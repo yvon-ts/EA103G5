@@ -244,7 +244,7 @@ option[value=""] {
                     <li><label><input type="radio" name="single" value="C" ${opAns[2] eq '1'? 'checked':''}> C. <input type="text" name="op3" value="${QuestionBankvo.op3}" placeholder="請輸入選項" style="width:209px"></label></li>
                     <li><label><input type="radio" name="single" value="D" ${opAns[3] eq '1'? 'checked':''}> D. <input type="text" name="op4" value="${QuestionBankvo.op4}" placeholder="請輸入選項" style="width:209px"></label></li>
                 </ul>
-            <h5>答案:</h5><input type="text" name="quans" id="writeanswer" value="${QuestionBankvo.quans}">`);
+            <h5>答案:</h5><input type="text" name="quans" id="writeanswer" value="${testAns}">`);
 
                             $('.summernote').summernote({
                                 width: 480,
@@ -273,7 +273,7 @@ option[value=""] {
                     <li><label><input type="checkbox" name="multiple" value="C" ${opAns[2] eq '1'? 'checked':''}> C. <input type="text" name="op3" value="${QuestionBankvo.op3}" placeholder="請輸入選項" style="width:209px"></label></li>
                     <li><label><input type="checkbox" name="multiple" value="D" ${opAns[3] eq '1'? 'checked':''}> D. <input type="text" name="op4" value="${QuestionBankvo.op4}" placeholder="請輸入選項" style="width:209px"></label></li>
                 </ul>
-            <h5>答案:</h5><input type="text" name="quans" id="writeanswer" value="${opAns}">`);
+            <h5>答案:</h5><input type="text" name="quans" id="writeanswer" value="${testAns}">`);
                             
                             $('.summernote').summernote({
                                 width: 480,
