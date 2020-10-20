@@ -40,9 +40,23 @@
 					value="${courseVO.coursename }"/></td>
 			</tr>
 			<tr>
-				<td>類別編號:<font color=red><b>*</b></font></td>
-				<td><input type="text" name="cstypeno" size="45"
-					value="${courseVO.cstypeno}" /></td>
+<!-- 				<td>類別編號:<font color=red><b>*</b></font></td> -->
+<!-- 				<td><input type="text" name="cstypeno" size="45" -->
+<%-- 					value="${courseVO.cstypeno}" /></td> --%>
+
+				<jsp:useBean id="courseTypeSvc" scope="page" class="com.course_type.model.CourseTypeService" />
+				<td>
+					<span>課程類別：</span>
+				</td>
+				<td>
+					<select name="cstypeno">
+						<c:forEach var="courseTypeVO" items="${courseTypeSvc.all}">
+							<option value="${courseTypeVO.cstypeno}" ${courseVO.cstypeno == courseTypeVO.cstypeno ? "selected" : ""}>
+								${courseTypeVO.cstypename}
+						</c:forEach>
+					</select>
+				</td>
+			</li>
 			</tr>
 			<tr>
 				<td>課程單價:</td>

@@ -350,7 +350,8 @@ public class CourseServlet extends HttpServlet {
 				String courseno = courseSvc.addCourse(cstypeno, tchrno, coursename, courseinfo, courseprice, ttltime, csstatus,	csscore, csscoretimes, courseimg);
 				courseVO = courseSvc.getOneCourse(courseno);
 				/*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
-				String url = "/front-end/course/listAllCourse.jsp";
+//				String url = "/front-end/course/listAllCourse.jsp";
+				String url = "/front-end/course/editCourse.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
 

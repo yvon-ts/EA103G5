@@ -24,7 +24,7 @@ public class CourseTypeService {
 		return courseTypeVO;
 	}
 
-	public CourseTypeVO updateCoursType(String cstypeno, String cstypename) {
+	public CourseTypeVO updateCourseType(String cstypeno, String cstypename) {
 		CourseTypeVO courseTypeVO = new CourseTypeVO();
 
 		courseTypeVO.setCstypeno(cstypeno);
@@ -33,7 +33,7 @@ public class CourseTypeService {
 		return courseTypeVO;
 	}
 
-	public CourseTypeVO getCoursType(String cstypeno) {
+	public CourseTypeVO getOneCourseType(String cstypeno) {
 		return dao.findByPrimaryKey(cstypeno);
 	}
 

@@ -39,14 +39,21 @@
 				<h1 id="pageTitle">課程管理 - ${courseVO.coursename}</h1>
 			</div>
 		</div>
+		
 
 		<div class="row">
 			<div class="col-md-3 sideBar">
 				<h2>基本資訊</h2>
 				<h5>課程編號：${courseVO.courseno}</h5>
 				<!-- 類別跟老師要轉為名稱 -->
-				<h5>授課老師：${courseVO.tchrno}</h5>
-				<h5>類別：${courseVO.cstypeno}</h5>
+<jsp:useBean id="membersSvc" scope="page" class="com.members.model.MembersService" />
+<jsp:useBean id="teacherSvc" scope="page" class="com.teacher.model.TeacherService" />
+<jsp:useBean id="courseTypeSvc" scope="page" class="com.course_type.model.CourseTypeService" />
+				<%-- <h5>授課老師：${courseVO.tchrno}</h5> --%>
+				<h5>授課老師：${membersSvc.getOneMembers(teacherSvc.getOneTeacher(courseVO.tchrno).memno).memname}</h5>
+				<!-- JOIN 3 個 table 我超神 -->
+				<%-- <h5>類別：${courseVO.cstypeno}</h5> --%>
+				<h5>類別：${courseTypeSvc.getOneCourseType(courseVO.cstypeno).cstypename}</h5>
 				<h5>單價：${courseVO.courseprice}</h5>
 				<h5>狀態：${courseVO.csstatus}</h5>
 				<h5>評分：${courseVO.csscore/courseVO.csscoretimes}</h5>
