@@ -1,0 +1,166 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page import="java.util.*,com.test_type.model.*"%>
+<%@ page import="com.question_bank.model.*"%>
+<% 
+		QuestionBankService questionbankSvc = new QuestionBankService();
+		List<QuestionBankVO> list = questionbankSvc.getAll();
+		
+		
+
+		TestTypeService testTypeSvc = new TestTypeService();
+		List<TestTypeVO> typeList = testTypeSvc.getAll();
+		
+		pageContext.setAttribute("typeList", typeList);
+
+		pageContext.setAttribute("list", list);
+%>
+<jsp:useBean id="ttSvc" scope="page" class="com.test_type.model.TestTypeService" />
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="BIG5">
+<title>Insert title here</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<!--     <title>Bootstrap CRUD Data Table for Database with Modal Form</title> -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<!--     <link rel="stylesheet" href="http://www.bootcss.com/p/bootstrap-switch/static/stylesheets/bootstrapSwitch.css"> -->
+    <link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/front-end/css/listAll.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <style>
+    	
+    </style>
+
+</head>
+<body>
+<c:if test="${not empty errorMsgs}">
+	<ul>
+	    <c:forEach var="message" items="${errorMsgs}">
+			<li style="color:red">${message}</li>
+		</c:forEach>
+	</ul>
+</c:if>
+	 <div class="container-xl">
+        <div class="table-responsive">
+            <div class="table-wrapper">
+                <div class="table-title">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <h2>Manage <b>TestQuestion</b></h2>
+                        </div>
+                        <div class="col-sm-6">
+                            <a href='<%= request.getContextPath()%>/front-end/question/inputQuestion.jsp' class="btn btn-success" ><i class="material-icons">&#xE147;</i> <span>Add New Question</span></a>
+                        </div>
+                    </div>
+                </div>
+                <form action="<%= request.getContextPath()%>/question/questionBank.do" method="post">
+                	<select name="courseno">
+                		<option value="" selected>請選擇課程</option>
+                		<option value="COUR0001">COURNAME1</option>
+                		<option value="COUR0002">COURNAME2</option>
+                		<option value="COUR0003">COURNAME3</option>
+                		<option value="COUR0004">COURNAME4</option>
+                	</select>
+                	<select name="testtypeno">
+                			<option value="" selected>請選擇題型</option>
+                		<c:forEach var="testTypevo" items="${typeList}">
+                			<option value="${testTypevo.testtypeno}">${testTypevo.testdgee}-${(testTypevo.testtype eq 'checkbox' )? '多選題':(testTypevo.testtype eq 'radio' )? '單選題':'填空題' }</option>	
+                		</c:forEach>
+                	</select>
+                	<select name="testscope">
+                		<option value="" selected>請選擇單元</option>
+                		<option value="1">單元一</option>
+                		<option value="2">單元二</option>
+                		<option value="3">單元三</option>
+                		<option value="4">單元四</option>
+                	</select>
+                	<input type="text" name="qustmt">
+                	<input type="hidden" name="action" value="listEmps_ByCompositeQuery">
+                	<input type="submit" value="送出查詢">
+                </form>
+              
+                <table class="table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>題目編號</th>
+                            <th>課程名稱</th>
+                            <th>課程難易度</th>
+                            <th>單元範圍</th>
+                            <th>題目敘述</th>
+                            <th>編輯</th>
+                            <th>狀態</th>	
+                        </tr>
+                    </thead>
+                    <tbody>
+                    	<%@ include file="page/page1.file" %> 
+                    
+                    	<c:forEach var="QuestionBankvo" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>" varStatus="counter">
+                        	
+                        <tr>
+                            
+                            <td>${QuestionBankvo.qbankno }</td>
+                            <td>${QuestionBankvo.courseno }</td>
+                            <c:if test="${ttSvc.getOnebyNO(QuestionBankvo.typeno).testdgee eq '簡單'}">
+                            	<td><span class="badge badge-primary">簡單</span></td>
+                            </c:if>
+                            <c:if test="${ttSvc.getOnebyNO(QuestionBankvo.typeno).testdgee eq '中等'}">
+                            	<td><span class="badge badge-success">中等</span></td>
+                            </c:if>
+                            <c:if test="${ttSvc.getOnebyNO(QuestionBankvo.typeno).testdgee eq '困難'}">
+                            	<td><span class="badge badge-warning">困難</span></td>
+                            </c:if>
+                            <td>${QuestionBankvo.testscope }</td>
+                            <td style="width:30%"  class="set" >${QuestionBankvo.qustmt}</td>
+                            <td>
+                            
+                            	<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/question/questionBank.do" style="margin-bottom: 0px;">
+			     					<input style="font-family: FontAwesome" value="&#xf044;" type="submit">
+	
+			     					<input type="hidden" name="qbankno"  value="${QuestionBankvo.qbankno}">
+			     					<input type="hidden" name="action"	value="getOne_For_Update">
+			     				</FORM>
+			     			</td>	
+			     			<td>
+			     					<input type="checkbox" id="customSwitches${counter.count}"  value="${QuestionBankvo.qbankno}" ${QuestionBankvo.qustatus eq '1'? "checked":"" } /><label for="customSwitches${counter.count}"></label>
+                            </td>
+                        </tr>
+                        </c:forEach>
+                    </tbody>
+                </table>
+               
+                <%@ include file="page/page2.file" %>
+            </div>
+        </div>
+    </div>
+	<script type="text/javascript">
+			
+			$(document).ready(function(){
+				
+				
+				
+				for(let i = 1 ; i <= `${list.size()}`;i++){
+					
+					$('#customSwitches' +i).click(function(){
+						$.ajax({
+							type : "post",
+							url  : "editStatus.jsp",
+							data : {
+								qbankno : $(this).val(),
+								status  : $(this).prop("checked")? 1 : 0
+							},
+						success : function(data){
+							console.log(123);
+						}
+						});
+					});
+				}	
+				$('.set').find('img').css("width","150px");
+				$('.set').find('img').css("height","150px");
+			});
+	</script>
+</body>
+</html>

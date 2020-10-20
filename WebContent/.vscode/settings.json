@@ -1,0 +1,5 @@
+{
+    "editor.wordWrapColumn": 200,
+    "html.format.wrapAttributes": "preserve",
+    "html.format.wrapLineLength": 0
+}

@@ -1,0 +1,252 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page import="java.util.*"%>
+<%@ page import="java.sql.*"%>
+<%@ page import="java.text.DateFormat"%>
+<%@ page import="java.text.SimpleDateFormat"%>
+<%@ page import="com.lecture.model.*"%>
+<!DOCTYPE html>
+
+<% LecVO lecVO = (LecVO) request.getAttribute("lecVO");
+	//CKeditor - Bytes to String
+	String info = "資訊更新中";
+	try{
+		byte[] b = lecVO.getLecinfo();
+		info = new String(b);
+	} catch (Exception e){
+		info = "資訊更新中";
+	}
+
+	//日期設定
+	Timestamp lecstart = lecVO.getLecstart();
+	Timestamp lecend = lecVO.getLecend();
+	Timestamp signstart= lecVO.getSignstart();
+	Timestamp signend= lecVO.getSignend();
+	String startdate = "";
+	String starttime = "";
+	String endtime = "";
+	String opendate = "";
+	String closedate = "";
+	DateFormat fmtdate = new SimpleDateFormat("yyyy/MM/dd");
+	DateFormat fmttime = new SimpleDateFormat("HH:mm");
+	startdate = fmtdate.format(lecstart);
+	starttime = fmttime.format(lecstart);
+	endtime = fmttime.format(lecend);
+	opendate = fmtdate.format(signstart);
+	closedate = fmtdate.format(signend);
+	
+	String status;
+	
+	if (lecVO.getLecstatus() == 1){
+		status = "正常";
+	} else {
+		status = "取消";
+	}
+%>
+
+<html lang="en">
+
+<head>
+<%@ include file="/index/front-index/header.jsp" %>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>Blog Post - Start Bootstrap Template</title>
+
+  <!-- Bootstrap core CSS -->
+  <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Custom styles for this template -->
+  <link href="css/blog-post.css" rel="stylesheet">
+
+</head>
+
+<body>
+ <!-- Header Area wrapper Starts -->
+    <header id="header-wrap">
+       
+        <!-- Hero Area Start -->
+        <div id="hero-area" class="hero-area-bg">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
+                        <div class="contents">
+                            <div class="about-wrapper wow fadeInLeft" data-wow-delay="0.3s">
+                                <h2 class="head-title">Xducation 名人講座</h2>
+                                <i class="lni-rocket"></i>&emsp;達人不藏私 x 面對面交流<br>
+                                <i class="lni-rocket"></i>&emsp;來聽各行各業你最想知道的事<br>
+                            </div>
+                            <br>
+                            <div class="about-wrapper wow fadeInLeft" data-wow-delay="0.4s">
+                                <div id="search">
+                                    <table id="searchbox">
+                                        <tr>
+                                            <td><i class="lni-search"></i></td>
+                                            <td>
+                                                <input type="text" size="30" placeholder="&nbsp;&nbsp;今天想學什麼呢？">
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <div class="header-button">
+                                    <a href="#" class="btn btn-common">探索課程</a>
+                                    <a href="#" class="btn btn-border video-popup">我要註冊</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
+                        <div class="about-wrapper wow fadeInRight" data-wow-delay="0.3s">
+                            <div id="introimg">
+                                <img class="img-fluid" src="<%=request.getContextPath() %>/index/front-index/assets/img/head/lecture.png" alt="">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+            <!-- Hero Area End -->
+    </header>
+    <!-- Header Area wrapper End -->
+  <!-- Page Content -->
+  <div class="container">
+
+    <div class="row">
+
+      <!-- Post Content Column -->
+      <div class="col-lg-8">
+
+        <!-- Title -->
+        <h1 class="mt-4">${lecVO.lecname}</h1>
+
+        <!-- Author -->
+       <div class="media mt-4">
+              <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
+              <div class="media-body">
+                <h5 class="mt-0">Commenter Name</h5>
+                Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
+              </div>
+            </div>
+        <hr>
+
+        <!-- Date/Time -->
+        <p>Posted on January 1, 2019 at 12:00 PM</p>
+
+        <hr>
+
+        <!-- Preview Image -->
+        <img class="img-fluid rounded" src="http://placehold.it/900x300" alt="">
+
+        <hr>
+
+        <!-- Post Content -->
+        <p class="lead">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ducimus, vero, obcaecati, aut, error quam sapiente nemo saepe quibusdam sit excepturi nam quia corporis eligendi eos magni recusandae laborum minus inventore?</p>
+
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut, tenetur natus doloremque laborum quos iste ipsum rerum obcaecati impedit odit illo dolorum ab tempora nihil dicta earum fugiat. Temporibus, voluptatibus.</p>
+
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos, doloribus, dolorem iusto blanditiis unde eius illum consequuntur neque dicta incidunt ullam ea hic porro optio ratione repellat perspiciatis. Enim, iure!</p>
+
+        <blockquote class="blockquote">
+          <p class="mb-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
+          <footer class="blockquote-footer">Someone famous in
+            <cite title="Source Title">Source Title</cite>
+          </footer>
+        </blockquote>
+
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error, nostrum, aliquid, animi, ut quas placeat totam sunt tempora commodi nihil ullam alias modi dicta saepe minima ab quo voluptatem obcaecati?</p>
+
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Harum, dolor quis. Sunt, ut, explicabo, aliquam tenetur ratione tempore quidem voluptates cupiditate voluptas illo saepe quaerat numquam recusandae? Qui, necessitatibus, est!</p>
+
+        <hr>
+
+        <!-- Comment with nested comments -->
+        <div class="media mb-4">
+          <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
+          <div class="media-body">
+            <h5 class="mt-0">可能要放地圖才能把side card撐開</h5>
+            Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Sidebar Widgets Column -->
+      <div class="col-md-4">
+
+        <!-- Search Widget -->
+        <div class="card my-4">
+          <h5 class="card-header">Search</h5>
+          <div class="card-body">
+            <div class="input-group">
+              <input type="text" class="form-control" value="心動不如趕快行動 ->">
+              <form method="post"	action="<%=request.getContextPath()%>/lecture/lecture.do">
+              <span class="input-group-append">
+              <input type="hidden" name="action" value="bookOne">
+              <input type="hidden" name="lecno" value="${lecVO.lecno}">
+                <button class="btn btn-secondary" type="submit">Go!</button>
+                </span>
+                </form>
+            </div>
+          </div>
+        </div>
+
+        <!-- Categories Widget -->
+        <div class="card my-4">
+          <h5 class="card-header">Categories</h5>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-lg-6">
+                <ul class="list-unstyled mb-0">
+                  <li>
+                    <a href="#">Web Design</a>
+                  </li>
+                  <li>
+                    <a href="#">HTML</a>
+                  </li>
+                  <li>
+                    <a href="#">Freebies</a>
+                  </li>
+                </ul>
+              </div>
+              <div class="col-lg-6">
+                <ul class="list-unstyled mb-0">
+                  <li>
+                    <a href="#">JavaScript</a>
+                  </li>
+                  <li>
+                    <a href="#">CSS</a>
+                  </li>
+                  <li>
+                    <a href="#">Tutorials</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Side Widget -->
+        <div class="card my-4">
+          <h5 class="card-header">Side Widget</h5>
+          <div class="card-body">
+            You can put anything you want inside of these side widgets. They are easy to use, and feature the new Bootstrap 4 card containers!
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+    <!-- /.row -->
+
+  </div>
+  <!-- /.container -->
+
+  <!-- Bootstrap core JavaScript -->
+  <script src="vendor/jquery/jquery.min.js"></script>
+  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<%@ include file="/index/front-index/footer.jsp" %>
+</body>
+
+</html>

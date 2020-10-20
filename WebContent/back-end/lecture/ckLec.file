@@ -1,0 +1,41 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>CKEditor</title>
+    <style>
+    	
+    </style>
+    <script src="https://cdn.ckeditor.com/4.7.3/basic/ckeditor.js"></script>
+</head>
+
+<body>
+    <textarea name="edtr"><%= info %></textarea>
+    <button id="btn">送出</button>
+    <script>
+    function init() {
+        CKEDITOR.replace("edtr", {
+            width: 800,
+        });
+        CKEDITOR.editorConfig = function(config) {
+            config.enterMode = CKEDITOR.ENTER_BR;
+        };
+    }
+    document.getElementById("btn");
+    btn.addEventListener("click", function() {
+        var box = document.createElement('input');
+        box.setAttribute("style", "display: none;");
+        var content = CKEDITOR.instances["edtr"].getData();
+        //box.type = hidden;
+        box.name = "lecinfo";
+        box.value = content;
+        btn.after(box);
+    });
+    window.onload = init;
+    </script>
+</body>
+
+</html>

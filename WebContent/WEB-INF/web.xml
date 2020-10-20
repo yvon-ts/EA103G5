@@ -1,0 +1,371 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd" version="4.0">
+  <display-name>EA103G5</display-name>
+  
+  <welcome-file-list>
+    <welcome-file>index.html</welcome-file>
+    <welcome-file>index.htm</welcome-file>
+    <welcome-file>index.jsp</welcome-file>
+    <welcome-file>default.html</welcome-file>
+    <welcome-file>default.htm</welcome-file>
+    <welcome-file>default.jsp</welcome-file>
+  </welcome-file-list>
+  
+  
+  
+  <resource-ref>
+    <description>DB Connection</description>
+    <res-ref-name>jdbc/xduDB</res-ref-name>
+    <res-type>javax.sql.DataSource</res-type>
+    <res-auth>Container</res-auth>
+  </resource-ref>
+  
+  
+  
+  <filter>
+    <filter-name>LoginFilter</filter-name>
+    <filter-class>com.employee.login.controller.LoginFilter</filter-class>
+  </filter>
+  <filter-mapping>
+   	<filter-name>LoginFilter</filter-name>
+   	<url-pattern>/back-end/employee/*</url-pattern>
+   	<url-pattern>/front-end/back-endHomePage.jsp</url-pattern>
+   	<dispatcher>REQUEST</dispatcher>
+   	<dispatcher>FORWARD</dispatcher>
+   	<dispatcher>INCLUDE</dispatcher>
+   	<dispatcher>ERROR</dispatcher>
+   	<dispatcher>ASYNC</dispatcher>
+  </filter-mapping>
+  
+  
+  
+  <servlet>
+    <servlet-name>Test_DataSource</servlet-name>
+    <servlet-class>Test_DataSource</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Test_DataSource</servlet-name>
+    <url-pattern>/Test_DataSource</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+    <servlet-name>ClassroomServlet</servlet-name>
+    <servlet-class>com.classroom.controller.ClassroomServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ClassroomServlet</servlet-name>
+    <url-pattern>/classroom/classroom.do</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+    <servlet-name>CourseServlet</servlet-name>
+    <servlet-class>com.course.controller.CourseServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>CourseServlet</servlet-name>
+    <url-pattern>/course/course.do</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+    <servlet-name>VideoServlet</servlet-name>
+    <servlet-class>com.video.controller.VideoServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>VideoServlet</servlet-name>
+    <url-pattern>/video/video.do</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+    <servlet-name>VideoReaderFromDB</servlet-name>
+    <servlet-class>com.video.controller.VideoReaderFromDB</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>VideoReaderFromDB</servlet-name>
+    <url-pattern>/video/VideoReaderFromDB</url-pattern>
+  </servlet-mapping>
+  
+   <servlet>
+  	<servlet-name>SpkrServlet</servlet-name>
+  	<servlet-class>com.speaker.controller.SpkrServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>SpkrServlet</servlet-name>
+  	<url-pattern>/speaker/speaker.do</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+  <servlet-name>IconReaderFromDB</servlet-name>
+  <servlet-class>com.speaker.controller.IconReaderFromDB</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>IconReaderFromDB</servlet-name>
+  	<url-pattern>/speaker/iconreader</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+  <servlet-name>PicReaderFromDB</servlet-name>
+  <servlet-class>com.lecture.controller.PicReaderFromDB</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>PicReaderFromDB</servlet-name>
+  	<url-pattern>/lecture/picreader</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+  	<servlet-name>LecServlet</servlet-name>
+  	<servlet-class>com.lecture.controller.LecServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>LecServlet</servlet-name>
+  	<url-pattern>/lecture/lecture.do</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+  	<servlet-name>DefRoomServlet</servlet-name>
+  	<servlet-class>com.lecture.controller.DefRoomServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>DefRoomServlet</servlet-name>
+  	<url-pattern>/lecture/defLayout.show</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+  	<servlet-name>LecRoomServlet</servlet-name>
+  	<servlet-class>com.lecture.controller.LecRoomServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>LecRoomServlet</servlet-name>
+  	<url-pattern>/lecture/currLayout.show</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+  	<servlet-name>LecAjaxServlet</servlet-name>
+  	<servlet-class>com.lecture.controller.LecAjaxServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>LecAjaxServlet</servlet-name>
+  	<url-pattern>/lecture/lecJson.get</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+  	<servlet-name>LodrServlet</servlet-name>
+  	<servlet-class>com.lecorder.controller.LodrServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>LodrServlet</servlet-name>
+  	<url-pattern>/lecorder/lecorder.do</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+  	<servlet-name>LecseatServlet</servlet-name>
+  	<servlet-class>com.lecseat.controller.LecseatServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>LecseatServlet</servlet-name>
+  	<url-pattern>/lecseat/lecseat.do</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+    <servlet-name>OrderMasterServlet</servlet-name>
+    <servlet-class>com.order_master.controller.OrderMasterServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>OrderMasterServlet</servlet-name>
+    <url-pattern>/Order_Master/Order_Master.do</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+    <servlet-name>OrderDetailServlet</servlet-name>
+    <servlet-class>com.order_detail.controller.OrderDetailServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>OrderDetailServlet</servlet-name>
+    <url-pattern>/Order_Detail/Order_Detail.do</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+    <servlet-name>ShoppingServlet</servlet-name>
+    <servlet-class>com.course.controller.ShoppingServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ShoppingServlet</servlet-name>
+    <url-pattern>/Shop/Shopping_Cart.do</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+    <servlet-name>CoupCodeServlet</servlet-name>
+    <servlet-class>com.coup_code.controller.CoupCodeServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>CoupCodeServlet</servlet-name>
+    <url-pattern>/Coup_Code/Coup_CodeServlet.do</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+    <servlet-name>PromoListServlet</servlet-name>
+    <servlet-class>com.promo_list.controller.PromoListServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>PromoListServlet</servlet-name>
+    <url-pattern>/Promo_List/Promo_List.do</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+    <servlet-name>MembersServlet</servlet-name>
+    <servlet-class>com.members.controller.MembersServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>MembersServlet</servlet-name>
+    <url-pattern>/members/members.do</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+    <servlet-name>TeacherServlet</servlet-name>
+    <servlet-class>com.teacher.controller.TeacherServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>TeacherServlet</servlet-name>
+    <url-pattern>/teacher/teacher.do</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+    <servlet-name>MemaccCheckServlet</servlet-name>
+    <servlet-class>com.members.controller.MemaccCheckServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>MemaccCheckServlet</servlet-name>
+    <url-pattern>/front-end/members/MemaccCheckServlet</url-pattern>
+  </servlet-mapping>
+  
+   <servlet>
+    <servlet-name>MembersUpdate</servlet-name>
+    <servlet-class>com.members.controller.MembersUpdate</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>MembersUpdate</servlet-name>
+    <url-pattern>/front-end/members/MembersUpdate</url-pattern>
+     <url-pattern>/back-end/members/MembersUpdate</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+    <servlet-name>MprofileDisplayServlet</servlet-name>
+    <servlet-class>com.members.controller.MprofileDisplayServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>MprofileDisplayServlet</servlet-name>
+    <url-pattern>/front-end/members/MprofileDisplayServlet</url-pattern>
+    <url-pattern>/back-end/members/MprofileDisplayServlet</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+    <servlet-name>TchrcertDisplayServlet1</servlet-name>
+    <servlet-class>com.teacher.controller.TchrcertDisplayServlet1</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>TchrcertDisplayServlet1</servlet-name>
+    <url-pattern>/front-end/teacher/TchrcertDisplayServlet1</url-pattern>
+    <url-pattern>/back-end/teacher/TchrcertDisplayServlet1</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+    <servlet-name>TchrcertDisplayServlet2</servlet-name>
+    <servlet-class>com.teacher.controller.TchrcertDisplayServlet2</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>TchrcertDisplayServlet2</servlet-name>
+    <url-pattern>/front-end/teacher/TchrcertDisplayServlet2</url-pattern>
+    <url-pattern>/back-end/teacher/TchrcertDisplayServlet2</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+    <servlet-name>MemdeleteSwichServlet</servlet-name>
+    <servlet-class>com.members.controller.MemdeleteSwichServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>MemdeleteSwichServlet</servlet-name>
+    <url-pattern>/front-end/members/MemdeleteSwichServlet</url-pattern>
+    <url-pattern>/back-end/members/MemdeleteSwichServlet</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+	<servlet-name>EmployeeServlet</servlet-name>
+	<servlet-class>com.employee.controller.EmployeeServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+	<servlet-name>EmployeeServlet</servlet-name>
+	<url-pattern>/employee/employee.do</url-pattern>
+  </servlet-mapping>
+	
+  <servlet>
+	<servlet-name>EmployeeLoginServlet</servlet-name>
+	<servlet-class>com.employee.login.controller.EmployeeLoginServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+	<servlet-name>EmployeeLoginServlet</servlet-name>
+	<url-pattern>/employee/login.do</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+  	<servlet-name>PostsServlet</servlet-name>
+  	<servlet-class>com.posts.controller.PostsServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>PostsServlet</servlet-name>
+  	<url-pattern>/posts/posts.do</url-pattern>		
+  </servlet-mapping>	
+  
+  <servlet>
+  	<servlet-name>ReportDetailServlet</servlet-name>
+  	<servlet-class>com.report_detail.controller.ReportDetailServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>ReportDetailServlet</servlet-name>
+  	<url-pattern>/report_detail/report_detail.do</url-pattern>		
+  </servlet-mapping>
+  
+  <servlet>
+  	<servlet-name>TrackingListServlet</servlet-name>
+  	<servlet-class>com.tracking_list.controller.TrackingListServlet</servlet-class>
+  </servlet>
+  	
+  <servlet-mapping>
+  	<servlet-name>TrackingListServlet</servlet-name>
+  	<url-pattern>/tracking_list/tracking_list.do</url-pattern>		
+  </servlet-mapping>
+  
+  <servlet>
+  	<servlet-name>QuestionBankServlet</servlet-name>
+  	<servlet-class>com.question_bank.controller.QuestionBankServlet</servlet-class>  
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>QuestionBankServlet</servlet-name>
+  	<url-pattern>/question/questionBank.do</url-pattern>
+  </servlet-mapping>	
+
+  <servlet>
+  	<servlet-name>QuestionTestServlet</servlet-name>
+  	<servlet-class>com.question_bank.controller.QuestionTestServlet</servlet-class>  
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>QuestionTestServlet</servlet-name>
+  	<url-pattern>/question/questionTest.do</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+    <servlet-name>CourseForPhoto</servlet-name>
+    <servlet-class>com.course.controller.CourseForPhoto</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>CourseForPhoto</servlet-name>
+    <url-pattern>/course/coursephoto.do</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+    <servlet-name>CourseSearch</servlet-name>
+    <servlet-class>com.course.controller.CourseSearch</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>CourseSearch</servlet-name>
+    <url-pattern>/course/coursesearch.do</url-pattern>
+  </servlet-mapping>
+</web-app>

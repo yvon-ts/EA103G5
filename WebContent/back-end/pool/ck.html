@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>CKEditor</title>
+    <script src="https://cdn.ckeditor.com/4.7.3/basic/ckeditor.js"></script>
+</head>
+
+<body>
+    <textarea name="edtr">123</textarea>
+    <button id="btn">submit</button>
+    <script>
+    function init() {
+        CKEDITOR.replace("edtr", {
+            width: 800,
+        });
+        CKEDITOR.editorConfig = function(config) {
+            config.enterMode = CKEDITOR.ENTER_BR; //br換行
+        };
+    }
+    document.getElementById("btn");
+    btn.addEventListener("click", function() {
+        var box = document.createElement('input'); //動態新增input抓值用
+        var content = CKEDITOR.instances["edtr"].getData(); //取值
+        //box.type = hidden;
+        box.name = "spkrinfo";
+        box.value = content;
+        btn.after(box);
+    });
+    window.onload = init;
+    </script>
+</body>
+
+</html>

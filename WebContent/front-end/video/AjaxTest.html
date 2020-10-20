@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>AjaxTest.ajax()</title>
+    <script src="http://code.jquery.com/jquery-1.12.4.min.js"></script>
+</head>
+
+<body>
+    <h2>Ajax Method Demo</h2>
+    <!--     <button id="get">using get</button> -->
+    <button id="post">using post</button>
+    <br>
+    <div id="demo">
+
+    </div>
+    <script>
+        //         $("#get").click(function () {
+        //             $.ajax({
+        //                 url: "NameCity.jsp?name=Jennifer&city=Taoyuan",
+        //                 type: "GET",
+        //                 success: function (data) {
+        //                     $("#demo").html(data);
+        //                 }
+        //             });
+        //         });
+
+        $("#post").click(function () {
+            $.ajax({
+                url: "/EA103G5_1005_Re/ajax_pratice",
+                type: "POST",
+                // data: {
+                // 	videono:"VID0008"
+                // },
+                success: function (data) {
+                    var videos = JSON.parse(data);
+					var txt = "";
+                    for (let i = 0; i < videos.length; i ++) {
+                        txt += "<p>videono = " + videos[i].videono + "</p>";
+                        txt += "<p>courseno = " + videos[i].courseno + "</p>";
+                        txt += "<p>testscope = " + videos[i].testscope + "</p>";
+                        txt += "<p>chapterno = " + videos[i].chapterno + "</p>";
+                        txt += "<p>chaptername = " + videos[i].chaptername + "</p>";
+                        txt += "<p>chapterlen = " + videos[i].chapterlen + "</p>";
+                        txt += "<p>====================</p>";
+                    }
+
+                    // for (video in videos) {
+                    //     txt += "videono = " + video.videono;
+                    //     txt += "<br>courseno = " + video.courseno;
+                    //     txt += "<br>testscope = " + video.testscope;
+                    //     txt += "<br>chapterno = " + video.chapterno;
+                    //     txt += "<br>chaptername = " + video.chaptername;
+                    //     txt += "<br>chapterlen = " + video.chapterlen;
+                    //     txt += "<br> ==================== <br>";
+                    // }
+
+                    $("#demo").html(txt);
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

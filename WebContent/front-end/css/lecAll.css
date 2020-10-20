@@ -1,0 +1,56 @@
+ /*講座日期*/
+        
+         .div {
+            background-color: pink;
+            min-height: 180px;
+        }
+        .daydiv {
+	        color: #0099cc;
+            padding: 38px 20px 38px 10px;
+            display: inline-block;
+            width: fit-content;
+            width: -webkit-fit-content;
+            width: -moz-fit-content;
+            text-align: center;
+        }
+        .date {
+        	padding: 3px 10px;
+            font-size: 40px;
+            font-weight: 700;
+            line-height: 40px;
+        }
+        .month {
+            font-size: 20px;
+            font-weight: 600;
+            line-height: 40px;
+        }
+        .time{
+	        font-size: 14px;
+	        line-height: 20px;
+        }
+        .div .pic {
+            display: inline-block;
+            position: absolute;
+            margin: 2px auto;
+            padding: 6px;
+        }
+        .div .pic img {
+            max-height: 160px;
+            width: auto;
+            margin-top: 0px;
+        }
+        .div .lec-txt{
+        	margin-left: 270px;
+        	display: inline-block;
+        }
+        
+        .div .lec-txt .title{
+        	font-size: 35px;
+        	font-weight: 600;
+        	color: #333;
+        }
+        .div .more{
+        	display: inline-block;
+        	margin-top: 80px;
+        	margin-left: 20px;
+        }

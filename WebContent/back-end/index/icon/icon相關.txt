@@ -1,0 +1,25 @@
+fontawesome 相關
+
+	#1 fontawesome homepage https://fontawesome.com/
+
+	#2 fontawesome cdn https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css
+
+後台用icon
+
+	#1 首頁 
+		#html <i class="fa fa-home" aria-hidden="true"></i>
+
+	#2 員工 
+		#html <i class="fa fa-user" aria-hidden="true"></i>
+
+	#3 會員
+		#html <i class="fa fa-users" aria-hidden="true"></i>	
+
+	#4 講座
+		#html <i class="fa fa-user-plus" aria-hidden="true"></i>
+	
+	#5 商城
+		#html <i class="fa fa-cart-plus" aria-hidden="true"></i>
+
+	#6 檢舉
+		#html <i class="fa fa-exclamation-circle" aria-hidden="true"></i>

@@ -1,0 +1,54 @@
+body {
+    font-family: microsoft jhengHei;
+}
+
+#classroom {
+    background-color: #A2D9FF;
+    /* width: 500px; */
+    height: auto;
+    text-align: center;
+    margin: 20px auto;
+}
+
+#stage {
+    background-color: rgba(240, 230, 140, 0.7);
+    width: 80%;
+    height: 50px;
+    margin: 5px auto;
+}
+
+#seatmapping {
+    background-color: #a2d8ffd3;
+    /* width: 90%; */
+    /* height: auto; */
+    margin: 5px auto;
+}
+
+.spaceblock {
+    /* 空間：設定的外觀與尺寸 */
+    display: inline-block;
+    vertical-align: top;
+
+    font-size: 16px;
+    text-align: center;
+    line-height: 35px;
+
+    width: 35px;
+    height: 35px;
+    margin: 5px;
+    border-radius: 50%;
+}
+
+.seat {
+    /* 座位：設定的識別特徵 */
+    /* background-color: rgba(235, 220, 88, 0.7); */
+    background-color: rgba(240, 230, 140, 0.7);
+    /* border: 1px solid black; */
+}
+
+.aisle {
+    /* 走道：設定的識別特徵 */
+    background-color: transparent;
+    border: 1px dashed rgba(0, 0, 0, 0.2);
+    color: rgba(0, 0, 0, 0.2);
+}

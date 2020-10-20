@@ -1,0 +1,18 @@
+package com.course.model;
+
+import java.util.List;
+import java.util.Map;
+
+public interface CourseDAO_interface {
+	public void insert(CourseVO courseVO);
+
+	public void update(CourseVO courseVO);
+
+	public CourseVO findPrimaryKey(String courseno);
+
+	public List<CourseVO> getAllForUser();
+	
+	public List<CourseVO> getAllForEmployee();
+	
+	public List<CourseVO> getAll(Map<String, String[]> map);
+}

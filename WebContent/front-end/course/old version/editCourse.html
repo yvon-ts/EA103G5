@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+    <!-- Font Awesome CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css">
+
+    <!-- 自己的 CSS 一定放在最下面 -->
+    <!--     <link rel="stylesheet" href="css/course.css"> -->
+    <!-- <link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/course/css/course.css"> -->
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <style>
+        .table-sortable {
+            position: relative;
+        }
+
+        .table-sortable .sortable-placeholder {
+            height: 100px;
+        }
+
+        .table-sortable .sortable-placeholder:after {
+            position: absolute;
+            z-index: 10;
+            content: " ";
+            height: 100px;
+            background: #f9f9f9;
+            left: 0;
+            right: 0;
+        }
+
+        input[type=number] {
+            width: 40px;
+        }
+    </style>
+
+
+    <!-- Bootstrap JS (jquery 改為完整版)-->
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+
+    <title>課程編輯</title>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3">
+                <h2>課程管理</h2>
+                <p>courseno 課程編號</p>
+                <p>cstypeno 類別編號</p>
+                <p>tchrno 老師編號</p>
+                <p>coursename 課程名稱</p>
+                <p>courseinfo 課程資訊</p>
+                <p>courseprice 課程單價</p>
+                <p>ttltime 課程總時數</p>
+                <p>csstatus 商品狀態</p>
+                <p>csscore 累積總評分數</p>
+                <p>csscoretimes 評分次數</p>
+            </div>
+
+            <div class="col-md-9">
+
+                <section>
+                    <h2>課程單元</h2>
+                    <table class="table table-sortable">
+                        <thead>
+                            <tr>
+                                <th style="width:40px;"></th>
+                                <th>#</th>
+                                <th colspan="2">單元內容</th>
+                                <!-- <th>影片</th> -->
+                                <!-- <th>編輯</th> -->
+                            </tr>
+                        </thead>
+                        <tbody id="videolist">
+
+                            <!-- <tr>
+                                <form method="post">
+                                    <td><i class="fas fa-bars"></i></td>
+                                    <td>
+                                        <p>單元：<input type="number" name="chapterno" value=99 readonly></p>
+                                        <p>範圍：<input type="number" name="testscope" value=1></p>
+                                    </td>
+                                    <td>
+                                        <p>課程名稱：<input type="text" name="chaptername" size="15" value="什麼是 HTML">
+                                        </p>
+                                    </td>
+                                    <td>
+                                        <p><input type=file name=file></p>
+                                        <p><input type="number" name="chapterlen" value=11> 秒</p>
+                                    </td>
+                                    <input type="hidden" name="action" value="update">
+                                </form>
+                            </tr>
+                            <tr>
+                                <form method="post">
+                                    <td><i class="fas fa-bars"></i></td>
+                                    <td>
+                                        <p>單元：<input type="number" name="chapterno" value=99 readonly></p>
+                                        <p>範圍：<input type="number" name="testscope" value=1></p>
+                                    </td>
+                                    <td>
+                                        <p>課程名稱：<input type="text" name="chaptername" size="15" value="建立你的第一個網頁">
+                                        </p>
+                                    </td>
+                                    <td>
+                                        <p><input type=file name=file></p>
+                                        <p><input type="number" name="chapterlen" value=22> 秒</p>
+                                    </td>
+                                    <input type="hidden" name="action" value="update">
+                                </form>
+                            </tr>
+                            <tr>
+                                <form method="post">
+                                    <td><i class="fas fa-bars"></i></td>
+                                    <td>
+                                        <p>單元：<input type="number" name="chapterno" value=99 readonly></p>
+                                        <p>範圍：<input type="number" name="testscope" value=1></p>
+                                    </td>
+                                    <td>
+                                        <p>課程名稱：<input type="text" name="chaptername" size="15" value="HTML 文件的架構">
+                                        </p>
+                                    </td>
+                                    <td>
+                                        <p><input type=file name=file></p>
+                                        <p><input type="number" name="chapterlen" value=33> 秒</p>
+                                    </td>
+                                    <input type="hidden" name="action" value="update">
+                                </form>
+                            </tr> -->
+
+                        </tbody>
+                    </table>
+                    <div>
+                        <span id="addNewChapter" class="far fa-plus-square"
+                            style="font-size: 50px; color: black;"></span>
+                    </div>
+                </section>
+
+                <button id="test">Cick Me</button>
+
+            </div>
+        </div>
+    </div>
+
+
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src="js/bootstrap-html5sortable-master/jquery.sortable.js"></script>
+
+    <script>
+        // addEventListener('load',init());
+        window.onload = loadOrignalChapters;
+
+        function loadOrignalChapters() {
+            // console.log("${courseVO.courseno}");
+
+            // 讀取本課程原始的單元影片
+            $.ajax({
+                url: "/EA103G5_1005_Re/ajax_pratice",
+                // url: "<%=request.getContextPath()%>/ajax_pratice",
+                type: "POST",
+                data: {
+                    courseno: "COUR0001"
+                    // courseno: "${courseVO.courseno}"
+                },
+                success: function (data) {
+                    // console.log(data);
+                    var videos = JSON.parse(data);
+                    var txt = "";
+                    for (let i = 0; i < videos.length; i++) {
+                        txt += `<tr>
+                                    <form method="post" id="origForm` + (i + 1) + `">
+                                        <td><i class="fas fa-bars"></i></td>
+                                        <td>
+                                            <p>單元：<input type="number" name="chapterno" value=` + videos[i].chapterno +
+                            ` readonly form="origForm` + (i + 1) + `"></p>
+                                            <p>範圍：<input type="number" name="testscope" value=` + videos[i].testscope +
+                            ` form="origForm` + (i + 1) + `"></p>
+                                        </td>
+                                        <td>
+                                            <p>課程名稱：<input type="text" name="chaptername" size="15" value=` + videos[i]
+                            .chaptername + ` form="origForm` + (i + 1) + `"></p>
+                                        </td>
+                                        <td>
+                                            <p><input type="file" name="video" form="origForm` + (i + 1) + `"></p>
+                                            <p>單元長度：<input type="number" name="chapterlen" value=` + videos[i]
+                            .chapterlen + ` form="origForm` + (i + 1) + `"> 秒</p>
+                                        </td>
+                                        <input type="hidden" name="videono" value="` + videos[i].videono +
+                            `" form="origForm` + (i + 1) + `">
+                                        <input type="hidden" name="action" value="update" form="origForm` + (i + 1) + `">
+                                    </form>
+                                </tr>`;
+                    }
+                    $("#videolist").html(txt);
+
+                    // 替原始影片註冊 sortable 事件
+                    $('.table-sortable tbody').sortable({
+                        handle: 'i'
+                    }).bind('sortupdate', replaceTheChapterNumber);
+		
+                    // 重新排序
+                    replaceTheChapterNumber();
+                }
+            });
+            
+        }
+
+
+
+
+
+        // 使用 github 上的 sortable，並呼叫 callback function
+        $(function () {
+            $('.table-sortable tbody').sortable({
+                handle: 'i'
+            }).bind('sortupdate', replaceTheChapterNumber);
+        });
+
+
+
+        let addNumber = 1;
+        // 新增新的章節
+        $("#addNewChapter").click(function () {
+            let newChapter = `<tr>
+                                <form method="post" id="newFrom` + addNumber + `"></form>
+                                    <td><i class="fas fa-bars"></i></td>
+                                    <td>
+                                        <p>單元：<input type="number" name="chapterno" value="" readonly form="newFrom` +
+                addNumber + `"></p>
+                                        <p>範圍：<input type="number" name="testscope" value="" form="newFrom` +
+                addNumber +
+                `"></p>
+                                    </td>
+                                    <td>
+                                        <p>課程名稱：<input type="text" name="chaptername" value="" size="15" form="newFrom` +
+                addNumber + `"></p>
+                                    </td>
+                                    <td>
+                                        <p><input type="file" name="video" form="newFrom` + addNumber + `"></p>
+                                        <p>單元長度：<input type="number" name="chapterlen" value="" form="newFrom` +
+                addNumber + `"> 秒</p>
+                                    </td>
+                                    <input type="hidden" name="action" value="insert" form="newFrom` + addNumber + `">
+                                </tr>`;
+
+            // 新增可以上傳課程的欄位
+            $("#videolist").append(newChapter);
+            replaceTheChapterNumber();
+
+            // 重新註冊 sortable 事件
+            $('.table-sortable tbody').sortable({
+                handle: 'i'
+            }).bind('sortupdate', replaceTheChapterNumber);
+
+            addNumber++;
+        });
+
+
+
+        // sortable 排序後，更新其單元編號
+        function replaceTheChapterNumber() {
+            for (let i = 0; i < $("#videolist tr").length; i++) {
+                $("#videolist tr:nth-child(" + (i + 1) + ") input[name='chapterno']").val(i + 1);
+            }
+            // // 純 javascript 寫法如下 (須在修改)
+            // let chapternos = document.querySelectorAll("#videolist .chapterno");
+            // for (let i = 0; i < chapternos.length; i++) {
+            //     chapternos[i].innerText = "單元" + (i + 1);
+            // }
+        }
+
+        //印出測試
+        getForms();
+
+
+
+
+        let formDatas = [];
+
+        function getForms() {
+            for (let i = 0; i < $("#videolist form").length; i++) {
+                let formData = new FormData($("#videolist form")[i]);
+                // console.log($("#videolist form")[i]);
+                // console.log(formData);
+                // formData.append("videono", "**要取自己的PK編號")
+                formData.append("courseno", "COUR0001")
+                // formData.append("chapterno", 11);
+                // formData.append("action", "doSomeThing OKkkkkkkkkkk");
+                // console.log(formData.forEach());
+                // for (let key of formData.keys()) {
+                //     console.log(key + " : " + formData.get(key));
+                // }
+                formDatas[i] = formData;
+                // console.log("==========")
+                // console.log(typeof (formDatas[i]));
+            }
+        }
+
+
+        $("#test").click(function () {
+        	getForms();
+        	 
+            for (let i = 0; i < formDatas.length; i++) {
+                formData = formDatas[i];
+                ajax_updateVideo(formData);
+            }
+            
+            // window.location.reload();
+            
+        },loadOrignalChapters());
+
+
+
+        // 拿宜靜的來改
+        function ajax_updateVideo(formData) {
+            // getForms();
+            $.ajax({ // 存入資料庫階段
+                url: "/EA103G5_1005_Re/courseVideosServlet",
+                type: "POST",
+                data: formData,
+                // 告訴jQuery不要去處理發送的資料
+                processData: false,
+                // 告訴jQuery不要去設定Content-Type請求頭
+                contentType: false,
+
+                success: function (data) { // 以上成功才執行
+                    console.log("*回傳內容： " + data);
+                    // if (data === 'false') {
+                    //   $('.wrap-validate-login').addClass('validate-input alert-validate-login');
+                    //console.log("data gg")
+                    //}
+                },
+                error: function () {
+                    console.log("真的不棒")
+                }
+            })
+        }
+    </script>
+
+
+<script>
+    // var myVideos = [];
+		var files = null;
+		window.URL = window.URL || window.webkitURL;
+        // document.getElementById('fileUp').onchange = setFileInfo;
+        
+        $("input[type=file]").click(function(){console.log("XX")});
+
+		function setFileInfo() {
+
+            console.log("印了");
+			files = this.files;
+			console.log(files[0].duration);
+			//myVideos.push(files[0]);
+			var video = document.createElement('video');
+			video.preload = 'metadata';
+
+			video.onloadedmetadata = function () {
+				window.URL.revokeObjectURL(video.src);
+				var duration = video.duration;
+				// 				myVideos[myVideos.length - 1].duration = duration;
+				files[0].duration = duration;
+				updateInfos();
+			}
+
+			video.src = URL.createObjectURL(files[0]);;
+
+		}
+
+		function updateInfos() {
+			var infos = document.getElementById('infos');
+			// infos.textContent = "";
+			// for (var i = 0; i < myVideos.length; i++) {
+			// infos.textContent += myVideos[i].name + " duration: " + myVideos[i].duration + '\n';
+			console.log(parseInt(files[0].duration));
+			$("input[name=chapterlen]").val(parseInt(files[0].duration));
+		}
+</script>
+
+
+</body>
+
+</html>
