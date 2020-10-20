@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 public interface CourseDAO_interface {
-	public void insert(CourseVO courseVO);
+	public String insert(CourseVO courseVO);
 
 	public void update(CourseVO courseVO);
 

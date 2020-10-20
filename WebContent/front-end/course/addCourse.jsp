@@ -49,7 +49,7 @@ th, td {
 		</ul>
 	</c:if>
 
-	<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/course/course.do" name="form1">
+	<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/course/course.do" name="form1" enctype="multipart/form-data">
 		<table>
 			<jsp:useBean id="courseSvc" scope="page" class="com.course.model.CourseService"/>
 			<tr>
@@ -85,9 +85,9 @@ th, td {
 			<tr>
 				<td>商品狀態:</td>
 				<td>
-					<input type="RADIO" name="csstatus" size="45" value="審核中" checked>審核中
-					<input type="RADIO" name="csstatus" size="45" value="上架">上架
-					<input type="RADIO" name="csstatus" size="45" value="下架">下架
+					<input type="RADIO" name="roomdelete" size="45" value="審核中" checked>審核中
+					<input type="RADIO" name="roomdelete" size="45" value="上架">上架
+					<input type="RADIO" name="roomdelete" size="45" value="下架">下架
 				</td>
 			</tr>
 			<tr>
@@ -100,10 +100,57 @@ th, td {
 				<td><input type="NUMBER" name="csscoretimes" size="45"
 					value="<%=(courseVO == null) ? 444 : courseVO.getCsscoretimes()%>" /></td>
 			</tr>
+			<tr>
+				<td>課程圖片:</td>
+				<td><input type="file" name="courseimg" size="45" id="fileUp"  /></td>
+<%-- 				<!-- <td><input type="FILE" name="video" size="45" value="<%=(courseVO == null) ? "Not Thing" : courseVO.getCourseimg%>" /></td> --> --%>
+<!-- 							如何保存forward回來的上傳選項呢？ -->
+			</tr>
 		</table>
 		<br>
 		<input type="hidden" name="action" value="insert">
 		<input type="submit" value="送出新增">
 	</FORM>
+	
+	<script type="text/javascript">
+	
+		var fileUp = document.getElementById("fileUp");
+		
+		fileUp.addEventListener('change', function() {
+			var files = fileUp.files;
+			if (files) {
+            for (var i = 0; i < files.length; i++) {
+                var file = files[i];
+                
+                if (file.type.indexOf('image') > -1) {
+                    var reader = new FileReader();
+                    reader.addEventListener('load', function() {
+
+                        var div = document.createElement('div');
+
+                        var img = document.createElement('img');
+                        
+                        img.setAttribute('src', event.target.result);
+
+                        div.append(img);
+                        
+                        if(fileUp.nextElementSibling){ //只給上傳一張
+                        	fileUp.nextElementSibling.remove();
+                        }
+                        
+                        fileUp.after(div);
+                    });
+                    reader.readAsDataURL(file);
+                } else {
+                    alert("請上圖檔");
+                }
+            }
+            
+//             fileUp.setAttribute('type', 'text');
+//             fileUp.setAttribute('type', 'file');
+        }
+    });
+	</script>
+	
 </body>
 </html>

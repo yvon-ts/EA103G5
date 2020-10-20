@@ -265,7 +265,7 @@
 		function ajax_updateVideo(formData) {
 			// getFormDatas();
 			$.ajax({ // 存入資料庫階段
-				url: "/EA103G5_1005_Re/courseVideosServlet",
+				url: "<%=request.getContextPath()%>/courseVideosServlet",
 				type: "POST",
 				data: formData,
 				// 告訴jQuery不要去處理發送的資料

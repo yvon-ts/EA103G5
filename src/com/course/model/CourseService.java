@@ -11,7 +11,7 @@ public class CourseService {
 			dao = new CourseDAO();
 		}
 		
-		public CourseVO addCourse(String cstypeno, String tchrno, String coursename, String courseinfo, Integer courseprice, Integer ttltime, String csstatus, Integer csscore, Integer csscoretimes,byte[] courseimg) {
+		public String addCourse(String cstypeno, String tchrno, String coursename, String courseinfo, Integer courseprice, Integer ttltime, String csstatus, Integer csscore, Integer csscoretimes,byte[] courseimg) {
 			
 			CourseVO courseVO = new CourseVO();
 			
@@ -25,9 +25,9 @@ public class CourseService {
 			courseVO.setCsscore(csscore);
 			courseVO.setCsscoretimes(csscoretimes);
 			courseVO.setCourseimg(courseimg);
-			dao.insert(courseVO);
+			String courseno = dao.insert(courseVO);
 			
-			return courseVO;
+			return courseno;
 		}
 		
 		public CourseVO updateCourse(String courseno, String cstypeno, String tchrno, String coursename, String courseinfo, Integer courseprice, Integer ttltime, String csstatus, Integer csscore, Integer csscoretimes,byte[] courseimg) {

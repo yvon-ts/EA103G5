@@ -17,12 +17,12 @@
 	<c:if test="${not empty errorMsgs}">
 		<h3 style="color:red">請修正以下錯誤：</h3>
 		<ul>
-<%-- 			<c:forEach var="message" items="${errorMsgs}"> --%>
-<%-- 				<li style="color:red">${message}</li> --%>
-<%-- 			</c:forEach> --%>
+			<c:forEach var="message" items="${errorMsgs}">
+				<li style="color:red">${message}</li>
+			</c:forEach>
 		</ul>
 	</c:if>
-
+	
 	<ul>
 		<li><a href="<%=request.getContextPath()%>/front-end/course/listAllCourse.jsp"> List </a> all Courses.</li>
 
@@ -38,7 +38,7 @@
 		<li>
 			<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/course/course.do">
 				<span> 請選擇課程編號：</span> <select name="courseno">
-					<c:forEach var="courseVO" items="${courseSvc.all}">
+					<c:forEach var="courseVO" items="${courseSvc.allForEmployee}">
 						<option value="${courseVO.courseno}">
 							${courseVO.courseno}
 					</c:forEach>
@@ -50,7 +50,7 @@
 		<li>
 			<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/course/course.do">
 				<span> 請選擇課程名稱：</span> <select name="courseno">
-					<c:forEach var="courseVO" items="${courseSvc.all}">
+					<c:forEach var="courseVO" items="${courseSvc.allForEmployee}">
 						<option value="${courseVO.courseno}">
 							${courseVO.coursename}
 					</c:forEach>
@@ -69,7 +69,7 @@
 	<li>
 			<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/course/course.do">
 				<span> 編輯課程編號：</span> <select name="courseno">
-					<c:forEach var="courseVO" items="${courseSvc.all}">
+					<c:forEach var="courseVO" items="${courseSvc.allForEmployee}">
 						<option value="${courseVO.courseno}">
 							${courseVO.courseno}
 					</c:forEach>
