@@ -300,8 +300,7 @@ height:36px;
 								href='<%=request.getContextPath()%>/front-end/members/signIn.jsp'>我要登入&nbsp;<i
 									class='lni-bulb'></i></a></li>
 						</c:if>
-						<input type="hidden" id="inform2" value="${requestScope.inform2}">
-
+						
 
 
 
@@ -724,6 +723,8 @@ height:36px;
 		</div>
 		<div class="col-md-12" style="padding-bottom: 100px"></div>
 	</footer>
+	<input type="hidden" id="inform2" value="${requestScope.inform2}">
+	
 	<!-- Footer Section End -->
 	<!-- Go to Top Link -->
 	<a href="#" class="back-to-top"> <i class="lni-comments"></i>

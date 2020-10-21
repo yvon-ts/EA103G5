@@ -6,6 +6,9 @@
 
 <%
 MembersVO membersVO = (MembersVO) session.getAttribute("membersVO");
+String inform2 = (String)request.getAttribute("inform2"); 
+
+
 %>
 
 <jsp:useBean id="teacherSvc" scope="page" class="com.teacher.model.TeacherService" />
@@ -22,8 +25,11 @@ MembersVO membersVO = (MembersVO) session.getAttribute("membersVO");
     <!-- Font Icon -->
     <link rel="stylesheet" href="fonts/material-icon/css/material-design-iconic-font.min.css">
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.3/sweetalert2.css" />
-    
+    <link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.3/sweetalert2.css" />
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.3/sweetalert2.js"
+	type="text/javascript"></script>
 
     <!-- Main css -->
   <link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/members/signIn&updateMembers_css/style.css">
@@ -148,13 +154,13 @@ background: url("<%=request.getContextPath()%>/front-end/members/assets/img/bgPi
 						<li class="nav-item"><a class="nav-link" href="#">
 								名人講座&nbsp;<i class="lni-bulb"></i>
 						</a></li>
-						<c:if test="${teacherSvc.getStatus(membersVO.memno).tchrstatus eq '已通過'}">
+						<c:if test="${teacherSvc.getStatus(sessionScope.membersVO.memno).tchrstatus eq '已通過'}">
 						<li class="nav-item"><a class="nav-link" href="#">
 								我要開課&nbsp;<i class="lni-bulb"></i>
 						</a></li>
 						</c:if>
 						
-						<c:if test="${not empty membersVO}">
+						<c:if test="${not empty sessionScope.membersVO}">
 							
 							
 							<li class="nav-item">
@@ -162,17 +168,17 @@ background: url("<%=request.getContextPath()%>/front-end/members/assets/img/bgPi
 									<button class="btn btn-secondary dropdown-toggle" type="button"
 										id="dropdownMenuButton" data-toggle="dropdown"
 										aria-haspopup="true" aria-expanded="false">
-										${membersVO.memname}</button>
+										${sessionScope.membersVO.memname}</button>
 									<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
 										<a class="dropdown-item"
 											href="<%=request.getContextPath()%>/front-end/members/updateMembersV2.jsp">個人檔案</a>
 											
 										
-										<c:if test="${teacherSvc.getStatus(membersVO.memno).tchrstatus eq '待審核'}">
+										<c:if test="${teacherSvc.getStatus(sessionScope.membersVO.memno).tchrstatus eq '待審核'}">
 										<a class="dropdown-item" onclick="status()" >老師檔案</a> 
 											
 										</c:if>
-										<c:if test="${teacherSvc.getStatus(membersVO.memno).tchrstatus eq '已通過'}">
+										<c:if test="${teacherSvc.getStatus(sessionScope.membersVO.memno).tchrstatus eq '已通過'}">
 										<a class="dropdown-item"
 											href="<%=request.getContextPath()%>/front-end/teacher/teacherDisplay.jsp">老師檔案</a> 
 											
@@ -182,7 +188,7 @@ background: url("<%=request.getContextPath()%>/front-end/members/assets/img/bgPi
 											href="<%=request.getContextPath()%>/front-end/teacher/teacherUpdate.jsp">老師檔案</a>
 											
 										</c:if>
-										<c:if test="${not empty membersVO}">
+										<c:if test="${not empty sessionScope.membersVO}">
 										<a class="dropdown-item"
 											href='<%=request.getContextPath()%>/members/members.do?action=signout'>會員登出</a> 
 											
@@ -199,25 +205,25 @@ background: url("<%=request.getContextPath()%>/front-end/members/assets/img/bgPi
 							</li>
 							
 							</c:if>
-							<c:if test="${not empty membersVO.memno}">
-							<c:if test="${empty teacherSvc.getStatus(membersVO.memno)}">
+							<c:if test="${not empty sessionScope.membersVO.memno}">
+							<c:if test="${empty teacherSvc.getStatus(sessionScope.membersVO.memno)}">
 							<img id="nav_icon" src='<%=request.getContextPath()%>/front-end/members/assets/img/students.svg'>
 							</c:if>
-							<c:if test="${teacherSvc.getStatus(membersVO.memno).tchrstatus eq '待審核'}">
+							<c:if test="${teacherSvc.getStatus(sessionScope.membersVO.memno).tchrstatus eq '待審核'}">
 							<img id="nav_icon" src='<%=request.getContextPath()%>/front-end/members/assets/img/students.svg'>
 							</c:if>
 							
-							<c:if test="${teacherSvc.getStatus(membersVO.memno).tchrstatus eq '已通過'}">
+							<c:if test="${teacherSvc.getStatus(sessionScope.membersVO.memno).tchrstatus eq '已通過'}">
 							<img id="nav_icon" src='<%=request.getContextPath()%>/front-end/members/assets/img/teacher.svg'>
 							</c:if>
-							<c:if test="${teacherSvc.getStatus(membersVO.memno).tchrstatus eq '未通過'}">
+							<c:if test="${teacherSvc.getStatus(sessionScope.membersVO.memno).tchrstatus eq '未通過'}">
 							<img id="nav_icon" src='<%=request.getContextPath()%>/front-end/members/assets/img/students.svg'>
 							
 							</c:if>
 							</c:if>
 							
 
-						<c:if test="${empty membersVO}">
+						<c:if test="${empty sessionScope.membersVO}">
 							<li class="nav-item"><a class='nav-link'
 								href='<%=request.getContextPath()%>/front-end/members/signIn.jsp'>我要登入&nbsp;<i
 									class='lni-bulb'></i></a></li>
@@ -235,6 +241,12 @@ background: url("<%=request.getContextPath()%>/front-end/members/assets/img/bgPi
 
         <!-- Sign up form -->
         <section class="signup">
+        <c:if test="${not empty errorMsgs}">
+		<c:forEach var="message" items="${errorMsgs}">
+			<input type="hidden" id="message" value="${message}">
+		</c:forEach>
+	
+        </c:if>
         <form method='POST' class='register-form' ACTION='<%=request.getContextPath()%>/members/members.do' id='register-form' enctype='multipart/form-data'>
                       
             <div class="container" id="bg">
@@ -357,6 +369,8 @@ background: url("<%=request.getContextPath()%>/front-end/members/assets/img/bgPi
             </div>
         </section>
     </footer>
+    <input type="hidden" id="inform2" value="${requestScope.inform2}">
+    
         </section>
         
 </div>
@@ -365,6 +379,18 @@ background: url("<%=request.getContextPath()%>/front-end/members/assets/img/bgPi
 
     <!-- JS -->
      <script type="text/javascript">
+     var inform2 = document.getElementById('inform2').value;
+ 	if(inform2 ==='200'){
+ 		swal('已成功更新', '您的個人檔案!', 'success');
+ 	}
+     
+     
+     
+     
+     var message = document.getElementById('message').value;
+     if(message.length !== 0){
+    	 swal('注意', message, 'warning');
+     }
     
 
         function readURL(input){
