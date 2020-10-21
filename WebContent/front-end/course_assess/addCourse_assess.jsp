@@ -149,12 +149,19 @@ height:100px;
 }
 
 
+ 
+ 
+ 
+ 
 
 
  div#bg{
  width:850px;
- height:630px; 
+ height:530px; 
  padding:0;
+ -webkit-box-shadow: 0 0 15px #8E8E8E;
+	-moz-box-shadow: 0 0 15px #8E8E8E;
+	box-shadow: 0 0 15px #5B5B5B;
  }
  div#content{
  width:100%;
@@ -170,7 +177,7 @@ height:100px;
  width:400px;
  height:300px;
  position:absolute;
- margin:150px 0 0 225px;
+ margin:50px 0 0 225px;
  
  
  }
@@ -182,7 +189,7 @@ height:100px;
  letter-spacing:1px;
  }
  input#register{
- margin:420px 0 0 360px;
+ margin:320px 0 0 360px;
  position:absolute;
  z-index:2;
  
@@ -191,9 +198,14 @@ height:100px;
  width:100%;
  text-align:center;
  color:#FF5151;
- 
- 
  }
+img.icon{
+width:120px;
+height:120px;
+border-radius:10px;
+margin-left:40px;
+margin-top:40px;
+}
  
 div.main{
 background: url("<%=request.getContextPath()%>/front-end/members/assets/img/bgPic.png");
@@ -214,6 +226,9 @@ background: url("<%=request.getContextPath()%>/front-end/members/assets/img/bgPi
 <form class="rating-form" action="<%=request.getContextPath()%>/course_assess/course_assess.do" method="post" name="">
   
   <div class="content">
+  
+  
+  
  <div id="bg" class="container">
   <h1>填寫課程評價 & 上課心得回饋</h1><br>
   <p>歡迎你給予鼓勵、提出建議，你的心得與想法，都將是尚未加入課程同學們的最佳參考！</p>

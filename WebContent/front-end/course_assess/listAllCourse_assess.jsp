@@ -2,7 +2,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.members.model.*"%>
 
-<%String inform2 = (String)request.getAttribute("inform2"); %>
 
 
 <%@ include file="/index/front-index/headtest.jsp" %>
@@ -117,52 +116,9 @@ background: url("<%=request.getContextPath()%>/front-end/members/assets/img/bgPi
 
 
 <body>
-<!-- <nav class="navbar navbar-expand-md bg-inverse fixed-top scrolling-navbar"> -->
-<!--             <div class="container"> -->
-<!--                 左上角LOGO Start -->
-<%--                 <a href="<%=request.getContextPath()%>/front-end/members/indexV1.jsp" class="navbar-brand"><img src="<%=request.getContextPath()%>/front-end/members/nav_css_ForSignIn&addMembers/img/logo.svg" alt=""> --%>
-<!--                     <div id="logo">Xducation</div> -->
-<!--                 </a> -->
-<!--                 左上角LOGO End -->
-<!--                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation"> -->
-<!--                     <i class="lni-menu"></i> -->
-<!--                 </button> -->
-<!--                 <div class="collapse navbar-collapse" id="navbarCollapse"> -->
-<!--                     <ul class="navbar-nav mr-auto w-100 justify-content-end clearfix"> -->
-<!--                         <li class="nav-item"> -->
-<!--                             <a class="nav-link" href="#"> -->
-<!--                                 進入搜尋&nbsp;<i class="lni-search"></i> -->
-<!--                             </a> -->
-<!--                         </li> -->
-<!--                         <li class="nav-item"> -->
-<!--                             <a class="nav-link" href="#"> -->
-<!--                                 精選課程&nbsp;<i class="lni-leaf"></i> -->
-<!--                             </a> -->
-<!--                         </li> -->
-<!--                         <li class="nav-item"> -->
-<!--                             <a class="nav-link" href="#"> -->
-<!--                                 名人講座&nbsp;<i class="lni-bulb"></i> -->
-<!--                             </a> -->
-<!--                         </li> -->
-                       
-<!--                        <li class="nav-item"> -->
-<%--                             <a class="nav-link" href="<%=request.getContextPath()%>/front-end/members/signIn.jsp" style="color: #0099CC"> --%>
-<!--                                 我要登入&nbsp;<i class="lni-home"></i> -->
-<!--                             </a> -->
-<!--                         </li> -->
-<!--                         已登入 End -->
-<!--                     </ul> -->
-<!--                 </div> -->
-<!--             </div> -->
-<!--         </nav> -->
+
       <div class="main">
 <section class="sign-in">
- <c:if test="${not empty errorMsgs}">
-		<c:forEach var="message" items="${errorMsgs}">
-			<input type="hidden" id="message" value="${message}">
-		</c:forEach>
-	
-        </c:if>
             <div id="bg" class="container">
                 <div class="signin-content">
                     <div class="signin-image">
@@ -171,7 +127,7 @@ background: url("<%=request.getContextPath()%>/front-end/members/assets/img/bgPi
                     </div>
 
                     <div class="signin-form">
-                        <h2 class="form-title">Sign in</h2>
+                        <h2 class="form-title">Sign in${inform2}</h2>
                         <form action="<%=request.getContextPath()%>/members/members.do" method="POST" class="register-form" id="login-form">
                             
                             <div class="form-group">
@@ -193,7 +149,12 @@ background: url("<%=request.getContextPath()%>/front-end/members/assets/img/bgPi
                          <input type="hidden" id="inform2" value="${inform2}">
                         <div class="social-login">
                             <span class="social-label">
-                            
+                            <c:if test="${not empty errorMsgs}">
+		<c:forEach var="message" items="${errorMsgs}">
+			<li style="color:red">${message}</li>
+		</c:forEach>
+	
+</c:if>
                             </span>
                             <ul class="socials">
                             </ul>
@@ -227,16 +188,9 @@ background: url("<%=request.getContextPath()%>/front-end/members/assets/img/bgPi
 
 <script>
 var inform2 = document.getElementById('inform2').value;
-var message = document.getElementById('message').value;
 if(inform2 ==='200'){
 	swal('恭喜啦', '您已經成為我們的會員囉<br>趕快來登入並且開始瀏覽課程吧', 'success');
-}else if(message.length !== 0){
-	 swal('注意', message, 'warning');
 }
-
-
-
-
 
 
 </script>
