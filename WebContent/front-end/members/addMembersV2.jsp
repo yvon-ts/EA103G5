@@ -185,7 +185,7 @@ background: url("<%=request.getContextPath()%>/front-end/members/assets/img/bgPi
                         <a href="indexV1.jsp"></a>
                         <c:if test="${not empty errorMsgs}">
 		<c:forEach var="message" items="${errorMsgs}">
-			<li style="color:red">${message}</li>
+			<input type="hidden" id="message" value="${message}">
 		</c:forEach>
 	
 </c:if>
@@ -232,7 +232,7 @@ background: url("<%=request.getContextPath()%>/front-end/members/assets/img/bgPi
                             <div class="form-group">
                                 <img class="icon" src="<%=request.getContextPath()%>/front-end/members/signIn&updateMembers_css/images/birthday-present.svg" alt="">
                                 <label for="name"></label>
-                                <input type="text" name="membday" value="${requestScope.membersVO.membday}" class="input" id="f_date1" value=" " placeholder="Your Birthday" />
+                                <input type="text" name="membday" value="${requestScope.membersVO.membday}" class="input" id="f_date1" placeholder="Your Birthday" />
                             </div>
                             <div class="form-group">
                                <img class="icon" src="<%=request.getContextPath()%>/front-end/members/signIn&updateMembers_css/images/pictures.svg" alt="">
@@ -279,9 +279,9 @@ background: url("<%=request.getContextPath()%>/front-end/members/assets/img/bgPi
 	    membday = new java.sql.Date(System.currentTimeMillis());
    }
 %>
-<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/front-end/datetimepicker/jquery.datetimepicker.css" />
-<script src="<%=request.getContextPath()%>/front-end/datetimepicker/jquery.js"></script>
-<script src="<%=request.getContextPath()%>/front-end/datetimepicker/jquery.datetimepicker.full.js"></script>
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/front-end/members/datetimepicker/jquery.datetimepicker.css" />
+<script src="<%=request.getContextPath()%>/front-end/members/datetimepicker/jquery.js"></script>
+<script src="<%=request.getContextPath()%>/front-end/members/datetimepicker/jquery.datetimepicker.full.js"></script>
 
 <style>
   .xdsoft_datetimepicker .xdsoft_datepicker {
@@ -294,6 +294,10 @@ background: url("<%=request.getContextPath()%>/front-end/members/assets/img/bgPi
 </style>
 
 <script type="text/javascript">
+var message = document.getElementById('message').value;
+if(message.length !== 0){
+	 swal('注意', message, 'warning');
+}
 /* $(function(){
     $('#myform').validate({
     /* 常用檢測屬性
