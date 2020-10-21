@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="java.util.* , test.Course" %>
+<%@ page import="java.util.* , com.course.model.*" %>
 <html>
 <head>
 <meta charset="UTF-8" content="text/html; charset=UTF-8">
@@ -8,7 +8,7 @@
 </head>
 <body>
 
-<%Vector<Course> buylist = (Vector<Course>) session.getAttribute("shoppingcart");%>
+<%Vector<CourseVO> buylist = (Vector<CourseVO>) session.getAttribute("shoppingcart");%>
 <%if (buylist != null && (buylist.size() > 0)) {%>
 
 <font size="+3">目前您購物車的內容如下：</font>
@@ -20,11 +20,11 @@
 	
 	<%
 	 for (int index = 0; index < buylist.size(); index++) {
-		Course order = buylist.get(index);
+		 CourseVO order = buylist.get(index);
 	%>
 	<tr>
 		<td width="200"><div align="center"><b><%=order.getCourseno()%></b></div></td>
-		<td width="100"><div align="center"><b><%=order.getSellprice()%></b></div></td>
+		<td width="100"><div align="center"><b><%=order.getCourseprice()%></b></div></td>
 		<td width="100"><div align="center">
           <form name="deleteForm" action="<%=request.getContextPath()%>/Shop/Shopping_Cart.do" method="POST">
               <input type="hidden" name="action" value="DELETE">

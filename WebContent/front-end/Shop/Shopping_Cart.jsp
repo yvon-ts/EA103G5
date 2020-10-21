@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*"%>
-<%@ page import="test.Course"%>
+<%@ page import="com.course.model.*"%>
 
 <html>
 <head>
@@ -12,7 +12,7 @@
 <body>
 
 	<%
-		Vector<Course> buylist = (Vector<Course>) session.getAttribute("shoppingcart");
+		Vector<CourseVO> buylist = (Vector<CourseVO>) session.getAttribute("shoppingcart");
 	%>
 
 	<font size="+3">目前您購物車的內容如下：</font>
@@ -24,7 +24,7 @@
 
 		<%
 			for (int index = 0; index < buylist.size(); index++) {
-				Course order = buylist.get(index);
+				CourseVO order = buylist.get(index);
 		%>
 		<c:if test="${empty shoppingcart}">
 			<h3>此購物車為空</h3>

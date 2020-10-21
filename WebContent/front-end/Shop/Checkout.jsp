@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ page import="java.util.*"%>
-<%@ page import="test.Course"%>
+<%@ page import="com.course.model.*"%>
 
 <html>
 <head>
@@ -26,7 +26,7 @@
 		crossorigin="anonymous"></script>
 
 	<%
-		Vector<Course> buylist = (Vector<Course>) session.getAttribute("shoppingcart");
+		Vector<CourseVO> buylist = (Vector<CourseVO>) session.getAttribute("shoppingcart");
 		String amount = (String) request.getAttribute("amount");
 		
 // 		session.setAttribute("memNo", "MEM0003");
@@ -42,9 +42,9 @@
 
 		<%
 			for (int i = 0; i < buylist.size(); i++) {
-				Course order = buylist.get(i);
+				CourseVO order = buylist.get(i);
 				String courseno = order.getCourseno();
-				int sellprice = order.getSellprice();
+				int sellprice = order.getCourseprice();
 		%>
 
 		<tr>
