@@ -114,7 +114,8 @@ public class MembersServlet extends HttpServlet {
 	
 
 	private void insert(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-		
+		List<String> errorMsgs = new LinkedList<String>();
+		req.setAttribute("errorMsgs", errorMsgs);
 		smsSending sms = new smsSending();
 		String vercode = getAutoCode();
 		StringBuilder sb = new StringBuilder();
@@ -126,10 +127,10 @@ public class MembersServlet extends HttpServlet {
 		ServletContext ct = req.getServletContext();
 		String path = ct.getRealPath("/front-end/members/addMembers_css/images/defaultMprofile.jpg");
 		
-		List<String> errorMsgs = new LinkedList<String>();
+		
 		// Store this set in the request scope, in case we need to
 		// send the ErrorPage view.
-		req.setAttribute("errorMsgs", errorMsgs);
+		
 		try {
 
 			String memacc = req.getParameter("memacc");
@@ -226,7 +227,7 @@ public class MembersServlet extends HttpServlet {
 			sb.append("歡迎註冊Xducation線上學習平台,");
 			sb.append("這是您的驗證碼:");
 			sb.append(vercode);
-//			sms.Process(sb, mphone);
+			sms.Process(sb, mphone);
 			session.setAttribute("memVO", memVO);
 			session.setAttribute("vercode", vercode);
 			session.setAttribute("count", count);
@@ -246,6 +247,8 @@ public class MembersServlet extends HttpServlet {
 	
 	private void verify(HttpServletRequest req, HttpServletResponse res)throws ServletException, IOException {
 		HttpSession session = req.getSession();
+		String inform2 = "200";
+		req.setAttribute("inform2", inform2);
 		session.removeAttribute("inform");
 		List<String> errorMsgs = new LinkedList<String>();
 		req.setAttribute("errorMsgs", errorMsgs);
@@ -262,7 +265,7 @@ public class MembersServlet extends HttpServlet {
 		System.out.println(vercode);
 		
 		
-		String clientVerCode = req.getParameter("clientVerCode");
+		String clientVerCode = req.getParameter("clientVerCode").toUpperCase();
 		if(clientVerCode == null || clientVerCode.trim().length() == 0) {
 			errorMsgs.add("不可為空白");
 			System.out.println("輸入空白");
@@ -271,11 +274,10 @@ public class MembersServlet extends HttpServlet {
 			session.removeAttribute("memVO");
 			session.removeAttribute("vercode");
 			session.removeAttribute("count");
-			String url = req.getContextPath()+"/front-end/members/indexV1.jsp";
-			res.sendRedirect(url);
+			String url = "/front-end/members/indexV1.jsp";
+			RequestDispatcher successView = req.getRequestDispatcher(url); 
+			successView.forward(req, res);
 			return;
-			
-			
 		}else if(!vercode.equals(clientVerCode.trim())) {
 			if(count.equals(1)) {
 				errorMsgs.add("請小心輸入啊,再一次就得重新註冊了><");
@@ -299,14 +301,6 @@ public class MembersServlet extends HttpServlet {
 		}
 		
 		
-		
-		
-		
-		
-		
-		
-		
-		
 		MembersService membersSvc = new MembersService();
 		String memacc = memVO.getMemacc();
 		String mempwd = memVO.getMempwd();
@@ -317,11 +311,15 @@ public class MembersServlet extends HttpServlet {
 		byte[] mprofile = memVO.getMprofile();
 		
 		membersSvc.addMembers(memacc, mempwd, memname, nkname, membday, memail, mphone, mprofile);
-		String url = "/front-end/members/signIn.jsp";
 		session.removeAttribute("memVO");
 		session.removeAttribute("vercode");
-		RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
+		
+		
+		RequestDispatcher successView = req.getRequestDispatcher("/front-end/members/signIn.jsp");
 		successView.forward(req, res);
+		
+		
+		
 
 		
 	}
@@ -493,39 +491,7 @@ public class MembersServlet extends HttpServlet {
 		successView.forward(req, res);
     }
 
-    private void photo(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException{
-    	List<String> errorMsgs = new LinkedList<String>();
-		req.setAttribute("errorMsgs", errorMsgs);
-		try {
-			HttpSession session = req.getSession();
-			MembersVO membersVO = (MembersVO) session.getAttribute("membersVO");
-			String memno = membersVO.getMemno();
-			
-    	byte[] mprofile = null;
-		Collection<Part> parts = req.getParts();
-		for (Part part : parts) {
-			if (getFileNameFromPart(part) != null && part.getContentType() != null) {
-				InputStream in = part.getInputStream();
-				mprofile = new byte[in.available()];
-				in.read(mprofile);
-				in.close();
-			}
-		}
-    	
-    MembersService membersSvc = new MembersService();
-	membersVO = membersSvc.photo(mprofile, memno);
-//	String url = "/front-end/members/updateMembers.jsp";
-//	RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
-//	successView.forward(req, res);
-
-} catch (Exception e) {
-	errorMsgs.add(e.getMessage());
-	RequestDispatcher failureView = req.getRequestDispatcher("updateMembers.jsp");
-	failureView.forward(req, res);
-}
-    }
-
-
+    
 
 
 }
