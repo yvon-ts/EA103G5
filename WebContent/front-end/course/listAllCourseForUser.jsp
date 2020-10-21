@@ -31,7 +31,8 @@
 <title>所有課程列表 - listAllCourse.jsp</title>
 <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.rateit/1.1.3/jquery.rateit.min.js"></script> -->
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-
+<style>
+</style>
 
 </head>
 
@@ -95,9 +96,11 @@
                       
 	<section id="services" class="section-padding">
         <div class="container">
-            <div class="row seacharea">
+            
                 <!-- Services item1 -->
-                <c:forEach var="courseVO" items="${Courselist}">
+                
+                		<div class="row seacharea">
+                		<c:forEach var="courseVO" items="${Courselist}">
                 <div class="col-md-6 col-lg-3 col-xs-12">
                     <div class="services-item wow fadeInRight" data-wow-delay="0.3s">
                         <div class="icon">
@@ -121,18 +124,22 @@
                         	
 <!--                         	套件ajax套有問題 -->
 <%--                         	&nbsp;&nbsp;&nbsp;<div class="rateit" data-rateit-value="${courseVO.csscore / courseVO.csscoretimes }" data-rateit-ispreset="true" data-rateit-readonly="true"></div>  --%>
-                        	&nbsp;&nbsp;&nbsp;${courseVO.csscoretimes}則評價
+                        	<br>&nbsp;&nbsp;&nbsp;${courseVO.csscoretimes}則評價
                             <h3><a href="#">${courseVO.coursename}</a></h3>
                             <p>課程共${courseVO.ttltime}分鐘</p>
 <!--                             <p>同學累計9487人</p> -->
-                            <h6>NT$${courseVO.courseprice}</h6>
-                        
+							<label class="shoppingcart"><i class="fa fa-shopping-cart" aria-hidden="true"></i>&nbsp;加入購物車</label>
+							<label class="bookmark"><i class="fa fa-heart-o" aria-hidden="true" style="color:red"></i>&nbsp;加入追蹤</label>
+                           	&nbsp;&nbsp;<h5>NT$${courseVO.courseprice}</h5>
+                        	
                         </div>
                     </div>
                 </div>
                 
                 </c:forEach>
-             </div>
+                 </div>
+                
+            
           </div>
           
        </section>
@@ -206,6 +213,13 @@
 <script>
 	$(document).ready(function(){
 		
+		$('.shoppingcart').click(function(){
+			alert(456);
+		});
+		$('.bookmark').click(function(){
+			alert(123);
+		});
+		
 		$('#turnin').click(function(){
 			$.ajax({
 				type:"post",
@@ -245,11 +259,13 @@
 							}
                        	 
                         }
-		                                str += `&nbsp;`+JSONarray[i].csscoretimes+`則評價
+		                                str += `<br>&nbsp;&nbsp;`+JSONarray[i].csscoretimes+`則評價
 		                            <h3><a href="#">`+JSONarray[i].coursename+`</a></h3>
 		                            <p>課程共`+JSONarray[i].ttltime+`分鐘</p>
 		<!--                             <p>同學累計9487人</p> -->
-									<h6>NT$`+JSONarray[i].courseprice+`</h6>
+									<label class="shoppingcart"><i class="fa fa-shopping-cart" aria-hidden="true"></i>&nbsp;加入購物車</label>
+									<label class="bookmark"><i class="fa fa-heart-o" aria-hidden="true" style="color:red"></i>&nbsp;加入追蹤</label>
+									<h5>NT$`+JSONarray[i].courseprice+`</h5>
 		                        </div>
 		                    </div>
 		                </div>`;

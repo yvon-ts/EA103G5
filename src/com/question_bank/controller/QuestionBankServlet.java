@@ -30,15 +30,15 @@ public class QuestionBankServlet extends HttpServlet {
 		String action = request.getParameter("action");
 
 
-		if ("inputQuestion".equals(action)) {// �憓���
+		if ("inputQuestion".equals(action)) {// 新增考題
 			inputQuestion(request, response);
 		}
 
-		if ("getOne_For_Update".equals(action)) { // ��閬���隞�
+		if ("getOne_For_Update".equals(action)) { // 取出要更改的物件
 			getOneForUpdate(request, response);
 
 		}
-		if ("updateQuestion".equals(action)) { // �����
+		if ("updateQuestion".equals(action)) { // 更新考題
 			updateQuestion(request, response);
 		}
 		System.out.println(action);
@@ -50,42 +50,42 @@ public class QuestionBankServlet extends HttpServlet {
 
 	
 	private void inputQuestion(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException { // �憓���
+			throws ServletException, IOException { // 新增考題
 		List<String> errorMsgs = new LinkedList<String>();
 		request.setAttribute("errorMsgs", errorMsgs);
 
 		QuestionBankService qse = new QuestionBankService();
 		QuestionBankVO QuestionBankvo = new QuestionBankVO();
 
-		String testtype = request.getParameter("testtype");// 憿��
+		String testtype = request.getParameter("testtype");// 題型
 
-		QuestionBankvo.setCourseno(request.getParameter("courseno"));// 隤脩�楊���
+		QuestionBankvo.setCourseno(request.getParameter("courseno"));// 課程編號
 
 		Integer typeno = null;
 		try {
 			typeno = Integer.parseInt(request.getParameter("typeno"));
 		} catch (Exception e) {
 			typeno = 0;
-			errorMsgs.add("隢�����");
+			errorMsgs.add("請選擇題型");
 		}
 
-		QuestionBankvo.setTypeno(typeno);// 憿�楊���
+		QuestionBankvo.setTypeno(typeno);// 題型編號
 
-		QuestionBankvo.setTestscope(request.getParameter("testscope"));// 蝭�楊���
+		QuestionBankvo.setTestscope(request.getParameter("testscope"));// 範圍編號
 
-		String qustmt = request.getParameter("qustmt");// 憿
+		String qustmt = request.getParameter("qustmt");// 題目
 
 		if (qustmt == null || qustmt.trim().length() == 0) {
-			errorMsgs.add("隢撓�憿");
+			errorMsgs.add("請輸入題目");
 			QuestionBankvo.setQustmt("");
 		} else {
 			QuestionBankvo.setQustmt(qustmt);
 		}
 
 		if ("text".equals(testtype)) {
-			String quans = request.getParameter("quans");// 蝑��
+			String quans = request.getParameter("quans");// 答案
 			if (quans == null || quans.trim().length() == 0) {
-				errorMsgs.add("隢撓�蝑��");
+				errorMsgs.add("請輸入答案");
 				QuestionBankvo.setQuans("");
 			} else {
 				QuestionBankvo.setQuans(quans);
@@ -97,37 +97,37 @@ public class QuestionBankServlet extends HttpServlet {
 				return;
 			}
 		} else if ("radio".equals(testtype) || "checkbox".equals(testtype)) {
-			String op1 = request.getParameter("op1");// ����
+			String op1 = request.getParameter("op1");// 選項一
 			if (op1 == null || op1.trim().length() == 0) {
-				errorMsgs.add("隢撓����");
+				errorMsgs.add("請輸入選項A");
 				QuestionBankvo.setOp1("");
 			} else {
 				QuestionBankvo.setOp1(op1);
 			}
-			String op2 = request.getParameter("op2");// �����
+			String op2 = request.getParameter("op2");// 選項二
 			if (op2 == null || op2.trim().length() == 0) {
-				errorMsgs.add("隢撓����");
+				errorMsgs.add("請輸入選項B");
 				QuestionBankvo.setOp2("");
 			} else {
 				QuestionBankvo.setOp2(op2);
 			}
-			String op3 = request.getParameter("op3");// �����
+			String op3 = request.getParameter("op3");// 選項三
 			if (op3 == null || op3.trim().length() == 0) {
-				errorMsgs.add("隢撓����");
+				errorMsgs.add("請輸入選項C");
 				QuestionBankvo.setOp3("");
 			} else {
 				QuestionBankvo.setOp3(op3);
 			}
-			String op4 = request.getParameter("op4");// �����
+			String op4 = request.getParameter("op4");// 選項四
 			if (op4 == null || op4.trim().length() == 0) {
-				errorMsgs.add("隢撓����");
+				errorMsgs.add("請輸入選項D");
 				QuestionBankvo.setOp4("");
 			} else {
 				QuestionBankvo.setOp4(op4);
 			}
-			String quans = request.getParameter("quans");// 蝑��
+			String quans = request.getParameter("quans");// 答案
 			if (quans == null || quans.trim().length() == 0) {
-				errorMsgs.add("隢�������");
+				errorMsgs.add("請選擇答案選項");
 				QuestionBankvo.setOp4("");
 			} else {
 				StringBuilder ansMaker = new StringBuilder("0000");
@@ -153,7 +153,7 @@ public class QuestionBankServlet extends HttpServlet {
 	}
 
 	private void getOneForUpdate(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException { // ��閬���隞�
+			throws ServletException, IOException { // 取出要更新的物件
 		List<String> errorMsgs = new LinkedList<String>();
 		// Store this set in the request scope, in case we need to
 		// send the ErrorPage view.
@@ -170,17 +170,17 @@ public class QuestionBankServlet extends HttpServlet {
 			
 			request.setAttribute("QuestionBankvo", QuestionBankvo);
 			String url = "/front-end/question/update_Question_input.jsp";
-			RequestDispatcher successView = request.getRequestDispatcher(url);// ����漱 update_Question_input.jsp
+			RequestDispatcher successView = request.getRequestDispatcher(url);// 成功轉交 update_Question_input.jsp
 			successView.forward(request, response);
 		} catch (Exception e) {
-			errorMsgs.add("�瘜���耨������:" + e.getMessage());
+			errorMsgs.add("無法取得要修改的資料:" + e.getMessage());
 			RequestDispatcher failureView = request.getRequestDispatcher("/front-end/question/ListAllQuestion.jsp");
 			failureView.forward(request, response);
 		}
 	}
 
 	private void updateQuestion(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException { // �����
+			throws ServletException, IOException { // 更新考題
 		List<String> errorMsgs = new LinkedList<String>();
 		// Store this set in the request scope, in case we need to
 		// send the ErrorPage view.
@@ -197,21 +197,21 @@ public class QuestionBankServlet extends HttpServlet {
 		QuestionBankvo.setTestscope(request.getParameter("testscope"));
 		
 		
-		String qustmt = request.getParameter("qustmt");// 憿(敹‵)
+		String qustmt = request.getParameter("qustmt");// 題目(必填)
 		
 		
 		if (qustmt == null || qustmt.trim().length() == 0) {
-			errorMsgs.add("隢撓�憿");
+			errorMsgs.add("請輸入題目");
 			QuestionBankvo.setQustmt("");
 		} else {
 			QuestionBankvo.setQustmt(qustmt);
 		}
 
 		if ("text".equals(testtype)) {
-			String quans = request.getParameter("quans");// 蝑��
+			String quans = request.getParameter("quans");// 答案
 			
 			if (quans == null || quans.trim().length() == 0) {
-				errorMsgs.add("隢撓�蝑��");
+				errorMsgs.add("請輸入答案");
 				QuestionBankvo.setQuans("");
 			} else {
 				QuestionBankvo.setQuans(quans);
@@ -224,38 +224,38 @@ public class QuestionBankServlet extends HttpServlet {
 				return;
 			}
 		} else if ("radio".equals(testtype) || "checkbox".equals(testtype)) {
-			String op1 = request.getParameter("op1");// ����
+			String op1 = request.getParameter("op1");// 選項一
 			if (op1 == null || op1.trim().length() == 0) {
-				errorMsgs.add("隢撓����");
+				errorMsgs.add("請輸入選項A");
 				QuestionBankvo.setOp1("");
 			} else {
 				QuestionBankvo.setOp1(op1);
 			}
-			String op2 = request.getParameter("op2");// �����
+			String op2 = request.getParameter("op2");// 選項二
 			if (op2 == null || op2.trim().length() == 0) {
-				errorMsgs.add("隢撓����");
+				errorMsgs.add("請輸入選項B");
 				QuestionBankvo.setOp2("");
 			} else {
 				QuestionBankvo.setOp2(op2);
 			}
-			String op3 = request.getParameter("op3");// �����
+			String op3 = request.getParameter("op3");// 選項三
 			if (op3 == null || op3.trim().length() == 0) {
-				errorMsgs.add("隢撓����");
+				errorMsgs.add("請輸入選項C");
 				QuestionBankvo.setOp3("");
 			} else {
 				QuestionBankvo.setOp3(op3);
 			}
-			String op4 = request.getParameter("op4");// �����
+			String op4 = request.getParameter("op4");// 選項四
 			if (op4 == null || op4.trim().length() == 0) {
-				errorMsgs.add("隢撓����");
+				errorMsgs.add("請輸入選項D");
 				QuestionBankvo.setOp4("");
 			} else {
 				QuestionBankvo.setOp4(op4);
 			}
-			String quans = request.getParameter("quans");// 蝑��
+			String quans = request.getParameter("quans");// 答案
 
 			if (quans == null || quans.trim().length() == 0) {
-				errorMsgs.add("隢�������");
+				errorMsgs.add("請選擇答案選項");
 				QuestionBankvo.setQuans("");
 			} else {
 				StringBuilder ansMaker = new StringBuilder("0000");
@@ -280,14 +280,16 @@ public class QuestionBankServlet extends HttpServlet {
 		
 		request.setAttribute("QuestionBankvo", QuestionBankvo);
 		
-		
+		String url = request.getParameter("url");
+		System.out.println(url);
+		 
 		RequestDispatcher successView = request.getRequestDispatcher("/front-end/question/ListOneQuestion.jsp");
 		successView.forward(request, response);
 
 	}
 
 	private void compositeQuery(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException { // 蝚血�閰ａ�
+			throws ServletException, IOException { // 符合查詢題目
 		List<String> errorMsgs = new LinkedList<String>();
 		// Store this set in the request scope, in case we need to
 		// send the ErrorPage view.
@@ -307,7 +309,7 @@ public class QuestionBankServlet extends HttpServlet {
 			QuestionBankService QuestionBankSvc = new QuestionBankService();
 			List<QuestionBankVO> list = QuestionBankSvc.getAll(map);
 
-			request.setAttribute("listEmps_ByCompositeQuery", list); // 鞈�澈����ist�隞�,摮request
+			request.setAttribute("listEmps_ByCompositeQuery", list); // 資料庫取出的list物件,存入request
 			RequestDispatcher successView = request
 					.getRequestDispatcher("/front-end/question/ListAllQuestionQuery.jsp");
 			successView.forward(request, response);
