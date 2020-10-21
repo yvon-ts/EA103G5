@@ -3,8 +3,9 @@
 
 <!DOCTYPE html>
 <html>
+
 <head>
-<title>Course: Home</title>
+	<title>Course: Home</title>
 </head>
 
 <body>
@@ -22,7 +23,7 @@
 			</c:forEach>
 		</ul>
 	</c:if>
-	
+
 	<ul>
 		<li><a href="<%=request.getContextPath()%>/front-end/course/listAllCourse.jsp"> List </a> all Courses.</li>
 
@@ -60,24 +61,21 @@
 			</FORM>
 		</li>
 	</ul>
-	
+
 	<h3>課程管理</h3>
 	<ul>
 		<li> <a href="<%=request.getContextPath()%>/front-end/course/addCourse.jsp"> Add </a> a new Course.</li>
 	</ul>
-	
-	<li>
-			<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/course/course.do">
-				<span> 編輯課程編號：</span> <select name="courseno">
-					<c:forEach var="courseVO" items="${courseSvc.allForEmployee}">
-						<option value="${courseVO.courseno}">
-							${courseVO.courseno}
-					</c:forEach>
-				</select> <input type="hidden" name="action" value="getOneCourseForUpdate">
-				<input type="submit" value="送出">
-			</FORM>
-		</li>
 
-	
+	<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/course/course.do">
+		<span> 編輯課程編號：</span> <select name="courseno">
+			<c:forEach var="courseVO" items="${courseSvc.allForEmployee}">
+				<option value="${courseVO.courseno}">
+					${courseVO.courseno}
+			</c:forEach>
+		</select> <input type="hidden" name="action" value="getOneCourseForUpdate">
+		<input type="submit" value="送出">
+	</FORM>
+
 </body>
 </html>
