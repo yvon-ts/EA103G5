@@ -1,6 +1,25 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="BIG5"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page import="java.util.*"%>
+<%@ page import="java.sql.*"%>
+<%@ page import="java.text.DateFormat"%>
+<%@ page import="java.text.SimpleDateFormat"%>
+<%@ page import="com.lecture.model.*"%>
+<%@ page import="com.speaker.model.*"%>
 <!DOCTYPE html>
+
+<%
+	//lecture
+	LecService lecSvc = new LecService();
+	List<LecVO> list = lecSvc.getList();
+	pageContext.setAttribute("list", list);
+	
+	String startdate = "";
+	String startmonth = "";
+	String starttime = "";
+%>
+
 <html lang="en">
 
 <head>
