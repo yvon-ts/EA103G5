@@ -12,7 +12,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Sign Up Form by Colorlib</title>
+    <title>Xducation-會員註冊</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.3/sweetalert2.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.3/sweetalert2.js" type="text/javascript"></script>
     <!-- Main css -->
@@ -114,6 +114,15 @@ a.signup-image-link{
 margin-right:200px;
 margin-top:20px;
 }
+div#bg{
+ -webkit-box-shadow: 0 0 15px #8E8E8E;
+	-moz-box-shadow: 0 0 15px #8E8E8E;
+	box-shadow: 0 0 15px #5B5B5B;
+}
+
+
+
+
 div.main{
 background: url("<%=request.getContextPath()%>/front-end/members/assets/img/bgPic.png");
 }
@@ -168,7 +177,7 @@ background: url("<%=request.getContextPath()%>/front-end/members/assets/img/bgPi
 
         <!-- Sign up form -->
         <section class="signup">
-            <div class="container" style="box-shadow: 3px 3px 12px #0099CC;">
+            <div class="container" id="bg">
             <a href="indexV1.jsp"><img  id='preview_progressbarTW_img' src="<%=request.getContextPath()%>/front-end/members/assets/img/head/01.png" alt="sing up image"></a>
             <div class="signup-image">
              <a href="<%=request.getContextPath()%>/front-end/members/signIn.jsp" class="signup-image-link" style="font-family:'Gochi Hand';">I am already member</a>

@@ -5,6 +5,8 @@
 
 <%
 MembersVO membersVO = (MembersVO) session.getAttribute("membersVO");
+String inform2 = (String)request.getAttribute("inform2"); 
+
 %>
 
 <jsp:useBean id="teacherSvc" scope="page" class="com.teacher.model.TeacherService" />
@@ -13,6 +15,8 @@ MembersVO membersVO = (MembersVO) session.getAttribute("membersVO");
 <html lang="en">
 
 <head>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js">
+</script>
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.3/sweetalert2.css" />
 <script
@@ -22,7 +26,7 @@ MembersVO membersVO = (MembersVO) session.getAttribute("membersVO");
 <meta charset="utf-8">
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Fusion - Bootstrap 4 Template</title>
+<title>Xducation-首頁</title>
 <!-- Bootstrap CSS -->
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/front-end/members/assets/css/bootstrap.min.css">
@@ -51,6 +55,143 @@ MembersVO membersVO = (MembersVO) session.getAttribute("membersVO");
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">-->
 </head>
 <style>
+div.loader-wrapper{
+width:100%;
+height:100%;
+position:absolute;
+top:0;
+left:0;
+background-color:#0099CC;
+display:flex;
+justify-content:center;
+
+}
+
+.container1 {
+  height: 100vh;
+  width: 100vw;
+  font-family: Helvetica;
+}
+
+.loader1 {
+  height: 20px;
+  width: 250px;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+}
+.loader--dot {
+  animation-name: loader;
+  animation-timing-function: ease-in-out;
+  animation-duration: 3s;
+  animation-iteration-count: infinite;
+  height: 20px;
+  width: 20px;
+  border-radius: 100%;
+  background-color: black;
+  position: absolute;
+  border: 2px solid white;
+}
+.loader--dot:first-child {
+  background-color: #8cc759;
+  animation-delay: 0.5s;
+}
+.loader--dot:nth-child(2) {
+  background-color: #8c6daf;
+  animation-delay: 0.4s;
+}
+.loader--dot:nth-child(3) {
+  background-color: #ef5d74;
+  animation-delay: 0.3s;
+}
+.loader--dot:nth-child(4) {
+  background-color: #f9a74b;
+  animation-delay: 0.2s;
+}
+.loader--dot:nth-child(5) {
+  background-color: #60beeb;
+  animation-delay: 0.1s;
+}
+.loader--dot:nth-child(6) {
+  background-color: #fbef5a;
+  animation-delay: 0s;
+}
+.loader--text {
+  position: absolute;
+  top: 200%;
+  left: 0;
+  right: 0;
+  width: 4rem;
+  margin: auto;
+}
+.loader--text:after {
+  content: "Loading";
+  font-weight: bold;
+  animation-name: loading-text;
+  animation-duration: 3s;
+  animation-iteration-count: infinite;
+}
+
+@keyframes loader {
+  15% {
+    transform: translateX(0);
+  }
+  45% {
+    transform: translateX(230px);
+  }
+  65% {
+    transform: translateX(230px);
+  }
+  95% {
+    transform: translateX(0);
+  }
+}
+@keyframes loading-text {
+  0% {
+    content: "Loading";
+  }
+  25% {
+    content: "Loading.";
+  }
+  50% {
+    content: "Loading..";
+  }
+  75% {
+    content: "Loading...";
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+img.img-fluid{
+transform-origin: 70% 88%;
+    animation: hand 2s infinite;
+    animation-delay: 1s;
+   
+	border-radius:10px;
+  
+}
+@keyframes hand {
+	0% { transform: rotate(0deg); }
+	50% { transform: rotate(5deg) }
+	100% { transform: rotate(0deg); }
+}
 img#nav_icon{
 width:36px;
 height:36px;
@@ -91,7 +232,7 @@ height:36px;
 						</a></li>
 						</c:if>
 						
-						<c:if test="${not empty membersVO}">
+						<c:if test="${not empty sessionScope.membersVO}">
 							
 							
 							<li class="nav-item">
@@ -99,27 +240,27 @@ height:36px;
 									<button class="btn btn-secondary dropdown-toggle" type="button"
 										id="dropdownMenuButton" data-toggle="dropdown"
 										aria-haspopup="true" aria-expanded="false">
-										${membersVO.memname}</button>
+										${sessionScope.membersVO.memname}</button>
 									<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
 										<a class="dropdown-item"
 											href="<%=request.getContextPath()%>/front-end/members/updateMembersV2.jsp">個人檔案</a>
 											
 										
-										<c:if test="${teacherSvc.getStatus(membersVO.memno).tchrstatus eq '待審核'}">
+										<c:if test="${teacherSvc.getStatus(sessionScope.membersVO.memno).tchrstatus eq '待審核'}">
 										<a class="dropdown-item" onclick="status()" >老師檔案</a> 
 											
 										</c:if>
-										<c:if test="${teacherSvc.getStatus(membersVO.memno).tchrstatus eq '已通過'}">
+										<c:if test="${teacherSvc.getStatus(sessionScope.membersVO.memno).tchrstatus eq '已通過'}">
 										<a class="dropdown-item"
 											href="<%=request.getContextPath()%>/front-end/teacher/teacherDisplay.jsp">老師檔案</a> 
 											
 										</c:if>
-											<c:if test="${teacherSvc.getStatus(membersVO.memno).tchrstatus eq '未通過'}">
+											<c:if test="${teacherSvc.getStatus(sessionScope.membersVO.memno).tchrstatus eq '未通過'}">
 										<a class="dropdown-item"
 											href="<%=request.getContextPath()%>/front-end/teacher/teacherUpdate.jsp">老師檔案</a>
 											
 										</c:if>
-										<c:if test="${not empty membersVO}">
+										<c:if test="${not empty sessionScope.membersVO}">
 										<a class="dropdown-item"
 											href='<%=request.getContextPath()%>/members/members.do?action=signout'>會員登出</a> 
 											
@@ -136,29 +277,30 @@ height:36px;
 							</li>
 							
 							</c:if>
-							<c:if test="${not empty membersVO.memno}">
-							<c:if test="${empty teacherSvc.getStatus(membersVO.memno)}">
+							<c:if test="${not empty sessionScope.membersVO.memno}">
+							<c:if test="${empty teacherSvc.getStatus(sessionScope.membersVO.memno)}">
 							<img id="nav_icon" src='<%=request.getContextPath()%>/front-end/members/assets/img/students.svg'>
 							</c:if>
-							<c:if test="${teacherSvc.getStatus(membersVO.memno).tchrstatus eq '待審核'}">
+							<c:if test="${teacherSvc.getStatus(sessionScope.membersVO.memno).tchrstatus eq '待審核'}">
 							<img id="nav_icon" src='<%=request.getContextPath()%>/front-end/members/assets/img/students.svg'>
 							</c:if>
 							
-							<c:if test="${teacherSvc.getStatus(membersVO.memno).tchrstatus eq '已通過'}">
+							<c:if test="${teacherSvc.getStatus(sessionScope.membersVO.memno).tchrstatus eq '已通過'}">
 							<img id="nav_icon" src='<%=request.getContextPath()%>/front-end/members/assets/img/teacher.svg'>
 							</c:if>
-							<c:if test="${teacherSvc.getStatus(membersVO.memno).tchrstatus eq '未通過'}">
+							<c:if test="${teacherSvc.getStatus(sessionScope.membersVO.memno).tchrstatus eq '未通過'}">
 							<img id="nav_icon" src='<%=request.getContextPath()%>/front-end/members/assets/img/students.svg'>
 							
 							</c:if>
 							</c:if>
 					
 
-						<c:if test="${empty membersVO}">
+						<c:if test="${empty sessionScope.membersVO}">
 							<li class="nav-item"><a class='nav-link'
 								href='<%=request.getContextPath()%>/front-end/members/signIn.jsp'>我要登入&nbsp;<i
 									class='lni-bulb'></i></a></li>
 						</c:if>
+						<input type="hidden" id="inform2" value="${requestScope.inform2}">
 
 
 
@@ -563,7 +705,7 @@ height:36px;
 				<div class="col-lg-3 col-md-3 col-sm-6 col-xs-6 col-mb-12">
 					<div class="widget" style="text-align: center">
 						<img src="<%=request.getContextPath()%>/front-end/members/assets/img/logo.svg" style="width: 100px; height: auto"
-							alt=""> </a>
+							alt=""> 
 					</div>
 				</div>
 				<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
@@ -586,13 +728,39 @@ height:36px;
 	<!-- Go to Top Link -->
 	<a href="#" class="back-to-top"> <i class="lni-comments"></i>
 	</a>
+	<!-- <div class="loader-wrapper">
+	<div class='container1'>
+  <div class='loader1'>
+    <div class='loader--dot'></div>
+    <div class='loader--dot'></div>
+    <div class='loader--dot'></div>
+    <div class='loader--dot'></div>
+    <div class='loader--dot'></div>
+    <div class='loader--dot'></div>
+    <div class='loader--text'></div>
+  </div>
+</div> -->
+	
+	
+	<!-- </div> -->
 	<!-- Preloader -->
 	<div id="preloader">
 		<div class="loader" id="loader-1"></div>
-	</div>
+	</div> 
 	<!-- End Preloader -->
 	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
 	<script type="text/javascript">
+	/*  $(window).on('load', function() {
+
+	        $('.loader-wrapper').fadeOut(1000);
+	 }); */
+	
+	
+	
+	
+	 
+	 
+	 
 	function status(){
 		
 		 swal('老師資格審核中', '請耐心等候1~3個工作天，一但審核完畢，即會立刻通知', 'info');
@@ -600,21 +768,15 @@ height:36px;
 	
 	
 	
+	var inform2 = document.getElementById('inform2').value;
+	if(inform2 ==='200'){
+		swal('完了', '沒辦法開始您的線上之旅了!', 'error');
+	}
 	
 	
-//     var abc = document.getElementById("abc").value;
-//     if(abc.length ===0){
-<%--     	var sign = document.getElementById("sign").innerHTML ="<a class='nav-link' href='<%=request.getContextPath()%>/front-end/members/signIn.jsp'>我要登入&nbsp;<i class='lni-bulb'></i></a>"; --%>
-//     	var dropdown = document.getElementById("dropdown").innerHTML ="<p> </p>";
-    
-    	
-//     }else{
-<%--     	var sign = document.getElementById("sign").innerHTML ="<a class='nav-link' id='signout' href='<%=request.getContextPath()%>/members/members.do?action=signout'>我要登出&nbsp;<i class='lni-bulb'></i></a>"; --%>
-<%--     	var text = document.getElementById("text").innerHTML ="<img src='<%=request.getContextPath()%>/front-end/members/assets/img/students.svg'>"; --%>
-    	
-    	
-//     }
-   
+	
+	
+
    
     
     

@@ -12,10 +12,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Sign Up Form by Colorlib</title>
+    <title>Xducation-老師檔案</title>
 
     <!-- Font Icon -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js">
+    <link rel="stylesheet" href="fonts/material-icon/css/material-design-iconic-font.min.css">
 
    <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.3/sweetalert2.css" />
@@ -189,20 +189,16 @@ img.fti{
   div#mpic{
   margin-top:20px;
   }
-    img#bankpic{
-  width:110px;
-  height:30px;
+  section#copyright{
+  margin-top:0px;
   }
-   section#copyright{
- height:400px;
- }
- 
-div.main{
+  img#bankpic{
+  width:110px;
+  height:20px;
+  }
+  div.main{
 background: url("<%=request.getContextPath()%>/front-end/members/assets/img/bgPic.png");
-
-
 }
-
     
 </style>
 <body>
@@ -405,9 +401,6 @@ background: url("<%=request.getContextPath()%>/front-end/members/assets/img/bgPi
        break;
    case "007":
 	   document.getElementById('bankdisplay').innerHTML="<img id='bankpic' src='<%=request.getContextPath()%>/front-end/teacher/teacherRegister_css/images/firstBank.png'>";
-       break;
-   case "700":
-	   document.getElementById('bankdisplay').innerHTML="<img id='bankpic' src='<%=request.getContextPath()%>/front-end/teacher/teacherRegister_css/images/postOffice.png'>";
        break;
    
    

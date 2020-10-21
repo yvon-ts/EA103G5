@@ -6,7 +6,8 @@
 
         /*Page Loader active
         ========================================================*/
-        $('#preloader').fadeOut();
+        $('.loader-wrapper').fadeOut();
+
 
         // Sticky Nav
         $(window).on('scroll', function() {

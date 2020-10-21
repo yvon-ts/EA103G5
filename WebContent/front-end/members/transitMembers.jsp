@@ -8,7 +8,7 @@
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>註冊成功</title>
+    <title>Xducation-會員轉跳</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.3/sweetalert2.css" />
 <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.3/sweetalert2.js" type="text/javascript"></script>
     
@@ -525,7 +525,7 @@ text-align:center;
         setTimeout(function () {
             // window.location.href = './input.html'
             window.open('<%=request.getContextPath()%>/front-end/members/vCodeMembers.jsp', '_self')
-        },3000)
+        },5000)
        </script> 
       
 </body>

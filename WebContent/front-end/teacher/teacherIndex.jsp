@@ -19,7 +19,7 @@ MembersVO membersVO = (MembersVO) session.getAttribute("membersVO");
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>Creative - Start Bootstrap Theme</title>
+        <title>Xducation-老師首頁</title>
         <!-- Favicon-->
         <!-- Font Awesome icons (free version)-->
          <link rel="stylesheet" href="fonts/material-icon/css/material-design-iconic-font.min.css">
@@ -41,6 +41,9 @@ MembersVO membersVO = (MembersVO) session.getAttribute("membersVO");
     <link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/teacher/nav_css/css/main.css">
     <!-- Responsive Style -->
     <link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/teacher/nav_css/css/responsive.css">
+    <link rel="stylesheet"
+	href="<%=request.getContextPath()%>/front-end/members/assets/fonts/line-icons.css">
+    
     </head>
     
     <style>
@@ -66,8 +69,15 @@ body{
 font-family:'Gochi Hand';
 
 }
+header.masthead{
+height:92vh;
+min-height:0px;
+background:rgba(57, 63, 84, 0.6);
+}
 
-
+.lni-bulb:before {
+    content: "\e92f";
+}
 
 
     </style>
@@ -417,6 +427,23 @@ font-family:'Gochi Hand';
             </div>
         </section>
     </footer>
+    
+    <div class='loader-'>
+    
+    
+    
+    </div>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <script type="text/javascript">
     function status(){
 		

@@ -10,7 +10,7 @@ Integer count = (Integer)session.getAttribute("count");%>
 <html>
 
 <head>
-<title>會員驗證</title>
+<title>Xducation-會員驗證</title>
 <script src="https://cdn.jsdelivr.net/npm/animejs@3.0.1/lib/anime.min.js" type="text/javascript"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.3/sweetalert2.css" />
 <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.3/sweetalert2.js" type="text/javascript"></script>
@@ -53,12 +53,6 @@ Integer count = (Integer)session.getAttribute("count");%>
 	100% { transform: rotate(0deg); }
 }
 
-.girl-hand
-{
-    transform-origin: 70% 88%;
-    animation: hand 2s infinite;
-    animation-delay: 1s;
-}
 
 @keyframes hand {
 	0% { transform: rotate(0deg); }

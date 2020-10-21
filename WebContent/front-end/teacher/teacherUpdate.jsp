@@ -12,7 +12,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Sign Up Form by Colorlib</title>
+    <title>Xducation-老師修改</title>
 
     <!-- Font Icon -->
     <link rel="stylesheet" href="fonts/material-icon/css/material-design-iconic-font.min.css">
@@ -31,9 +31,6 @@
 <%--     <link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/teacher/nav_css_ForTeacherRegister/css/responsive.css"> --%>
 </head>
 <style type="text/css">
-
-
-
     textarea{
         width: 280px;
         height: 100px;
@@ -87,14 +84,8 @@
     margin-top:75px;
     margin-left:125px;
     }
-    section#copyright{
- height:400px;
- }
- 
-div.main{
+    div.main{
 background: url("<%=request.getContextPath()%>/front-end/members/assets/img/bgPic.png");
-
-
 }
     
 </style>
@@ -155,7 +146,7 @@ background: url("<%=request.getContextPath()%>/front-end/members/assets/img/bgPi
                             <div class="form-group">
                                 <h5 class="h5">你的銀行帳號<img class="pic" src="<%=request.getContextPath()%>/front-end/teacher/teacherRegister_css/images//bank-account.svg"></h5>
                                 
-                                <input style="font-family:'Gochi Hand';" type="text" name="bankacc" id="name" placeholder="只能輸入數字，限制20字" value="${teacherSvc.getOneTeacher(teacherSvc.getStatus(membersVO.memno).tchrno).bankacc}" />
+                                <input type="text" name="bankacc" id="name" placeholder="只能輸入數字，限制20字" value="${teacherSvc.getOneTeacher(teacherSvc.getStatus(membersVO.memno).tchrno).bankacc}" />
                               
                               
                             </div>
@@ -165,10 +156,10 @@ background: url("<%=request.getContextPath()%>/front-end/members/assets/img/bgPi
 
                             </div>
                              <div class="form-group" id="form-group">
-                                <label id="cert" style="font-family:'Gochi Hand';">點選上傳證照1  <img class="pic" src="<%=request.getContextPath()%>/front-end/teacher/teacherRegister_css/images/pictures.svg"><input  onchange="readURL(this)" targetID="license1" style="display:none;" type="file" name="tchrcert1" style="display:none;" id="tchrcert"/></label>
+                                <label id="cert">點選上傳證照1  <img class="pic" src="<%=request.getContextPath()%>/front-end/teacher/teacherRegister_css/images/pictures.svg"><input  onchange="readURL(this)" targetID="license1" style="display:none;" type="file" name="tchrcert1" style="display:none;" id="tchrcert"/></label>
                                </div>
                                <div class="form-group" id="form-group">
-                                <label id="cert" style="font-family:'Gochi Hand';">點選上傳證照2  <img class="pic" src="<%=request.getContextPath()%>/front-end/teacher/teacherRegister_css/images/pictures.svg"><input  onchange="readURL(this)" targetID="license2" style="display:none;" type="file" name="tchrcert2" style="display:none;" id="tchrcert"/></label>
+                                <label id="cert">點選上傳證照2  <img class="pic" src="<%=request.getContextPath()%>/front-end/teacher/teacherRegister_css/images/pictures.svg"><input  onchange="readURL(this)" targetID="license2" style="display:none;" type="file" name="tchrcert2" style="display:none;" id="tchrcert"/></label>
                                </div>
                             <div class="form-group">
                                 <h5 class="h5">你的個人介紹<img class="pic" src="<%=request.getContextPath()%>/front-end/teacher/teacherRegister_css/images/reunion.svg"></h5>
@@ -197,7 +188,7 @@ background: url("<%=request.getContextPath()%>/front-end/members/assets/img/bgPi
                         <figure class='license'><img id="license2" class="certification" src="<%=request.getContextPath()%>/front-end/teacher/TchrcertDisplayServlet2?TCHRNO=${teacherSvc.getStatus(membersVO.memno).tchrno}" ></figure>
                                 <input type="hidden" name="action" value="updateTeacher">
                                 <input type='hidden' name='tchrno' value='${teacherSvc.getOneTeacher(teacherSvc.getStatus(membersVO.memno).tchrno).tchrno}'>
-                                <input type="submit" style="font-family:'Gochi Hand';" name="signup" id="signup" class="form-submit" value="Submit"/>
+                                <input type="submit" name="signup" id="signup" class="form-submit" value="提交"/>
                                  </form>
                     </div>
                    

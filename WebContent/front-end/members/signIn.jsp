@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.members.model.*"%>
 
-
+<%String inform2 = (String)request.getAttribute("inform2"); %>
 
 
 <%@ include file="/index/front-index/headtest.jsp" %>
@@ -13,7 +13,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Sign Up Form by Colorlib</title>
+    <title>Xducation-會員登入</title>
 
 
     <!-- Main css -->
@@ -23,6 +23,11 @@
 <%--     <link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/members/nav_css_ForSignIn&addMembers/css/animate.css"> --%>
 <%--     <link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/members/nav_css_ForSignIn&addMembers/css/main.css"> --%>
 <%--     <link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/members/nav_css_ForSignIn&addMembers/css/responsive.css"> --%>
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.3/sweetalert2.css" />
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.3/sweetalert2.js"
+	type="text/javascript"></script>
 </head>
 
 <style>
@@ -43,7 +48,7 @@ position: absolute;
 }
 h2.form-title{
 width:600px;
-height:400px;
+height:200px;
 position: absolute;
  z-index:1;
 font-size:120px;
@@ -54,6 +59,7 @@ margin:-240px 0 0 -30px;
 }
 input#signin{
 margin:10px 0 0 70px ;
+
 }
 
 
@@ -75,6 +81,9 @@ margin:10px 0 0 70px ;
  div#bg{
  width:850px;
  height:630px; 
+ -webkit-box-shadow: 0 0 15px #8E8E8E;
+	-moz-box-shadow: 0 0 15px #8E8E8E;
+	box-shadow: 0 0 15px #5B5B5B;
  }
  section#copyright{
  height:400px;
@@ -156,7 +165,7 @@ background: url("<%=request.getContextPath()%>/front-end/members/assets/img/bgPi
                     </div>
 
                     <div class="signin-form">
-                        <h2 class="form-title">Sign in</h2>
+                        <h2 class="form-title">Sign in${inform2}</h2>
                         <form action="<%=request.getContextPath()%>/members/members.do" method="POST" class="register-form" id="login-form">
                             
                             <div class="form-group">
@@ -175,6 +184,7 @@ background: url("<%=request.getContextPath()%>/front-end/members/assets/img/bgPi
                                <input style="font-family:'Gochi Hand'" type="submit" name="signIn" id="signin" class="form-submit" value="Log in"/> 
                             </div>
                         </form>
+                         <input type="hidden" id="inform2" value="${inform2}">
                         <div class="social-login">
                             <span class="social-label">
                             <c:if test="${not empty errorMsgs}">
@@ -211,4 +221,25 @@ background: url("<%=request.getContextPath()%>/front-end/members/assets/img/bgPi
     <!-- JS -->
     <%-- <%@ include file="/index/front-index/foottest.jsp" %> --%>
 </body>
+
+
+
+<script>
+var inform2 = document.getElementById('inform2').value;
+if(inform2 ==='200'){
+	swal('恭喜啦', '您已經成為我們的會員囉<br>趕快來登入並且開始瀏覽課程吧', 'success');
+}
+
+
+</script>
+
+
+
+
+
+
+
+
+
+
 </html>

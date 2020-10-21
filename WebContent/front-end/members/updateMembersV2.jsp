@@ -17,7 +17,7 @@ MembersVO membersVO = (MembersVO) session.getAttribute("membersVO");
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Sign Up Form by Colorlib</title>
+    <title>Xducation-會員修改</title>
 
     <!-- Font Icon -->
     <link rel="stylesheet" href="fonts/material-icon/css/material-design-iconic-font.min.css">
@@ -91,9 +91,12 @@ height:350px;
   padding-top:0px;
   
   }
-  div.container{
-box-shadow: 5px 10px #0099CC:
-}
+  div#bg{
+  -webkit-box-shadow: 0 0 15px #8E8E8E;
+	-moz-box-shadow: 0 0 15px #8E8E8E;
+	box-shadow: 0 0 15px #5B5B5B;
+  }
+  
   
   input#register.form-submit{
   	margin-left:70px;
@@ -234,7 +237,7 @@ background: url("<%=request.getContextPath()%>/front-end/members/assets/img/bgPi
         <section class="signup">
         <form method='POST' class='register-form' ACTION='<%=request.getContextPath()%>/members/members.do' id='register-form' enctype='multipart/form-data'>
                       
-            <div class="container">
+            <div class="container" id="bg">
                 <div class="signup-content">
                     <div class="signup-form">
 
