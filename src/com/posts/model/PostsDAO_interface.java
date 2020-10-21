@@ -1,7 +1,7 @@
 package com.posts.model;
 
 import java.util.List;
-
+//uuuuuuuuu
 public interface PostsDAO_interface {
 	public PostsVO insert(PostsVO postsVO);
 	public void updateStatusRemove(String postno);
