@@ -40,7 +40,7 @@ public class CourseServlet extends HttpServlet {
 				/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
 				String courseno = req.getParameter("courseno");
 
-				// 檢查空字串或空白
+				// 檢查空字串或空白的錯誤
 				if (courseno == null || courseno.trim().length() == 0) {
 					errorMsgs.add("請輸入課程編號");
 				}
