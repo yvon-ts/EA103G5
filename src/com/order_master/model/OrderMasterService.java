@@ -10,11 +10,10 @@ public class OrderMasterService {
 		dao = new OrderMasterDAO();
 	}
 	
-	public OrderMasterVO addOrder(String memno, java.sql.Date orderdate, Integer orderamt, String coupno, String payby){
-		
+	public OrderMasterVO addOrder(String memno, Integer orderamt, String coupno, String payby){
+		System.out.println("Service");
 		OrderMasterVO vo = new OrderMasterVO();
 		vo.setMemno(memno);
-		vo.setOrderdate(orderdate);
 		vo.setOrderamt(orderamt);
 		vo.setCoupno(coupno);
 		vo.setPayby(payby);

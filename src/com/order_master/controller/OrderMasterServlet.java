@@ -157,32 +157,10 @@ public class OrderMasterServlet extends HttpServlet {
 
 			try {
 				/*********************** 1.接收請求參數 - 輸入格式的錯誤處理 *************************/
-				String memno = req.getParameter("ename");
-				String memReg = "^[M][E][M]-\\d{4}$";
-				if (memno == null || memno.trim().length() == 0) {
-					errorMsgs.add("會員編號: 請勿空白");
-				} else if (!memno.trim().matches(memReg)) { // 以下練習正則(規)表示式(regular-expression)
-					errorMsgs.add("會員編號: 只能是英文字母、數字和- , 且長度必需在7到8之間");
-				}
-
-				java.sql.Date orderdate = null;
-				try {
-					orderdate = java.sql.Date.valueOf(req.getParameter("orderdate").trim());
-				} catch (IllegalArgumentException e) {
-					orderdate = new java.sql.Date(System.currentTimeMillis());
-					errorMsgs.add("請輸入日期!");
-				}
-
-				Integer orderamt = null;
-				try {
-					orderamt = new Integer(req.getParameter("orderamt").trim());
-				} catch (NumberFormatException e) {
-					orderamt = 0;
-					errorMsgs.add("折扣金額請填數字.");
-				}
-
+				String memno = req.getParameter("memno");
+				Integer orderamt = new Integer (req.getParameter("orderamt"));
 				String coupno = req.getParameter("coupno");
-
+				
 				String payby = req.getParameter("payby").trim();
 				if (payby == null || coupno.trim().length() == 0) {
 					errorMsgs.add("付款方式請勿空白");
@@ -190,22 +168,22 @@ public class OrderMasterServlet extends HttpServlet {
 
 				OrderMasterVO orderMasterVO = new OrderMasterVO();
 				orderMasterVO.setMemno(memno);
-				orderMasterVO.setOrderdate(orderdate);
 				orderMasterVO.setOrderamt(orderamt);
 				orderMasterVO.setCoupno(coupno);
 				orderMasterVO.setPayby(payby);
+				System.out.println(orderMasterVO.getMemno());
 
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
-					req.setAttribute("orderMasterVO", orderMasterVO); // 含有輸入格式錯誤的empVO物件,也存入req
-					RequestDispatcher failureView = req.getRequestDispatcher("/emp/addEmp.jsp");
+					req.setAttribute("orderMasterVO", orderMasterVO);
+					RequestDispatcher failureView = req.getRequestDispatcher("/front-end/Shop/Shopping_Cart.jsp");
 					failureView.forward(req, res);
 					return;
 				}
 
 				/*************************** 2.開始新增資料 ***************************************/
 				OrderMasterService ordermasterSvc = new OrderMasterService();
-				orderMasterVO = ordermasterSvc.addOrder(memno, orderdate, orderamt, coupno, payby);
+				orderMasterVO = ordermasterSvc.addOrder(memno, orderamt, coupno, payby);
 
 				/*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
 				String url = "/back-end/Order_Master/ListOneOrder.jsp";
@@ -215,7 +193,7 @@ public class OrderMasterServlet extends HttpServlet {
 				/*************************** 其他可能的錯誤處理 **********************************/
 			} catch (Exception e) {
 				errorMsgs.add(e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/emp/addEmp.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/Shop/Shopping_Cart.jsp");
 				failureView.forward(req, res);
 			}
 		}

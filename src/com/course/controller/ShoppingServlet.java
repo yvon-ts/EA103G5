@@ -33,15 +33,21 @@ public class ShoppingServlet extends HttpServlet {
 		Vector<CourseVO> buylist = (Vector<CourseVO>) session.getAttribute("shoppingcart");
 		String action = req.getParameter("action");
 
-		if (!action.equals("CHECKOUT")) {
-			//新增購物車車車
+//		if (!action.equals("CHECKOUT")) {
+//			//新增購物車
 			if (action.equals("DELETE")) {
 				String del = req.getParameter("del");
 				int d = Integer.parseInt(del);
 				buylist.removeElementAt(d);
+				
+				session.setAttribute("shoppingcart", buylist);
+				String url = "/front-end/Shop/Shopping_Cart.jsp";
+				RequestDispatcher rd = req.getRequestDispatcher(url);
+				rd.forward(req, res);
 			}
 			//移除商品
-			else if (action.equals("ADD")) {
+		
+		if (action.equals("ADD")) {
 				
 				boolean match = false;
 				CourseVO acourse = getCourse(req);
@@ -65,33 +71,34 @@ public class ShoppingServlet extends HttpServlet {
 				}
 			}
 			session.setAttribute("shoppingcart", buylist);
-			String url = "/front-end/Shop/EShop.jsp";
+			String url = "/front-end/course/listAllCourseForUser.jsp";
 			RequestDispatcher rd = req.getRequestDispatcher(url);
 			rd.forward(req, res);
 		}
 
 			//付款結帳
-			else if (action.equals("CHECKOUT")) {
-				int total = 0;
-				for (int i = 0; i < buylist.size(); i++) {
-					CourseVO order = buylist.get(i);
-					int price = order.getCourseprice();
-					total += price;
-				}
-
-				String amount = String.valueOf(total);
-				req.setAttribute("amount", amount);
-				String url = "/front-end/Shop/Checkout.jsp";
-				RequestDispatcher rd = req.getRequestDispatcher(url);
-				rd.forward(req, res);
-			}
-		}
+//			else if (action.equals("CHECKOUT")) {
+//				int total = 0;
+//				for (int i = 0; i < buylist.size(); i++) {
+//					CourseVO order = buylist.get(i);
+//					int price = order.getCourseprice();
+//					total += price;
+//				}
+//
+//				String amount = String.valueOf(total);
+//				req.setAttribute("amount", amount);
+//				String url = "/front-end/Shop/Checkout.jsp";
+//				RequestDispatcher rd = req.getRequestDispatcher(url);
+//				rd.forward(req, res);
+//			}
+//		}
 	
 
 	private CourseVO getCourse(HttpServletRequest req) {
 
 		String courseno = req.getParameter("courseno");
 		String courseprice = req.getParameter("courseprice");
+		System.out.println(courseprice);
 
 		CourseVO cs = new CourseVO();
 
