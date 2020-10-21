@@ -5,7 +5,7 @@
 <%@ page import="java.text.DateFormat"%>
 <%@ page import="java.text.SimpleDateFormat"%>
 <%@ page import="com.lecture.model.*"%>
-
+<%@ page import="com.speaker.model.*"%>
 
 <!DOCTYPE html>
 
@@ -18,7 +18,6 @@
 	String startmonth = "";
 	String starttime = "";
 %>
-
 <html>
 <head>
 <%@ include file="/index/front-index/header.jsp" %>
@@ -109,6 +108,10 @@
 			startdate = fmtdate.format(lecstart);
 			startmonth = fmtmonth.format(lecstart);
 			starttime = fmttime.format(lecstart);
+			//講者姓名
+			SpkrService spkrSvc = new SpkrService();
+			SpkrVO spkrVO = spkrSvc.getOne(lecVO.getSpkrno());
+			String spkrname = spkrVO.getSpkrname();
 		%>
    <div class="div col-lg-9 col-md-12 col-sm-12 col-xs-12 box-item wow fadeInLeft" data-wow-delay="0.3s">
         <div class="daydiv">
@@ -117,11 +120,15 @@
             <span class="time"><%=starttime%></span><br>
         </div>
         <div class="pic">
-            <img src="<%=request.getContextPath()%>/index/front-index/assets/img/course/img1.jpg">
+            <img src="<%=request.getContextPath()%>/lecture/picreader?lecno=${lecVO.lecno}">
         </div>
         <div class="lec-txt">
         	<p class="title">${lecVO.lecname}</p><br>
-        	<p class="ctnt">ANTICO FORNO主廚吳治君<br>現場示範3道義式經典料理 X 義大利飲食文化</p>
+<%--         	<c:forEach var="spkrVO" items="${spkrSvc.list}"> --%>
+<%--         	<c:if test="${lecVO.spkrno}==${spkrVO.spkrno}"> --%>
+        	<p class="ctnt">【<%=spkrname%>】<br>現場示範3道義式經典料理 X 義大利飲食文化</p>
+<%--         	</c:if> --%>
+<%--         	</c:forEach> --%>
         </div>
         <div class="more">
         	<form method="post" action="<%=request.getContextPath()%>/lecture/lecture.do">
