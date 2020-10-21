@@ -9,16 +9,16 @@
 <%@ page import="com.speaker.model.*"%>
 <!DOCTYPE html>
 
-<%
-	//lecture
-	LecService lecSvc = new LecService();
-	List<LecVO> list = lecSvc.getList();
-	pageContext.setAttribute("list", list);
+<%-- <% --%>
+// 	//lecture
+// 	LecService lecSvc = new LecService();
+// 	List<LecVO> list = lecSvc.getList();
+// 	pageContext.setAttribute("list", list);
 	
-	String startdate = "";
-	String startmonth = "";
-	String starttime = "";
-%>
+// 	String startdate = "";
+// 	String startmonth = "";
+// 	String starttime = "";
+<%-- %> --%>
 
 <html lang="en">
 

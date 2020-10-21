@@ -13,31 +13,32 @@ public class TrackingListService {
 	}
 
 	// insert
-	public TrackingListVO addTracking(String memno, String courseno) {
+	public void addTracking(String memno, String courseno) {
 
 		TrackingListVO trackinglistVO = new TrackingListVO();
 
-		trackinglistVO.setMemno("memno");
-		trackinglistVO.setCourseno("courseno");
+		trackinglistVO.setMemno(memno);
+		trackinglistVO.setCourseno(courseno);
 
-		return trackinglistVO;
+		dao.insert(trackinglistVO);
 
 	}
 
 	// delete
-	public TrackingListVO deleteTracking(String memno, String courseno) {
+	public void deleteTracking(String memno, String courseno) {
 		
 		TrackingListVO trackinglistVO = new TrackingListVO();
 
-		trackinglistVO.setMemno("memno");
-		trackinglistVO.setCourseno("courseno");
+		trackinglistVO.setMemno(memno);
+		trackinglistVO.setCourseno(courseno);
 
-		return trackinglistVO;
+		dao.delete(trackinglistVO);
 
 	}
 
 	// getByMemno
-	public List<TrackingListVO> findByMemno(String memno) {
+	public List<TrackingListVO> getOneByMemno(String memno) {
+		System.out.println(123);
 		return dao.findByMemno(memno);
 	}
 	

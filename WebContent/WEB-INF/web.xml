@@ -129,6 +129,9 @@
   	<url-pattern>/lecture/defLayout.show</url-pattern>
   </servlet-mapping>
   
+  
+  
+  
   <servlet>
   	<servlet-name>LecRoomServlet</servlet-name>
   	<servlet-class>com.lecture.controller.LecRoomServlet</servlet-class>
@@ -326,7 +329,7 @@
   <servlet>
   	<servlet-name>TrackingListServlet</servlet-name>
   	<servlet-class>com.tracking_list.controller.TrackingListServlet</servlet-class>
-  </servlet>
+  </servlet>	   
   	
   <servlet-mapping>
   	<servlet-name>TrackingListServlet</servlet-name>

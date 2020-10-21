@@ -27,12 +27,12 @@ public class TrackingListDAO implements TrackingListDAO_interface {
 	private static final String INSERT_STMT = "INSERT INTO TRACKING_LIST (MEMNO, COURSENO) VALUES (?, ?)";
 	private static final String DELETE_STMT = "DELETE FROM TRACKING_LIST WHERE MEMNO = ? AND COURSENO = ?";
 	private static final String GET_ALL_STMT = "SELECT MEMNO, COURSENO FROM TRACKING_LIST ORDER BY MEMNO";
-	
+
 	private static final String GETMEMTRACKING = "SELECT * FROM TRACKING_LIST WHERE MEMNO = ?";
-	
-	
+
 	@Override
 	public void insert(TrackingListVO trackVO) {
+
 		Connection con = null;
 		PreparedStatement pstmt = null;
 
@@ -40,15 +40,22 @@ public class TrackingListDAO implements TrackingListDAO_interface {
 
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(INSERT_STMT);
+			con.setAutoCommit(false);
 
 			pstmt.setString(1, trackVO.getMemno());
 			pstmt.setString(2, trackVO.getCourseno());
-		
 
 			pstmt.executeUpdate();
-
+			con.commit();
 			// Handle any SQL errors
 		} catch (SQLException se) {
+			// TODO Auto-generated catch block
+			try {
+				con.rollback();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 			// Clean up JDBC resources
 		} finally {
@@ -61,13 +68,14 @@ public class TrackingListDAO implements TrackingListDAO_interface {
 			}
 			if (con != null) {
 				try {
+					con.setAutoCommit(true);
 					con.close();
 				} catch (Exception e) {
 					e.printStackTrace(System.err);
 				}
 			}
 		}
-		
+
 	}
 
 	@Override
@@ -79,14 +87,22 @@ public class TrackingListDAO implements TrackingListDAO_interface {
 
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(DELETE_STMT);
+			con.setAutoCommit(false);
 
 			pstmt.setString(1, trackVO.getMemno());
 			pstmt.setString(2, trackVO.getCourseno());
 
 			pstmt.executeUpdate();
-
+			con.commit();
 			// Handle any driver errors
 		} catch (SQLException se) {
+			// TODO Auto-generated catch block
+			try {
+				con.rollback();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 			// Clean up JDBC resources
 		} finally {
@@ -99,13 +115,14 @@ public class TrackingListDAO implements TrackingListDAO_interface {
 			}
 			if (con != null) {
 				try {
+					con.setAutoCommit(true);
 					con.close();
 				} catch (Exception e) {
 					e.printStackTrace(System.err);
 				}
 			}
 		}
-		
+
 	}
 
 	@Override
@@ -127,9 +144,10 @@ public class TrackingListDAO implements TrackingListDAO_interface {
 
 			while (rs.next()) {
 				// trackVO 也稱為 Domain objects
-				trackinglistVO= new TrackingListVO();
+				trackinglistVO = new TrackingListVO();
 				trackinglistVO.setMemno(rs.getString("memno"));
 				trackinglistVO.setCourseno(rs.getString("courseno"));
+				list.add(trackinglistVO);
 			}
 
 			// Handle any driver errors
@@ -159,6 +177,7 @@ public class TrackingListDAO implements TrackingListDAO_interface {
 				}
 			}
 		}
+		
 		return list;
 		
 	}
@@ -183,11 +202,9 @@ public class TrackingListDAO implements TrackingListDAO_interface {
 				trackinglistVO = new TrackingListVO();
 				trackinglistVO.setMemno(rs.getString("memno"));
 				trackinglistVO.setCourseno(rs.getString("courseno"));
-				
 
 				list.add(trackinglistVO); // Store the row in the list
 
-				
 			}
 
 			// Handle any driver errors
@@ -219,7 +236,6 @@ public class TrackingListDAO implements TrackingListDAO_interface {
 		}
 		return list;
 
-		
 	}
 
 }

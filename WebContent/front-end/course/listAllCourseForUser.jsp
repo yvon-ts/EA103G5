@@ -22,8 +22,10 @@
 	int i = 0 ;
 	
 	String memno = (String) session.getAttribute("memno");
-	memno = "MEM0001";
+	memno = "MEM0002";
 	pageContext.setAttribute("memno",memno);
+	
+	
 %>
 
 <!DOCTYPE html>
@@ -44,6 +46,7 @@
 	<!-- member -->
 	<input type="hidden" id ="memno" value="${memno}"/>
 	<jsp:useBean id="courseTypeSvc" scope="page" class="com.course_type.model.CourseTypeService"/>
+	<jsp:useBean id="TrackingListSvc" scope="page" class="com.tracking_list.model.TrackingListService"/>
 	<jsp:include page="/index/front-index/header.jsp"/>
 	
 	<div id="hero-area" style="background-image: none">
@@ -137,7 +140,17 @@
 							<input type="hidden" name="courseprice" value="${courseVO.courseprice}" />
 							</form>
 							
-							<label class="bookmark"><i class="fa fa-heart-o" aria-hidden="true" style="color:red"></i>&nbsp;加入追蹤</label>
+<%-- 							<c:forEach var="TrackingListVO" items="${TrackingListSvc.oneByMemno(memno)}"> --%>
+<%-- 							<c:choose> --%>
+<%-- 								<c:when test="${ TrackingListVO.memno eq memno}"> --%>
+<!-- 									<label class="bookmark"><i class="fa fa-heart" aria-hidden="true" style="color:red"></i>&nbsp;加入追蹤</label> -->
+<%-- 								</c:when> --%>
+<%-- 								<c:when test="${ TrackingListVO.memno ne memno}"> --%>
+<!-- 									<label class="bookmark"><i class="fa fa-heart-o" aria-hidden="true" style="color:red"></i>&nbsp;加入追蹤</label> -->
+<%-- 								</c:when> --%>
+							
+<%-- 							</c:choose> --%>
+<%-- 							</c:forEach> --%>
 							<input type ="hidden" name="courseno" value ="${courseVO.courseno}"/>
 							
 							
@@ -166,24 +179,26 @@
 		
 		$('.bookmark').click(function(){
 
-			var courseno = $(this).next().val();
-			var memno = $("#memno").val();
-			var action ;
+			var updateTrackingList;
 			
 			if ($(this).children().attr("class") === "fa fa-heart-o"){
-				action = "insert";
+				updateTrackingList = "insert";
 				$(this).children().attr("class","fa fa-heart");
 			}
 			else{
-				action = "delete";
+				updateTrackingList = "delete";
 				$(this).children().attr("class","fa fa-heart-o");
 			}
 			
 			$.ajax({
-				url	:"<%=request.getContextPath()%>/course/coursesearch.do", 
+				url	:"<%=request.getContextPath()%>/tracking_list/tracking_list.do", 
 				data:{
-					searchText:$('#searchText').val(),
-					
+					courseno : $(this).next().val(),
+					memno    : $("#memno").val(),
+					action   : updateTrackingList ,
+				},
+				success: function(data){
+					console.log('操作成功');
 				}
 			});
 			
