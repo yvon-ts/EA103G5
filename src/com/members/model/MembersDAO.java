@@ -26,7 +26,7 @@ public class MembersDAO implements MembersDAO_interface {
 	String userid = "XDU";
 	String passwd = "123456";
 
-	private static final String INSERT_STMT = "INSERT INTO MEMBERS(MEMNO,MEMACC,MEMPWD,MEMNAME,NKNAME,MEMBDAY,MEMAIL,MPHONE,MPROFILE) VALUES ('MEM' || LPAD(MEMBERS_SEQ.NEXTVAL, 4, 0),?,?,?,?,?,?,?,?)";
+	private static final String INSERT_STMT = "INSERT INTO MEMBERS(MEMNO,MEMACC,MEMPWD,MEMNAME,NKNAME,MEMBDAY,MEMAIL,MPHONE,MPROFILE) VALUES ('MEM' || LPAD(SEQ_MEMBERS.NEXTVAL, 4, 0),?,?,?,?,?,?,?,?)";
 	private static final String GET_ALL_STMT = "SELECT MEMNO,MEMACC,MEMPWD,MEMNAME,NKNAME,TO_CHAR(MEMBDAY,'YYYY-MM-DD')MEMBDAY,MEMAIL,MPHONE,MPROFILE,REGDATE,MEMDELETE FROM MEMBERS ORDER BY MEMNO";
 	private static final String GET_ONE_STMT = "SELECT MEMNO,MEMACC,MEMPWD,MEMNAME,NKNAME,TO_CHAR(MEMBDAY,'YYYY-MM-DD')MEMBDAY,MEMAIL,MPHONE,MPROFILE,REGDATE,MEMDELETE FROM MEMBERS WHERE MEMNO = ?";
 	private static final String UPDATE = "UPDATE MEMBERS SET MEMPWD=?,NKNAME=?,MPROFILE=? WHERE MEMNO =?";
@@ -64,7 +64,7 @@ public class MembersDAO implements MembersDAO_interface {
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
-			throw new RuntimeException("輸入的資料有重複");
+			throw new RuntimeException("Email重複");
 			// Clean up JDBC resources
 		} finally {
 			if (pstmt != null) {
