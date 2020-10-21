@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import test.Course;
+import com.course.model.*;
 
 /**
  * Servlet implementation class ShoppingServlet
@@ -30,7 +30,7 @@ public class ShoppingServlet extends HttpServlet {
 		req.setCharacterEncoding("UTF-8");
 
 		HttpSession session = req.getSession();
-		Vector<Course> buylist = (Vector<Course>) session.getAttribute("shoppingcart");
+		Vector<CourseVO> buylist = (Vector<CourseVO>) session.getAttribute("shoppingcart");
 		String action = req.getParameter("action");
 
 		if (!action.equals("CHECKOUT")) {
@@ -44,14 +44,14 @@ public class ShoppingServlet extends HttpServlet {
 			else if (action.equals("ADD")) {
 				
 				boolean match = false;
-				Course acourse = getCourse(req);
+				CourseVO acourse = getCourse(req);
 				
 				if (buylist == null) {
-					buylist = new Vector<Course>();
+					buylist = new Vector<CourseVO>();
 					buylist.add(acourse);
 				} else {
 					for (int i = 0; i < buylist.size(); i++) {
-						Course course = buylist.get(i);
+						CourseVO course = buylist.get(i);
 						
 						if(course.getCourseno().equals(acourse.getCourseno())) {
 							buylist.set(i, acourse);
@@ -74,8 +74,8 @@ public class ShoppingServlet extends HttpServlet {
 			else if (action.equals("CHECKOUT")) {
 				int total = 0;
 				for (int i = 0; i < buylist.size(); i++) {
-					Course order = buylist.get(i);
-					int price = order.getSellprice();
+					CourseVO order = buylist.get(i);
+					int price = order.getCourseprice();
 					total += price;
 				}
 
@@ -88,15 +88,15 @@ public class ShoppingServlet extends HttpServlet {
 		}
 	
 
-	private Course getCourse(HttpServletRequest req) {
+	private CourseVO getCourse(HttpServletRequest req) {
 
 		String courseno = req.getParameter("courseno");
-		String sellprice = req.getParameter("sellprice");
+		String courseprice = req.getParameter("courseprice");
 
-		Course cs = new Course();
+		CourseVO cs = new CourseVO();
 
 		cs.setCourseno(courseno);
-		cs.setSellprice((new Integer(sellprice)).intValue());
+		cs.setCourseprice((new Integer(courseprice)).intValue());
 		return cs;
 	}
 }

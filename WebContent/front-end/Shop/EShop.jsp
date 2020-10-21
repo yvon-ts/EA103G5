@@ -24,7 +24,7 @@
 				<input type="submit" name="Submit" value="放入購物車">
 					</div></td>
 					<input type="hidden" name="courseno" value="COUR0001"> 
-					<input type="hidden" name="sellprice" value="600"> 
+					<input type="hidden" name="courseprice" value="600"> 
 					<input type="hidden" name="action" value="ADD">
 			</tr>
 		</form>
@@ -38,7 +38,7 @@
 				<input type="submit" name="Submit" value="放入購物車">
 					</div></td>
 				<input type="hidden" name="courseno" value="COUR0002" /> 
-				<input type="hidden" name="sellprice" value="500" /> 
+				<input type="hidden" name="courseprice" value="500" /> 
 				<input type="hidden" name="action" value="ADD" />
 			</tr>
 		</form>
