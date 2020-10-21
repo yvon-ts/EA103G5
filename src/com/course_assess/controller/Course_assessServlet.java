@@ -25,10 +25,8 @@ public class Course_assessServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		req.setCharacterEncoding("UTF-8");// 處理中文檔名
 		res.setContentType("text/html; charset=UTF-8");
-		System.out.println("有進來servlet");
 
 		String action = req.getParameter("action");
-		System.out.println(action);
 		//===================以下為新增會員區塊======================
 				if ("insert".equals(action)) {
 					insert(req, res);
@@ -39,28 +37,26 @@ public class Course_assessServlet extends HttpServlet {
 	}
 	private void insert(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		String memno = req.getParameter("memno");
-		System.out.println("會員編號:"+memno);
 		
 		String courseno = req.getParameter("courseno");
-		System.out.println("課程編號"+courseno);
 		String cs = req.getParameter("coursescore");
-		System.out.println("課程評價"+cs);
 		
 		if(cs == null || cs.trim().length() == 0) {
 			cs = "5";
 		}
 		Integer coursescore = Integer.parseInt(cs);
-		System.out.println("課程編號 數字型態"+coursescore);
 		String comments = req.getParameter("comments");
 		if (comments == null || comments.trim().length() == 0) {
-		comments ="這是一門很\"固固\"的課程唷^^d";
+		comments = "這是一門很\"固固\"的課程唷^^d";
+		}else if(comments.length()>=100) {
+			String url = req.getContextPath()+ "/front-end/members/indexV1.jsp";
+			res.sendRedirect(url);
 		}
-		System.out.println("課程留言"+comments);
 		
 		Course_assessService course_assessSvc = new Course_assessService();
 		course_assessSvc.addCourse_assess(courseno, memno, coursescore, comments);
-		RequestDispatcher failureView = req.getRequestDispatcher("/front-end/course_assess/addCourse_assess.jsp");
-		failureView.forward(req, res);
+		RequestDispatcher SuccessView = req.getRequestDispatcher("/front-end/course_assess/addCourse_assess.jsp");
+		SuccessView.forward(req, res);
 		return;
 		
 		

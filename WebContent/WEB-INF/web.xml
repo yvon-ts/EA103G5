@@ -368,4 +368,16 @@
     <servlet-name>CourseSearch</servlet-name>
     <url-pattern>/course/coursesearch.do</url-pattern>
   </servlet-mapping>
+  
+  <servlet>
+    <servlet-name>Course_assessServlet</servlet-name>
+    <servlet-class>com.course_assess.controller.Course_assessServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Course_assessServlet</servlet-name>
+    <url-pattern>/course_assess/course_assess.do</url-pattern>
+  </servlet-mapping>
+  
+  
 </web-app>
+

@@ -350,7 +350,6 @@ public class MembersServlet extends HttpServlet {
 			failView.forward(req, res);
 		} else {
 			session.setAttribute("membersVO", membersVO);
-			System.out.println(123);
 			String url = "/front-end/members/indexV1.jsp";
 			RequestDispatcher successView = req.getRequestDispatcher(url);
 			successView.forward(req, res);
@@ -369,8 +368,10 @@ public class MembersServlet extends HttpServlet {
 
 	private void updatemembers(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		List<String> errorMsgs = new LinkedList<String>();
-		String memno =null;
 		req.setAttribute("errorMsgs", errorMsgs);
+		
+		String memno =null;
+		
 		try {
 			HttpSession session = req.getSession();
 			MembersVO membersVO = (MembersVO) session.getAttribute("membersVO");
@@ -379,18 +380,20 @@ public class MembersServlet extends HttpServlet {
 			String mempwd = req.getParameter("mempwd");
 			String mempwdReg = "[\\w]{6,16}$";
 			if (mempwd == null || mempwd.trim().length() == 0) {
-				errorMsgs.add("會員密碼: 請勿空白");
+				mempwd = membersVO.getMempwd();
 			} else if (!mempwd.trim().matches(mempwdReg)) { // 以下練習正則(規)表示式(regular-expression)
 				errorMsgs.add("會員密碼: 只能是英文字母、數字,且長度必需在6到16之間");
 			}
 			String Rmempwd = req.getParameter("Rmempwd");
-			if (!(Rmempwd.equals(mempwd))) {
-				errorMsgs.add("重複輸入密碼必須一致");
+			if (Rmempwd == null || Rmempwd.trim().length() == 0) {
+				Rmempwd = membersVO.getMempwd();
+			}else if (!(Rmempwd.equals(mempwd))) {
+				errorMsgs.add("重複輸入密碼:必須一致");
 			}
 			String nkname = req.getParameter("nkname");
 			String nknameReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{2,10}";
 			if (nkname == null || nkname.trim().length() == 0) {
-				errorMsgs.add("會員暱稱: 請勿空白");
+				nkname = membersVO.getNkname();
 			} else if (!nkname.trim().matches(nknameReg)) { // 以下練習正則(規)表示式(regular-expression)
 				errorMsgs.add("會員暱稱: 只能是中、英文字母和數字 , 且長度必需在2到10之間");
 			}
@@ -415,12 +418,16 @@ public class MembersServlet extends HttpServlet {
 			membersVO.setMempwd(mempwd);
 			membersVO.setNkname(nkname);
 			membersVO.setMprofile(mprofile);
+			
+			
 			if (!errorMsgs.isEmpty()) {
 				req.setAttribute("membersVO", membersVO); // 含有輸入格式錯誤的empVO物件,也存入req
 				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/members/updateMembersV2.jsp");
 				failureView.forward(req, res);
 				return;
 			}
+			String inform2 = "200";
+			req.setAttribute("inform2", inform2);
 			MembersService membersSvc = new MembersService();
 			membersVO = membersSvc.updateMembers(mempwd, nkname, mprofile, memno);
 			String url = "/front-end/members/updateMembersV2.jsp";
