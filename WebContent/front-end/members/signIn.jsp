@@ -227,10 +227,12 @@ background: url("<%=request.getContextPath()%>/front-end/members/assets/img/bgPi
 
 <script>
 var inform2 = document.getElementById('inform2').value;
-var message = document.getElementById('message').value;
 if(inform2 ==='200'){
 	swal('恭喜啦', '您已經成為我們的會員囉<br>趕快來登入並且開始瀏覽課程吧', 'success');
-}else if(message.length !== 0){
+}
+var message = document.getElementById('message').value;
+
+if(message.length !== 0){
 	 swal('注意', message, 'warning');
 }
 

@@ -745,9 +745,9 @@ height:36px;
 	
 	<!-- </div> -->
 	<!-- Preloader -->
-	<div id="preloader">
+	<!-- <div id="preloader">
 		<div class="loader" id="loader-1"></div>
-	</div> 
+	</div>  -->
 	<!-- End Preloader -->
 	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
 	<script type="text/javascript">
