@@ -11,28 +11,25 @@
 	PostsService postsSvc = new PostsService();
 	List<PostsVO> list = postsSvc.getAll();
 	request.setAttribute("list", list);
-	
-	
-	
 %>
-<%
-	//????-如何先get到session member登入資料  才能夠去檢舉
-	ReportDetailVO reportdetailVO2 = new ReportDetailVO();//假資料
-	reportdetailVO2.setMemno("MEM0005");//假資料
-	reportdetailVO2.setPostno("POST0005");//假資料
-	// 		  reportdetailVO2.setReportno("REPO0005");//假資料
-	reportdetailVO2.setEmpno("EMP0002");//假資料
-	//reportdetailVO2.setCourseno("COUR0002");//假資料
-	
-%>
+
 <jsp:useBean id="postSvc" scope="page" class="com.posts.model.PostsService" />
 <jsp:useBean id="memSvc" scope="page" class="com.members.model.MembersService" />
 <!DOCTYPE html>
 <html>
 <head>
+
+		<script>
+			function toggleA(name){
+				if	(document.getElementById(name).style.display=="none"){
+					document.getElementById(name).style.display = "block";
+				} else{
+					document.getElementById(name).style.display = "none";
+				}
+			}
+		</script>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-
 
 </head>
 <style>
@@ -49,21 +46,17 @@
 	-moz-box-sizing: border-box;
 	box-sizing: border-box;
 }
-
 a {
 	color: #03658c;
 	text-decoration: none;
 }
-
 ul {
 	list-style-type: none;
 }
-
 body {
 	font-family: 'Roboto', Arial, Helvetica, Sans-serif, Verdana;
 	background: #dee1e3;
 }
-
 /** ====================
  * Lista de Comentarios
  =======================*/
@@ -71,23 +64,19 @@ body {
 	margin: 60px auto 15px;
 	width: 768px;
 }
-
 .comments-container h1 {
 	font-size: 36px;
 	color: #283035;
 	font-weight: 400;
 }
-
 .comments-container h1 a {
 	font-size: 18px;
 	font-weight: 700;
 }
-
 .comments-list {
 	margin-top: 30px;
 	position: relative;
 }
-
 /**
  * Lineas / Detalles
  -----------------------*/
@@ -100,7 +89,6 @@ body {
 	left: 32px;
 	top: 0;
 }
-
 .comments-list:after {
 	content: '';
 	position: absolute;
@@ -114,11 +102,9 @@ body {
 	-moz-border-radius: 50%;
 	border-radius: 50%;
 }
-
 .reply-list:before, .reply-list:after {
 	display: none;
 }
-
 .reply-list li:before {
 	content: '';
 	width: 60px;
@@ -128,13 +114,11 @@ body {
 	top: 25px;
 	left: -55px;
 }
-
 .comments-list li {
 	margin-bottom: 15px;
 	display: block;
 	position: relative;
 }
-
 .comments-list li:after {
 	content: '';
 	display: block;
@@ -142,7 +126,6 @@ body {
 	height: 0;
 	width: 0;
 }
-
 .reply-list {
 	padding-left: 88px;
 	clear: both;
@@ -166,17 +149,14 @@ body {
 	box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
 	overflow: hidden;
 }
-
 .comments-list .comment-avatar img {
 	width: 100%;
 	height: 100%;
 }
-
 .reply-list .comment-avatar {
 	width: 50px;
 	height: 50px;
 }
-
 .comment-main-level:after {
 	content: '';
 	width: 0;
@@ -195,7 +175,6 @@ body {
 	-moz-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15);
 	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15);
 }
-
 .comments-list .comment-box:before, .comments-list .comment-box:after {
 	content: '';
 	height: 0;
@@ -208,17 +187,14 @@ body {
 	top: 8px;
 	left: -11px;
 }
-
 .comments-list .comment-box:before {
 	border-width: 11px 13px 11px 0;
 	border-color: transparent rgba(0, 0, 0, 0.05);
 	left: -12px;
 }
-
 .reply-list .comment-box {
 	width: 610px;
 }
-
 .comment-box .comment-head {
 	background: #FCFCFC;
 	padding: 10px 12px;
@@ -228,7 +204,6 @@ body {
 	-moz-border-radius: 4px 4px 0 0;
 	border-radius: 4px 4px 0 0;
 }
-
 .comment-box .comment-head i {
 	float: right;
 	margin-left: 14px;
@@ -240,11 +215,9 @@ body {
 	-o-transition: color 0.3s ease;
 	transition: color 0.3s ease;
 }
-
 .comment-box .comment-head i:hover {
 	color: #03658c;
 }
-
 .comment-box .comment-name {
 	color: #283035;
 	font-size: 14px;
@@ -252,11 +225,9 @@ body {
 	float: left;
 	margin-right: 10px;
 }
-
 .comment-box .comment-name a {
 	color: #283035;
 }
-
 .comment-box .comment-head span {
 	float: left;
 	color: #999;
@@ -264,7 +235,6 @@ body {
 	position: relative;
 	top: 1px;
 }
-
 .comment-box .comment-content {
 	background: #FFF;
 	padding: 12px;
@@ -274,12 +244,10 @@ body {
 	-moz-border-radius: 0 0 4px 4px;
 	border-radius: 0 0 4px 4px;
 }
-
 .comment-box .comment-name.by-author, .comment-box .comment-name.by-author a
 	{
 	color: #03658c;
 }
-
 .comment-box .comment-name.by-author:after {
 	content: 'autor';
 	background: #03658c;
@@ -292,12 +260,10 @@ body {
 	-moz-border-radius: 3px;
 	border-radius: 3px;
 }
-
 .add {
 	postion: absolute;
 	left: 500px;
 }
-
 /** =====================
  * Responsive
  ========================*/
@@ -315,18 +281,22 @@ body {
 </style>
 <body>
 
+<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/posts/posts.do" name="form1"  accept-charset="utf-8">
 	<div class="comments-container">
 		<ul id="comments-list" class="comments-list">
 			<li>
 				<div class="comment-main-level">
 					<!-- 新增留言  -->
 					<div class="comment-avatar">
-						<img src="" alt="登入會員圖片連結">
+						<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/Outdoors-man-portrait_%28cropped%29.jpg/330px-Outdoors-man-portrait_%28cropped%29.jpg" alt="登入會員圖片連結">
 					</div>
+					<input type="hidden" name="action" value="insert"/>
+					<input type="hidden" name="memno" value="MEM0001"/>
+					<input type="hidden" name="courseno" value="COUR0001"/>
+					<input type="hidden" name="superpostno" value=""/>
 					<!-- textarea -->
 					<div class="comment-box">
-						<textarea rows="4" cols="50" style="width: 680px;">
-						</textarea>
+						<textarea rows="4" cols="50" style="width: 680px;" name="postcontent" placeholder="please leave a message..."></textarea>
 						<div align="right">
 							<button>送出</button>
 						</div>
@@ -334,74 +304,101 @@ body {
 				</div>
 			</li>
 		</ul>
-	
+	</form>
 
 		<c:forEach var="postsVO" items="${list}">
-		<c:forEach var="memVO" items="${memSvc.all}">
-		<div class="comment-main-level">
-			<ul id="comments-list" class="comments-list">
-				<li>
-					<!-- 父文章 -->
-					<div class="comment-avatar">
-						<img src="" alt="會員圖片連結">
-					</div>
-
-					<div class="comment-box">
-						<div class="comment-head">
-							<!--之後改成memname -->
-							<h6 class="comment-name by-author">						
+			<c:forEach var="memVO" items="${memSvc.all}">
+			<c:if test="${postsVO.memno == memVO.memno}">
+			<div class="comment-main-level">
+				<ul id="comments-list" class="comments-list">
+					<li>
+						<!-- 父文章 -->
+						<div class="comment-avatar">
+							<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/Outdoors-man-portrait_%28cropped%29.jpg/330px-Outdoors-man-portrait_%28cropped%29.jpg" alt="會員圖片連結">
+						</div>
+	
+						<div class="comment-box">
+							<div class="comment-head">
+								<!--之後改成memname -->
+								<h6 class="comment-name by-author">						
+									
+									${memVO.memname}
 								
-								<c:if test="${postsVO.memno == memVO.memno}">
-								<a>${memVO.memname}</a>
-								</c:if>
+								</h6>
+								
 							
-							</h6>
-							<h6 class="comment-name by-author">
-								<a>${postsVO.postno}</a>
-							</h6>
+	
+								<span></span> <i class="fa fa-reply"></i> <i class="fa fa-heart"></i>
+								<div align="right">
+									<button>檢舉</button>
+									<input type="button" onclick="toggleA('${postsVO.postno }')" value="回覆">
+								</div>				
+											
+							</div>				
+						<div class="comment-content">
+								${postsVO.postcontent}
+						</div>
+						</div>
+					</li>
+				</ul>
+				</div>		
+		
+		<c:forEach var="postsVOSub" items="${list}">
+			<c:forEach var="memVOSub" items="${memSvc.all}">
+			<c:if test="${postsVOSub.memno == memVOSub.memno && postsVOSub.superpostno == postsVO.postno}">
+				<!-- 回覆留言 -->
+				<ul class="comments-list reply-list">
+					<li>
+						<!-- Avatar -->
+						<div class="comment-avatar">
+							<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/Outdoors-man-portrait_%28cropped%29.jpg/330px-Outdoors-man-portrait_%28cropped%29.jpg" alt="會員照片連結">
+						</div> <!-- Contenedor del Comentario -->
+						<div class="comment-box">
+							<div class="comment-head">
+								<h6 class="comment-name">
+									<a>${memVOSub.memname}</a>
+			
+								</h6>
+								<span></span> <i class="fa fa-reply"></i> <i class="fa fa-heart"></i>
+								<div align="right">
+									<button>檢舉</button>
+								</div>
+							</div>
+							<div class="comment-content">	${postsVOSub.postcontent}</div>
+							</div>
+					</li>
+				</ul>	
+				
 							
-						
-
-							<span></span> <i class="fa fa-reply"></i> <i class="fa fa-heart"></i>
-							<div align="right">
-								<button>檢舉</button>
-							</div>							
-						</div>				
-					<div class="comment-content">Lorem ipsum dolor sit amet,
-						consectetur adipisicing elit. Velit omnis animi et iure laudantium
-						vitae, praesentium optio, sapiente distinctio illo?
-					</div>
-					</div>
-				</li>
-			</ul>
-			</div>		
-	<!-- 回覆留言 -->
-	<ul class="comments-list reply-list">
-		<li>
-			<!-- Avatar -->
-			<div class="comment-avatar">
-				<img src="" alt="會員照片連結">
-			</div> <!-- Contenedor del Comentario -->
-			<div class="comment-box">
-				<div class="comment-head">
-					<h6 class="comment-name">
-						<a>${postsVO.memno}</a>
-
-					</h6>
-					<h6 class="comment-name">
-						<a>${postsVO.postno}</a>
-					</h6>
-					<span></span> <i class="fa fa-reply"></i> <i class="fa fa-heart"></i>
-					<div align="right">
-						<button>檢舉</button>
-					</div>
-				</div>
-				<div class="comment-content">Lorem ipsum dolor sit amet,
-					consectetur adipisicing elit. Velit omnis animi et iure laudantium
-					vitae, praesentium optio, sapiente distinctio illo?</div>
-				</div>
-		</li>
-	</ul>	
+				</c:if>
+				</c:forEach>
+			</c:forEach>
+		
+			<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/posts/posts.do" name="form1"  accept-charset="utf-8" id="${postsVO.postno }" style="display:none">
+				
+					<ul id="comments-list" class="comments-list"  id="${postsVO.postno }">
+						<li>
+							<div class="comment-main-level">
+								<!-- 新增留言  -->
+								<div class="comment-avatar">
+									<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/Outdoors-man-portrait_%28cropped%29.jpg/330px-Outdoors-man-portrait_%28cropped%29.jpg" alt="登入會員圖片連結">
+								</div>
+								<input type="hidden" name="action" value="insert"/>
+								<input type="hidden" name="memno" value="MEM0001"/>
+								<input type="hidden" name="courseno" value="COUR0001"/>
+								<input type="hidden" name="superpostno" value="${postsVO.postno }"/>
+								<!-- textarea -->
+								<div class="comment-box">
+									<textarea rows="4" cols="50" style="width: 680px;" name="postcontent"></textarea>
+									<div align="right">
+										<button>送出</button>
+									</div>
+								</div>
+							</div>
+						</li>
+					</ul>
+				</form>
+		</c:if>
 		</c:forEach>
 	</c:forEach>
 	

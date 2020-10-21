@@ -250,10 +250,6 @@ public class PostsServlet extends HttpServlet {
 				String memno = req.getParameter("memno");
 				String courseno = req.getParameter("courseno");
 
-				MembersService memSvc= new MembersService();
-				MembersVO memVO = memSvc.getOneMembers(memno);
-				String memName = memVO.getMemname();
-				req.setAttribute("memName", memName);
 				
 				if (postcontent == null || (postcontent.trim()).length() == 0) {
 					errorMsgs.add("留言不能空白");
@@ -269,15 +265,15 @@ public class PostsServlet extends HttpServlet {
 
 				/*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
 				req.setAttribute("postsVO", postsVO);
-				String url = "/front-end/posts/Posts.jsp";
+				String url = "/front-end/posts/posts.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); 
 				successView.forward(req, res);
 
 				/*************************** 其他可能的錯誤處理 **********************************/
 			} catch (Exception e) {
-				System.out.println("空值");
+				System.out.println("空值" + e);
 				errorMsgs.add(e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/posts/addPosts.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/posts/posts.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -306,7 +302,7 @@ public class PostsServlet extends HttpServlet {
 
 				/*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
 				req.setAttribute("postsVO", postsVO);
-				String url = "/front-end/posts/listOnePosts.jsp";
+				String url = "/front-end/posts/post.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); 
 				successView.forward(req, res);
 
