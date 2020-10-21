@@ -1,6 +1,5 @@
 package com.lecorder.model;
 
-import java.sql.Connection;
 import java.sql.Timestamp;
 import java.util.List;
 import com.lecseat.model.*;

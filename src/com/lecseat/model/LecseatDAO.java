@@ -8,9 +8,6 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
-import com.lecorder.model.*;
-import com.lecture.model.*;
-
 public class LecseatDAO implements LecseatDAO_Interface{
 	
 	private static DataSource ds = null;

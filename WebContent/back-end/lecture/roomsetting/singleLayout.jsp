@@ -3,11 +3,7 @@
 <%@ page import="com.classroom.model.*"%>
 <%@ page import="com.lecture.model.*"%>
 
-<%
-	LecVO lvo = (LecVO) request.getAttribute("lecVO");
-	String roomnoStr = lvo.getRoomno();
-	String lecno = lvo.getLecno();
-%>
+
 
 <html>
 <head>
@@ -40,16 +36,16 @@
 			<div class="col-md-4">
 				<div id="classroom">
 					<div id="stage">
-						Stage
+						Stage hi
 					</div>
 					<br>
 					<div id="seatmapping"></div>
 					<%-- hidden layout settings --%>
-					<input type="hidden" id="roomno" value="<%=roomnoStr%>">
-					<input type="hidden" id="roomrow" class="roomSpace" name="roomrow" value="3">
-					<input type="hidden" id="roomcolumn" class="roomSpace" name="roomcolumn" value="3">
-					<input type="hidden" id="fixedseat" name="initseat" value="" readonly>
-					<input type="hidden" id="defaultseat" name="currseat" value="111111111" readonly>
+					<input type="hidden" id="roomno" value="${lecVO.roomno}">
+					<input type="hidden" id="roomrow" class="roomSpace" name="roomrow">
+					<input type="hidden" id="roomcolumn" class="roomSpace" name="roomcolumn">
+					<input type="hidden" id="fixedseat" name="initseat" readonly>
+					<input type="hidden" id="defaultseat" name="currseat" value="${lecVO.currseat}" readonly>
 				</div>
 			</div>
 			
@@ -61,19 +57,12 @@
 	<div id="div"></div>
 	<script src="<%=request.getContextPath()%>/back-end/lecture/roomsetting/javascript/classroom.js"></script>
   	<script>
-  	/*setDefaultseatValue($("#defaultseat").val());
-  	showSeatMapping();
   	
-  	$("#select").change(function(){
-  		var roomno = $(this).val();
-  		$("#roomno").val(roomno);
-  		$("#roomnoForm").val(roomno);*/
-  		
   		$.ajax({
   	  		url: "<%=request.getContextPath()%>/lecture/currLayout.show",
   	  		type: "POST",
   	  		data:{
-  	  			lecno: "<%=lecno%>"
+  	  			lecno: "${lecVO.lecno}"
   	  		},
   	  		success: function(data){
   	  			console.log(data);

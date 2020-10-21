@@ -45,6 +45,9 @@
 	} else {
 		status = "取消";
 	}
+	
+	pageContext.setAttribute("lecVO", lecVO);
+	
 %>
 <jsp:useBean id="spkrSvc" scope="page" class="com.speaker.model.SpkrService" />
 <jsp:useBean id="roomSvc" scope="page" class="com.classroom.model.ClassroomService" />
@@ -131,8 +134,9 @@
 			</td>
 	</tr>
 </table>
-<div id="displayInfo"><img src="<%=request.getContextPath()%>/speaker/picreader?spkrno=${lecVO.lecno}"><br><%=info %></div>
-<%@ include file="/back-end/lecture/roomsetting/singleLayout.jsp"%><br>
+<div id="displayInfo"><img src="<%=request.getContextPath()%>/lecture/picreader?lecno=${lecVO.lecno}"><br><%=info %></div>
+<%-- <%@ include file="/back-end/lecture/roomsetting/singleLayout.jsp"%><br> --%>
+<jsp:include page="/back-end/lecture/roomsetting/singleLayout.jsp"></jsp:include>
 </div>
 </body>
 

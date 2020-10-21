@@ -5,13 +5,6 @@ import java.io.IOException;
 import javax.servlet.*;
 import javax.servlet.http.*;
 
-import java.util.*;
-import java.sql.*;
-
-import com.lecture.model.*;
-import com.lecorder.model.*;
-import com.lecseat.model.*;
-
 public class LecseatServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		doPost(req, res);

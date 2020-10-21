@@ -54,8 +54,8 @@
 			action="<%=request.getContextPath()%>/back-end/lecture/listAllLec.jsp">
 			<input type="submit" value="回列表">
 		</form>
-		<div id="preivew"><img id="newimg" src=""></div>
-		<form method="post"	action="<%=request.getContextPath()%>/lecture/lecture.do">
+		<div id="preivew"><img id="dbimg" src="<%=request.getContextPath()%>/lecture/picreader?lecno=${lecVO.lecno}"><img id="newimg" src=""></div>
+		<form method="post"	action="<%=request.getContextPath()%>/lecture/lecture.do" enctype="multipart/form-data">
 			講座編號：<input type="text" name="lecno" value="${lecVO.lecno}" readonly><br>
 			講座名稱：<input type="text" name="lecname" value="${lecVO.lecname}"><br>
 			講師姓名：<jsp:useBean id="spkrSvc" scope="page" class="com.speaker.model.SpkrService" />
@@ -71,11 +71,11 @@
 			開始報名：<input name="signstart" id="f_date3" type="text"><br>
 			結束報名：<input name="signend" id="f_date4" type="text"><br>
 			講座狀態：<select name="lecstatus"><option value="1">正常</option><option value="0">取消</option></select>
-			講座圖片：等下再弄
+			講座圖片：<input name="lecpic" id="upimg" type="file"><br>
 			<%@ include file="/back-end/lecture/roomsetting/updateLayout.jsp"%><br>
 			講座資訊：
 			<%@ include file="/back-end/lecture/ckLec.file"%>
-			<input type="hidden" name="action" value="update">
+			<input id="action" type="hidden" name="action" value="update">
 		</form>
 	</div>
 	<script type="text/javascript">
@@ -248,6 +248,33 @@
         //              }
         //              return [true, ""];
         //      }});
+        
+        //upload image preview
+		var upimg = document.getElementById("upimg");
+		var dbimg = document.getElementById("dbimg");
+		upimg.addEventListener("change", function(){
+			readURL(this);
+			dbimg.setAttribute("style", "display: none;")
+		});
+		
+		function readURL(input){
+			if (input.files && input.files[0]){
+				var reader = new FileReader();
+				reader.onload = function(e){
+					var newimg = document.getElementById("newimg");
+					newimg.setAttribute("src", e.target.result);
+				}
+				reader.readAsDataURL(input.files[0]);
+			}
+		}
+		$("#btn").mouseenter(function(){
+			var fileInput = $("#upimg").get(0).files[0];
+			if(fileInput == null){
+				var val = $("#action").val("updateText");
+			}
+		});
+		
+		
 </script>
 
 </html>

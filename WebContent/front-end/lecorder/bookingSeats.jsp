@@ -29,14 +29,13 @@
 	<div class="container">
 				<div id="classroom">
 					<div id="stage">
-						Stage 幹
+						Stage
 					</div>
 					<br>
 					<div id="seatmapping"></div>
 					<%-- hidden layout settings --%>
 					<input type="hidden" id="roomrow" class="roomSpace" name="roomrow" value="${roomVO.roomrow}">
 					<input type="hidden" id="roomcolumn" class="roomSpace" name="roomcolumn" value="${roomVO.roomcolumn}">
-					<input type="text" id="fixedseat" name="initseat" value="${lvo.initseat}" readonly>
 					<input type="text" id="defaultseat" name="currseat" value="<%=defseat%>" readonly>
 				</div>
 				<div>
@@ -49,7 +48,7 @@
 	<div id="div"></div>
 	<script src="<%=request.getContextPath()%>/back-end/lecture/roomsetting/javascript/classroom.js"></script>
   	<script>
-  	var defseat = <%=defseat%>;
+  	var defseat = "<%=defseat%>";
   		
   		$.ajax({
   	  		url: "<%=request.getContextPath()%>/lecture/currLayout.show",
@@ -58,13 +57,14 @@
   	  			lecno: "<%=lno%>"
   	  		},
   	  		success: function(data){
-	  	  		console.log("我有執行");
   	  			var layout = JSON.parse(data);
+  	  			console.log(data);
   	  			for (let i = 0; i < layout.length; i++){
   	  	  			$("#roomrow").val(layout[i].roomrow);
   	  	  			$("#roomcolumn").val(layout[i].roomcolumn);
-  	  	  			$("#defaultseat").val(layout[i].currseat);
-  	  	  			$("#fixedseat").val(layout[i].initseat);
+  	  	  			$("#defaultseat").val(defseat);
+  	  	  			console.log(layout[i].roomrow);
+  	  	  		console.log(layout[i].roomcolumn);
   	  			}
   	  	         let roomRow = $("#roomrow").val();
   	  	         let roomColumn = $("#roomcolumn").val();

@@ -21,8 +21,7 @@ public class LecRoomServlet extends HttpServlet {
 		req.setCharacterEncoding("UTF-8");
 		res.setContentType("text/html; charset=UTF-8");
 		
-		String lecno = "LEC0001";
-		//String lecno = req.getParameter("lecno");
+		String lecno = req.getParameter("lecno");
 		PrintWriter out = res.getWriter();
 		
 		LecService lecSvc = new LecService();

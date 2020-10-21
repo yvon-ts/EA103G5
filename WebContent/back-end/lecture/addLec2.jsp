@@ -13,11 +13,10 @@
 	LecVO lecVO = (LecVO) request.getAttribute("lecVO");
 	String info = "請輸入講座資訊";
 //========================Init lecstart========================//
-	/*String param = request.getParameter("lecinit");
+	String param = request.getParameter("lecinit");
 	SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
 	java.util.Date paramDate = format.parse(param);
-	Timestamp lecinit = new java.sql.Timestamp(paramDate.getTime());*/
-	Timestamp lecinit = new java.sql.Timestamp(System.currentTimeMillis());
+	Timestamp lecinit = new java.sql.Timestamp(paramDate.getTime());
 %>
 
 <html>
@@ -48,7 +47,7 @@
 			<input type="submit" value="回首頁">
 		</form>
 		<div id="preivew"><img id="newimg" src=""></div>
-	<form method="post"	action="<%=request.getContextPath()%>/lecture/lecture.do"  enctype="multipart/form-data">
+	<form method="post"	action="<%=request.getContextPath()%>/lecture/lecture.do" enctype="multipart/form-data">
 			<%-- hidden roomno --%>
 			<input id="roomnoForm" type="hidden" name="roomno" value="${lecVO.roomno}"><br>
 			&emsp;講座名稱：<input type="text" name="lecname" value="${lecVO.lecname}"><br>
@@ -65,11 +64,12 @@
 			&emsp;結束時間：<input name="lecend" id="f_date2" type="text"><br>
 			&emsp;開始報名：<input name="signstart" id="f_date3" type="text"><br>
 			&emsp;結束報名：<input name="signend" id="f_date4" type="text"><br>
-			&emsp;講座圖片：<%--<input name="lecpic" type="file"><br> --%>
+			&emsp;講座圖片：<input name="lecpic" id="upimg" type="file"><br>
 			<%@ include file="/back-end/lecture/roomsetting/layout.jsp"%><br>
 			講座資訊：
-			<input type="hidden" name="action" value="insert"><br>
+			<input id="action" type="hidden" name="action" value="insert"><br>
 			<%@ include file="/back-end/lecture/ckLec.file"%>
+			
 			
 			
 		</form>
@@ -244,7 +244,12 @@
         //              }
         //              return [true, ""];
         //      }});
-        
+		$("#btn").mouseenter(function(){
+			var fileInput = $("#upimg").get(0).files[0];
+			if(fileInput == null){
+				var val = $("#action").val("insertText");
+			}
+		});
 </script>
 
 </html>

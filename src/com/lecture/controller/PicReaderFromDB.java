@@ -28,9 +28,9 @@ public class PicReaderFromDB extends HttpServlet {
 		ResultSet rs = null;
 
 		try {
-			String spkrno = req.getParameter("lecno");
+			String lecno = req.getParameter("lecno");
 			pstmt = con.prepareStatement(LOAD_LECPIC);
-			pstmt.setString(1, spkrno);
+			pstmt.setString(1, lecno);
 			rs = pstmt.executeQuery();
 
 			if (rs.next()) {

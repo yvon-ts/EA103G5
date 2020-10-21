@@ -15,7 +15,12 @@ public class LecDAO implements LecDAO_Interface {
 
 	private static final String INSERT_STMT = "INSERT INTO LECTURE (lecno, lecname, lecprice, spkrno, roomno, lecstart, lecend, signstart, signend, initseat, currseat, lecinfo, lecpic)"
 			+ "VALUES ('LEC' || LPAD(SEQ_LECNO.NEXTVAL, 4, 0), ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-	private static final String UPDATE_STMT = "UPDATE LECTURE SET lecname = ?, lecprice = ?, spkrno = ?, roomno = ?, lecstart = ?, lecend = ?, signstart = ?, signend = ?, initseat = ?,currseat = ?, lecinfo = ?, lecpic = ?, lecstatus = ?, leclmod = ? WHERE lecno = ?";
+	private static final String INSERT_NO_PIC = "INSERT INTO LECTURE (lecno, lecname, lecprice, spkrno, roomno, lecstart, lecend, signstart, signend, initseat, currseat, lecinfo)"
+			+ "VALUES ('LEC' || LPAD(SEQ_LECNO.NEXTVAL, 4, 0), ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+	private static final String UPDATE_STMT = "UPDATE LECTURE SET lecname = ?, lecprice = ?, spkrno = ?, roomno = ?, lecstart = ?, lecend = ?, signstart = ?, signend = ?,"
+			+ " initseat = ?,currseat = ?, lecinfo = ?, lecpic = ?, lecstatus = ?, leclmod = ? WHERE lecno = ?";
+	private static final String UPDATE_NO_PIC = "UPDATE LECTURE SET lecname = ?, lecprice = ?, spkrno = ?, roomno = ?, lecstart = ?, lecend = ?, signstart = ?, signend = ?,"
+			+ " initseat = ?, currseat = ?, lecinfo = ?, lecstatus = ?, leclmod = ? WHERE lecno = ?";
 	private static final String GETONE_STMT = "SELECT * FROM LECTURE WHERE lecno = ?";
 	private static final String GETALL_STMT = "SELECT * FROM LECTURE ORDER BY LECNO";
 	
@@ -83,6 +88,59 @@ public class LecDAO implements LecDAO_Interface {
 			}
 		}
 	}
+	
+	@Override
+	public void insertNoPic(LecVO lecVO) {
+
+		Connection con = null;
+		PreparedStatement pstmt = null;
+
+		try {
+			con = ds.getConnection();
+			con.setAutoCommit(false);
+			pstmt = con.prepareStatement(INSERT_NO_PIC);
+
+			pstmt.setString(1, lecVO.getLecname());
+			pstmt.setInt(2, lecVO.getLecprice());
+			pstmt.setString(3, lecVO.getSpkrno());
+			pstmt.setString(4, lecVO.getRoomno());
+			pstmt.setTimestamp(5, lecVO.getLecstart());
+			pstmt.setTimestamp(6, lecVO.getLecend());
+			pstmt.setTimestamp(7, lecVO.getSignstart());
+			pstmt.setTimestamp(8, lecVO.getSignend());
+			pstmt.setString(9, lecVO.getInitseat());
+			pstmt.setString(10, lecVO.getCurrseat());
+			pstmt.setBytes(11, lecVO.getLecinfo());
+
+			pstmt.executeUpdate();
+			con.commit();
+
+		} catch (SQLException se) {
+			try {
+				con.rollback();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			throw new RuntimeException("Database error." + se.getMessage());
+
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.setAutoCommit(true);
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+	}
 
 	@Override
 	public void update(LecVO lecVO) {
@@ -112,6 +170,64 @@ public class LecDAO implements LecDAO_Interface {
 			Timestamp leclmod = new Timestamp(System.currentTimeMillis());
 			pstmt.setTimestamp(14, leclmod);
 			pstmt.setString(15, lecVO.getLecno());
+
+			pstmt.executeUpdate();
+			con.commit();
+
+		} catch (SQLException se) {
+			try {
+				con.rollback();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			throw new RuntimeException("Database error." + se.getMessage());
+
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.setAutoCommit(true);
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+	}
+	
+	@Override
+	public void updateNoPic(LecVO lecVO) {
+
+		Connection con = null;
+		PreparedStatement pstmt = null;
+
+		try {
+			con = ds.getConnection();
+			con.setAutoCommit(false);
+			pstmt = con.prepareStatement(UPDATE_NO_PIC);
+
+			pstmt.setString(1, lecVO.getLecname());
+			pstmt.setInt(2, lecVO.getLecprice());
+			pstmt.setString(3, lecVO.getSpkrno());
+			pstmt.setString(4, lecVO.getRoomno());
+			pstmt.setTimestamp(5, lecVO.getLecstart());
+			pstmt.setTimestamp(6, lecVO.getLecend());
+			pstmt.setTimestamp(7, lecVO.getSignstart());
+			pstmt.setTimestamp(8, lecVO.getSignend());
+			pstmt.setString(9, lecVO.getInitseat());
+			pstmt.setString(10, lecVO.getCurrseat());
+			pstmt.setBytes(11, lecVO.getLecinfo());
+			pstmt.setInt(12, lecVO.getLecstatus());
+			//get lmod
+			Timestamp leclmod = new Timestamp(System.currentTimeMillis());
+			pstmt.setTimestamp(13, leclmod);
+			pstmt.setString(14, lecVO.getLecno());
 
 			pstmt.executeUpdate();
 			con.commit();
