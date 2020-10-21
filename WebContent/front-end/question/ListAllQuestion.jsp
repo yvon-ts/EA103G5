@@ -17,6 +17,10 @@
 		pageContext.setAttribute("list", list);
 %>
 <jsp:useBean id="ttSvc" scope="page" class="com.test_type.model.TestTypeService" />
+
+<jsp:useBean id="CourseSvc" scope="page" class="com.course.model.CourseService" />
+
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -57,13 +61,16 @@
                         </div>
                     </div>
                 </div>
+                
+                
                 <form action="<%= request.getContextPath()%>/question/questionBank.do" method="post">
+                	
                 	<select name="courseno">
-                		<option value="" selected>請選擇課程</option>
-                		<option value="COUR0001">COURNAME1</option>
-                		<option value="COUR0002">COURNAME2</option>
-                		<option value="COUR0003">COURNAME3</option>
-                		<option value="COUR0004">COURNAME4</option>
+                			<option value="" selected>請選擇課程</option>
+                		<c:forEach var="CourseVo" items="${CourseSvc.allForEmployee}">
+                			<option value="${CourseVo.courseno }">${CourseVo.coursename }</option>
+                		</c:forEach>
+                		
                 	</select>
                 	<select name="testtypeno">
                 			<option value="" selected>請選擇題型</option>
@@ -71,6 +78,7 @@
                 			<option value="${testTypevo.testtypeno}">${testTypevo.testdgee}-${(testTypevo.testtype eq 'checkbox' )? '多選題':(testTypevo.testtype eq 'radio' )? '單選題':'填空題' }</option>	
                 		</c:forEach>
                 	</select>
+                	
                 	<select name="testscope">
                 		<option value="" selected>請選擇單元</option>
                 		<option value="1">單元一</option>
@@ -103,7 +111,7 @@
                         <tr>
                             
                             <td>${QuestionBankvo.qbankno }</td>
-                            <td>${QuestionBankvo.courseno }</td>
+                            <td>${CourseSvc.getOneCourse(QuestionBankvo.courseno).coursename }</td>
                             <c:if test="${ttSvc.getOnebyNO(QuestionBankvo.typeno).testdgee eq '簡單'}">
                             	<td><span class="badge badge-primary">簡單</span></td>
                             </c:if>
@@ -136,6 +144,10 @@
             </div>
         </div>
     </div>
+    
+    
+    
+    
 	<script type="text/javascript">
 			
 			$(document).ready(function(){

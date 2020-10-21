@@ -280,8 +280,7 @@ public class QuestionBankServlet extends HttpServlet {
 		
 		request.setAttribute("QuestionBankvo", QuestionBankvo);
 		
-		String url = request.getParameter("url");
-		System.out.println(url);
+		
 		 
 		RequestDispatcher successView = request.getRequestDispatcher("/front-end/question/ListOneQuestion.jsp");
 		successView.forward(request, response);

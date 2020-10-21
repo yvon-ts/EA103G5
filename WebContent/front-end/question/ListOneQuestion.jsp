@@ -20,6 +20,7 @@
     pageContext.setAttribute("testAns",testAns.toString());
   }
 %>
+<jsp:useBean id="CourseSvc" scope="page" class="com.course.model.CourseService" />
 <!DOCTYPE html>
 <html>
 <head>
@@ -58,7 +59,7 @@ Back to the question bank</span></a>
                             <td>題目編號</td><td>${QuestionBankvo.qbankno }</td>
                         </tr>
                         <tr>
-                            <td>課程名稱</td><td>${QuestionBankvo.courseno }</td>
+                            <td>課程名稱</td><td>${CourseSvc.getOneCourse(QuestionBankvo.courseno).coursename }</td>
                         </tr>
                         <tr>    
                             <td>課程難易度</td><td>${QuestionBankvo.typeno }</td>

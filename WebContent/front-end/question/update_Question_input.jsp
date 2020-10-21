@@ -23,6 +23,8 @@
 %>
 <jsp:useBean id="testTypeSvc" scope="page" class="com.test_type.model.TestTypeService" />
 
+<jsp:useBean id="CourseSvc" scope="page" class="com.course.model.CourseService" />
+
 <!DOCTYPE html>
 <html>
 
@@ -180,15 +182,21 @@ option[value=""] {
         		<option value="checkbox" ${testTypeSvc.getOnebyNO(QuestionBankvo.typeno).testtype eq 'checkbox'? 'selected':'disabled'}>多選題</option>
     		</select>
                 
-                <select id="idatype" name="courseno" class="select-text" required>
-                    <option value="COUR0001" ${QuestionBankvo.courseno eq "COUR0001" ? 'selected' :''}>courseName1</option>
-                    <option value="COUR0002" ${QuestionBankvo.courseno eq "COUR0002" ? 'selected' :''}>courseName2</option>
-                    <option value="COUR0003" ${QuestionBankvo.courseno eq "COUR0003" ? 'selected' :''}>courseName3</option>
+                
+                
+               
+                
+                 <select id="idatype" name="courseno" class="select-text" required>
+                		<c:forEach var="CourseVo" items="${CourseSvc.allForEmployee}">
+                			 <option value="${CourseVo.courseno }" ${QuestionBankvo.courseno eq "${CourseVo.courseno} " ? 'selected' :''} readonly>${CourseVo.coursename }</option>
+                		</c:forEach>
                 </select>
+                
+               
                 <select id="idatype" name="testscope" class="select-text" required>
-                    <option value="1" value="1" ${QuestionBankvo.testscope eq '1' ? 'selected' :''}>單元一</option>
+                    <option value="1" ${QuestionBankvo.testscope eq '1' ? 'selected' :''}>單元一</option>
                     <option value="2" ${QuestionBankvo.testscope eq '2' ? 'selected' :''}>單元二</option>
-                    <option value="3" value="3" ${QuestionBankvo.testscope eq '3' ? 'selected' :''}>單元三</option>
+                    <option value="3" ${QuestionBankvo.testscope eq '3' ? 'selected' :''}>單元三</option>
                 </select>
                 <div id="parentDiv"></div>
                 <input type="hidden" name="action" value="updateQuestion">
@@ -197,6 +205,9 @@ option[value=""] {
         		</div>
         </form>
         </div>
+
+
+
     <script type="text/javascript">
                 $(document).ready(function() {
                 	$('#idatype').hide();
@@ -206,9 +217,9 @@ option[value=""] {
                         if ($(this).val() == 'text') {
                             $('#parentDiv').html(`
                     <select id="idatype" name="typeno" class="select-text" required>
-                        <option value="1" >簡單</option>
-                        <option value="2" >中等</option>
-                        <option value="3" >困難</option>
+                        <option value="1" ${QuestionBankvo.typeno eq '1' ? 'selected' :''} >簡單</option>
+                        <option value="2" ${QuestionBankvo.typeno eq '2' ? 'selected' :''}>中等</option>
+                        <option value="3" ${QuestionBankvo.typeno eq '3' ? 'selected' :''}>困難</option>
                     </select><h5>題目:</h5><textarea class="summernote"  name="qustmt">${QuestionBankvo.qustmt}</textarea>
                 		    <h5>答案:</h5><textarea name="quans" style="width = 480px">${QuestionBankvo.quans}</textarea>`);
                             
@@ -225,9 +236,9 @@ option[value=""] {
                         } else if ($(this).val() == 'radio') {
 
                             $('#parentDiv').html(`<select id="idatype" name="typeno" class="select-text" required>
-                        <option value="4" >簡單</option>
-                        <option value="5" >中等</option>
-                        <option value="6" >困難</option>
+                        <option value="4" ${QuestionBankvo.typeno eq '4' ? 'selected' :''}>簡單</option>
+                        <option value="5" ${QuestionBankvo.typeno eq '5' ? 'selected' :''}>中等</option>
+                        <option value="6" ${QuestionBankvo.typeno eq '6' ? 'selected' :''}>困難</option>
                     </select><h5>題目:</h5><textarea class="summernote" name="qustmt">${QuestionBankvo.qustmt}</textarea>
                     <ul class="option">
                     <li><label><input type="radio" name="single" value="A" ${opAns[0] eq '1'? 'checked':''}> A. <input type="text" name="op1" value="${QuestionBankvo.op1}" placeholder="請輸入選項" style="width:209px"></label></li>
@@ -252,9 +263,9 @@ option[value=""] {
                         } else if ($(this).val() == 'checkbox') {
 
                             $('#parentDiv').html(`<select id="idatype" name="typeno" class="select-text" required>
-                        <option value="7" >簡單</option>
-                        <option value="8" >中等</option>
-                        <option value="9" >困難</option>
+                        <option value="7" ${QuestionBankvo.typeno eq '7' ? 'selected' :''}>簡單</option>
+                        <option value="8" ${QuestionBankvo.typeno eq '8' ? 'selected' :''}>中等</option>
+                        <option value="9" ${QuestionBankvo.typeno eq '9' ? 'selected' :''}>困難</option>
                     </select><h5>題目:</h5><textarea class="summernote" name="qustmt">${QuestionBankvo.qustmt}</textarea>
                     <ul class="option">
                     <li><label><input type="checkbox" name="multiple" value="A" ${opAns[0] eq '1'? 'checked':''}> A. <input type="text" name="op1" value="${QuestionBankvo.op1}" placeholder="請輸入選項" style="width:209px"></label></li>
