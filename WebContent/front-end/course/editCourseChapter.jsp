@@ -33,7 +33,7 @@
 					map.put("courseno", new String[]{ courseno });
 					request.setAttribute("map", map);
 				%>
-				${courseVO.courseno}
+				
 				<!-- 讀出課程現有的單元清單 -->
 				<jsp:useBean id="videoSvc" scope="page" class="com.video.model.VideoService" />
 				<c:forEach var="videoVO" items="${videoSvc.getAll(map)}" varStatus="status">

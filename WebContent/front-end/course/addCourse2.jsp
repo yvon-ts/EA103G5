@@ -45,7 +45,7 @@
 			</div>
 
 			<div class="row">
-				<div class="col">
+				<div class="col-md-6">
 					<h2>資料新增：</h2>
 
 					<%-- 錯誤表列 --%>
@@ -72,53 +72,46 @@
 								</c:forEach>
 							</select>
 						</div>
+						
 						<div>
 							<span>課程名稱：</span>
 							<input type="text" name="coursename" size="45" value="<%=(courseVO == null) ? "真空吸引" : courseVO.getCoursename()%>" />
 						</div>
 
-						<div>
-							<span>課程資訊：</span>
-							<input type="TEXT" name="courseinfo" size="45" value="<%=(courseVO == null) ? "這是一堂騙錢的課" : courseVO.getCourseinfo()%>" />
-						</div>
+						
 
 						<div>
 							<span>課程單價：</span>
 							<input type="NUMBER" name="courseprice" size="45" value="<%=(courseVO == null) ? 787 : courseVO.getCourseprice()%>" />
 						</div>
 
-						<div><span>課程圖片：</span></div>
-						<input type="file" name="courseimg" size="45" id="fileUp" />
+						<div>
+							<span>課程圖片：</span>
+							<input type="file" name="courseimg" size="45" id="fileUp"/>
+						</div>
 
-<br><br><br><br><br>
+					</div>
 
-						<h2>不該給開課者填寫的東西</h2>
-						<div><span>老師編號：(該被自動抓取)</span></div>
-						<input type="text" name="tchrno" size="45" value="<%=(courseVO == null) ? "TCHR0001" : courseVO.getTchrno()%>" />
-
-						<div><span>課程總時數：</span></div>
-						<input type="NUMBER" name="ttltime" size="45"
-							value="<%=(courseVO == null) ? 9999 : courseVO.getTtltime()%>" />
-
-						<div><span>商品狀態：</span></div>
-						<input type="RADIO" name="roomdelete" size="45" value="審核中" checked>審核中
-						<input type="RADIO" name="roomdelete" size="45" value="上架">上架
-						<input type="RADIO" name="roomdelete" size="45" value="下架">下架
-
-						<div><span>累積總評分數：</span></div>
-						<input type="NUMBER" name="csscore" size="45"
-							value="<%=(courseVO == null) ? 333 : courseVO.getCsscore()%>" />
-
-						<div><span>評分次數：</span></div>
-						<input type="NUMBER" name="csscoretimes" size="45"
-							value="<%=(courseVO == null) ? 444 : courseVO.getCsscoretimes()%>" />
-
-
-<h2>不該給開課者填寫的東西</h2>
-						<br>
+					<div class="col-md-6">
+						<div>
+							<span>課程資訊：</span>
+							<input type="TEXT" name="courseinfo" size="45" value="<%=(courseVO == null) ? "這是一堂騙錢的課" : courseVO.getCourseinfo()%>" />
+						</div>
+						
+						
 						<input type="hidden" name="action" value="insert">
 						<input type="submit" value="送出新增">
-
+						
+						
+						
+						
+						<h2>不該給開課者填寫的東西</h2>
+						<!-- 教師編號應該要自己抓到 -->
+						<input type="text" name="tchrno" size="45" value="TCHR0001" />
+						<input type="hidden" name="ttltime" value=0 />
+						<input type="hidden" name=csstatus value="審核中" >
+						<input type="hidden" name="csscore" value=3 />
+						<input type="hidden" name="csscoretimes" value=1 />
 					</form>
 
 				</div>

@@ -177,8 +177,8 @@ public class CourseServlet extends HttpServlet {
 				Integer csscore = null;
 				try {
 					csscore = Integer.valueOf(req.getParameter("csscore"));
-					if (csscore <= 0) {
-						errorMsgs.add("累積總評分數請輸入大於零的整數");
+					if (csscore < 0) {
+						errorMsgs.add("累積總評分數不可小於零");
 					}
 				} catch (NumberFormatException e) {
 					csscore = 0;
@@ -188,8 +188,8 @@ public class CourseServlet extends HttpServlet {
 				Integer csscoretimes = null;
 				try {
 					csscoretimes = Integer.valueOf(req.getParameter("csscoretimes"));
-					if (csscoretimes <= 0) {
-						errorMsgs.add("評分次數請輸入大於零的整數");
+					if (csscoretimes < 0) {
+						errorMsgs.add("評分次數請不可小於零");
 					}
 				} catch (NumberFormatException e) {
 					csscoretimes = 0;
@@ -197,6 +197,7 @@ public class CourseServlet extends HttpServlet {
 				}
 				
 				byte[] courseimg = null;
+				//圖片尚未做
 
 				CourseVO courseVO = new CourseVO();
 				courseVO.setCourseno(courseno);
@@ -272,8 +273,8 @@ public class CourseServlet extends HttpServlet {
 				// 應該要自己抓影片的長度
 				try {
 					ttltime = Integer.valueOf(req.getParameter("ttltime"));
-					if (ttltime <= 0) {
-						errorMsgs.add("課程總時數請輸入大於零的整數");
+					if (ttltime < 0) {
+						errorMsgs.add("課程總時數不可小於零");
 					}
 				} catch (NumberFormatException e) {
 					ttltime = 0;
@@ -285,8 +286,8 @@ public class CourseServlet extends HttpServlet {
 				Integer csscore = null;
 				try {
 					csscore = Integer.valueOf(req.getParameter("csscore"));
-					if (csscore <= 0) {
-						errorMsgs.add("累積總評分數請輸入大於零的整數");
+					if (csscore < 0) {
+						errorMsgs.add("累積總評分數不可小於零");
 					}
 				} catch (NumberFormatException e) {
 					csscore = 0;
@@ -298,8 +299,8 @@ public class CourseServlet extends HttpServlet {
 				Integer csscoretimes = null;
 				try {
 					csscoretimes = Integer.valueOf(req.getParameter("csscoretimes"));
-					if (csscoretimes <= 0) {
-						errorMsgs.add("評分次數請輸入大於零的整數");
+					if (csscoretimes < 0) {
+						errorMsgs.add("評分次數不可小於零");
 					}
 				} catch (NumberFormatException e) {
 					csscoretimes = 0;
@@ -322,7 +323,7 @@ public class CourseServlet extends HttpServlet {
 					InputStream in = part.getInputStream();
 					courseimg = getUpdateFileByteArray(in);
 //					System.out.println(courseimg.length);
-					in.close();
+//					in.close();
 				}
 
 				CourseVO courseVO = new CourseVO();
@@ -340,7 +341,7 @@ public class CourseServlet extends HttpServlet {
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					req.setAttribute("courseVO", courseVO); // 含有輸入格式錯誤的empVO物件,也存入req
-					RequestDispatcher failureView = req.getRequestDispatcher("/front-end/course/addCourse.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/front-end/course/addCourse2.jsp");
 					failureView.forward(req, res);
 					return;
 				}
@@ -351,6 +352,7 @@ public class CourseServlet extends HttpServlet {
 				courseVO = courseSvc.getOneCourse(courseno);
 				/*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
 //				String url = "/front-end/course/listAllCourse.jsp";
+				req.setAttribute("courseVO", courseVO);
 				String url = "/front-end/course/editCourse.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
@@ -358,11 +360,10 @@ public class CourseServlet extends HttpServlet {
 				/*************************** 其他可能的錯誤處理 **********************************/
 			} catch (Exception e) {
 				errorMsgs.add("無法新增資料:" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/course/addCourse.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/course/addCourse2.jsp");
 				failureView.forward(req, res);
 			}
 		}
-
 	}
 
 	public static byte[] getUpdateFileByteArray(InputStream in) throws IOException {
@@ -371,5 +372,4 @@ public class CourseServlet extends HttpServlet {
 		in.close();
 		return buffer;
 	}
-
 }
