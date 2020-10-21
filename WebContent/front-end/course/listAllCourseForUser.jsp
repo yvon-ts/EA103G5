@@ -128,7 +128,14 @@
                             <h3><a href="#">${courseVO.coursename}</a></h3>
                             <p>課程共${courseVO.ttltime}分鐘</p>
 <!--                             <p>同學累計9487人</p> -->
-							<label class="shoppingcart"><i class="fa fa-shopping-cart" aria-hidden="true"></i>&nbsp;加入購物車</label>
+							
+							<form name="shoppingForm" action="<%=request.getContextPath()%>/Shop/Shopping_Cart.do" method="POST">
+							<label class="shoppingcart"><input type="submit" name="Submit"><i class="fa fa-shopping-cart" aria-hidden="true"></i>&nbsp;加入購物車</label>
+							<input type="hidden" name="action" value="ADD" />
+							<input type="hidden" name="courseno" value="${courseVO.courseno}" />
+							<input type="hidden" name="courseprice" value="${courseVO.courseprice}" />
+							</form>
+							
 							<label class="bookmark"><i class="fa fa-heart-o" aria-hidden="true" style="color:red"></i>&nbsp;加入追蹤</label>
                            	&nbsp;&nbsp;<h5>NT$${courseVO.courseprice}</h5>
                         	
@@ -214,7 +221,7 @@
 	$(document).ready(function(){
 		
 		$('.shoppingcart').click(function(){
-			alert(456);
+			alert('加入購物車');
 		});
 		$('.bookmark').click(function(){
 			alert(123);

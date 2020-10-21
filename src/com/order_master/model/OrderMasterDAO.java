@@ -41,12 +41,14 @@ public class OrderMasterDAO implements OrderMasterDAO_interface {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		String ord_next_no = null;
+		System.out.println("DAO");
 		
 		try {
 			con = ds.getConnection();
 			con.setAutoCommit(false);
 			
 			String[] col = { "orderno" };
+			System.out.println(col[0]);
 			pstmt = con.prepareStatement(INSERT_STMT, col);
 			
 			pstmt.setString(1, orderMasterVO.getMemno());
@@ -68,6 +70,7 @@ public class OrderMasterDAO implements OrderMasterDAO_interface {
 				orderDetailVO.setOrderno(ord_next_no);
 				orderDetailDAO1.insert(orderDetailVO, con);
 			}
+			System.out.println("訂單成立成功");
 			con.commit();
 			
 		} catch (Exception se) {
