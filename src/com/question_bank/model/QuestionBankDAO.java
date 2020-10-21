@@ -19,7 +19,7 @@ import javax.sql.DataSource;
 
 
 
-import jdbcUtil_CompositeQuery.jdbcUtil_CompositeQuery_Emp2;
+import jdbcUtil_CompositeQuery.jdbcUtil_CompositeQuery_question;
 
 public class QuestionBankDAO implements QuestionBankDAO_interface {
 
@@ -409,7 +409,7 @@ public class QuestionBankDAO implements QuestionBankDAO_interface {
 
 		try {
 			con = ds.getConnection();
-			String finalSQL = "select * from QUESTION_BANK " + jdbcUtil_CompositeQuery_Emp2.get_WhereCondition(map)
+			String finalSQL = "select * from QUESTION_BANK " + jdbcUtil_CompositeQuery_question.get_WhereCondition(map)
 					+ "order by QBANKNO";
 			pstmt = con.prepareStatement(finalSQL);
 			System.out.println("●●finalSQL(by DAO) = " + finalSQL);

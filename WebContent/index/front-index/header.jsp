@@ -27,7 +27,7 @@
         <nav class="navbar navbar-expand-md bg-inverse fixed-top scrolling-navbar">
             <div class="container">
                 <!-- 左上角LOGO Start -->
-                <a href="index.html" class="navbar-brand"><img src="<%=request.getContextPath()%>/index/front-index/assets/img/logo.svg" alt="">
+                <a href="<%=request.getContextPath()%>/index/front-index/index.jsp" class="navbar-brand"><img src="<%=request.getContextPath()%>/index/front-index/assets/img/logo.svg" alt="">
                     <div id="logo">Xducation</div>
                 </a>
                 <!-- 左上角LOGO End -->

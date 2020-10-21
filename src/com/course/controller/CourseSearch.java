@@ -42,9 +42,9 @@ public class CourseSearch extends HttpServlet {
 		Map<String, String[]> map = new HashMap<>();
 		
 		if ("search".equals(action)) {
-				
+			
 			if (searchText == null || searchText.trim().isEmpty()) { // 沒有輸入導到全部課程頁面
-				RequestDispatcher courseList = req.getRequestDispatcher("/front-end/course/listAllCourse.jsp");
+				RequestDispatcher courseList = req.getRequestDispatcher("/front-end/course/listAllCourseForUser.jsp");
 				courseList.forward(req, res);
 			} else {
 				
@@ -57,7 +57,7 @@ public class CourseSearch extends HttpServlet {
 				}
 
 				req.setAttribute("list", list);
-				RequestDispatcher courseList = req.getRequestDispatcher("/front-end/course/listAllCourse.jsp");
+				RequestDispatcher courseList = req.getRequestDispatcher("/front-end/course/listAllCourseForUser.jsp");
 				courseList.forward(req, res);
 			}
 		}else if("mutlipleSearch".equals(action)){

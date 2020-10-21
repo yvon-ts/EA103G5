@@ -8,7 +8,7 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
-import jdbcUtil_CompositeQuery.jdbcUtil_CompositeQuery_course_orig;
+import jdbcUtil_CompositeQuery.*;
 
 public class CourseDAO implements CourseDAO_interface {
 
@@ -284,6 +284,8 @@ public class CourseDAO implements CourseDAO_interface {
 
 	@Override
 	public List<CourseVO> getAll(Map<String, String[]> map) { // 複合查詢
+		
+		
 
 		List<CourseVO> list = new ArrayList<CourseVO>();
 		CourseVO courseVO = null;
@@ -296,7 +298,7 @@ public class CourseDAO implements CourseDAO_interface {
 
 			con = ds.getConnection();
 
-			String finalSQL = "select * from course " + jdbcUtil_CompositeQuery_course_orig.get_WhereCondition(map);
+			String finalSQL = "select * from course " + jdbcUtil_CompositeQuery_course.get_WhereCondition(map);
 
 			pstmt = con.prepareStatement(finalSQL);
 			System.out.println(finalSQL);

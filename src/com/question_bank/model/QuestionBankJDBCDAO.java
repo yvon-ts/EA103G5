@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import jdbcUtil_CompositeQuery.jdbcUtil_CompositeQuery_Emp2;
+import jdbcUtil_CompositeQuery.jdbcUtil_CompositeQuery_question;
 
 public class QuestionBankJDBCDAO implements QuestionBankDAO_interface{
 //	private static DataSource ds = null;
@@ -446,7 +446,7 @@ public List<QuestionBankVO> findAll(Map<String, String[]> map) {
 	try {
 		Class.forName(driver);
 		con = DriverManager.getConnection(url,userid,passwd);
-		String finalSQL = "select * from emp2 " + jdbcUtil_CompositeQuery_Emp2.get_WhereCondition(map)
+		String finalSQL = "select * from emp2 " + jdbcUtil_CompositeQuery_question.get_WhereCondition(map)
 				+ "order by empno";
 		pstmt = con.prepareStatement(finalSQL);
 		System.out.println("●●finalSQL(by DAO) = " + finalSQL);

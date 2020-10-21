@@ -9,7 +9,7 @@ package jdbcUtil_CompositeQuery;
 
 import java.util.*;
 
-public class jdbcUtil_CompositeQuery_Emp2 {
+public class jdbcUtil_CompositeQuery_question {
 
 	public static String get_aCondition_For_Oracle(String columnName, String value) {
 		
