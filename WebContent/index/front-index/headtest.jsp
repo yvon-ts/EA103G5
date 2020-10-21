@@ -70,13 +70,13 @@ height:36px;
 						<li class="nav-item"><a class="nav-link" href="#">
 								名人講座&nbsp;<i class="lni-bulb"></i>
 						</a></li>
-						<c:if test="${teacherSvc.getStatus(membersVO.memno).tchrstatus eq '已通過'}">
+						<c:if test="${teacherSvc.getStatus(sessionScope.membersVO.memno).tchrstatus eq '已通過'}">
 						<li class="nav-item"><a class="nav-link" href="#">
 								我要開課&nbsp;<i class="lni-bulb"></i>
 						</a></li>
 						</c:if>
 						
-						<c:if test="${not empty membersVO}">
+						<c:if test="${not empty sessionScope.membersVO}">
 							
 							
 							<li class="nav-item">
@@ -84,27 +84,27 @@ height:36px;
 									<button class="btn btn-secondary dropdown-toggle" type="button"
 										id="dropdownMenuButton" data-toggle="dropdown"
 										aria-haspopup="true" aria-expanded="false">
-										${membersVO.memname}</button>
+										${sessionScope.membersVO.memname}</button>
 									<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
 										<a class="dropdown-item"
 											href="<%=request.getContextPath()%>/front-end/members/updateMembersV2.jsp">個人檔案</a>
 											
 										
-										<c:if test="${teacherSvc.getStatus(membersVO.memno).tchrstatus eq '待審核'}">
+										<c:if test="${teacherSvc.getStatus(sessionScope.membersVO.memno).tchrstatus eq '待審核'}">
 										<a class="dropdown-item" onclick="status()" >老師檔案</a> 
 											
 										</c:if>
-										<c:if test="${teacherSvc.getStatus(membersVO.memno).tchrstatus eq '已通過'}">
+										<c:if test="${teacherSvc.getStatus(sessionScope.membersVO.memno).tchrstatus eq '已通過'}">
 										<a class="dropdown-item"
 											href="<%=request.getContextPath()%>/front-end/teacher/teacherDisplay.jsp">老師檔案</a> 
 											
 										</c:if>
-											<c:if test="${teacherSvc.getStatus(membersVO.memno).tchrstatus eq '未通過'}">
+											<c:if test="${teacherSvc.getStatus(sessionScope.membersVO.memno).tchrstatus eq '未通過'}">
 										<a class="dropdown-item"
 											href="<%=request.getContextPath()%>/front-end/teacher/teacherUpdate.jsp">老師檔案</a>
 											
 										</c:if>
-										<c:if test="${not empty membersVO}">
+										<c:if test="${not empty sessionScope.membersVO}">
 										<a class="dropdown-item"
 											href='<%=request.getContextPath()%>/members/members.do?action=signout'>會員登出</a> 
 											
@@ -122,25 +122,25 @@ height:36px;
 							
 							</c:if>
 							
-							<c:if test="${not empty membersVO.memno}">
-							<c:if test="${empty teacherSvc.getStatus(membersVO.memno)}">
+							<c:if test="${not empty sessionScope.membersVO.memno}">
+							<c:if test="${empty teacherSvc.getStatus(sessionScope.membersVO.memno)}">
 							<img id="nav_icon" src='<%=request.getContextPath()%>/front-end/members/assets/img/students.svg'>
 							</c:if>
-							<c:if test="${teacherSvc.getStatus(membersVO.memno).tchrstatus eq '待審核'}">
+							<c:if test="${teacherSvc.getStatus(sessionScope.membersVO.memno).tchrstatus eq '待審核'}">
 							<img id="nav_icon" src='<%=request.getContextPath()%>/front-end/members/assets/img/students.svg'>
 							</c:if>
 							
-							<c:if test="${teacherSvc.getStatus(membersVO.memno).tchrstatus eq '已通過'}">
+							<c:if test="${teacherSvc.getStatus(sessionScope.membersVO.memno).tchrstatus eq '已通過'}">
 							<img id="nav_icon" src='<%=request.getContextPath()%>/front-end/members/assets/img/teacher.svg'>
 							</c:if>
-							<c:if test="${teacherSvc.getStatus(membersVO.memno).tchrstatus eq '未通過'}">
+							<c:if test="${teacherSvc.getStatus(sessionScope.membersVO.memno).tchrstatus eq '未通過'}">
 							<img id="nav_icon" src='<%=request.getContextPath()%>/front-end/members/assets/img/students.svg'>
 							
 							</c:if>
 							</c:if>
 							
 
-						<c:if test="${empty membersVO}">
+						<c:if test="${empty sessionScope.membersVO}">
 							<li class="nav-item"><a class='nav-link'
 								href='<%=request.getContextPath()%>/front-end/members/signIn.jsp'>我要登入&nbsp;<i
 									class='lni-bulb'></i></a></li>
