@@ -8,8 +8,6 @@ import javax.servlet.*;
 import javax.servlet.http.*;
 
 import com.lecture.model.*;
-import com.speaker.model.SpkrService;
-import com.speaker.model.SpkrVO;
 
 public class LecServlet extends HttpServlet {
 	
@@ -106,9 +104,7 @@ public class LecServlet extends HttpServlet {
 				byte[] lecinfo = getByteArray(infoString);
 				/***********************圖片設定***********************/
 				byte[] lecpic = null;
-				System.out.println("line 106");
 				Part part = req.getPart("lecpic");
-				System.out.println("line 108");
 				
 				if (part == null) {
 					errorMsgs.add("請上傳圖片");
@@ -116,11 +112,8 @@ public class LecServlet extends HttpServlet {
 					System.out.println(part.getContentType());
 					errorMsgs.add("僅支援.jpg .jpeg .gif .png 格式");
 				}
-				System.out.println("line 114");
 				InputStream in = part.getInputStream();
-				System.out.println("line 116");
 				lecpic = getFileByteArray(in);
-				System.out.println("line 118");
 				in.close();
 				
 				LecVO lecVO = new LecVO();
@@ -220,13 +213,22 @@ public class LecServlet extends HttpServlet {
 						String infoString = req.getParameter("lecinfo");
 						byte[] lecinfo = getByteArray(infoString);
 						
-//						if (("application/octet-stream").equals(part.getContentType())) {
-//							LecService lecSvc = new LecService();
-//							LecVO lecVO = lecSvc.getOne(lecno);
-//							spkricon = spkrVO.getSpkricon();
-//							System.out.println("從DB叫出byte[]有成功");
-//						}
+						byte[] lecpic = null;
+						Part part = req.getPart("lecpic");
+						System.out.println(part);
+						System.out.println(part.getContentType());
 						
+						if (("application/octet-stream").equals(part.getContentType())) {
+							LecService lecSvc = new LecService();
+							LecVO lecVO = lecSvc.getOne(lecno);
+							lecpic = lecVO.getLecpic();
+							System.out.println("lecpic remains the same as which in DB");
+						}
+						if(("image/gif").equals(part.getContentType()) || ("image/jpeg").equals(part.getContentType()) || ("image/png").equals(part.getContentType())) {
+							InputStream in = part.getInputStream();
+							lecpic = getFileByteArray(in);
+							in.close();
+						}
 						
 						LecVO lecVO = new LecVO();
 						lecVO.setLecno(lecno);
@@ -242,6 +244,7 @@ public class LecServlet extends HttpServlet {
 						lecVO.setCurrseat(currseat);
 						lecVO.setLecstatus(lecstatus);
 						lecVO.setLecinfo(lecinfo);
+						lecVO.setLecpic(lecpic);
 						req.setAttribute("lecVO", lecVO);
 						
 						if (!errorMsgs.isEmpty()) {
@@ -251,7 +254,7 @@ public class LecServlet extends HttpServlet {
 						}
 					/***********************驗證完畢***********************/	
 						LecService lecSvc = new LecService();
-						lecVO = lecSvc.updateLec(lecno, lecname, lecprice, spkrno, roomno, lecstart, lecend, signstart, signend, initseat, currseat, lecstatus, lecinfo);
+						lecVO = lecSvc.updateLec(lecno, lecname, lecprice, spkrno, roomno, lecstart, lecend, signstart, signend, initseat, currseat, lecstatus, lecinfo, lecpic);
 						
 						RequestDispatcher successView = req.getRequestDispatcher("/back-end/lecture/listAllLec.jsp"); 
 						successView.forward(req, res);

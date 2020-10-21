@@ -3,7 +3,6 @@ package com.lecture.model;
 import java.sql.Timestamp;
 import java.util.List;
 
-import com.speaker.model.SpkrVO;
 
 public class LecService {
 	
@@ -35,7 +34,7 @@ public class LecService {
 		return lecVO;
 	}
 	
-public LecVO updateLec(String lecno, String lecname, Integer lecprice, String spkrno, String roomno, Timestamp lecstart, Timestamp lecend, Timestamp signstart, Timestamp signend, String initseat, String currseat, Integer lecstatus, byte[] lecinfo) {
+public LecVO updateLec(String lecno, String lecname, Integer lecprice, String spkrno, String roomno, Timestamp lecstart, Timestamp lecend, Timestamp signstart, Timestamp signend, String initseat, String currseat, Integer lecstatus, byte[] lecinfo, byte[] lecpic) {
 		
 		LecVO lecVO = new LecVO();
 		lecVO.setLecno(lecno);
@@ -51,6 +50,7 @@ public LecVO updateLec(String lecno, String lecname, Integer lecprice, String sp
 		lecVO.setCurrseat(currseat);
 		lecVO.setLecstatus(lecstatus);
 		lecVO.setLecinfo(lecinfo);
+		lecVO.setLecpic(lecpic);
 		dao.update(lecVO);
 		
 		return lecVO;

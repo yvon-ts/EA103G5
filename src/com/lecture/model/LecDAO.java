@@ -15,7 +15,7 @@ public class LecDAO implements LecDAO_Interface {
 
 	private static final String INSERT_STMT = "INSERT INTO LECTURE (lecno, lecname, lecprice, spkrno, roomno, lecstart, lecend, signstart, signend, initseat, currseat, lecinfo, lecpic)"
 			+ "VALUES ('LEC' || LPAD(SEQ_LECNO.NEXTVAL, 4, 0), ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-	private static final String UPDATE_STMT = "UPDATE LECTURE SET lecname = ?, lecprice = ?, spkrno = ?, roomno = ?, lecstart = ?, lecend = ?, signstart = ?, signend = ?, initseat = ?,currseat = ?, lecinfo = ?, lecstatus = ?, leclmod = ? WHERE lecno = ?";
+	private static final String UPDATE_STMT = "UPDATE LECTURE SET lecname = ?, lecprice = ?, spkrno = ?, roomno = ?, lecstart = ?, lecend = ?, signstart = ?, signend = ?, initseat = ?,currseat = ?, lecinfo = ?, lecpic = ?, lecstatus = ?, leclmod = ? WHERE lecno = ?";
 	private static final String GETONE_STMT = "SELECT * FROM LECTURE WHERE lecno = ?";
 	private static final String GETALL_STMT = "SELECT * FROM LECTURE ORDER BY LECNO";
 	
@@ -106,11 +106,12 @@ public class LecDAO implements LecDAO_Interface {
 			pstmt.setString(9, lecVO.getInitseat());
 			pstmt.setString(10, lecVO.getCurrseat());
 			pstmt.setBytes(11, lecVO.getLecinfo());
-			pstmt.setInt(12, lecVO.getLecstatus());
+			pstmt.setBytes(12, lecVO.getLecpic());
+			pstmt.setInt(13, lecVO.getLecstatus());
 			//get lmod
 			Timestamp leclmod = new Timestamp(System.currentTimeMillis());
-			pstmt.setTimestamp(13, leclmod);
-			pstmt.setString(14, lecVO.getLecno());
+			pstmt.setTimestamp(14, leclmod);
+			pstmt.setString(15, lecVO.getLecno());
 
 			pstmt.executeUpdate();
 			con.commit();
