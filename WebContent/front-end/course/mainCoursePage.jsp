@@ -17,11 +17,10 @@
 	<!-- Font Awesome CSS -->
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css">
 	<!-- 自己的 CSS 一定放在最下面 -->
-	<!--     <link rel="stylesheet" href="css/course.css"> -->
 	<link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/course/css/course.css">
 	<!-- ========== CSS Area ========== -->
 
-	<title>${courseVO.coursename} - Xducation 你的學習好夥伴</title>
+	<title>${courseVO.coursename} - Xducation 線上學習平台</title>
 </head>
 
 <body>
@@ -33,25 +32,32 @@
 			<div class="jumbotron">
 				<div class="container">
 					<div class="row">
-						<div class="col-12">
+						<div class="col">
 							<!-- 麵包屑 -->
+							<jsp:useBean id="courseTypeSvc" scope="page" class="com.course_type.model.CourseTypeService" />
 							<nav aria-label="breadcrumb">
 								<ol class="breadcrumb">
-									<li class="breadcrumb-item"><a href="#">所有課程</a></li>
-									<li class="breadcrumb-item"><a href="#">氣壓學</a></li>
-									<li class="breadcrumb-item active" aria-current="page">${courseVO.coursename}</li>
+									<li class="breadcrumb-item">
+										<a href="<%=request.getContextPath()%>/front-end/course/listAllCourseForUser.jsp">所有課程</a>
+									</li>
+									<li class="breadcrumb-item">
+										<a href="#">${courseTypeSvc.getOneCourseType(courseVO.cstypeno).cstypename}</a>
+									</li>
+									<li class="breadcrumb-item active" aria-current="page">
+										${courseVO.coursename}
+									</li>
 								</ol>
 							</nav>
 						</div>
 					</div>
-				</div>
-				<div class="container">
+
 					<div class="row">
-						<div class="col-12">
+						<div class="col">
 							<!-- 課程名稱 -->
 							<h1>${courseVO.coursename}<span id="nowPlaying"></span></h1>
 						</div>
 					</div>
+					
 					<div class="row">
 						<div class="col-lg-8 align-self-center">
 							<!-- 影片播放 -->
@@ -96,9 +102,7 @@
 							</div>
 						</div>
 					</div>
-				</div>
 
-				<div class="container">
 					<div class="row align-items-center text-center courseInfoContainer">
 						<div class="col-md-2 col-4 courseInfo">
 							<!-- 須要查詢訂單中的購買人次 -->
@@ -123,11 +127,11 @@
 						</div>
 						<div class="col-md col-3 courseInfo ">
 							<!-- 須要查詢該使用者是否已加入收藏 -->
-								<i id="track"></i>
+							<i id="track"></i>
 						</div>
 						<div class="col-md col-3 courseInfo ">
 							<!-- 須要查詢該使用者是否已購買 -->
-								<i id="addShopCart" class="fas fa-cart-plus"></i>
+							<i id="addShopCart" class="fas fa-cart-plus"></i>
 						</div>
 					</div>
 				</div>
@@ -201,12 +205,12 @@
 				videoPlayer.load();
 				$("#nowPlaying").text(" → " + $(this).attr('chaptername'));
 			});
-			
+
 			// 追蹤清單
 			trackingOrNot(false);
 		});
-		
-		function trackingOrNot (isTracking) {
+
+		function trackingOrNot(isTracking) {
 			// 追蹤清單初始化
 			if (isTracking) {
 				// 實心愛心
@@ -215,21 +219,19 @@
 				// 空心愛心
 				$("#track").addClass("far fa-heart");
 			}
-			
+
 			// 註冊切換追蹤清單事件
-			$("#track").click(function(){
+			$("#track").click(function () {
 				$(this).toggleClass("fas fa-heart");
 				$(this).toggleClass("far fa-heart");
 
 				if ($(this).hasClass("fas fa-heart")) {
 					console.log("**增加追蹤清單");
-				} else if ($(this).hasClass("far fa-heart")){
+				} else if ($(this).hasClass("far fa-heart")) {
 					console.log("**刪除追蹤清單");
 				}
 			});
 		}
-		
-
 	</script>
 
 	<!-- include 前台頁面的 footer -->
