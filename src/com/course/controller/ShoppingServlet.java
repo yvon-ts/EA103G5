@@ -34,7 +34,7 @@ public class ShoppingServlet extends HttpServlet {
 		String action = req.getParameter("action");
 
 		if (!action.equals("CHECKOUT")) {
-			//新增購物車車
+			//新增購物車車車
 			if (action.equals("DELETE")) {
 				String del = req.getParameter("del");
 				int d = Integer.parseInt(del);
