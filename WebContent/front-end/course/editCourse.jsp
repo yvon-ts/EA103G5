@@ -7,6 +7,7 @@
 <jsp:useBean id="membersSvc" scope="page" class="com.members.model.MembersService" />
 <jsp:useBean id="teacherSvc" scope="page" class="com.teacher.model.TeacherService" />
 <jsp:useBean id="courseTypeSvc" scope="page" class="com.course_type.model.CourseTypeService" />
+
 <%
 	CourseVO courseVO = (CourseVO) request.getAttribute("courseVO");
 	Double courseScore = (double)courseVO.getCsscore() / (double)courseVO.getCsscoretimes();
