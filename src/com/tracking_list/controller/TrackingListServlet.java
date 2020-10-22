@@ -2,6 +2,7 @@ package com.tracking_list.controller;
 
 import java.io.IOException;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -12,6 +13,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.course.model.CourseService;
+import com.course.model.CourseVO;
 import com.report_detail.model.ReportDetailService;
 import com.report_detail.model.ReportDetailVO;
 import com.tracking_list.model.TrackingListService;
@@ -88,6 +91,35 @@ public class TrackingListServlet extends HttpServlet {
 				failureView.forward(req, res);
 			}
 		}
+		
+		if("shoppingCart".equals(action)) {
+			String courseno = req.getParameter("courseno");
+			CourseService courseSvc = new CourseService();
+			
+			CourseVO userSelectedCourse = courseSvc.getOneCourse(courseno);
+			
+			List<CourseVO> shoppingList = (List<CourseVO>)req.getSession().getAttribute("shoppingList");
+			 
+			
+			if(shoppingList==null) {
+				shoppingList = new ArrayList<>();
+			}
+			System.out.println(userSelectedCourse);
+			if(shoppingList!= null && !(shoppingList.contains(userSelectedCourse))) {
+				
+				shoppingList.add(userSelectedCourse);
+				System.out.println(shoppingList.size());
+				res.getWriter().println(true);
+			}else {
+				shoppingList.remove(userSelectedCourse);
+				System.out.println(shoppingList.size());
+				res.getWriter().println(false);
+			}
+			
+			req.getSession().setAttribute("shoppingList", shoppingList);
+		}
+		
+		
 //		if ("findByMemno".equals(action)) { // 來自select_page.jsp的請求
 //
 //			List<String> errorMsgs = new LinkedList<String>();

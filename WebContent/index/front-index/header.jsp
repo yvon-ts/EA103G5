@@ -17,6 +17,10 @@
     <link rel="stylesheet" href="<%=request.getContextPath()%>/index/front-index/assets/css/main.css">
     <!-- Responsive Style -->
     <link rel="stylesheet" href="<%=request.getContextPath()%>/index/front-index/assets/css/responsive.css">
+    
+    <link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	
     <style>
     </style>
 </head>
@@ -37,8 +41,8 @@
                 <div class="collapse navbar-collapse" id="navbarCollapse">
                     <ul class="navbar-nav mr-auto w-100 justify-content-end clearfix">
                         <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                進入搜尋&nbsp;<i class="lni-search"></i>
+                            <a class="nav-link" href="<%=request.getContextPath()%>/front-end/tracking_list/listTrackingListForMember.jsp">
+                              <i class="fa fa-shopping-cart" aria-hidden="true"></i>
                             </a>
                         </li>
                         <li class="nav-item">
