@@ -95,7 +95,7 @@ public class courseVideosServlet extends HttpServlet {
 //				VideoService videoSvc = new VideoService();
 
 				if (part.getSize() == 0) {
-					System.out.println("***沒傳檔案***");
+					System.out.println("***沒上傳檔案***");
 				} else if (part.getContentType().indexOf("video/mp4") < 0) {
 					errorMsgs.add("僅可以上傳 mp4 影片檔案");
 				} else {
@@ -229,8 +229,7 @@ public class courseVideosServlet extends HttpServlet {
 				} else {
 					InputStream in = part.getInputStream();
 					video = getUpdateFileByteArray(in);
-					in.close();
-					// 檔案格式錯誤？目前寫 mp4
+					// in.close();
 					// 其他錯誤處理
 				}
 
@@ -278,22 +277,9 @@ public class courseVideosServlet extends HttpServlet {
 				failureView.forward(req, res);
 			}
 		}
-
 	}
 
 	public static byte[] getUpdateFileByteArray(InputStream in) throws IOException {
-//		ByteArrayOutputStream baos = new ByteArrayOutputStream(); // 此資料流會把write的位元資料，存到一個內建的byte[]
-//		byte[] buffer = new byte[8192];
-//		int i;
-//		while ((i = in.read(buffer)) != -1) {
-//			baos.write(buffer, 0, i);
-//			baos.flush();
-//		}
-//		baos.close();
-//		in.close();
-//
-//		return baos.toByteArray(); // toByteArray() 可以讓我們取得這個資料流內建的 byte[]
-
 		byte[] buffer = new byte[in.available()];
 		in.read(buffer);
 		in.close();

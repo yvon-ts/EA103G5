@@ -76,8 +76,7 @@ public class CourseServlet extends HttpServlet {
 
 				/*************************** 3.查詢完成,準備轉交(Send the Success view) *************/
 				req.setAttribute("courseVO", courseVO);
-
-//				String url = "/front-end/course/listOneCourse.jsp";
+				// String url = "/front-end/course/listOneCourse.jsp";
 				String url = "/front-end/course/mainCoursePage.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
@@ -98,7 +97,7 @@ public class CourseServlet extends HttpServlet {
 			try {
 				/*************************** 1.接收請求參數 ****************************************/
 				String courseno = req.getParameter("courseno");
-
+				
 				/*************************** 2.開始查詢資料 ****************************************/
 				CourseService courseSvc = new CourseService();
 				CourseVO courseVO = courseSvc.getOneCourse(courseno);
@@ -244,8 +243,14 @@ public class CourseServlet extends HttpServlet {
 
 			try {
 				/*********************** 1.接收請求參數 - 輸入格式的錯誤處理 *************************/
-				String cstypeno = req.getParameter("cstypeno");
 				String tchrno = req.getParameter("tchrno");
+				
+				String cstypeno = req.getParameter("cstypeno");
+				System.out.println(cstypeno);
+				if (cstypeno == null || cstypeno.trim().length() == 0) {
+					cstypeno = "";
+					errorMsgs.add("請選擇課程類別");
+				}
 
 				String coursename = req.getParameter("coursename");
 				String coursenameRegex = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{2,10}$";
@@ -317,8 +322,8 @@ public class CourseServlet extends HttpServlet {
 
 				if (part.getSize() == 0) {
 					errorMsgs.add("請上傳課程圖片");
-				} else if (part.getContentType().indexOf("image/jpeg") < 0) {
-					errorMsgs.add("僅可以上傳 jpg 圖片檔案");
+				} else if (part.getContentType().indexOf("image") < 0) {
+					errorMsgs.add("僅可以上傳圖片檔案");
 				} else {
 					InputStream in = part.getInputStream();
 					courseimg = getUpdateFileByteArray(in);
@@ -353,6 +358,134 @@ public class CourseServlet extends HttpServlet {
 				/*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
 //				String url = "/front-end/course/listAllCourse.jsp";
 				req.setAttribute("courseVO", courseVO);
+				String url = "/front-end/course/editCourse.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url);
+				successView.forward(req, res);
+
+				/*************************** 其他可能的錯誤處理 **********************************/
+			} catch (Exception e) {
+				errorMsgs.add("無法新增資料:" + e.getMessage());
+				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/course/addCourse2.jsp");
+				failureView.forward(req, res);
+			}
+		}
+		
+		
+		
+		
+		if ("create".equals(action)) {
+			// 2020/10/22 新版本上架課程
+
+			List<String> errorMsgs = new LinkedList<String>();
+			req.setAttribute("errorMsgs", errorMsgs);
+
+			try {
+				/*********************** 1.接收請求參數 - 輸入格式的錯誤處理 *************************/
+				
+				// 課程類別
+				String cstypeno = req.getParameter("cstypeno");
+				System.out.println(cstypeno);
+				if (cstypeno == null || cstypeno.trim().length() == 0) {
+					cstypeno = "";
+					errorMsgs.add("請選擇課程類別");
+				}
+
+				// 開課教師 NG
+				String tchrno = req.getParameter("tchrno");
+				
+				// 課程名稱 NG
+				String coursename = req.getParameter("coursename");
+				String coursenameRegex = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{2,15}$";
+				if (coursename == null || coursename.trim().length() == 0) {
+					coursename = "";
+					errorMsgs.add("課程名稱請勿空白");
+				} else if (!coursename.trim().matches(coursenameRegex)) {
+					errorMsgs.add("課程名稱: 只能是中、英文字母、數字和_ , 且長度必需在2到15之間");
+				}
+				
+				// 課程資訊 NG
+				String courseinfo = req.getParameter("courseinfo");
+
+				// 課程單價
+				Integer courseprice = null;
+				try {
+					courseprice = Integer.valueOf(req.getParameter("courseprice"));
+					if (courseprice <= 0) {
+						errorMsgs.add("課程單價請輸入大於零的整數");
+					}
+				} catch (NumberFormatException e) {
+					courseprice = 0;
+					errorMsgs.add("課程單價請輸入數字");
+				}
+
+				// 課程總時數
+				Integer ttltime = 0;
+
+				// 課程狀態 NG 應該為 0
+				String csstatus = "審核中";
+
+				// 課程總評分
+				Integer csscore = 3;
+
+				// 評分次數 NG 應該為 0
+				Integer csscoretimes = 1;
+
+				
+				// 上傳課程圖片
+				byte[] courseimg = null;
+				Part part = req.getPart("courseimg");
+
+//				System.out.println("===== PART: " + courseimg + " =====");
+				System.out.println("**SubmittedFileName = " + part.getSubmittedFileName());
+				System.out.println("**ContentType = " + part.getContentType());
+				System.out.println("**Size = " + part.getSize());
+
+				if (part.getSize() == 0) {
+					System.out.println("***沒上傳檔案***");
+					// errorMsgs.add("請上傳課程圖片");
+				} else if (part.getContentType().indexOf("image") < 0) {
+					errorMsgs.add("僅可以上傳圖片類型之檔案");
+				} else {
+					InputStream in = part.getInputStream();
+					courseimg = getUpdateFileByteArray(in);
+				}
+
+				CourseVO courseVO = new CourseVO();
+				courseVO.setCstypeno(cstypeno);
+				courseVO.setTchrno(tchrno);
+				courseVO.setCoursename(coursename);
+				courseVO.setCourseinfo(courseinfo);
+				courseVO.setCourseprice(courseprice);
+				courseVO.setTtltime(ttltime);
+				courseVO.setCsstatus(csstatus);
+				courseVO.setCsscore(csscore);
+				courseVO.setCsscoretimes(csscoretimes);
+				courseVO.setCourseimg(courseimg);
+
+				// Send the use back to the form, if there were errors
+				if (!errorMsgs.isEmpty()) {
+					req.setAttribute("courseVO", courseVO);
+					RequestDispatcher failureView = req.getRequestDispatcher("/front-end/course/addCourse2.jsp");
+					failureView.forward(req, res);
+					return;
+				}
+				/*************************** 2.開始新增資料 ***************************************/
+				CourseService courseSvc = new CourseService();
+				// 新增後，再抓取自增PK，再進行轉交，才能拿到 PK 流水碼
+				// String courseno = courseSvc.addCourse(cstypeno, tchrno, coursename, courseinfo, courseprice, ttltime, csstatus,	csscore, csscoretimes, courseimg);
+				
+				String courseno = "";
+				if (part.getSize() == 0) {
+					//courseno = courseSvc.addCourse(cstypeno, tchrno, coursename, courseinfo, courseprice, ttltime, csstatus,	csscore, csscoretimes);
+				} else {
+					courseno = courseSvc.addCourse(cstypeno, tchrno, coursename, courseinfo, courseprice, ttltime, csstatus,	csscore, csscoretimes, courseimg);
+				}
+				
+				
+				/*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
+				courseVO = courseSvc.getOneCourse(courseno);
+				req.setAttribute("courseVO", courseVO);
+				
 				String url = "/front-end/course/editCourse.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
