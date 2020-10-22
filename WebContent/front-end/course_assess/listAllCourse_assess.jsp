@@ -26,7 +26,11 @@ pageContext.setAttribute("avg",avg);
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Xducation-會員登入</title>
 
-
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.3/sweetalert2.css" />
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.3/sweetalert2.js"
+	type="text/javascript"></script>
     <!-- Main css -->
     <link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/members/signIn&updateMembers_css/style.css">
 <%--     <link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/members/nav_css_ForSignIn&addMembers/css/bootstrap.min.css"> --%>
@@ -160,7 +164,7 @@ select {
   cursor: pointer; 
   
   }
-  input#add{
+  a#add{
    display: inline-block;
   background: #6dabe4;
   color: #fff;
@@ -175,7 +179,8 @@ select {
   margin-top:-80px;
   height:80px;
   font-size:30px;
-  padding:auto;
+  padding:16px;
+  text-align:center;
 
   }
  
@@ -302,7 +307,7 @@ background: url("<%=request.getContextPath()%>/front-end/members/assets/img/bgPi
             <div id="avg">${avg}</div>
             
             
-            <input id="add" type="submit" value="發表評價">
+            <a id='add' href="<%=request.getContextPath()%>/front-end/course_assess/addCourse_assess.jsp">發表評價</a>
             
             
 							<c:forEach var="course_assessVO" items="${list}" begin="<%=pageIndex%>"
@@ -409,6 +414,7 @@ background: url("<%=request.getContextPath()%>/front-end/members/assets/img/bgPi
 </script>
 
 
+<script src="<%=request.getContextPath()%>/front-end/members/assets/js/members&teacher&course_assess.js"></script>
 
 
 

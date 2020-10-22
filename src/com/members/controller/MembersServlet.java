@@ -247,8 +247,7 @@ public class MembersServlet extends HttpServlet {
 	
 	private void verify(HttpServletRequest req, HttpServletResponse res)throws ServletException, IOException {
 		HttpSession session = req.getSession();
-		String inform2 = "200";
-		req.setAttribute("inform2", inform2);
+		
 		session.removeAttribute("inform");
 		List<String> errorMsgs = new LinkedList<String>();
 		req.setAttribute("errorMsgs", errorMsgs);
@@ -295,6 +294,8 @@ public class MembersServlet extends HttpServlet {
 		
 		
 		if (!errorMsgs.isEmpty()) {
+			String inform2 = "200";
+			req.setAttribute("inform2", inform2);
 			RequestDispatcher failureView = req.getRequestDispatcher("/front-end/members/vCodeMembers.jsp");
 			failureView.forward(req, res);
 			return;
@@ -310,6 +311,8 @@ public class MembersServlet extends HttpServlet {
 		String memail = memVO.getMemail();
 		byte[] mprofile = memVO.getMprofile();
 		
+		String inform3 = "200";
+		req.setAttribute("inform3", inform3);		
 		membersSvc.addMembers(memacc, mempwd, memname, nkname, membday, memail, mphone, mprofile);
 		session.removeAttribute("memVO");
 		session.removeAttribute("vercode");
@@ -426,8 +429,8 @@ public class MembersServlet extends HttpServlet {
 				failureView.forward(req, res);
 				return;
 			}
-			String inform2 = "200";
-			req.setAttribute("inform2", inform2);
+			String inform4 = "200";
+			req.setAttribute("inform4", inform4);
 			MembersService membersSvc = new MembersService();
 			membersVO = membersSvc.updateMembers(mempwd, nkname, mprofile, memno);
 			String url = "/front-end/members/updateMembersV2.jsp";

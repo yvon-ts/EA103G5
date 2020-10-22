@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.members.model.*"%>
 
-<%String inform2 = (String)request.getAttribute("inform2"); %>
+<%String inform3 = (String)request.getAttribute("inform3"); %>
 
 
 <%@ include file="/index/front-index/headtest.jsp" %>
@@ -190,7 +190,7 @@ background: url("<%=request.getContextPath()%>/front-end/members/assets/img/bgPi
                                <input style="font-family:'Gochi Hand'" type="submit" name="signIn" id="signin" class="form-submit" value="Log in"/> 
                             </div>
                         </form>
-                         <input type="hidden" id="inform2" value="${inform2}">
+                         <input type="hidden" id="inform3" value="${requestScope.inform3}">
                         <div class="social-login">
                             <span class="social-label">
                             
@@ -226,10 +226,8 @@ background: url("<%=request.getContextPath()%>/front-end/members/assets/img/bgPi
 
 
 <script>
-var inform2 = document.getElementById('inform2').value;
-if(inform2 ==='200'){
-	swal('恭喜啦', '您已經成為我們的會員囉<br>趕快來登入並且開始瀏覽課程吧', 'success');
-}
+
+
 var message = document.getElementById('message').value;
 
 if(message.length !== 0){
