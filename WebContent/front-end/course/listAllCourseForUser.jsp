@@ -110,7 +110,9 @@
                 <div class="col-md-6 col-lg-3 col-xs-12">
                     <div class="services-item wow fadeInRight" data-wow-delay="0.3s">
                         <div class="icon">
-                            <img src="<%=request.getContextPath()%>/course/coursephoto.do?action=searchPhoto&courseno=${courseVO.courseno}" style="width:200px;height:150px" class="pic">
+<!-- 顯鈞：替換成新版本讀圖測試2020/10/22 -->
+							<%-- <img src="<%=request.getContextPath()%>/course/coursephoto.do?action=searchPhoto&courseno=${courseVO.courseno}" style="width:200px;height:150px" class="pic"> --%>
+                            <img src="<%=request.getContextPath()%>/course/CoursePictureReaderFromDB?courseno=${courseVO.courseno}" style="width:200px; height:150px;" class="pic">
                         </div>
                         <div class="services-content">
                         	
@@ -224,16 +226,26 @@
 					var str = "";
 					for(let i = 0 ; i < JSONarray.length ; i++){
 						
-						var courseimgno = "<%=request.getContextPath()%>/course/coursephoto.do?action=searchPhoto&courseno=" + JSONarray[i].courseno;
+<%-- 						var courseimgno = "<%=request.getContextPath()%>/course/coursephoto.do?action=searchPhoto&courseno=" + JSONarray[i].courseno; --%>
 						
 					
 						
-						str +=  `<div class="col-md-6 col-lg-3 col-xs-12">
-		                    <div class="services-item wow fadeInRight" data-wow-delay="0.3s">
-		                        <div class="icon">
-		                            <img src=  "` +  courseimgno    + `"style="width:200px;height:150px">
-		                        </div>
-		                        <div class="services-content">`;
+// 						str +=  `<div class="col-md-6 col-lg-3 col-xs-12">
+// 		                    <div class="services-item wow fadeInRight" data-wow-delay="0.3s">
+// 		                        <div class="icon">
+// 		                            <img src=  "` +  courseimgno    + `"style="width:200px;height:150px">
+// 		                        </div>
+// 		                        <div class="services-content">`;
+		                
+						// 顯鈞：替換成新版本讀圖測試2020/10/22
+		                var pictureURL = "<%=request.getContextPath()%>/course/CoursePictureReaderFromDB?courseno=" + JSONarray[i].courseno;
+		                        
+		                str +=  `<div class="col-md-6 col-lg-3 col-xs-12">
+			                <div class="services-item wow fadeInRight" data-wow-delay="0.3s">
+			                    <div class="icon">
+			                        <img src=  "` +  pictureURL    + `"style="width:200px;height:150px">
+			                    </div>
+			                    <div class="services-content">`;
 		                        
 		                        
 						for(let j = 0; j < 5; j++){
