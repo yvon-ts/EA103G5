@@ -48,27 +48,28 @@ public class OrderMasterDAO implements OrderMasterDAO_interface {
 			con.setAutoCommit(false);
 			
 			String[] col = { "orderno" };
-			System.out.println(col[0]);
 			pstmt = con.prepareStatement(INSERT_STMT, col);
 			
 			pstmt.setString(1, orderMasterVO.getMemno());
 			pstmt.setInt(2, orderMasterVO.getOrderamt());
 			pstmt.setString(3, orderMasterVO.getCoupno());
 			pstmt.setString(4, orderMasterVO.getPayby());
-
+			
 			pstmt.executeUpdate();
 			
 			ResultSet rs = pstmt.getGeneratedKeys();
+			
 			if (rs.next()) {
-				ord_next_no = rs.getString(1);
-				System.out.println("orderno = " + ord_next_no);
+			ord_next_no = rs.getString(1);
+			System.out.println("orderno = " + ord_next_no);
 			}
 			
-			OrderDetailDAO orderDetailDAO1 = new OrderDetailDAO();
+			OrderDetailDAO orderDetailDAO = new OrderDetailDAO();
 			
 			for (OrderDetailVO orderDetailVO : detailList) {
 				orderDetailVO.setOrderno(ord_next_no);
-				orderDetailDAO1.insert(orderDetailVO, con);
+				System.out.println(orderDetailVO.getOrderno());
+				orderDetailDAO.insert(orderDetailVO, con);
 			}
 			System.out.println("訂單成立成功");
 			con.commit();
@@ -77,7 +78,6 @@ public class OrderMasterDAO implements OrderMasterDAO_interface {
 			try {
 				con.rollback();
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			throw new RuntimeException("A database error occured. "

@@ -83,7 +83,7 @@
 			<input
 			type="hidden" name="payby" value="信用卡">
 			<input
-			type="hidden" name="coupno" value="11"> <input
+			type="hidden" name="coupno" value=""> <input
 			type="submit" value="付款結帳">
 	</form>
 </body>

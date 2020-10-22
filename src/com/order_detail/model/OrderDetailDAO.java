@@ -35,7 +35,6 @@ public class OrderDetailDAO implements OrderDetailDAO_interface {
 		try {
 
 			pstmt = con.prepareStatement(INSERT_STMT);
-			System.out.println(orderDetailVO.getOrderno());
 			pstmt.setString(1, orderDetailVO.getOrderno());
 			pstmt.setString(2, orderDetailVO.getCourseno());
 			pstmt.setInt(3, orderDetailVO.getSellprice());

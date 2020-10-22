@@ -160,9 +160,11 @@ public class OrderMasterServlet extends HttpServlet {
 				String memno = req.getParameter("memno");
 				Integer orderamt = new Integer (req.getParameter("orderamt"));
 				String coupno = req.getParameter("coupno");
-				
+//				空值
+				coupno = null;
+//				空值
 				String payby = req.getParameter("payby").trim();
-				if (payby == null || coupno.trim().length() == 0) {
+				if (payby == null || payby.trim().length() == 0) {
 					errorMsgs.add("付款方式請勿空白");
 				}
 
