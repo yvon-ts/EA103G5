@@ -20,7 +20,7 @@
 	<link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/course/css/course.css">
 	<!-- ========== CSS Area ========== -->
 
-	<title>${courseVO.coursename} - Xducation 線上學習平台</title>
+	<title>${courseVO.coursename} - Xducation 陪你成長的學習好夥伴</title>
 </head>
 
 <body>
@@ -107,7 +107,8 @@
 						<div class="col-md-2 col-4 courseInfo">
 							<!-- 須要查詢訂單中的購買人次 -->
 							<i class="fas fa-users"></i>
-							<p><span>8787</span> 位同學</p>
+<!-- NG -->
+							<p><span>ToBeChange</span> 位同學</p>
 						</div>
 						<div class="col-md-2 col-4 courseInfo">
 							<!-- 須要video中的課程的時間加總 -->
@@ -161,6 +162,7 @@
 				<div class="tab-content" id="subpage">
 					<div id="courseinfo" class="tab-pane fade show active">
 						<h3>課程簡介</h3>
+						<h5>你可以學到：</h5>
 						<div>${courseVO.courseinfo}</div>
 						<%-- <jsp:include page="/front-end/course/subpage_courseinfo.html" /> --%>
 					</div>

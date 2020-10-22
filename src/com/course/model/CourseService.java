@@ -12,25 +12,6 @@ public class CourseService {
 	}
 
 	public String addCourse(String cstypeno, String tchrno, String coursename, String courseinfo, Integer courseprice,
-			Integer ttltime, String csstatus, Integer csscore, Integer csscoretimes) {
-
-		CourseVO courseVO = new CourseVO();
-
-		courseVO.setCstypeno(cstypeno);
-		courseVO.setTchrno(tchrno);
-		courseVO.setCoursename(coursename);
-		courseVO.setCourseinfo(courseinfo);
-		courseVO.setCourseprice(courseprice);
-		courseVO.setTtltime(ttltime);
-		courseVO.setCsstatus(csstatus);
-		courseVO.setCsscore(csscore);
-		courseVO.setCsscoretimes(csscoretimes);
-		String courseno = dao.insert(courseVO);
-
-		return courseno;
-	}
-
-	public String addCourse(String cstypeno, String tchrno, String coursename, String courseinfo, Integer courseprice,
 			Integer ttltime, String csstatus, Integer csscore, Integer csscoretimes, byte[] courseimg) {
 
 		CourseVO courseVO = new CourseVO();

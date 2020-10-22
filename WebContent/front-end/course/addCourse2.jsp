@@ -16,19 +16,16 @@
 	<!-- ========== CSS Area ========== -->
 	<!-- Bootstrap 的 CSS -->
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-	<!-- Font Awesome CSS -->
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css">
-	<!-- 自己的 CSS 一定放在最下面 -->
-	<%-- <link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/course/css/course.css"> --%>
 
-	<style type="text/css">
+	<!-- This page's CSS -->
+	<style>
 		main {
 			margin-top: 90px;
 		}
 	</style>
 	<!-- ========== CSS Area ========== -->
 
-	<title>課程資料新增 - addCourse2.jsp</title>
+	<title>申請開課 - Xducation 陪你成長的學習好夥伴</title>
 </head>
 
 <body>
@@ -39,46 +36,57 @@
 		<div class="container">
 			<div class="row">
 				<div class="col">
-					<h1>課程資料新增 - addCourse2.jsp</h1>
+					<h1>申請開課 - addCourse2.jsp</h1>
 					<p><a href="<%=request.getContextPath()%>/front-end/course/select_page.jsp">回首頁</a></p>
 				</div>
 			</div>
 
 			<div class="row">
-				<form METHOD="post" ACTION="<%=request.getContextPath()%>/course/course.do" name="form1" enctype="multipart/form-data">
-					<div class="col-md-6">
+				<div class="col-md-6">
+
+					<!-- 注意 form 不可移動到 col 上，版型會有問題 -->
+					<form METHOD="post" ACTION="<%=request.getContextPath()%>/course/course.do" name="form1" enctype="multipart/form-data">
 
 						<jsp:useBean id="courseSvc" scope="page" class="com.course.model.CourseService" />
 						<jsp:useBean id="courseTypeSvc" scope="page" class="com.course_type.model.CourseTypeService" />
 
 						<div class="input-group mb-3">
 							<div class="input-group-prepend">
-								<label class="input-group-text" for="inputGroupSelect01">課程類別</label>
+								<span class="input-group-text">課程名稱</span>
 							</div>
-							<select class="custom-select" id="inputGroupSelect01" name="cstypeno">
-								<option value="">Choose...</option>
-								<c:forEach var="courseTypeVO" items="${courseTypeSvc.all}">
-									<option value="${courseTypeVO.cstypeno}" ${courseVO.cstypeno==courseTypeVO.cstypeno ? 'selected' : '' }>
-										${courseTypeVO.cstypename}
-								</c:forEach>
-
-							</select>
-						</div>
-
-						<div class="input-group mb-3">
-							<div class="input-group-prepend">
-								<span class="input-group-text" id="inputGroup-sizing-default">課程名稱</span>
-							</div>
-							<input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default"
+							<input type="text" class="form-control" aria-label="Sizing example input"
 								name="coursename" value="<%=(courseVO == null) ? "老師很懶不取名" : courseVO.getCoursename()%>">
 						</div>
 
 						<div class="input-group mb-3">
 							<div class="input-group-prepend">
-								<span class="input-group-text" id="inputGroup-sizing-default">課程單價</span>
+								<label class="input-group-text">課程類別</label>
 							</div>
-							<input type="number" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default"
-								name="courseprice" value="<%=(courseVO == null) ? 1688 : courseVO.getCourseprice()%>">
+							<select class="custom-select" name="cstypeno">
+								<option value="">請選擇...</option>
+								<c:forEach var="courseTypeVO" items="${courseTypeSvc.all}">
+									<option value="${courseTypeVO.cstypeno}" ${courseVO.cstypeno==courseTypeVO.cstypeno ? 'selected' : '' }>
+										${courseTypeVO.cstypename}
+								</c:forEach>
+							</select>
+						</div>
+
+						<div class="input-group mb-3">
+							<div class="input-group-prepend">
+								<span class="input-group-text">課程單價</span>
+							</div>
+							<input type="number" class="form-control"
+								min="0" max="999999" step="1"
+								name="courseprice" value="<%=(courseVO == null) ? 0 : courseVO.getCourseprice()%>">
+						</div>
+
+						<!-- 教師編號應該要自己抓到 -->
+						<div class="input-group mb-3">
+							<div class="input-group-prepend">
+								<span class="input-group-text">該從 session 抓老師</span>
+							</div>
+							<input type="text" class="form-control"
+								name="tchrno" value="<%=(courseVO == null) ? "TCHR0001" : courseVO.getTchrno()%>">
 						</div>
 
 						<div class="input-group mb-3">
@@ -86,54 +94,62 @@
 								<span class="input-group-text" id="inputGroupFileAddon01">課程圖片</span>
 							</div>
 							<div class="custom-file">
-								<input type="file" class="custom-file-input" id="fileUp" aria-describedby="inputGroupFileAddon01"
+								<input type="file" class="custom-file-input" id="fileUp"
 									name="courseimg">
-								<label class="custom-file-label" for="fileUp">Choose file</label>
+								<label class="custom-file-label" for="fileUp"> 建議圖片比例 4 : 3</label>
 							</div>
 						</div>
 
 						<div id="picturePreview"></div>
 
-					</div> <!-- end of col-->
+				</div> <!-- end of col-->
 
-					<div class="col-md-6">
-						<div class="input-group mb-3">
-							<div class="input-group-prepend">
-								<span class="input-group-text" id="inputGroup-sizing-default">課程資訊</span>
-							</div>
-							<input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default"
-								name="courseinfo" value="<%=(courseVO == null) ? "這是一堂騙錢的課" : courseVO.getCourseinfo()%>">
+				<div class="col-md-6">
+
+					<div class="input-group mb-3">
+						<div class="input-group-prepend">
+							<span class="input-group-text">課程資訊</span>
 						</div>
+						<textarea name="courseinfo" class="form-control" aria-label="With textarea">${courseVO == null ? "<h1>你可以學到...</h1>" : courseVO.courseinfo}</textarea>
+					</div>
 
-						<input type="hidden" name="action" value="create">
-						<input type="submit" value="送出新增">
-
-						<p>不該給開課者填寫的東西</p>
-						<!-- 教師編號應該要自己抓到 -->
-						<input type="text" name="tchrno" size="45" value="TCHR0001" />
-<!-- 						<input type="hidden" name="ttltime" value=0 /> -->
-<!-- 						<input type="hidden" name=csstatus value="審核中"> -->
-<!-- 						<input type="hidden" name="csscore" value=3 /> -->
-<!-- 						<input type="hidden" name="csscoretimes" value=1 /> -->
-
-						<div>
-							<%-- 錯誤表列 --%>
-							<c:if test="${not empty errorMsgs}">
-								<font style="color: red">請修正以下錯誤：</font>
-								<ul>
-									<c:forEach var="message" items="${errorMsgs}">
-										<li style="color: red">${message}</li>
-									</c:forEach>
-								</ul>
-							</c:if>
-						</div>
-
-					</div> <!-- end of col-->
-				</form>
+				</div> <!-- end of col-->
 			</div>
+
+			<div class="row">
+				<div class="col">
+
+					<br>
+
+					<div>
+						<%-- 錯誤表列 --%>
+						<c:if test="${not empty errorMsgs}">
+							<font style="color: red">請修正以下錯誤：</font>
+							<ul>
+								<c:forEach var="message" items="${errorMsgs}">
+									<li style="color: red">${message}</li>
+								</c:forEach>
+							</ul>
+						</c:if>
+					</div>
+
+					<br>
+
+					<input type="hidden" name="action" value="create">
+					<h5>送出申請後，將繼續編輯課程內容...</h5>
+					<button type="submit" class="btn btn-lg btn-primary btn-block">申請開課</button>
+
+					</form>
+					<!-- 注意 form 不可移動到外面，版型會有問題 -->
+
+				</div>
+			</div>
+
 		</div>
 	</main>
 
+	<!-- ========== JavaScript Area ========== -->
+	<!-- 關於讀取圖片 -->
 	<script type="text/javascript">
 		var fileUp = document.getElementById("fileUp");
 
@@ -147,35 +163,51 @@
 						var reader = new FileReader();
 						reader.addEventListener('load', function () {
 
-							// 							var div = document.createElement('div');
 							var div = document.getElementById('picturePreview');
 							div.innerHTML = "";
 							var img = document.createElement('img');
 
 							img.setAttribute('src', event.target.result);
-							img.setAttribute('style', "max-width:100%;height:auto;");
-
-							// 							div.append(img);
+							img.setAttribute('style', "max-width:100%;height:300px;");
 
 							if (fileUp.nextElementSibling) { //只給上傳一張
 								fileUp.nextElementSibling.remove();
 							}
 
-							// 							fileUp.after(div);
 							div.append(img);
 						});
 						reader.readAsDataURL(file);
 					} else {
-						alert("請上圖檔");
+						var div = document.getElementById('picturePreview');
+						div.innerHTML = "";
+						files = null;
+						alert("僅支援圖片類型檔案");
 					}
 				}
-
-				//             fileUp.setAttribute('type', 'text');
-				//             fileUp.setAttribute('type', 'file');
 			}
 		});
 	</script>
 
+	<!-- 關於 CK EDITER -->
+	<script src="https://cdn.ckeditor.com/4.7.3/basic/ckeditor.js"></script>
+	<script>
+		function init() {
+			CKEDITOR.replace("courseinfo", {
+				width: 800,
+				height: 300
+			});
+			CKEDITOR.editorConfig = function (config) {
+				config.enterMode = CKEDITOR.ENTER_BR; //br換行
+			};
+		}
+		window.onload = init;
+	</script>
+	<!-- ========== JavaScript Area ========== -->
+
+
+
+	<!-- include 前台頁面的 footer -->
+	<jsp:include page="/index/front-index/footer.jsp" />
 </body>
 
 </html>

@@ -413,32 +413,29 @@ public class CourseServlet extends HttpServlet {
 					if (courseprice <= 0) {
 						errorMsgs.add("課程單價請輸入大於零的整數");
 					}
+					if (courseprice > 999999) {
+						errorMsgs.add("課程單價請小於一百萬");
+					}
 				} catch (NumberFormatException e) {
 					courseprice = 0;
 					errorMsgs.add("課程單價請輸入數字");
 				}
 
+				// ========== 初次申請課程的初始值區域 ==========
 				// 課程總時數
 				Integer ttltime = 0;
-
 				// 課程狀態 NG 應該為 0
 				String csstatus = "審核中";
-
-				// 課程總評分
+				// 課程總評分 NG 應該為 0
 				Integer csscore = 3;
-
 				// 評分次數 NG 應該為 0
 				Integer csscoretimes = 1;
+				// ========== 初次申請課程的初始值區域 ==========
 
 				
 				// 上傳課程圖片
 				byte[] courseimg = null;
 				Part part = req.getPart("courseimg");
-
-//				System.out.println("===== PART: " + courseimg + " =====");
-				System.out.println("**SubmittedFileName = " + part.getSubmittedFileName());
-				System.out.println("**ContentType = " + part.getContentType());
-				System.out.println("**Size = " + part.getSize());
 
 				if (part.getSize() == 0) {
 					System.out.println("***沒上傳檔案***");
@@ -449,6 +446,13 @@ public class CourseServlet extends HttpServlet {
 					InputStream in = part.getInputStream();
 					courseimg = getUpdateFileByteArray(in);
 				}
+				
+				// ========== 測試用印出程式碼 ==========
+				// System.out.println("===== PART: " + courseimg + " =====");
+				System.out.println("**SubmittedFileName = " + part.getSubmittedFileName());
+				System.out.println("**ContentType = " + part.getContentType());
+				System.out.println("**Size = " + part.getSize());
+				// ========== 測試用印出程式碼 ==========
 
 				CourseVO courseVO = new CourseVO();
 				courseVO.setCstypeno(cstypeno);
@@ -472,15 +476,7 @@ public class CourseServlet extends HttpServlet {
 				/*************************** 2.開始新增資料 ***************************************/
 				CourseService courseSvc = new CourseService();
 				// 新增後，再抓取自增PK，再進行轉交，才能拿到 PK 流水碼
-				// String courseno = courseSvc.addCourse(cstypeno, tchrno, coursename, courseinfo, courseprice, ttltime, csstatus,	csscore, csscoretimes, courseimg);
-				
-				String courseno = "";
-				if (part.getSize() == 0) {
-					//courseno = courseSvc.addCourse(cstypeno, tchrno, coursename, courseinfo, courseprice, ttltime, csstatus,	csscore, csscoretimes);
-				} else {
-					courseno = courseSvc.addCourse(cstypeno, tchrno, coursename, courseinfo, courseprice, ttltime, csstatus,	csscore, csscoretimes, courseimg);
-				}
-				
+				String courseno = courseSvc.addCourse(cstypeno, tchrno, coursename, courseinfo, courseprice, ttltime, csstatus,	csscore, csscoretimes, courseimg);
 				
 				/*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
 				courseVO = courseSvc.getOneCourse(courseno);
