@@ -13,5 +13,6 @@ public interface LecDAO_Interface {
 	public List<LecVO> getAll();
 	
 	public void updateSeats(LecVO lecVO, Connection con);
+	public List<LecVO> getTextQuery(String str);
 	
 }

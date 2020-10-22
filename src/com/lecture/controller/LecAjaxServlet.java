@@ -2,6 +2,7 @@ package com.lecture.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 import javax.servlet.*;
@@ -10,6 +11,7 @@ import javax.servlet.http.*;
 import org.json.*;
 
 import com.lecture.model.*;
+import com.speaker.model.*;
 import com.classroom.model.*;
 
 public class LecAjaxServlet extends HttpServlet {
@@ -60,6 +62,55 @@ public class LecAjaxServlet extends HttpServlet {
 			}
 			out.print(arr);
 			
+		}
+		////////////////////////////////////////////////////////////////////
+		
+		if ("sendQuery".equals(action)) {
+			
+			String query = req.getParameter("query");
+			out = res.getWriter();
+			
+			LecService lecSvc = new LecService();
+			List<LecVO> list = lecSvc.getQuery(query);
+			
+			JSONArray arr = new JSONArray();
+			
+			for (LecVO lecVO : list) {
+			
+				JSONObject obj = new JSONObject();	
+	
+				SpkrService spkrSvc = new SpkrService();
+				SpkrVO spkrVO = spkrSvc.getOne(lecVO.getSpkrno());
+//					
+//				ClassroomService roomSvc = new ClassroomService();
+//				ClassroomVO roomVO = roomSvc.getOneClassroom(lecVO.getRoomno());
+				
+				//date format
+				SimpleDateFormat fmtdate = new SimpleDateFormat("dd");
+				SimpleDateFormat fmtmonth = new SimpleDateFormat("MMM");
+				SimpleDateFormat fmttime = new SimpleDateFormat("HH:mm");
+				String startdate = fmtdate.format(lecVO.getLecstart());
+				String startmonth = fmtmonth.format(lecVO.getLecstart());
+				String starttime = fmttime.format(lecVO.getLecstart());
+				
+				obj.put("lecno", lecVO.getLecno());
+				obj.put("lecname", lecVO.getLecname());
+				obj.put("lecprice", lecVO.getLecprice());
+				obj.put("spkrno", lecVO.getSpkrno());
+				obj.put("roomno", lecVO.getRoomno());
+				obj.put("lecstart", lecVO.getLecstart());
+				obj.put("lecend", lecVO.getLecend());
+				obj.put("startdate", startdate);
+				obj.put("startmonth", startmonth);
+				obj.put("starttime", starttime);
+				
+//				obj.put("roomname", roomVO.getRoomname());
+				obj.put("spkrname", spkrVO.getSpkrname());
+				
+				arr.put(obj);
+			
+			}
+			out.print(arr);
 		}
 	}
 

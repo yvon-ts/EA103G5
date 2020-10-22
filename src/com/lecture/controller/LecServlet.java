@@ -38,6 +38,30 @@ public class LecServlet extends HttpServlet {
 		
 		System.out.println(action);
 		
+		if("sendQuery".equals(action)) {
+			String str = req.getParameter("query").trim();
+			System.out.println(str);
+			String[] queries = str.split(" ");
+			for (int i = 0; i < queries.length; i++) {
+				
+				try {
+					LecService lecSvc = new LecService();
+					List<LecVO> list = lecSvc.getQuery(queries[i]);
+
+					req.setAttribute("list", list);
+
+					String url = "/back-end/lecture/listOneLec.jsp";
+					RequestDispatcher successView = req.getRequestDispatcher(url);
+					successView.forward(req, res);
+					return;
+
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				
+			}
+		}
+		
 		//====================================開始新增====================================//
 		if ("insert".equals(action)) {
 			
@@ -563,6 +587,36 @@ public class LecServlet extends HttpServlet {
 						req.setAttribute("lecVO", lecVO);
 
 						String url = "/front-end/lecorder/confirmLodr.jsp";
+						RequestDispatcher successView = req.getRequestDispatcher(url);
+						successView.forward(req, res);
+						return;
+
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+				
+				//====================================確認訂購====================================//
+				if ("queryServlet".equals(action)) {
+					
+					List<String> errorMsgs = new LinkedList<String>();
+					req.setAttribute("errorMsgs", errorMsgs);
+					
+					try {
+						String query = req.getParameter("query");
+						LecService lecSvc = new LecService();
+						List<LecVO> list = lecSvc.getQuery(query);
+						
+						for(LecVO vo : list) {
+							System.out.println(vo.getLecname());
+							System.out.println(vo.getSpkrno());
+							System.out.println(vo.getLecstart());
+							System.out.println(vo.getLecend());
+						}
+
+						req.setAttribute("list", list);
+
+						String url = "/front-end/lecture/listAllLec2.jsp";
 						RequestDispatcher successView = req.getRequestDispatcher(url);
 						successView.forward(req, res);
 						return;

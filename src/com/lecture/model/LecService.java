@@ -104,4 +104,8 @@ public LecVO updateLec(String lecno, String lecname, Integer lecprice, String sp
 	public List<LecVO> getList(){
 		return dao.getAll();
 	}
+	
+	public List<LecVO> getQuery(String query){
+		return dao.getTextQuery(query);
+	}
 }
