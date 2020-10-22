@@ -129,80 +129,68 @@
 
 			</div>
 
-			<section id="services" class="section-padding">
-				<div class="container">
-
-					<!-- Services item1 -->
-
-					<div class="row seacharea">
-						<c:forEach var="courseVO" items="${Courselist}">
-							<div class="col-md-6 col-lg-3 col-xs-12">
-								<div class="services-item wow fadeInRight" data-wow-delay="0.3s">
-									<div class="icon">
-										<img
-											src="<%=request.getContextPath()%>/course/coursephoto.do?action=searchPhoto&courseno=${courseVO.courseno}"
-											style="width: 200px; height: 150px" class="pic">
-									</div>
-									<div class="services-content">
-
-
-										<!--                         	套件ajax套有問題 -->
-										&nbsp;&nbsp;&nbsp;
-										<div class="rateit"
-											data-rateit-value="${courseVO.csscore / courseVO.csscoretimes }"
-											data-rateit-ispreset="true" data-rateit-readonly="true"></div>
-										<br>&nbsp;&nbsp;&nbsp;${courseVO.csscoretimes}則評價
-										<h3>
-											<a href="#">${courseVO.coursename}</a>
-										</h3>
-										<p>課程共${courseVO.ttltime}分鐘</p>
-										<!--                             <p>同學累計9487人</p> -->
-
-										<form name="shoppingForm"
-											action="<%=request.getContextPath()%>/Shop/Shopping_Cart.do"
-											method="POST">
-											<label class="shoppingcart"><input type="submit"
-												name="Submit"><i class="fa fa-shopping-cart"
-												aria-hidden="true"></i>&nbsp;加入購物車</label> <input type="hidden"
-												name="action" value="ADD" /> <input type="hidden"
-												name="courseno" value="${courseVO.courseno}" /> <input
-												type="hidden" name="courseprice"
-												value="${courseVO.courseprice}" />
-										</form>
-
-
-										<c:forEach var="TrackingListVO"
-											items="${TrackingListSvc.getOneByMemno(Membersvo.memno)}">
-
-											<c:choose>
-												<c:when
-													test="${ courseVO.courseno eq TrackingListVO.courseno}">
-													<label class="bookmark"><i class="fa fa-heart"
-														aria-hidden="true" style="color: red"></i>&nbsp;加入追蹤</label>
-												</c:when>
-
-											</c:choose>
-										</c:forEach>
-
-										<input type="hidden" name="courseno"
-											value="${courseVO.courseno}" /> &nbsp;&nbsp;
-										<h5>NT$${courseVO.courseprice}</h5>
-
-									</div>
-								</div>
-							</div>
-
-						</c:forEach>
-					</div>
-
-
-				</div>
-
-			</section>
-		</div>
-	</div>
-	
-	<script>
+                      
+	<section id="services" class="section-padding">
+        <div class="container">
+            
+                <!-- Services item1 -->
+                
+                		<div class="row seacharea">
+                		<c:forEach var="courseVO" items="${Courselist}">
+                <div class="col-md-6 col-lg-3 col-xs-12">
+                    <div class="services-item wow fadeInRight" data-wow-delay="0.3s">
+                        <div class="icon">
+<!-- 顯鈞：替換成新版本讀圖測試2020/10/22 -->
+							<%-- <img src="<%=request.getContextPath()%>/course/coursephoto.do?action=searchPhoto&courseno=${courseVO.courseno}" style="width:200px;height:150px" class="pic"> --%>
+                            <img src="<%=request.getContextPath()%>/course/CoursePictureReaderFromDB?courseno=${courseVO.courseno}" style="width:200px; height:150px;" class="pic">
+                        </div>
+                        <div class="services-content">
+                        	
+                  
+<!--                         	套件ajax套有問題 -->
+                        	&nbsp;&nbsp;&nbsp;<div class="rateit" data-rateit-value="${courseVO.csscore / courseVO.csscoretimes }" data-rateit-ispreset="true" data-rateit-readonly="true"></div> 
+                        	<br>&nbsp;&nbsp;&nbsp;${courseVO.csscoretimes}則評價
+                            <h3><a href="#">${courseVO.coursename}</a></h3>
+                            <p>課程共${courseVO.ttltime}分鐘</p>
+<!--                             <p>同學累計9487人</p> -->
+							
+							<form name="shoppingForm" action="<%=request.getContextPath()%>/Shop/Shopping_Cart.do" method="POST">
+							<label class="shoppingcart"><input type="submit" name="Submit"><i class="fa fa-shopping-cart" aria-hidden="true"></i>&nbsp;加入購物車</label>
+							<input type="hidden" name="action" value="ADD" />
+							<input type="hidden" name="courseno" value="${courseVO.courseno}" />
+							<input type="hidden" name="courseprice" value="${courseVO.courseprice}" />
+							</form>
+							
+<%-- 							<c:forEach var="TrackingListVO" items="${TrackingListSvc.oneByMemno(memno)}"> --%>
+<%-- 							<c:choose> --%>
+<%-- 								<c:when test="${ TrackingListVO.memno eq memno}"> --%>
+<!-- 									<label class="bookmark"><i class="fa fa-heart" aria-hidden="true" style="color:red"></i>&nbsp;加入追蹤</label> -->
+<%-- 								</c:when> --%>
+<%-- 								<c:when test="${ TrackingListVO.memno ne memno}"> --%>
+<!-- 									<label class="bookmark"><i class="fa fa-heart-o" aria-hidden="true" style="color:red"></i>&nbsp;加入追蹤</label> -->
+<%-- 								</c:when> --%>
+							
+<%-- 							</c:choose> --%>
+<%-- 							</c:forEach> --%>
+							<input type ="hidden" name="courseno" value ="${courseVO.courseno}"/>
+							
+							
+                           	&nbsp;&nbsp;<h5>NT$${courseVO.courseprice}</h5>
+                        	
+                        </div>
+                    </div>
+                </div>
+                
+                </c:forEach>
+                 </div>
+                
+            
+          </div>
+          
+       </section>
+       </div>
+       </div>
+<script>
 	$(document).ready(function(){
 		
 		
@@ -260,16 +248,26 @@
 					var str = "";
 					for(let i = 0 ; i < JSONarray.length ; i++){
 						
-						var courseimgno = "<%=request.getContextPath()%>/course/coursephoto.do?action=searchPhoto&courseno=" + JSONarray[i].courseno;
+<%-- 						var courseimgno = "<%=request.getContextPath()%>/course/coursephoto.do?action=searchPhoto&courseno=" + JSONarray[i].courseno; --%>
 						
 					
 						
-						str +=  `<div class="col-md-6 col-lg-3 col-xs-12">
-		                    <div class="services-item wow fadeInRight" data-wow-delay="0.3s">
-		                        <div class="icon">
-		                            <img src=  "` +  courseimgno    + `"style="width:200px;height:150px">
-		                        </div>
-		                        <div class="services-content">`;
+// 						str +=  `<div class="col-md-6 col-lg-3 col-xs-12">
+// 		                    <div class="services-item wow fadeInRight" data-wow-delay="0.3s">
+// 		                        <div class="icon">
+// 		                            <img src=  "` +  courseimgno    + `"style="width:200px;height:150px">
+// 		                        </div>
+// 		                        <div class="services-content">`;
+		                
+						// 顯鈞：替換成新版本讀圖測試2020/10/22
+		                var pictureURL = "<%=request.getContextPath()%>/course/CoursePictureReaderFromDB?courseno=" + JSONarray[i].courseno;
+		                        
+		                str +=  `<div class="col-md-6 col-lg-3 col-xs-12">
+			                <div class="services-item wow fadeInRight" data-wow-delay="0.3s">
+			                    <div class="icon">
+			                        <img src=  "` +  pictureURL    + `"style="width:200px;height:150px">
+			                    </div>
+			                    <div class="services-content">`;
 		                        
 		                        
 										str += `&nbsp;&nbsp;&nbsp;<div class="rateit" data-rateit-value="` + JSONarray[i].csscore / JSONarray[i].csscoretimes + `" data-rateit-ispreset="true" data-rateit-readonly="true"></div>`
