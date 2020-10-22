@@ -7,6 +7,7 @@
 <%@ page import="com.course.model.*"%>
 <%@ page import="com.members.model.*"%>
 <%@ page import="com.report_detail.model.*"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%
 	PostsService postsSvc = new PostsService();
 	List<PostsVO> list = postsSvc.getAll();
@@ -322,7 +323,7 @@ body {
 								<!--之後改成memname -->
 								<h6 class="comment-name by-author">						
 									
-									${memVO.memname}
+									${memVO.memname}&nbsp;&nbsp;|&nbsp;&nbsp;<fmt:formatDate value="${postsVO.posttime}" pattern="yyyy-MM-dd HH:mm"/>
 								
 								</h6>
 								
@@ -330,8 +331,9 @@ body {
 	
 								<span></span> <i class="fa fa-reply"></i> <i class="fa fa-heart"></i>
 								<div align="right">
-									<button>檢舉</button>
-									<input type="button" onclick="toggleA('${postsVO.postno }')" value="回覆">
+									<button><img src="<%=request.getContextPath() %>/front-end/posts/images/flag.png" style="width:15px;height:15px"></button>
+<%-- 									<input type="button" onclick="toggleA('${postsVO.postno }')" value="回覆"> --%>
+									<button onclick="toggleA('${postsVO.postno}')" type="button"><img src="<%=request.getContextPath() %>/front-end/posts/images/reply.png" style="width:15px;height:15px;"></button>
 								</div>				
 											
 							</div>				
@@ -356,12 +358,12 @@ body {
 						<div class="comment-box">
 							<div class="comment-head">
 								<h6 class="comment-name">
-									<a>${memVOSub.memname}</a>
+									${memVOSub.memname}&nbsp;&nbsp;|&nbsp;&nbsp;<fmt:formatDate value="${postsVO.posttime}" pattern="yyyy-MM-dd HH:mm"/>
 			
 								</h6>
 								<span></span> <i class="fa fa-reply"></i> <i class="fa fa-heart"></i>
 								<div align="right">
-									<button>檢舉</button>
+									<button><img src="<%=request.getContextPath() %>/front-end/posts/images/flag.png" style="width:15px;height:15px"></button>
 								</div>
 							</div>
 							<div class="comment-content">	${postsVOSub.postcontent}</div>
@@ -384,14 +386,14 @@ body {
 									<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/Outdoors-man-portrait_%28cropped%29.jpg/330px-Outdoors-man-portrait_%28cropped%29.jpg" alt="登入會員圖片連結">
 								</div>
 								<input type="hidden" name="action" value="insert"/>
-								<input type="hidden" name="memno" value="MEM0001"/>
-								<input type="hidden" name="courseno" value="COUR0001"/>
+								<input type="hidden" name="memno" value="${memVO.memno }"/>
+								<input type="hidden" name="courseno" value="${courseVo.courseno }"/>
 								<input type="hidden" name="superpostno" value="${postsVO.postno }"/>
 								<!-- textarea -->
 								<div class="comment-box">
 									<textarea rows="4" cols="50" style="width: 680px;" name="postcontent"></textarea>
 									<div align="right">
-										<button>送出</button>
+										<button>新增回覆</button>
 									</div>
 								</div>
 							</div>
