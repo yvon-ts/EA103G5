@@ -56,7 +56,7 @@ public class MembersServlet extends HttpServlet {
 			getOne_For_Display(req,res);
 		}
 //===================以下為會員驗證區塊===================
-				if ("verify".equals(action)) {
+		if ("verify".equals(action)) {
 					verify(req, res);
 				}
 
@@ -162,7 +162,7 @@ public class MembersServlet extends HttpServlet {
 			String nkname = req.getParameter("nkname");
 			String nknameReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{2,10}";
 			if (nkname == null || nkname.trim().length() == 0) {
-				errorMsgs.add("會員暱稱: 請勿空白");
+				nkname = "X-learner";
 			} else if (!nkname.trim().matches(nknameReg)) { // 以下練習正則(規)表示式(regular-expression)
 				errorMsgs.add("會員暱稱: 只能是中、英文字母和數字 , 且長度必需在2到10之間");
 			}
@@ -227,7 +227,7 @@ public class MembersServlet extends HttpServlet {
 			sb.append("歡迎註冊Xducation線上學習平台,");
 			sb.append("這是您的驗證碼:");
 			sb.append(vercode);
-//			sms.Process(sb, mphone);
+			sms.Process(sb, mphone);
 			session.setAttribute("memVO", memVO);
 			session.setAttribute("vercode", vercode);
 			session.setAttribute("count", count);

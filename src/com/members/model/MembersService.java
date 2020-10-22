@@ -64,12 +64,6 @@ public class MembersService {
 		int a = dao.checkMemacc(memacc);
 		return a;
 	}
-	public MembersVO photo(byte[] mprofile,String memno) {
-		MembersVO membersVO = new MembersVO();
-		membersVO.setMprofile(mprofile);
-		membersVO.setMemno(memno);
-		dao.photo(membersVO);
-		return membersVO;
-	}
+	
 
 }

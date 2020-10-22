@@ -11,5 +11,4 @@ public interface MembersDAO_interface {
 	public Integer checkMemacc(String memacc);
 	public MembersVO checkMemail(String memail);
 	public void updateMembers(MembersVO membersVO);
-	public void photo(MembersVO membersVO);
 }

@@ -279,9 +279,9 @@ background: url("<%=request.getContextPath()%>/front-end/members/assets/img/bgPi
 	    membday = new java.sql.Date(System.currentTimeMillis());
    }
 %>
-<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/front-end/members/datetimepicker/jquery.datetimepicker.css" />
-<script src="<%=request.getContextPath()%>/front-end/members/datetimepicker/jquery.js"></script>
-<script src="<%=request.getContextPath()%>/front-end/members/datetimepicker/jquery.datetimepicker.full.js"></script>
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/front-end/members/datepicker/jquery.datetimepicker.css" />
+<script src="<%=request.getContextPath()%>/front-end/members/datepicker/jquery.js"></script>
+<script src="<%=request.getContextPath()%>/front-end/members/datepicker/jquery.datetimepicker.full.js"></script>
 
 <style>
   .xdsoft_datetimepicker .xdsoft_datepicker {

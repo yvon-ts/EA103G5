@@ -22,8 +22,8 @@ public class Course_assessDAO implements Course_assessDAO_interface {
 	String userid = "XDU";
 	String passwd = "123456";
 	
-	private static final String INSERT_STMT = "INSERT INTO COURSE_ASSESS(ASESNO,COURSENO,MEMNO,COURSESCORE,COMMENTS) VALUES ('ASES' || LPAD(TCH_SEQ.NEXTVAL, 4, 0),?,?,?,?)";
-	private static final String GET_ALL_STMT = "SELECT ASESNO,COURSENO,MEMNO,COURSESCORE,COMMENTS FROM COURSE_ASSESS ORDER BY ASESNO";
+	private static final String INSERT_STMT = "INSERT INTO COURSE_ASSESS(ASESNO,COURSENO,MEMNO,COURSESCORE,COMMENTS) VALUES ('ASES' || LPAD(SEQ_ASESNO.NEXTVAL, 4, 0),?,?,?,?)";
+	private static final String GET_ALL_STMT = "SELECT ASESNO,COURSENO,MEMNO,COURSESCORE,COMMENTS,COMMENTTIME FROM COURSE_ASSESS ORDER BY ASESNO";
 	private static final String GET_ONE_STMT = "SELECT ASESNO,COURSENO,MEMNO,COURSESCORE,COMMENTS FROM COURSE_ASSESS WHERE ASESNO = ?";
 	private static final String UPDATE = "UPDATE COURSE_ASSESS SET COURSESCORE=?,COMMENTS=? WHERE ASESNO =?";
 	private static final String DELETE = "DELETE FROM COURSE_ASSESS WHERE ASESNO=?";
@@ -217,6 +217,8 @@ public class Course_assessDAO implements Course_assessDAO_interface {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
+//			Class.forName(driver);
+//			con = DriverManager.getConnection(url, userid, passwd);
 
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(GET_ALL_STMT);
@@ -263,6 +265,19 @@ public class Course_assessDAO implements Course_assessDAO_interface {
 		}
 		return list;
 	}
+//	public static void main(String[] args) {
+//		Course_assessDAO dao = new Course_assessDAO();
+//		List<Course_assessVO>list = dao.getAll();
+//		for(Course_assessVO vo :list) {
+//			System.out.println(vo.getAsesno());
+//			System.out.println(vo.getCourseno());
+//			System.out.println(vo.getMemno());
+//			System.out.println(vo.getComments());
+//			System.out.println(vo.getCoursescore());
+//			System.out.println(vo.getCommenttime());
+//			
+//		}
+//	}
 }
 
 
