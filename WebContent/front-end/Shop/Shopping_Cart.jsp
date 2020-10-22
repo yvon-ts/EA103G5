@@ -63,9 +63,7 @@
 				</div></td>
 
 		</tr>
-		<%
-			}
-		%>
+		
 		<tr>
 			<td width="200">總金額</td>
 			<td width="200"><div align="center">
@@ -78,13 +76,17 @@
 		action="<%=request.getContextPath()%>/Order_Master/Order_Master.do"
 		method="POST">
 		<input type="hidden" name="action" value="insert"> <input
-			type="hidden" name="memno" value="<%=memno%>"> <input
-			type="hidden" name="orderamt" value="<%=orderamt%>">
-			<input
-			type="hidden" name="payby" value="信用卡">
-			<input
-			type="hidden" name="coupno" value=""> <input
-			type="submit" value="付款結帳">
+			type="hidden" name="memno" value="<%=memno%>"> 
+		
+		<input type="hidden" name="courseno" value="<%=order.getCourseno()%>">
+		<input type="hidden" name="courseprice" value="<%=order.getCourseprice()%>">
+		<input type="hidden" name="promono" value="promono">
+		<input type="hidden" name="orderamt" value="<%=orderamt%>"> <input
+			type="hidden" name="payby" value="信用卡"> <input type="hidden"
+			name="coupno" value=""> <input type="submit" value="付款結帳">
+		<%
+			}
+		%>
 	</form>
 </body>
 </html>

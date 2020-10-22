@@ -3,14 +3,16 @@ package com.order_master.controller;
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Vector;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-import com.order_detail.model.OrderDetailService;
+import com.course.model.CourseVO;
 import com.order_detail.model.OrderDetailVO;
 import com.order_master.model.OrderMasterService;
 import com.order_master.model.OrderMasterVO;
@@ -23,6 +25,8 @@ public class OrderMasterServlet extends HttpServlet {
 	public void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 
 		req.setCharacterEncoding("UTF-8");
+		HttpSession session = req.getSession();
+		List<CourseVO> buylist = (Vector<CourseVO>) session.getAttribute("shoppingcart");
 		String action = req.getParameter("action");
 
 		if ("getOne_For_Display".equals(action)) { // 來自OrderMasterDB.jsp的請求
@@ -167,14 +171,33 @@ public class OrderMasterServlet extends HttpServlet {
 				if (payby == null || payby.trim().length() == 0) {
 					errorMsgs.add("付款方式請勿空白");
 				}
+				
+				String[] courseno = req.getParameterValues("courseno");
+				String[] sellprice = req.getParameterValues("courseprice");
+				String[] promono = req.getParameterValues("promono");
+				
+				for(int i = 0 ; i <= promono.length; i++) {
+					promono[i] = null;
+				}
 
 				OrderMasterVO orderMasterVO = new OrderMasterVO();
 				orderMasterVO.setMemno(memno);
 				orderMasterVO.setOrderamt(orderamt);
 				orderMasterVO.setCoupno(coupno);
 				orderMasterVO.setPayby(payby);
-				System.out.println(orderMasterVO.getMemno());
 
+				List<OrderDetailVO> list = new Vector<OrderDetailVO>();
+				
+				for (int i = 0; i < buylist.size(); i++) {
+					OrderDetailVO odVO = new OrderDetailVO();
+					odVO.setCourseno(courseno[i]);
+					odVO.setSellprice(new Integer(sellprice[i]));
+					odVO.setPromono(courseno[i]);
+					
+					list.add(odVO);
+					
+				}
+				
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					req.setAttribute("orderMasterVO", orderMasterVO);
@@ -185,7 +208,7 @@ public class OrderMasterServlet extends HttpServlet {
 
 				/*************************** 2.開始新增資料 ***************************************/
 				OrderMasterService ordermasterSvc = new OrderMasterService();
-				orderMasterVO = ordermasterSvc.addOrder(memno, orderamt, coupno, payby);
+				orderMasterVO = ordermasterSvc.addOrder(memno, orderamt, coupno, payby, list);
 
 				/*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
 				String url = "/back-end/Order_Master/ListOneOrder.jsp";

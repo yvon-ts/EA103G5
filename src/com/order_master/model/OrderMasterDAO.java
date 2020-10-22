@@ -54,7 +54,7 @@ public class OrderMasterDAO implements OrderMasterDAO_interface {
 			pstmt.setInt(2, orderMasterVO.getOrderamt());
 			pstmt.setString(3, orderMasterVO.getCoupno());
 			pstmt.setString(4, orderMasterVO.getPayby());
-			
+			System.out.println("here");
 			pstmt.executeUpdate();
 			
 			ResultSet rs = pstmt.getGeneratedKeys();
@@ -63,7 +63,7 @@ public class OrderMasterDAO implements OrderMasterDAO_interface {
 			ord_next_no = rs.getString(1);
 			System.out.println("orderno = " + ord_next_no);
 			}
-			
+			System.out.println("here1");
 			OrderDetailDAO orderDetailDAO = new OrderDetailDAO();
 			
 			for (OrderDetailVO orderDetailVO : detailList) {
