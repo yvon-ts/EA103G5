@@ -132,10 +132,6 @@ public class MembersDAO implements MembersDAO_interface {
 
 	}
 
-	
-	
-	
-	
 
 	@Override
 	public MembersVO findByPrimaryKey(String memno) {
@@ -487,40 +483,6 @@ public class MembersDAO implements MembersDAO_interface {
 		
 	}
 
-	@Override
-	public void photo(MembersVO membersVO) {
-		Connection con = null;
-		PreparedStatement pstmt = null;
-		try {
-//			Class.forName(driver);
-//			con = DriverManager.getConnection(url, userid, passwd);
-			con = ds.getConnection();
-			pstmt = con.prepareStatement("UPDATE MEMBERS SET MPROFILE = ? WHERE MEMNO=?");
-	pstmt.setBytes(1, membersVO.getMprofile());
-	pstmt.setString(2, membersVO.getMemno());
-
-	 pstmt.executeUpdate();
-} catch (SQLException se) {
-	throw new RuntimeException("A database error occured. " + se.getMessage());
-	// Clean up JDBC resources
-} finally {
-	if (pstmt != null) {
-		try {
-			pstmt.close();
-		} catch (SQLException se) {
-			se.printStackTrace(System.err);
-		}
-	}
-	if (con != null) {
-		try {
-			con.close();
-		} catch (Exception e) {
-			e.printStackTrace(System.err);
-		}
-	}
-}
-
-}
 	
 
 	
