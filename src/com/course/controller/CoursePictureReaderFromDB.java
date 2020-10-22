@@ -54,8 +54,8 @@ public class CoursePictureReaderFromDB extends HttpServlet {
 			pstmt.close();
 
 		} catch (Exception e) {
-			e.printStackTrace();
-			System.out.println("課程圖片錯誤");
+//			e.printStackTrace();
+//			System.out.println("課程圖片錯誤");
 			// 展示預設錯誤圖片
 			InputStream in = getServletContext().getResourceAsStream("/front-end/course/image/CourseNoPicture.PNG");
 			byte[] b = new byte[in.available()];

@@ -24,7 +24,7 @@
 
 	MembersVO Membersvo = (MembersVO) session.getAttribute("Membersvo");
 	Membersvo = new MembersVO();
-	Membersvo.setMemno("MEM0003");
+	Membersvo.setMemno("MEM0001");
 	pageContext.setAttribute("Membersvo", Membersvo);
 
 	// 	TrackingListService test = new TrackingListService();
@@ -33,6 +33,9 @@
 	// 	for(TrackingListVO vo : listall){
 	// 		System.out.println(vo);
 	// 	}
+	
+	
+	
 %>
 
 <!DOCTYPE html>
@@ -47,7 +50,7 @@
 	href="https://cdnjs.cloudflare.com/ajax/libs/jquery.rateit/1.1.3/rateit.css" />
 <link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-	
+
 
 <style>
 .rateit .rateit-preset {
@@ -129,51 +132,60 @@
 
 			</div>
 
-                      
-	<section id="services" class="section-padding">
-        <div class="container">
-            
-                <!-- Services item1 -->
-                
-                		<div class="row seacharea">
-                		<c:forEach var="courseVO" items="${Courselist}">
-                <div class="col-md-6 col-lg-3 col-xs-12">
-                    <div class="services-item wow fadeInRight" data-wow-delay="0.3s">
-                        <div class="icon">
-<!-- 顯鈞：替換成新版本讀圖測試2020/10/22 -->
-							<%-- <img src="<%=request.getContextPath()%>/course/coursephoto.do?action=searchPhoto&courseno=${courseVO.courseno}" style="width:200px;height:150px" class="pic"> --%>
-                            <img src="<%=request.getContextPath()%>/course/CoursePictureReaderFromDB?courseno=${courseVO.courseno}" style="width:200px; height:150px;" class="pic">
+
+			<section id="services" class="section-padding">
+				<div class="container">
+
+					<!-- Services item1 -->
+
+					<div class="row seacharea">
+						<c:forEach var="courseVO" items="${Courselist}">
+							<div class="col-md-6 col-lg-3 col-xs-12">
+								<div class="services-item wow fadeInRight" data-wow-delay="0.3s">
+									<div class="icon">
+										<!-- 顯鈞：替換成新版本讀圖測試2020/10/22 -->
+										<%-- <img src="<%=request.getContextPath()%>/course/coursephoto.do?action=searchPhoto&courseno=${courseVO.courseno}" style="width:200px;height:150px" class="pic"> --%>
+										<img src="<%=request.getContextPath()%>/course/CoursePictureReaderFromDB?courseno=${courseVO.courseno}" style="width: 200px; height: 150px;" class="pic">
                         </div>
                         <div class="services-content">
                         	
                   
-<!--                         	套件ajax套有問題 -->
+<!--                         	 -->
                         	&nbsp;&nbsp;&nbsp;<div class="rateit" data-rateit-value="${courseVO.csscore / courseVO.csscoretimes }" data-rateit-ispreset="true" data-rateit-readonly="true"></div> 
                         	<br>&nbsp;&nbsp;&nbsp;${courseVO.csscoretimes}則評價
                             <h3><a href="#">${courseVO.coursename}</a></h3>
                             <p>課程共${courseVO.ttltime}分鐘</p>
 <!--                             <p>同學累計9487人</p> -->
 							
-							<form name="shoppingForm" action="<%=request.getContextPath()%>/Shop/Shopping_Cart.do" method="POST">
-							<label class="shoppingcart"><input type="submit" name="Submit"><i class="fa fa-shopping-cart" aria-hidden="true"></i>&nbsp;加入購物車</label>
-							<input type="hidden" name="action" value="ADD" />
-							<input type="hidden" name="courseno" value="${courseVO.courseno}" />
-							<input type="hidden" name="courseprice" value="${courseVO.courseprice}" />
-							</form>
+							<label class="shoppingcart">
+								<i class="fa fa-shopping-cart" aria-hidden="true">
+									<input type ="hidden" name="courseno" 	 id="courseno"   value ="${courseVO.courseno}"/>
+									<input type ="hidden" name="courseprice" id="courseprice" value ="${courseVO.courseprice}"/>
+									<input type ="hidden" name="courseinfo"  id="courseinfo"  value ="${courseVO.courseinfo}"/>
+								</i>&nbsp;加入購物車
+							</label>
 							
-<%-- 							<c:forEach var="TrackingListVO" items="${TrackingListSvc.oneByMemno(memno)}"> --%>
-<%-- 							<c:choose> --%>
-<%-- 								<c:when test="${ TrackingListVO.memno eq memno}"> --%>
-<!-- 									<label class="bookmark"><i class="fa fa-heart" aria-hidden="true" style="color:red"></i>&nbsp;加入追蹤</label> -->
-<%-- 								</c:when> --%>
-<%-- 								<c:when test="${ TrackingListVO.memno ne memno}"> --%>
-<!-- 									<label class="bookmark"><i class="fa fa-heart-o" aria-hidden="true" style="color:red"></i>&nbsp;加入追蹤</label> -->
-<%-- 								</c:when> --%>
 							
-<%-- 							</c:choose> --%>
-<%-- 							</c:forEach> --%>
-							<input type ="hidden" name="courseno" value ="${courseVO.courseno}"/>
 							
+							<c:forEach var="TrackingListVO" items="${TrackingListSvc.getOneByMemno(Membersvo.memno)}">
+								<c:choose>
+									<c:when test="${ courseVO.courseno eq TrackingListVO.courseno}">
+										<label class="bookmark"><i class="fa fa-heart" aria-hidden="true" style="color:red">
+										</i>&nbsp;加入追蹤</label>
+										<c:set var="flag" value="true"/>
+									</c:when>
+								</c:choose>
+							</c:forEach>
+							
+							<c:if test="${empty flag}">
+								<label class="bookmark"><i class="fa fa-heart-o" aria-hidden="true" style="color:red">
+									<input type ="hidden" name="courseno" id="courseno" value ="${courseVO.courseno}"/>
+									
+								</i>&nbsp;加入追蹤</label>
+							</c:if>
+							<c:remove var="flag"/>
+								
+								
 							
                            	&nbsp;&nbsp;<h5>NT$${courseVO.courseprice}</h5>
                         	
@@ -193,15 +205,23 @@
 <script>
 	$(document).ready(function(){
 		
-		
-		
 		$('.shoppingcart').click(function(){
-			alert('加入購物車');
+// 			console.log($(this).find('#courseno').val());
+			$.ajax({
+				url	:"<%=request.getContextPath()%>/tracking_list/tracking_list.do",
+				data:{
+					courseno:$(this).find('#courseno').val(),
+					action: "shoppingCart"
+				},
+				success: function(data){
+					console.log(data);
+				}
+			});
 		});
 		
 		
 		$('.bookmark').click(function(){
-
+			
 			var updateTrackingList;
 			
 			if ($(this).children().attr("class") === "fa fa-heart-o"){
@@ -216,7 +236,7 @@
 			$.ajax({
 				url	:"<%=request.getContextPath()%>/tracking_list/tracking_list.do", 
 				data:{
-					courseno : $(this).next().val(),
+					courseno : $(this).find('#courseno').val(),
 					memno    : $("#memno").val(),
 					action   : updateTrackingList ,
 				},

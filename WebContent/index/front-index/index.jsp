@@ -45,6 +45,7 @@
     <!-- Font Awesome
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">-->
 	<script src="https://kit.fontawesome.com/b99e675b6e.js"></script>
+	
 	<style>
 		.scrollable-dropdown{
     height: auto;
@@ -76,6 +77,11 @@
 <%--                             <a class="nav-link" href="<%=request.getContextPath()%>/front-end/course/listAllCourse.jsp"> --%>
 <!--                                ¶i¤J·j´M&nbsp;<i class="lni-search"></i>  -->
 <!--                             </a> -->
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="<%=request.getContextPath()%>/front-end/tracking_list/listTrackingListForMember.jsp">
+                              <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                            </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#">
