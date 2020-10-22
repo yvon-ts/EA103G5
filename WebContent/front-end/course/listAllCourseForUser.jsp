@@ -180,14 +180,13 @@
 							<c:if test="${empty flag}">
 								<label class="bookmark"><i class="fa fa-heart-o" aria-hidden="true" style="color:red">
 									<input type ="hidden" name="courseno" id="courseno" value ="${courseVO.courseno}"/>
-									
 								</i>&nbsp;加入追蹤</label>
 							</c:if>
 							<c:remove var="flag"/>
 								
 								
 							
-                           	&nbsp;&nbsp;<h5>NT$${courseVO.courseprice}</h5>
+                           <h5>NT$${courseVO.courseprice}</h5>
                         	
                         </div>
                     </div>
@@ -281,28 +280,27 @@
 		                
 						// 顯鈞：替換成新版本讀圖測試2020/10/22
 		                var pictureURL = "<%=request.getContextPath()%>/course/CoursePictureReaderFromDB?courseno=" + JSONarray[i].courseno;
-		                        
+		                    
+		                
 		                str +=  `<div class="col-md-6 col-lg-3 col-xs-12">
 			                <div class="services-item wow fadeInRight" data-wow-delay="0.3s">
 			                    <div class="icon">
-			                        <img src=  "` +  pictureURL    + `"style="width:200px;height:150px">
+			                        <img src=  "` + pictureURL + `"style="width:200px;height:150px">
 			                    </div>
-			                    <div class="services-content">`;
-		                        
-		                        
-										str += `&nbsp;&nbsp;&nbsp;<div class="rateit" data-rateit-value="` + JSONarray[i].csscore / JSONarray[i].csscoretimes + `" data-rateit-ispreset="true" data-rateit-readonly="true"></div>`
-		                                str += `<br>&nbsp;&nbsp;`+JSONarray[i].csscoretimes+`則評價
-		                            <h3><a href="#">`+JSONarray[i].coursename+`</a></h3>
+			                   <div class="services-content">`;
+						str += `&nbsp;&nbsp;
+								<div class="rateit" data-rateit-value="` + JSONarray[i].csscore / JSONarray[i].csscoretimes + `" data-rateit-ispreset="true" data-rateit-readonly="true">
+								</div><br>`;
+		                str += `&nbsp;&nbsp;&nbsp;` + JSONarray[i].csscoretimes + `則評價
+		                        <h3><a href="#">` + JSONarray[i].coursename + `</a></h3>
 		                            <p>課程共`+JSONarray[i].ttltime+`分鐘</p>
 		<!--                             <p>同學累計9487人</p> -->
 									<label class="shoppingcart"><i class="fa fa-shopping-cart" aria-hidden="true"></i>&nbsp;加入購物車</label>
 									<label class="bookmark"><i class="fa fa-heart-o" aria-hidden="true" style="color:red"></i>&nbsp;加入追蹤</label>
-									<h5>NT$`+JSONarray[i].courseprice+`</h5>
+									<h5>NT$` + JSONarray[i].courseprice + `</h5>
 		                        </div>
 		                    </div>
 		                </div>`;
-											
-										
 					}
 					
 					$(".seacharea").append(str);

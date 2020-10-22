@@ -1,6 +1,7 @@
 package com.course.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.*;
 
 import javax.servlet.RequestDispatcher;
@@ -87,7 +88,13 @@ public class CourseSearch extends HttpServlet {
 				String str = new JSONArray(list).toString();
 				
 				
-				res.getWriter().println(str);
+				res.setContentType("text/plain");
+				res.setCharacterEncoding("UTF-8");
+				PrintWriter out =res.getWriter();
+				out.write(str);
+				out.flush();
+				out.close();
+				
 		}
 		
 
