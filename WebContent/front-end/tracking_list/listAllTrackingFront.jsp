@@ -9,8 +9,8 @@
 <%
 		String memno = request.getParameter("memno");
 	    TrackingListService trackinglistSvc = new TrackingListService();
-	    List<TrackingListVO> list = trackinglistSvc.findByMemno(memno);
-	    request.setAttribute("list",list);
+// 	    List<TrackingListVO> list = trackinglistSvc.findByMemno(memno);
+// 	    request.setAttribute("list",list);
 
 
 // 		TrackingListService trackinglistSvc = new TrackingListService();
@@ -91,13 +91,13 @@
 		
 		
 	</tr>
-	<%@ include file="page1.file" %> 
-	<c:forEach var="trackinglistVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
+<%-- 	<%@ include file="page1.file" %>  --%>
+<%-- 	<c:forEach var="trackinglistVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>"> --%>
 		
-		<tr>
+<!-- 		<tr> -->
 			
-			<td>${TrackingListVO.memno}</td>
-			<td>${TrackingListVO.coursetno}</td>
+<%-- 			<td>${TrackingListVO.memno}</td> --%>
+<%-- 			<td>${TrackingListVO.coursetno}</td> --%>
 			
 <%-- 			<td><c:forEach var="empVO" items="${empSvc.all}"> --%>
 <%--                     <c:if test="${empVO.empno==empVO.empno}"> --%>
@@ -108,20 +108,20 @@
 		
 			
 			
-			<td>
-			  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/tracking_list/tracking_list.do" style="margin-bottom: 0px;">
-			     <input type="submit" value="取消追蹤">
-			     <input type="hidden" name="memno" value="${trackinglistVO.memno}">
-			     <input type="hidden" name="courseno" value="${trackinglistVO.courseno}">
-			     <input type="hidden" name="action"	value="delete"></FORM>
-			</td>
+<!-- 			<td> -->
+<%-- 			  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/tracking_list/tracking_list.do" style="margin-bottom: 0px;"> --%>
+<!-- 			     <input type="submit" value="取消追蹤"> -->
+<%-- 			     <input type="hidden" name="memno" value="${trackinglistVO.memno}"> --%>
+<%-- 			     <input type="hidden" name="courseno" value="${trackinglistVO.courseno}"> --%>
+<!-- 			     <input type="hidden" name="action"	value="delete"></FORM> -->
+<!-- 			</td> -->
 			
 
 			
-		</tr>
-	</c:forEach>
+<!-- 		</tr> -->
+<%-- 	</c:forEach> --%>
 </table>
-<%@ include file="page2.file" %>
+<%-- <%@ include file="page2.file" %> --%>
 
 </body>
 </html>

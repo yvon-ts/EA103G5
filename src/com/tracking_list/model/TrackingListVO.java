@@ -10,6 +10,10 @@ public class TrackingListVO implements Serializable{
 	private String courseno;
 	
 	
+	
+	public TrackingListVO() {
+		super();
+	}
 	public String getMemno() {
 		return memno;
 	}
@@ -22,7 +26,11 @@ public class TrackingListVO implements Serializable{
 	public void setCourseno(String courseno) {
 		this.courseno = courseno;
 	}
+	@Override
+	public String toString() {
+		return "TrackingListVO [memno=" + memno + ", courseno=" + courseno + "]";
+	}
 	
 	
-
+	
 }

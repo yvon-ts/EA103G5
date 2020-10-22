@@ -38,7 +38,7 @@ public class TrackingListService {
 
 	// getByMemno
 	public List<TrackingListVO> getOneByMemno(String memno) {
-		System.out.println(123);
+		
 		return dao.findByMemno(memno);
 	}
 	
