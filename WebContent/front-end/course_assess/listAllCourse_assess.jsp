@@ -8,8 +8,10 @@
 
 <%
 	Course_assessService course_assessSvc = new Course_assessService();
-List<Course_assessVO> list = course_assessSvc.getAll();
+String avg = course_assessSvc.avgScore("COUR0001");
+List<Course_assessVO> list = course_assessSvc.getAll("COUR0001");
 pageContext.setAttribute("list", list);
+pageContext.setAttribute("avg",avg);
 %>
 
 <%@ include file="/index/front-index/headtest.jsp" %>
@@ -68,6 +70,70 @@ margin:10px 0 0 70px ;
 
 }
 
+select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -ms-appearance: none;
+  appearance: none;
+  outline: 0;
+  box-shadow: none;
+  border: 0 !important;
+  background: #2c3e50;
+  background-image: none;
+}
+/* Remove IE arrow */
+select::-ms-expand {
+  display: none;
+}
+/* Custom Select */
+.select {
+  position: relative;
+  display: flex;
+  width: 20em;
+  height: 3em;
+  line-height: 3;
+  background: #2c3e50;
+  overflow: hidden;
+  border-radius: .25em;
+ 
+}
+select {
+  flex: 1;
+  padding: 0 .5em;
+  color: #fff;
+  cursor: pointer;
+}
+/* Arrow */
+.select::after {
+  content: '\25BC';
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 0 1em;
+  background: #34495e;
+  cursor: pointer;
+  pointer-events: none;
+  -webkit-transition: .25s all ease;
+  -o-transition: .25s all ease;
+  transition: .25s all ease;
+   margin-left:10px;
+}
+/* Transition */
+.select:hover::after {
+  color: #f39c12;
+}
+
+
+
+
+
+
+
+
+
+
+
+
 
 
  img.icon{
@@ -82,26 +148,49 @@ margin:10px 0 0 70px ;
  vertical-align:unset;
  
  }
- input#your_pass{
- padding-left:40px;
- width:250px;
- }
- input#your_name{
- padding-left:40px;
-  width:250px;
+ input.register{
+  display: inline-block;
+  background: #6dabe4;
+  color: #fff;
+  border-bottom: none;
+  width: auto;
+ border:1px;
+  border-radius: 5px;
+  margin-left: 5px;
+  cursor: pointer; 
+  
+  }
+  input#add{
+   display: inline-block;
+  background: #6dabe4;
+  color: #fff;
+  border-bottom: none;
+  width: 200px;
+ border:1px;
+  border-radius: 5px;
+  margin-left: 600px;
+  cursor: pointer; 
+  position: absolute;
+  z-index:2;
+  margin-top:-80px;
+  height:80px;
+  font-size:30px;
+  padding:auto;
 
- }
+  }
+ 
+/* Remove IE arrow */
  div#bg{
  width:850px;
  height:auto; 
  -webkit-box-shadow: 0 0 15px #8E8E8E;
 	-moz-box-shadow: 0 0 15px #8E8E8E;
 	box-shadow: 0 0 15px #5B5B5B;
-	padding-top:150px;
+	padding-top:100px;
 	padding-bottom:50px;
  }
  section#copyright{
- height:400px;
+ height:200px;
  }
  input.input{
 font-family:'Gochi Hand';
@@ -135,7 +224,7 @@ p.text{
 width:100%;
 height:100%;
 text-align:center;
-font-size:20px;
+font-size:18px;
 
 }
 p.date{
@@ -148,14 +237,51 @@ margin:25px 0 0 200px ;
 h4.nkname{
 width:200px;
 height:50px;
-margin:10px 0 0 15px ;
+margin:12px 0 0 25px ;
 
 }
 .signup-image-link {
     margin-top: 20px;
     margin-left:5px;
     }
+    div,p{
+    font-family:'Gochi Hand';
+    }
+    div#count{
+    width:300px;
+    height:100px;
+    position:absolute;
+    z-index:2;
+    margin:-25px 0 0 140px;
+    font-size:20px;
+    color:#D0D0D0;
+    
+    }
+    div#title{
+     width:300px;
+    height:50px;
+    position:absolute;
+    z-index:2;
+    margin:-25px 0 0 23px;
+    font-size:20px;
+    color:#FF0000;
+    
+    }
+    div#avg{
+    width:300px;
+    height:50px;
+    position:absolute;
+    z-index:2;
+    margin:-130px 0 0 10px;
+    font-size:80px;
+    color:#0099CC;
+    }
+  
+    
+    
+    
 div.main{
+padding:150px 0 0 0;
 background: url("<%=request.getContextPath()%>/front-end/members/assets/img/bgPic.png");
 
 
@@ -172,15 +298,20 @@ background: url("<%=request.getContextPath()%>/front-end/members/assets/img/bgPi
             <div id="bg" class="container">
             
             
-            
             <%@ include file="page1.file"%>
+            <div id="avg">${avg}</div>
+            
+            
+            <input id="add" type="submit" value="發表評價">
+            
+            
 							<c:forEach var="course_assessVO" items="${list}" begin="<%=pageIndex%>"
 								end="<%=pageIndex+rowsPerPage-1%>" varStatus="s">
                 <div class="signin-content">
                     <div class="signin-image">
                         <a href="<%=request.getContextPath()%>/front-end/members/indexV1.jsp"><img class="pic" src="<%=request.getContextPath()%>/back-end/members/MprofileDisplayServlet?MEMNO=${course_assessVO.memno}" alt="sing up image"></a>
                         
-                        <h4 class="nkname">${membersSvc.getOneMembers(course_assessVO.memno).nkname}
+                        <h4 style="font-family:Gochi Hand" class="nkname">${membersSvc.getOneMembers(course_assessVO.memno).nkname}
                         
                             <c:if test="${empty teacherSvc.getStatus(course_assessVO.memno)}">
 							<img id="nav_icon" src='<%=request.getContextPath()%>/front-end/members/assets/img/students.svg'>
@@ -207,9 +338,16 @@ background: url("<%=request.getContextPath()%>/front-end/members/assets/img/bgPi
                     </div>
                     <div class="signin-form">
                            <div class="form-group">
+                           <c:forEach var="num" begin="1" end="${course_assessVO.coursescore}" step="1">
+
+                           <img class="icon" src="<%=request.getContextPath()%>/front-end/members/signIn&updateMembers_css/images/star.svg">
+                              
+                           </c:forEach> 
                            
-                               <img class="icon" src="<%=request.getContextPath()%>/front-end/members/signIn&updateMembers_css/images/star.svg">
-                           </div>
+                        	   
+                           
+                           
+                                </div>
                             <div class="form-group">
                                 <p class="text">${course_assessVO.comments}</p>
                                 <p class="date"><fmt:formatDate value="${course_assessVO.commenttime}" type="date" dateStyle="full"/></p>
@@ -218,7 +356,19 @@ background: url("<%=request.getContextPath()%>/front-end/members/assets/img/bgPi
                 </div>
                 </c:forEach>
                 <%@ include file="page2.file"%>
-                
+                <%if (pageNumber>1) {%>
+                <div>
+    <FORM METHOD="post" ACTION="<%=request.getRequestURI()%>">  
+       <select size="1"  name="whichPage">
+       <option selected disabled>Choose an option</option>
+         <%for (int i=1; i<=pageNumber; i++){%>
+            <option value="<%=i%>">跳至第<%=i%>頁
+         <%}%> 
+       </select>
+       <input class="register" type="submit" value="確定" >  
+    </FORM>
+    </div>
+  <%}%>
                 
                 
                 
