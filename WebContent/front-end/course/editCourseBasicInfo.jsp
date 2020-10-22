@@ -24,7 +24,7 @@
 		</ul>
 	</c:if>
 
-	<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/course/course.do" name="form1">
+	<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/course/course.do" name="form1" enctype="multipart/form-data">
 		<input type="hidden" name="courseno" value="${courseVO.courseno}">
 		<input type="hidden" name="tchrno" value="${courseVO.tchrno}">
 		<input type="hidden" name="ttltime" value="${courseVO.ttltime}">

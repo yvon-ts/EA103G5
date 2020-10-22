@@ -34,6 +34,7 @@ public class CourseService {
 	public CourseVO updateCourse(String courseno, String cstypeno, String tchrno, String coursename, String courseinfo,
 			Integer courseprice, Integer ttltime, String csstatus, Integer csscore, Integer csscoretimes,
 			byte[] courseimg) {
+		// 有更新課程圖片
 
 		CourseVO courseVO = new CourseVO();
 
@@ -48,6 +49,27 @@ public class CourseService {
 		courseVO.setCsscore(csscore);
 		courseVO.setCsscoretimes(csscoretimes);
 		courseVO.setCourseimg(courseimg);
+		dao.update(courseVO);
+
+		return courseVO;
+	}
+
+	public CourseVO updateCourse(String courseno, String cstypeno, String tchrno, String coursename, String courseinfo,
+			Integer courseprice, Integer ttltime, String csstatus, Integer csscore, Integer csscoretimes) {
+		// 不更新課程圖片，保有原本的檔案
+
+		CourseVO courseVO = new CourseVO();
+
+		courseVO.setCourseno(courseno);
+		courseVO.setCstypeno(cstypeno);
+		courseVO.setTchrno(tchrno);
+		courseVO.setCoursename(coursename);
+		courseVO.setCourseinfo(courseinfo);
+		courseVO.setCourseprice(courseprice);
+		courseVO.setTtltime(ttltime);
+		courseVO.setCsstatus(csstatus);
+		courseVO.setCsscore(csscore);
+		courseVO.setCsscoretimes(csscoretimes);
 		dao.update(courseVO);
 
 		return courseVO;

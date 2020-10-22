@@ -204,8 +204,6 @@
 	</script>
 	<!-- ========== JavaScript Area ========== -->
 
-
-
 	<!-- include 前台頁面的 footer -->
 	<jsp:include page="/index/front-index/footer.jsp" />
 </body>

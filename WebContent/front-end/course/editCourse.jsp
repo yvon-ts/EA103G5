@@ -9,8 +9,8 @@
 <jsp:useBean id="courseTypeSvc" scope="page" class="com.course_type.model.CourseTypeService" />
 
 <%
-	CourseVO courseVO = (CourseVO) request.getAttribute("courseVO");
-	Double courseScore = (double)courseVO.getCsscore() / (double)courseVO.getCsscoretimes();
+	//CourseVO courseVO = (CourseVO) request.getAttribute("courseVO");
+	//Double courseScore = (double)courseVO.getCsscore() / (double)courseVO.getCsscoretimes();
 %>
 
 <!DOCTYPE html>
@@ -35,8 +35,8 @@
 	<!-- include 前台頁面的 header -->
 	<jsp:include page="/index/front-index/header.jsp" />
 
-
-	<div class="container" style="margin-top: 80px;">
+	<div class="container" style="margin-top: 90px;">
+	
 		<div class="row">
 			<div class="col">
 				<h1 id="pageTitle">課程管理 - ${courseVO.coursename}</h1>

@@ -177,6 +177,9 @@
 		// 將課程資訊寫入資料庫  // 拿宜靜的來改
 		function ajax_updateVideo(formData) {
 			// getFormDatas();
+			
+			//var count++;
+			
 			$.ajax({ // 存入資料庫階段
 				url: "<%=request.getContextPath()%>/courseVideosServlet",
 				type: "POST",
@@ -187,9 +190,13 @@
 				contentType: false,
 				success: function (data) { // 以上成功才執行
 					console.log("*回傳內容： " + data);
+					
+					// count--;
 				},
 				error: function () {
 					console.log("*真的不棒")
+					
+					//count--;
 				}
 			})
 		}

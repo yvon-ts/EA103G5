@@ -17,7 +17,7 @@
 	<!-- Font Awesome CSS -->
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css">
 	<!-- 自己的 CSS 一定放在最下面 -->
-	<link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/course/css/course.css">
+	<link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/course/css/mainCoursePage.css">
 	<!-- ========== CSS Area ========== -->
 
 	<title>${courseVO.coursename} - Xducation 陪你成長的學習好夥伴</title>
@@ -162,7 +162,6 @@
 				<div class="tab-content" id="subpage">
 					<div id="courseinfo" class="tab-pane fade show active">
 						<h3>課程簡介</h3>
-						<h5>你可以學到：</h5>
 						<div>${courseVO.courseinfo}</div>
 						<%-- <jsp:include page="/front-end/course/subpage_courseinfo.html" /> --%>
 					</div>

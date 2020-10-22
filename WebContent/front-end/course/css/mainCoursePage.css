@@ -80,3 +80,16 @@ li {
 #subpage {
     margin-top: 50px;
 }
+
+#subpage #courseinfo ul, #subpage #courseinfo ol{
+/* 	list-style: outside circle circle; */
+	padding-inline-start: 40px;
+}
+
+#subpage #courseinfo ul li {
+	list-style: initial;
+}
+
+#subpage #courseinfo ol li {
+	list-style:decimal;
+}
