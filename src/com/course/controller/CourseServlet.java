@@ -390,10 +390,10 @@ public class CourseServlet extends HttpServlet {
 					errorMsgs.add("請選擇課程類別");
 				}
 
-				// 開課教師 NG
+				// 開課教師 NGNGNGNGNGNGNGNGNGNGNGNGNGNGNGNGNGNGNGNGNGNGNGNGNG
 				String tchrno = req.getParameter("tchrno");
 				
-				// 課程名稱 NG
+				// 課程名稱 NGNGNGNGNGNGNGNGNGNGNGNGNGNGNGNGNGNGNGNGNGNGNGNGNG
 				String coursename = req.getParameter("coursename");
 				String coursenameRegex = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{2,15}$";
 				if (coursename == null || coursename.trim().length() == 0) {
@@ -403,7 +403,7 @@ public class CourseServlet extends HttpServlet {
 					errorMsgs.add("課程名稱: 只能是中、英文字母、數字和_ , 且長度必需在2到15之間");
 				}
 				
-				// 課程資訊 NG
+				// 課程資訊 NGNGNGNGNGNGNGNGNGNGNGNGNGNGNGNGNGNGNGNGNGNGNGNGNG
 				String courseinfo = req.getParameter("courseinfo");
 
 				// 課程單價
@@ -426,9 +426,9 @@ public class CourseServlet extends HttpServlet {
 				Integer ttltime = 0;
 				// 課程狀態 NG 應該為 0
 				String csstatus = "審核中";
-				// 課程總評分 NG 應該為 0
+				// 課程總評分 NG 應該為 0 NGNGNGNGNGNGNGNGNGNGNGNGNGNGNGNGNGNGNGNGNGNGNGNGNG
 				Integer csscore = 3;
-				// 評分次數 NG 應該為 0
+				// 評分次數 NG 應該為 0 NGNGNGNGNGNGNGNGNGNGNGNGNGNGNGNGNGNGNGNGNGNGNGNGNG
 				Integer csscoretimes = 1;
 				// ========== 初次申請課程的初始值區域 ==========
 
