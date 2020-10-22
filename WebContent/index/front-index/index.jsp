@@ -525,6 +525,8 @@
     <script src="assets/js/jquery.counterup.min.js"></script>
     <script src="assets/js/waypoints.min.js"></script>
     <script src="assets/js/main.js"></script>
+    
+    
     <script>
     $(document).ready(function(e){
 	      $('.search-panel .dropdown-menu').find('a').click(function(e) {
