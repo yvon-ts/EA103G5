@@ -7,7 +7,8 @@ public interface Course_assessDAO_interface {
 	public void update(Course_assessVO course_assessVO);
 	public void delete(String asesno);
 	public Course_assessVO findByPrimaryKey(String asesno);
-	public List<Course_assessVO> getAll();
+	public List<Course_assessVO> getAll(String courseno);
+	public String avgScore(String courseno);
 	
 	
 

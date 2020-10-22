@@ -762,17 +762,8 @@ height:36px;
 	 
 	 
 	 
-	function status(){
-		
-		 swal('老師資格審核中', '請耐心等候1~3個工作天，一但審核完畢，即會立刻通知', 'info');
-	}
 	
 	
-	
-	var inform2 = document.getElementById('inform2').value;
-	if(inform2 ==='200'){
-		swal('完了', '沒辦法開始您的線上之旅了!', 'error');
-	}
 	
 	
 	
@@ -805,6 +796,8 @@ height:36px;
 		src="<%=request.getContextPath()%>/front-end/members/assets/js/waypoints.min.js"></script>
 	<script
 		src="<%=request.getContextPath()%>/front-end/members/assets/js/main.js"></script>
+		<script
+		src="<%=request.getContextPath()%>/front-end/members/assets/js/members&teacher&course_assess.js"></script>
 </body>
 
 </html>

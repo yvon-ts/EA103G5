@@ -6,7 +6,7 @@
 
 <%
 MembersVO membersVO = (MembersVO) session.getAttribute("membersVO");
-String inform2 = (String)request.getAttribute("inform2"); 
+String inform4 = (String)request.getAttribute("inform4"); 
 
 
 %>
@@ -369,7 +369,7 @@ background: url("<%=request.getContextPath()%>/front-end/members/assets/img/bgPi
             </div>
         </section>
     </footer>
-    <input type="hidden" id="inform2" value="${requestScope.inform2}">
+    <input type="hidden" id="inform4" value="${requestScope.inform4}">
     
         </section>
         
@@ -379,10 +379,7 @@ background: url("<%=request.getContextPath()%>/front-end/members/assets/img/bgPi
 
     <!-- JS -->
      <script type="text/javascript">
-     var inform2 = document.getElementById('inform2').value;
- 	if(inform2 ==='200'){
- 		swal('已成功更新', '您的個人檔案!', 'success');
- 	}
+    
      
      
      
@@ -415,6 +412,8 @@ background: url("<%=request.getContextPath()%>/front-end/members/assets/img/bgPi
 
         	}
     </script>
+    <script
+		src="<%=request.getContextPath()%>/front-end/members/assets/js/members&teacher&course_assess.js"></script>
     
 </body><!-- This templates was made by Colorlib (https://colorlib.com) -->
 </html>

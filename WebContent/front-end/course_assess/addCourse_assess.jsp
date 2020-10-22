@@ -15,7 +15,11 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Xducation-新增評價</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.3/sweetalert2.css" />
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.3/sweetalert2.js"
+	type="text/javascript"></script>
     <!-- Main css -->
     <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
     <link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/members/signIn&updateMembers_css/style.css">
@@ -71,41 +75,31 @@
   left: 0px;
 }
 
-.ratingControl-stars--15 {
-  left: 75px;
-}
+
 
 .ratingControl-stars--2 {
   left: 75px;
 }
 
-.ratingControl-stars--25 {
-  left: 150px;
-}
+
 
 .ratingControl-stars--3 {
   left: 150px;
 }
 
-.ratingControl-stars--35 {
-  left: 225px;
-}
+
 
 .ratingControl-stars--4 {
   left: 225px;
 }
 
-.ratingControl-stars--45 {
-  left: 300px;
-}
+
 
 .ratingControl-stars--5 {
   left: 300px;
 }
 
-.ratingControl-stars--half {
-  width: 34px;
-}
+
 
 @font-face {
   font-family: 'Audiowide';
@@ -286,4 +280,9 @@ background: url("<%=request.getContextPath()%>/front-end/members/assets/img/bgPi
     <!-- JS -->
     <%-- <%@ include file="/index/front-index/foottest.jsp" %> --%>
 </body>
+
+<script src="<%=request.getContextPath()%>/front-end/members/assets/js/members&teacher&course_assess.js"></script>
+
+
+
 </html>

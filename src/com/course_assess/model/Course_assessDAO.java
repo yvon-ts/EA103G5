@@ -1,9 +1,11 @@
 package com.course_assess.model;
 
 import java.sql.*;
+import java.text.DecimalFormat;
 import java.util.*;
 import javax.naming.*;
 import javax.sql.DataSource;
+import java.math.*;
 
 
 
@@ -23,10 +25,11 @@ public class Course_assessDAO implements Course_assessDAO_interface {
 	String passwd = "123456";
 	
 	private static final String INSERT_STMT = "INSERT INTO COURSE_ASSESS(ASESNO,COURSENO,MEMNO,COURSESCORE,COMMENTS) VALUES ('ASES' || LPAD(SEQ_ASESNO.NEXTVAL, 4, 0),?,?,?,?)";
-	private static final String GET_ALL_STMT = "SELECT ASESNO,COURSENO,MEMNO,COURSESCORE,COMMENTS,COMMENTTIME FROM COURSE_ASSESS ORDER BY ASESNO";
-	private static final String GET_ONE_STMT = "SELECT ASESNO,COURSENO,MEMNO,COURSESCORE,COMMENTS FROM COURSE_ASSESS WHERE ASESNO = ?";
+	private static final String GET_ALL_STMT = "SELECT ASESNO,COURSENO,MEMNO,COURSESCORE,COMMENTS,COMMENTTIME FROM COURSE_ASSESS WHERE COURSENO = ? ORDER BY ASESNO";
+	private static final String GET_ONE_STMT = "SELECT ASESNO,COURSENO,MEMNO,COURSESCORE,COMMENTS,COMMENTTIME FROM COURSE_ASSESS WHERE ASESNO = ?";
 	private static final String UPDATE = "UPDATE COURSE_ASSESS SET COURSESCORE=?,COMMENTS=? WHERE ASESNO =?";
 	private static final String DELETE = "DELETE FROM COURSE_ASSESS WHERE ASESNO=?";
+	private static final String AVG_SCORE = "SELECT courseno, AVG(COURSESCORE)  FROM COURSE_ASSESS where courseno = ? group by courseno";
 
 	
 
@@ -151,6 +154,78 @@ public class Course_assessDAO implements Course_assessDAO_interface {
 
 	}
 
+	
+	
+	@Override
+	public String avgScore(String courseno) {
+		float avg = 0f;
+		String str =null;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+
+//			con = ds.getConnection();
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
+
+			pstmt = con.prepareStatement(AVG_SCORE);
+
+			pstmt.setString(1, courseno);
+
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				
+				avg = rs.getFloat("AVG(COURSESCORE)");
+				
+			}
+			   
+			  DecimalFormat   fnum   =   new   DecimalFormat("##0.0");  
+			   str = fnum.format(avg);      
+			
+			
+			} catch (SQLException se) {
+				throw new RuntimeException("A database error occured. "
+						+ se.getMessage());
+				// Clean up JDBC resources
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} finally {
+				if (rs != null) {
+					try {
+						rs.close();
+					} catch (SQLException se) {
+						se.printStackTrace(System.err);
+					}
+				}
+				if (pstmt != null) {
+					try {
+						pstmt.close();
+					} catch (SQLException se) {
+						se.printStackTrace(System.err);
+					}
+				}
+				if (con != null) {
+					try {
+						con.close();
+					} catch (Exception e) {
+						e.printStackTrace(System.err);
+					}
+				}
+			}
+		
+		
+		
+		
+		
+		return str;
+	}
+	
+	
+	
+	
+	
 	@Override
 	public Course_assessVO findByPrimaryKey(String asesno) {
 		Course_assessVO course_assessVO =null;
@@ -209,7 +284,7 @@ public class Course_assessDAO implements Course_assessDAO_interface {
 	}
 
 	@Override
-	public List<Course_assessVO> getAll() {
+	public List<Course_assessVO> getAll(String courseno) {
 		List<Course_assessVO> list = new ArrayList<Course_assessVO>();
 		Course_assessVO course_assessVO = null;
 
@@ -222,6 +297,7 @@ public class Course_assessDAO implements Course_assessDAO_interface {
 
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(GET_ALL_STMT);
+			pstmt.setString(1, courseno);
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
@@ -265,19 +341,17 @@ public class Course_assessDAO implements Course_assessDAO_interface {
 		}
 		return list;
 	}
-//	public static void main(String[] args) {
+	public static void main(String[] args) {
 //		Course_assessDAO dao = new Course_assessDAO();
-//		List<Course_assessVO>list = dao.getAll();
-//		for(Course_assessVO vo :list) {
-//			System.out.println(vo.getAsesno());
-//			System.out.println(vo.getCourseno());
-//			System.out.println(vo.getMemno());
-//			System.out.println(vo.getComments());
-//			System.out.println(vo.getCoursescore());
-//			System.out.println(vo.getCommenttime());
+//		Course_assessService sv = new Course_assessService();
+//		System.out.println(sv.avgScore("COUR0001"));
+//		
 //			
-//		}
-//	}
+		}
+	
+
+
+
 }
 
 

@@ -33,11 +33,14 @@ public class Course_assessService {
 		return dao.findByPrimaryKey(asesno);
 		
 	}
-	public List<Course_assessVO> getAll(){
-		return dao.getAll();
+	public List<Course_assessVO> getAll(String courseno){
+		return dao.getAll(courseno);
 	}
     
 	public void deleteCourse_assess(String asesno) {
 		dao.delete(asesno);
+	}
+	public String avgScore(String courseno) {
+		return dao.avgScore(courseno);
 	}
 }
