@@ -12,6 +12,11 @@ import javax.sql.DataSource;
 public class LecDAO implements LecDAO_Interface {
 
 	private static DataSource ds = null;
+	
+	String driver = "oracle.jdbc.driver.OracleDriver";
+	String url = "jdbc:oracle:thin:@localhost:1521:XE";
+	String userid = "XDU";
+	String passwd = "123456";
 
 	private static final String INSERT_STMT = "INSERT INTO LECTURE (lecno, lecname, lecprice, spkrno, roomno, lecstart, lecend, signstart, signend, initseat, currseat, lecinfo, lecpic)"
 			+ "VALUES ('LEC' || LPAD(SEQ_LECNO.NEXTVAL, 4, 0), ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -21,6 +26,7 @@ public class LecDAO implements LecDAO_Interface {
 			+ " initseat = ?,currseat = ?, lecinfo = ?, lecpic = ?, lecstatus = ?, leclmod = ? WHERE lecno = ?";
 	private static final String UPDATE_NO_PIC = "UPDATE LECTURE SET lecname = ?, lecprice = ?, spkrno = ?, roomno = ?, lecstart = ?, lecend = ?, signstart = ?, signend = ?,"
 			+ " initseat = ?, currseat = ?, lecinfo = ?, lecstatus = ?, leclmod = ? WHERE lecno = ?";
+	
 	private static final String GETONE_STMT = "SELECT * FROM LECTURE WHERE lecno = ?";
 	private static final String GETALL_STMT = "SELECT * FROM LECTURE ORDER BY LECNO";
 	
@@ -420,5 +426,71 @@ public class LecDAO implements LecDAO_Interface {
 		}
 		return list;
 	}
+	
+	@Override
+	public List<LecVO> getTextQuery(String query) {
+		
+		String QUERY_TEXT = "SELECT * FROM (SELECT * FROM LECTURE JOIN SPEAKER ON LECTURE.SPKRNO = SPEAKER.SPKRNO)"
+				+ "WHERE LECNAME LIKE '%"+ query +"%'"+ "OR SPKRNAME LIKE '%"+ query +"%'";
+		
+		List<LecVO> list = new ArrayList<LecVO>();
+		LecVO lecVO = null;
+		
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
 
+		try {
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(QUERY_TEXT);
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				lecVO = new LecVO();
+				lecVO.setLecno(rs.getString("lecno"));
+				lecVO.setLecname(rs.getString("lecname"));
+				lecVO.setLecprice(rs.getInt("lecprice"));
+				lecVO.setSpkrno(rs.getString("spkrno"));
+				lecVO.setRoomno(rs.getString("roomno"));
+				lecVO.setLecstart(rs.getTimestamp("lecstart"));
+				lecVO.setLecend(rs.getTimestamp("lecend"));
+				lecVO.setSignstart(rs.getTimestamp("signstart"));
+				lecVO.setSignend(rs.getTimestamp("signend"));
+				lecVO.setInitseat(rs.getString("initseat"));
+				lecVO.setCurrseat(rs.getString("currseat"));
+				lecVO.setLecstatus(rs.getInt("lecstatus"));
+				lecVO.setLecinfo(rs.getBytes("lecinfo"));
+				lecVO.setLecpic(rs.getBytes("lecpic"));
+				lecVO.setLeclmod(rs.getTimestamp("leclmod"));
+				list.add(lecVO);
+			}
+
+		} catch (SQLException se) {
+			throw new RuntimeException("Database error." + se.getMessage());
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace();
+				}
+			}
+
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace();
+				}
+			}
+			if (con != null) {
+				try {
+					pstmt.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return list;
+	}
 }

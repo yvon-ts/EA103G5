@@ -10,13 +10,13 @@
 <!DOCTYPE html>
 
 <%
-	LecService lecSvc = new LecService();
-	List<LecVO> list = lecSvc.getList();
+	List<LecVO> list = (List<LecVO>) request.getAttribute("list");
 	pageContext.setAttribute("list", list);
 	
 	String startdate = "";
 	String startmonth = "";
 	String starttime = "";
+	String spkrname = "";
 %>
 <html>
 <head>
@@ -55,17 +55,17 @@
                             <br>
                             <div class="about-wrapper wow fadeInLeft" data-wow-delay="0.4s">
                                 <div id="search">
-<%--                                    <form id="queryForm" method="post" action="<%=request.getContextPath()%>/lecture/lecJson.get"> --%>
+                                   <form id="queryForm" method="post" action="<%=request.getContextPath()%>/lecture/lecture.do">
                                     <table id="searchbox">
                                         <tr>
                                             <td><i class="lni-search"></i></td>
                                             <td>
                                                 <input id="query" name="query" type="text" size="30" placeholder="&nbsp;&nbsp;今天想學什麼呢？">
-                                                <input name="action" type="hidden" value="sendQuery">
+                                                <input name="action" type="hidden" value="queryServlet">
                                             </td>
                                         </tr>
                                     </table>
-<!--                                 </form> -->
+                                </form>
                                 </div>
                                 <div class="header-button">
                                     <a href="#" class="btn btn-common">探索課程</a>
@@ -89,32 +89,34 @@
     <!-- Header Area wrapper End -->
 
     <!-- Features Section Start -->
-    <%@ include file="/back-end/pool/page1.file" %>
     <section id="features" class="section-padding">
         <div class="container">
             <div class="section-header text-center">
                 <h2 class="section-title wow fadeInDown" data-wow-delay="0.3s"><i class="lni-rocket"></i> 名人講座</h2>
             </div>
             <div id="row" class="row">
-
-                        <% int listindex = 0; %>
-	<c:forEach var="lecVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
-	<%
-			//時間設定
-			LecVO lecVO = list.get(listindex + pageIndex);
-			Timestamp lecstart = lecVO.getLecstart();
-			SimpleDateFormat fmtdate = new SimpleDateFormat("dd");
-			SimpleDateFormat fmtmonth = new SimpleDateFormat("MMM");
-			SimpleDateFormat fmttime = new SimpleDateFormat("HH:mm");
-			startdate = fmtdate.format(lecstart);
-			startmonth = fmtmonth.format(lecstart);
-			starttime = fmttime.format(lecstart);
-			//講者姓名
-			SpkrService spkrSvc = new SpkrService();
-			SpkrVO spkrVO = spkrSvc.getOne(lecVO.getSpkrno());
-			String spkrname = spkrVO.getSpkrname();
-		%>
-   <div class="div col-lg-10 col-md-12 col-sm-12 col-xs-12 box-item wow fadeInLeft" data-wow-delay="0.3s">
+<!--                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"> -->
+<!--                     <div class="content-left"> -->
+<!--                         <div class="wow fadeInLeft" data-wow-delay="0.3s"> -->
+            <% //時間設定
+			LecService svc = new LecService();
+			for (LecVO lecVO : list){
+				Timestamp lecstart = lecVO.getLecstart();
+				SimpleDateFormat fmtdate = new SimpleDateFormat("dd");
+				SimpleDateFormat fmtmonth = new SimpleDateFormat("MMM");
+				SimpleDateFormat fmttime = new SimpleDateFormat("HH:mm");
+				startdate = fmtdate.format(lecstart);
+				startmonth = fmtmonth.format(lecstart);
+				starttime = fmttime.format(lecstart);
+				//講者姓名
+				SpkrService spkrSvc = new SpkrService();
+				SpkrVO spkrVO = spkrSvc.getOne(lecVO.getSpkrno());
+				spkrname = spkrVO.getSpkrname();
+				}%>
+                        
+	<c:forEach var="lecVO" items="${list}">
+	
+   <div class="div col-lg-9 col-md-12 col-sm-12 col-xs-12 box-item wow fadeInLeft" data-wow-delay="0.3s">
         <div class="daydiv">
             <span class="date"><%=startdate%></span><br>
             <span class="month"><%=startmonth%></span><br>
@@ -135,15 +137,25 @@
         	</form>
         </div>
     </div>
-    <% listindex++;%>
     </c:forEach>
                     </div>
                 </div>
-
+                <!-- 講座區圖片 
+                <div class="col-lg-5 col-md-12 col-sm-12 col-xs-12">
+                    <div class="show-box wow fadeInUp" data-wow-delay="0.3s">
+                        <img src="<%=request.getContextPath() %>/index/front-index/assets/img/head/calendar.gif" alt="">
+                    </div>
+                </div>-->
+<!--             </div> -->
+<!--         </div> -->
+<!--         </div> -->
     </section>
     <!-- Features Section End -->
+
+    <!-- Footer Section Start -->
+    
+    <!-- Footer Section End -->
 	
-	<%@ include file="/back-end/pool/page2.file" %>
 	<form method="post"	action="<%=request.getContextPath()%>/back-end/speaker/select_page.jsp">
 	<input type="submit" value="回首頁"></form>
 	<%@ include file="/index/front-index/footer.jsp" %>
@@ -153,57 +165,56 @@
        
         	console.log("press");
             $("#queryForm").submit();
-            $("#row").empty();
         
-        $.ajax({
-  	  		url: "<%=request.getContextPath()%>/lecture/lecJson.get",
-  	  		type: "POST",
-  	  		data:{
-  	  			action: "sendQuery",
-  	  			query: $("#query").val()
-  	  		},
-  	  		success: function(data){
-  	  			var lecs = JSON.parse(data);
-  	  			//$("#row").empty();
-  	  			for (let i = 0; i < lecs.length; i++){
-  	  			jQuery('<div/>', {
-  	  		    id: 'lec'+ i,
-  	  		    "class": 'div col-lg-9 col-md-12 col-sm-12 col-xs-12 box-item wow fadeInLeft',
-  	  		    "html" : `<div class="daydiv">
-  	              <span class="date"></span><br>
-  	              <span class="month"></span><br>
-  	              <span class="time"></span><br>
-  	          </div>
-  	          <div class="pic">
-  	        <img src="<%=request.getContextPath() %>/index/front-index/assets/img/head/lecture.png">
-  	          </div>
-  	          <div class="lec-txt">
-  	          	<p class="title"></p><br>
-  	          	<p class="ctnt"></p>
-  	          </div>
-  	          <div class="more">
-  	          	<form method="post" action="<%=request.getContextPath()%>/lecture/lecture.do">
-  	          		<input type="submit" value="我有興趣">
-  	          		<input type="hidden" name="lecno" value="${lecVO.lecno}">
-  	          		<input type="hidden" name="action" value="frontOne">
-  	          	</form>
-  	          </div>`
-  	  		}).appendTo('#row');
+//         $.ajax({
+<%--   	  		url: "<%=request.getContextPath()%>/lecture/lecJson.get", --%>
+//   	  		type: "POST",
+//   	  		data:{
+//   	  			action: "sendQuery",
+//   	  			query: $("#query").val()
+//   	  		},
+//   	  		success: function(data){
+//   	  			var lecs = JSON.parse(data);
+//   	  			$("#row").empty();
+//   	  			for (let i = 0; i < lecs.length; i++){
+//   	  			jQuery('<div/>', {
+//   	  		    id: 'lec'+ i,
+//   	  		    "class": 'div col-lg-9 col-md-12 col-sm-12 col-xs-12 box-item wow fadeInLeft',
+//   	  		    "html" : `<div class="daydiv">
+//   	              <span class="date"></span><br>
+//   	              <span class="month"></span><br>
+//   	              <span class="time"></span><br>
+//   	          </div>
+//   	          <div class="pic">
+<%--   	        <img src="<%=request.getContextPath() %>/index/front-index/assets/img/head/lecture.png"> --%>
+//   	          </div>
+//   	          <div class="lec-txt">
+//   	          	<p class="title"></p><br>
+//   	          	<p class="ctnt"></p>
+//   	          </div>
+//   	          <div class="more">
+<%--   	          	<form method="post" action="<%=request.getContextPath()%>/lecture/lecture.do"> --%>
+//   	          		<input type="submit" value="我有興趣">
+//   	          		<input type="hidden" name="lecno" value="${lecVO.lecno}">
+//   	          		<input type="hidden" name="action" value="frontOne">
+//   	          	</form>
+//   	          </div>`
+//   	  		}).appendTo('#row');
   	  			
-				//日期  	  			
-  	  			$("#lec"+i+" div .date").text(lecs[i].startdate);
-  	  			$("#lec"+i+" div .month").text(lecs[i].startmonth);
-  	  			$("#lec"+i+" div .time").text(lecs[i].starttime);
+// 				//日期  	  			
+//   	  			$("#lec"+i+" div .date").text(lecs[i].startdate);
+//   	  			$("#lec"+i+" div .month").text(lecs[i].startmonth);
+//   	  			$("#lec"+i+" div .time").text(lecs[i].starttime);
   	  			
-  	  		//內容
-  	  			$("#lec"+i+" div .title").text(lecs[i].lecname);
-  	  			$("#lec"+i+" div .ctnt").text(lecs[i].spkrname);
+//   	  		//內容
+//   	  			$("#lec"+i+" div .title").text(lecs[i].lecname);
+//   	  			$("#lec"+i+" div .ctnt").text(lecs[i].spkrname);
   	  			
-  	  			}
-  	  		console.log($("#query").val());
-  	  		console.log(data);
-  	  		}
-        });
+//   	  			}
+//   	  		console.log($("#query").val());
+//   	  		console.log(data);
+//   	  		}
+//         });
         }
     });
 	</script>
