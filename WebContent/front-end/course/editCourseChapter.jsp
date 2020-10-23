@@ -21,7 +21,7 @@
 					<!-- <th scope="col" style="width: 150px;">#</th> -->
 					<th scope="col">#</th>
 					<th scope="col">Chapter Title</th>
-					<th scope="col" colspan="2">Video File</th>
+					<th scope="col" colspan="3">Video File</th>
 					<!-- <th>編輯</th> -->
 				</tr>
 			</thead>
@@ -64,6 +64,14 @@
 							<input type="hidden" name="videono" value=${videoVO.videono} form="origForm${status.count}">
 							<input type="hidden" name="action" value="update" form="origForm${status.count}">
 						</form>
+							<td class="align-middle text-center">
+								<form method="post" ACTION="<%=request.getContextPath()%>/video/video.do">
+									<input type="hidden" name="videono" value=${videoVO.videono}>
+									<input type="hidden" name="action" value="delete">
+<!-- 									<input type=submit class="btn btn-danger delete" value=刪除> -->
+									<button type="button" class="btn btn-danger delete">刪除</button>
+								</form>
+							</td>
 					</tr>
 				</c:forEach>
 				<tr id="chapterEditRow" class="disabled text-center">
@@ -211,6 +219,17 @@
 				ajax_updateVideo(formData);
 			}
 			// to do: 還須使其 reload 或重新整理
+		});
+		
+		
+		$(".delete").click(function(e){
+// 			if(confirm("\n確認刪除後，將無法回復資料\n\n請問是否要刪除本單元？")){
+				$(this).parent().parent().parent().remove(); // 超蠢寫法 NG
+				replaceTheChapterNumber();
+// 				$(this).parent().submit();
+// 			} else{
+				//e.preventDefault();
+// 			}			
 		});
 	</script>
 
