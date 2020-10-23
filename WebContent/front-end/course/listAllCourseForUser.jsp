@@ -262,7 +262,7 @@
 					action:'mutlipleSearch'
 				},
 				success: function(data){
-					console.log(data);
+					
 					var JSONarray = JSON.parse(data);
 					$(".seacharea").empty();
 					
