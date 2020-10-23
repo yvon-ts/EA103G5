@@ -261,12 +261,11 @@ public class CourseServlet extends HttpServlet {
 							ttltime, csstatus, csscore, csscoretimes, courseimg);
 				}
 				
-				
 				courseVO = courseSvc.getOneCourse(courseno);
 				/*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
 				req.setAttribute("courseVO", courseVO);
-				String url = "/front-end/course/editCourse.jsp"; // 不用加前面的路徑？2020/09/30
-				RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllCourse.jsp
+				String url = "/front-end/course/editCourse.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
 				/*************************** 其他可能的錯誤處理 **********************************/
 			} catch (Exception e) {
@@ -469,22 +468,20 @@ public class CourseServlet extends HttpServlet {
 				// ========== 初次申請課程的初始值區域 ==========
 				// 課程總時數
 				Integer ttltime = 0;
-				// 課程狀態 NG 應該為 0
+				// 課程狀態
 				String csstatus = "審核中";
-				// 課程總評分 NG 應該為 0 NGNGNGNGNGNGNGNGNGNGNGNGNGNGNGNGNGNGNGNGNGNGNGNGNG
-				Integer csscore = 3;
-				// 評分次數 NG 應該為 0 NGNGNGNGNGNGNGNGNGNGNGNGNGNGNGNGNGNGNGNGNGNGNGNGNG
-				Integer csscoretimes = 1;
+				// 課程總評分
+				Integer csscore = 0;
+				// 評分次數
+				Integer csscoretimes = 0;
 				// ========== 初次申請課程的初始值區域 ==========
 
-				
 				// 上傳課程圖片
 				byte[] courseimg = null;
 				Part part = req.getPart("courseimg");
 
 				if (part.getSize() == 0) {
-					System.out.println("***沒上傳檔案***");
-					// errorMsgs.add("請上傳課程圖片");
+					//System.out.println("***沒上傳檔案***");
 				} else if (part.getContentType().indexOf("image") < 0) {
 					errorMsgs.add("僅可以上傳圖片類型之檔案");
 				} else {
@@ -492,12 +489,12 @@ public class CourseServlet extends HttpServlet {
 					courseimg = getUpdateFileByteArray(in);
 				}
 				
-				// ========== 測試用印出程式碼 ==========
-				// System.out.println("===== PART: " + courseimg + " =====");
-				System.out.println("**SubmittedFileName = " + part.getSubmittedFileName());
-				System.out.println("**ContentType = " + part.getContentType());
-				System.out.println("**Size = " + part.getSize());
-				// ========== 測試用印出程式碼 ==========
+//				// ========== 測試用印出程式碼 ==========
+//				// System.out.println("===== PART: " + courseimg + " =====");
+//				System.out.println("**SubmittedFileName = " + part.getSubmittedFileName());
+//				System.out.println("**ContentType = " + part.getContentType());
+//				System.out.println("**Size = " + part.getSize());
+//				// ========== 測試用印出程式碼 ==========
 
 				CourseVO courseVO = new CourseVO();
 				courseVO.setCstypeno(cstypeno);
@@ -527,10 +524,9 @@ public class CourseServlet extends HttpServlet {
 				courseVO = courseSvc.getOneCourse(courseno);
 				req.setAttribute("courseVO", courseVO);
 				
-				String url = "/front-end/course/editCourse.jsp";
+				String url = "/front-end/course/addCourseToEdit.jsp?";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
-
 				/*************************** 其他可能的錯誤處理 **********************************/
 			} catch (Exception e) {
 				errorMsgs.add("無法新增資料:" + e.getMessage());
