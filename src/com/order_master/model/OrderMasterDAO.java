@@ -110,7 +110,7 @@ public class OrderMasterDAO implements OrderMasterDAO_interface {
 		PreparedStatement pstmt = null;
 
 		try {
-			con = ds.getConnection();
+//			con = ds.getConnection();
 			con.setAutoCommit(false);
 			pstmt = con.prepareStatement(UPDATE);
 			
@@ -157,7 +157,7 @@ public class OrderMasterDAO implements OrderMasterDAO_interface {
 
 		try {
 
-			con = ds.getConnection();
+//			con = ds.getConnection();
 			pstmt = con.prepareStatement(GET_ONE_STMT_ORDERNO);
 
 			pstmt.setString(1, orderNo);
@@ -214,7 +214,7 @@ public class OrderMasterDAO implements OrderMasterDAO_interface {
 
 		try {
 
-			con = ds.getConnection();
+//			con = ds.getConnection();
 			pstmt = con.prepareStatement(GET_ALL_STMT);
 			rs = pstmt.executeQuery();
 
@@ -266,7 +266,7 @@ public class OrderMasterDAO implements OrderMasterDAO_interface {
 
 		try {
 
-			con = ds.getConnection();
+//			con = ds.getConnection();
 			pstmt = con.prepareStatement(GET_ONE_STMT_MEMNO);
 
 			pstmt.setString(1, memno);

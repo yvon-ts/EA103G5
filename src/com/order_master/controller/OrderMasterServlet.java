@@ -176,10 +176,12 @@ public class OrderMasterServlet extends HttpServlet {
 				String[] sellprice = req.getParameterValues("courseprice");
 				String[] promono = req.getParameterValues("promono");
 				
+//				空值
 				for(int i = 0 ; i <= promono.length; i++) {
 					promono[i] = null;
 				}
-
+//				空值
+				
 				OrderMasterVO orderMasterVO = new OrderMasterVO();
 				orderMasterVO.setMemno(memno);
 				orderMasterVO.setOrderamt(orderamt);
@@ -192,16 +194,15 @@ public class OrderMasterServlet extends HttpServlet {
 					OrderDetailVO odVO = new OrderDetailVO();
 					odVO.setCourseno(courseno[i]);
 					odVO.setSellprice(new Integer(sellprice[i]));
-					odVO.setPromono(courseno[i]);
+					odVO.setPromono(promono[i]);
 					
 					list.add(odVO);
-					
 				}
 				
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					req.setAttribute("orderMasterVO", orderMasterVO);
-					RequestDispatcher failureView = req.getRequestDispatcher("/front-end/Shop/Shopping_Cart.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/front-end/Shop/Test.jsp");
 					failureView.forward(req, res);
 					return;
 				}
@@ -218,7 +219,7 @@ public class OrderMasterServlet extends HttpServlet {
 				/*************************** 其他可能的錯誤處理 **********************************/
 			} catch (Exception e) {
 				errorMsgs.add(e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/Shop/Shopping_Cart.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/Shop/Test.jsp");
 				failureView.forward(req, res);
 			}
 		}
