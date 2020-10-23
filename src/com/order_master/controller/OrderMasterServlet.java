@@ -176,10 +176,12 @@ public class OrderMasterServlet extends HttpServlet {
 				String[] sellprice = req.getParameterValues("courseprice");
 				String[] promono = req.getParameterValues("promono");
 				
+//				空值
 				for(int i = 0 ; i <= promono.length; i++) {
 					promono[i] = null;
 				}
-
+//				空值
+				
 				OrderMasterVO orderMasterVO = new OrderMasterVO();
 				orderMasterVO.setMemno(memno);
 				orderMasterVO.setOrderamt(orderamt);
@@ -192,10 +194,9 @@ public class OrderMasterServlet extends HttpServlet {
 					OrderDetailVO odVO = new OrderDetailVO();
 					odVO.setCourseno(courseno[i]);
 					odVO.setSellprice(new Integer(sellprice[i]));
-					odVO.setPromono(courseno[i]);
+					odVO.setPromono(promono[i]);
 					
 					list.add(odVO);
-					
 				}
 				
 				// Send the use back to the form, if there were errors
