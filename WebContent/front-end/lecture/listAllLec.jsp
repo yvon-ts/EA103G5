@@ -17,6 +17,7 @@
 	String startdate = "";
 	String startmonth = "";
 	String starttime = "";
+	String lecinfo = "";
 %>
 <html>
 <head>
@@ -27,12 +28,6 @@
 	h1{
 		margin-top: 150px;
 		margin-left: 400px;
-	}
-	#include{
-		margin-left: 400px;
-		padding: 30px;
-		background-color: #F3F3F3;
-		border-radius: 1%;
 	}
 </style>
 </head>
@@ -55,21 +50,21 @@
                             <br>
                             <div class="about-wrapper wow fadeInLeft" data-wow-delay="0.4s">
                                 <div id="search">
-<%--                                    <form id="queryForm" method="post" action="<%=request.getContextPath()%>/lecture/lecJson.get"> --%>
-                                    <table id="searchbox">
-                                        <tr>
-                                            <td><i class="lni-search"></i></td>
-                                            <td>
-                                                <input id="query" name="query" type="text" size="30" placeholder="&nbsp;&nbsp;今天想學什麼呢？">
-                                                <input name="action" type="hidden" value="sendQuery">
-                                            </td>
-                                        </tr>
-                                    </table>
+<%--                                    <form id="queryForm" method="post" action="<%=request.getContextPath()%>/lecture/lecture.do"> --%>
+<!--                                     <table id="searchbox"> -->
+<!--                                         <tr> -->
+<!--                                             <td><i class="lni-search"></i></td> -->
+<!--                                             <td> -->
+<!--                                                 <input id="query" name="query" type="text" size="30" placeholder="&nbsp;&nbsp;今天想學什麼呢？"> -->
+<!--                                                 <input name="action" type="hidden" value="queryServlet"> -->
+<!--                                             </td> -->
+<!--                                         </tr> -->
+<!--                                     </table> -->
 <!--                                 </form> -->
                                 </div>
                                 <div class="header-button">
-                                    <a href="#" class="btn btn-common">探索課程</a>
-                                    <a href="#" class="btn btn-border video-popup">我要註冊</a>
+                                    <a href="#lecture" class="btn btn-common">搜尋講座</a>
+                                    <a href="<%=request.getContextPath()%>/front-end/lecture/listAllLec.jsp" class="btn btn-border">查看全部</a>
                                 </div>
                             </div>
                         </div>
@@ -93,7 +88,13 @@
     <section id="features" class="section-padding">
         <div class="container">
             <div class="section-header text-center">
-                <h2 class="section-title wow fadeInDown" data-wow-delay="0.3s"><i class="lni-rocket"></i> 名人講座</h2>
+                <h2 id="lecture" class="section-title wow fadeInDown" data-wow-delay="0.3s"><i class="lni-rocket"></i> 名人講座</h2>
+            </div>
+            <div id="querybox" class="box-item">
+            	<div id="searchbox">
+            	<i class="lni-search"></i>
+            	<input id="query" name="query" type="text" size="30" placeholder="&nbsp;&nbsp;今天想學什麼呢？">
+            	</div>
             </div>
             <div id="row" class="row">
 
@@ -113,7 +114,23 @@
 			SpkrService spkrSvc = new SpkrService();
 			SpkrVO spkrVO = spkrSvc.getOne(lecVO.getSpkrno());
 			String spkrname = spkrVO.getSpkrname();
+			//講座資訊
+			lecinfo = "講座資訊更新中";
+				try{
+					//CKeditor - Bytes to String
+					byte[] b = lecVO.getLecinfo();
+					if (b != null) {
+						String bString = new String(b);
+						lecinfo = bString.substring(0, 23);
+					} else {
+						System.out.println("b is null");
+					}
+				} catch (Exception e){
+					lecinfo = "講座資訊更新中";
+					e.printStackTrace();
+				}
 		%>
+   <div class="col-lg-1 col-md-12 col-sm-12 col-xs-12 for-align"></div>
    <div class="div col-lg-10 col-md-12 col-sm-12 col-xs-12 box-item wow fadeInLeft" data-wow-delay="0.3s">
         <div class="daydiv">
             <span class="date"><%=startdate%></span><br>
@@ -125,17 +142,18 @@
         </div>
         <div class="lec-txt">
         	<p class="title">${lecVO.lecname}</p><br>
-        	<p class="ctnt">【<%=spkrname%>】<br>現場示範3道義式經典料理 X 義大利飲食文化</p>
+        	<p class="ctnt">【<%=spkrname%>】<br><%=lecinfo%></p>
         </div>
         <div class="more">
         	<form method="post" action="<%=request.getContextPath()%>/lecture/lecture.do">
-        		<input type="submit" value="我有興趣">
+        		<input type="submit" class="btn btn-common" value="我有興趣">
         		<input type="hidden" name="lecno" value="${lecVO.lecno}">
         		<input type="hidden" name="action" value="frontOne">
         	</form>
         </div>
     </div>
     <% listindex++;%>
+    <div class="col-lg-1 col-md-12 col-sm-12 col-xs-12 for-align"></div>
     </c:forEach>
                     </div>
                 </div>
@@ -149,63 +167,85 @@
 	<%@ include file="/index/front-index/footer.jsp" %>
 	<script>
 	$("#query").keyup(function(e){
-        if (e.keyCode === 13){
-       
-        	console.log("press");
-            $("#queryForm").submit();
-            $("#row").empty();
-        
-        $.ajax({
-  	  		url: "<%=request.getContextPath()%>/lecture/lecJson.get",
-  	  		type: "POST",
-  	  		data:{
-  	  			action: "sendQuery",
-  	  			query: $("#query").val()
-  	  		},
-  	  		success: function(data){
-  	  			var lecs = JSON.parse(data);
-  	  			//$("#row").empty();
-  	  			for (let i = 0; i < lecs.length; i++){
-  	  			jQuery('<div/>', {
-  	  		    id: 'lec'+ i,
-  	  		    "class": 'div col-lg-9 col-md-12 col-sm-12 col-xs-12 box-item wow fadeInLeft',
-  	  		    "html" : `<div class="daydiv">
-  	              <span class="date"></span><br>
-  	              <span class="month"></span><br>
-  	              <span class="time"></span><br>
-  	          </div>
-  	          <div class="pic">
-  	        <img src="<%=request.getContextPath() %>/index/front-index/assets/img/head/lecture.png">
-  	          </div>
-  	          <div class="lec-txt">
-  	          	<p class="title"></p><br>
-  	          	<p class="ctnt"></p>
-  	          </div>
-  	          <div class="more">
-  	          	<form method="post" action="<%=request.getContextPath()%>/lecture/lecture.do">
-  	          		<input type="submit" value="我有興趣">
-  	          		<input type="hidden" name="lecno" value="${lecVO.lecno}">
-  	          		<input type="hidden" name="action" value="frontOne">
-  	          	</form>
-  	          </div>`
-  	  		}).appendTo('#row');
-  	  			
-				//日期  	  			
-  	  			$("#lec"+i+" div .date").text(lecs[i].startdate);
-  	  			$("#lec"+i+" div .month").text(lecs[i].startmonth);
-  	  			$("#lec"+i+" div .time").text(lecs[i].starttime);
-  	  			
-  	  		//內容
-  	  			$("#lec"+i+" div .title").text(lecs[i].lecname);
-  	  			$("#lec"+i+" div .ctnt").text(lecs[i].spkrname);
-  	  			
-  	  			}
-  	  		console.log($("#query").val());
-  	  		console.log(data);
-  	  		}
-        });
-        }
-    });
+		 if (e.keyCode === 13){
+
+		 	console.log("press");
+		     $("#queryForm").submit();
+		     $("#row").empty();
+		 
+		 $.ajax({
+		  	  		url: "<%=request.getContextPath()%>/lecture/lecJson.get",
+		 		type: "POST",
+		 		async: false,
+		 		data:{
+		 			action: "sendQuery",
+		 			query: $("#query").val()
+		 		},
+		 		dataType: 'json',
+		 		success: function(data){
+//		   	  			var lecs = JSON.parse(data);
+					var lecs = data;
+		 			//$("#row").empty();
+		 			if (lecs.length != 0){
+		 				
+			  			for (let i = 0; i < lecs.length; i++){
+				  			var align = `<div class="col-lg-1 col-md-12 col-sm-12 col-xs-12 for-align"></div>`;
+				  			$("#row").append(align);
+			  			jQuery('<div/>', {
+			  		    id: 'lec'+ i,
+			  		    "class": 'div col-lg-10 col-md-12 col-sm-12 col-xs-12 box-item wow fadeInLeft ',
+			  		    "html" : `<div class="daydiv">
+			              <span class="date"></span><br>
+			              <span class="month"></span><br>
+			              <span class="time"></span><br>
+			          </div>
+			          <div class="pic">
+			        <img>
+			          </div>
+			          <div class="lec-txt">
+			          	<p class="title"></p><br>
+			          	<p class="ctnt"></p><br>
+			          	<p class="info"></p>
+			          </div>
+			          <div class="more">
+			  	          	<form method="post" action="<%=request.getContextPath()%>/lecture/lecture.do">
+			          		<input type="submit" value="我有興趣">
+			          		<input type="hidden" name="lecno" value="${lecVO.lecno}">
+			          		<input type="hidden" name="action" value="frontOne">
+			          	</form>
+			          </div>`
+			  		}).appendTo('#row');
+			  			
+			  			var lecno = lecs[i].lecno;
+			  	  			var srcHead = "<%=request.getContextPath()%>/lecture/picreader?lecno=";
+			  			var src = srcHead + lecno;
+			  			
+						//日期  	  			
+			  			$("#lec"+i+" div .date").text(lecs[i].startdate);
+			  			$("#lec"+i+" div .month").text(lecs[i].startmonth);
+			  			$("#lec"+i+" div .time").text(lecs[i].starttime);
+			  			
+			  			//內容
+			  			$("#lec"+i+" div .title").text(lecs[i].lecname);
+			  			$("#lec"+i+" div .ctnt").text(lecs[i].spkrname);
+			  			
+			  			//圖文
+			  			$("#lec"+i+" img").attr("src", src)
+			  			$("#lec"+i+" div .info").text(lecs[i].lecinfo);
+			  			
+			  			$("#row").append(align);
+			  			}
+			  			
+			  		console.log($("#query").val());
+			  		console.log(data);
+			  		} else {
+			  		$("#row").text(查無資料);
+			  		}
+		 		}
+		 })
+		 }
+		});
+
 	</script>
 </body>
 </html>

@@ -93,6 +93,17 @@ public class LecAjaxServlet extends HttpServlet {
 				String startmonth = fmtmonth.format(lecVO.getLecstart());
 				String starttime = fmttime.format(lecVO.getLecstart());
 				
+				//info processing
+				String lecinfo = "講座資訊更新中";
+				try{
+					//CKeditor - Bytes to String
+					byte[] b = lecVO.getLecinfo();
+					String bString = new String(b);
+					lecinfo = bString.substring(3, 21);
+				} catch (Exception e){
+					lecinfo = "講座資訊更新中";
+				}
+				
 				obj.put("lecno", lecVO.getLecno());
 				obj.put("lecname", lecVO.getLecname());
 				obj.put("lecprice", lecVO.getLecprice());
@@ -103,6 +114,7 @@ public class LecAjaxServlet extends HttpServlet {
 				obj.put("startdate", startdate);
 				obj.put("startmonth", startmonth);
 				obj.put("starttime", starttime);
+				obj.put("lecinfo", lecinfo);
 				
 //				obj.put("roomname", roomVO.getRoomname());
 				obj.put("spkrname", spkrVO.getSpkrname());
@@ -110,7 +122,11 @@ public class LecAjaxServlet extends HttpServlet {
 				arr.put(obj);
 			
 			}
-			out.print(arr);
+			res.setContentType("text/plain");
+
+			out.print(arr.toString());
+			out.flush();
+			out.close();
 		}
 	}
 

@@ -210,7 +210,7 @@ public class SpkrDAO implements SpkrDAO_Interface {
 			}
 			if (con != null) {
 				try {
-					pstmt.close();
+					con.close();
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
