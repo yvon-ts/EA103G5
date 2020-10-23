@@ -26,7 +26,7 @@ public class TrackingListDAO implements TrackingListDAO_interface {
 	}
 	private static final String INSERT_STMT = "INSERT INTO TRACKING_LIST (MEMNO, COURSENO) VALUES (?, ?)";
 	private static final String DELETE_STMT = "DELETE FROM TRACKING_LIST WHERE MEMNO = ? AND COURSENO = ?";
-	private static final String GET_ALL_STMT = "SELECT MEMNO, COURSENO FROM TRACKING_LIST ORDER BY MEMNO";
+	private static final String GET_ALL_STMT = "SELECT MEMNO, COURSENO FROM TRACKING_LIST WHERE MEMNO = ? ORDER BY COURSENO";
 
 	private static final String GETMEMTRACKING = "SELECT * FROM TRACKING_LIST WHERE MEMNO = ?";
 
@@ -183,7 +183,7 @@ public class TrackingListDAO implements TrackingListDAO_interface {
 	}
 
 	@Override
-	public List<TrackingListVO> getAll() {
+	public List<TrackingListVO> getAll(String memno) {
 		List<TrackingListVO> list = new ArrayList<TrackingListVO>();
 		TrackingListVO trackinglistVO;
 
@@ -195,6 +195,7 @@ public class TrackingListDAO implements TrackingListDAO_interface {
 
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(GET_ALL_STMT);
+			pstmt.setString(1, memno);
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {

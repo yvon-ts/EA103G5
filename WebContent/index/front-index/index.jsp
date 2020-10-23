@@ -9,16 +9,6 @@
 <%@ page import="com.speaker.model.*"%>
 <!DOCTYPE html>
 
-<%-- <% --%>
-// 	//lecture
-// 	LecService lecSvc = new LecService();
-// 	List<LecVO> list = lecSvc.getList();
-// 	pageContext.setAttribute("list", list);
-	
-// 	String startdate = "";
-// 	String startmonth = "";
-// 	String starttime = "";
-<%-- %> --%>
 
 <html lang="en">
 
@@ -28,20 +18,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Xducation - 陪你成長的學習好夥伴</title>
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/index/front-index/assets/css/bootstrap.min.css">
     <!-- Icon -->
-    <link rel="stylesheet" href="assets/fonts/line-icons.css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/index/front-index/assets/fonts/line-icons.css">
     <!-- Owl carousel -->
-    <link rel="stylesheet" href="assets/css/owl.carousel.min.css">
-    <link rel="stylesheet" href="assets/css/owl.theme.css">
-    <link rel="stylesheet" href="assets/css/magnific-popup.css">
-    <link rel="stylesheet" href="assets/css/nivo-lightbox.css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/index/front-index/assets/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/index/front-index/assets/css/owl.theme.css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/index/front-index/assets/css/magnific-popup.css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/index/front-index/assets/css/nivo-lightbox.css">
     <!-- Animate -->
-    <link rel="stylesheet" href="assets/css/animate.css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/index/front-index/assets/css/animate.css">
     <!-- Main Style -->
-    <link rel="stylesheet" href="assets/css/main.css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/index/front-index/assets/css/main.css">
     <!-- Responsive Style -->
-    <link rel="stylesheet" href="assets/css/responsive.css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/index/front-index/assets/css/responsive.css">
     <!-- Font Awesome
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">-->
 	<script src="https://kit.fontawesome.com/b99e675b6e.js"></script>
@@ -514,37 +504,39 @@
     </div>
     <!-- End Preloader -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="assets/js/jquery-min.js"></script>
-    <script src="assets/js/popper.min.js"></script>
-    <script src="assets/js/bootstrap.min.js"></script>
-    <script src="assets/js/owl.carousel.min.js"></script>
-    <script src="assets/js/wow.js"></script>
-    <script src="assets/js/jquery.nav.js"></script>
-    <script src="assets/js/scrolling-nav.js"></script>
-    <script src="assets/js/jquery.easing.min.js"></script>
-    <script src="assets/js/jquery.counterup.min.js"></script>
-    <script src="assets/js/waypoints.min.js"></script>
-    <script src="assets/js/main.js"></script>
+   <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="<%=request.getContextPath()%>/index/front-index/assets/js/jquery-min.js"></script>
+    <script src="<%=request.getContextPath()%>/index/front-index/assets/js/popper.min.js"></script>
+    <script src="<%=request.getContextPath()%>/index/front-index/assets/js/bootstrap.min.js"></script>
+    <script src="<%=request.getContextPath()%>/index/front-index/assets/js/owl.carousel.min.js"></script>
+    <script src="<%=request.getContextPath()%>/index/front-index/assets/js/wow.js"></script>
+<!--     	沒有拿掉，首頁連結會失效 -->
+<%--     <script src="<%=request.getContextPath()%>/index/front-index/assets/js/jquery.nav.js"></script> --%>
+    <script src="<%=request.getContextPath()%>/index/front-index/assets/js/scrolling-nav.js"></script>
+    <script src="<%=request.getContextPath()%>/index/front-index/assets/js/jquery.easing.min.js"></script>
+    <script src="<%=request.getContextPath()%>/index/front-index/assets/js/jquery.counterup.min.js"></script>
+    <script src="<%=request.getContextPath()%>/index/front-index/assets/js/waypoints.min.js"></script>
+    <script src="<%=request.getContextPath()%>/index/front-index/assets/js/main.js"></script>
     
     
     <script>
-    $(document).ready(function(e){
-	      $('.search-panel .dropdown-menu').find('a').click(function(e) {
-				e.preventDefault();
-				var param = $(this).attr("href").replace("#","");
-				var concept = $(this).text();
-				$('.search-panel span#search_concept').text(concept);
-				$('.input-group #search_param').val(param);
-		   	});
-	      });
-var a = document.getElementByTagName('a').item(0);
-$(a).on('keyup', function(evt){
-console.log(evt);
-if(evt.keycode === 13){
+//     $(document).ready(function(e){
+// 	      $('.search-panel .dropdown-menu').find('a').click(function(e) {
+// 				e.preventDefault();
+// 				var param = $(this).attr("href").replace("#","");
+// 				var concept = $(this).text();
+// 				$('.search-panel span#search_concept').text(concept);
+// 				$('.input-group #search_param').val(param);
+// 		   	});
+// 	      });
+// var a = document.getElementByTagName('a').item(0);
+// $(a).on('keyup', function(evt){
+// console.log(evt);
+// if(evt.keycode === 13){
   
-  alert('search?');
-} 
-}); 
+//   alert('search?');
+// } 
+// }); 
     </script>
 </body>
 
