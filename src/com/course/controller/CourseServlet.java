@@ -253,13 +253,13 @@ public class CourseServlet extends HttpServlet {
 				}
 				/*************************** 2.開始新增資料 ***************************************/
 				CourseService courseSvc = new CourseService();
-//				if (part.getSize() == 0) {
-//					courseVO = courseSvc.updateCourse(courseno, cstypeno, tchrno, coursename, courseinfo, courseprice,
-//							ttltime, csstatus, csscore, csscoretimes);
-//				} else {
+				if (part.getSize() == 0) {
+					courseVO = courseSvc.updateCourse(courseno, cstypeno, tchrno, coursename, courseinfo, courseprice,
+							ttltime, csstatus, csscore, csscoretimes);
+				} else {
 					courseVO = courseSvc.updateCourse(courseno, cstypeno, tchrno, coursename, courseinfo, courseprice,
 							ttltime, csstatus, csscore, csscoretimes, courseimg);
-//				}
+				}
 				
 				
 				courseVO = courseSvc.getOneCourse(courseno);

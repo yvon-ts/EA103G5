@@ -70,7 +70,7 @@ public class CourseService {
 		courseVO.setCsstatus(csstatus);
 		courseVO.setCsscore(csscore);
 		courseVO.setCsscoretimes(csscoretimes);
-		dao.update(courseVO);
+		dao.update(courseVO, false);
 
 		return courseVO;
 	}

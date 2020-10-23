@@ -28,12 +28,14 @@ public class CourseDAO implements CourseDAO_interface {
 
 	private static final String GET_ONE_STMT = "SELECT courseno, cstypeno, tchrno, coursename, courseinfo, courseprice, ttltime, csstatus, csscore, csscoretimes ,courseimg ,courlmod FROM course where courseno = ?";
 	private static final String UPDATE = "UPDATE course set cstypeno=?, tchrno=?, coursename=?, courseinfo=?, courseprice=?, ttltime=?, csstatus=?, csscore=?, csscoretimes=? , courseimg=? , courlmod=CURRENT_TIMESTAMP where courseno = ?";
+	private static final String UPDATE_NO_PICTURE = "UPDATE course set cstypeno=?, tchrno=?, coursename=?, courseinfo=?, courseprice=?, ttltime=?, csstatus=?, csscore=?, csscoretimes=? , courlmod=CURRENT_TIMESTAMP where courseno = ?";
 
 	@Override
 	public String insert(CourseVO courseVO) {
 
 		Connection con = null;
 		PreparedStatement pstmt = null;
+		ResultSet rs = null;
 
 		// 掘取對應的自增主鍵值
 		String next_courseno = null;
@@ -41,9 +43,9 @@ public class CourseDAO implements CourseDAO_interface {
 		try {
 			con = ds.getConnection();
 			con.setAutoCommit(false);
-			
+
 			// 指定自增主鍵
-			String cols[] = {"courseno"};
+			String cols[] = { "courseno" };
 			pstmt = con.prepareStatement(INSERT_STMT, cols);
 
 			pstmt.setString(1, courseVO.getCstypeno());
@@ -57,21 +59,19 @@ public class CourseDAO implements CourseDAO_interface {
 			pstmt.setBytes(9, courseVO.getCourseimg());
 
 			pstmt.executeUpdate();
-			
-			
-			//掘取對應的自增主鍵值
-			ResultSet rs = pstmt.getGeneratedKeys();
+
+			// 掘取對應的自增主鍵值
+			rs = pstmt.getGeneratedKeys();
 			if (rs.next()) {
 				next_courseno = rs.getString(1);
-				System.out.println("自增主鍵值= " + next_courseno +"(剛新增成功的課程編號)");
+				System.out.println("自增主鍵值= " + next_courseno + "(剛新增成功的課程編號)");
 			} else {
 				System.out.println("未取得自增主鍵值");
 			}
-			rs.close();
+//			rs.close();
 
-			
 			con.commit();
-			
+
 			// Handle any SQL errors
 		} catch (SQLException se) {
 			try {
@@ -82,6 +82,13 @@ public class CourseDAO implements CourseDAO_interface {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 			// Clean up JDBC resources
 		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
 			if (pstmt != null) {
 				try {
 					pstmt.close();
@@ -102,7 +109,12 @@ public class CourseDAO implements CourseDAO_interface {
 	}
 
 	@Override
-	public void update(CourseVO courseVO) {// 更新
+	public void update(CourseVO courseVO) {
+		update(courseVO, true);
+	}
+
+	@Override
+	public void update(CourseVO courseVO, Boolean updatePicture) {// 更新
 
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -110,19 +122,36 @@ public class CourseDAO implements CourseDAO_interface {
 		try {
 			con = ds.getConnection();
 			con.setAutoCommit(false);
-			pstmt = con.prepareStatement(UPDATE);
 
-			pstmt.setString(1, courseVO.getCstypeno());
-			pstmt.setString(2, courseVO.getTchrno());
-			pstmt.setString(3, courseVO.getCoursename());
-			pstmt.setString(4, courseVO.getCourseinfo());
-			pstmt.setInt(5, courseVO.getCourseprice());
-			pstmt.setInt(6, courseVO.getTtltime());
-			pstmt.setString(7, courseVO.getCsstatus());
-			pstmt.setInt(8, courseVO.getCsscore());
-			pstmt.setInt(9, courseVO.getCsscoretimes());
-			pstmt.setBytes(10, courseVO.getCourseimg());
-			pstmt.setString(11, courseVO.getCourseno());
+			if (updatePicture) {
+				pstmt = con.prepareStatement(UPDATE);
+
+				pstmt.setString(1, courseVO.getCstypeno());
+				pstmt.setString(2, courseVO.getTchrno());
+				pstmt.setString(3, courseVO.getCoursename());
+				pstmt.setString(4, courseVO.getCourseinfo());
+				pstmt.setInt(5, courseVO.getCourseprice());
+				pstmt.setInt(6, courseVO.getTtltime());
+				pstmt.setString(7, courseVO.getCsstatus());
+				pstmt.setInt(8, courseVO.getCsscore());
+				pstmt.setInt(9, courseVO.getCsscoretimes());
+				pstmt.setBytes(10, courseVO.getCourseimg());
+				pstmt.setString(11, courseVO.getCourseno());
+			} else {
+				pstmt = con.prepareStatement(UPDATE_NO_PICTURE);
+
+				pstmt.setString(1, courseVO.getCstypeno());
+				pstmt.setString(2, courseVO.getTchrno());
+				pstmt.setString(3, courseVO.getCoursename());
+				pstmt.setString(4, courseVO.getCourseinfo());
+				pstmt.setInt(5, courseVO.getCourseprice());
+				pstmt.setInt(6, courseVO.getTtltime());
+				pstmt.setString(7, courseVO.getCsstatus());
+				pstmt.setInt(8, courseVO.getCsscore());
+				pstmt.setInt(9, courseVO.getCsscoretimes());
+				
+				pstmt.setString(10, courseVO.getCourseno());
+			}
 
 			pstmt.executeUpdate();
 
@@ -284,8 +313,6 @@ public class CourseDAO implements CourseDAO_interface {
 
 	@Override
 	public List<CourseVO> getAll(Map<String, String[]> map) { // 複合查詢
-		
-		
 
 		List<CourseVO> list = new ArrayList<CourseVO>();
 		CourseVO courseVO = null;
