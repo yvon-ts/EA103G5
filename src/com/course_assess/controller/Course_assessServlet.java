@@ -31,10 +31,15 @@ public class Course_assessServlet extends HttpServlet {
 				if ("insert".equals(action)) {
 					insert(req, res);
 				}
+				
+				if("update".equals(action)) {
+					update(req,res);
+				}
 		
 		
 		
 	}
+	
 	private void insert(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		String memno = req.getParameter("memno");
 		
@@ -55,7 +60,9 @@ public class Course_assessServlet extends HttpServlet {
 		
 		Course_assessService course_assessSvc = new Course_assessService();
 		course_assessSvc.addCourse_assess(courseno, memno, coursescore, comments);
-		RequestDispatcher SuccessView = req.getRequestDispatcher("/front-end/course_assess/addCourse_assess.jsp");
+		String inform5 = "200";
+		req.setAttribute("inform5", inform5);
+		RequestDispatcher SuccessView = req.getRequestDispatcher("/front-end/course_assess/listAllCourse_assess.jsp");
 		SuccessView.forward(req, res);
 		return;
 		
@@ -64,4 +71,31 @@ public class Course_assessServlet extends HttpServlet {
 		
 	}
 
+		
+	
+	private void update(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException{
+		String asesno = req.getParameter("asesno");
+		String cs = req.getParameter("coursescore");
+		Integer coursescore = Integer.parseInt(cs);
+		String comments = req.getParameter("comments");
+		if (comments == null || comments.trim().length() == 0) {
+			comments = "這是一門很\"固固\"的課程唷^^d";
+			}else if(comments.length()>=40) {
+				String url = req.getContextPath()+ "/front-end/members/indexV1.jsp";
+				res.sendRedirect(url);
+			}
+		String inform5 = "100";
+		req.setAttribute("inform5", inform5);
+		Course_assessService course_assessSvc = new Course_assessService();
+		course_assessSvc.updateCourse_assess(asesno, coursescore, comments);
+		RequestDispatcher SuccessView = req.getRequestDispatcher("/front-end/course_assess/listAllCourse_assess.jsp");
+		SuccessView.forward(req, res);
+		return;
+	}
+	
+	
+	
+	
+	
+	
 }

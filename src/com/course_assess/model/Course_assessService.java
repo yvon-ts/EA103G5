@@ -20,17 +20,18 @@ public class Course_assessService {
 		
 		return course_assessVO;
 	}
-	public Course_assessVO updateCourse_assess(Integer coursescore,String comments) {
+	public Course_assessVO updateCourse_assess(String asesno,Integer coursescore,String comments) {
 		Course_assessVO course_assessVO = new Course_assessVO();
 		course_assessVO.setCoursescore(coursescore);
 		course_assessVO.setComments(comments);
+		course_assessVO.setAsesno(asesno);
 		dao.update(course_assessVO);
 		return course_assessVO;
 		
 	}
 	
-	public Course_assessVO getOneCourse_assess(String asesno) {
-		return dao.findByPrimaryKey(asesno);
+	public Course_assessVO getOneCourse_assess(String memno) {
+		return dao.findByPrimaryKey(memno);
 		
 	}
 	public List<Course_assessVO> getAll(String courseno){
