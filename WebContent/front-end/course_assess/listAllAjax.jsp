@@ -9,10 +9,8 @@
 <%
 Course_assessService course_assessSvc = new Course_assessService();
 String avg = course_assessSvc.avgScore("COUR0001");
-List<Course_assessVO> list = course_assessSvc.getAll("COUR0001");
-pageContext.setAttribute("list", list);
+
 pageContext.setAttribute("avg",avg);
-pageContext.setAttribute("course_assessSvc",course_assessSvc);
 String inform5 = (String)request.getAttribute("inform5");
 %>
 
@@ -304,7 +302,6 @@ background: url("<%=request.getContextPath()%>/front-end/members/assets/img/bgPi
             <div id="bg" class="container">
             
             
-            <%@ include file="page1.file"%>
             <div id="avg">${avg}</div>
             <c:if test="${not empty sessionScope.membersVO}">
            <c:if test="${empty course_assessSvc.getOneCourse_assess(sessionScope.membersVO.memno)}">
@@ -317,8 +314,7 @@ background: url("<%=request.getContextPath()%>/front-end/members/assets/img/bgPi
             
             
             
-							<c:forEach var="course_assessVO" items="${list}" begin="<%=pageIndex%>"
-								end="<%=pageIndex+rowsPerPage-1%>" varStatus="s">
+							
                 <div class="signin-content">
                     <div class="signin-image">
                         <a href="<%=request.getContextPath()%>/front-end/members/indexV1.jsp"><img class="pic" src="<%=request.getContextPath()%>/back-end/members/MprofileDisplayServlet?MEMNO=${course_assessVO.memno}" alt="sing up image"></a>
@@ -348,6 +344,7 @@ background: url("<%=request.getContextPath()%>/front-end/members/assets/img/bgPi
                           </h4>
                         
                     </div>
+                    
                     <div class="signin-form">
                            <div class="form-group">
                            <c:forEach var="num" begin="1" end="${course_assessVO.coursescore}" step="1">
@@ -366,21 +363,10 @@ background: url("<%=request.getContextPath()%>/front-end/members/assets/img/bgPi
                             </div>
                     </div>
                 </div>
-                </c:forEach>
-                <%@ include file="page2.file"%>
-                <%if (pageNumber>1) {%>
                 <div>
-    <FORM METHOD="post" ACTION="<%=request.getRequestURI()%>">  
-       <select size="1"  name="whichPage">
-       <option selected disabled>Choose an option</option>
-         <%for (int i=1; i<=pageNumber; i++){%>
-            <option value="<%=i%>">跳至第<%=i%>頁
-         <%}%> 
-       </select>
-       <input class="register" type="submit" value="確定" >  
-    </FORM>
+                <input type="hidden" id="courseno" value="COUR0001" />
+                <button class="register" id="js-load-more" >載入更多</button>
     </div>
-  <%}%>
                 
                 
                 
@@ -431,7 +417,7 @@ $(document).ready(function(){
 	
 	var counter = 0; /*計數器*/
 	var pageStart = 0; /*offset*/
-	var pageSize = 3; /*size*/
+	var pageSize = 6; /*size*/
 	/*首次載入*/
 	getData(pageStart, pageSize);
 	/*監聽載入更多*/
@@ -451,7 +437,7 @@ function getData(offset,size){
 		type: 'POST',
 		url: "<%=request.getContextPath()%>/course_assess/course_assess.do", 
 		data:{
-			memno:$('#memno').val(),
+			courseno:$('#courseno').val(),
 			action:'getAll'
 		},
 		success: function(data){
@@ -484,13 +470,7 @@ function getData(offset,size){
         		result +=   `<h3><a href="#">`+ JSONarray[i].coursename + `</a></h3>`;
         		result +=   `<p>課程共` + JSONarray[i].ttltime + `分鐘</p>`;
             
-        		result += 	`<label class="shoppingcart">
-								<i class="fa fa-shopping-cart" aria-hidden="true">
-									<input type ="hidden" name="courseno" 	 id="courseno"   value ="${courseVO.courseno}"/>
-									<input type ="hidden" name="courseprice" id="courseprice" value ="${courseVO.courseprice}"/>
-									<input type ="hidden" name="courseinfo"  id="courseinfo"  value ="${courseVO.courseinfo}"/>
-								</i>&nbsp;加入購物車
-							</label>`;
+        		
 				result += `<h5>NT$` + JSONarray[i].courseprice + `</h5></div></div></div></div>`;
         
 			}
