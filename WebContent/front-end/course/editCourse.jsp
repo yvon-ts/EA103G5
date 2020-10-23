@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%> <%@ page import="java.util.*"%>
+<%@ page import="java.text.*"%>
 <%@ page import="com.course.model.*"%>
 <%@ page import="com.video.model.*"%>
 
@@ -9,8 +10,16 @@
 <jsp:useBean id="courseTypeSvc" scope="page" class="com.course_type.model.CourseTypeService" />
 
 <%
-	//CourseVO courseVO = (CourseVO) request.getAttribute("courseVO");
-	//Double courseScore = (double)courseVO.getCsscore() / (double)courseVO.getCsscoretimes();
+	CourseVO courseVO = (CourseVO) request.getAttribute("courseVO");
+	
+	// 處理課程評分精度以及分母為零的問題
+	Integer csscore = courseVO.getCsscore();
+	Integer csscoretimes = courseVO.getCsscoretimes();
+	NumberFormat formatter = new DecimalFormat("#.#");
+	String courseScore = "0";
+	if (csscoretimes > 0) {
+		courseScore = formatter.format(Double.valueOf(csscore) / Double.valueOf(csscoretimes));
+	}
 %>
 
 <!DOCTYPE html>
@@ -35,7 +44,7 @@
 	<!-- include 前台頁面的 header -->
 	<jsp:include page="/index/front-index/header.jsp" />
 
-	<div class="container" style="margin-top: 90px;">
+	<div class="container-fluid" style="margin-top: 90px;">
 
 		<div class="row">
 			<div class="col">
@@ -47,10 +56,10 @@
 
 			<div class="col-md-3 sideBar">
 				<h2>基本資訊</h2>
-				<h5>課程編號：${courseVO.courseno}</h5>
+				<h5>編號：${courseVO.courseno}</h5>
 				<!-- 類別跟老師要轉為名稱 -->
 
-				<h5>授課老師：${membersSvc.getOneMembers(teacherSvc.getOneTeacher(courseVO.tchrno).memno).memname}</h5>
+				<h5>老師：${membersSvc.getOneMembers(teacherSvc.getOneTeacher(courseVO.tchrno).memno).memname}</h5>
 				<%-- <h5>授課老師：${courseVO.tchrno}</h5> --%>
 				<!-- JOIN 3 個 table 我超神 -->
 				<h5>類別：${courseTypeSvc.getOneCourseType(courseVO.cstypeno).cstypename}</h5>
@@ -58,7 +67,7 @@
 				<h5>單價：${courseVO.courseprice}</h5>
 				<h5>狀態：${courseVO.csstatus}</h5>
 				<!-- 評分可能會有小數除不盡的問題 -->
-				<h5>評分：${courseVO.csscore/courseVO.csscoretimes}</h5>
+				<h5>評分：<%= courseScore %></h5>
 
 				<br>
 

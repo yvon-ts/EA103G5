@@ -11,6 +11,11 @@
 <html>
 
 <head>
+	<style type="text/css">
+		#picturePreview {
+			text-align: center;
+		}
+	</style>
 </head>
 
 <body>
@@ -142,8 +147,8 @@
 	<script>
 		function init() {
 			CKEDITOR.replace("courseinfo", {
-				width: 800,
-				height: 300
+				width: "80%",
+ 				height: 350,
 			});
 			CKEDITOR.editorConfig = function (config) {
 				config.enterMode = CKEDITOR.ENTER_BR; //br換行

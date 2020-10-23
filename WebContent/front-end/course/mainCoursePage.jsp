@@ -1,8 +1,22 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*"%>
+<%@ page import="java.text.*"%>
 <%@ page import="com.course.model.*"%>
 <%@ page import="com.video.model.*"%>
+
+<%
+	CourseVO courseVO = (CourseVO) request.getAttribute("courseVO");
+	
+	// 處理課程評分精度以及分母為零的問題
+	Integer csscore = courseVO.getCsscore();
+	Integer csscoretimes = courseVO.getCsscoretimes();
+	NumberFormat formatter = new DecimalFormat("#.#");
+	String courseScore = formatter.format(0);
+	if (csscoretimes > 0) {
+		courseScore = formatter.format(Double.valueOf(csscore) / Double.valueOf(csscoretimes));
+	}
+%>
 
 <!DOCTYPE html>
 <html lang="zh-Hant">
@@ -77,7 +91,7 @@
 							<div class="list-group" id="videolist">
 								<!-- 宣告複合查詢使用的 map -->
 								<%
-									CourseVO courseVO = (CourseVO) request.getAttribute("courseVO");
+									//CourseVO courseVO = (CourseVO) request.getAttribute("courseVO");
 									String courseno = courseVO.getCourseno();
 									Map<String, String[]> map = new TreeMap<String, String[]>();
 									map.put("courseno", new String[]{courseno});
@@ -118,7 +132,7 @@
 						</div>
 						<div class="col-md-2 col-4 courseInfo">
 							<!-- 須要查詢評分 -->
-							<i class="fas fa-star">${courseVO.csscore / courseVO.csscoretimes}</i>
+							<i class="fas fa-star"><%= courseScore %></i>
 							<p><span>${courseVO.csscoretimes}</span> 則評價</p>
 						</div>
 						<div class="col-md-3 col-6 courseInfo">

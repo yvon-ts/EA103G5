@@ -22,6 +22,9 @@
 		main {
 			margin-top: 90px;
 		}
+		#picturePreview {
+			text-align: center;
+		}
 	</style>
 	<!-- ========== CSS Area ========== -->
 
@@ -89,7 +92,11 @@
 								name="tchrno" value="<%=(courseVO == null) ? "TCHR0001" : courseVO.getTchrno()%>">
 						</div>
 
-						<div class="input-group mb-3">
+				</div> <!-- end of col-->
+
+				<div class="col-md-6">
+					
+					<div class="input-group mb-3">
 							<div class="input-group-prepend">
 								<span class="input-group-text" id="inputGroupFileAddon01">課程圖片</span>
 							</div>
@@ -100,26 +107,23 @@
 							</div>
 						</div>
 
-						<div id="picturePreview"></div>
-
-				</div> <!-- end of col-->
-
-				<div class="col-md-6">
-
-					<div class="input-group mb-3">
-						<div class="input-group-prepend">
-							<span class="input-group-text">課程資訊</span>
+						<div id="picturePreview">
+							<img src="<%=request.getContextPath()%>/front-end/course/image/CourseNoPicture.PNG" style="max-width:100%;height:300px;">
 						</div>
-						<textarea name="courseinfo" class="form-control" aria-label="With textarea">${courseVO == null ? "<h1>你可以學到...</h1>" : courseVO.courseinfo}</textarea>
-					</div>
 
 				</div> <!-- end of col-->
 			</div>
 
 			<div class="row">
 				<div class="col">
-
+					
 					<br>
+					<div class="input-group mb-3">
+						<div class="input-group-prepend">
+							<span class="input-group-text">課程資訊</span>
+						</div>
+						<textarea name="courseinfo" class="form-control" aria-label="With textarea">${courseVO == null ? "<h1>你可以學到...</h1>" : courseVO.courseinfo}</textarea>
+					</div>
 
 					<div>
 						<%-- 錯誤表列 --%>
@@ -193,7 +197,7 @@
 	<script>
 		function init() {
 			CKEDITOR.replace("courseinfo", {
-				width: 800,
+				width: '90%',
 				height: 300
 			});
 			CKEDITOR.editorConfig = function (config) {
