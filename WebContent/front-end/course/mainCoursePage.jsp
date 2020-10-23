@@ -62,7 +62,8 @@
 						<div class="col-lg-8 align-self-center">
 							<!-- 影片播放 -->
 							<div id="videoContainer">
-								<video id="coursePlayer" width="100%" height="auto" controls autoplay>
+								<video id="coursePlayer" width="100%" height="auto" controls preload="metadata">
+<!-- 								<video id="coursePlayer" width="100%" height="auto" controls autoplay> -->
 									<source src="<%=request.getContextPath()%>/front-end/course/Nyan_Cat.mp4" type="video/mp4">
 									您的瀏覽器未支援此播放系統，建議使用 Chrome 瀏覽器瀏覽網頁
 								</video>
@@ -201,6 +202,7 @@
 			// 註冊影片清單點擊事件
 			$("#videolist .list-group-item").click(function (e) {
 				e.preventDefault();
+				$("#videoContainer video").attr("autoplay", true);
 				$("#videoContainer video source").attr("src", $(this).attr("href"));
 				let videoPlayer = document.getElementById("coursePlayer");
 				videoPlayer.load();

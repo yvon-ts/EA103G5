@@ -514,7 +514,7 @@ public class CourseServlet extends HttpServlet {
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					req.setAttribute("courseVO", courseVO);
-					RequestDispatcher failureView = req.getRequestDispatcher("/front-end/course/addCourse2.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/front-end/course/addCourse.jsp");
 					failureView.forward(req, res);
 					return;
 				}
@@ -534,7 +534,7 @@ public class CourseServlet extends HttpServlet {
 				/*************************** 其他可能的錯誤處理 **********************************/
 			} catch (Exception e) {
 				errorMsgs.add("無法新增資料:" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/course/addCourse2.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/course/addCourse.jsp");
 				failureView.forward(req, res);
 			}
 		}
