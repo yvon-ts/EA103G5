@@ -33,7 +33,6 @@ public class LoginFilter implements Filter {
 		config = null;
 	}
 
-	
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
 
@@ -43,9 +42,8 @@ public class LoginFilter implements Filter {
 		HttpSession session = req.getSession();
 		Object empacc = session.getAttribute("empacc");
 
-		
 		// 從員工編號查權限
-		String empno = (String)session.getAttribute("empno");
+		String empno = (String) session.getAttribute("empno");
 		EmpAuthorityService empAuthSvc = new EmpAuthorityService();
 		List<EmpAuthorityVO> empauth = empAuthSvc.findByEmp(empno);
 
@@ -54,36 +52,33 @@ public class LoginFilter implements Filter {
 		FunctionxService funSvc = new FunctionxService();
 		FunctionxVO funurl = funSvc.getUrl(urls);
 		System.out.println(funurl);
-		
-		
-		if(funurl == null) {
+
+		if (empacc == null) {
+			session.setAttribute("location", req.getRequestURI());
+			res.sendRedirect(req.getContextPath() + "/back-end/login/login.jsp");
+			return;
+		}
+
+		if (funurl == null) {
 			chain.doFilter(request, response);
 			return;
 		}
-		if(empauth.isEmpty()) {
+		if (empauth.isEmpty()) {
 			session.setAttribute("errors", "你沒有權限");
 			res.sendRedirect(req.getContextPath() + "/front-end/back-endHomePage.jsp");
 			return;
-		}		
-		
+		}
+
 		String funcno = funurl.getFuncno();
-		
-		for(EmpAuthorityVO auth :empauth) {
-			if(! auth.getFuncno().equals(funcno)){
+
+		for (EmpAuthorityVO auth : empauth) {
+			if (!auth.getFuncno().equals(funcno)) {
 				session.setAttribute("error", "你沒有權限");
 				res.sendRedirect(req.getContextPath() + "/front-end/back-endHomePage.jsp");
 			}
 		}
-	
-			
-			if (empacc == null) {
-				session.setAttribute("location", req.getRequestURI());
-				res.sendRedirect(req.getContextPath() + "/back-end/login/login.jsp");
-				return;
-			}
-			chain.doFilter(request, response);
-			
 
+		chain.doFilter(request, response);
 
 	}
 
