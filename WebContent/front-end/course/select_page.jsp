@@ -64,7 +64,7 @@
 
 	<h3>課程管理</h3>
 	<ul>
-		<li> <a href="<%=request.getContextPath()%>/front-end/course/addCourse2.jsp"> Add </a> a new Course.</li>
+		<li> <a href="<%=request.getContextPath()%>/front-end/course/addCourse.jsp"> Add </a> a new Course.</li>
 	</ul>
 
 	<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/course/course.do">
@@ -78,4 +78,5 @@
 	</FORM>
 
 </body>
+
 </html>

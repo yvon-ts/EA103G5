@@ -24,115 +24,78 @@
 		</ul>
 	</c:if>
 
-	<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/course/course.do" name="form1" enctype="multipart/form-data">
+	<form METHOD="post" ACTION="<%=request.getContextPath()%>/course/course.do" name="form1" enctype="multipart/form-data">
 		<input type="hidden" name="courseno" value="${courseVO.courseno}">
 		<input type="hidden" name="tchrno" value="${courseVO.tchrno}">
 		<input type="hidden" name="ttltime" value="${courseVO.ttltime}">
 		<input type="hidden" name="csstatus" value="${courseVO.csstatus}">
 		<input type="hidden" name="csscore" value="${courseVO.csscore}">
 		<input type="hidden" name="csscoretimes" value="${courseVO.csscoretimes}">
-		
-<!-- 		<table> -->
-<%-- 			<jsp:useBean id="courseSvc" scope="page" class="com.course.model.CourseService"/> --%>
-<!-- 			<tr> -->
-<!-- 				<td>課程名稱:</td> -->
-<!-- 				<td><input type="text" name="coursename" size="45" -->
-<%-- 					value="${courseVO.coursename }"/></td> --%>
-<!-- 			</tr> -->
-<!-- 			<tr> -->
-<%-- 				<jsp:useBean id="courseTypeSvc" scope="page" class="com.course_type.model.CourseTypeService" /> --%>
-<!-- 				<td> -->
-<!-- 					<span>課程類別：</span> -->
-<!-- 				</td> -->
-<!-- 				<td> -->
-<!-- 					<select name="cstypeno"> -->
-<%-- 						<c:forEach var="courseTypeVO" items="${courseTypeSvc.all}"> --%>
-<%-- 							<option value="${courseTypeVO.cstypeno}" ${courseVO.cstypeno == courseTypeVO.cstypeno ? "selected" : ""}> --%>
-<%-- 								${courseTypeVO.cstypename} --%>
-<%-- 						</c:forEach> --%>
-<!-- 					</select> -->
-<!-- 				</td> -->
-<!-- 			</li> -->
-<!-- 			</tr> -->
-<!-- 			<tr> -->
-<!-- 				<td>課程單價:</td> -->
-<!-- 				<td><input type="number" name="courseprice" size="45" -->
-<%-- 					value="${courseVO.courseprice}" /></td> --%>
-<!-- 			</tr> -->
-<!-- 			<tr> -->
-<!-- 				<td>課程資訊:</td> -->
-<!-- 				<td> -->
-<%-- 					<textarea name="courseinfo" rows="10" cols="50">${courseVO.courseinfo}</textarea> --%>
-<!-- 				</td> -->
-<!-- 			</tr> -->
-<!-- 		</table> -->
 
 		<jsp:useBean id="courseSvc" scope="page" class="com.course.model.CourseService" />
-						<jsp:useBean id="courseTypeSvc" scope="page" class="com.course_type.model.CourseTypeService" />
+		<jsp:useBean id="courseTypeSvc" scope="page" class="com.course_type.model.CourseTypeService" />
 
-						<div class="input-group mb-3">
-							<div class="input-group-prepend">
-								<span class="input-group-text">課程名稱</span>
-							</div>
-							<input type="text" class="form-control" aria-label="Sizing example input"
-								name="coursename" value="<%=(courseVO == null) ? "老師很懶不取名" : courseVO.getCoursename()%>">
-						</div>
+		<div class="input-group mb-3">
+			<div class="input-group-prepend">
+				<span class="input-group-text">課程名稱</span>
+			</div>
+			<input type="text" class="form-control" aria-label="Sizing example input"
+				name="coursename" value="<%=(courseVO == null) ? "老師很懶不取名" : courseVO.getCoursename()%>">
+		</div>
 
-						<div class="input-group mb-3">
-							<div class="input-group-prepend">
-								<label class="input-group-text">課程類別</label>
-							</div>
-							<select class="custom-select" name="cstypeno">
-								<option value="">請選擇...</option>
-								<c:forEach var="courseTypeVO" items="${courseTypeSvc.all}">
-									<option value="${courseTypeVO.cstypeno}" ${courseVO.cstypeno==courseTypeVO.cstypeno ? 'selected' : '' }>
-										${courseTypeVO.cstypename}
-								</c:forEach>
-							</select>
-						</div>
+		<div class="input-group mb-3">
+			<div class="input-group-prepend">
+				<label class="input-group-text">課程類別</label>
+			</div>
+			<select class="custom-select" name="cstypeno">
+				<option value="">請選擇...</option>
+				<c:forEach var="courseTypeVO" items="${courseTypeSvc.all}">
+					<option value="${courseTypeVO.cstypeno}" ${courseVO.cstypeno==courseTypeVO.cstypeno ? 'selected' : '' }>
+						${courseTypeVO.cstypename}
+				</c:forEach>
+			</select>
+		</div>
 
-						<div class="input-group mb-3">
-							<div class="input-group-prepend">
-								<span class="input-group-text">課程單價</span>
-							</div>
-							<input type="number" class="form-control"
-								min="0" max="999999" step="1"
-								name="courseprice" value="<%=(courseVO == null) ? 0 : courseVO.getCourseprice()%>">
-						</div>
-						
-						<div class="input-group mb-3">
-							<div class="input-group-prepend">
-								<span class="input-group-text" id="inputGroupFileAddon01">課程圖片</span>
-							</div>
-							<div class="custom-file">
-								<input type="file" class="custom-file-input" id="fileUp"
-									name="courseimg">
-								<label class="custom-file-label" for="fileUp"> 建議圖片比例 4 : 3</label>
-							</div>
-						</div>
+		<div class="input-group mb-3">
+			<div class="input-group-prepend">
+				<span class="input-group-text">課程單價</span>
+			</div>
+			<input type="number" class="form-control"
+				min="0" max="999999" step="1"
+				name="courseprice" value="<%=(courseVO == null) ? 0 : courseVO.getCourseprice()%>">
+		</div>
 
-						<div id="picturePreview">
-							<img src="<%=request.getContextPath()%>/course/CoursePictureReaderFromDB?courseno=${courseVO.courseno}" style="max-width:100%;height:300px;">
-						</div>
-						<br>
-						
-						
-					<div class="input-group mb-3">
-						<div class="input-group-prepend">
-							<span class="input-group-text">課程資訊</span>
-						</div>
-						<textarea name="courseinfo" class="form-control" aria-label="With textarea">${courseVO == null ? "<h1>你可以學到...</h1>" : courseVO.courseinfo}</textarea>
-					</div>
+		<div class="input-group mb-3">
+			<div class="input-group-prepend">
+				<span class="input-group-text" id="inputGroupFileAddon01">課程圖片</span>
+			</div>
+			<div class="custom-file">
+				<input type="file" class="custom-file-input" id="fileUp"
+					name="courseimg">
+				<label class="custom-file-label" for="fileUp"> 建議圖片比例 4 : 3</label>
+			</div>
+		</div>
+
+		<div id="picturePreview">
+			<img src="<%=request.getContextPath()%>/course/CoursePictureReaderFromDB?courseno=${courseVO.courseno}" style="max-width:100%;height:300px;">
+		</div>
+		<br>
 
 
+		<div class="input-group mb-3">
+			<div class="input-group-prepend">
+				<span class="input-group-text">課程資訊</span>
+			</div>
+			<textarea name="courseinfo" class="form-control" aria-label="With textarea">${courseVO == null ? "<h1>你可以學到...</h1>" : courseVO.courseinfo}</textarea>
+		</div>
 
 		<br>
 		<input type="hidden" name="action" value="update">
 		<button type="submit" class="btn btn-lg btn-primary btn-block">送出修改</button>
-<!-- 		<input type="submit" value="送出修改"> -->
-	</FORM>
-	
-	
+		<!-- 		<input type="submit" value="送出修改"> -->
+	</form>
+
+
 	<!-- ========== JavaScript Area ========== -->
 	<!-- 關於讀取圖片 -->
 	<script type="text/javascript">
@@ -172,8 +135,8 @@
 			}
 		});
 	</script>
-	
-	
+
+
 	<!-- 關於 CK EDITER -->
 	<script src="https://cdn.ckeditor.com/4.7.3/basic/ckeditor.js"></script>
 	<script>
@@ -191,4 +154,5 @@
 	<!-- ========== JavaScript Area ========== -->
 
 </body>
+
 </html>

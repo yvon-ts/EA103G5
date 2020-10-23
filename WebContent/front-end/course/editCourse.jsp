@@ -36,7 +36,7 @@
 	<jsp:include page="/index/front-index/header.jsp" />
 
 	<div class="container" style="margin-top: 90px;">
-	
+
 		<div class="row">
 			<div class="col">
 				<h1 id="pageTitle">課程管理 - ${courseVO.coursename}</h1>
@@ -61,7 +61,7 @@
 				<h5>評分：${courseVO.csscore/courseVO.csscoretimes}</h5>
 
 				<br>
-				
+
 				<h2>課程編輯</h2>
 				<nav>
 					<ul class="nav flex-column nav-pills">
@@ -105,19 +105,25 @@
 		</div>
 	</div>
 
+
 	<!-- ========== JavaScript Area ========== -->
 	<!-- Bootstrap JS (jquery 改為完整版) -->
 	<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-	<!-- Sortable API JS -->
-	<script src="<%=request.getContextPath()%>/front-end/course/js/bootstrap-html5sortable-master/jquery.sortable.js"></script>
 	<!-- 計算 video durarion 相關的 JS -->
 	<script src="<%=request.getContextPath()%>/front-end/video/js/videoDurationCaculation.js"></script>
+	<!-- ========== JavaScript Area ========== -->
 
 
 	<!-- include 前台頁面的 footer -->
-	<%-- <jsp:include page="/index/front-index/footer.jsp"/> --%>
+	<jsp:include page="/index/front-index/footer.jsp" />
+	<!-- include 前台頁面的 footer -->
+
+	<!-- ========== JavaScript Area ========== -->
+	<!-- Sortable API JS (放到 include 那邊會出事，且須放在 footer 之下)-->
+	<script src="<%=request.getContextPath()%>/front-end/course/js/bootstrap-html5sortable-master/jquery.sortable.min.js"></script>
+	<!-- ========== JavaScript Area ========== -->
 </body>
 
 </html>

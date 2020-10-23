@@ -1,156 +1,211 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%> <%@ page import="java.util.*"%>
 <%@ page import="com.course.model.*"%>
 
 <%
 	CourseVO courseVO = (CourseVO) request.getAttribute("courseVO");
 %>
 
-<html>
+<!DOCTYPE html>
+<html lang="zh-Hant">
+
 <head>
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-<title>課程資料新增 - addCourse.jsp</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<style>
-table {
-	width: 950px;
-	background-color: white;
-	margin-top: 1px;
-	margin-bottom: 1px;
-}
+	<!-- ========== CSS Area ========== -->
+	<!-- Bootstrap 的 CSS -->
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
-table, th, td {
-	border: 0px solid #CCCCFF;
-}
+	<!-- This page's CSS -->
+	<style>
+		main {
+			margin-top: 90px;
+		}
+	</style>
+	<!-- ========== CSS Area ========== -->
 
-th, td {
-	padding: 1px;
-}
-</style>
-
+	<title>申請開課 - Xducation 陪你成長的學習好夥伴</title>
 </head>
 
-<body bgcolor='white'>
-	<h3>課程資料新增 - addCourse.jsp</h3>
-	
-	<p>
-		<a href="<%=request.getContextPath()%>/front-end/course/select_page.jsp">回首頁</a>
-	</p>
-	
-	<h3>資料新增:</h3>
+<body>
+	<!-- include 前台頁面的 header -->
+	<jsp:include page="/index/front-index/header.jsp" />
 
-	<%-- 錯誤表列 --%>
-	<c:if test="${not empty errorMsgs}">
-		<font style="color: red">請修正以下錯誤:</font>
-		<ul>
-			<c:forEach var="message" items="${errorMsgs}">
-				<li style="color: red">${message}</li>
-			</c:forEach>
-		</ul>
-	</c:if>
+	<main>
+		<div class="container">
+			<div class="row">
+				<div class="col">
+					<h1>申請開課 - Xducation 上架你的才華</h1>
+					<%-- <p><a href="<%=request.getContextPath()%>/front-end/course/select_page.jsp">回首頁</a></p> --%>
+				</div>
+			</div>
 
-	<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/course/course.do" name="form1" enctype="multipart/form-data">
-		<table>
-			<jsp:useBean id="courseSvc" scope="page" class="com.course.model.CourseService"/>
-			<tr>
-				<td>類別編號:<font color=red><b>*</b></font></td>
-				<td><input type="TEXT" name="cstypeno" size="45"
-					value="<%=(courseVO == null) ? "TYPE0001" : courseVO.getCstypeno()%>" /></td>
-			</tr>
-			<tr>
-				<td>老師編號:</td>
-				<td><input type="TEXT" name="tchrno" size="45"
-					value="<%=(courseVO == null) ? "TCHR0001" : courseVO.getTchrno()%>"/></td>
-			</tr>
-			<tr>
-				<td>課程名稱:</td>
-				<td><input type="TEXT" name="coursename" size="45"
-					value="<%=(courseVO == null) ? "真空吸引" : courseVO.getCoursename()%>"/></td>
-			</tr>
-			<tr>
-				<td>課程資訊:</td>
-				<td><input type="TEXT" name="courseinfo" size="45"
-					value="<%=(courseVO == null) ? "這是一堂騙錢的課" : courseVO.getCourseinfo()%>" /></td>
-			</tr>
-			<tr>
-				<td>課程單價:</td>
-				<td><input type="NUMBER" name="courseprice" size="45"
-					value="<%=(courseVO == null) ? 787 : courseVO.getCourseprice()%>" /></td>
-			</tr>
-			<tr>
-				<td>課程總時數:</td>
-				<td><input type="NUMBER" name="ttltime" size="45"
-					value="<%=(courseVO == null) ? 9999 : courseVO.getTtltime()%>" /></td>
-			</tr>
-			<tr>
-				<td>商品狀態:</td>
-				<td>
-					<input type="RADIO" name="roomdelete" size="45" value="審核中" checked>審核中
-					<input type="RADIO" name="roomdelete" size="45" value="上架">上架
-					<input type="RADIO" name="roomdelete" size="45" value="下架">下架
-				</td>
-			</tr>
-			<tr>
-				<td>累積總評分數:</td>
-				<td><input type="NUMBER" name="csscore" size="45"
-					value="<%=(courseVO == null) ? 333 : courseVO.getCsscore()%>" /></td>
-			</tr>
-			<tr>
-				<td>評分次數:</td>
-				<td><input type="NUMBER" name="csscoretimes" size="45"
-					value="<%=(courseVO == null) ? 444 : courseVO.getCsscoretimes()%>" /></td>
-			</tr>
-			<tr>
-				<td>課程圖片:</td>
-				<td><input type="file" name="courseimg" size="45" id="fileUp"  /></td>
-<%-- 				<!-- <td><input type="FILE" name="video" size="45" value="<%=(courseVO == null) ? "Not Thing" : courseVO.getCourseimg%>" /></td> --> --%>
-<!-- 							如何保存forward回來的上傳選項呢？ -->
-			</tr>
-		</table>
-		<br>
-		<input type="hidden" name="action" value="insert">
-		<input type="submit" value="送出新增">
-	</FORM>
-	
+			<div class="row">
+				<div class="col-md-6">
+
+					<!-- 注意! 雖有警告，但 form tag 不可移動到 col 之上，版型會有問題 -->
+					<form METHOD="post" ACTION="<%=request.getContextPath()%>/course/course.do" name="form1" enctype="multipart/form-data">
+
+						<jsp:useBean id="courseSvc" scope="page" class="com.course.model.CourseService" />
+						<jsp:useBean id="courseTypeSvc" scope="page" class="com.course_type.model.CourseTypeService" />
+
+						<div class="input-group mb-3">
+							<div class="input-group-prepend">
+								<span class="input-group-text">課程名稱</span>
+							</div>
+							<input type="text" class="form-control" aria-label="Sizing example input"
+								name="coursename" value="<%=(courseVO == null) ? "老師很懶不取名" : courseVO.getCoursename()%>">
+						</div>
+
+						<div class="input-group mb-3">
+							<div class="input-group-prepend">
+								<label class="input-group-text">課程類別</label>
+							</div>
+							<select class="custom-select" name="cstypeno">
+								<option value="">請選擇...</option>
+								<c:forEach var="courseTypeVO" items="${courseTypeSvc.all}">
+									<option value="${courseTypeVO.cstypeno}" ${courseVO.cstypeno==courseTypeVO.cstypeno ? 'selected' : '' }>
+										${courseTypeVO.cstypename}
+								</c:forEach>
+							</select>
+						</div>
+
+						<div class="input-group mb-3">
+							<div class="input-group-prepend">
+								<span class="input-group-text">課程單價</span>
+							</div>
+							<input type="number" class="form-control"
+								min="0" max="999999" step="1"
+								name="courseprice" value="<%=(courseVO == null) ? 0 : courseVO.getCourseprice()%>">
+						</div>
+
+						<!-- 教師編號應該要自己抓到 -->
+						<div class="input-group mb-3">
+							<div class="input-group-prepend">
+								<span class="input-group-text">該從 session 抓老師</span>
+							</div>
+							<input type="text" class="form-control"
+								name="tchrno" value="<%=(courseVO == null) ? "TCHR0001" : courseVO.getTchrno()%>">
+						</div>
+
+						<div class="input-group mb-3">
+							<div class="input-group-prepend">
+								<span class="input-group-text" id="inputGroupFileAddon01">課程圖片</span>
+							</div>
+							<div class="custom-file">
+								<input type="file" class="custom-file-input" id="fileUp"
+									name="courseimg">
+								<label class="custom-file-label" for="fileUp"> 建議圖片比例 4 : 3</label>
+							</div>
+						</div>
+
+						<div id="picturePreview"></div>
+
+				</div> <!-- end of col-->
+
+				<div class="col-md-6">
+
+					<div class="input-group mb-3">
+						<div class="input-group-prepend">
+							<span class="input-group-text">課程資訊</span>
+						</div>
+						<textarea name="courseinfo" class="form-control" aria-label="With textarea">${courseVO == null ? "<h1>你可以學到...</h1>" : courseVO.courseinfo}</textarea>
+					</div>
+
+				</div> <!-- end of col-->
+			</div>
+
+			<div class="row">
+				<div class="col">
+
+					<br>
+
+					<div>
+						<%-- 錯誤表列 --%>
+						<c:if test="${not empty errorMsgs}">
+							<font style="color: red">請修正以下錯誤：</font>
+							<ul>
+								<c:forEach var="message" items="${errorMsgs}">
+									<li style="color: red">${message}</li>
+								</c:forEach>
+							</ul>
+						</c:if>
+					</div>
+
+					<br>
+
+					<input type="hidden" name="action" value="create">
+					<h5>送出申請後，將繼續編輯課程內容...</h5>
+					<button type="submit" class="btn btn-lg btn-primary btn-block">申請開課</button>
+
+					</form>
+					<!-- 注意! 雖有警告，但 form tag 不可移動到外面，版型會有問題 -->
+
+				</div>
+			</div>
+
+		</div>
+	</main>
+
+	<!-- ========== JavaScript Area ========== -->
+	<!-- 關於讀取圖片 -->
 	<script type="text/javascript">
-	
 		var fileUp = document.getElementById("fileUp");
-		
-		fileUp.addEventListener('change', function() {
+
+		fileUp.addEventListener('change', function () {
 			var files = fileUp.files;
 			if (files) {
-            for (var i = 0; i < files.length; i++) {
-                var file = files[i];
-                
-                if (file.type.indexOf('image') > -1) {
-                    var reader = new FileReader();
-                    reader.addEventListener('load', function() {
+				for (var i = 0; i < files.length; i++) {
+					var file = files[i];
 
-                        var div = document.createElement('div');
+					if (file.type.indexOf('image') > -1) {
+						var reader = new FileReader();
+						reader.addEventListener('load', function () {
 
-                        var img = document.createElement('img');
-                        
-                        img.setAttribute('src', event.target.result);
+							var div = document.getElementById('picturePreview');
+							div.innerHTML = "";
+							var img = document.createElement('img');
 
-                        div.append(img);
-                        
-                        if(fileUp.nextElementSibling){ //只給上傳一張
-                        	fileUp.nextElementSibling.remove();
-                        }
-                        
-                        fileUp.after(div);
-                    });
-                    reader.readAsDataURL(file);
-                } else {
-                    alert("請上圖檔");
-                }
-            }
-            
-//             fileUp.setAttribute('type', 'text');
-//             fileUp.setAttribute('type', 'file');
-        }
-    });
+							img.setAttribute('src', event.target.result);
+							img.setAttribute('style', "max-width:100%;height:300px;");
+
+							if (fileUp.nextElementSibling) { //只給上傳一張
+								fileUp.nextElementSibling.remove();
+							}
+
+							div.append(img);
+						});
+						reader.readAsDataURL(file);
+					} else {
+						var div = document.getElementById('picturePreview');
+						div.innerHTML = "";
+						files = null;
+						alert("僅支援圖片類型檔案");
+					}
+				}
+			}
+		});
 	</script>
-	
+
+	<!-- 關於 CK EDITER -->
+	<script src="https://cdn.ckeditor.com/4.7.3/basic/ckeditor.js"></script>
+	<script>
+		function init() {
+			CKEDITOR.replace("courseinfo", {
+				width: 800,
+				height: 300
+			});
+			CKEDITOR.editorConfig = function (config) {
+				config.enterMode = CKEDITOR.ENTER_BR; //br換行
+			};
+		}
+		window.onload = init;
+	</script>
+	<!-- ========== JavaScript Area ========== -->
+
+	<!-- include 前台頁面的 footer -->
+	<jsp:include page="/index/front-index/footer.jsp" />
 </body>
+
 </html>
