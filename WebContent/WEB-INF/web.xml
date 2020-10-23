@@ -138,9 +138,6 @@
   	<url-pattern>/lecture/defLayout.show</url-pattern>
   </servlet-mapping>
   
-  
-  
-  
   <servlet>
   	<servlet-name>LecRoomServlet</servlet-name>
   	<servlet-class>com.lecture.controller.LecRoomServlet</servlet-class>

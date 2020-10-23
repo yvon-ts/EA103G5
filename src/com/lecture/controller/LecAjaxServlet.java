@@ -67,11 +67,13 @@ public class LecAjaxServlet extends HttpServlet {
 		
 		if ("sendQuery".equals(action)) {
 			
-			String query = req.getParameter("query");
+			String query = req.getParameter("query").trim();
+			String orderBy = req.getParameter("condition").trim();
+			System.out.println("ajax servlet query=" + query + " condition=" + orderBy);
 			out = res.getWriter();
 			
 			LecService lecSvc = new LecService();
-			List<LecVO> list = lecSvc.getQuery(query);
+			List<LecVO> list = lecSvc.getQuery(query, orderBy);
 			
 			JSONArray arr = new JSONArray();
 			
@@ -99,7 +101,7 @@ public class LecAjaxServlet extends HttpServlet {
 					//CKeditor - Bytes to String
 					byte[] b = lecVO.getLecinfo();
 					String bString = new String(b);
-					lecinfo = bString.substring(3, 21);
+					lecinfo = bString.substring(3, 25);
 				} catch (Exception e){
 					lecinfo = "講座資訊更新中";
 				}

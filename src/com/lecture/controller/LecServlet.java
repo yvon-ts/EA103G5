@@ -40,11 +40,12 @@ public class LecServlet extends HttpServlet {
 
 		if ("sendQuery".equals(action)) {
 			String query = req.getParameter("query").trim();
-			System.out.println(query);
+			String orderBy = req.getParameter("orderBy").trim();
+			System.out.println(query + " " + orderBy);
 
 				try {
 					LecService lecSvc = new LecService();
-					List<LecVO> list = lecSvc.getQuery(query);
+					List<LecVO> list = lecSvc.getQuery(query, orderBy);
 
 					req.setAttribute("list", list);
 

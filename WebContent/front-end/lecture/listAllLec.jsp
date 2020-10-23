@@ -29,6 +29,19 @@
 		margin-top: 150px;
 		margin-left: 400px;
 	}
+	#searchbox{
+		display: inline-block;
+	}
+	#searchbox input{
+		padding: 8px;
+    	border-radius: 10px;
+    	margin-left: 60px;
+	}
+	.chosen {
+	    color: #fff;
+	    border-color: #0099CC;
+	    background-color: #A2D9FF;
+	}
 </style>
 </head>
 
@@ -90,10 +103,15 @@
             <div class="section-header text-center">
                 <h2 id="lecture" class="section-title wow fadeInDown" data-wow-delay="0.3s"><i class="lni-rocket"></i> 名人講座</h2>
             </div>
-            <div id="querybox" class="box-item">
+            <div id="querybox" class="box-item" style="background-color: #b3e6ff; border-radius: 10px">
             	<div id="searchbox">
-            	<i class="lni-search"></i>
-            	<input id="query" name="query" type="text" size="30" placeholder="&nbsp;&nbsp;今天想學什麼呢？">
+            		<input id="query" name="query" type="text" placeholder="&nbsp;&rArr;&nbsp;今天想學什麼呢？">
+            	</div>
+            	<div id="orderBy" style="display: inline-block">
+            		<div id="priceAsc" class="btn" style="padding: 0;"><button class="filter btn btn-common " style="margin: 0 10px;">價格低至高</button></div>
+            		<div id="priceDesc" class="btn" style="padding: 0"><button class="filter btn btn-common" style="margin: 0 10px;">價格高至低</button></div>
+            		<div id="timeAsc" class="btn" style="padding: 0"><button class="filter btn btn-common" style="margin: 0 10px;">時間新到舊</button></div>
+            		<div id="timeDesc" class="btn" style="padding: 0"><button class="filter btn btn-common" style="margin: 0 10px;">時間舊到新</button></div>
             	</div>
             </div>
             <div id="row" class="row">
@@ -142,7 +160,9 @@
         </div>
         <div class="lec-txt">
         	<p class="title">${lecVO.lecname}</p><br>
-        	<p class="ctnt">【<%=spkrname%>】<br><%=lecinfo%></p>
+        	<p class="spkr">【<%=spkrname%>】</p>
+        	<p class="info"><%=lecinfo%></p>
+        	<p><span class="price"><i class="lni-rocket"></i>&nbsp;${lecVO.lecprice} NTD</span></p>
         </div>
         <div class="more">
         	<form method="post" action="<%=request.getContextPath()%>/lecture/lecture.do">
@@ -166,85 +186,133 @@
 	<input type="submit" value="回首頁"></form>
 	<%@ include file="/index/front-index/footer.jsp" %>
 	<script>
+	var orderBy = "";
+	$("#orderBy div").click(function(){
+		if ($(this).attr("id") === "priceAsc"){
+			orderBy = "priceAsc";
+			$("#priceAsc button").addClass("chosen");
+			$("#priceDesc button").removeClass("chosen");
+			$("#timeAsc button").removeClass("chosen");
+			$("#timeDesc button").removeClass("chosen");
+		}
+			
+		else if ($(this).attr("id") === "priceDesc"){
+			orderBy = "priceDesc";
+			$("#priceDesc button").addClass("chosen");
+			$("#priceAsc button").removeClass("chosen");
+			$("#timeAsc button").removeClass("chosen");
+			$("#timeDesc button").removeClass("chosen");
+		}
+		else if ($(this).attr("id") === "timeAsc"){
+			orderBy = "timeDesc";
+			$("#timeAsc button").addClass("chosen");
+			$("#priceDesc button").removeClass("chosen");
+			$("#priceAsc button").removeClass("chosen");
+			$("#timeDesc button").removeClass("chosen");
+		}
+		else if ($(this).attr("id") === "timeDesc"){
+			orderBy = "timeAsc";
+			$("#timeDesc button").addClass("chosen");
+			$("#priceAsc button").removeClass("chosen");
+			$("#priceDesc button").removeClass("chosen");
+			$("#timeAsc button").removeClass("chosen");
+		}
+		else{
+			orderBy = "";
+		}
+		
+		console.log("orderBy="+orderBy);
+		$("#row").empty();
+		sendAjaxQuery();
+		console.log("ajax sent");
+	});
+	
 	$("#query").keyup(function(e){
 		 if (e.keyCode === 13){
-
 		 	console.log("press");
-		     $("#queryForm").submit();
-		     $("#row").empty();
-		 
-		 $.ajax({
-		  	  		url: "<%=request.getContextPath()%>/lecture/lecJson.get",
-		 		type: "POST",
-		 		async: false,
-		 		data:{
-		 			action: "sendQuery",
-		 			query: $("#query").val()
-		 		},
-		 		dataType: 'json',
-		 		success: function(data){
-//		   	  			var lecs = JSON.parse(data);
-					var lecs = data;
-		 			//$("#row").empty();
-		 			if (lecs.length != 0){
-		 				
-			  			for (let i = 0; i < lecs.length; i++){
-				  			var align = `<div class="col-lg-1 col-md-12 col-sm-12 col-xs-12 for-align"></div>`;
-				  			$("#row").append(align);
-			  			jQuery('<div/>', {
-			  		    id: 'lec'+ i,
-			  		    "class": 'div col-lg-10 col-md-12 col-sm-12 col-xs-12 box-item wow fadeInLeft ',
-			  		    "html" : `<div class="daydiv">
-			              <span class="date"></span><br>
-			              <span class="month"></span><br>
-			              <span class="time"></span><br>
-			          </div>
-			          <div class="pic">
-			        <img>
-			          </div>
-			          <div class="lec-txt">
-			          	<p class="title"></p><br>
-			          	<p class="ctnt"></p><br>
-			          	<p class="info"></p>
-			          </div>
-			          <div class="more">
-			  	          	<form method="post" action="<%=request.getContextPath()%>/lecture/lecture.do">
-			          		<input type="submit" value="我有興趣">
-			          		<input type="hidden" name="lecno" value="${lecVO.lecno}">
-			          		<input type="hidden" name="action" value="frontOne">
-			          	</form>
-			          </div>`
-			  		}).appendTo('#row');
-			  			
-			  			var lecno = lecs[i].lecno;
-			  	  			var srcHead = "<%=request.getContextPath()%>/lecture/picreader?lecno=";
-			  			var src = srcHead + lecno;
-			  			
-						//日期  	  			
-			  			$("#lec"+i+" div .date").text(lecs[i].startdate);
-			  			$("#lec"+i+" div .month").text(lecs[i].startmonth);
-			  			$("#lec"+i+" div .time").text(lecs[i].starttime);
-			  			
-			  			//內容
-			  			$("#lec"+i+" div .title").text(lecs[i].lecname);
-			  			$("#lec"+i+" div .ctnt").text(lecs[i].spkrname);
-			  			
-			  			//圖文
-			  			$("#lec"+i+" img").attr("src", src)
-			  			$("#lec"+i+" div .info").text(lecs[i].lecinfo);
-			  			
-			  			$("#row").append(align);
-			  			}
-			  			
-			  		console.log($("#query").val());
-			  		console.log(data);
-			  		} else {
-			  		$("#row").text(查無資料);
-			  		}
-		 		}
-		 })
+		 	$("#row").empty();
+		 	sendAjaxQuery();
 		 }
 		});
+	
+	function sendAjaxQuery(){
+		$.ajax({
+  	  		url: "<%=request.getContextPath()%>/lecture/lecJson.get",
+ 		type: "POST",
+ 		async: false,
+ 		data:{
+ 			action: "sendQuery",
+ 			query: $("#query").val(),
+ 			condition: orderBy
+ 		},
+ 		dataType: 'json',
+ 		success: function(data){
+//   	  			var lecs = JSON.parse(data);
+			var lecs = data;
+ 			//$("#row").empty();
+ 			if (lecs.length != 0){
+ 				
+	  			for (let i = 0; i < lecs.length; i++){
+		  			var align = `<div class="col-lg-1 col-md-12 col-sm-12 col-xs-12 for-align"></div>`;
+		  			$("#row").append(align);
+	  			jQuery('<div/>', {
+	  		    id: 'lec'+ i,
+	  		    "class": 'div col-lg-10 col-md-12 col-sm-12 col-xs-12 box-item wow fadeInLeft ',
+	  		    "html" : `<div class="daydiv">
+	              <span class="date"></span><br>
+	              <span class="month"></span><br>
+	              <span class="time"></span><br>
+	          </div>
+	          <div class="pic">
+	        <img>
+	          </div>
+	          <div class="lec-txt">
+	          	<p class="title"></p><br>
+	          	<p class="spkr"></p>
+	          	<p class="info"></p>
+	          	<p><span class="price"></span></p>
+	          </div>
+	          <div class="more">
+	  	          	<form method="post" action="<%=request.getContextPath()%>/lecture/lecture.do">
+	          		<input type="submit" class="btn btn-common" value="我有興趣">
+	          		<input type="hidden" name="lecno">
+	          		<input type="hidden" name="action" value="frontOne">
+	          	</form>
+	          </div>`
+	  		}).appendTo('#row');
+	  			
+	  			var lecno = lecs[i].lecno;
+	  	  			var srcHead = "<%=request.getContextPath()%>/lecture/picreader?lecno=";
+	  			var src = srcHead + lecno;
+	  			var price = `<i class="lni-rocket"></i>&nbsp;`+lecs[i].lecprice+` NTD`;
+	  			
+				//日期  	  			
+	  			$("#lec"+i+" div .date").text(lecs[i].startdate);
+	  			$("#lec"+i+" div .month").text(lecs[i].startmonth);
+	  			$("#lec"+i+" div .time").text(lecs[i].starttime);
+	  			
+	  			//內容
+	  			$("#lec"+i+" div .title").text(lecs[i].lecname);
+	  			$("#lec"+i+" div .spkr").text("【" + lecs[i].spkrname + "】");
+	  			$("#lec"+i+" div .info").text(lecs[i].lecinfo);
+	  			$("#lec"+i+" div .price").html(price);
+	  			
+	  			//圖片
+	  			$("#lec"+i+" img").attr("src", src)
+	  			//按鈕
+	  			$("#lec"+i+" div input[name='lecno']").attr("value", lecs[i].lecno);
+	  			$("#row").append(align);
+	  			}
+	  			
+	  		console.log($("#query").val());
+	  		console.log("orderBy="+orderBy);
+	  		console.log(data);
+	  		} else {
+	  		$("#row").text(查無資料);
+	  		}
+ 		}
+ })
+	}
 
 	</script>
 </body>
