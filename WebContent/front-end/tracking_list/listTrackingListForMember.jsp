@@ -13,12 +13,7 @@
 	
 	
 	
-	if(shoppingList!= null){
-		System.out.println(shoppingList.size());
-	}else{
-		System.out.println(0);
-	}
-		
+	
 	
 %>
 
@@ -112,6 +107,21 @@
 	<script>
 		$(document).ready(function(){
 			
+			//加仔順序 js--->ajax 註冊事件會失效
+			//https://www.zhihu.com/question/23895785
+			$('body').on('click' , '.shoppingcart' , function(){
+				$.ajax({
+					url	:"<%=request.getContextPath()%>/tracking_list/tracking_list.do",
+					data:{
+						courseno:$(this).find('#courseno').val(),
+						memno    : $("#memno").val(),
+						action: "shoppingCart"
+					},
+					success: function(data){
+						console.log(data);
+					}
+				});
+			});
 			
 			var counter = 0; /*計數器*/
 			var pageStart = 0; /*offset*/
@@ -120,6 +130,20 @@
 			getData(pageStart, pageSize);
 			/*監聽載入更多*/
 			
+// 			$('.shoppingcart').click(function(){
+// 				console.log(123);
+// 				$.ajax({
+<%-- 					url	:"<%=request.getContextPath()%>/tracking_list/tracking_list.do", --%>
+// 					data:{
+// 						courseno:$(this).find('#courseno').val(),
+// 						memno    : $("#memno").val(),
+// 						action: "shoppingCart"
+// 					},
+// 					success: function(data){
+// 						console.log(data);
+// 					}
+// 				});
+// 			});
 		
 			
 			$(document).on('click', '#js-load-more', function(){
@@ -127,6 +151,8 @@
 			pageStart = counter * pageSize;
 			pageEnd = 	( counter + 1 ) * pageSize;
 			getData(pageStart, pageEnd);
+			
+			
 			});
 			
 		});
@@ -170,9 +196,7 @@
                     
                 		result += 	`<label class="shoppingcart">
 										<i class="fa fa-shopping-cart" aria-hidden="true">
-											<input type ="hidden" name="courseno" 	 id="courseno"   value ="${courseVO.courseno}"/>
-											<input type ="hidden" name="courseprice" id="courseprice" value ="${courseVO.courseprice}"/>
-											<input type ="hidden" name="courseinfo"  id="courseinfo"  value ="${courseVO.courseinfo}"/>
+												<input type ="hidden"  id="courseno" value ="`+ JSONarray[i].courseno +`"/>
 										</i>&nbsp;加入購物車
 									</label>`;
 						result += `<h5>NT$` + JSONarray[i].courseprice + `</h5></div></div></div></div>`;
@@ -186,11 +210,11 @@
 
 
 // 				/*隱藏more按鈕*/
-				if ( (offset + size) >= sum){
-					$("#js-load-more").hide();
-				}else{
-					$("#js-load-more").show();
-				}
+					if ( (offset + size) >= sum){
+						$("#js-load-more").hide();
+					}else{
+						$("#js-load-more").show();
+					}
 				}	
 				});
 			}

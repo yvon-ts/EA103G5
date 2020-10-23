@@ -15,6 +15,8 @@ import org.json.JSONObject;
 
 import com.course.model.CourseService;
 import com.course.model.CourseVO;
+import com.tracking_list.model.TrackingListService;
+import com.tracking_list.model.TrackingListVO;
 
 public class CourseSearch extends HttpServlet {
 
@@ -37,7 +39,7 @@ public class CourseSearch extends HttpServlet {
 		String min =  req.getParameter("min");
 		String max =  req.getParameter("max");
 		String order  = req.getParameter("order");
-		
+		String memno = req.getParameter("memno");
 		
 		CourseService courseSvc = new CourseService();
 		Map<String, String[]> map = new HashMap<>();
@@ -69,7 +71,7 @@ public class CourseSearch extends HttpServlet {
 //			System.out.println(max);
 //			System.out.println(min);
 //			System.out.println(order);
-			
+			TrackingListService  TrackingListSvc = new TrackingListService();
 			
 			if( searchText!= null && !searchText.trim().isEmpty()) {
 				map.put("searchText", new String[]{searchText.trim()});
@@ -84,8 +86,39 @@ public class CourseSearch extends HttpServlet {
 				map.put("min", new String[]{min});
 			}
 				map.put("order", new String[]{order});
-				List<CourseVO> list = courseSvc.getAll(map);
-				String str = new JSONArray(list).toString();
+				
+				List<CourseVO> searchList = courseSvc.getAll(map);
+				
+				JSONArray JSONarray = new JSONArray(searchList);
+				
+				for(int i = 0 ; i <JSONarray.length();i++ ) {
+					JSONObject json_book = JSONarray.getJSONObject(i);
+					
+					List<TrackingListVO> TrackingList = TrackingListSvc.getAll(memno);
+					
+					boolean  flag = true;
+					
+					for(TrackingListVO vo : TrackingList ) {
+						if(vo.getCourseno().equals(json_book.getString("courseno")) ) {
+							json_book.put("class", "fa fa-heart");
+							flag =	false;
+						}
+					}
+					
+					if(flag) {
+						json_book.put("class", "fa fa-heart-o");
+					}
+					
+					
+				}
+				
+				
+				
+				
+				
+				
+				
+				String str = JSONarray.toString();
 				
 				
 				res.setContentType("text/plain");
