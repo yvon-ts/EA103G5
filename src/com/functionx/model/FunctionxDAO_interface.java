@@ -12,4 +12,5 @@ public interface FunctionxDAO_interface {
 	public FunctionxVO findByPrimaryKey(String funcno);
 	public List<FunctionxVO> getAll();
 	public void insertWithFunc(FunctionxVO functionxVO,  List<EmpAuthorityVO> list);
+	public FunctionxVO findByUrl(String url);
 }

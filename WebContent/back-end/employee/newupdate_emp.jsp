@@ -339,7 +339,15 @@ table.table .avatar {
 				<form method="post"
 					ACTION="<%=request.getContextPath()%>/employee/employee.do">
 					<table class="table table-striped table-hover" id="test">
-						<tbody>
+						<c:if test="${not empty errMsgs}">
+							<font style="color:red">請修正以下錯誤:</font>
+								<ul>
+									<c:forEach var="message" items="${errMsgs}">
+										<li style="color:red">${message}</li>
+									</c:forEach>
+								</ul>
+						</c:if>	
+					<tbody>
 							<tr>
 								<th>員工編號</th>
 								<th><label><%=employeeVO.getEmpno()%></label></th>

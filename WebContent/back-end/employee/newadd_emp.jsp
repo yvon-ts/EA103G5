@@ -212,13 +212,17 @@ table.table td a.view {
 	text-align: center;
 }
 
-input[type="submit"].view {
-	width: 60px;
+table tr th input[type="submit"].view {
+	width: 100px;
 	height: 30px;
 	color: #2196F3;
 	border: 2px solid;
 	border-radius: 30px;
 	text-align: center;
+}
+
+table tr th input[type="submit"].view:hover  {
+	color: #2196F3;
 }
 
 table.table td a.view i {
@@ -344,31 +348,39 @@ table.table .avatar {
 				<form method="post" ACTION="<%=request.getContextPath() %>/employee/employee.do" name="form1">
 					<table class="table table-striped table-hover" id="test">
 						<tbody>
+							<c:if test="${not empty errMsgs}">
+								<font style="color:red">請修正以下錯誤:</font>
+								<ul>
+									<c:forEach var="message" items="${errMsgs}">
+										<li style="color:red">${message}</li>
+									</c:forEach>
+								</ul>
+							</c:if>						
 							<tr>
 								<th>員工帳號</th>
-								<th><input type="text" name="empacc" placeholder="請輸入員工帳號" value="${param.empacc}"></th>
+								<th><input type="text" name="empacc" placeholder="請輸入員工帳號" value="<%= (employeeVO==null)? "" : employeeVO.getEmpacc()%>"></th>
 							</tr>
-							<tr>
-								<th>員工密碼</th>
-								<th><input type="password" name="emppwd" placeholder="請輸入員工密碼" autocomplete="off" value="${param.empacc}"></th>
-							</tr>
+<!-- 							<tr> -->
+<!-- 								<th>員工密碼</th> -->
+<%-- 								<th><input type="password" name="emppwd" placeholder="請輸入員工密碼" autocomplete="off" value="${param.empacc}"></th> --%>
+<!-- 							</tr> -->
 							<tr>
 								<th>員工姓名</th>
-								<th><input type="text" name="empname" placeholder="請輸入員工姓名" autocomplete="off" value="${param.empname}"></th>
+								<th><input type="text" name="empname" placeholder="請輸入員工姓名" autocomplete="off" value="<%= (employeeVO==null)? "" : employeeVO.getEmpname()%>"></th>
 							</tr>
 							<tr>
 								<th>員工薪水</th>
-								<th><input type="text" name="empsalary" placeholder="請輸入員工薪水" autocomplete="off" value="${empsalary}"></th>
+								<th><input type="text" name="empsalary" placeholder="請輸入員工薪水" autocomplete="off" value="<%= (employeeVO==null)? "" : employeeVO.getEmpsalary()%>"></th>
 							</tr>
 							<tr>
 								<th>員工到職日期</th>
 								<th><input type="text" id="f_date1" name="hiredate"  placeholder="請輸入員工到職日" 
-								value="${param.hiredate}">
+								value="<%= (employeeVO==null)? "" : employeeVO.getHiredate()%>">
 								</th>
 							</tr>
 							<tr>
 								<th>員工Email</th>
-								<th><input type="email" name="empemail" placeholder="請輸入email" value="${param.empemail}" ></th>
+								<th><input type="email" name="empemail" placeholder="請輸入email" value="<%= (employeeVO==null)? "" : employeeVO.getEmpemail()%>" ></th>
 							</tr>
 							<tr>
 								<th>員工權限</th>
@@ -378,16 +390,16 @@ table.table .avatar {
 	                   				<label for="${functionxVO.funcno}">${functionxVO.funcname}</label><br>	                   			
 	                   			    </c:forEach>
 	                   			    
-	                   			    <c:forEach var="empAuthorityVO" items="${empAuthorityVO}">
-	                   			    <input type="hidden" name="emp" value="${empAuthorityVO.funcno}">                 																								                											 								     							 		    		       		    						     								
-     								</c:forEach>
+<%-- 	                   			    <c:forEach var="empAuthorityVO" items="${empAuthorityVO}"> --%>
+<%-- 	                   			    <input type="hidden" name="emp" value="${empAuthorityVO.funcno}">                 																								                											 								     							 		    		       		    						     								 --%>
+<%--      								</c:forEach> --%>
      															  
       							</th>     							
 							</tr>
 							<tr>
-								<th>
+								<th>								
 									<input type="hidden" name="action" value="insert"> 
-									<input type="submit" class="btn btn-primary" value="新增員工">
+									<input type="submit" class="view" value="新增員工">									
 								</th>
 							</tr>
 						</tbody>

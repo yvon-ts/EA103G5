@@ -4,9 +4,10 @@ import java.io.Serializable;
 import java.sql.Date;
 
 public class FunctionxVO implements Serializable{
+
 	private String funcno;
 	private String funcname;
-	private String funcifo;
+	private String urls;
 	private Date funclmod;
 	
 	
@@ -19,14 +20,14 @@ public class FunctionxVO implements Serializable{
 	public String getFuncname() {
 		return funcname;
 	}
+	public String getUrl() {
+		return urls;
+	}
+	public void setUrl(String urls) {
+		this.urls = urls;
+	}
 	public void setFuncname(String funcname) {
 		this.funcname = funcname;
-	}
-	public String getFuncifo() {
-		return funcifo;
-	}
-	public void setFuncifo(String funcifo) {
-		this.funcifo = funcifo;
 	}
 	public Date getFunclmod() {
 		return funclmod;

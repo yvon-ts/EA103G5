@@ -15,11 +15,10 @@ public class FunctionxService {
 	}
 	
 	//新增功能
-	public FunctionxVO addFunc(String funcname, String funcifo, java.sql.Date funclmod) {
+	public FunctionxVO addFunc(String funcname, java.sql.Date funclmod) {
 		
 		FunctionxVO functionxVO = new FunctionxVO();
 		functionxVO.setFuncname(funcname);
-		functionxVO.setFuncifo(funcifo);
 		functionxVO.setFunclmod(funclmod);
 		dao.insert(functionxVO);
 		
@@ -28,12 +27,11 @@ public class FunctionxService {
 	
 	//更新功能資料
 	
-	public FunctionxVO updateFunc(String funcno, String funcname, String funcifo, java.sql.Date funclmod) {
+	public FunctionxVO updateFunc(String funcno, String funcname, java.sql.Date funclmod) {
 		
 		FunctionxVO functionxVO = new FunctionxVO();
 		functionxVO.setFuncno(funcno);
 		functionxVO.setFuncname(funcname);
-		functionxVO.setFuncifo(funcifo);
 		functionxVO.setFunclmod(funclmod);
 		dao.update(functionxVO);
 		
@@ -53,5 +51,9 @@ public class FunctionxService {
 	//查詢全部
 	public List<FunctionxVO> getAll(){
 		return dao.getAll();
+	}
+	
+	public FunctionxVO getUrl(String urls) {
+		return dao.findByUrl(urls);
 	}
 }

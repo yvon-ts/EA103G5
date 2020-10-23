@@ -23,11 +23,12 @@ public class FunctionxJNDIDAO implements FunctionxDAO_interface {
 		}
 	}
 
-	private static final String INSERT_STMT = "INSERT INTO functionx (funcno, funcname, funcifo, funclmod) VALUES (('FUN' || LPAD(SEQ_EMPLOYEE.NEXTVAL, 4, 0)), ?, ?, ?)";
-	private static final String GET_ALL_STMT = "SELECT funcno, funcname, funcifo, to_char(funclmod,'yyyy-mm-dd') funclmod FROM functionx order by funcno";
-	private static final String GET_ONE_STMT = "SELECT funcno, funcname, funcifo, to_char(funclmod,'yyyy-mm-dd') funclmod FROM functionx where funcno = ?";
+	private static final String INSERT_STMT = "INSERT INTO functionx (funcno, funcname, funclmod) VALUES (('FUN' || LPAD(SEQ_EMPLOYEE.NEXTVAL, 4, 0)), ?, ?)";
+	private static final String GET_ALL_STMT = "SELECT funcno, funcname, to_char(funclmod,'yyyy-mm-dd') funclmod FROM functionx order by funcno";
+	private static final String GET_ONE_STMT = "SELECT funcno, funcname, to_char(funclmod,'yyyy-mm-dd') funclmod FROM functionx where funcno = ?";
+	private static final String GET_URL = "SELECT funcno, funcname, to_char(funclmod,'yyyy-mm-dd') funclmod FROM functionx where urls = ?";
 	private static final String DELETE = "DELETE FROM functionx where funcno = ?";
-	private static final String UPDATE = "UPDATE functionx set funcname=?, funcifo=?, funclmod=? where funcno=? ";
+	private static final String UPDATE = "UPDATE functionx set funcname=?, funclmod=? where funcno=? ";
 
 	@Override
 	public void insert(FunctionxVO functionxVO) {
@@ -40,8 +41,7 @@ public class FunctionxJNDIDAO implements FunctionxDAO_interface {
 			pstmt = con.prepareStatement(INSERT_STMT);
 
 			pstmt.setString(1, functionxVO.getFuncname());
-			pstmt.setString(2, functionxVO.getFuncifo());
-			pstmt.setDate(3, functionxVO.getFunclmod());
+			pstmt.setDate(2, functionxVO.getFunclmod());
 
 			pstmt.executeUpdate();
 			con.commit();
@@ -83,15 +83,13 @@ public class FunctionxJNDIDAO implements FunctionxDAO_interface {
 			pstmt = con.prepareStatement(UPDATE);
 
 			pstmt.setString(1, functionxVO.getFuncname());
-			pstmt.setString(2, functionxVO.getFuncifo());
-			pstmt.setDate(3, functionxVO.getFunclmod());
-			pstmt.setString(4, functionxVO.getFuncno());
+			pstmt.setDate(2, functionxVO.getFunclmod());
+			pstmt.setString(3, functionxVO.getFuncno());
 
 			pstmt.executeUpdate();
 			con.commit();
 		} catch (SQLException e) {
 			try {
-				System.out.println("123");
 				con.rollback();
 			} catch (SQLException se) {
 				throw new RuntimeException("A database error occured. " + se.getMessage());
@@ -133,7 +131,6 @@ public class FunctionxJNDIDAO implements FunctionxDAO_interface {
 			con.commit();
 		} catch (SQLException e) {
 			try {
-				System.out.println("123");
 				con.rollback();
 			} catch (SQLException se) {
 				throw new RuntimeException("A database error occured. " + se.getMessage());
@@ -177,13 +174,11 @@ public class FunctionxJNDIDAO implements FunctionxDAO_interface {
 				functionxVO = new FunctionxVO();
 				functionxVO.setFuncno(rs.getString("funcno"));
 				functionxVO.setFuncname(rs.getString("funcname"));
-				functionxVO.setFuncifo(rs.getString("funcifo"));
 				functionxVO.setFunclmod(rs.getDate("funclmod"));
 			}
 			con.commit();
 		} catch (SQLException e) {
 			try {
-				System.out.println("123");
 				con.rollback();
 			} catch (SQLException se) {
 				throw new RuntimeException("A database error occured. " + se.getMessage());
@@ -236,7 +231,6 @@ public class FunctionxJNDIDAO implements FunctionxDAO_interface {
 				functionxVO = new FunctionxVO();
 				functionxVO.setFuncno(rs.getString("funcno"));
 				functionxVO.setFuncname(rs.getString("funcname"));
-				functionxVO.setFuncifo(rs.getString("funcifo"));
 				functionxVO.setFunclmod(rs.getDate("funclmod"));
 				list.add(functionxVO);
 			}
@@ -287,8 +281,7 @@ public class FunctionxJNDIDAO implements FunctionxDAO_interface {
 			String cols[] = {"funcno"};
 			pstmt = con.prepareStatement(INSERT_STMT);
 			pstmt.setString(1, functionxVO.getFuncname());
-			pstmt.setString(2, functionxVO.getFuncifo());
-			pstmt.setDate(3, functionxVO.getFunclmod());
+			pstmt.setDate(2, functionxVO.getFunclmod());
 
 			pstmt.executeUpdate();
 			ResultSet rs = pstmt.getGeneratedKeys();
@@ -333,4 +326,59 @@ public class FunctionxJNDIDAO implements FunctionxDAO_interface {
 		}
 		
 	}
+
+	@Override
+	public FunctionxVO findByUrl(String urls) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		FunctionxVO functionxVO = null;
+		try {
+			con = ds.getConnection();
+			con.setAutoCommit(false);
+			pstmt = con.prepareStatement(GET_URL);
+
+			pstmt.setString(1, urls);
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				functionxVO = new FunctionxVO();
+				functionxVO.setFuncno(rs.getString("funcno"));
+				functionxVO.setFuncname(rs.getString("funcname"));
+				functionxVO.setFunclmod(rs.getDate("funclmod"));
+			}
+			con.commit();
+		} catch (SQLException e) {
+			try {
+				con.rollback();
+			} catch (SQLException se) {
+				throw new RuntimeException("A database error occured. " + se.getMessage());
+			}
+			throw new RuntimeException("A database error occured. " + e.getMessage());
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.setAutoCommit(true);
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return functionxVO;
+	}
+
 }

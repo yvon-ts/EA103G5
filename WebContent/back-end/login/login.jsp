@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.employee.model.*"%>
 <%
 	session.setAttribute("empacc",null);
@@ -48,17 +49,18 @@
 					<span class="login100-form-title p-b-34 p-t-27">
 						管理後臺登入
 					</span>
-
+					<div align="center">
+					<font color="yellow"><b>${errlogin}</b></font><br>
+					</div>
 					<div class="wrap-input100 validate-input" data-validate = "Enter username">
-						<input class="input100" type="text" name="empacc" placeholder="Username" value="${empacc}">
+						<input class="input100" type="text" name="empacc" placeholder="輸入帳號" >
 						<span class="focus-input100" data-placeholder="&#xf207;"></span>
 					</div>
 
 					<div class="wrap-input100 validate-input" data-validate="Enter password">
-						<input class="input100" type="password" name="emppwd" placeholder="Password">
+						<input class="input100" type="password" name="emppwd" placeholder="輸入密碼">
 						<span class="focus-input100" data-placeholder="&#xf191;"></span>
 					</div>
-
 					<div class="container-login100-form-btn">
 						<button class="login100-form-btn" type=submit >
 							Login

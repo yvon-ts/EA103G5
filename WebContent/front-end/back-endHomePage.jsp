@@ -11,11 +11,12 @@
     <!-- Main CSS-->
     <link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/front-end/css/main.css">
     <!-- Font-icon css-->
-    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+ <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+ <script src="dist/sweetalert.min.js"></script>
+<link rel="stylesheet" type="text/css" href="dist/sweetalert.css">
 </head>
 
 <body class="app sidebar-mini">
-<jsp:useBean id="funSvc" scope="page" class="com.functionx.model.FunctionxService"/>
     <!-- Navbar-->
     <header class="app-header"><a class="app-header__logo" href="index.html">
             <img src="<%=request.getContextPath() %>/front-end/images/logo.svg" alt="" width="50px" height="50px">
@@ -76,11 +77,18 @@
                 </ul>
             </li>
             <!-- User Menu-->
-             <li class="dropdown"><a class="app-nav__item" href="#" data-toggle="dropdown" aria-label="Open Profile Menu"><i class="fa fa-user fa-lg"></i></a>
+            <li class="dropdown"><a class="app-nav__item" href="#" data-toggle="dropdown" aria-label="Open Profile Menu"><i class="fa fa-user fa-lg"></i></a>
                 <ul class="dropdown-menu settings-menu dropdown-menu-right">
                     <li><a class="dropdown-item" href="page-user.html"><i class="fa fa-cog fa-lg"></i> Settings</a></li>
-                    <li><a class="dropdown-item" href="page-user.html"><i class="fa fa-user fa-lg"></i> Profile</a></li>
-                      <li><a class="dropdown-item" href="<%=request.getContextPath() %>/back-end/login/login.jsp"><i class="fa fa-sign-out fa-lg"></i>Logout</a></li>
+                    <a class="dropdown-item" href="">
+                    	<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/employee/employee.do">
+                    		<li><i class="fa fa-user fa-lg"></i>
+                    		<input type="submit" value="個人資料" ">
+			     			<input type="hidden" name="empno"  value="${empno}">
+			     			<input type="hidden" name="action"	value="forupdate"></li>									
+			     		</FORM>
+			     		</a>
+                    <li><a class="dropdown-item" href="<%=request.getContextPath() %>/back-end/login/login.jsp"><i class="fa fa-sign-out fa-lg"></i>登出</a></li>
                 </ul>
             </li>
         </ul>
@@ -95,25 +103,23 @@
             </div>
         </div>
         <ul class="app-menu">
-        <li><a class="app-menu__item active" href="<%=request.getContextPath() %>/front-end/back-endHomePage.jsp"><i class="fa fa-home" aria-hidden="true"> </i><span class="app-menu__label"> 首頁 </span></a></li>
-         
-     		
-     		<li class="treeview" id="FUN0001" style="display:none"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="fa fa-user" aria-hidden="true"></i>
+        <li><a class="app-menu__item active" href="<%=request.getContextPath() %>/front-end/back-endHomePage.jsp"><i class="fa fa-home" aria-hidden="true"> </i><span class="app-menu__label"> 首頁 </span></a></li>             		
+     		<li class="treeview" id="FUN0001" ><a class="app-menu__item" href="#" data-toggle="treeview"><i class="fa fa-user" aria-hidden="true"></i>
                 <span class="app-menu__label">員工管理
 	            </span><i class="treeview-indicator fa fa-angle-right"></i></a>
                 <ul class="treeview-menu">
-                    <li><a class="treeview-item" href="<%=request.getContextPath() %>/back-end/employee/newallemp.jsp"><i class="icon fa fa-circle-o"></i> 員工資料</a></li>
+                    <li><a class="treeview-item" href="<%=request.getContextPath() %>/back-end/employee/newallemp.jsp"><i class="icon fa fa-circle-o"></i>員工資料</a></li>
                     <li><a class="treeview-item" href="https://fontawesome.com/v4.7.0/icons/" target="_blank" rel="noopener"><i class="icon fa fa-circle-o"></i>員工權限 </a></li>
                 </ul>               
             </li>                                 
-            <li class="treeview" id="FUN0002" style="display:none"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="fa fa-users" aria-hidden="true"></i>
-                    <span class="app-menu__label"> 會員管理 </span><i class="treeview-indicator fa fa-angle-right"></i></a>
+            <li class="treeview" id="FUN0002" ><a class="app-menu__item" href="#" data-toggle="treeview"><i class="fa fa-users" aria-hidden="true"></i>
+                    <span class="app-menu__label"> 會員管理</span><i class="treeview-indicator fa fa-angle-right"></i></a>
                 <ul class="treeview-menu">
                     <li><a class="treeview-item" href="bootstrap-components.html"><i class="icon fa fa-circle-o"></i> 會員資料</a></li>
                     <li><a class="treeview-item" href="https://fontawesome.com/v4.7.0/icons/" target="_blank" rel="noopener"><i class="icon fa fa-circle-o"></i>會員課程 </a></li>
                 </ul>
             </li>
-             <li class="treeview" id="FUN0006" style="display:none"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="fa fa-user-plus" aria-hidden="true"></i>
+             <li class="treeview" id="FUN0003" ><a class="app-menu__item" href="#" data-toggle="treeview"><i class="fa fa-user-plus" aria-hidden="true"></i>
                     <span class="app-menu__label"> 實體講座 </span><i class="treeview-indicator fa fa-angle-right"></i></a>
                 <ul class="treeview-menu">
                     <li><a class="treeview-item" href="bootstrap-components.html"><i class="icon fa fa-circle-o"></i> 教室管理</a></li>
@@ -121,7 +127,7 @@
                     <li><a class="treeview-item" href="bootstrap-components.html"><i class="icon fa fa-circle-o"></i> 講座管理</a></li>
                 </ul>
             </li>
-            <li class="treeview" id="FUN0007" style="display:none"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="fa fa-cart-plus" aria-hidden="true"></i>
+            <li class="treeview" id="FUN0004" ><a class="app-menu__item" href="#" data-toggle="treeview"><i class="fa fa-cart-plus" aria-hidden="true"></i>
                     <span class="app-menu__label"> 課程商城 </span><i class="treeview-indicator fa fa-angle-right"></i></a>
                 <ul class="treeview-menu">
                     <li><a class="treeview-item" href="bootstrap-components.html"><i class="icon fa fa-circle-o"></i> 訂單管理</a></li>
@@ -129,7 +135,7 @@
                     <li><a class="treeview-item" href="bootstrap-components.html"><i class="icon fa fa-circle-o"></i> 課程管理</a></li>
                 </ul>
             </li>
-            <li style="display:none"><a class="app-menu__item" href="docs.html"><i class="fa fa-exclamation-circle" aria-hidden="true"></i><span class="app-menu__label">檢舉管理</span></a></li>
+            <li  id="FUN0005"><a class="app-menu__item" href="docs.html"><i class="fa fa-exclamation-circle" aria-hidden="true"></i><span class="app-menu__label">檢舉管理</span></a></li>
         </ul>
     </aside>
     <!-- 內容放在下面 -->
@@ -137,15 +143,22 @@
     <!-- Essential javascripts for application to work-->
     <script src="<%=request.getContextPath() %>/front-end/js/jquery-3.3.1.min.js"></script>
     <script src="<%=request.getContextPath() %>/front-end/js/popper.min.js"></script>
-<%--     <script src="<%=request.getContextPath() %>/front-end/js/bootstrap.min.js"></script> --%>
+    <script src="<%=request.getContextPath() %>/front-end/js/bootstrap.min.js"></script>
     <script src="<%=request.getContextPath() %>/front-end/js/main.js"></script>
     <script>		
 
-<c:forEach var="empAuthorityVO" items="${empauth}"> 
-	var x = document.getElementById("${empAuthorityVO.funcno}");
-	x.style.display= "";	
-</c:forEach> 
-
+// <c:forEach var="empAuthorityVO" items="${empauth}"> 
+// 	var x = document.getElementById("${empAuthorityVO.funcno}");
+// 	console.log(x);
+// 	x.style.display= "";	
+// </c:forEach> 
+// 	swal({
+//   		title: '${errormes}',
+//   		icon: "success",
+// 	});
+<c:if test="not empty ${error} ">
+	alert("${error}");
+</c:if>	
     </script>
     
 </body>

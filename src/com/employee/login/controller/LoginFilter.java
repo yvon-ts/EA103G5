@@ -1,6 +1,5 @@
 package com.employee.login.controller;
 
-
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
@@ -22,58 +21,70 @@ import com.employee.model.EmployeeVO;
 import com.functionx.model.FunctionxService;
 import com.functionx.model.FunctionxVO;
 
-
 public class LoginFilter implements Filter {
-	
+
 	private FilterConfig config;
 
 	public void init(FilterConfig config) throws ServletException {
 		this.config = config;
 	}
+
 	public void destroy() {
 		config = null;
 	}
 
+	
+	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
+			throws IOException, ServletException {
 
-	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-		
 		HttpServletRequest req = (HttpServletRequest) request;
 		HttpServletResponse res = (HttpServletResponse) response;
-		
+
 		HttpSession session = req.getSession();
 		Object empacc = session.getAttribute("empacc");
+
 		
-		//從帳號找員工編號
-//		EmployeeService empSvc = new EmployeeService();		
-//		EmployeeVO empVO =  empSvc.getEmpAcc((String) empacc);
-//		String empno = empVO.getEmpno();
-//	
-//		EmpAuthorityService  empAuth = new EmpAuthorityService();
-//		List<EmpAuthorityVO> empAuthList = empAuth.findByEmp(empno);
-//		for(EmpAuthorityVO e: empAuthList) {
-//			System.out.println(e.getFuncno());
-//		}
-//		
-//		FunctionxService funcSvc = new FunctionxService();
-//		List<FunctionxVO> funcVO = funcSvc.getAll();		
-//		for(FunctionxVO funcvo : funcVO) {
-//			for(EmpAuthorityVO empvo: empAuthList) {
-//				if((funcvo.getFuncno()) != (empvo.getFuncno())) {
-//					session.setAttribute("location", req.getRequestURI());
-//					res.sendRedirect(req.getContextPath() + "/front-end/back-endHomePage.jsp");
-//					return;
-//				}
-//			}
-//		}
+		// 從員工編號查權限
+		String empno = (String)session.getAttribute("empno");
+		EmpAuthorityService empAuthSvc = new EmpAuthorityService();
+		List<EmpAuthorityVO> empauth = empAuthSvc.findByEmp(empno);
+
+		String urls = req.getRequestURI();
+		System.out.println(urls);
+		FunctionxService funSvc = new FunctionxService();
+		FunctionxVO funurl = funSvc.getUrl(urls);
+		System.out.println(funurl);
 		
-		if (empacc == null) {
-			session.setAttribute("location", req.getRequestURI());
-			res.sendRedirect(req.getContextPath() + "/back-end/login/login.jsp");
+		
+		if(funurl == null) {
+			chain.doFilter(request, response);
+			return;
+		}
+		if(empauth.isEmpty()) {
+			session.setAttribute("errors", "你沒有權限");
+			res.sendRedirect(req.getContextPath() + "/front-end/back-endHomePage.jsp");
 			return;
 		}		
-		chain.doFilter(request, response);
+		
+		String funcno = funurl.getFuncno();
+		
+		for(EmpAuthorityVO auth :empauth) {
+			if(! auth.getFuncno().equals(funcno)){
+				session.setAttribute("error", "你沒有權限");
+				res.sendRedirect(req.getContextPath() + "/front-end/back-endHomePage.jsp");
+			}
+		}
+	
+			
+			if (empacc == null) {
+				session.setAttribute("location", req.getRequestURI());
+				res.sendRedirect(req.getContextPath() + "/back-end/login/login.jsp");
+				return;
+			}
+			chain.doFilter(request, response);
+			
+
+
 	}
-
-
 
 }
