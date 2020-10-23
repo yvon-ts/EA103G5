@@ -159,14 +159,13 @@ public class OrderMasterServlet extends HttpServlet {
 			// send the ErrorPage view.
 			req.setAttribute("errorMsgs", errorMsgs);
 
-			try {
+//			try {
 				/*********************** 1.接收請求參數 - 輸入格式的錯誤處理 *************************/
+				
 				String memno = req.getParameter("memno");
 				Integer orderamt = new Integer (req.getParameter("orderamt"));
 				String coupno = req.getParameter("coupno");
-//				空值
-				coupno = null;
-//				空值
+
 				String payby = req.getParameter("payby").trim();
 				if (payby == null || payby.trim().length() == 0) {
 					errorMsgs.add("付款方式請勿空白");
@@ -176,26 +175,19 @@ public class OrderMasterServlet extends HttpServlet {
 				String[] sellprice = req.getParameterValues("courseprice");
 				String[] promono = req.getParameterValues("promono");
 				
-//				空值
-				for(int i = 0 ; i <= promono.length; i++) {
-					promono[i] = null;
-				}
-//				空值
 				
 				OrderMasterVO orderMasterVO = new OrderMasterVO();
 				orderMasterVO.setMemno(memno);
 				orderMasterVO.setOrderamt(orderamt);
 				orderMasterVO.setCoupno(coupno);
 				orderMasterVO.setPayby(payby);
-
 				List<OrderDetailVO> list = new Vector<OrderDetailVO>();
-				
+				System.out.println(buylist.size());
 				for (int i = 0; i < buylist.size(); i++) {
 					OrderDetailVO odVO = new OrderDetailVO();
 					odVO.setCourseno(courseno[i]);
 					odVO.setSellprice(new Integer(sellprice[i]));
 					odVO.setPromono(promono[i]);
-					
 					list.add(odVO);
 				}
 				
@@ -215,13 +207,13 @@ public class OrderMasterServlet extends HttpServlet {
 				String url = "/back-end/Order_Master/ListOneOrder.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
 				successView.forward(req, res);
-
+				
 				/*************************** 其他可能的錯誤處理 **********************************/
-			} catch (Exception e) {
-				errorMsgs.add(e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/Shop/Test.jsp");
-				failureView.forward(req, res);
-			}
+//			} catch (Exception e) {
+//				errorMsgs.add(e.getMessage());
+//				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/Shop/Test.jsp");
+//				failureView.forward(req, res);
+//			}
 		}
 		if ("getMemno_For_Display".equals(action)) { // 來自OrderMasterDB.jsp的請求
 			List<String> errorMsgs = new LinkedList<String>();
