@@ -202,7 +202,7 @@ public class OrderMasterServlet extends HttpServlet {
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					req.setAttribute("orderMasterVO", orderMasterVO);
-					RequestDispatcher failureView = req.getRequestDispatcher("/front-end/Shop/Shopping_Cart.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/front-end/Shop/Test.jsp");
 					failureView.forward(req, res);
 					return;
 				}
@@ -219,7 +219,7 @@ public class OrderMasterServlet extends HttpServlet {
 				/*************************** 其他可能的錯誤處理 **********************************/
 			} catch (Exception e) {
 				errorMsgs.add(e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/Shop/Shopping_Cart.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/Shop/Test.jsp");
 				failureView.forward(req, res);
 			}
 		}
