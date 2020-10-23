@@ -51,7 +51,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">
+                            <a class="nav-link" href="<%=request.getContextPath()%>/front-end/lecture/listAllLec.jsp">
                                 名人講座&nbsp;<i class="lni-bulb"></i>
                             </a>
                         </li>

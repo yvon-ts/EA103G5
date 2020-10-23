@@ -27,13 +27,8 @@
 		
 
 		<div class="row">
-			<div class="col-md-4">
-				
-				
-		座位數量：<span id="seatCount"></span> / <span id="blockCount"></span> 
-			</div>
-
-			<div class="col-md-4">
+			<div class="col-md-8">
+			<span>剩餘座位數量：</span><span id="seatCount"></span> / <span id="blockCount"></span>
 				<div id="classroom">
 					<div id="stage">
 						Stage hi

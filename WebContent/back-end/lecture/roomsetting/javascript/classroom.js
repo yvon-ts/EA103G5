@@ -261,11 +261,7 @@ function blockCount(statusStr) {
 function totalSeatCount(statusStr) {
 	let ttlseatCount = 0;
 	for (let i = 0; i < statusStr.length; i++) {
-		if (statusStr[i] === "1") {
-			ttlseatCount++;
-		} else if (statusStr[i] === "*") {
-			ttlseatCount++;
-		}
+		ttlseatCount++;
 	}
 	return (ttlseatCount);
 }

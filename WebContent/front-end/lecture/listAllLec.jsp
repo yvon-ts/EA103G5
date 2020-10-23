@@ -63,17 +63,6 @@
                             <br>
                             <div class="about-wrapper wow fadeInLeft" data-wow-delay="0.4s">
                                 <div id="search">
-<%--                                    <form id="queryForm" method="post" action="<%=request.getContextPath()%>/lecture/lecture.do"> --%>
-<!--                                     <table id="searchbox"> -->
-<!--                                         <tr> -->
-<!--                                             <td><i class="lni-search"></i></td> -->
-<!--                                             <td> -->
-<!--                                                 <input id="query" name="query" type="text" size="30" placeholder="&nbsp;&nbsp;今天想學什麼呢？"> -->
-<!--                                                 <input name="action" type="hidden" value="queryServlet"> -->
-<!--                                             </td> -->
-<!--                                         </tr> -->
-<!--                                     </table> -->
-<!--                                 </form> -->
                                 </div>
                                 <div class="header-button">
                                     <a href="#lecture" class="btn btn-common">搜尋講座</a>

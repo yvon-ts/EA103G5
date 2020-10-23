@@ -85,32 +85,32 @@ html{
 <div class="container">
  <div class="row">
    <div id="calendar" class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
-   <%@ include file="/calendar/calendar.jsp" %>
-   </div>
-<div id="form"><form class="login-form" method="post" action="<%=request.getContextPath()%>/front-end/lecorder/confirmLodr.jsp">
-<h1>${lecVO.lecname}</h1>
-<ul>
+    <img src="<%=request.getContextPath()%>/lecture/picreader?lecno=${lecVO.lecno}">
+    <h1>${lecVO.lecname}</h1>
+    <ul>
 	<li>講座日期：<%=startdate%></li>
 	<li>講座時間：<%=starttime%> - <%=endtime%></li>
 	<li>講座地點：<%=roomname%>教室</li>
 	<li>講座票價：<span id="lecprice">${lecVO.lecprice}</span>元/人</li>
 </ul>
+  付款方式：<input type="radio" checked>信用卡<br>
+  訂購數量：<input id="count" type="text" name="count" readonly>
+  
+  <input id="lecamt" type="text" name="lecamt" readonly>
+    
+<%--    <%@ include file="/calendar/calendar.jsp" %> --%>
+   </div>
+<div id="form"><form class="login-form" method="post" action="<%=request.getContextPath()%>/front-end/lecorder/confirmLodr.jsp">
+
+<%@ include file="/front-end/lecorder/bookingSeats.jsp"%>
+
   <label>會員編號</label>
   <input type="text" name="memno">
-  
-  <label>付款方式：</label>
-  <label><input type="radio">信用卡</label><br>
-
-  <label>訂購數量：</label>
-   <input id="count" type="text" name="count" readonly>
-  
-  <label>金額小計：</label>
-  <input id="lecamt" type="text" name="lecamt" readonly>
 
   <input id="submit" type="submit" value="確認付款">
   <input type="hidden" name="lecno" value="<%=lecno%>">
    <div>
-   <%@ include file="/front-end/lecorder/bookingSeats.jsp"%>
+   
    </div>
 </form>
 </div>

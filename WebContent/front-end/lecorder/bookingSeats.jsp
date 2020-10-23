@@ -76,6 +76,7 @@
 	  	  	    addClickForBooking();
   	  		}
   	  	});
+  		
     </script>
 </body>
 </html>
