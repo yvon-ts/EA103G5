@@ -7,11 +7,13 @@
 <%@ page import="java.util.*"%>
 
 <%
-	Course_assessService course_assessSvc = new Course_assessService();
+Course_assessService course_assessSvc = new Course_assessService();
 String avg = course_assessSvc.avgScore("COUR0001");
 List<Course_assessVO> list = course_assessSvc.getAll("COUR0001");
 pageContext.setAttribute("list", list);
 pageContext.setAttribute("avg",avg);
+pageContext.setAttribute("course_assessSvc",course_assessSvc);
+String inform5 = (String)request.getAttribute("inform5");
 %>
 
 <%@ include file="/index/front-index/headtest.jsp" %>
@@ -305,9 +307,15 @@ background: url("<%=request.getContextPath()%>/front-end/members/assets/img/bgPi
             
             <%@ include file="page1.file"%>
             <div id="avg">${avg}</div>
+            <c:if test="${not empty sessionScope.membersVO}">
+           <c:if test="${empty course_assessSvc.getOneCourse_assess(sessionScope.membersVO.memno)}">
+				 <a id='add' href="<%=request.getContextPath()%>/front-end/course_assess/addCourse_assess.jsp">發表評價</a>							
+		   </c:if>
+            <c:if test="${not empty course_assessSvc.getOneCourse_assess(sessionScope.membersVO.memno)}">
+				 <a id='add' href="<%=request.getContextPath()%>/front-end/course_assess/updateCourse_assess.jsp">修改評價</a>
+		   </c:if>
+		   </c:if>
             
-            
-            <a id='add' href="<%=request.getContextPath()%>/front-end/course_assess/addCourse_assess.jsp">發表評價</a>
             
             
 							<c:forEach var="course_assessVO" items="${list}" begin="<%=pageIndex%>"
@@ -409,6 +417,13 @@ background: url("<%=request.getContextPath()%>/front-end/members/assets/img/bgPi
 
 
 <script>
+var inform5 = ${inform5};
+
+if(inform5 == 200){
+	swal('新增成功', '感謝您撥空留下您寶貴的意見', 'success');
+}else if(inform5 == 100){
+	swal('修改成功', '感謝您撥空修改您寶貴的意見', 'success');
+}
 
 
 </script>

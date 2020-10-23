@@ -163,22 +163,6 @@ justify-content:center;
     content: "Loading...";
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 img.img-fluid{
 transform-origin: 70% 88%;
     animation: hand 2s infinite;

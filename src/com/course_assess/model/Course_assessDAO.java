@@ -26,7 +26,7 @@ public class Course_assessDAO implements Course_assessDAO_interface {
 	
 	private static final String INSERT_STMT = "INSERT INTO COURSE_ASSESS(ASESNO,COURSENO,MEMNO,COURSESCORE,COMMENTS) VALUES ('ASES' || LPAD(SEQ_ASESNO.NEXTVAL, 4, 0),?,?,?,?)";
 	private static final String GET_ALL_STMT = "SELECT ASESNO,COURSENO,MEMNO,COURSESCORE,COMMENTS,COMMENTTIME FROM COURSE_ASSESS WHERE COURSENO = ? ORDER BY ASESNO";
-	private static final String GET_ONE_STMT = "SELECT ASESNO,COURSENO,MEMNO,COURSESCORE,COMMENTS,COMMENTTIME FROM COURSE_ASSESS WHERE ASESNO = ?";
+	private static final String GET_ONE_STMT = "SELECT ASESNO,COURSENO,MEMNO,COURSESCORE,COMMENTS,COMMENTTIME FROM COURSE_ASSESS WHERE MEMNO = ?";
 	private static final String UPDATE = "UPDATE COURSE_ASSESS SET COURSESCORE=?,COMMENTS=? WHERE ASESNO =?";
 	private static final String DELETE = "DELETE FROM COURSE_ASSESS WHERE ASESNO=?";
 	private static final String AVG_SCORE = "SELECT courseno, AVG(COURSESCORE)  FROM COURSE_ASSESS where courseno = ? group by courseno";
@@ -227,7 +227,7 @@ public class Course_assessDAO implements Course_assessDAO_interface {
 	
 	
 	@Override
-	public Course_assessVO findByPrimaryKey(String asesno) {
+	public Course_assessVO findByPrimaryKey(String memno) {
 		Course_assessVO course_assessVO =null;
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -237,7 +237,7 @@ public class Course_assessDAO implements Course_assessDAO_interface {
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(GET_ONE_STMT);
 
-			pstmt.setString(1, asesno);
+			pstmt.setString(1, memno);
 
 			rs = pstmt.executeQuery();
 
