@@ -70,8 +70,10 @@ public class ShoppingServlet extends HttpServlet {
 					
 				}
 			}
+			System.out.println(buylist);
+			
 			session.setAttribute("shoppingcart", buylist);
-			String url = "/front-end/course/listAllCourseForUser.jsp";
+			String url = "/front-end/Shop/Test1.jsp";
 			RequestDispatcher rd = req.getRequestDispatcher(url);
 			rd.forward(req, res);
 		}

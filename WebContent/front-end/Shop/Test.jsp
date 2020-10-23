@@ -20,17 +20,17 @@
 		memno = (session.getAttribute("memno")).toString();
 	%>
 	<form name="checkoutForm"
-		action="<%=request.getContextPath()%>/Order_Master/Order_Master.do"
+		action="<%=request.getContextPath()%>/Shop/Shopping_Cart.do"
 		method="POST">
-		<input type="hidden" name="action" value="insert"> <input
-			type="hidden" name="memno" value="<%=memno%>"> 
-		
+		<input type="hidden" name="action" value="ADD"> 
+		<input type="hidden" name="memno" value="<%=memno%>"> 
 		<input type="hidden" name="courseno" value="COUR0002">
-		<input type="hidden" name="courseprice" value="600>">
-		<input type="hidden" name="promono" value="promono">
-		<input type="hidden" name="orderamt" value="600"> <input
-			type="hidden" name="payby" value="信用卡"> <input type="hidden"
-			name="coupno" value=""> <input type="submit" value="付款結帳">
+		<input type="hidden" name="courseprice" value="600">
+		<input type="hidden" name="promono" value="PRO0001">
+		<input type="hidden" name="orderamt" value="600"> 
+		<input type="hidden" name="payby" value="信用卡">
+		<input type="hidden" name="coupno" value="COUR0001">
+		<input type="submit" value="付款結帳">
 		
 	</form>
 
