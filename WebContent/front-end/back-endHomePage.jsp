@@ -12,8 +12,6 @@
     <link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/front-end/css/main.css">
     <!-- Font-icon css-->
  <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
- <script src="dist/sweetalert.min.js"></script>
-<link rel="stylesheet" type="text/css" href="dist/sweetalert.css">
 </head>
 
 <body class="app sidebar-mini">
@@ -152,12 +150,11 @@
 // 	console.log(x);
 // 	x.style.display= "";	
 // </c:forEach> 
-// 	swal({
-//   		title: '${errormes}',
-//   		icon: "success",
-// 	});
-<c:if test="not empty ${error} ">
+
+
+<c:if test="${not empty error}">
 	alert("${error}");
+<%request.getSession().removeAttribute("error");%>		
 </c:if>	
     </script>
     
