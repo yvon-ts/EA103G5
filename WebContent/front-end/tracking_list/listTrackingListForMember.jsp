@@ -68,7 +68,7 @@
 	<section id="services" class="section-padding" style="padding:90px 0">
         <div class="container">
             <div class="section-header">
-                <h2 class="section-title wow fadeInDown" data-wow-delay="0.3s"><i class="fa fa-shopping-cart" aria-hidden="true" style="font-size:25px"></i>購物車</h2>
+                <h2 class="section-title wow fadeInDown" data-wow-delay="0.3s"><i class="fa fa-shopping-cart" aria-hidden="true" style="font-size:25px"></i>&nbsp;My Cart</h2>
                 <div class="title wow fadeInDown" data-wow-delay="0.3s"></div>
                 
                 <c:if test="${empty shoppingList}">
@@ -84,7 +84,12 @@
                		 </div>
      				
                 </c:if>
+                <c:if test="${not empty shoppingList}">
+                	<div>
+                		class
+                	</div>
                 
+                </c:if>
             </div>
          </div>
 	</section>
@@ -93,7 +98,7 @@
 	<section id="services" class="section-padding" style="padding:90px 0">
         <div class="container">
             <div class="section-header">
-                <h2 class="section-title wow fadeInDown" data-wow-delay="0.3s"><i class="fa fa-shopping-cart" aria-hidden="true"></i>追蹤清單</h2>
+                <h2 class="section-title wow fadeInDown" data-wow-delay="0.3s"><i class="fa fa-heart" aria-hidden="true"  style="font-size:25px"></i>&nbsp;追蹤清單</h2>
                 <div class="title wow fadeInDown" data-wow-delay="0.3s"></div>
             
             <div class="row trackingArea">
@@ -125,7 +130,7 @@
 			
 			var counter = 0; /*計數器*/
 			var pageStart = 0; /*offset*/
-			var pageSize = 3; /*size*/
+			var pageSize = 4; /*size*/
 			/*首次載入*/
 			getData(pageStart, pageSize);
 			/*監聽載入更多*/
@@ -182,7 +187,7 @@
 					for(let i=offset; i< (offset+size); i ++){
 						
 						
-						result += 	`<div class="col-md-6 col-lg-4 col-xs-12">`;
+						result += 	`<div class="col-md-6 col-lg-3 col-xs-12">`;
 						result +=	`<div class="services-item wow fadeInRight" data-wow-delay="0.3s">`;
 						result +=	`<div class="icon">`
 						result +=	`<img src="<%=request.getContextPath()%>/course/CoursePictureReaderFromDB?courseno=` + JSONarray[i].courseno  +`" style="width: 200px; height: 150px;" class="pic"></div>`;

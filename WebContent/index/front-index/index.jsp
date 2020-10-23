@@ -70,7 +70,7 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="<%=request.getContextPath()%>/front-end/tracking_list/listTrackingListForMember.jsp">
-                              <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                   	┴╩клио&nbsp;<i class="fa fa-shopping-cart" aria-hidden="true"></i>
                             </a>
                         </li>
                         <li class="nav-item">
