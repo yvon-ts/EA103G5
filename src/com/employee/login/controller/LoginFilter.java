@@ -64,7 +64,7 @@ public class LoginFilter implements Filter {
 			return;
 		}
 		if (empauth.isEmpty()) {
-			session.setAttribute("errors", "你沒有權限");
+			session.setAttribute("error", "你沒有權限");
 			res.sendRedirect(req.getContextPath() + "/front-end/back-endHomePage.jsp");
 			return;
 		}
