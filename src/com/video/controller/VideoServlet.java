@@ -95,7 +95,6 @@ public class VideoServlet extends HttpServlet {
 			}
 		}
 
-		// 尚未測試
 		if ("getOne_For_Update".equals(action)) {
 
 			List<String> errorMsgs = new LinkedList<String>();
@@ -243,7 +242,6 @@ public class VideoServlet extends HttpServlet {
 				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/video/update_video_input.jsp");
 				failureView.forward(req, res);
 			}
-
 		}
 
 		// 進行中
