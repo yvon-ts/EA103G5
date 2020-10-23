@@ -7,7 +7,7 @@ public interface TrackingListDAO_interface {
 	public void insert(TrackingListVO trackVO);
 	public void delete(TrackingListVO trackVO);
 	public List<TrackingListVO> findByMemno(String memno);
-	public List<TrackingListVO> getAll();
+	public List<TrackingListVO> getAll(String memno);
 	
 
 }

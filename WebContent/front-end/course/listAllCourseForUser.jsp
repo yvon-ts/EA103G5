@@ -24,7 +24,7 @@
 
 	MembersVO Membersvo = (MembersVO) session.getAttribute("Membersvo");
 	Membersvo = new MembersVO();
-	Membersvo.setMemno("MEM0001");
+	Membersvo.setMemno("MEM0002");
 	pageContext.setAttribute("Membersvo", Membersvo);
 
 	// 	TrackingListService test = new TrackingListService();
@@ -160,8 +160,8 @@
 							<label class="shoppingcart">
 								<i class="fa fa-shopping-cart" aria-hidden="true">
 									<input type ="hidden" name="courseno" 	 id="courseno"   value ="${courseVO.courseno}"/>
-									<input type ="hidden" name="courseprice" id="courseprice" value ="${courseVO.courseprice}"/>
-									<input type ="hidden" name="courseinfo"  id="courseinfo"  value ="${courseVO.courseinfo}"/>
+<%-- 									<input type ="hidden" name="courseprice" id="courseprice" value ="${courseVO.courseprice}"/> --%>
+<%-- 									<input type ="hidden" name="courseinfo"  id="courseinfo"  value ="${courseVO.courseinfo}"/> --%>
 								</i>&nbsp;加入購物車
 							</label>
 							
@@ -171,6 +171,7 @@
 								<c:choose>
 									<c:when test="${ courseVO.courseno eq TrackingListVO.courseno}">
 										<label class="bookmark"><i class="fa fa-heart" aria-hidden="true" style="color:red">
+											<input type ="hidden"  id="courseno" value ="${courseVO.courseno}"/>
 										</i>&nbsp;加入追蹤</label>
 										<c:set var="flag" value="true"/>
 									</c:when>
@@ -179,13 +180,11 @@
 							
 							<c:if test="${empty flag}">
 								<label class="bookmark"><i class="fa fa-heart-o" aria-hidden="true" style="color:red">
-									<input type ="hidden" name="courseno" id="courseno" value ="${courseVO.courseno}"/>
+									<input type ="hidden"  id="courseno" value ="${courseVO.courseno}"/>
 								</i>&nbsp;加入追蹤</label>
 							</c:if>
 							<c:remove var="flag"/>
 								
-								
-							
                            <h5>NT$${courseVO.courseprice}</h5>
                         	
                         </div>
@@ -205,11 +204,11 @@
 	$(document).ready(function(){
 		
 		$('.shoppingcart').click(function(){
-// 			console.log($(this).find('#courseno').val());
 			$.ajax({
 				url	:"<%=request.getContextPath()%>/tracking_list/tracking_list.do",
 				data:{
 					courseno:$(this).find('#courseno').val(),
+					memno    : $("#memno").val(),
 					action: "shoppingCart"
 				},
 				success: function(data){
@@ -231,6 +230,8 @@
 				updateTrackingList = "delete";
 				$(this).children().attr("class","fa fa-heart-o");
 			}
+			
+			console.log(updateTrackingList + "," + $(this).find('#courseno').val() );
 			
 			$.ajax({
 				url	:"<%=request.getContextPath()%>/tracking_list/tracking_list.do", 
@@ -260,7 +261,7 @@
 					action:'mutlipleSearch'
 				},
 				success: function(data){
-					
+					console.log(data);
 					var JSONarray = JSON.parse(data);
 					$(".seacharea").empty();
 					
@@ -295,8 +296,10 @@
 		                        <h3><a href="#">` + JSONarray[i].coursename + `</a></h3>
 		                            <p>課程共`+JSONarray[i].ttltime+`分鐘</p>
 		<!--                             <p>同學累計9487人</p> -->
-									<label class="shoppingcart"><i class="fa fa-shopping-cart" aria-hidden="true"></i>&nbsp;加入購物車</label>
-									<label class="bookmark"><i class="fa fa-heart-o" aria-hidden="true" style="color:red"></i>&nbsp;加入追蹤</label>
+									<label class="shoppingcart"><i class="fa fa-shopping-cart" aria-hidden="true"></i>&nbsp;加入購物車</label>`;
+									
+									
+										 str +=	`<label class="bookmark"><i class="fa fa-heart-o" aria-hidden="true" style="color:red"></i>&nbsp;加入追蹤</label>
 									<h5>NT$` + JSONarray[i].courseprice + `</h5>
 		                        </div>
 		                    </div>
@@ -311,8 +314,6 @@
 				}
 			});
 		});
-		
-	
 		
 	});
 </script>

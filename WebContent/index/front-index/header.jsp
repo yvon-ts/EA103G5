@@ -87,7 +87,8 @@
     <script src="<%=request.getContextPath()%>/index/front-index/assets/js/bootstrap.min.js"></script>
     <script src="<%=request.getContextPath()%>/index/front-index/assets/js/owl.carousel.min.js"></script>
     <script src="<%=request.getContextPath()%>/index/front-index/assets/js/wow.js"></script>
-    <script src="<%=request.getContextPath()%>/index/front-index/assets/js/jquery.nav.js"></script>
+<!--     	沒有拿掉，首頁連結會失效 -->
+<%--     <script src="<%=request.getContextPath()%>/index/front-index/assets/js/jquery.nav.js"></script> --%>
     <script src="<%=request.getContextPath()%>/index/front-index/assets/js/scrolling-nav.js"></script>
     <script src="<%=request.getContextPath()%>/index/front-index/assets/js/jquery.easing.min.js"></script>
     <script src="<%=request.getContextPath()%>/index/front-index/assets/js/jquery.counterup.min.js"></script>

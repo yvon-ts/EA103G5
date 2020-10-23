@@ -62,7 +62,7 @@
 		<th>測驗範圍</th>
 		<th>測驗時間</th>
 		<th>測驗分數</th>
-		<th><a href="SelectedQuestion.jsp">回首頁</a></th>
+		<th><a href="<%= request.getContextPath()%>/front-end/test/SelectedTest.jsp">回首頁</a></th>
 	</tr>
 	<%@ include file="page/page1.file" %> 
 	<c:forEach var="TestsVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
