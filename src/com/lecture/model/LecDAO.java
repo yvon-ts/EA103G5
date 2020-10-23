@@ -357,7 +357,7 @@ public class LecDAO implements LecDAO_Interface {
 			}
 			if (con != null) {
 				try {
-					pstmt.close();
+					con.close();
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -396,6 +396,7 @@ public class LecDAO implements LecDAO_Interface {
 				lecVO.setCurrseat(rs.getString("currseat"));
 				lecVO.setLecstatus(rs.getInt("lecstatus"));
 				lecVO.setLeclmod(rs.getTimestamp("leclmod"));
+				lecVO.setLecinfo(rs.getBytes("lecinfo"));
 				list.add(lecVO);
 			}
 		} catch (SQLException se) {
@@ -485,7 +486,7 @@ public class LecDAO implements LecDAO_Interface {
 			}
 			if (con != null) {
 				try {
-					pstmt.close();
+					con.close();
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

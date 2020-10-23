@@ -35,31 +35,27 @@ public class LecServlet extends HttpServlet {
 	
 		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
-		
+
 		System.out.println(action);
-		
-		if("sendQuery".equals(action)) {
-			String str = req.getParameter("query").trim();
-			System.out.println(str);
-			String[] queries = str.split(" ");
-			for (int i = 0; i < queries.length; i++) {
-				
+
+		if ("sendQuery".equals(action)) {
+			String query = req.getParameter("query").trim();
+			System.out.println(query);
+
 				try {
 					LecService lecSvc = new LecService();
-					List<LecVO> list = lecSvc.getQuery(queries[i]);
+					List<LecVO> list = lecSvc.getQuery(query);
 
 					req.setAttribute("list", list);
-
-					String url = "/back-end/lecture/listOneLec.jsp";
-					RequestDispatcher successView = req.getRequestDispatcher(url);
-					successView.forward(req, res);
-					return;
 
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
-				
-			}
+
+			String url = "/front-end/lecture/listAllLec2.jsp";
+			RequestDispatcher successView = req.getRequestDispatcher(url);
+			successView.forward(req, res);
+			return;
 		}
 		
 		//====================================開始新增====================================//
@@ -596,34 +592,35 @@ public class LecServlet extends HttpServlet {
 					}
 				}
 				
-				//====================================確認訂購====================================//
-				if ("queryServlet".equals(action)) {
-					
-					List<String> errorMsgs = new LinkedList<String>();
-					req.setAttribute("errorMsgs", errorMsgs);
-					
-					try {
-						String query = req.getParameter("query");
-						LecService lecSvc = new LecService();
-						List<LecVO> list = lecSvc.getQuery(query);
-						
-						for(LecVO vo : list) {
-							System.out.println(vo.getLecname());
-							System.out.println(vo.getSpkrno());
-							System.out.println(vo.getLecstart());
-							System.out.println(vo.getLecend());
-						}
-
-						req.setAttribute("list", list);
-
-						String url = "/front-end/lecture/listAllLec2.jsp";
-						RequestDispatcher successView = req.getRequestDispatcher(url);
-						successView.forward(req, res);
-						return;
-
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-				}
+				//====================================關鍵字搜尋====================================//
+//				if ("queryServlet".equals(action)) {
+//					
+//					List<String> errorMsgs = new LinkedList<String>();
+//					req.setAttribute("errorMsgs", errorMsgs);
+//					
+//					try {
+//						String query = req.getParameter("query");
+//						LecService lecSvc = new LecService();
+//						List<LecVO> list = lecSvc.getQuery(query);
+//						
+//						// 驗證
+//						for(LecVO vo : list) {
+//							System.out.println(vo.getLecname());
+//							System.out.println(vo.getSpkrno());
+//							System.out.println(vo.getLecstart());
+//							System.out.println(vo.getLecend());
+//						}
+//
+//						req.setAttribute("list", list);
+//
+//						String url = "/front-end/lecture/listAllLec2.jsp";
+//						RequestDispatcher successView = req.getRequestDispatcher(url);
+//						successView.forward(req, res);
+//						return;
+//
+//					} catch (Exception e) {
+//						e.printStackTrace();
+//					}
+//				}
 	}
 }
