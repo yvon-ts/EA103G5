@@ -18,7 +18,9 @@
 <title>listAllByMemno.jsp</title>
 
 </head>
-<body bgcolor='white'>
+<body>
+
+	<jsp:include page="/index/front-index/header.jsp" />
 
 	<table id="table-1">
 		<tr>
@@ -42,27 +44,35 @@
 		</ul>
 	</c:if>
 
-	<table>
-		<tr>
-			<th>折扣券號碼</th>
-			<th>折扣券金額</th>
-			<th>領取時間</th>
-			<th>使用期限</th>
-		</tr>
-		<%@ include file="page1.file"%>
+	<c:if test="${empty list}">
+		<div>未持有折扣券</div>
+	</c:if>
 
-		<c:forEach var="coupVO" items="${list}" begin="<%=pageIndex%>"
-			end="<%=pageIndex+rowsPerPage-1%>">
-
+	<c:if test="${not empty list}">
+		<table>
 			<tr>
-				<td>${coupVO.coupcode}</td>
-				<td>${coupVO.discamt}</td>
-				<td>${coupVO.couptime}</td>
-				<td>${coupVO.coupexp}</td>
+				<th>折扣券號碼</th>
+				<th>折扣券金額</th>
+				<th>領取時間</th>
+				<th>使用期限</th>
 			</tr>
-		</c:forEach>
-	</table>
-	<%@ include file="page2.file"%>
+			<%@ include file="page1.file"%>
+
+			<c:forEach var="coupVO" items="${list}" begin="<%=pageIndex%>"
+				end="<%=pageIndex+rowsPerPage-1%>">
+
+				<tr>
+					<td>${coupVO.coupcode}</td>
+					<td>${coupVO.discamt}</td>
+					<td>${coupVO.couptime}</td>
+					<td>${coupVO.coupexp}</td>
+				</tr>
+			</c:forEach>
+		</table>
+		<%@ include file="page2.file"%>
+	</c:if>
 
 </body>
+<jsp:include page="/index/front-index/footer.jsp" />
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.rateit/1.1.3/jquery.rateit.min.js"></script>
 </html>

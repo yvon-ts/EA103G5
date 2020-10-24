@@ -18,7 +18,10 @@
 <title>listAllByMemno.jsp</title>
 
 </head>
-<body bgcolor='white'>
+<body>
+
+
+<jsp:include page="/index/front-index/header.jsp" />
 
 	<table id="table-1">
 		<tr>
@@ -41,6 +44,12 @@
 			</c:forEach>
 		</ul>
 	</c:if>
+	
+	<c:if test="${empty list}">
+		<div>未持有訂單紀錄</div>
+	</c:if>
+
+	<c:if test="${not empty list}">
 
 	<table>
 		<tr>
@@ -68,6 +77,7 @@
 		</c:forEach>
 	</table>
 	<%@ include file="page2.file"%>
+	</c:if>
 
 </body>
 </html>
