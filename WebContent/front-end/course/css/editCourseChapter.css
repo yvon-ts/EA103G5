@@ -66,14 +66,21 @@
     width: 45px;
 }
 
+#videolist input[name=chaptername] {
+    
+    font-size: 20px;
+    font-weight: 800;
+}
+
 #videolist input[name=chapterlen] {
     width: 60px;
 }
 
-#videolist input[name=chaptername] {
-    font-size: 20px;
-    font-weight: 800;
+#videolist input[type=file] {
+    width: 150px;
+/*     outline-width: initial; */
 }
+
 
 #videolist input[readonly] {
     background-color: transparent;
