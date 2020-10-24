@@ -96,7 +96,6 @@ public class VideoServlet extends HttpServlet {
 		}
 
 		if ("getOne_For_Update".equals(action)) {
-
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);
 
@@ -359,38 +358,7 @@ public class VideoServlet extends HttpServlet {
 		
 		
 		
-		if ("deleteVideo".equals(action)) { // 來自listAllEmp.jsp
 
-			List<String> errorMsgs = new LinkedList<String>();
-			req.setAttribute("errorMsgs", errorMsgs);
-	
-			try {
-				/***************************1.接收請求參數***************************************/
-				String vidoeno = req.getParameter("videono");
-				
-				/***************************2.開始刪除資料***************************************/
-				VideoService videoSvc = new VideoService();
-				CourseService courseSvc = new CourseService();
-				CourseVO courseVO = courseSvc.getOneCourse(videoSvc.getOneVideo(vidoeno).getCourseno());
-				videoSvc.deleteVideo(vidoeno);
-				
-				/***************************3.刪除完成,準備轉交(Send the Success view)***********/								
-//				req.setAttribute("courseVO", courseVO);
-//				String url = "/front-end/course/editCourse.jsp";
-//				RequestDispatcher successView = req.getRequestDispatcher(url);
-//				successView.forward(req, res);
-				
-				/***************************其他可能的錯誤處理**********************************/
-			} catch (Exception e) {
-				e.printStackTrace();
-//				errorMsgs.add("刪除資料失敗:"+e.getMessage());
-//				RequestDispatcher failureView = req
-//						.getRequestDispatcher("/emp/listAllEmp.jsp");
-//				failureView.forward(req, res);
-			}
-		}
-		
-		
 		
 	}
 	

@@ -57,7 +57,7 @@
 									value=${videoVO.chaptername} form="chapterInfoForm${status.count}">
 							</td>
 							<input type="hidden" name="videono" value=${videoVO.videono} form="chapterInfoForm${status.count}">
-							<input type="hidden" name="action" value="update" form="chapterInfoForm${status.count}">
+							<input type="hidden" name="action" value="updateChapterInfo" form="chapterInfoForm${status.count}">
 						</form>
 						<!-- 表單 #1 課程資訊 -->
 
@@ -120,6 +120,8 @@
 		});
 	</script>
 
+
+	<!-- ==================== 文件元件相關：排序、新增 ==================== -->
 	<script type="text/javascript">
 		function addSortableEvent() {
 			// 註冊 sortable 事件，以及其 callback function
@@ -130,20 +132,18 @@
 			}).bind('sortupdate', replaceTheChapterNumber);
 		}
 
+		// 更新排序後的單元編號
 		function replaceTheChapterNumber() {
 			// 更新排序後的單元編號
 			for (let i = 0; i < $("#videolist tr").length; i++) {
 				$("#videolist tr:nth-child(" + (i + 1) + ") input[name='chapterno']").val(i + 1);
 			}
-
-			// 純 javascript 版本
-			// let chapternos = document.querySelectorAll("#videolist .chapterno");
-			// for (let i = 0; i < chapternos.length; i++) {
-			//     chapternos[i].innerText = "單元" + (i + 1);
-			// }
 		}
+		
+		
 
 		// 增加章節欄位，並設定其為 insert
+		<!-- ==================== NGNGNGNNGNNGNGNGNGNGNGNNGNGNG ==================== -->
 		let addNumber = 1;
 		$("#addNewChapter").click(function () {
 			let newChapter = `<tr class="insertChapterTr">
@@ -180,7 +180,14 @@
 			getFormDatas();
 			addNumber++;
 		});
+		
+		</script>
 
+
+		<!-- ==================== 資料讀寫相關 ==================== -->
+		<script type="text/javascript">
+		
+		// 取得該課程內所有單元的基本資訊
 		function getFormDatas() {
 			let formDatas = [];
 			// 取得課程單元之 FormDatas
@@ -190,24 +197,56 @@
 				formData.append("courseno", "${courseVO.courseno}")
 				// 存入 formDatas Array 內
 				formDatas[i] = formData;
-				// // ====== 測試用 ======
-				// // 於 console 印出所有 key-value pair 
+				// // 測試：於 console 印出所有 key-value pair 
 				// console.log("===== FormDate " + (i+1) + " =====")
 				// for (let key of formData.keys()) {
 				//     console.log(key + " : " + formData.get(key));
 				// }
-				// // ====== 測試用 ======
 			}
 			return formDatas;
 		}
-		// 將課程資訊寫入資料庫  // 拿宜靜的來改
-		function updateChapterInfo_Ajax(formData) {
+		
+		
+		// 更新該課程內所有單元的基本資訊
+		$("#updateChapterInfo").click(function () {
+			updateAllChaptersInfo();
+		});
+		
+		// 更新該課程內所有單元的基本資訊
+		function updateAllChaptersInfo (){
+			let formDatas = getFormDatas();
+			for (let i = 0; i < formDatas.length; i++) {
+				formData = formDatas[i];
+				updateOneChapterInfo(formData);
+			}
+			// to do: 還須使其 reload 或重新整理
+		}
+		
+		// 取得該課程內所有單元的基本資訊
+		function getFormDatas() {
+			let formDatas = [];
+			// 取得課程單元之 FormDatas
+			for (let i = 0; i < $("#videolist .chapterInfo").length; i++) {
+				let formData = new FormData($("#videolist .chapterInfo")[i]);
+				// 加入 courseno
+				formData.append("courseno", "${courseVO.courseno}")
+				// 存入 formDatas Array 內
+				formDatas[i] = formData;
+				// // 測試：於 console 印出所有 key-value pair 
+				// console.log("===== FormDate " + (i+1) + " =====")
+				// for (let key of formData.keys()) {
+				//     console.log(key + " : " + formData.get(key));
+				// }
+			}
+			return formDatas;
+		}
+		
+		// 更新單一單元的基本資訊  <= 拿宜靜的來改
+		function updateOneChapterInfo(formData) {
 			// getFormDatas();
-
 			//var count++;
-
 			$.ajax({ // 存入資料庫階段
-				url: "<%=request.getContextPath()%>/courseVideosServlet",
+				url: "<%=request.getContextPath()%>/video/videoAjax.do",
 				type: "POST",
 				data: formData,
 				// 告訴jQuery不要去處理發送的資料
@@ -217,38 +256,25 @@
 				//async: false, //****
 				success: function (data) { // 以上成功才執行
 					console.log("*回傳內容： " + data);
-
 					// count--;
 				},
 				error: function (data) {
 					console.log("*真的不棒" + data)
-
 					//count--;
 				}
 			})
 		}
-
-		// 測試按鈕
-		$("#updateChapterInfo").click(function () {
-			let formDatas = getFormDatas();
-			for (let i = 0; i < formDatas.length; i++) {
-				formData = formDatas[i];
-				updateChapterInfo_Ajax(formData);
-			}
-			// to do: 還須使其 reload 或重新整理
-		});
-
-
-		$(".deleteButton").click(function (e) {
+		
+		// 上傳單一單元的影片
+		$(".updateButton").click(function(e){
 			e.preventDefault();
-			if (confirm("\n確認刪除後，將無法回復資料\n且不建議刪除以開使販售之課程\n避免影響學生權益\n\n請問是否要刪除本單元？")) {
-				let formData = new FormData($(this).parent()[0]);
-				// for (let key of formData.keys()) {
-				// 	console.log(key + " : " + formData.get(key));
-				// }
-
-				$.ajax({
-					url: "<%=request.getContextPath()%>/video/video.do",
+			var formData = new FormData($(this).parents("tr").children(".videoFile")[0]);
+			for (var key of formData.keys()) {
+					console.log(key + " : " + formData.get(key));
+			}
+			
+			$.ajax({
+					url: "<%=request.getContextPath()%>/video/videoAjax.do",
 					type: "POST",
 					data: formData,
 					// 告訴jQuery不要去處理發送的資料
@@ -256,22 +282,48 @@
 					// 告訴jQuery不要去設定Content-Type請求頭
 					contentType: false,
 					success: function (data) { // 以上成功才執行
-						alert("課程單元已成功刪除")
+						alert(data);
+					},
+					error: function (data) {
+						alert(data);
+					}
+				})
+		});
+
+		// 刪除單一單元，包含 DB 內資料
+		$(".deleteButton").click(function (e) {
+			e.preventDefault();
+			if (confirm("\n確認刪除後，將無法回復資料\n且不建議刪除以開使販售之課程\n避免影響學生權益\n\n請問是否要刪除本單元？")) {
+				var formData = new FormData($(this).parent()[0]);
+				// for (let key of formData.keys()) {
+				// 	console.log(key + " : " + formData.get(key));
+				// }
+
+				$.ajax({
+					url: "<%=request.getContextPath()%>/video/videoAjax.do",
+					type: "POST",
+					data: formData,
+					// 告訴jQuery不要去處理發送的資料
+					processData: false,
+					// 告訴jQuery不要去設定Content-Type請求頭
+					contentType: false,
+					success: function (data) { // 以上成功才執行
+						alert(data);
 						console.log("* Video 刪除成功");
 					},
 					error: function (data) {
-						alert("課程單元刪除失敗")
+						alert(data)
 						console.log("* Video 刪除失敗");
 					}
 				})
-				$(this).parent().parent().parent().remove(); // 超蠢寫法 NG
+
+				$(this).parents("tr").remove(); // 感謝靜神
 				replaceTheChapterNumber();
 			} else {
 				e.preventDefault();
 			}
 		});
 	</script>
-
 </body>
 
 </html>
