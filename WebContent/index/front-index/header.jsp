@@ -41,7 +41,7 @@
                 <div class="collapse navbar-collapse" id="navbarCollapse">
                     <ul class="navbar-nav mr-auto w-100 justify-content-end clearfix">
                         <li class="nav-item">
-                            <a class="nav-link" href="<%=request.getContextPath()%>/front-end/tracking_list/listTrackingListForMember.jsp">
+                            <a class="nav-link" href="<%=request.getContextPath()%>/front-end/tracking_list/listTrackingListForUser.jsp">
                             購物車&nbsp;<i class="fa fa-shopping-cart" aria-hidden="true"></i>
                             </a>
                         </li>

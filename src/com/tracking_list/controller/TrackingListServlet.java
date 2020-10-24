@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.json.JSONArray;
+import org.json.JSONObject;
 
 import com.course.model.CourseService;
 import com.course.model.CourseVO;
@@ -85,6 +86,8 @@ public class TrackingListServlet extends HttpServlet {
 
 			CourseVO userSelectedCourse = courseSvc.getOneCourse(courseno);
 
+			String jsonStr = "false";
+			
 			List<CourseVO> shoppingList = (List<CourseVO>) req.getSession().getAttribute("shoppingList");
 
 			try {
@@ -94,14 +97,21 @@ public class TrackingListServlet extends HttpServlet {
 				if (shoppingList != null && !(shoppingList.contains(userSelectedCourse))) {
 
 					shoppingList.add(userSelectedCourse);
-					System.out.println(shoppingList.size());
-					res.getWriter().println(true);
+					jsonStr = new JSONObject(userSelectedCourse).toString();
 				} else {
 					shoppingList.remove(userSelectedCourse);
-					System.out.println(shoppingList.size());
-					res.getWriter().println(false);
 				}
-
+				
+				
+				
+				res.setContentType("text/plain");
+				res.setCharacterEncoding("UTF-8");
+				PrintWriter out = res.getWriter();
+				out.write(jsonStr);
+				out.flush();
+				out.close();
+				
+				
 				req.getSession().setAttribute("shoppingList", shoppingList);
 			} catch (Exception e) {
 				errorMsgs.add("無法取得資料:" + e.getMessage());

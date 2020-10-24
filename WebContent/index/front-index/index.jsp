@@ -69,7 +69,7 @@
 <!--                             </a> -->
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="<%=request.getContextPath()%>/front-end/tracking_list/listTrackingListForMember.jsp">
+                            <a class="nav-link" href="<%=request.getContextPath()%>/front-end/tracking_list/listTrackingListForUser.jsp">
                    	購物車&nbsp;<i class="fa fa-shopping-cart" aria-hidden="true"></i>
                             </a>
                         </li>
@@ -509,8 +509,7 @@
     <script src="<%=request.getContextPath()%>/index/front-index/assets/js/bootstrap.min.js"></script>
     <script src="<%=request.getContextPath()%>/index/front-index/assets/js/owl.carousel.min.js"></script>
     <script src="<%=request.getContextPath()%>/index/front-index/assets/js/wow.js"></script>
-<!--     	沒有拿掉，首頁連結會失效 -->
-<%--     <script src="<%=request.getContextPath()%>/index/front-index/assets/js/jquery.nav.js"></script> --%>
+    <script src="<%=request.getContextPath()%>/index/front-index/assets/js/jquery.nav.js"></script>
     <script src="<%=request.getContextPath()%>/index/front-index/assets/js/scrolling-nav.js"></script>
     <script src="<%=request.getContextPath()%>/index/front-index/assets/js/jquery.easing.min.js"></script>
     <script src="<%=request.getContextPath()%>/index/front-index/assets/js/jquery.counterup.min.js"></script>
