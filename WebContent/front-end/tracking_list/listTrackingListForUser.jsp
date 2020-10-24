@@ -25,6 +25,7 @@
 	href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 	<link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/jquery.rateit/1.1.3/rateit.css" />
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 	<style>
 	.title{
             height: 1px;
@@ -70,7 +71,7 @@
 	<section id="services" class="section-padding" style="padding:90px 0">
         <div class="container">
             <div class="section-header">
-                <h2 class="section-title wow fadeInDown" data-wow-delay="0.3s"><i class="fa fa-shopping-cart" aria-hidden="true" style="font-size:25px"></i>&nbsp;My Cart</h2>
+                <h2 class="section-title wow fadeInDown" data-wow-delay="0.3s"><i class="fa fa-shopping-cart" aria-hidden="true" style="font-size:25px"></i>&nbsp;Shopping Cart</h2>
                 &nbsp;&nbsp;<i class="text-info font-weight-bold"><span id = "number"><%= productNumber%></span></i> items in your cart
                 
                 <input type = "hidden" id = "shoppingCartSize"  value= "<%= productNumber%>" />
@@ -88,12 +89,16 @@
                		 </div>
      				
                 </c:if>
-                <c:if test="${not empty shoppingList}">
+      <form method="post" action="<%=request.getContextPath()%>/Order_Master/Order_Master.do" id = "myForm">         
+      <c:if test="${not empty shoppingList}">
+                 
                 	<section>
+           	
   <div class="container">
     <div class="row w-100">
         <div class="col-lg-12 col-md-12 col-12">
-            
+        
+            <div class="shoppingCartArea">
             <table id="shoppingCart" class="table table-condensed table-responsive  wow fadeInDown" data-wow-delay="0.3s">
                 <thead>
                     <tr>
@@ -112,7 +117,7 @@
                         <td data-th="Product">
                             <div class="row">
                                 <div class="col-md-3 text-left">
-                                    <img src="<%=request.getContextPath()%>/course/CoursePictureReaderFromDB?courseno=${courseVO.courseno}" alt="" class="img-fluid d-none d-md-block rounded mb-2 shadow ">
+<%--                                     <img src="<%=request.getContextPath()%>/course/CoursePictureReaderFromDB?courseno=${courseVO.courseno}" alt="" class="img-fluid d-none d-md-block rounded mb-2 shadow "> --%>
                                 </div>
                                 <div class="col-md-9 text-left mt-sm-2">
                                     <h5>${courseVO.coursename}</h5>
@@ -133,34 +138,42 @@
                             </div>
                         </td>
                     </tr>
-                   
+                   </c:forEach>
                	 </tbody>
-                </c:forEach>
+                
             </table>
             
             <div class="float-right text-right">
                <h5 id="totalPrice"> Total:$${totalPrice}</h5>
             </div>
-        </div>
-    </div>
+        
+    
+    
     <div class="title wow "></div>
     <div class="row mt-4 d-flex align-items-center">
         <div class="col-sm-6 order-md-2 text-right">
-            <button type="button" class="btn btn-primary">Checkout</button>
+            <button type="button" class="btn btn-primary" id= "checkout">Checkout</button>
+            <input type="hidden" name="action" value="insert"/>
+            <input type="hidden" name="coupcode" value="COUP0001"/>
         </div>
         <div class="col-sm-6 mb-3 mb-m-1 order-md-1 text-md-left">
             <a href="<%=request.getContextPath()%>/front-end/course/listAllCourseForUser.jsp">
                <i class="fa fa-undo" aria-hidden="true"></i>&nbsp;&nbsp;Continue Shopping</a>
         </div>
     </div>
+	</div>
 </div>
-</section>
-                
-                </c:if>
-            </div>
-         </div>
-	</section>
+</div>
+</div>
+<!-- 	<input type="submit" value="提交"/> -->
 
+</section>
+
+ </c:if> 
+ </form>              
+           </div>     
+</div>
+	</section>
 	
 	<section id="services" class="section-padding" style="padding:90px 0">
         <div class="container">
@@ -179,21 +192,59 @@
 	<script>
 		$(document).ready(function(){
 			
+			$('body').on('click' , '#checkout',function(){
+				$('#myForm').submit(); 
+			 });
 	
+			//刪除的按鈕不知道why 一定要註冊兩次@@@
 			
 			for(let i = 1 ; i <= $('#shoppingCartSize').val() ; i++){
-				$('#remove' + i).click(function(){
-// 					console.log($(this).next().val());
+				$('body').on('click' , '#remove' + i,function(){
+					
+					
+					
 					$(this).parents('tr').remove();
 					var totalPriceString = $('#totalPrice').text();
 					var totalPrice = $('#totalPrice').text().replace('Total:$','');
 					$('#totalPrice').text( 'Total:$' + (totalPrice-$(this).prev().val()));
+					
+					$('#number').text(parseInt($('#number').text()) - 1);
+					
+					if(parseInt($('#number').text()) == 0 ){
+						
+						
+						$('.shoppingCartArea').empty();
+						
+						var str = `<img class="fit-picture"
+							 src="<%=request.getContextPath()%>/index/front-index/assets/img/empty-box.svg"
+								alt="shoppingCart Empty"/>
+								<div>購物車空空的，來去逛逛吧!!!</div>	
+						<button class="btn btn-common"  onclick="location.href='<%=request.getContextPath()%>/front-end/course/listAllCourseForUser.jsp'" style="margin-top:3%;">
+        						搜尋課程
+        				</button>`;
+						
+        				$('.shoppingCartArea').append(str);
+					}
+					
+					$.ajax({
+						url	:"<%=request.getContextPath()%>/tracking_list/tracking_list.do",
+						data:{
+							courseno:$(this).next().val(),
+							memno    : $("#memno").val(),
+							action: "shoppingCart"
+						},
+						success: function(data){
+							console.log('移除成功--->ShoppingCartPage');
+						}
+					});
+					
 				});
 			}
 			
 			//加仔順序 js--->ajax 註冊事件會失效
 			//https://www.zhihu.com/question/23895785
 			$('body').on('click' , '.shoppingcart' , function(){
+				
 				$.ajax({
 					url	:"<%=request.getContextPath()%>/tracking_list/tracking_list.do",
 					data:{
@@ -202,20 +253,58 @@
 						action: "shoppingCart"
 					},
 					success: function(data){
-						console.log('操作成功--->ShoppingCartPage');
+						console.log('加入成功--->ShoppingCartPage');
+						
+						let count = 1 ;
 						
 						if(data !== 'false'){
+							swal({ 
+								title: "成功加入購物車",
+							    icon: "success",
+							    button: true});
+									
 							var JSONObj = JSON.parse(data);
 							
-							console.log(JSONObj);
+														
 							
+							
+							if($('#shoppingCart tr').length > 0){
+								count = $('#shoppingCart tr').length ;
+							}
+							
+							var commonStr = '';
+							commonStr +=  	`<tr>
+	                        				<td data-th="Product">
+                            					<div class="row">
+                                					<div class="col-md-3 text-left">
+<%--                                     					<img src="<%=request.getContextPath()%>/course/CoursePictureReaderFromDB?courseno=`+ JSONObj.courseno +`" alt="" class="img-fluid d-none d-md-block rounded mb-2 shadow "> --%>
+                                					</div>
+                                					<div class="col-md-9 text-left mt-sm-2">
+                                    						<h5>` + JSONObj.coursename + `</h5>
+                                    						<p class="font-weight-light"> ` + JSONObj.courseinfo + `</p>
+                                					</div>
+                            					</div>
+                        					</td>
+                        					<td data-th="Price">` + JSONObj.csstatus + `</td>
+                        
+                        					<td data-th="Price">` + JSONObj.courseprice + `</td>
+                      
+                       						<td class="actions" data-th="">
+                            					<div class="text-right">
+                            					<input type="hidden"  id='courseprice`+ count + `' value ="` + JSONObj.courseprice + `"/>
+                                    			<button type="button" class="btn btn-danger" id="remove`+ count + `">Remove</button>
+                                    			<input type="hidden" name='courseno`+ count +`' id='courseno`+ count + `' value ="` + JSONObj.courseno + `"/>
+                            					</div>
+                       						 </td>
+                    						</tr>`;
+			             	
 							if($('.fit-picture').length > 0){
 								$('.fit-picture').remove();
 								$('.shoppingCartArea').empty();
 								
 								
-							var str = "" ;
-								str +=	`<table id="shoppingCart" class="table table-condensed table-responsive  wow fadeInDown" data-wow-delay="0.3s">`;
+								var str = "" ;
+								str +=	`<div class= "shoppingArea"><table id="shoppingCart" class="table table-condensed table-responsive  wow fadeInDown" data-wow-delay="0.3s">`;
 				                str +=  `<thead>
 				                    		<tr>
 				                        		<th style="width:60%">課程名稱</th>
@@ -225,57 +314,93 @@
 				                    		</tr>
 				                		</thead>
 				                		<tbody>`;
-				                str +=  	`<tr>
-		                        				<td data-th="Product">
-	                            					<div class="row">
-	                                					<div class="col-md-3 text-left">
-	                                    					<img src="<%=request.getContextPath()%>/course/CoursePictureReaderFromDB?courseno=`+ JSONObj.courseno +`" alt="" class="img-fluid d-none d-md-block rounded mb-2 shadow ">
-	                                					</div>
-	                                					<div class="col-md-9 text-left mt-sm-2">
-	                                    						<h5>` + JSONObj.coursename + `</h5>
-	                                    						<p class="font-weight-light"> ` + JSONObj.courseinfo + `</p>
-	                                					</div>
-	                            					</div>
-	                        					</td>
-	                        					<td data-th="Price">` + JSONObj.csstatus + `</td>
-	                        
-	                        					<td data-th="Price">` + JSONObj.courseprice + `</td>
-	                      
-	                       						<td class="actions" data-th="">
-	                            					<div class="text-right">
-	                            					<input type="hidden"  id='courseprice1' value ="` + JSONObj.courseprice + `"/>
-	                                    			<button type="button" class="btn btn-danger" id="remove${counter.count}">Remove</button>
-	                                    			<input type="hidden" name='courseno1' id='courseno1' value ="` + JSONObj.courseno + `"/>
-	                            					</div>
-	                       						 </td>
-	                    						</tr>`;
-				             	str += ` </tbody>
-				                    	</table>
-				                    
-				                    	<div class="float-right text-right">
+							
+				                str += 	commonStr;	
+				                		
+				                		
+				                		
+				               str += ` </tbody>
+				            	   </table>
+				               		<div class="float-right text-right">
 				                       		<h5 id="totalPrice"> Total:$` + JSONObj.courseprice + ` </h5>
 				                    </div>
-				                </div>
-				            </div>
 				            <div class="title wow "></div>
 				            <div class="row mt-4 d-flex align-items-center">
 				                <div class="col-sm-6 order-md-2 text-right">
-				                    <button type="button" class="btn btn-primary">Checkout</button>
+				                    <button type="button" class="btn btn-primary" id="checkout">Checkout</button>
+				                    <input type="hidden" name="action" value="insert"/>
 				                </div>
 				                <div class="col-sm-6 mb-3 mb-m-1 order-md-1 text-md-left">
 				                    <a href="<%=request.getContextPath()%>/front-end/course/listAllCourseForUser.jsp">
 				                       <i class="fa fa-undo" aria-hidden="true"></i>&nbsp;&nbsp;Continue Shopping</a>
 				                </div>
 				            </div>
-				        </div>`;   	
-				                		$('.shoppingCartArea').append(str);
-				                		$('#number').text($('#shoppingCart tr').length - 1);
+				        </div>`; 
+				               
+				               
+				       
+				                    
+				                    	 			
+				               	$('.shoppingCartArea').append(str);
+				                
 							}
 							
 							else{
+// 								console.log($('#shoppingCart tr:last'));
 								
+								$('#shoppingCart tr:last').after(commonStr);
 								
+								var totalPriceString = $('#totalPrice').text();
+								var totalPrice = $('#totalPrice').text().replace('Total:$','');
+								$('#totalPrice').text( 'Total:$' + (parseInt(totalPrice)+parseInt($('#courseprice'+count).val())));
 							}
+							
+							$('#number').text($('#shoppingCart tr').length - 1);
+							
+							$('body').on('click' , '#checkout',function(){
+									$('#myForm').submit(); 
+							});
+							
+							
+							$('body').on('click' , '#remove' + count,function(){
+								$(this).parents('tr').remove();
+								var totalPriceString = $('#totalPrice').text();
+								var totalPrice = $('#totalPrice').text().replace('Total:$','');
+								$('#totalPrice').text( 'Total:$' + (totalPrice-$(this).prev().val()));
+								
+								$('#number').text(parseInt($('#number').text()) - 1);
+								
+								if(parseInt($('#number').text()) == 0 ){
+									
+									$('.shoppingCartArea').empty();
+									
+									var str = `<img class="fit-picture"
+										 src="<%=request.getContextPath()%>/index/front-index/assets/img/empty-box.svg"
+											alt="shoppingCart Empty"/>
+											<div>購物車空空的，來去逛逛吧!!!</div>	
+									<button class="btn btn-common"  onclick="location.href='<%=request.getContextPath()%>/front-end/course/listAllCourseForUser.jsp'" style="margin-top:3%;">
+			        						搜尋課程
+			        				</button>`;
+									
+			        				$('.shoppingCartArea').append(str);
+								}
+								
+								
+								$.ajax({
+									url	:"<%=request.getContextPath()%>/tracking_list/tracking_list.do",
+									data:{
+										courseno: $(this).next().val(),
+										memno    : $("#memno").val(),
+										action: "shoppingCart"
+									},
+									success: function(data){
+										console.log('移除成功--->ShoppingCartPage');
+									}
+								});
+								
+							});
+							
+							count++;
 						}
 					}
 				});

@@ -33,6 +33,7 @@ public class TrackingListServlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		req.setCharacterEncoding("UTF-8");
+		res.setContentType("text/html; charset=utf-8");
 		String action = req.getParameter("action");
 
 		String memno = req.getParameter("memno");
@@ -98,7 +99,10 @@ public class TrackingListServlet extends HttpServlet {
 
 					shoppingList.add(userSelectedCourse);
 					jsonStr = new JSONObject(userSelectedCourse).toString();
-				} else {
+					
+				} 
+				else {
+					System.out.println("刪除");
 					shoppingList.remove(userSelectedCourse);
 				}
 				

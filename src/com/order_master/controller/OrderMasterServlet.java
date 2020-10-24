@@ -1,6 +1,7 @@
 package com.order_master.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Vector;
@@ -31,6 +32,8 @@ public class OrderMasterServlet extends HttpServlet {
 		List<CourseVO> buylist = (Vector<CourseVO>) session.getAttribute("shoppingcart");
 		String action = req.getParameter("action");
 
+		System.out.println(action);
+		
 		if ("getOne_For_Display".equals(action)) { // 來自OrderMasterDB.jsp的請求
 
 			List<String> errorMsgs = new LinkedList<String>();
@@ -156,6 +159,13 @@ public class OrderMasterServlet extends HttpServlet {
 		}
 		if ("insert".equals(action)) {
 
+			List<CourseVO> shoppingList = (List<CourseVO>)req.getSession().getAttribute("shoppingList");
+			
+			
+			for(CourseVO vo :shoppingList) {
+				System.out.println(vo);
+			}
+			
 			List<String> errorMsgs = new LinkedList<String>();
 			// Store this set in the request scope, in case we need to
 			// send the ErrorPage view.
@@ -166,8 +176,10 @@ public class OrderMasterServlet extends HttpServlet {
 				
 				String memno = req.getParameter("memno");
 				
+				
 				//折扣碼轉換
 				String coupcode = req.getParameter("coupcode");
+				System.out.println(coupcode);
 				CoupCodeService coupSvc = new CoupCodeService();
 				CoupCodeVO coupCodeVO = coupSvc.getOneCoupno(coupcode);
 				String coupno = coupCodeVO.getCoupno();
