@@ -94,7 +94,7 @@
             </div>
             <div id="querybox" class="box-item" style="background-color: #b3e6ff; border-radius: 10px">
             	<div id="searchbox">
-            		<input id="query" name="query" type="text" placeholder="&nbsp;&rArr;&nbsp;今天想學什麼呢？">
+            		<input id="query" name="query" type="text" placeholder="&nbsp;&rArr;&nbsp;想找什麼呢？">
             	</div>
             	<div id="orderBy" style="display: inline-block">
             		<div id="priceAsc" class="btn" style="padding: 0;"><button class="filter btn btn-common " style="margin: 0 10px;">價格低至高</button></div>

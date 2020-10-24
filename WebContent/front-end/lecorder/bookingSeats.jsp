@@ -76,7 +76,19 @@
 	  	  	    addClickForBooking();
   	  		}
   	  	});
-  		
+  	// 訂位用，將 input 內寫入剩餘座位字串值
+  		function setCurrseatValue(statusStr) {
+  			$("#defaultseat").val(statusStr);
+  			$("#seatCount").text(seatCount(statusStr));
+  			$("#blockCount").text(totalSeatCount(statusStr));
+  			let chosenCount = chosenSeatCount(statusStr);
+  			console.log("chosenCount=" + chosenCount);
+  			$("#count").val(chosenCount);
+  			let lecprice = $("#lecprice").val();
+  			console.log(lecprice);
+  			let currAmount = chosenCount * lecprice;
+  			$("#lecamt").val(currAmount);
+  		}
     </script>
 </body>
 </html>
