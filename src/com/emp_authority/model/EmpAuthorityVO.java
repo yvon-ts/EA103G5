@@ -19,5 +19,5 @@ public class EmpAuthorityVO implements Serializable{
 		public void setFuncno(String funcno) {
 			this.funcno = funcno;
 		}
-
+		
 }

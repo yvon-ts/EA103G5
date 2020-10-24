@@ -11,7 +11,9 @@
     <!-- Main CSS-->
     <link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/front-end/css/main.css">
     <!-- Font-icon css-->
- <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+ 	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+ 	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+ 
 </head>
 
 <body class="app sidebar-mini">
@@ -152,11 +154,17 @@
 // </c:forEach> 
 
 
+// <c:if test="${not empty error}">
+// 	alert("${error}");
+<%-- <%request.getSession().removeAttribute("error");%>		 --%>
+// </c:if>	
 <c:if test="${not empty error}">
-	alert("${error}");
-<%request.getSession().removeAttribute("error");%>		
+swal({
+	  title: "${error}",
+	  icon: "error",
+	});
 </c:if>	
-    </script>
+   </script>
     
 </body>
 
