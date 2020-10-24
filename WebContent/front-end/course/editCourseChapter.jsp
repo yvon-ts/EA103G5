@@ -7,6 +7,8 @@
 <html>
 
 <head>
+	<!-- This page's CSS -->
+	<link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/course/css/editCourseChapter.css">
 </head>
 
 <body>
@@ -38,17 +40,20 @@
 				<jsp:useBean id="videoSvc" scope="page" class="com.video.model.VideoService" />
 				<c:forEach var="videoVO" items="${videoSvc.getAll(map)}" varStatus="status">
 					<tr>
-						<form method="post" id="origForm${status.count}">
+						<form method="post" class="chapterInfo" id="origForm${status.count}">
 							<td scope="row" class="align-middle text-center">
 								<i class="fas fa-bars"></i>
 							</td>
-							<td>
-								<p>單元：<input type="number" name="chapterno" value=${videoVO.chapterno} readonly form="origForm${status.count}"></p>
-								<p>範圍：<input type="number" name="testscope" value=${videoVO.testscope} min=1 max=10 step=1 form="origForm${status.count}"></p>
+							<td class="align-middle text-center">
+								<h5><input type="number" name="chapterno" value=${videoVO.chapterno} readonly form="origForm${status.count}"></h5>
+								<%-- <p>範圍：<input type="number" name="testscope" value=${videoVO.testscope} min=1 max=10 step=1 form="origForm${status.count}"></p> --%>
+								<input type="hidden" name="testscope" value=${videoVO.testscope} form="origForm${status.count}">
 							</td>
-							<td class="align-middle">
+							<td>
 								<!-- <p>單元名稱</p> -->
-								<input type="text" name="chaptername" size="20" value=${videoVO.chaptername} form="origForm${status.count}">
+								<input type="text" name="chaptername" class="form-control" style="margin:10px 0;"
+									value=${videoVO.chaptername} form="origForm${status.count}">
+								<%-- 								<input type="text" name="chaptername" size="20" value=${videoVO.chaptername} form="origForm${status.count}"> --%>
 							</td>
 							<td class="align-middle text-center">
 								<a href="<%=request.getContextPath()%>/video/VideoReaderFromDB?videono=${videoVO.videono}" target="_blank">
@@ -64,14 +69,14 @@
 							<input type="hidden" name="videono" value=${videoVO.videono} form="origForm${status.count}">
 							<input type="hidden" name="action" value="update" form="origForm${status.count}">
 						</form>
-							<td class="align-middle text-center">
-								<form method="post" ACTION="<%=request.getContextPath()%>/video/video.do">
-									<input type="hidden" name="videono" value=${videoVO.videono}>
-									<input type="hidden" name="action" value="delete">
-<!-- 									<input type=submit class="btn btn-danger delete" value=刪除> -->
-									<button type="button" class="btn btn-danger delete">刪除</button>
-								</form>
-							</td>
+						<td class="align-middle text-center">
+							<form method="post" ACTION="<%=request.getContextPath()%>/video/video.do">
+								<input type="hidden" name="videono" value=${videoVO.videono}>
+								<input type="hidden" name="action" value="deleteVideo">
+								<!-- 									<input type=submit class="btn btn-danger delete" value=刪除> -->
+								<button type="button" class="btn btn-danger delete">刪除</button>
+							</form>
+						</td>
 					</tr>
 				</c:forEach>
 				<tr id="chapterEditRow" class="disabled text-center">
@@ -167,8 +172,8 @@
 		function getFormDatas() {
 			let formDatas = [];
 			// 取得課程單元之 FormDatas
-			for (let i = 0; i < $("#videolist form").length; i++) {
-				let formData = new FormData($("#videolist form")[i]);
+			for (let i = 0; i < $("#videolist .chapterInfo").length; i++) {
+				let formData = new FormData($("#videolist .chapterInfo")[i]);
 				// 加入 courseno
 				formData.append("courseno", "${courseVO.courseno}")
 				// 存入 formDatas Array 內
@@ -204,7 +209,7 @@
 					// count--;
 				},
 				error: function (data) {
-					console.log("*真的不棒"+ data)
+					console.log("*真的不棒" + data)
 
 					//count--;
 				}
@@ -220,16 +225,38 @@
 			}
 			// to do: 還須使其 reload 或重新整理
 		});
-		
-		
-		$(".delete").click(function(e){
-// 			if(confirm("\n確認刪除後，將無法回復資料\n\n請問是否要刪除本單元？")){
+
+
+		$(".delete").click(function (e) {
+			e.preventDefault();
+			if (confirm("\n確認刪除後，將無法回復資料\n且不建議刪除以開使販售之課程\n避免影響學生權益\n\n請問是否要刪除本單元？")) {
+				let formData = new FormData($(this).parent()[0]);
+				// for (let key of formData.keys()) {
+				// 	console.log(key + " : " + formData.get(key));
+				// }
+
+				$.ajax({
+					url: "<%=request.getContextPath()%>/video/video.do",
+					type: "POST",
+					data: formData,
+					// 告訴jQuery不要去處理發送的資料
+					processData: false,
+					// 告訴jQuery不要去設定Content-Type請求頭
+					contentType: false,
+					success: function (data) { // 以上成功才執行
+						alert("課程單元已成功刪除")
+						console.log("* Video 刪除成功");
+					},
+					error: function (data) {
+						alert("課程單元刪除失敗")
+						console.log("* Video 刪除失敗");
+					}
+				})
 				$(this).parent().parent().parent().remove(); // 超蠢寫法 NG
 				replaceTheChapterNumber();
-// 				$(this).parent().submit();
-// 			} else{
-				//e.preventDefault();
-// 			}			
+			} else {
+				e.preventDefault();
+			}
 		});
 	</script>
 

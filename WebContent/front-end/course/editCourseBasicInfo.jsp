@@ -11,6 +11,10 @@
 <html>
 
 <head>
+	<!-- Ckeditor 的 CSS (for CourseInfo)-->
+	<link rel="stylesheet" href="<%=request.getContextPath()%>/front-end\course\css\ckeditorForCourseInfo.css">
+
+	<!-- This page's CSS -->
 	<style type="text/css">
 		#picturePreview {
 			text-align: center;
@@ -75,8 +79,7 @@
 				<span class="input-group-text" id="inputGroupFileAddon01">課程圖片</span>
 			</div>
 			<div class="custom-file">
-				<input type="file" class="custom-file-input" id="fileUp"
-					name="courseimg">
+				<input type="file" class="custom-file-input" id="fileUp" name="courseimg">
 				<label class="custom-file-label" for="fileUp"> 建議圖片比例 4 : 3</label>
 			</div>
 		</div>
@@ -91,7 +94,9 @@
 			<div class="input-group-prepend">
 				<span class="input-group-text">課程資訊</span>
 			</div>
-			<textarea name="courseinfo" class="form-control" aria-label="With textarea">${courseVO == null ? "<h1>你可以學到...</h1>" : courseVO.courseinfo}</textarea>
+			<textarea id="ckeditor5" name="courseinfo" class="form-control" aria-label="With textarea">
+				${courseVO.courseinfo}
+			</textarea>
 		</div>
 
 		<br>
@@ -141,22 +146,24 @@
 		});
 	</script>
 
-
-	<!-- 關於 CK EDITER -->
-	<script src="https://cdn.ckeditor.com/4.7.3/basic/ckeditor.js"></script>
+	<!-- =============== Ckeditor 5 =============== -->
+	<script src="<%=request.getContextPath()%>\library\ckeditor5-build-classic\ckeditor.js"></script>
 	<script>
-		function init() {
-			CKEDITOR.replace("courseinfo", {
-				width: "80%",
- 				height: 350,
+		ClassicEditor
+			.create(document.querySelector('#ckeditor5'), {
+				toolbar: ['heading', '|', 'bold', 'italic', 'bulletedList', 'numberedList']
+			})
+			.then(editor => {
+				console.log(editor);
+			})
+			.catch(error => {
+				console.error(error);
 			});
-			CKEDITOR.editorConfig = function (config) {
-				config.enterMode = CKEDITOR.ENTER_BR; //br換行
-			};
-		}
-		window.onload = init;
 	</script>
+	<!-- =============== Ckeditor 5 =============== -->
+
 	<!-- ========== JavaScript Area ========== -->
+
 
 </body>
 

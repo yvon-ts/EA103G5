@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 
+import com.course.model.CourseService;
+import com.course.model.CourseVO;
 import com.video.model.VideoService;
 import com.video.model.VideoVO;
 
@@ -34,8 +36,6 @@ public class VideoServlet extends HttpServlet {
 		System.out.println("***action = " + action);
 
 		if ("getOne_For_Display".equals(action)) {
-
-			System.out.println("getOne_For_Display 區間");
 
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);
@@ -120,6 +120,11 @@ public class VideoServlet extends HttpServlet {
 				failureView.forward(req, res);
 			}
 		}
+		
+		
+		
+		
+		
 
 		// 未完成，目前是 insert 版本
 		if ("update".equals(action)) {
@@ -351,7 +356,45 @@ public class VideoServlet extends HttpServlet {
 				failureView.forward(req, res);
 			}
 		}
+		
+		
+		
+		if ("deleteVideo".equals(action)) { // 來自listAllEmp.jsp
+
+			List<String> errorMsgs = new LinkedList<String>();
+			req.setAttribute("errorMsgs", errorMsgs);
+	
+			try {
+				/***************************1.接收請求參數***************************************/
+				String vidoeno = req.getParameter("videono");
+				
+				/***************************2.開始刪除資料***************************************/
+				VideoService videoSvc = new VideoService();
+				CourseService courseSvc = new CourseService();
+				CourseVO courseVO = courseSvc.getOneCourse(videoSvc.getOneVideo(vidoeno).getCourseno());
+				videoSvc.deleteVideo(vidoeno);
+				
+				/***************************3.刪除完成,準備轉交(Send the Success view)***********/								
+//				req.setAttribute("courseVO", courseVO);
+//				String url = "/front-end/course/editCourse.jsp";
+//				RequestDispatcher successView = req.getRequestDispatcher(url);
+//				successView.forward(req, res);
+				
+				/***************************其他可能的錯誤處理**********************************/
+			} catch (Exception e) {
+				e.printStackTrace();
+//				errorMsgs.add("刪除資料失敗:"+e.getMessage());
+//				RequestDispatcher failureView = req
+//						.getRequestDispatcher("/emp/listAllEmp.jsp");
+//				failureView.forward(req, res);
+			}
+		}
+		
+		
+		
 	}
+	
+	
 
 	public static byte[] getUpdateFileByteArray(InputStream in) throws IOException {
 		ByteArrayOutputStream baos = new ByteArrayOutputStream(); // 此資料流會把write的位元資料，存到一個內建的byte[]
@@ -366,5 +409,7 @@ public class VideoServlet extends HttpServlet {
 
 		return baos.toByteArray(); // toByteArray() 可以讓我們取得這個資料流內建的 byte[]
 	}
+	
+	
 
 }
