@@ -1,14 +1,16 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*"%>
-<%@ page import="com.order_master.model.*"%>
+<%@ page import="com.order_master.model.*, com.members.model.*"%>
+
 
 <%
+	MembersVO membersVO = (MembersVO) session.getAttribute("membersVO");
+	String memno = membersVO.getMemno().toString();
+
 	OrderMasterService orderSvc = new OrderMasterService();
-	List<OrderMasterVO> list = (List<OrderMasterVO>) request.getAttribute("orderMasterVO");
-	
+	List<OrderMasterVO> list = orderSvc.getOnesOrder(memno);
 	pageContext.setAttribute("list", list);
-	
 %>
 
 <html>
@@ -17,7 +19,7 @@
 
 </head>
 <body bgcolor='white'>
-	
+
 	<table id="table-1">
 		<tr>
 			<td>
@@ -51,8 +53,8 @@
 			<th>付款方式</th>
 		</tr>
 		<%@ include file="page1.file"%>
-<%-- 			<c:out value ="${pageScope.list}"></c:out> --%>
-		
+		<%-- 			<c:out value ="${pageScope.list}"></c:out> --%>
+
 		<c:forEach var="ordermasterVO" items="${list}" begin="<%=pageIndex%>"
 			end="<%=pageIndex+rowsPerPage-1%>">
 

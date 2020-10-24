@@ -1,6 +1,7 @@
 package com.order_master.model;
 
 import java.util.List;
+import com.coup_code.model.*;
 
 import com.order_detail.model.OrderDetailVO;
 
@@ -13,6 +14,7 @@ public class OrderMasterService {
 	}
 	
 	public OrderMasterVO addOrder(String memno, Integer orderamt, String coupno, String payby, List<OrderDetailVO> list){
+		
 		OrderMasterVO vo = new OrderMasterVO();
 		
 		vo.setMemno(memno);

@@ -37,7 +37,6 @@ public class OrderMasterDAO implements OrderMasterDAO_interface {
 
 	@Override
 	public void insert(OrderMasterVO orderMasterVO, List<OrderDetailVO> detailList) {
-		// TODO Auto-generated method stub
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		String ord_next_no = null;
@@ -107,7 +106,7 @@ public class OrderMasterDAO implements OrderMasterDAO_interface {
 		PreparedStatement pstmt = null;
 
 		try {
-//			con = ds.getConnection();
+			con = ds.getConnection();
 			con.setAutoCommit(false);
 			pstmt = con.prepareStatement(UPDATE);
 			
@@ -154,7 +153,7 @@ public class OrderMasterDAO implements OrderMasterDAO_interface {
 
 		try {
 
-//			con = ds.getConnection();
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(GET_ONE_STMT_ORDERNO);
 
 			pstmt.setString(1, orderNo);
@@ -211,7 +210,7 @@ public class OrderMasterDAO implements OrderMasterDAO_interface {
 
 		try {
 
-//			con = ds.getConnection();
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(GET_ALL_STMT);
 			rs = pstmt.executeQuery();
 
@@ -263,7 +262,7 @@ public class OrderMasterDAO implements OrderMasterDAO_interface {
 
 		try {
 
-//			con = ds.getConnection();
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(GET_ONE_STMT_MEMNO);
 
 			pstmt.setString(1, memno);

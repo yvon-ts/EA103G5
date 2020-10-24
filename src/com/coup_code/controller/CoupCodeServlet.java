@@ -216,7 +216,7 @@ public class CoupCodeServlet extends HttpServlet {
 				coupVO = coupSvc.addCoupCode(memno, coupcode, discamt, coupexp);
 
 				/*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
-				String url = "/back-end/Coup_Code/ListCoupCode.jsp";
+				String url = "/back-end/Coup_Code/listAllCoupCode.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
 

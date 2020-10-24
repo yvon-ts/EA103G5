@@ -32,6 +32,7 @@ public class CoupCodeDAO implements CoupCodeDAO_interface {
 	private static final String GET_ALL_STMT = "SELECT * FROM coup_code order by coupno";
 	private static final String GET_ONE_STMT = "SELECT * FROM coup_code where coupno = ?";
 	private static final String UPDATE = "UPDATE coup_code set discstatus = ? where coupno = ?";
+	private static final String GET_ONE_STMT_BYNAME = "SELECT * FROM coup_code where coupcode = ?";
 
 	@Override
 	public void insert(CoupCodeVO coupCodeVO) {
@@ -137,6 +138,61 @@ public class CoupCodeDAO implements CoupCodeDAO_interface {
 			pstmt = con.prepareStatement(GET_ONE_STMT);
 
 			pstmt.setString(1, coupno);
+
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				coupCodeVO = new CoupCodeVO();
+				coupCodeVO.setCoupno(rs.getString("coupno"));
+				coupCodeVO.setCoupno(rs.getString("coupno"));
+				coupCodeVO.setMemno(rs.getString("memno"));
+				coupCodeVO.setCoupcode(rs.getString("coupcode"));
+				coupCodeVO.setDiscamt(rs.getInt("discamt"));
+				coupCodeVO.setDiscstatus(rs.getInt("discstatus"));
+				coupCodeVO.setCouptime(rs.getDate("couptime"));
+				coupCodeVO.setCoupexp(rs.getDate("coupexp"));
+			}
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return coupCodeVO;
+	}
+	
+	public CoupCodeVO findByCoupCode(String coupname) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		CoupCodeVO coupCodeVO = null;
+
+		try {
+
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(GET_ONE_STMT_BYNAME);
+
+			pstmt.setString(1, coupname);
 
 			rs = pstmt.executeQuery();
 

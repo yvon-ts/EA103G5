@@ -37,6 +37,10 @@ public class CoupCodeService {
 	public CoupCodeVO getOneCoupCode(String coupno) {
 		return dao.findByPrimaryKey(coupno);
 	}
+	
+	public CoupCodeVO getOneCoupno(String coupname) {
+		return dao.findByCoupCode(coupname);
+	}
 
 	public List<CoupCodeVO> getAll() {
 		return dao.getAll();
