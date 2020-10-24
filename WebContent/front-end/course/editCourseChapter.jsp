@@ -23,7 +23,8 @@
 					<!-- <th scope="col" style="width: 150px;">#</th> -->
 					<th scope="col">#</th>
 					<th scope="col">Chapter Title</th>
-					<th scope="col" colspan="3">Video File</th>
+					<th scope="col" colspan="2">Video File</th>
+					<th scope="col" colspan="2">Action</th>
 					<!-- <th>編輯</th> -->
 				</tr>
 			</thead>
@@ -40,51 +41,62 @@
 				<jsp:useBean id="videoSvc" scope="page" class="com.video.model.VideoService" />
 				<c:forEach var="videoVO" items="${videoSvc.getAll(map)}" varStatus="status">
 					<tr>
-						<form method="post" class="chapterInfo" id="origForm${status.count}">
+						<!-- 表單 #1 課程資訊 -->
+						<form method="post" class="chapterInfo" id="chapterInfoForm${status.count}">
 							<td scope="row" class="align-middle text-center">
 								<i class="fas fa-bars"></i>
 							</td>
 							<td class="align-middle text-center">
-								<h5><input type="number" name="chapterno" value=${videoVO.chapterno} readonly form="origForm${status.count}"></h5>
-								<%-- <p>範圍：<input type="number" name="testscope" value=${videoVO.testscope} min=1 max=10 step=1 form="origForm${status.count}"></p> --%>
-								<input type="hidden" name="testscope" value=${videoVO.testscope} form="origForm${status.count}">
+								<h5><input type="number" name="chapterno" value=${videoVO.chapterno} readonly form="chapterInfoForm${status.count}"></h5>
+								<%-- <p>範圍：<input type="number" name="testscope" value=${videoVO.testscope} min=1 max=10 step=1 form="chapterInfoForm${status.count}"></p> --%>
+								<input type="hidden" name="testscope" value=${videoVO.testscope} form="chapterInfoForm${status.count}">
 							</td>
 							<td>
 								<!-- <p>單元名稱</p> -->
 								<input type="text" name="chaptername" class="form-control" style="margin:10px 0;"
-									value=${videoVO.chaptername} form="origForm${status.count}">
-								<%-- 								<input type="text" name="chaptername" size="20" value=${videoVO.chaptername} form="origForm${status.count}"> --%>
+									value=${videoVO.chaptername} form="chapterInfoForm${status.count}">
 							</td>
+							<input type="hidden" name="videono" value=${videoVO.videono} form="chapterInfoForm${status.count}">
+							<input type="hidden" name="action" value="update" form="chapterInfoForm${status.count}">
+						</form>
+						<!-- 表單 #1 課程資訊 -->
+
+						<!-- 表單 #2 課程影片 -->
+						<form method="post" class="videoFile" id="videoFileForm${status.count}">
 							<td class="align-middle text-center">
 								<a href="<%=request.getContextPath()%>/video/VideoReaderFromDB?videono=${videoVO.videono}" target="_blank">
 									<span class="far fa-play-circle"></span></a>
 							</td>
 							<td>
 								<span>影片時間：</span><span class="showVideoLen"></span>
-								<input type="hidden" name="chapterlen" value=${videoVO.chapterlen} min=0 step=1 readonly form="origForm${status.count}">
-								<!-- <span> Secs</span> -->
+								<input type="hidden" name="chapterlen" value=${videoVO.chapterlen} min=0 step=1 readonly form="videoFileForm${status.count}">
 								<br>
-								<input type="file" name="video" form="origForm${status.count}">
+								<input type="file" name="video" form="videoFileForm${status.count}">
+								<input type="hidden" name="videono" value=${videoVO.videono} form="videoFileForm${status.count}">
+								<input type="hidden" name="action" value="updateVideoFile" form="videoFileForm${status.count}">
 							</td>
-							<input type="hidden" name="videono" value=${videoVO.videono} form="origForm${status.count}">
-							<input type="hidden" name="action" value="update" form="origForm${status.count}">
+							<td class="align-middle text-center">
+								<button type="button" class="btn btn-success updateButton"><i class="fas fa-file-upload"></i></button>
+							</td>
 						</form>
+						<!-- 表單 #2 課程影片 -->
 						<td class="align-middle text-center">
+							<!-- 表單 #3 刪除按鈕 -->
 							<form method="post" ACTION="<%=request.getContextPath()%>/video/video.do">
 								<input type="hidden" name="videono" value=${videoVO.videono}>
 								<input type="hidden" name="action" value="deleteVideo">
-								<!-- 									<input type=submit class="btn btn-danger delete" value=刪除> -->
-								<button type="button" class="btn btn-danger delete">刪除</button>
+								<button type="button" class="btn btn-danger deleteButton"><i class="far fa-trash-alt"></i></button>
 							</form>
+							<!-- 表單 #3 刪除按鈕 -->
 						</td>
 					</tr>
 				</c:forEach>
 				<tr id="chapterEditRow" class="disabled text-center">
-					<td colspan="4" class="text-center">
+					<td colspan="5" class="text-center">
 						<span id="addNewChapter" class="far fa-plus-square"></span>
 					</td>
-					<td class="text-center">
-						<sapn id="test" class="fas fa-save"></span>
+					<td colspan="2" class="text-center">
+						<sapn id="updateChapterInfo" class="fas fa-save"></span>
 					</td>
 				</tr>
 			</tbody>
@@ -189,7 +201,7 @@
 			return formDatas;
 		}
 		// 將課程資訊寫入資料庫  // 拿宜靜的來改
-		function ajax_updateVideo(formData) {
+		function updateChapterInfo_Ajax(formData) {
 			// getFormDatas();
 
 			//var count++;
@@ -217,17 +229,17 @@
 		}
 
 		// 測試按鈕
-		$("#test").click(function () {
+		$("#updateChapterInfo").click(function () {
 			let formDatas = getFormDatas();
 			for (let i = 0; i < formDatas.length; i++) {
 				formData = formDatas[i];
-				ajax_updateVideo(formData);
+				updateChapterInfo_Ajax(formData);
 			}
 			// to do: 還須使其 reload 或重新整理
 		});
 
 
-		$(".delete").click(function (e) {
+		$(".deleteButton").click(function (e) {
 			e.preventDefault();
 			if (confirm("\n確認刪除後，將無法回復資料\n且不建議刪除以開使販售之課程\n避免影響學生權益\n\n請問是否要刪除本單元？")) {
 				let formData = new FormData($(this).parent()[0]);
