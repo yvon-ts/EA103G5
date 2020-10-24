@@ -37,10 +37,17 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
-	#calendar{
+	#info-part{
 		background-color: #fff;
 		padding: 30px;
 		border-radius: 2%;
+	}
+	#info-part #seatAppend{
+		color: #fff;
+	}
+	#info-block{
+		border-radius: 10%;
+		padding: 8px 0;
 	}
 html {
   box-sizing: border-box;
@@ -48,19 +55,29 @@ html {
 *, *:before, *:after {
   box-sizing: inherit;
 }
-input{
-  display:block;
-  width:100%;
-  padding:.2em;
-  margin: .2em 0 .6em;
-  font-size:1.2em;
-}
+
+       input{
+            width: 200px;
+            margin: 10px auto;
+            background-color: #e0eaf4;
+            border: 0;
+            line-height: 25px;
+            font-family: monospace;
+            
+            padding:.2em;
+   margin: .2em 0 .6em;
+   font-size: 1.2em;
+   border: 0;
+   background-color: transparent;
+   border-bottom: 1px solid #642100;
+        }
 input[type=submit]{
   background: #6699cc;
   border:none;
   margin:1em 0;
   color:white;
   padding:1em;
+  width: 100%;
 }
 .message{
   background: #333;
@@ -79,43 +96,42 @@ html{
   box-shadow:1em 1em 0 0 rgba(0,0,0,.2);
   font-family:Raleway, sans-serif;
 }
+li{
+	list-style: none;
+}
 </style>
 </head>
 <body>
+<form class="login-form" method="post" action="<%=request.getContextPath()%>/front-end/lecorder/confirmLodr.jsp">
 <div class="container">
- <div class="row">
-   <div id="calendar" class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
-    <img src="<%=request.getContextPath()%>/lecture/picreader?lecno=${lecVO.lecno}">
-    <h1>${lecVO.lecname}</h1>
-    <ul>
-	<li>講座日期：<%=startdate%></li>
-	<li>講座時間：<%=starttime%> - <%=endtime%></li>
-	<li>講座地點：<%=roomname%>教室</li>
-	<li>講座票價：<span id="lecprice">${lecVO.lecprice}</span>元/人</li>
-</ul>
-  付款方式：<input type="radio" checked>信用卡<br>
-  訂購數量：<input id="count" type="text" name="count" readonly>
-  
-  <input id="lecamt" type="text" name="lecamt" readonly>
-    
+	<div class="row">
+   		<div id="info-part" class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
+    		<img src="<%=request.getContextPath()%>/lecture/picreader?lecno=${lecVO.lecno}">
+    		<%@ include file="/front-end/lecorder/bookingSeats.jsp"%>
+  		</div> 
 <%--    <%@ include file="/calendar/calendar.jsp" %> --%>
-   </div>
-<div id="form"><form class="login-form" method="post" action="<%=request.getContextPath()%>/front-end/lecorder/confirmLodr.jsp">
-
-<%@ include file="/front-end/lecorder/bookingSeats.jsp"%>
-
-  <label>會員編號</label>
-  <input type="text" name="memno">
-
-  <input id="submit" type="submit" value="確認付款">
-  <input type="hidden" name="lecno" value="<%=lecno%>">
-   <div>
-   
-   </div>
+		<div id="form" class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
+		<h1 style="color: #333">${lecVO.lecname}</h1>
+    		<div id="info-block">
+    		
+				講座日期<br>
+				&nbsp;<input class="txt" type="text" value="<%=startdate%>"readonly><br>
+				講座時間：<br>&nbsp;<input class="txt" type="text" value="<%=starttime%> - <%=endtime%>"readonly><br>
+				講座地點：<br>&nbsp;<input class="txt" type="text" value="<%=roomname%>教室"readonly><br>
+				訂購數量：<br>&nbsp;<input class="txt" id="count" type="text" name="count" readonly><br>
+				單一票價：<br>$<input class="txt" id="lecprice" type="text" name="lecprice" value="${lecVO.lecprice}" readonly><br>
+				金額小計：<br>$<input class="txt" id="lecamt" type="text" name="lecamt" readonly><br>
+				付款方式：&nbsp;<input type="radio" style="width: 20px"checked>&nbsp;信用卡
+			
+			</div>
+			
+  				會員編號：<input type="text" name="memno">
+				  <input id="submit" type="submit" value="確認付款">
+  				<input type="hidden" name="lecno" value="<%=lecno%>">
+		</div>
+ 	</div>
+</div>
 </form>
-</div>
-</div>
-</div>
 <!-- Bootstrap core JavaScript -->
 	<script src="vendor/jquery/jquery.min.js"></script>
 	<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>

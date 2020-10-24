@@ -20,6 +20,8 @@
 	LecVO lecVO = (LecVO) session.getAttribute("bookingLec");
 	String lecno = lecVO.getLecno();
 	String roomno = lecVO.getRoomno();
+	String lecname = lecVO.getLecname();
+	Integer lecprice = lecVO.getLecprice();
 	ClassroomService roomSvc = new ClassroomService();
 	ClassroomVO roomVO = roomSvc.getOneClassroom(roomno);
 	String roomname = roomVO.getRoomname();
@@ -44,7 +46,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
-	#calendar{
+	#credit-card{
 		background-color: #fff;
 		padding: 30px;
 		border-radius: 2%;
@@ -91,38 +93,48 @@ html{
 <body>
 <div class="container">
  <div class="row">
-   <div id="calendar" class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
-   信用卡模板
+   <div id="credit-card" class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
+   <%@ include file="/front-end/lecorder/creditCard.jsp"%>
+   <div>
+   		<button id="btn">+</button>
+   </div>
    </div>
 <div id="form"><form class="login-form" method="post" action="<%=request.getContextPath()%>/lecorder/lecorder.do">
-<h1>${lecVO.lecname}</h1>
-<ul>
-	<li>講座日期：<%=startdate%></li>
-	<li>講座時間：<%=starttime%> - <%=endtime%></li>
-	<li>講座地點：<%=roomname%>教室</li>
-	<li>講座票價：<span id="lecprice">${lecVO.lecprice}</span>元/人</li>
-	<li>訂購數量：<input type="text" name="count" value="<%=count%>" readonly></li>
-	<li>訂購金額：<input type="text" name="lecamt" value="<%=lecamt%>" readonly></li>
-	
-</ul>
-  <label>會員編號</label>
-  <input type="text" name="memno" value="<%=memno%>">
-
-  <input type="submit" value="確認付款">
-  講座編號<input type="text" name="lecno" value="<%=lecno%>">
-  座位<input type="text" name="currseat" value="<%=currseat%>">
-  座位號碼<input type="text" name="seatno" value="<%=seatno%>">
+講座名稱
+<input style="background-color: #fff; border-bottom: 1px #333 solid; border-radius: 0" type="text" value="<%=lecname%>"readonly>
+講座日期
+<input style="background-color: #fff; border-bottom: 1px #333 solid; border-radius: 0" type="text" value="<%=startdate%>"readonly>
+講座時間
+<input style="background-color: #fff; border-bottom: 1px #333 solid; border-radius: 0" type="text" value="<%=starttime%> - <%=endtime%>"readonly>
+講座地點
+<input style="background-color: #fff; border-bottom: 1px #333 solid; border-radius: 0" type="text" value="<%=roomname%>教室"readonly>
+訂購數量
+<input style="background-color: #fff; border-bottom: 1px #333 solid; border-radius: 0" type="text" name="count" value="<%=count%>" readonly>
+單一票價
+<input style="background-color: #fff; border-bottom: 1px #333 solid; border-radius: 0" id="lecprice" type="text" value="<%=lecprice%>" readonly>
+訂購金額
+<input style="background-color: #fff; border-bottom: 1px #333 solid; border-radius: 0" type="text" name="lecamt" value="<%=lecamt%>" readonly>
+  講座編號
+  <input type="text" name="lecno" style="background-color: #fff; border-bottom: 1px #333 solid; border-radius: 0" value="<%=lecno%>">
+  座位
+  <input type="text" name="currseat" style="background-color: #fff; border-bottom: 1px #333 solid; border-radius: 0" value="<%=currseat%>">
+  座位號碼
+  <input type="text" name="seatno" style="background-color: #fff; border-bottom: 1px #333 solid; border-radius: 0" value="<%=seatno%>">
   <input type="hidden" name="action" value="insert">
-   <div>
-   </div>
+  <input type="text" name="memno" value="<%=memno%>">
+  <input type="submit" value="確認付款">
 </form>
 </div>
 </div>
 </div>
 <!-- Bootstrap core JavaScript -->
-	<script src="vendor/jquery/jquery.min.js"></script>
+	
 	<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 	<script>
+		$("#btn").click(function(){
+			console.log("hi");
+		});
 	</script>
+	<script src="vendor/jquery/jquery.min.js"></script>
 </body>
 </html>

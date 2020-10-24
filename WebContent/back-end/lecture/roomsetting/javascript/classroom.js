@@ -215,7 +215,7 @@ function setCurrseatValue(statusStr) {
 	let chosenCount = chosenSeatCount(statusStr);
 	console.log("chosenCount=" + chosenCount);
 	$("#count").val(chosenCount);
-	let lecprice = $("#lecprice").text();
+	let lecprice = $("#lecprice").val();
 	console.log(lecprice);
 	let currAmount = chosenCount * lecprice;
 	$("#lecamt").val(currAmount);
