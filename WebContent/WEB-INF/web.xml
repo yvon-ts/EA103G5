@@ -85,6 +85,15 @@
   </servlet-mapping>
   
   <servlet>
+    <servlet-name>VideosServlet_AJAX</servlet-name>
+    <servlet-class>com.video.controller.VideosServlet_AJAX</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>VideosServlet_AJAX</servlet-name>
+    <url-pattern>/video/videoAjax.do</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
     <servlet-name>VideoReaderFromDB</servlet-name>
     <servlet-class>com.video.controller.VideoReaderFromDB</servlet-class>
   </servlet>
