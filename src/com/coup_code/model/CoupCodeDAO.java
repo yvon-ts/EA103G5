@@ -13,6 +13,7 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
+import com.order_master.model.OrderMasterVO;
 import com.promo_detail.model.PromoDetailDAO;
 import com.promo_detail.model.PromoDetailVO;
 
@@ -33,6 +34,7 @@ public class CoupCodeDAO implements CoupCodeDAO_interface {
 	private static final String GET_ONE_STMT = "SELECT * FROM coup_code where coupno = ?";
 	private static final String UPDATE = "UPDATE coup_code set discstatus = ? where coupno = ?";
 	private static final String GET_ONE_STMT_BYNAME = "SELECT * FROM coup_code where coupcode = ?";
+	private static final String GET_ONE_STMT_BYMEMBER = "SELECT * FROM coup_code where memno = ? and discstatus = 0";
 
 	@Override
 	public void insert(CoupCodeVO coupCodeVO) {
@@ -261,6 +263,60 @@ public class CoupCodeDAO implements CoupCodeDAO_interface {
 				coupCodeVO.setCouptime(rs.getDate("couptime"));
 				coupCodeVO.setCoupexp(rs.getDate("coupexp"));
 
+				list.add(coupCodeVO);
+			}
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return list;
+	}
+	
+	public List<CoupCodeVO> findByMemno(String memno) {
+
+		List<CoupCodeVO> list = new ArrayList<CoupCodeVO>();
+		CoupCodeVO coupCodeVO = null;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(GET_ONE_STMT_BYMEMBER);
+
+			pstmt.setString(1, memno);
+
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				coupCodeVO = new CoupCodeVO();
+				coupCodeVO.setCoupcode(rs.getString("coupcode"));
+				coupCodeVO.setDiscamt(rs.getInt("discamt"));
+				coupCodeVO.setCouptime(rs.getDate("couptime"));
+				coupCodeVO.setCoupexp(rs.getDate("coupexp"));
 				list.add(coupCodeVO);
 			}
 		} catch (SQLException se) {
