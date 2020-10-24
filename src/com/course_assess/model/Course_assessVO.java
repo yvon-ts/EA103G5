@@ -8,6 +8,9 @@ public class Course_assessVO implements java.io.Serializable {
 	private Integer coursescore;
 	private String comments;
 	private Timestamp commenttime;
+	private String nkname;
+	private String tchrstatus;
+	private String string_commenttime;
 	
 	public Course_assessVO() {
 		
@@ -49,6 +52,36 @@ public class Course_assessVO implements java.io.Serializable {
 	}
 	public void setCommenttime(Timestamp commenttime) {
 		this.commenttime = commenttime;
+	}
+
+
+	public String getNkname() {
+		return nkname;
+	}
+
+
+	public void setNkname(String nkname) {
+		this.nkname = nkname;
+	}
+
+
+	public String getTchrstatus() {
+		return tchrstatus;
+	}
+
+
+	public void setTchrstatus(String tchrstatus) {
+		this.tchrstatus = tchrstatus;
+	}
+
+
+	public String getString_commenttime() {
+		return string_commenttime;
+	}
+
+
+	public void setString_commenttime(String string_commenttime) {
+		this.string_commenttime = string_commenttime;
 	}
 
 }
