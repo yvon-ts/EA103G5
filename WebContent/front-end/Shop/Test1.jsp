@@ -24,7 +24,7 @@
 		<input type="hidden" name="promono" value="PROM0001">
 		<input type="hidden" name="orderamt" value="600"> 
 		<input type="hidden" name="payby" value="信用卡">
-		<input type="hidden" name="coupcode" value="AXXX-ZXCV">
+		<input type="hidden" name="coupcode" value="XXXX-ZXCV">
 		<input type="submit" value="付款結帳">
 	</form>
 

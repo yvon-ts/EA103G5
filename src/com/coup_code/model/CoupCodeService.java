@@ -45,4 +45,8 @@ public class CoupCodeService {
 	public List<CoupCodeVO> getAll() {
 		return dao.getAll();
 	}
+	
+	public List<CoupCodeVO> getMemberCoup(String memno) {
+		return dao.findByMemno(memno);
+	}
 }

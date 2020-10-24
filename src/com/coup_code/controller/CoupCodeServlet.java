@@ -227,6 +227,49 @@ public class CoupCodeServlet extends HttpServlet {
 				failureView.forward(req, res);
 			}
 		}
+		
+		if ("getMemno_For_Display".equals(action)) { // 來自OrderMasterDB.jsp的請求
+			List<String> errorMsgs = new LinkedList<String>();
+			// Store this set in the request scope, in case we need to
+			// send the ErrorPage view.
+			req.setAttribute("errorMsgs", errorMsgs);
+			
+			try {
+				/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
+				String memno = req.getParameter("memno").toString();
+				if (!errorMsgs.isEmpty()) {
+					RequestDispatcher failureView = req.getRequestDispatcher("/front-end/members/indexV1.jsp");
+					failureView.forward(req, res);
+					return;// 程式中斷
+				}
+
+				/*************************** 2.開始查詢資料 *****************************************/
+				System.out.println(memno);
+				CoupCodeService coupSvc = new CoupCodeService();
+				List<CoupCodeVO> coupVO = coupSvc.getMemberCoup(memno);
+//				if (coupVO == null) {
+//					errorMsgs.add("查無資料");
+//				}
+//				// Send the use back to the form, if there were errors
+//				if (!errorMsgs.isEmpty()) {
+//					RequestDispatcher failureView = req.getRequestDispatcher("/back-end/Order_Master/OrderMasterDB.jsp");
+//					failureView.forward(req, res);
+//					return;// 程式中斷
+//				}
+
+				/*************************** 3.查詢完成,準備轉交(Send the Success view) *************/
+				req.setAttribute("coupVO", coupVO); // 資料庫取出的ordVO物件,存入req
+				String url = "/front-end/Coup_Code/listAllByMemno.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url);
+				successView.forward(req, res);
+
+				/*************************** 其他可能的錯誤處理 *************************************/
+			} catch (Exception e) {
+				errorMsgs.add("無法取得資料:" + e.getMessage());
+				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/members/indexV1.jsp");
+				failureView.forward(req, res);
+			}
+		}
 
 	}
 

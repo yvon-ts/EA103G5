@@ -32,7 +32,7 @@ public class OrderMasterDAO implements OrderMasterDAO_interface {
 	private static final String INSERT_STMT = "INSERT INTO order_master(orderno, memno, orderamt, coupno, payby) VALUES ('ORD' || LPAD(SEQ_ORDER_MASTER.NEXTVAL, 4, 0), ?, ?, ?, ?)";
 	private static final String GET_ALL_STMT = "SELECT orderno, memno,to_char(orderdate,'yyyy-mm-dd') orderdate, orderstatus, orderamt, coupno, payby FROM order_master order by orderno";
 	private static final String GET_ONE_STMT_ORDERNO = "SELECT orderno, memno,to_char(orderdate,'yyyy-mm-dd') orderdate, orderstatus, orderamt, coupno, payby FROM order_master where orderno = ?";
-	private static final String GET_ONE_STMT_MEMNO = "SELECT orderno, memno,to_char(orderdate,'yyyy-mm-dd') orderdate, orderstatus, orderamt, coupno, payby FROM order_master where memno = ?";
+	private static final String GET_ONE_STMT_MEMNO = "SELECT orderno, to_char(orderdate,'yyyy-mm-dd') orderdate, orderstatus, orderamt, coupno, payby FROM order_master where memno = ?";
 	private static final String UPDATE = "UPDATE order_master set orderstatus=? where orderno = ?";
 
 	@Override
@@ -272,7 +272,6 @@ public class OrderMasterDAO implements OrderMasterDAO_interface {
 			while (rs.next()) {
 				orderMasterVO = new OrderMasterVO();
 				orderMasterVO.setOrderno(rs.getString("orderno"));
-				orderMasterVO.setMemno(rs.getString("memno"));
 				orderMasterVO.setOrderdate(rs.getDate("orderdate"));
 				orderMasterVO.setOrderstatus(rs.getString("orderstatus"));
 				orderMasterVO.setOrderamt(rs.getInt("orderamt"));
