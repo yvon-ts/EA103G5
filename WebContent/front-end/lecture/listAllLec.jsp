@@ -21,6 +21,8 @@
 %>
 <html>
 <head>
+<%-- <link rel="stylesheet" href="<%=request.getContextPath()%>/index/front-index/assets/css/bootstrap.min.css"> --%>
+<%-- <link rel="stylesheet" href="<%=request.getContextPath()%>/index/front-index/assets/css/main.css"> --%>
 <%@ include file="/index/front-index/header.jsp" %>
 <link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/css/lecAll.css">
 <title>listAlllec.jsp</title>

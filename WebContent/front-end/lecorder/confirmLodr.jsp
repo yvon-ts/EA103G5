@@ -9,34 +9,35 @@
 <%@ page import="com.lecture.model.*"%>
 
 <%
-	//訂購資訊
+	// booking info
 	String memno = request.getParameter("memno");
 	String count = request.getParameter("count");
 	String lecamt = request.getParameter("lecamt");
 	String currseat = request.getParameter("currseat");
 	String seatno = request.getParameter("seatno");
 	
-	//講座資訊
+	// lecture info
 	LecVO lecVO = (LecVO) session.getAttribute("bookingLec");
 	String lecno = lecVO.getLecno();
 	String roomno = lecVO.getRoomno();
 	String lecname = lecVO.getLecname();
 	Integer lecprice = lecVO.getLecprice();
+	
 	ClassroomService roomSvc = new ClassroomService();
 	ClassroomVO roomVO = roomSvc.getOneClassroom(roomno);
 	String roomname = roomVO.getRoomname();
 	
-	//日期設定
-		Timestamp lecstart = lecVO.getLecstart();
-		Timestamp lecend = lecVO.getLecend();
-		String startdate = "";
-		String starttime = "";
-		String endtime = "";
-		DateFormat fmtdate = new SimpleDateFormat("yyyy/MM/dd");
-		DateFormat fmttime = new SimpleDateFormat("HH:mm");
-		startdate = fmtdate.format(lecstart);
-		starttime = fmttime.format(lecstart);
-		endtime = fmttime.format(lecend);
+	// date time formatter
+	Timestamp lecstart = lecVO.getLecstart();
+	Timestamp lecend = lecVO.getLecend();
+	String startdate = "";
+	String starttime = "";
+	String endtime = "";
+	DateFormat fmtdate = new SimpleDateFormat("yyyy/MM/dd");
+	DateFormat fmttime = new SimpleDateFormat("HH:mm");
+	startdate = fmtdate.format(lecstart);
+	starttime = fmttime.format(lecstart);
+	endtime = fmttime.format(lecend);
 %>
 
 <!DOCTYPE html>

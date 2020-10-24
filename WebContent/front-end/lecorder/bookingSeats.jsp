@@ -39,9 +39,10 @@
 					<input type="text" id="defaultseat" name="currseat" value="<%=defseat%>" readonly>
 				</div>
 				<div>
-				<div id="seatAppend"></div>
+				<div id="seatAppend">
 				剩餘座位數量：<span id="seatCount"></span> / <span id="blockCount"></span><br>
 				</div>
+	</div>
 	</div>
 	
 		

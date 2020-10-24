@@ -8,15 +8,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Xducation - 陪你成長的學習好夥伴</title>
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="<%=request.getContextPath()%>/index/front-index/assets/css/bootstrap.min.css">
-    <!-- Icon -->
-    <link rel="stylesheet" href="<%=request.getContextPath()%>/index/front-index/assets/fonts/line-icons.css">
-    <!-- Animate -->
-    <link rel="stylesheet" href="<%=request.getContextPath()%>/index/front-index/assets/css/animate.css">
-    <!-- Main Style -->
-    <link rel="stylesheet" href="<%=request.getContextPath()%>/index/front-index/assets/css/main.css">
-    <!-- Responsive Style -->
-    <link rel="stylesheet" href="<%=request.getContextPath()%>/index/front-index/assets/css/responsive.css">
+<%--     <link rel="stylesheet" href="<%=request.getContextPath()%>/index/front-index/assets/css/bootstrap.min.css"> --%>
+<!--     Icon -->
+<%--     <link rel="stylesheet" href="<%=request.getContextPath()%>/index/front-index/assets/fonts/line-icons.css"> --%>
+<!--     Animate -->
+<%--     <link rel="stylesheet" href="<%=request.getContextPath()%>/index/front-index/assets/css/animate.css"> --%>
+<!--     Main Style -->
+<%--     <link rel="stylesheet" href="<%=request.getContextPath()%>/index/front-index/assets/css/main.css"> --%>
+<!--     Responsive Style -->
+<%--     <link rel="stylesheet" href="<%=request.getContextPath()%>/index/front-index/assets/css/responsive.css"> --%>
     <style>
     </style>
 </head>

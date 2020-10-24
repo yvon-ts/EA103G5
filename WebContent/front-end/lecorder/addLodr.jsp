@@ -12,94 +12,34 @@
 	LecVO lecVO = (LecVO) request.getAttribute("lecVO");
 	String lecno = lecVO.getLecno();
 	String roomno = lecVO.getRoomno();
+	
 	ClassroomService roomSvc = new ClassroomService();
 	ClassroomVO roomVO = roomSvc.getOneClassroom(roomno);
+	
 	String roomname = roomVO.getRoomname();
 	session.setAttribute("bookingLec", lecVO);
 	
-	//日期設定
-		Timestamp lecstart = lecVO.getLecstart();
-		Timestamp lecend = lecVO.getLecend();
-		String startdate = "";
-		String starttime = "";
-		String endtime = "";
-		DateFormat fmtdate = new SimpleDateFormat("yyyy/MM/dd");
-		DateFormat fmttime = new SimpleDateFormat("HH:mm");
-		startdate = fmtdate.format(lecstart);
-		starttime = fmttime.format(lecstart);
-		endtime = fmttime.format(lecend);
+	// date time formatter
+	Timestamp lecstart = lecVO.getLecstart();
+	Timestamp lecend = lecVO.getLecend();
+	String startdate = "";
+	String starttime = "";
+	String endtime = "";
+	DateFormat fmtdate = new SimpleDateFormat("yyyy/MM/dd");
+	DateFormat fmttime = new SimpleDateFormat("HH:mm");
+	startdate = fmtdate.format(lecstart);
+	starttime = fmttime.format(lecstart);
+	endtime = fmttime.format(lecend);
 %>
 
 <!DOCTYPE html>
 <html>
 <link href="<%=request.getContextPath()%>/front-end/lecture/listOneLec/vendor/bootstrap/css/bootstrap-grid.min.css" rel="stylesheet" />
+<link href="<%=request.getContextPath()%>/front-end/lecorder/css/addLodr.css" rel="stylesheet" />
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<style>
-	#info-part{
-		background-color: #fff;
-		padding: 30px;
-		border-radius: 2%;
-	}
-	#info-part #seatAppend{
-		color: #fff;
-	}
-	#info-block{
-		border-radius: 10%;
-		padding: 8px 0;
-	}
-html {
-  box-sizing: border-box;
-}
-*, *:before, *:after {
-  box-sizing: inherit;
-}
 
-       input{
-            width: 200px;
-            margin: 10px auto;
-            background-color: #e0eaf4;
-            border: 0;
-            line-height: 25px;
-            font-family: monospace;
-            
-            padding:.2em;
-   margin: .2em 0 .6em;
-   font-size: 1.2em;
-   border: 0;
-   background-color: transparent;
-   border-bottom: 1px solid #642100;
-        }
-input[type=submit]{
-  background: #6699cc;
-  border:none;
-  margin:1em 0;
-  color:white;
-  padding:1em;
-  width: 100%;
-}
-.message{
-  background: #333;
-  padding: 1em .5em;
-  margin: 1em 0;
-}
-/* Presentational for this pen */
-html{
-  background: #F3F3F3;
-}
-#form{
-  padding:5%;
-  background: white;
-  max-width:30em;
-  margin: 6% auto;
-  box-shadow:1em 1em 0 0 rgba(0,0,0,.2);
-  font-family:Raleway, sans-serif;
-}
-li{
-	list-style: none;
-}
-</style>
 </head>
 <body>
 <form class="login-form" method="post" action="<%=request.getContextPath()%>/front-end/lecorder/confirmLodr.jsp">
@@ -107,12 +47,15 @@ li{
 	<div class="row">
    		<div id="info-part" class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
     		<img src="<%=request.getContextPath()%>/lecture/picreader?lecno=${lecVO.lecno}">
+    		<br>
+    		<br>
+    		請依下方黃色區塊選擇您的座位<br>
+    		（每位會員僅限購四個座位）
     		<%@ include file="/front-end/lecorder/bookingSeats.jsp"%>
   		</div> 
 <%--    <%@ include file="/calendar/calendar.jsp" %> --%>
 		<div id="form" class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
 		<h1 style="color: #333">${lecVO.lecname}</h1>
-    		<div id="info-block">
     		
 				講座日期<br>
 				&nbsp;<input class="txt" type="text" value="<%=startdate%>"readonly><br>
@@ -123,12 +66,10 @@ li{
 				金額小計：<br>$<input class="txt" id="lecamt" type="text" name="lecamt" readonly><br>
 				付款方式：&nbsp;<input type="radio" style="width: 20px"checked>&nbsp;信用卡
 			
-			</div>
-			
-  				會員編號：<input type="text" name="memno">
+				會員編號：<input type="text" name="memno">
 				  <input id="submit" type="submit" value="確認付款">
   				<input type="hidden" name="lecno" value="<%=lecno%>">
-		</div>
+			</div>
  	</div>
 </div>
 </form>
