@@ -30,7 +30,7 @@ public class PostsDAO implements PostsDAO_interface {
 	private static final String UPDATE_STATUS1 = "UPDATE POSTS SET ISHIDDEN = 1 WHERE POSTNO = ?"; // 更改poststatus
 	private static final String UPDATE_STATUS2 = "UPDATE POSTS SET ISHIDDEN = 0 WHERE POSTNO = ?"; // 更改poststatus
 	private static final String UPDATE_STMT = "UPDATE POSTS SET POSTCONTENT = ?, POSTTIME = CURRENT_TIMESTAMP WHERE POSTNO=?";// 會員修改內容
-	private static final String GET_ALL_STMT = "SELECT * FROM POSTS ORDER BY POSTNO";
+	private static final String GET_ALL_STMT = "SELECT * FROM POSTS ORDER BY POSTNO DESC";
 	private static final String GET_ONE_STMT = "SELECT * FROM POSTS WHERE POSTNO = ?";
 	private static final String GET_MEMNO = "SELECT * FROM POSTS WHERE MEMNO = ?";
 

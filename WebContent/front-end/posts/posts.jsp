@@ -14,8 +14,28 @@
 	request.setAttribute("list", list);
 %>
 
-<jsp:useBean id="postSvc" scope="page" class="com.posts.model.PostsService" />
-<jsp:useBean id="memSvc" scope="page" class="com.members.model.MembersService" />
+<%
+MembersVO membersVO = (MembersVO) session.getAttribute("membersVO");
+System.out.println("目前登入的是:" + membersVO.getMemno());
+%>
+
+<% 
+// String courseno = (String)request.getParameter("courseno");
+
+//須由前端給值
+String courseno = "COUR0002";
+pageContext.setAttribute("courseno", courseno);
+
+CourseService courseSrv = new CourseService();
+CourseVO courseVO = courseSrv.getOneCourse(courseno);
+pageContext.setAttribute("courseVO", courseVO);
+System.out.println("測試的課程編號=" + courseno + "，課程名稱=" + courseVO.getCoursename() );
+
+%>
+
+<jsp:useBean id="postSvc" scope="page" class="com.posts.model.PostsService"/>
+<jsp:useBean id="memSvc" scope="page" class="com.members.model.MembersService"/>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -282,101 +302,121 @@ body {
 </style>
 <body>
 
-<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/posts/posts.do" name="form1"  accept-charset="utf-8">
-	<div class="comments-container">
-		<ul id="comments-list" class="comments-list">
-			<li>
-				<div class="comment-main-level">
-					<!-- 新增留言  -->
-					<div class="comment-avatar">
-						<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/Outdoors-man-portrait_%28cropped%29.jpg/330px-Outdoors-man-portrait_%28cropped%29.jpg" alt="登入會員圖片連結">
-					</div>
-					<input type="hidden" name="action" value="insert"/>
-					<input type="hidden" name="memno" value="MEM0001"/>
-					<input type="hidden" name="courseno" value="COUR0001"/>
-					<input type="hidden" name="superpostno" value=""/>
-					<!-- textarea -->
-					<div class="comment-box">
-						<textarea rows="4" cols="50" style="width: 680px;" name="postcontent" placeholder="please leave a message..."></textarea>
-						<div align="right">
-							<button>送出</button>
+	<!--上方留言區塊 -->
+	<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/posts/posts.do" name="form1"  accept-charset="utf-8">
+		<div class="comments-container">
+			<ul id="comments-list" class="comments-list">
+				<li>
+					<div class="comment-main-level">
+						<!-- 新增留言  -->
+						<div class="comment-avatar">
+							<img id='mprofile' src="<%=request.getContextPath()%>/front-end/members/MprofileDisplayServlet?MEMNO=${membersVO.memno}" alt="sing up image">
+						</div>
+						<input type="hidden" name="action" value="insert"/>
+						<input type="hidden" name="memno" value="${membersVO.memno}"/>
+						<input type="hidden" name="courseno" value="${courseVO.courseno}"/>
+						<input type="hidden" name="superpostno" value=""/>
+						<!-- textarea -->
+						<div class="comment-box">
+							<textarea rows="4" cols="50" style="width: 680px;" name="postcontent" placeholder="please leave a message...">${memVO.memno}</textarea>
+							<div align="right">
+								<button>送出</button>
+							</div>
 						</div>
 					</div>
-				</div>
-			</li>
-		</ul>
-	</form>
+				</li>
+			</ul>
+	</FORM>
 
-		<c:forEach var="postsVO" items="${list}">
-			<c:forEach var="memVO" items="${memSvc.all}">
-			<c:if test="${postsVO.memno == memVO.memno}">
+
+	<!-- 課程留言 -->
+	
+
+
+	<c:forEach var="postsVO" items="${list}">
+	
+		<c:if test="${empty postsVO.superpostno}">
+	
+			<!-- 取得每位留言者的membersVO -->
+			<c:set var="memVO" value="${memSvc.getOneMembers(postsVO.memno)}" scope="page"/>
+		
+<%-- 		<c:forEach var="memVO" items="${memSvc.all}"> --%>
+<%-- 			<c:if test="${postsVO.memno == membersVO.memno}"> --%>
+			
+			<!-- 第一層留言內容 -->
 			<div class="comment-main-level">
 				<ul id="comments-list" class="comments-list">
 					<li>
 						<!-- 父文章 -->
 						<div class="comment-avatar">
-							<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/Outdoors-man-portrait_%28cropped%29.jpg/330px-Outdoors-man-portrait_%28cropped%29.jpg" alt="會員圖片連結">
+							<img id='mprofile' src="<%=request.getContextPath()%>/front-end/members/MprofileDisplayServlet?MEMNO=${postsVO.memno}" alt="sing up image">
 						</div>
 	
 						<div class="comment-box">
 							<div class="comment-head">
+							
 								<!--之後改成memname -->
 								<h6 class="comment-name by-author">						
-									
 									${memVO.memname}&nbsp;&nbsp;|&nbsp;&nbsp;<fmt:formatDate value="${postsVO.posttime}" pattern="yyyy-MM-dd HH:mm"/>
-								
 								</h6>
 								
-							
-	
-								<span></span> <i class="fa fa-reply"></i> <i class="fa fa-heart"></i>
+								<span></span><i class="fa fa-reply"></i> <i class="fa fa-heart"></i>
 								<div align="right">
+									<c:if test="${membersVO.memno == memVO.memno}">
+										<button>修改</button>
+										<button>刪除</button>
+									</c:if>
 									<button><img src="<%=request.getContextPath() %>/front-end/posts/images/flag.png" style="width:15px;height:15px"></button>
-<%-- 									<input type="button" onclick="toggleA('${postsVO.postno }')" value="回覆"> --%>
+	<%-- 									<input type="button" onclick="toggleA('${postsVO.postno }')" value="回覆"> --%>
 									<button onclick="toggleA('${postsVO.postno}')" type="button"><img src="<%=request.getContextPath() %>/front-end/posts/images/reply.png" style="width:15px;height:15px;"></button>
 								</div>				
-											
 							</div>				
-						<div class="comment-content">
-								${postsVO.postcontent}
-						</div>
+							<div class="comment-content">${postsVO.postcontent}</div>
 						</div>
 					</li>
 				</ul>
-				</div>		
-		
-		<c:forEach var="postsVOSub" items="${list}">
-			<c:forEach var="memVOSub" items="${memSvc.all}">
-			<c:if test="${postsVOSub.memno == memVOSub.memno && postsVOSub.superpostno == postsVO.postno}">
-				<!-- 回覆留言 -->
-				<ul class="comments-list reply-list">
-					<li>
-						<!-- Avatar -->
-						<div class="comment-avatar">
-							<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/Outdoors-man-portrait_%28cropped%29.jpg/330px-Outdoors-man-portrait_%28cropped%29.jpg" alt="會員照片連結">
-						</div> <!-- Contenedor del Comentario -->
-						<div class="comment-box">
-							<div class="comment-head">
-								<h6 class="comment-name">
-									${memVOSub.memname}&nbsp;&nbsp;|&nbsp;&nbsp;<fmt:formatDate value="${postsVO.posttime}" pattern="yyyy-MM-dd HH:mm"/>
+			</div>
 			
-								</h6>
-								<span></span> <i class="fa fa-reply"></i> <i class="fa fa-heart"></i>
-								<div align="right">
-									<button><img src="<%=request.getContextPath() %>/front-end/posts/images/flag.png" style="width:15px;height:15px"></button>
-								</div>
-							</div>
-							<div class="comment-content">	${postsVOSub.postcontent}</div>
-							</div>
-					</li>
-				</ul>	
-				
-							
-				</c:if>
-				</c:forEach>
-			</c:forEach>
+			</c:if>
+				<!-- 第一層留言內容  END-->
+	
 		
-			<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/posts/posts.do" name="form1"  accept-charset="utf-8" id="${postsVO.postno }" style="display:none">
+				<!-- 第二層留言 -->	
+				<c:forEach var="postsVOSub" items="${list}">
+					<c:forEach var="memVOSub" items="${memSvc.all}">
+					<c:if test="${postsVOSub.memno == memVOSub.memno && postsVOSub.superpostno == postsVO.postno}">
+						<!-- 回覆留言 -->
+						<ul class="comments-list reply-list">
+							<li>
+								<!-- Avatar -->
+								<div class="comment-avatar">
+									<img id='mprofile' src="<%=request.getContextPath()%>/front-end/members/MprofileDisplayServlet?MEMNO=${postsVOSub.memno}" alt="sing up image">
+								</div> <!-- Contenedor del Comentario -->
+								<div class="comment-box">
+									<div class="comment-head">
+										<h6 class="comment-name">
+											${memVOSub.memname}&nbsp;&nbsp;|&nbsp;&nbsp;<fmt:formatDate value="${postsVO.posttime}" pattern="yyyy-MM-dd HH:mm"/>
+					
+										</h6>
+										<span></span> <i class="fa fa-reply"></i> <i class="fa fa-heart"></i>
+										<div align="right">
+											<c:if test="${membersVO.memno == memVOSub.memno}">
+												<button>修改</button>
+												<button>刪除</button>
+											</c:if>
+										
+											<button><img src="<%=request.getContextPath() %>/front-end/posts/images/flag.png" style="width:15px;height:15px"></button>
+										</div>
+									</div>
+									<div class="comment-content">	${postsVOSub.postcontent}</div>
+									</div>
+							</li>
+						</ul>	
+						</c:if>
+					</c:forEach>
+				</c:forEach>
+		
+				<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/posts/posts.do" name="form1"  accept-charset="utf-8" id="${postsVO.postno }" style="display:none">
 				
 					<ul id="comments-list" class="comments-list"  id="${postsVO.postno }">
 						<li>
@@ -386,9 +426,10 @@ body {
 									<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/Outdoors-man-portrait_%28cropped%29.jpg/330px-Outdoors-man-portrait_%28cropped%29.jpg" alt="登入會員圖片連結">
 								</div>
 								<input type="hidden" name="action" value="insert"/>
-								<input type="hidden" name="memno" value="${memVO.memno }"/>
-								<input type="hidden" name="courseno" value="${courseVo.courseno }"/>
+								<input type="hidden" name="memno" value="${membersVO.memno }"/>
+								<input type="hidden" name="courseno" value="${courseVO.courseno }"/>
 								<input type="hidden" name="superpostno" value="${postsVO.postno }"/>
+								
 								<!-- textarea -->
 								<div class="comment-box">
 									<textarea rows="4" cols="50" style="width: 680px;" name="postcontent"></textarea>
@@ -400,8 +441,8 @@ body {
 						</li>
 					</ul>
 				</form>
-		</c:if>
-		</c:forEach>
+<%-- 		</c:if> --%>
+<%-- 		</c:forEach> --%>
 	</c:forEach>
 	
 	</div>

@@ -249,7 +249,13 @@ public class PostsServlet extends HttpServlet {
 				String superpostno = req.getParameter("superpostno");
 				String memno = req.getParameter("memno");
 				String courseno = req.getParameter("courseno");
-
+				
+				
+				System.out.println("@PostsServlet 新增留言得到的參數為:");
+				System.out.println("postcontent=" + postcontent );
+				System.out.println("superpostno=" + superpostno );
+				System.out.println("memno=" + memno);
+				System.out.println("courseno=" + courseno);
 				
 				if (postcontent == null || (postcontent.trim()).length() == 0) {
 					errorMsgs.add("留言不能空白");
