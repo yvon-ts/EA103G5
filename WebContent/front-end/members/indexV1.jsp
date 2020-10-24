@@ -229,6 +229,10 @@ height:36px;
 										<a class="dropdown-item"
 											href="<%=request.getContextPath()%>/front-end/members/updateMembersV2.jsp">個人檔案</a>
 											
+											<a class="dropdown-item"
+											href='<%=request.getContextPath()%>/for萬州 塞路徑在這'>會員課程</a> 
+											
+											
 										
 										<c:if test="${teacherSvc.getStatus(sessionScope.membersVO.memno).tchrstatus eq '待審核'}">
 										<a class="dropdown-item" onclick="status()" >老師檔案</a> 
@@ -244,11 +248,9 @@ height:36px;
 											href="<%=request.getContextPath()%>/front-end/teacher/teacherUpdate.jsp">老師檔案</a>
 											
 										</c:if>
-										<c:if test="${not empty sessionScope.membersVO}">
 										<a class="dropdown-item"
 											href='<%=request.getContextPath()%>/members/members.do?action=signout'>會員登出</a> 
 											
-										</c:if>
 											
 											
 										
