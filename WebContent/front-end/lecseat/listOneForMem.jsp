@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*" %>
 <%@ page import="java.sql.*" %>
@@ -12,6 +11,9 @@
 <%
 	//lecseat
 	String lodrno = request.getParameter("lodrno").trim();
+	if(lodrno.length() == 0){
+		lodrno = (String) request.getAttribute("lodrno");
+	}
 	LecseatService seatSvc = new LecseatService();
 	List<LecseatVO> list = seatSvc.getSeatsByOrder(lodrno);
 	//lecorder
@@ -52,54 +54,35 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Bootstrap Elegant Table Design</title>
+<title>Xducation - 陪你成長的學習好夥伴</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<%@ include file="/index/front-index/header.jsp" %>
 <link rel="stylesheet" href="<%=request.getContextPath()%>/back-end/css/bootTable.css">
-<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
 <style>
-body {
-    color: #566787;
-    background: #f5f5f5;
-    font-family: 'Roboto', sans-serif;
-}
-#lecinfo{
-	position: absolute;
-	top: 50%;
-  	left: 50%;
- 	margin: -150px 0 0 -300px;
-
+body { 
+    color: #566787; 
+     background: #f5f5f5; 
+     font-family: 'Roboto', sans-serif; 
+     margin: 0; 
+ } 
+.lecinfo{
+	border: 1px solid #000;
+    width: fit-content;
+    margin-top: 80px;
+	margin-left: 400px;
 }
 .hide{
 	display: none;
 }
-
 </style>
 <script>
-$(document).ready(function(){
-	$('[data-toggle="tooltip"]').tooltip();
-	// Animate select box length
-	var searchInput = $(".search-box input");
-	var inputGroup = $(".search-box .input-group");
-	var boxWidth = inputGroup.width();
-	searchInput.focus(function(){
-		inputGroup.animate({
-			width: "300"
-		});
-	}).blur(function(){
-		inputGroup.animate({
-			width: boxWidth
-		});
-	});
-});
 </script>
 </head>
 <body>
-<div class="container-xl">
+<div id="padd">padd</div>
+<div id="table-area" class="container-xl">
     <div class="table-responsive">
         <div class="table-wrapper">			
             <div class="table-title">
@@ -117,18 +100,19 @@ $(document).ready(function(){
             <table class="table table-bordered">
                 <thead>
                     <tr>
-                        <th>訂單編號<i class="fa fa-sort"></i></th>
+                        <th>訂單編號</th>
                         <th>講座名稱</th>
-                        <th>講座票價<i class="fa fa-sort"></i></th>
+                        <th>講座票價</th>
                         <th>座位號碼</th>
-                        <th>訂單狀態<i class="fa fa-sort"></i></th>
-                        <th></th>
+                        <th>訂單狀態</th>
+                        <th>取消座位</th>
                     </tr>
                 </thead>
                 <tbody>
                <%@ include file="/back-end/pool/page1.file" %>
                         <c:forEach var="seatVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
 
+			
 			<tr><td>${seatVO.lodrno}</td>
 			 <td>${lecVO.lecname}</td>
 			<td>${lecVO.lecprice}</td>
@@ -137,7 +121,7 @@ $(document).ready(function(){
             <td>
             <form id="formGetOne" method="post" action="<%=request.getContextPath()%>/lecseat/lecseat.do">
             <input type="hidden" name="lodrno" value="${lodrVO.lodrno}">
-			<button type="submit" class="btn edit"><i class="material-icons">&#xE254;</i></button></form>
+			<button class="btn edit modify" style="color: orange"><i class="material-icons">&#xE254;</i></button></form>
             </td>
             </tr>
 		</c:forEach>
@@ -159,7 +143,7 @@ $(document).ready(function(){
 </div> 
  <div class="row">
    <div class="col-sm-6">
-   <div id="lecinfo">
+   <div class="lecinfo">
    	<ul>
    	<li>講座名稱：${lecVO.lecname}</li>
    	<li>講師姓名：${lecVO.spkrno}</li>
@@ -170,8 +154,9 @@ $(document).ready(function(){
    	</div>
    </div>
 		
-       <div class="col-sm-6"><button id="modify">修改座位</button><form method="post" action="<%=request.getContextPath()%>/lecorder/lecorder.do">
-       <%@ include file="/front-end/lecseat/bookedSeats.jsp" %>
+       <div class="col-sm-6"><button class="modify">修改座位</button><form method="post" action="<%=request.getContextPath()%>/lecorder/lecorder.do">
+      <button id="confirm" class="hide" style="margin-left:250px">確定變更</button>
+      <%@ include file="/front-end/lecseat/bookedSeats.jsp" %>
        <input type="hidden" name="lodrno" value="<%=lodrno%>">
        <input type="hidden" name="lecno" value="<%=lecno%>">
        <input type="hidden" name="action" value="update">
@@ -179,12 +164,15 @@ $(document).ready(function(){
   <input id="lecamt" type="text" name="lecamt" readonly>
   <input id="lecprice" type="hidden" value=<%=lecprice%> readonly>
   <input id="seatno" type="text" name="seatno" readonly>
-       <button id="confirm" class="hide">確定變更</button></form>
+       </form>
        
       </div>
       </div>
+      <%@ include file="/index/front-index/footer.jsp" %>
 	<script>
-		$("#modify").click(function(){
+		$(".modify").click(function(e){
+			e.preventDefault();
+			alert("請點選綠色區塊取消指定座位");
 			addClickForCancel();
 			$("#confirm").removeClass("hide");
 		});

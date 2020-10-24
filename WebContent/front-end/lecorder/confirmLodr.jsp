@@ -45,7 +45,7 @@
 <link href="<%=request.getContextPath()%>/front-end/lecture/listOneLec/vendor/bootstrap/css/bootstrap-grid.min.css" rel="stylesheet" />
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Xducation - 陪你成長的學習好夥伴</title>
 <style>
 	#credit-card{
 		background-color: #fff;

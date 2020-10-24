@@ -27,7 +27,10 @@
 		display: none;
 	}
 	#classroom{
-		width: 50%;
+		width: 235px;
+    	margin-left: 700px;
+   		margin-top: -250px;
+}
 	}
 </style>
 </head>
