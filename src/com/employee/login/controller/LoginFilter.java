@@ -1,6 +1,7 @@
 package com.employee.login.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -38,48 +39,52 @@ public class LoginFilter implements Filter {
 
 		HttpServletRequest req = (HttpServletRequest) request;
 		HttpServletResponse res = (HttpServletResponse) response;
-
+		
+		
 		HttpSession session = req.getSession();
 		Object empacc = session.getAttribute("empacc");
-
-		// 從員工編號查權限
-		String empno = (String) session.getAttribute("empno");
-		EmpAuthorityService empAuthSvc = new EmpAuthorityService();
-		List<EmpAuthorityVO> empauth = empAuthSvc.findByEmp(empno);
-
+		
+		List<EmpAuthorityVO> empauthlist =  (List<EmpAuthorityVO>) session.getAttribute("empauth");
+		
 		String urls = req.getRequestURI();
 		System.out.println(urls);
 		FunctionxService funSvc = new FunctionxService();
 		FunctionxVO funurl = funSvc.getUrl(urls);
-		System.out.println(funurl);
-
+		
 		if (empacc == null) {
 			session.setAttribute("location", req.getRequestURI());
 			res.sendRedirect(req.getContextPath() + "/back-end/login/login.jsp");
 			return;
 		}
-
+		
+		
+		
 		if (funurl == null) {
 			chain.doFilter(request, response);
 			return;
 		}
-		if (empauth.isEmpty()) {
-			session.setAttribute("error", "你沒有權限");
+		if (empauthlist.isEmpty()) {
+			session.setAttribute("error", "你沒有權限!");
 			res.sendRedirect(req.getContextPath() + "/front-end/back-endHomePage.jsp");
 			return;
 		}
 
 		String funcno = funurl.getFuncno();
-
-		for (EmpAuthorityVO auth : empauth) {
-			if (!auth.getFuncno().equals(funcno)) {
-				session.setAttribute("error", "你沒有權限");
+		System.out.println(funcno+"========================");
+		
+		//細節權限還是無法阻擋
+		for (EmpAuthorityVO auth : empauthlist) {
+			System.out.println(auth.getFuncno().equals(funcno));
+			if (auth.getFuncno().equals(funcno)) {
+				session.setAttribute("error", "你沒有權限!");
 				res.sendRedirect(req.getContextPath() + "/front-end/back-endHomePage.jsp");
 			}
 		}
 
 		chain.doFilter(request, response);
-
+		
+		
+		
 	}
 
 }

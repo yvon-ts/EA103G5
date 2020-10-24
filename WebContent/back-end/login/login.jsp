@@ -4,8 +4,9 @@
 <%@ page import="com.employee.model.*"%>
 <%
 	session.setAttribute("empacc",null);
-	session.setAttribute("empAuthorityVO",null);
+	session.setAttribute("empauth",null);
 	session.setAttribute("empname",null);
+	session.setAttribute("error",null);
 %>
 <!DOCTYPE html>
 <html lang="en">
