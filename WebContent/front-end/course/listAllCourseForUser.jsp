@@ -4,7 +4,6 @@
 <%@ page import="java.util.*"%>
 <%@ page
 	import="com.course.model.*,com.course_type.model.*,com.members.model.*,com.tracking_list.model.*"%>
-
 <%
 	List<CourseVO> list = (List<CourseVO>) request.getAttribute("list");
 
@@ -50,7 +49,7 @@
 	href="https://cdnjs.cloudflare.com/ajax/libs/jquery.rateit/1.1.3/rateit.css" />
 <link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 <style>
 .rateit .rateit-preset {
@@ -64,8 +63,6 @@
 </head>
 
 <body>
-
-
 
 	<!-- member -->
 	<input type="hidden" id="memno" value="${Membersvo.memno}" />
@@ -212,7 +209,12 @@
 					action: "shoppingCart"
 				},
 				success: function(data){
-					console.log(data);
+					if(data !== 'false'){
+						swal({ 
+							title: "成功加入購物車",
+						    icon: "success",
+						    button: true});
+					}
 				}
 			});
 		});

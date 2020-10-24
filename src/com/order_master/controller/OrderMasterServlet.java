@@ -1,6 +1,7 @@
 package com.order_master.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Vector;
@@ -31,6 +32,8 @@ public class OrderMasterServlet extends HttpServlet {
 		List<CourseVO> buylist = (Vector<CourseVO>) session.getAttribute("shoppingcart");
 		String action = req.getParameter("action");
 
+		System.out.println(action);
+		
 		if ("getOne_For_Display".equals(action)) { // 來自OrderMasterDB.jsp的請求
 
 			List<String> errorMsgs = new LinkedList<String>();
@@ -156,38 +159,47 @@ public class OrderMasterServlet extends HttpServlet {
 		}
 		if ("insert".equals(action)) {
 
+			List<CourseVO> shoppingList = (List<CourseVO>)req.getSession().getAttribute("shoppingList");
+			
+			
+			for(CourseVO vo :shoppingList) {
+				System.out.println(vo);
+			}
+			
 			List<String> errorMsgs = new LinkedList<String>();
 			// Store this set in the request scope, in case we need to
 			// send the ErrorPage view.
 			req.setAttribute("errorMsgs", errorMsgs);
 
-//			try {
-			/*********************** 1.接收請求參數 - 輸入格式的錯誤處理 *************************/
+			try {
 
-			String memno = req.getParameter("memno");
 
-			// 折扣碼轉換
-			String coupcode = req.getParameter("coupcode");
-			Integer orderamt = new Integer(req.getParameter("orderamt"));
-			String coupno = null;
-			if (!(coupcode.length() == 0)) {
-				CoupCodeService coupSvc = new CoupCodeService();
-				CoupCodeVO coupCodeVO = coupSvc.getOneCoupno(coupcode);
-				coupno = coupCodeVO.getCoupno();
-				// 折扣碼扣除
-				Integer discamt = coupCodeVO.getDiscamt();
-				if (!(coupno.length() == 0)) {
-					orderamt = orderamt - discamt;
-					coupSvc.updateCoupCode(coupno, 1);
-				}
-			} else {
-				coupno = null;
-			}
-
-			String payby = req.getParameter("payby").trim();
-			if (payby == null || payby.trim().length() == 0) {
-				errorMsgs.add("付款方式請勿空白");
-			}
+				/*********************** 1.接收請求參數 - 輸入格式的錯誤處理 *************************/
+				
+				String memno = req.getParameter("memno");
+				String coupno = req.getParameter("coupno");
+				String orderamt = req.getParameter("orderamt");
+				
+				//折扣碼轉換
+//				String coupcode = req.getParameter("coupcode");
+//				System.out.println(coupcode);
+//				CoupCodeService coupSvc = new CoupCodeService();
+//				CoupCodeVO coupCodeVO = coupSvc.getOneCoupno(coupcode);
+//				coupno = coupCodeVO.getCoupno();
+//				// 折扣碼扣除
+//				Integer discamt = coupCodeVO.getDiscamt();
+//				if (!(coupno.length() == 0)) {
+//					orderamt = orderamt - discamt;
+//					coupSvc.updateCoupCode(coupno, 1);
+//				}
+//			} else {
+//				coupno = null;
+//			}
+//
+//			String payby = req.getParameter("payby").trim();
+//			if (payby == null || payby.trim().length() == 0) {
+//				errorMsgs.add("付款方式請勿空白");
+//			}
 
 			String[] courseno = req.getParameterValues("courseno");
 			String[] sellprice = req.getParameterValues("courseprice");
@@ -220,7 +232,7 @@ public class OrderMasterServlet extends HttpServlet {
 
 			/*************************** 2.開始新增資料 ***************************************/
 			OrderMasterService ordermasterSvc = new OrderMasterService();
-			orderMasterVO = ordermasterSvc.addOrder(memno, orderamt, coupno, payby, list);
+//			orderMasterVO = ordermasterSvc.addOrder(memno, orderamt, coupno, payby, list);
 
 			/*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
 			String url = "/back-end/Order_Master/ListOneOrder.jsp";
@@ -228,11 +240,11 @@ public class OrderMasterServlet extends HttpServlet {
 			successView.forward(req, res);
 
 			/*************************** 其他可能的錯誤處理 **********************************/
-//			} catch (Exception e) {
-//				errorMsgs.add(e.getMessage());
-//				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/Shop/Test.jsp");
-//				failureView.forward(req, res);
-//			}
+			} catch (Exception e) {
+				errorMsgs.add(e.getMessage());
+				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/Shop/Test.jsp");
+				failureView.forward(req, res);
+			}
 		}
 		if ("getMemno_For_Display".equals(action)) { // 來自OrderMasterDB.jsp的請求
 			List<String> errorMsgs = new LinkedList<String>();
