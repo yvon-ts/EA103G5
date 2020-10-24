@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.coup_code.model.CoupCodeService;
+import com.coup_code.model.CoupCodeVO;
 import com.course.model.CourseVO;
 import com.order_detail.model.OrderDetailVO;
 import com.order_master.model.OrderMasterService;
@@ -163,8 +165,20 @@ public class OrderMasterServlet extends HttpServlet {
 				/*********************** 1.接收請求參數 - 輸入格式的錯誤處理 *************************/
 				
 				String memno = req.getParameter("memno");
+				
+				//折扣碼轉換
+				String coupcode = req.getParameter("coupcode");
+				CoupCodeService coupSvc = new CoupCodeService();
+				CoupCodeVO coupCodeVO = coupSvc.getOneCoupno(coupcode);
+				String coupno = coupCodeVO.getCoupno();
+				//折扣碼扣除
 				Integer orderamt = new Integer (req.getParameter("orderamt"));
-				String coupno = req.getParameter("coupno");
+				Integer discamt = coupCodeVO.getDiscamt();
+				if (!(coupno.length() == 0)) {
+					orderamt = orderamt - discamt;
+					coupSvc.updateCoupCode(coupno, 1);
+					
+				}
 
 				String payby = req.getParameter("payby").trim();
 				if (payby == null || payby.trim().length() == 0) {
@@ -175,12 +189,13 @@ public class OrderMasterServlet extends HttpServlet {
 				String[] sellprice = req.getParameterValues("courseprice");
 				String[] promono = req.getParameterValues("promono");
 				
-				
 				OrderMasterVO orderMasterVO = new OrderMasterVO();
-				orderMasterVO.setMemno(memno);
-				orderMasterVO.setOrderamt(orderamt);
-				orderMasterVO.setCoupno(coupno);
-				orderMasterVO.setPayby(payby);
+				
+//				orderMasterVO.setMemno(memno);
+//				orderMasterVO.setOrderamt(orderamt);
+//				orderMasterVO.setCoupno(coupno);
+//				orderMasterVO.setPayby(payby);
+				
 				List<OrderDetailVO> list = new Vector<OrderDetailVO>();
 				System.out.println(buylist.size());
 				for (int i = 0; i < buylist.size(); i++) {
@@ -220,23 +235,10 @@ public class OrderMasterServlet extends HttpServlet {
 			// Store this set in the request scope, in case we need to
 			// send the ErrorPage view.
 			req.setAttribute("errorMsgs", errorMsgs);
-
+			
 			try {
 				/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
-				String str = req.getParameter("memno");
-				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req.getRequestDispatcher("/back-end/Order_Master/OrderMasterDB.jsp");
-					failureView.forward(req, res);
-					return;// 程式中斷
-				}
-
-				String memno = null;
-				try {
-					memno = new String(str);
-				} catch (Exception e) {
-					errorMsgs.add("會員編號格式不正確");
-				}
-				// Send the use back to the form, if there were errors
+				String memno = req.getParameter("memno").toString();
 				if (!errorMsgs.isEmpty()) {
 					RequestDispatcher failureView = req.getRequestDispatcher("/back-end/Order_Master/OrderMasterDB.jsp");
 					failureView.forward(req, res);
@@ -244,8 +246,10 @@ public class OrderMasterServlet extends HttpServlet {
 				}
 
 				/*************************** 2.開始查詢資料 *****************************************/
+				System.out.println(memno);
 				OrderMasterService ordSvc = new OrderMasterService();
 				List<OrderMasterVO> orderMasterVO = ordSvc.getOnesOrder(memno);
+				System.out.println(orderMasterVO.size());
 				if (orderMasterVO == null) {
 					errorMsgs.add("查無資料");
 				}

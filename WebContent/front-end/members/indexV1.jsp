@@ -184,6 +184,8 @@ height:36px;
 </style>
 
 <body>
+
+
 	<!-- Header Area wrapper Starts -->
 	<header id="header-wrap">
 		<!-- Navbar Start -->
@@ -230,9 +232,8 @@ height:36px;
 											href="<%=request.getContextPath()%>/front-end/members/updateMembersV2.jsp">個人檔案</a>
 											
 											<a class="dropdown-item"
-											href='<%=request.getContextPath()%>/for萬州 塞路徑在這'>會員課程</a> 
-											
-											
+											href='<%=request.getContextPath()%>/front-end/Order_Master/listAllByMemno.jsp'>課程訂單紀錄</a> 
+																
 										
 										<c:if test="${teacherSvc.getStatus(sessionScope.membersVO.memno).tchrstatus eq '待審核'}">
 										<a class="dropdown-item" onclick="status()" >老師檔案</a> 
