@@ -2,22 +2,22 @@
         @import url("https://fonts.googleapis.com/css?family=Arvo:700|Gochi+Hand");
         body {
             overflow-x: visible;
-            background: #fff;
-            font-size: 14px;
-            font-weight: 400;
+/*             background: #fff; */
+/*             font-size: 14px; */
+/*             font-weight: 400; */
             font-family: 'Open Sans', sans-serif;
             -webkit-box-sizing: border-box;
             -moz-box-sizing: border-box;
             box-sizing: border-box;
             -webkit-font-smoothing: subpixel-antialiased;
-            color: #abacae;
+/*             color: #abacae; */
             line-height: 25px;
             -webkit-backface-visibility: hidden;
             backface-visibility: hidden;
             overflow-x: hidden;
         }
 
-        h1, h2, h3, h4 {
+        h1, h2 {
             font-size: 38px;
             color: #222222;
             font-weight: 700;
@@ -56,9 +56,9 @@
             list-style: none;
         }
 
-        a:not([href]):not([tabindex]) {
-            color: #fff;
-        }
+/*         a:not([href]):not([tabindex]) { */
+/*             color: #fff; */
+/*         } */
 
         .section-header {
             margin-bottom: 30px;
@@ -1454,7 +1454,6 @@
         /* Footer Area Start */
         .footer-area {
             position: relative;
-            padding: 50px 0px 0px;
             background: #fff;
         }
 

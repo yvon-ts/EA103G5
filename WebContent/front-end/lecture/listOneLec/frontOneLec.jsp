@@ -5,48 +5,62 @@
 <%@ page import="java.text.DateFormat"%>
 <%@ page import="java.text.SimpleDateFormat"%>
 <%@ page import="com.lecture.model.*"%>
+<%@ page import="com.speaker.model.*"%>
 <!DOCTYPE html>
 
-<% LecVO lecVO = (LecVO) request.getAttribute("lecVO");
-	//CKeditor - Bytes to String
-	String info = "資訊更新中";
-	try{
-		byte[] b = lecVO.getLecinfo();
-		info = new String(b);
-	} catch (Exception e){
-		info = "資訊更新中";
-	}
-
-	//日期設定
+<% 
+	LecVO lecVO = (LecVO) request.getAttribute("lecVO");
+	String lecno = lecVO.getLecno();
+	String roomno = lecVO.getRoomno();
+	
+	ClassroomService roomSvc = new ClassroomService();
+	ClassroomVO roomVO = roomSvc.getOneClassroom(roomno);
+	
+	SpkrService spkrSvc = new SpkrService();
+	SpkrVO spkrVO = spkrSvc.getOne(lecVO.getSpkrno());
+	String spkrname = spkrVO.getSpkrname();
+	
+	String roomname = roomVO.getRoomname();
+	session.setAttribute("bookingLec", lecVO);
+	session.setAttribute("roomname", roomname);
+	session.setAttribute("spkrname", spkrname);
+	
+	// date time formatter
 	Timestamp lecstart = lecVO.getLecstart();
 	Timestamp lecend = lecVO.getLecend();
-	Timestamp signstart= lecVO.getSignstart();
-	Timestamp signend= lecVO.getSignend();
 	String startdate = "";
 	String starttime = "";
 	String endtime = "";
-	String opendate = "";
-	String closedate = "";
 	DateFormat fmtdate = new SimpleDateFormat("yyyy/MM/dd");
 	DateFormat fmttime = new SimpleDateFormat("HH:mm");
 	startdate = fmtdate.format(lecstart);
 	starttime = fmttime.format(lecstart);
 	endtime = fmttime.format(lecend);
-	opendate = fmtdate.format(signstart);
-	closedate = fmtdate.format(signend);
 	
-	String status;
+	//CKeditor - Bytes to String
+	String spkrinfo = "講師資訊更新中";
+	try{
+		byte[] b = spkrVO.getSpkrinfo();
+		spkrinfo = new String(b);
+	} catch (Exception e){
+		spkrinfo = "講師資訊更新中";
+	}
 	
-	if (lecVO.getLecstatus() == 1){
-		status = "正常";
-	} else {
-		status = "取消";
+	String lecinfo = "講座資訊更新中";
+	try{
+		byte[] b = lecVO.getLecinfo();
+		lecinfo = new String(b);
+	} catch (Exception e){
+		lecinfo = "講座資訊更新中";
 	}
 %>
 
 <html lang="en">
 
 <head>
+
+<%-- <link rel="stylesheet" href="<%=request.getContextPath()%>/index/front-index/assets/css/main.css"> --%>
+<%-- <link rel="stylesheet" href="<%=request.getContextPath()%>/library/bootstrap/4.5.3/css/bootstrap.min.css"> --%>
 <%@ include file="/index/front-index/header.jsp" %>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -90,9 +104,9 @@
                                         </tr>
                                     </table>
                                 </div>
-                                <div class="header-button">
-                                    <a href="#" class="btn btn-common">探索課程</a>
-                                    <a href="#" class="btn btn-border video-popup">我要註冊</a>
+                                 <div class="header-button">
+                                    <a href="<%=request.getContextPath()%>/front-end/lecture/listAllLec.jsp" class="btn btn-common">搜尋講座</a>
+                                    <a href="<%=request.getContextPath()%>/front-end/lecture/listAllLec.jsp" class="btn btn-border">查看全部</a>
                                 </div>
                             </div>
                         </div>
@@ -125,8 +139,8 @@
        <div class="media mt-4">
               <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
               <div class="media-body">
-                <h5 class="mt-0">Commenter Name</h5>
-                Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
+                <h5 class="mt-0"><%=spkrname%></h5>
+                <%=spkrinfo %>
               </div>
             </div>
         <hr>
@@ -154,7 +168,7 @@
             <cite title="Source Title">Source Title</cite>
           </footer>
         </blockquote>
-		<%=info%>
+		<%=lecinfo%>
         <hr>
 
         <!-- Comment with nested comments -->
@@ -187,35 +201,15 @@
 
         <!-- Categories Widget -->
         <div class="card my-4">
-          <h5 class="card-header">Categories</h5>
+          <h5 class="card-header">Search</h5>
           <div class="card-body">
-            <div class="row">
-              <div class="col-lg-6">
-                <ul class="list-unstyled mb-0">
-                  <li>
-                    <a href="#">Web Design</a>
-                  </li>
-                  <li>
-                    <a href="#">HTML</a>
-                  </li>
-                  <li>
-                    <a href="#">Freebies</a>
-                  </li>
-                </ul>
-              </div>
-              <div class="col-lg-6">
-                <ul class="list-unstyled mb-0">
-                  <li>
-                    <a href="#">JavaScript</a>
-                  </li>
-                  <li>
-                    <a href="#">CSS</a>
-                  </li>
-                  <li>
-                    <a href="#">Tutorials</a>
-                  </li>
-                </ul>
-              </div>
+            <div class="input-group">
+              <form method="post"	action="<%=request.getContextPath()%>/front-end/lecorder/listByMemno.jsp">
+              <span class="input-group-append">
+              <input type="text" name="memno" value="memno"><br>
+                <button class="btn btn-secondary" type="submit">查看我的講座清單</button>
+                </span>
+                </form>
             </div>
           </div>
         </div>

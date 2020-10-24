@@ -21,11 +21,12 @@
 %>
 <html>
 <head>
+<link rel="stylesheet" href="<%=request.getContextPath()%>/library/bootstrap/4.5.3/css/bootstrap.min.css">
 <%-- <link rel="stylesheet" href="<%=request.getContextPath()%>/index/front-index/assets/css/bootstrap.min.css"> --%>
-<%-- <link rel="stylesheet" href="<%=request.getContextPath()%>/index/front-index/assets/css/main.css"> --%>
+<link rel="stylesheet" href="<%=request.getContextPath()%>/index/front-index/assets/css/main.css">
 <%@ include file="/index/front-index/header.jsp" %>
 <link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/css/lecAll.css">
-<title>listAlllec.jsp</title>
+<title>Xducation - 陪你成長的學習好夥伴</title>
 <style>
 	h1{
 		margin-top: 150px;

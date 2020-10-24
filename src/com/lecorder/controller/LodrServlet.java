@@ -91,7 +91,9 @@ public class LodrServlet extends HttpServlet {
 				LodrService lodrSvc = new LodrService();
 				lodrSvc.addLodr(lodrVO, seatList, lecVO);
 				
-				RequestDispatcher successView = req.getRequestDispatcher("/success.jsp");
+				req.setAttribute("memno", memno);
+				
+				RequestDispatcher successView = req.getRequestDispatcher("/front-end/lecorder/listByMemno.jsp");
 				successView.forward(req, res);
 				return;
 			} catch (Exception e) {
@@ -214,7 +216,9 @@ public class LodrServlet extends HttpServlet {
 						LodrService lodrSvc = new LodrService();
 						lodrSvc.updateLodr(lodrVO, seatList, lecVO);
 						
-						RequestDispatcher successView = req.getRequestDispatcher("/success.jsp");
+						req.setAttribute("lodrno", lodrno);
+						
+						RequestDispatcher successView = req.getRequestDispatcher("/front-end/lecseat/listOneForMem.jsp");
 						successView.forward(req, res);
 						return;
 					} catch (Exception e) {
