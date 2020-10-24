@@ -2,6 +2,9 @@ package com.course_assess.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import org.json.JSONArray;
@@ -16,6 +19,8 @@ import javax.servlet.http.HttpSession;
 
 import com.course_assess.model.Course_assessService;
 import com.course_assess.model.Course_assessVO;
+import com.members.model.MembersService;
+import com.teacher.model.TeacherService;
 
 public class Course_assessServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -53,8 +58,25 @@ public class Course_assessServlet extends HttpServlet {
 		
 		try {
 			Course_assessService course_assessSvc = new Course_assessService();
+			MembersService membersSvc = new MembersService();
+			TeacherService teacherSvc = new TeacherService();
+			
 			String courseno = req.getParameter("courseno");
 			List<Course_assessVO>list = course_assessSvc.getAll(courseno);
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd HH:mm:ss");
+			
+			 for(Course_assessVO vo: list) {
+				vo.setNkname(membersSvc.getOneMembers(vo.getMemno()).getNkname());
+				vo.setTchrstatus(teacherSvc.getStatus(vo.getMemno()).getTchrstatus());
+				Date date = vo.getCommenttime();
+				vo.setString_commenttime(new SimpleDateFormat("yyyy年MM月dd日 HH時:mm分").format(date));
+			 }
+			
+			
+			
+			
+			
+			
 			
 			String str = new JSONArray(list).toString();
 			
@@ -97,7 +119,7 @@ public class Course_assessServlet extends HttpServlet {
 		course_assessSvc.addCourse_assess(courseno, memno, coursescore, comments);
 		String inform5 = "200";
 		req.setAttribute("inform5", inform5);
-		RequestDispatcher SuccessView = req.getRequestDispatcher("/front-end/course_assess/listAllCourse_assess.jsp");
+		RequestDispatcher SuccessView = req.getRequestDispatcher("/front-end/course_assess/listAllAjax.jsp");
 		SuccessView.forward(req, res);
 		return;
 		
@@ -123,13 +145,13 @@ public class Course_assessServlet extends HttpServlet {
 		req.setAttribute("inform5", inform5);
 		Course_assessService course_assessSvc = new Course_assessService();
 		course_assessSvc.updateCourse_assess(asesno, coursescore, comments);
-		RequestDispatcher SuccessView = req.getRequestDispatcher("/front-end/course_assess/listAllCourse_assess.jsp");
+		RequestDispatcher SuccessView = req.getRequestDispatcher("/front-end/course_assess/listAllAjax.jsp");
 		SuccessView.forward(req, res);
 		return;
 	}
 	
 	
-	
+
 	
 	
 	
