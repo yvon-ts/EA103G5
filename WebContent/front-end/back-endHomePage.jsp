@@ -163,7 +163,10 @@ swal({
 	  title: "${error}",
 	  icon: "error",
 	});
-</c:if>	
+<%request.getSession().removeAttribute("error");%>		
+</c:if>
+
+	
    </script>
     
 </body>
