@@ -17,10 +17,10 @@
             }
         });
 
-        // one page navigation 
-        $('.navbar-nav').onePageNav({
-            currentClass: 'active'
-        });
+//        // one page navigation 
+//        $('.navbar-nav').onePageNav({
+//            currentClass: 'active'
+//        });
 
         /* Auto Close Responsive Navbar on Click
         ========================================================*/

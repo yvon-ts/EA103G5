@@ -79,7 +79,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">
+                            <a class="nav-link" href="<%=request.getContextPath()%>/front-end/lecture/listAllLec.jsp">
                                 ¦W¤HÁ¿®y&nbsp;<i class="lni-bulb"></i>
                             </a>
                         </li>
