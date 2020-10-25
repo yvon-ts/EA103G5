@@ -20,7 +20,7 @@ System.out.println("目前登入的是:" + membersVO.getMemno());
 %>
 
 <% 
-// String courseno = (String)request.getParameter("courseno");
+/* String courseno = (String)request.getParameter("courseno");*/
 
 //須由前端給值
 String courseno = "COUR0002";
@@ -39,7 +39,7 @@ System.out.println("測試的課程編號=" + courseno + "，課程名稱=" + co
 <!DOCTYPE html>
 <html>
 <head>
-
+		<script src="/library/jquery/jquery-3.5.1.js"></script>
 		<script>
 			function toggleA(name){
 				if	(document.getElementById(name).style.display=="none"){
@@ -53,6 +53,12 @@ System.out.println("測試的課程編號=" + courseno + "，課程名稱=" + co
 <title>Insert title here</title>
 
 </head>
+<style>
+.button{
+	display:inline-block;
+}
+
+</style>
 <style>
 /**
  * Oscuro: #283035
@@ -355,23 +361,41 @@ body {
 						<div class="comment-box">
 							<div class="comment-head">
 							
-								<!--之後改成memname -->
-								<h6 class="comment-name by-author">						
+							
+								<h6 class="comment-name">						
 									${memVO.memname}&nbsp;&nbsp;|&nbsp;&nbsp;<fmt:formatDate value="${postsVO.posttime}" pattern="yyyy-MM-dd HH:mm"/>
 								</h6>
 								
 								<span></span><i class="fa fa-reply"></i> <i class="fa fa-heart"></i>
 								<div align="right">
 									<c:if test="${membersVO.memno == memVO.memno}">
-										<button>修改</button>
-										<button>刪除</button>
+										<input type="button" onclick="toggleA('${postsVO.postno}_reply')" class="button" value="修改"></input>
+									
+											<form METHOD="post"  ACTION="<%=request.getContextPath()%>/posts/posts.do" class="button" accept-charset="utf-8">
+											<input type="submit"  value="刪除"></input>
+											<input type="hidden" name="action" value="update_Status_Remove" />
+											<input type="hidden" name="postno" value="${postsVO.postno}"/>
+											</form>
 									</c:if>
 									<button><img src="<%=request.getContextPath() %>/front-end/posts/images/flag.png" style="width:15px;height:15px"></button>
 	<%-- 									<input type="button" onclick="toggleA('${postsVO.postno }')" value="回覆"> --%>
 									<button onclick="toggleA('${postsVO.postno}')" type="button"><img src="<%=request.getContextPath() %>/front-end/posts/images/reply.png" style="width:15px;height:15px;"></button>
+									
 								</div>				
 							</div>				
 							<div class="comment-content">${postsVO.postcontent}</div>
+							<div class="comment-content">
+								<form METHOD="post" id="${postsVO.postno}_reply" ACTION="<%=request.getContextPath()%>/posts/posts.do" style="display:none" accept-charset="utf-8">
+									<input type="hidden" name="action" value="update" />
+									<textarea name="postcontent" style="width:100%">${postsVO.postcontent}</textarea>
+									<input type="hidden" name="postno" value="${postsVO.postno}"/>
+									<input type="hidden" name="superpostno" value="${postsVO.superpostno}"/>
+									<input type="hidden" name="memno" value="${postsVO.memno}"/>
+									<input type="hidden" name="courseno" value="${postsVO.courseno}"/>
+									<input type="submit" value="送出"/> 
+								
+								</form>
+								</div>
 						</div>
 					</li>
 				</ul>
@@ -401,14 +425,31 @@ body {
 										<span></span> <i class="fa fa-reply"></i> <i class="fa fa-heart"></i>
 										<div align="right">
 											<c:if test="${membersVO.memno == memVOSub.memno}">
-												<button>修改</button>
-												<button>刪除</button>
+												<input type="button" onclick="toggleA('${postsVO.postno}_reply')" class="button" value="修改"></input>
+												
+												<form METHOD="post" ACTION="<%=request.getContextPath()%>/posts/posts.do" class="button" accept-charset="utf-8">
+												<input type="submit"  value="刪除"></input>
+												<input type="hidden" name="action" value="update_Status_Remove" />
+												<input type="hidden" name="postno" value="${postsVOSub.postno}"/>
+												</form>
 											</c:if>
 										
 											<button><img src="<%=request.getContextPath() %>/front-end/posts/images/flag.png" style="width:15px;height:15px"></button>
 										</div>
 									</div>
-									<div class="comment-content">	${postsVOSub.postcontent}</div>
+									<div class="comment-content">${postsVOSub.postcontent}</div>
+									<div class="comment-content">
+										<form METHOD="post" id="${postsVOSub.postno}_reply" ACTION="<%=request.getContextPath()%>/posts/posts.do" style="display:none" accept-charset="utf-8">
+											<input type="hidden" name="action" value="update" />
+											<textarea name="postcontent" style="width:100%">${postsVOSub.postcontent}</textarea>
+											<input type="hidden" name="postno" value="${postsVOSub.postno}"/>
+											<input type="hidden" name="superpostno" value="${postsVOSub.superpostno}"/>
+											<input type="hidden" name="memno" value="${postsVOSub.memno}"/>
+											<input type="hidden" name="courseno" value="${postsVOSub.courseno}"/>
+											<input type="submit" value="送出"/> 
+										
+										</form>
+									</div>
 									</div>
 							</li>
 						</ul>	
@@ -423,7 +464,7 @@ body {
 							<div class="comment-main-level">
 								<!-- 新增留言  -->
 								<div class="comment-avatar">
-									<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/Outdoors-man-portrait_%28cropped%29.jpg/330px-Outdoors-man-portrait_%28cropped%29.jpg" alt="登入會員圖片連結">
+									<img id='mprofile' src="<%=request.getContextPath()%>/front-end/members/MprofileDisplayServlet?MEMNO=${membersVO.memno}" alt="sing up image">
 								</div>
 								<input type="hidden" name="action" value="insert"/>
 								<input type="hidden" name="memno" value="${membersVO.memno }"/>
