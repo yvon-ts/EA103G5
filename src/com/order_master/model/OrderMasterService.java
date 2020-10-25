@@ -14,7 +14,7 @@ public class OrderMasterService {
 	}
 	
 	public OrderMasterVO addOrder(String memno, Integer orderamt, String coupno, String payby, List<OrderDetailVO> list){
-		
+		System.out.println("進入service");
 		OrderMasterVO vo = new OrderMasterVO();
 		
 		vo.setMemno(memno);

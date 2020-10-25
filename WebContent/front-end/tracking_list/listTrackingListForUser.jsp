@@ -11,6 +11,7 @@
 	Membersvo.setMemno("MEM0002");
 	
 	session.setAttribute("Membersvo",Membersvo);//此處須修改
+	String memno = "MEM0002";
 	
 // 	pageContext.setAttribute("Membersvo", Membersvo);	
 	
@@ -160,7 +161,9 @@
         <div class="col-sm-6 order-md-2 text-right">
             <button type="button" class="btn btn-primary" id= "checkout">Checkout</button>
             <input type="hidden" name="action" value="insert">
-            <input type="hidden" name="coupcode" value="COUP0001">
+            <input type="hidden" name="coupcode" value="XXXX-ZXCV">
+            <input type="hidden" name="memno" value="memno">
+            <input type="hidden" name="orderamt" value="${totalPrice}">
         </div>
         <div class="col-sm-6 mb-3 mb-m-1 order-md-1 text-md-left">
             <a href="<%=request.getContextPath()%>/front-end/course/listAllCourseForUser.jsp">

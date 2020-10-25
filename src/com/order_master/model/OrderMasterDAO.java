@@ -37,6 +37,7 @@ public class OrderMasterDAO implements OrderMasterDAO_interface {
 
 	@Override
 	public void insert(OrderMasterVO orderMasterVO, List<OrderDetailVO> detailList) {
+		System.out.println("進入DAO");
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		String ord_next_no = null;

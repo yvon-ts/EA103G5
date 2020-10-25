@@ -33,7 +33,7 @@ public class OrderMasterServlet extends HttpServlet {
 		String action = req.getParameter("action");
 
 		System.out.println(action);
-		
+
 		if ("getOne_For_Display".equals(action)) { // 來自OrderMasterDB.jsp的請求
 
 			List<String> errorMsgs = new LinkedList<String>();
@@ -159,10 +159,9 @@ public class OrderMasterServlet extends HttpServlet {
 		}
 		if ("insert".equals(action)) {
 
-			List<CourseVO> shoppingList = (List<CourseVO>)req.getSession().getAttribute("shoppingList");
-			
-			
-			for(CourseVO vo :shoppingList) {
+			List<CourseVO> shoppingList = (List<CourseVO>) req.getSession().getAttribute("shoppingList");
+
+			for (CourseVO vo : shoppingList) {
 				System.out.println(vo);
 			}
 			
@@ -173,76 +172,72 @@ public class OrderMasterServlet extends HttpServlet {
 
 			try {
 
-
 				/*********************** 1.接收請求參數 - 輸入格式的錯誤處理 *************************/
-				
+
 				String memno = req.getParameter("memno");
-				String coupno = req.getParameter("coupno");
-				String orderamt = req.getParameter("orderamt");
-				
-				//折扣碼轉換
-//				String coupcode = req.getParameter("coupcode");
-//				System.out.println(coupcode);
-//				CoupCodeService coupSvc = new CoupCodeService();
-//				CoupCodeVO coupCodeVO = coupSvc.getOneCoupno(coupcode);
-//				coupno = coupCodeVO.getCoupno();
+				Integer orderamt = new Integer(req.getParameter("orderamt"));
+
+				// 折扣碼轉換
+				String coupcode = req.getParameter("coupcode");
+				CoupCodeService coupSvc = new CoupCodeService();
+				CoupCodeVO coupCodeVO = coupSvc.getOneCoupno(coupcode);
+				String coupno = coupCodeVO.getCoupno();
 //				// 折扣碼扣除
-//				Integer discamt = coupCodeVO.getDiscamt();
-//				if (!(coupno.length() == 0)) {
-//					orderamt = orderamt - discamt;
-//					coupSvc.updateCoupCode(coupno, 1);
-//				}
-//			} else {
-//				coupno = null;
-//			}
-//
-//			String payby = req.getParameter("payby").trim();
-//			if (payby == null || payby.trim().length() == 0) {
-//				errorMsgs.add("付款方式請勿空白");
-//			}
+				Integer discamt = coupCodeVO.getDiscamt();
+				if (!(coupno.length() == 0)) {
+					orderamt = orderamt - discamt;
+					coupSvc.updateCoupCode(coupno, 1);
+				} else {
+					coupno = null;
+				}
 
-			String[] courseno = req.getParameterValues("courseno");
-			String[] sellprice = req.getParameterValues("courseprice");
-			String[] promono = req.getParameterValues("promono");
+				String payby = req.getParameter("payby").trim();
+				if (payby == null || payby.trim().length() == 0) {
+					errorMsgs.add("付款方式請勿空白");
+				}
 
-			OrderMasterVO orderMasterVO = new OrderMasterVO();
+				String[] courseno = req.getParameterValues("courseno");
+				String[] sellprice = req.getParameterValues("courseprice");
+				String[] promono = req.getParameterValues("promono");
+
+				OrderMasterVO orderMasterVO = new OrderMasterVO();
 
 //				orderMasterVO.setMemno(memno);
 //				orderMasterVO.setOrderamt(orderamt);
 //				orderMasterVO.setCoupno(coupno);
 //				orderMasterVO.setPayby(payby);
 
-			List<OrderDetailVO> list = new Vector<OrderDetailVO>();
-			System.out.println(buylist.size());
-			for (int i = 0; i < buylist.size(); i++) {
-				OrderDetailVO odVO = new OrderDetailVO();
-				odVO.setCourseno(courseno[i]);
-				odVO.setSellprice(new Integer(sellprice[i]));
-				odVO.setPromono(promono[i]);
-				list.add(odVO);
-			}
+				List<OrderDetailVO> list = new Vector<OrderDetailVO>();
+				System.out.println(buylist.size());
+				for (int i = 0; i < buylist.size(); i++) {
+					OrderDetailVO odVO = new OrderDetailVO();
+					odVO.setCourseno(courseno[i]);
+					odVO.setSellprice(new Integer(sellprice[i]));
+					odVO.setPromono(promono[i]);
+					list.add(odVO);
+				}
 
-			// Send the use back to the form, if there were errors
-			if (!errorMsgs.isEmpty()) {
-				req.setAttribute("orderMasterVO", orderMasterVO);
-				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/Shop/Test.jsp");
-				failureView.forward(req, res);
-				return;
-			}
+				// Send the use back to the form, if there were errors
+				if (!errorMsgs.isEmpty()) {
+					req.setAttribute("orderMasterVO", orderMasterVO);
+					RequestDispatcher failureView = req.getRequestDispatcher("/front-end/tracking_list/listTrackingListForUser.jsp");
+					failureView.forward(req, res);
+					return;
+				}
 
-			/*************************** 2.開始新增資料 ***************************************/
-			OrderMasterService ordermasterSvc = new OrderMasterService();
-//			orderMasterVO = ordermasterSvc.addOrder(memno, orderamt, coupno, payby, list);
+				/*************************** 2.開始新增資料 ***************************************/
+				OrderMasterService ordermasterSvc = new OrderMasterService();
+				orderMasterVO = ordermasterSvc.addOrder(memno, orderamt, coupno, payby, list);
 
-			/*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
-			String url = "/back-end/Order_Master/ListOneOrder.jsp";
-			RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
-			successView.forward(req, res);
+				/*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
+				String url = "/front-end/Shop/Test2.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
+				successView.forward(req, res);
 
-			/*************************** 其他可能的錯誤處理 **********************************/
+				/*************************** 其他可能的錯誤處理 **********************************/
 			} catch (Exception e) {
 				errorMsgs.add(e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/Shop/Test.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/tracking_list/listTrackingListForUser.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -280,7 +275,7 @@ public class OrderMasterServlet extends HttpServlet {
 				/*************************** 3.查詢完成,準備轉交(Send the Success view) *************/
 				req.setAttribute("orderMasterVO", orderMasterVO); // 資料庫取出的ordVO物件,存入req
 				String url = "/front-end/Order_Master/listAllByMemno.jsp";
-				RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 listOneOrder.jsp
+				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
 
 				/*************************** 其他可能的錯誤處理 *************************************/
