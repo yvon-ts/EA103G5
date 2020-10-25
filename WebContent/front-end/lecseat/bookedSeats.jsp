@@ -6,7 +6,7 @@
 <%@ page import="com.lecseat.model.*" %>
 
 <%
-	String odrno = request.getParameter("lodrno").trim();
+ 	String odrno = request.getParameter("lodrno").trim();
 	LodrService svc = new LodrService();
 	LodrVO odrVO = svc.getOne(odrno);
 	String lec = odrVO.getLecno();
@@ -28,8 +28,6 @@
 	}
 	#classroom{
 		width: 235px;
-    	margin-left: 700px;
-   		margin-top: -250px;
 }
 	}
 </style>

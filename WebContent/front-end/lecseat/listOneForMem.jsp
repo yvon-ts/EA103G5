@@ -56,10 +56,35 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="<%=request.getContextPath()%>/library/bootstrap/4.5.3/css/bootstrap.min.css">
 <%@ include file="/index/front-index/header.jsp" %>
 <link rel="stylesheet" href="<%=request.getContextPath()%>/back-end/css/bootTable.css">
 <link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/lecseat/css/listOneForMem.css">
 <style>
+body { 
+    color: #566787; 
+    background: #f5f5f5; 
+    font-family: 'Roboto', sans-serif; 
+    margin: 0; 
+ } 
+.hide{
+	display: none;
+}
+#cus-service{
+	max-height: 300px;
+    width: auto;
+}
+#lecinfo{
+	margin-top:20px;
+	color: #333;
+}
+.cursor{
+	cursor: pointer;
+}
+#confrim{
+	position: absolute;
+	right: 180px;
+}
 </style>
 <script>
 </script>
@@ -125,7 +150,6 @@
 			  	   <input id="currseat" type="hidden" name="currseat" readonly>
 			  	   <input type="hidden" name="action" value="update">
 		       </form>
-                   <button id="confirm" class="hide btn btn-border" style="border: 1px solid #0099cc;">確定變更</button>
                 </div>
             </div>
         </div>
@@ -133,29 +157,35 @@
 </div> 
 <div id="table-area" class="container-xl">
     <div class="table-responsive">
-        <div class="table-wrapper">			
-            <div class="table-title">
-                <div class="row" id="seat-area">
-                    <div class="col-sm-4">
-                    	<img id="cus-service" src="<%=request.getContextPath()%>/index/front-index/assets/img/head/cus-service.png"><br>
-                    </div>
-                    <div class="col-sm-4" id="lecinfo">
-	                    <ul style="margin-top: 120px; margin-left: 50px">
-						   	<li>${lecVO.lecname}</li>
-						   	<li>講師姓名：${lecVO.spkrno}</li>
-						   	<li>講座日期：<%=startdate%></li>
-							<li>講座時間：<%=starttime%> - <%=endtime%></li>
-							<li>講座地點：<%=roomname%>教室</li>
-					   	</ul>
-                    </div>
-                    <div class="col-sm-4" style="margin-left: 300px">
-                   		<%@ include file="/front-end/lecseat/bookedSeats.jsp" %>
-                    </div>
+	    <div class="table-wrapper">
+        	<div class="container">
+            	<div class="row">
+                	<div class="col-md-4">
+               		  <img id="cus-service" src="<%=request.getContextPath()%>/index/front-index/assets/img/head/cus-service.png">
+               		  <br>
+               		  <br>編輯完畢後請點選右方【確定變更】按鈕
+               		</div>
+		          	<div class="col-md-4">
+					    <%@ include file="/front-end/lecseat/bookedSeats.jsp" %>
+		            </div>
+                	    <div id="lecinfo" class="col-md-4">
+					   	<ul><li>${lecVO.lecname}</li> 
+					   	<li>講師姓名：${lecVO.spkrno}</li>
+					   	<li>講座日期：<%=startdate%></li>
+						<li>講座時間：<%=starttime%> - <%=endtime%></li>
+						<li>講座地點：<%=roomname%>教室</li>
+						</ul>
+						<form method="post" action="<%=request.getContextPath()%>/front-end/lecorder/listByMemno.jsp">
+						<input type="text" name="memno"><br>
+						<button id="return" class="btn btn-border" style="border: 1px solid #0099cc;">回上頁</button>
+						</form>
+						<button id="confirm" class="hide btn btn-border" style="border: 1px solid #0099cc;">確定變更</button>
+                  </div>
                 </div>
             </div>
         </div>
     </div>
-</div> 
+</div>
 <%@ include file="/index/front-index/footer.jsp" %>
 <script>
 	$(".modify").click(function(e){
@@ -180,6 +210,11 @@
 		 var currseat = $("#defaultseat").val();
 		 $("#currseat").val(currseat);
 		 
+	});
+	
+	$("#confirm").click(function(){
+		confirm("座位即將被取消，請問是否確認？");
+		$("#modifyForm").submit();
 	});
 	
 	$("#confirm").click(function(){

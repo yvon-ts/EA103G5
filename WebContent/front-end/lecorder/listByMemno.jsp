@@ -19,6 +19,7 @@
 <title>Xducation - 陪你成長的學習好夥伴</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<link rel="stylesheet" href="<%=request.getContextPath()%>/library/bootstrap/4.5.3/css/bootstrap.min.css">
 <%@ include file="/index/front-index/header.jsp" %>
 <link rel="stylesheet" href="<%=request.getContextPath()%>/back-end/css/bootTable.css">
 <style>
