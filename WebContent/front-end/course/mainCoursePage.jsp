@@ -68,7 +68,7 @@
 					<div class="row">
 						<div class="col">
 							<!-- 課程名稱 -->
-							<h1>${courseVO.coursename}<span id="nowPlaying"></span></h1>
+							<h1 style="color:#0099CC;">${courseVO.coursename}<span id="nowPlaying"></span></h1>
 						</div>
 					</div>
 					
@@ -77,7 +77,6 @@
 							<!-- 影片播放 -->
 							<div id="videoContainer">
 								<video id="coursePlayer" width="100%" height="auto" controls preload="metadata">
-<!-- 								<video id="coursePlayer" width="100%" height="auto" controls autoplay> -->
 									<source src="<%=request.getContextPath()%>/front-end/course/Nyan_Cat.mp4" type="video/mp4">
 									您的瀏覽器未支援此播放系統，建議使用 Chrome 瀏覽器瀏覽網頁
 								</video>
@@ -86,7 +85,7 @@
 						<div class="col-lg-4">
 							<!-- 單元選擇欄位 -->
 							<div>
-								<h4>課程單元列表</h4>
+								<h2>課程單元清單</h2>
 							</div>
 							<div class="list-group" id="videolist">
 								<!-- 宣告複合查詢使用的 map -->
@@ -102,11 +101,10 @@
 								<c:forEach var="videoVO" items="${videoSvc.getAll(map)}">
 									<a
 										class="list-group-item list-group-item-action list-group-item-primary d-flex"
-										href="<%=request.getContextPath()%>/video/VideoReaderFromDB?videono=${videoVO.videono}"
-										chaptername="${videoVO.chaptername}">
+										href="<%=request.getContextPath()%>/video/VideoReaderFromDB?videono=${videoVO.videono}"  chaptername="${videoVO.chaptername}">
 										<div class="w-75">
-											<p>單元 ${videoVO.chapterno}</p>
-											<p>${videoVO.chaptername}</p>
+											<h3>單元 ${videoVO.chapterno}</h3>
+											<h3>${videoVO.chaptername}</h3>
 										</div>
 										<div class="w-25">
 											<p class="showVideoLen text-right"></p>
@@ -176,9 +174,7 @@
 
 				<div class="tab-content" id="subpage">
 					<div id="courseinfo" class="tab-pane fade show active">
-						<h3>課程簡介</h3>
 						<div>${courseVO.courseinfo}</div>
-						<%-- <jsp:include page="/front-end/course/subpage_courseinfo.html" /> --%>
 					</div>
 					<div id="downloadfile" class="tab-pane fade">
 						<h3>教材下載</h3>

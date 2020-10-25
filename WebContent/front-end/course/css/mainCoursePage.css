@@ -48,7 +48,7 @@ li {
     height: 435px;
 }
 
-#videoView .list-group a p {
+#videoView .list-group h3{
     font-weight: 600;
 }
 
@@ -80,6 +80,17 @@ li {
 #subpage {
     margin-top: 50px;
 }
+
+
+#subpage h3 {
+	font-size: 30px;
+	font-weight:500;
+}
+
+#subpage h4 {
+	font-size: 22px; 
+	font-weight:500;
+
 
 #subpage #courseinfo ul, #subpage #courseinfo ol{
 /* 	list-style: outside circle circle; */

@@ -79,12 +79,12 @@ public class VideosServlet_AJAX extends HttpServlet {
 				}
 
 				String chaptername = req.getParameter("chaptername");
-				String chapternameRegex = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_.)]{2,15}$";
+				String chapternameRegex = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_. )]{2,50}$";
 				if (chaptername == null || chaptername.trim().length() == 0) {
 					chaptername = "";
 					errorMsgs.add("單元名稱請勿空白");
 				} else if (!chaptername.trim().matches(chapternameRegex)) { // 以下練習正則(規)表示式(regular-expression)
-					errorMsgs.add("單元名稱: 只能是中、英文字母、數字和_ , 且長度必需在2到15之間");
+					errorMsgs.add("單元名稱: 只能是中、英文字母、數字和_ , 且長度必需在2到50之間");
 				}
 
 				Integer chapterlen = null;
@@ -169,7 +169,7 @@ public class VideosServlet_AJAX extends HttpServlet {
 				VideoVO videoVO = videoSvc.getOneVideo(videono);
 
 				String chaptername = req.getParameter("chaptername");
-				String chapternameRegex = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_.)]{2,50}$";
+				String chapternameRegex = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_. )]{2,50}$";
 				if (chaptername == null || chaptername.trim().length() == 0) {
 					chaptername = videoVO.getChaptername();
 //					errorMsgs.add("單元名稱請勿空白");
@@ -414,12 +414,12 @@ public class VideosServlet_AJAX extends HttpServlet {
 //				}
 //
 //				String chaptername = req.getParameter("chaptername");
-//				String chapternameRegex = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_.)]{2,15}$";
+//				String chapternameRegex = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_.)]{2,50}$";
 //				if (chaptername == null || chaptername.trim().length() == 0) {
 //					chaptername = "";
 //					errorMsgs.add("單元名稱請勿空白");
 //				} else if (!chaptername.trim().matches(chapternameRegex)) { // 以下練習正則(規)表示式(regular-expression)
-//					errorMsgs.add("單元名稱: 只能是中、英文字母、數字和_ , 且長度必需在2到15之間");
+//					errorMsgs.add("單元名稱: 只能是中、英文字母、數字和_ , 且長度必需在2到50之間");
 //				}
 //
 //				Integer chapterlen = null;
