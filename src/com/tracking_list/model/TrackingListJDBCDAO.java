@@ -51,9 +51,12 @@ public class TrackingListJDBCDAO implements TrackingListDAO_interface {
 	}
 
 	@Override
-	public void delete(TrackingListVO trackVO) {
+	public int  delete(TrackingListVO trackVO) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
+		
+		int count = 0;
+		
 		try {
 			Class.forName(driver);
 			con = DriverManager.getConnection(url, userId, passwd);
@@ -62,7 +65,7 @@ public class TrackingListJDBCDAO implements TrackingListDAO_interface {
 			pstmt.setString(1, trackVO.getMemno());
 			pstmt.setString(2, trackVO.getCourseno());
 
-			pstmt.executeUpdate();
+			count = pstmt.executeUpdate();
 
 		} catch (ClassNotFoundException e) {
 			
@@ -71,7 +74,8 @@ public class TrackingListJDBCDAO implements TrackingListDAO_interface {
 		} catch (SQLException se) {
 			throw new RuntimeException(se.getMessage());
 		}
-
+		
+		return count ;
 	}
 
 	@Override

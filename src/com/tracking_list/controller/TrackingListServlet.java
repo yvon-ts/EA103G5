@@ -19,6 +19,7 @@ import org.json.JSONObject;
 
 import com.course.model.CourseService;
 import com.course.model.CourseVO;
+import com.members.model.MembersVO;
 import com.report_detail.model.ReportDetailService;
 import com.report_detail.model.ReportDetailVO;
 import com.tracking_list.model.TrackingListService;
@@ -36,11 +37,13 @@ public class TrackingListServlet extends HttpServlet {
 		res.setContentType("text/html; charset=utf-8");
 		String action = req.getParameter("action");
 
-		String memno = req.getParameter("memno");
-		String courseno = req.getParameter("courseno");
 		System.out.println(action);
-		System.out.println(memno);
-		System.out.println(courseno);
+		
+		
+		MembersVO Membersvo = (MembersVO) req.getSession().getAttribute("Membersvo");
+		String memno = Membersvo.getMemno();
+		
+		String courseno = req.getParameter("courseno");
 
 		if ("insert".equals(action)) {
 
@@ -67,10 +70,24 @@ public class TrackingListServlet extends HttpServlet {
 			req.setAttribute("errorMsgs", errorMsgs);
 
 			try {
-
+				
+				System.out.println(memno + " , " + courseno);
 				TrackingListService trackinglistSvc = new TrackingListService();
-				trackinglistSvc.deleteTracking(memno, courseno);
-
+				int count = trackinglistSvc.deleteTracking(memno, courseno);
+				
+				String result = "false";
+				
+				if(count > 0) {
+					result = "true";
+				}
+				
+				
+				res.setContentType("text/plain");
+				res.setCharacterEncoding("UTF-8");
+				PrintWriter out = res.getWriter();
+				out.write(result);
+				out.flush();
+				
 			} catch (Exception e) {
 				errorMsgs.add("無法取得要修改的資料:" + e.getMessage());
 				RequestDispatcher failureView = req.getRequestDispatcher("新增失敗小視窗.jsp");

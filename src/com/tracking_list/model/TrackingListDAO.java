@@ -79,10 +79,12 @@ public class TrackingListDAO implements TrackingListDAO_interface {
 	}
 
 	@Override
-	public void delete(TrackingListVO trackVO) {
+	public int delete(TrackingListVO trackVO) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
-
+		
+		int count = 0;
+		
 		try {
 
 			con = ds.getConnection();
@@ -92,7 +94,8 @@ public class TrackingListDAO implements TrackingListDAO_interface {
 			pstmt.setString(1, trackVO.getMemno());
 			pstmt.setString(2, trackVO.getCourseno());
 
-			pstmt.executeUpdate();
+			count = pstmt.executeUpdate();
+			
 			con.commit();
 			// Handle any driver errors
 		} catch (SQLException se) {
@@ -122,7 +125,7 @@ public class TrackingListDAO implements TrackingListDAO_interface {
 				}
 			}
 		}
-
+		return count;
 	}
 
 	@Override

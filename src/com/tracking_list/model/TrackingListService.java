@@ -25,14 +25,14 @@ public class TrackingListService {
 	}
 
 	// delete
-	public void deleteTracking(String memno, String courseno) {
+	public int  deleteTracking(String memno, String courseno) {
 		
 		TrackingListVO trackinglistVO = new TrackingListVO();
 
 		trackinglistVO.setMemno(memno);
 		trackinglistVO.setCourseno(courseno);
 
-		dao.delete(trackinglistVO);
+		return dao.delete(trackinglistVO);
 
 	}
 
