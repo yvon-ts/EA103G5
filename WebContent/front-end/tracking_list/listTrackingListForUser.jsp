@@ -72,7 +72,8 @@
 	<jsp:useBean id="courseTypeSvc" scope="page" class="com.course_type.model.CourseTypeService" />
 	<jsp:useBean id="TrackingListSvc" scope="page" class="com.tracking_list.model.TrackingListService" />
 	
-	<form method="post" action="<%=request.getContextPath()%>/Order_Master/Order_Master.do" id = "myForm"> 
+<%-- 	<form method="post" action="<%=request.getContextPath()%>/Order_Master/Order_Master.do" id = "myForm">  --%>
+	
 	
 	<section id="services" class="section-padding" style="padding:90px 0">
         <div class="container">
@@ -159,11 +160,11 @@
     <div class="title wow "></div>
     <div class="row mt-4 d-flex align-items-center">
         <div class="col-sm-6 order-md-2 text-right">
-            <button type="button" class="btn btn-primary" id= "checkout">Checkout</button>
-            <input type="hidden" name="action" value="insert">
-            <input type="hidden" name="coupcode" value="XXXX-ZXCV">
-            <input type="hidden" name="memno" value="memno">
-            <input type="hidden" name="orderamt" value="${totalPrice}">
+            <a href="<%=request.getContextPath()%>/front-end/Shop/Checkout.jsp"><button type="button" class="btn btn-primary" id= "checkout">Checkout</button></a>
+<!--             <input type="hidden" name="action" value="insert"> -->
+<!--             <input type="hidden" name="coupcode" value="XXXX-ZXCV"> -->
+<!--             <input type="hidden" name="memno" value="MEM0002"> -->
+<%--             <input type="hidden" name="orderamt" value="${totalPrice}"> --%>
         </div>
         <div class="col-sm-6 mb-3 mb-m-1 order-md-1 text-md-left">
             <a href="<%=request.getContextPath()%>/front-end/course/listAllCourseForUser.jsp">
@@ -182,7 +183,7 @@
            </div>     
 </div>
 	</section>
-	</form>
+<!-- 	</form> -->
 	<section id="services" class="section-padding" style="padding:90px 0">
         <div class="container">
             <div class="section-header">

@@ -53,7 +53,10 @@ public class OrderMasterDAO implements OrderMasterDAO_interface {
 			pstmt.setInt(2, orderMasterVO.getOrderamt());
 			pstmt.setString(3, orderMasterVO.getCoupno());
 			pstmt.setString(4, orderMasterVO.getPayby());
+			System.out.println(orderMasterVO.getMemno());
+			System.out.println(orderMasterVO.getPayby());
 			pstmt.executeUpdate();
+			
 			
 			ResultSet rs = pstmt.getGeneratedKeys();
 			
