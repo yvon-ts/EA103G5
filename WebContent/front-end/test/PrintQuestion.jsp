@@ -34,24 +34,20 @@
 			<c:if test="${not empty question.op1}">
 				<ul class="multiple">
 					<label>
-						<li class="option"><input type="${type.testtype}"
-						class="class${counter.count}" name="${question.qbankno}" value="0" /> <span>A </span><span>${question.op1}</span>
+						<li class="option"><input type="${type.testtype}" class="class${counter.count}" name="${question.qbankno}" value="0" /> <span>A </span><span>${question.op1}</span>
 					</li>
 					</label>
 					<label>
-						<li class="option"><input type="${type.testtype}"
-							class="class${counter.count}" name="${question.qbankno}" value="1" /> <span>B </span><span>${question.op2}</span>
+						<li class="option"><input type="${type.testtype}" class="class${counter.count}" name="${question.qbankno}" value="1" /> <span>B </span><span>${question.op2}</span>
 					</li>
 					</label>
 					<label>
-						<li class="option"><input type="${type.testtype}"
-							class="class${counter.count}" name="${question.qbankno}" value="2" /> <span>C </span><span>${question.op3}</span>
-					</li>
+						<li class="option"><input type="${type.testtype}" class="class${counter.count}" name="${question.qbankno}" value="2" /> <span>C </span><span>${question.op3}</span>
+						</li>
 					</label>
 					<label>
-						<li class="option"><input type="${type.testtype}"
-							class="class${counter.count}" name="${question.qbankno}" value="3" /> <span>D </span><span>${question.op4}</span>
-					</li>
+						<li class="option"><input type="${type.testtype}" class="class${counter.count}" name="${question.qbankno}" value="3" /> <span>D </span><span>${question.op4}</span>
+						</li>
 					</label>
 				</ul>
 		</div>
@@ -105,6 +101,8 @@
 		
 		$('label').click(function(){//正確作答則移除
 			$(this).parents('ul').removeClass('notWritten');
+
+			console.log($(this).find('input')));
 		});
 		
 		$('#turnin').click(function(e) {//全部題目做完繳交判定

@@ -10,8 +10,7 @@
         .box1 {
             width: 1400px;
             border: 1px solid black;
-            border-top-left-radius: 15px;
-            border-bottom-right-radius: 15px;
+            border-radius: 15px;
             background: -webkit-linear-gradient(left top, #FCFCFC, white);
             background: -o-linear-gradient(bottom right, #FCFCFC, white);
             background: -moz-linear-gradient(bottom right, #FCFCFC, white);
