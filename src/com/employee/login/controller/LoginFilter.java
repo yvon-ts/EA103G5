@@ -8,6 +8,7 @@ import java.util.List;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
@@ -72,12 +73,17 @@ public class LoginFilter implements Filter {
 		String funcno = funurl.getFuncno();
 		System.out.println(funcno+"========================");
 		
-		//細節權限還是無法阻擋
+		
+		
+		
+
+		
 		for (EmpAuthorityVO auth : empauthlist) {
-			System.out.println(auth.getFuncno().equals(funcno));
-			if (auth.getFuncno().equals(funcno)) {
+			System.out.println((auth.getFuncno()).equals(funcno));
+			if (!auth.getFuncno().equals(funcno)) {
 				session.setAttribute("error", "你沒有權限!");
 				res.sendRedirect(req.getContextPath() + "/front-end/back-endHomePage.jsp");
+				return;
 			}
 		}
 
