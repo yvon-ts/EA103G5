@@ -45,10 +45,9 @@ public class VideosServlet_AJAX extends HttpServlet {
 		System.out.println();
 		System.out.println("***action = " + action);
 
-		
-		
-		// 10/25 之前的版本，尚未更新，進行中
-		if ("insert".equals(action)) {
+
+		// 10/26 NEW INSERT
+		if ("addNewChapter".equals(action)) {
 
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);
@@ -69,7 +68,6 @@ public class VideosServlet_AJAX extends HttpServlet {
 				}
 
 				Integer chapterno = null;
-				// 尚未處理：同課程中，單元編號不得重複
 				try {
 					chapterno = Integer.valueOf(req.getParameter("chapterno"));
 					if (chapterno <= 0) {
@@ -116,48 +114,22 @@ public class VideosServlet_AJAX extends HttpServlet {
 					// 其他錯誤處理
 				}
 
-				VideoVO videoVO = new VideoVO();
-
-				videoVO.setCourseno(courseno);
-				videoVO.setTestscope(testscope);
-				videoVO.setChapterno(chapterno);
-				videoVO.setChaptername(chaptername);
-				videoVO.setChapterlen(chapterlen);
-//						videoVO.setVideo(video); // 不用 hold 上傳檔案的資料
-
 				if (!errorMsgs.isEmpty()) {
-					System.out.println("insert ERR:");
-//					for (String errorMsg : errorMsgs) {
-//						System.out.println(errorMsg);
-//						res.getWriter().println(errorMsg);
-//					}
-//					req.setAttribute("videoVO", videoVO); // 含有輸入格式錯誤的empVO物件,也存入req
-//					RequestDispatcher failureView = req.getRequestDispatcher("/back-end/video/addVideo.jsp");
-//					failureView.forward(req, res);
+					String jsonStr = gson.toJson(errorMsgs);
+					out.println(jsonStr);
 					return; // 中斷程式
 				}
-
 				/*************************** 2.開始新增資料 *****************************************/
 				VideoService videoSvc = new VideoService();
-				videoVO = videoSvc.addVideo(courseno, testscope, chapterno, chaptername, chapterlen, video);
-				String videono = videoVO.getVideono();
-
-//						if (!errorMsgs.isEmpty()) {
-//							RequestDispatcher failureView = req.getRequestDispatcher("/back-end/xxxxx/xxxpage.jsp");
-//							failureView.forward(req, res);
-//							return; // 中斷程式
-//						}
+				VideoVO videoVO = videoSvc.addVideo(courseno, testscope, chapterno, chaptername, chapterlen, video);
 				/*************************** 3.查詢完成,準備轉交(Send the Success view) *************/
-				res.getWriter().print("Insert Success: " + videono);
-//				req.setAttribute("videoVO", videoVO);
-//				String url = "/back-end/video/listAllVideo.jsp";
-//				RequestDispatcher successView = req.getRequestDispatcher(url);
-//				successView.forward(req, res);
+				out.print("成功新增課程單元： " + videoVO.getChaptername());
 				/*************************** 其他可能的錯誤處理 *************************************/
 			} catch (Exception e) {
 				errorMsgs.add("無法新增資料: " + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/video/addVideo.jsp");
-				failureView.forward(req, res);
+				String jsonStr = gson.toJson(errorMsgs);
+				out.println(jsonStr);
+				return; // 中斷程式
 			}
 		}
 
@@ -183,7 +155,6 @@ public class VideosServlet_AJAX extends HttpServlet {
 				}
 
 				Integer chapterno = null;
-				// 尚未處理：同課程中，單元編號不得重複
 				try {
 					chapterno = Integer.valueOf(req.getParameter("chapterno"));
 					if (chapterno <= 0) {
@@ -277,34 +248,29 @@ public class VideosServlet_AJAX extends HttpServlet {
 				/*************************** 其他可能的錯誤處理 *************************************/
 			} catch (Exception e) {
 				e.printStackTrace();
-				out.print("伺服器異常 影片上傳失敗");
+				out.print("伺服器異常，影片上傳失敗");
 			}
 		}
-		
-		
-		
+
 		if ("deleteVideo".equals(action)) {
 			try {
-				/***************************1.接收請求參數***************************************/
+				/*************************** 1.接收請求參數 ***************************************/
 				String vidoeno = req.getParameter("videono");
-				
-				/***************************2.開始刪除資料***************************************/
+
+				/*************************** 2.開始刪除資料 ***************************************/
 				VideoService videoSvc = new VideoService();
 //				CourseService courseSvc = new CourseService();
 //				CourseVO courseVO = courseSvc.getOneCourse(videoSvc.getOneVideo(vidoeno).getCourseno());
 				videoSvc.deleteVideo(vidoeno);
-				
-				/***************************3.刪除完成,準備轉交(Send the Success view)***********/								
+
+				/*************************** 3.刪除完成,準備轉交(Send the Success view) ***********/
 				out.print("課程單元已成功刪除");
-				/***************************其他可能的錯誤處理**********************************/
+				/*************************** 其他可能的錯誤處理 **********************************/
 			} catch (Exception e) {
 				e.printStackTrace();
 				out.print("伺服器異常，課程單元刪除失敗");
 			}
 		}
-		
-		
-		
 
 //		// ========== 10/25 之前，同時更新資訊+上傳影片的版本，但是影片太多會卡死 ==========
 //		// 更新單一課程內的基本資訊
@@ -409,6 +375,121 @@ public class VideosServlet_AJAX extends HttpServlet {
 //			} catch (Exception e) {
 //				errorMsgs.add("無法新增資料: " + e.getMessage());
 //				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/video/update_video_input.jsp");
+//				failureView.forward(req, res);
+//			}
+//		}
+		
+		
+//		// 10/25 之前的版本，尚未更新，進行中
+//		if ("insert".equals(action)) {
+//
+//			List<String> errorMsgs = new LinkedList<String>();
+//			req.setAttribute("errorMsgs", errorMsgs);
+//
+//			try {
+//				/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
+//				String courseno = req.getParameter("courseno");
+//
+//				Integer testscope = null;
+//				try {
+//					testscope = Integer.valueOf(req.getParameter("testscope"));
+//					if (testscope <= 0) {
+//						errorMsgs.add("範圍編號請輸入大於零的整數");
+//					}
+//				} catch (NumberFormatException e) {
+//					testscope = 0;
+//					errorMsgs.add("範圍編號請輸入數字");
+//				}
+//
+//				Integer chapterno = null;
+//				// 尚未處理：同課程中，單元編號不得重複
+//				try {
+//					chapterno = Integer.valueOf(req.getParameter("chapterno"));
+//					if (chapterno <= 0) {
+//						errorMsgs.add("單元編號請輸入大於零的整數");
+//					}
+//				} catch (NumberFormatException e) {
+//					chapterno = 0;
+//					errorMsgs.add("單元編號請輸入數字");
+//				}
+//
+//				String chaptername = req.getParameter("chaptername");
+//				String chapternameRegex = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_.)]{2,15}$";
+//				if (chaptername == null || chaptername.trim().length() == 0) {
+//					chaptername = "";
+//					errorMsgs.add("單元名稱請勿空白");
+//				} else if (!chaptername.trim().matches(chapternameRegex)) { // 以下練習正則(規)表示式(regular-expression)
+//					errorMsgs.add("單元名稱: 只能是中、英文字母、數字和_ , 且長度必需在2到15之間");
+//				}
+//
+//				Integer chapterlen = null;
+//				// 應該要自己抓影片的長度
+//				try {
+//					chapterlen = Integer.valueOf(req.getParameter("chapterlen"));
+//					if (chapterlen <= 0) {
+//						errorMsgs.add("單元長度請輸入大於零的整數");
+//					}
+//				} catch (NumberFormatException e) {
+//					chapterlen = 0;
+//					errorMsgs.add("單元長度請輸入數字");
+//				}
+//
+//				byte[] video = null;
+//				Part part = req.getPart("video");
+//				System.out.println(part);
+//
+//				if (part.getSize() == 0) {
+//					errorMsgs.add("請上傳課程影片");
+//				} else if (part.getContentType().indexOf("video/mp4") < 0) {
+//					errorMsgs.add("僅可以上傳 mp4 影片檔案");
+//				} else {
+//					InputStream in = part.getInputStream();
+//					video = getUpdateFileByteArray(in);
+//					// in.close();
+//					// 其他錯誤處理
+//				}
+//
+//				VideoVO videoVO = new VideoVO();
+//
+//				videoVO.setCourseno(courseno);
+//				videoVO.setTestscope(testscope);
+//				videoVO.setChapterno(chapterno);
+//				videoVO.setChaptername(chaptername);
+//				videoVO.setChapterlen(chapterlen);
+////						videoVO.setVideo(video); // 不用 hold 上傳檔案的資料
+//
+//				if (!errorMsgs.isEmpty()) {
+//					System.out.println("insert ERR:");
+////					for (String errorMsg : errorMsgs) {
+////						System.out.println(errorMsg);
+////						res.getWriter().println(errorMsg);
+////					}
+////					req.setAttribute("videoVO", videoVO); // 含有輸入格式錯誤的empVO物件,也存入req
+////					RequestDispatcher failureView = req.getRequestDispatcher("/back-end/video/addVideo.jsp");
+////					failureView.forward(req, res);
+//					return; // 中斷程式
+//				}
+//
+//				/*************************** 2.開始新增資料 *****************************************/
+//				VideoService videoSvc = new VideoService();
+//				videoVO = videoSvc.addVideo(courseno, testscope, chapterno, chaptername, chapterlen, video);
+//				String videono = videoVO.getVideono();
+//
+////						if (!errorMsgs.isEmpty()) {
+////							RequestDispatcher failureView = req.getRequestDispatcher("/back-end/xxxxx/xxxpage.jsp");
+////							failureView.forward(req, res);
+////							return; // 中斷程式
+////						}
+//				/*************************** 3.查詢完成,準備轉交(Send the Success view) *************/
+//				res.getWriter().print("Insert Success: " + videono);
+////				req.setAttribute("videoVO", videoVO);
+////				String url = "/back-end/video/listAllVideo.jsp";
+////				RequestDispatcher successView = req.getRequestDispatcher(url);
+////				successView.forward(req, res);
+//				/*************************** 其他可能的錯誤處理 *************************************/
+//			} catch (Exception e) {
+//				errorMsgs.add("無法新增資料: " + e.getMessage());
+//				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/video/addVideo.jsp");
 //				failureView.forward(req, res);
 //			}
 //		}

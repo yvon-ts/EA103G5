@@ -96,7 +96,7 @@
 						<span id="addNewChapter" class="far fa-plus-square"></span>
 					</td>
 					<td colspan="2" class="text-center">
-						<sapn id="updateChapterInfo" class="fas fa-save"></span>
+						<sapn id="updateAllChaptersInfo" class="fas fa-save"></span>
 					</td>
 				</tr>
 			</tbody>
@@ -117,6 +117,8 @@
 			showInitOriginalVideoLen();
 			// 抓取初始 FormData
 			getFormDatas();
+			// 註冊刪除按鈕
+			addDeleteEvent()
 		});
 	</script>
 
@@ -139,89 +141,102 @@
 				$("#videolist tr:nth-child(" + (i + 1) + ") input[name='chapterno']").val(i + 1);
 			}
 		}
-		
-		
 
 		// 增加章節欄位，並設定其為 insert
-		<!-- ==================== NGNGNGNNGNNGNGNGNGNGNGNNGNGNG ==================== -->
-		let addNumber = 1;
+		var addNumber = 0;
+		var alreadyAddOneClass = false;
 		$("#addNewChapter").click(function () {
-			let newChapter = `<tr class="insertChapterTr">
-								<form method="post" id="newFrom` + addNumber + `"></form>
-								<td class="align-middle text-center"><i class="fas fa-bars"></i></td>
-								<td>
-									<p>單元：<input type="number" name="chapterno" value="" readonly form="newFrom` + addNumber + `"></p>
-									<p>範圍：<input type="number" name="testscope" value=0 min=1 max=10 step=1 form="newFrom` + addNumber + `"></p>
-								</td>
-								<td class="align-middle">
-									<input type="text" name="chaptername" value="" size="20" form="newFrom` + addNumber + `">
-								</td>
-								<td class="align-middle text-center">
-									<i class="fas fa-video-slash"></i>
-								</td>
-								<td>
-									<span>影片時間：</span><span class="showVideoLen">0</span>
-									<input type="hidden" name="chapterlen" value=0 min=0 step=1 readonly form="newFrom` + addNumber + `">
-									<br>
-									<input type="file" name="video" form="newFrom` + addNumber + `">
-								</td>
-								<input type="hidden" name="action" value="insert" form="newFrom` + addNumber + `">
-							</tr>`;
-			// 新增可以上傳課程的欄位
-			// $("#videolist").append(newChapter);
-			$("#videolist #chapterEditRow").before(newChapter);
-			// 更新排序後的單元編號
-			replaceTheChapterNumber();
-			// 重新註冊 sortable 事件
-			addSortableEvent()
-			// 註冊自動抓取影片時間事件
-			$("input[name=video]").change(setVideoDuration);
-			// 取得課程單元之 FormDatas
-			getFormDatas();
-			addNumber++;
-		});
-		
-		</script>
+			if (!alreadyAddOneClass) {
+				alreadyAddOneClass = true;
+				var newChapterStr = `<tr class="insertChapterTr">
+										<!-- 表單 #1 課程資訊 -->
+										<form method="post" class="newChapterForm" id="newChapterForm` + addNumber + `">
+											<td scope="row" class="align-middle text-center">
+												<i class="fas fa-bars"></i>
+											</td>
+											<td class="align-middle text-center">
+												<h5><input type="number" name="chapterno" value="" readonly form="newChapterForm` + addNumber + `"></h5>
+												<input type="hidden" name="testscope" value=1 form="newChapterForm` + addNumber + `">
+											</td>
+											<td>
+												<!-- <p>單元名稱</p> -->
+												<input type="text" name="chaptername" class="form-control" style="margin:10px 0;"
+													value="新單元" form="newChapterForm` + addNumber + `">
+											</td>
+										<!-- 表單 #1 課程資訊 -->
+										<!-- 表單 #2 課程影片 -->
+											<td class="align-middle text-center">
+													<i class="fas fa-video-slash"></i>
+											</td>
+											<td>
+												<span>影片時間：</span><span class="showVideoLen"> 0 : 00</span>
+												<input type="hidden" name="chapterlen" value=0 min=0 step=1 readonly form="newChapterForm` + addNumber + `">
+												<br>
+												<input type="file" name="video" form="newChapterForm` + addNumber + `">
+												<input type="hidden" name="action" value="addNewChapter" form="newChapterForm` + addNumber + `">
+											</td>
+											<td class="align-middle text-center">
+												<button type="button" class="btn btn-success addNewButton"><i class="fas fa-sign-in-alt"></i></i></button>
+											</td>
+										</form>
+										<!-- 表單 #2 課程影片 -->
+										<td class="align-middle text-center">
+											<!-- 表單 #3 刪除按鈕 -->
+											<form method="post" ACTION="<%=request.getContextPath()%>/video/video.do">
+												<input type="hidden" name="videono" value=${videoVO.videono}>
+												<input type="hidden" name="action" value="deleteVideo">
+												<button type="button" class="btn btn-danger deleteButton" new=true><i class="far fa-trash-alt"></i></button>
+											</form>
+											<!-- 表單 #3 刪除按鈕 -->
+										</td>
+									</tr>`;
 
+				// 新增可以上傳課程的欄位
+				// $("#videolist").append(newChapter);
+				$("#videolist #chapterEditRow").before(newChapterStr);
+				// 更新排序後的單元編號
+				replaceTheChapterNumber();
+				// 重新註冊 sortable 事件
+				addSortableEvent();
+				// 註冊自動抓取影片時間事件
+				$("input[name=video]").change(setVideoDuration);
+				// 取得課程單元之 FormDatas
+				getFormDatas();
+				addNumber++;
 
-		<!-- ==================== 資料讀寫相關 ==================== -->
-		<script type="text/javascript">
-		
-		// 取得該課程內所有單元的基本資訊
-		function getFormDatas() {
-			let formDatas = [];
-			// 取得課程單元之 FormDatas
-			for (let i = 0; i < $("#videolist .chapterInfo").length; i++) {
-				let formData = new FormData($("#videolist .chapterInfo")[i]);
-				// 加入 courseno
-				formData.append("courseno", "${courseVO.courseno}")
-				// 存入 formDatas Array 內
-				formDatas[i] = formData;
-				// // 測試：於 console 印出所有 key-value pair 
-				// console.log("===== FormDate " + (i+1) + " =====")
-				// for (let key of formData.keys()) {
-				//     console.log(key + " : " + formData.get(key));
-				// }
+				// 註冊新增按鈕
+				addAddNewEvent();
+				// 註冊刪除按鈕
+				addDeleteEvent();
 			}
-			return formDatas;
-		}
-		
-		
+		});
+	</script>
+
+
+	<!-- ==================== 資料讀寫相關 ==================== -->
+	<script type="text/javascript">
+		// // 測試用：於 console 印出所有 key-value pair 
+		// console.log("===== FormDate " + (i+1) + " =====")
+		// for (let key of formData.keys()) {
+		//     console.log(key + " : " + formData.get(key));
+		// }
+
 		// 更新該課程內所有單元的基本資訊
-		$("#updateChapterInfo").click(function () {
+		$("#updateAllChaptersInfo").click(function () {
 			updateAllChaptersInfo();
 		});
-		
+
 		// 更新該課程內所有單元的基本資訊
-		function updateAllChaptersInfo (){
+		function updateAllChaptersInfo() {
 			let formDatas = getFormDatas();
 			for (let i = 0; i < formDatas.length; i++) {
 				formData = formDatas[i];
 				updateOneChapterInfo(formData);
 			}
-			// to do: 還須使其 reload 或重新整理
+			// 重新整理寫在 updateCourseInfo() 的 complete
+			updateCourseInfo();
 		}
-		
+
 		// 取得該課程內所有單元的基本資訊
 		function getFormDatas() {
 			let formDatas = [];
@@ -232,15 +247,10 @@
 				formData.append("courseno", "${courseVO.courseno}")
 				// 存入 formDatas Array 內
 				formDatas[i] = formData;
-				// // 測試：於 console 印出所有 key-value pair 
-				// console.log("===== FormDate " + (i+1) + " =====")
-				// for (let key of formData.keys()) {
-				//     console.log(key + " : " + formData.get(key));
-				// }
 			}
 			return formDatas;
 		}
-		
+
 		// 更新單一單元的基本資訊  <= 拿宜靜的來改
 		function updateOneChapterInfo(formData) {
 			// getFormDatas();
@@ -264,65 +274,108 @@
 				}
 			})
 		}
-		
+
+		// 新增課程單元(包含影片上傳)
+		var addNewIsWorking;
+
+		function addAddNewEvent() {
+			$(".addNewButton").click(function (e) {
+				if (addNewIsWorking === undefined) {
+					addNewIsWorking = false;
+				}
+
+				e.preventDefault();
+				var formData = new FormData($(this).parents("tr").children(".newChapterForm")[0]);
+				formData.append("courseno", "${courseVO.courseno}")
+
+				if (!addNewIsWorking) {
+					addNewIsWorking = true;
+
+					$.ajax({
+						url: "<%=request.getContextPath()%>/video/videoAjax.do",
+						type: "POST",
+						data: formData,
+						// 告訴jQuery不要去處理發送的資料
+						processData: false,
+						// 告訴jQuery不要去設定Content-Type請求頭
+						contentType: false,
+						success: function (data) { // 以上成功才執行
+							alert(data);
+							if (data.indexOf('成功') > -1) {
+								updateAllChaptersInfo();
+							}
+						},
+						error: function (data) {
+							alert(data);
+						},
+						complete: function () {
+							addNewIsWorking = false;
+						}
+					})
+				}
+			});
+		}
+
 		// 上傳單一單元的影片
-		$(".updateButton").click(function(e){
+		$(".updateButton").click(function (e) {
 			e.preventDefault();
 			var formData = new FormData($(this).parents("tr").children(".videoFile")[0]);
-			for (var key of formData.keys()) {
-					console.log(key + " : " + formData.get(key));
-			}
-			
+
 			$.ajax({
-					url: "<%=request.getContextPath()%>/video/videoAjax.do",
-					type: "POST",
-					data: formData,
-					// 告訴jQuery不要去處理發送的資料
-					processData: false,
-					// 告訴jQuery不要去設定Content-Type請求頭
-					contentType: false,
-					success: function (data) { // 以上成功才執行
-						alert(data);
-					},
-					error: function (data) {
-						alert(data);
-					}
-				})
+				url: "<%=request.getContextPath()%>/video/videoAjax.do",
+				type: "POST",
+				data: formData,
+				// 告訴jQuery不要去處理發送的資料
+				processData: false,
+				// 告訴jQuery不要去設定Content-Type請求頭
+				contentType: false,
+				success: function (data) { // 以上成功才執行
+					alert(data);
+					updateAllChaptersInfo();
+				},
+				error: function (data) {
+					alert(data);
+				}
+			})
 		});
 
-		// 刪除單一單元，包含 DB 內資料
-		$(".deleteButton").click(function (e) {
-			e.preventDefault();
-			if (confirm("\n確認刪除後，將無法回復資料\n且不建議刪除以開使販售之課程\n避免影響學生權益\n\n請問是否要刪除本單元？")) {
-				var formData = new FormData($(this).parent()[0]);
-				// for (let key of formData.keys()) {
-				// 	console.log(key + " : " + formData.get(key));
-				// }
-
-				$.ajax({
-					url: "<%=request.getContextPath()%>/video/videoAjax.do",
-					type: "POST",
-					data: formData,
-					// 告訴jQuery不要去處理發送的資料
-					processData: false,
-					// 告訴jQuery不要去設定Content-Type請求頭
-					contentType: false,
-					success: function (data) { // 以上成功才執行
-						alert(data);
-						console.log("* Video 刪除成功");
-					},
-					error: function (data) {
-						alert(data)
-						console.log("* Video 刪除失敗");
-					}
-				})
-
-				$(this).parents("tr").remove(); // 感謝靜神
-				replaceTheChapterNumber();
-			} else {
+		function addDeleteEvent() {
+			// 刪除單一單元，包含 DB 內資料
+			$(".deleteButton").unbind().click(function (e) {
+				// 加上 unbind()，可以清除先前的事件，避免重複註冊
 				e.preventDefault();
-			}
-		});
+				if (confirm("\n確認刪除後，將無法回復資料\n且不建議刪除以開使販售之課程\n避免影響學生權益\n\n請問是否要刪除本單元？")) {
+					if ($(this).attr("new") === "true") {
+						alreadyAddOneClass = false;
+					}
+
+					var formData = new FormData($(this).parent()[0]);
+
+					$.ajax({
+						url: "<%=request.getContextPath()%>/video/videoAjax.do",
+						type: "POST",
+						data: formData,
+						// 告訴jQuery不要去處理發送的資料
+						processData: false,
+						// 告訴jQuery不要去設定Content-Type請求頭
+						contentType: false,
+						success: function (data) { // 以上成功才執行
+							alert(data);
+							console.log("* Video 刪除成功");
+						},
+						error: function (data) {
+							alert(data)
+							console.log("* Video 刪除失敗");
+						}
+					})
+
+					$(this).parents("tr").remove(); // 感謝靜神
+					replaceTheChapterNumber();
+				} else {
+					e.preventDefault();
+				}
+			});
+		}
 	</script>
 </body>
 

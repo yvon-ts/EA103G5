@@ -33,7 +33,7 @@
 		</ul>
 	</c:if>
 
-	<form METHOD="post" ACTION="<%=request.getContextPath()%>/course/course.do" name="form1" enctype="multipart/form-data">
+	<form METHOD="post" id="courseInfoForm" ACTION="<%=request.getContextPath()%>/course/course.do" name="form1" enctype="multipart/form-data">
 		<input type="hidden" name="courseno" value="${courseVO.courseno}">
 		<input type="hidden" name="tchrno" value="${courseVO.tchrno}">
 		<input type="hidden" name="ttltime" value="${courseVO.ttltime}">
@@ -161,6 +161,35 @@
 			});
 	</script>
 	<!-- =============== Ckeditor 5 =============== -->
+
+	<script>
+		// 更新單一課程的基本資訊
+		function updateCourseInfo() {
+			var formData = new FormData($("#courseInfoForm")[0]);
+			// 			for (var key of formData.keys()) {
+			// 				console.log(key + " : " + formData.get(key));
+			// 			}
+
+			$.ajax({
+				url: "<%=request.getContextPath()%>/course/course.do",
+				type: "POST",
+				data: formData,
+				// 告訴jQuery不要去處理發送的資料
+				processData: false,
+				// 告訴jQuery不要去設定Content-Type請求頭
+				contentType: false,
+				success: function (data) { // 以上成功才執行
+					console.log("成功");;
+				},
+				error: function (data) {
+					console.log("失敗");
+				},
+				complete: function () {
+					location.reload(true);
+				}
+			})
+		}
+	</script>
 
 	<!-- ========== JavaScript Area ========== -->
 
