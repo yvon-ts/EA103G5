@@ -8,5 +8,6 @@ public interface CoupCodeDAO_interface {
 	public void update(CoupCodeVO coupCodeVO);
 	public CoupCodeVO findByPrimaryKey(String coupno);
 	public List<CoupCodeVO> getAll();
+	public List<CoupCodeVO> findByMemno(String memno);
 
 }
