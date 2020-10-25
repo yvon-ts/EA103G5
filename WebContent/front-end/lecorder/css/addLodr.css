@@ -1,4 +1,4 @@
-html{
+	html{
  		background: #F3F3F3;
  		box-sizing: border-box;
 	}
@@ -15,6 +15,7 @@ html{
 		padding: 30px;
 		border-radius: 2%;
 		text-align: center;
+		margin-bottom: 50px;
 	}
 	#info-part #seatAppend{
 		color: #fff;
@@ -48,3 +49,9 @@ html{
 		color:white;
 		padding:1em;
 	}
+	#padd{
+	padding: 40px 0;
+	background-color: #fff;
+	color: #fff;
+	margin-bottom: 50px;
+ 	} 

@@ -30,7 +30,7 @@
 	ClassroomService roomSvc = new ClassroomService();
 	ClassroomVO roomVO = roomSvc.getOneClassroom(roomno);
 	String roomname = roomVO.getRoomname();
-	//日期設定
+	//date time formatter
 	Timestamp lecstart = lecVO.getLecstart();
 	Timestamp lecend = lecVO.getLecend();
 	String startdate = "";
@@ -48,8 +48,6 @@
 %>
 
 <!DOCTYPE html>
-<%
-%>
 <html>
 <head>
 <meta charset="utf-8">
@@ -60,22 +58,8 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <%@ include file="/index/front-index/header.jsp" %>
 <link rel="stylesheet" href="<%=request.getContextPath()%>/back-end/css/bootTable.css">
+<link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/lecseat/css/listOneForMem.css">
 <style>
-body { 
-    color: #566787; 
-     background: #f5f5f5; 
-     font-family: 'Roboto', sans-serif; 
-     margin: 0; 
- } 
-.lecinfo{
-	border: 1px solid #000;
-    width: fit-content;
-    margin-top: 80px;
-	margin-left: 400px;
-}
-.hide{
-	display: none;
-}
 </style>
 <script>
 </script>
@@ -93,7 +77,6 @@ body {
                         <h2 class="text-center">座位查詢</h2>
                     </div>
                     <div class="col-sm-4">
-                       
                     </div>
                 </div>
             </div>
@@ -109,89 +92,101 @@ body {
                     </tr>
                 </thead>
                 <tbody>
-               <%@ include file="/back-end/pool/page1.file" %>
-                        <c:forEach var="seatVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
+               		<%@ include file="/back-end/pool/page1.file" %>
+                    <c:forEach var="seatVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
 
-			
-			<tr><td>${seatVO.lodrno}</td>
-			 <td>${lecVO.lecname}</td>
-			<td>${lecVO.lecprice}</td>
-			<td>${seatVO.seatno}</td>
-			<td>${seatVO.seatstatus}</td>
-            <td>
-            <form id="formGetOne" method="post" action="<%=request.getContextPath()%>/lecseat/lecseat.do">
-            <input type="hidden" name="lodrno" value="${lodrVO.lodrno}">
-			<button class="btn edit modify" style="color: orange"><i class="material-icons">&#xE254;</i></button></form>
-            </td>
-            </tr>
-		</c:forEach>
+					<tr>
+						<td>${seatVO.lodrno}</td>
+						<td>${lecVO.lecname}</td>
+						<td>${lecVO.lecprice}</td>
+						<td>${seatVO.seatno}</td>
+						<td>${seatVO.seatstatus}</td>
+			            <td>
+				            <form id="formGetOne" method="post" action="<%=request.getContextPath()%>/lecseat/lecseat.do">
+					            <input type="hidden" name="lodrno" value="${lodrVO.lodrno}">
+								<button class="btn edit modify" style="color: orange"><i class="material-icons">&#xE254;</i></button>
+							</form>
+			            </td>
+		            </tr>
+					
+					</c:forEach>
                 </tbody>
             </table>
-            <div class="clearfix">
-                <ul class="pagination">
-                    <li class="page-item disabled"><a href="#">Previous</a></li>
-                    <li class="page-item"><a href="#" class="page-link">1</a></li>
-                    <li class="page-item"><a href="#" class="page-link">2</a></li>
-                    <li class="page-item active"><a href="#" class="page-link">3</a></li>
-                    <li class="page-item"><a href="#" class="page-link">4</a></li>
-                    <li class="page-item"><a href="#" class="page-link">5</a></li>
-                    <li class="page-item"><a href="#" class="page-link">Next</a></li>
-                </ul>
+            <div class="clearfix" style="padding-bottom: 50px">
+               <div class="pagination">
+               <form id="modifyForm"method="post" action="<%=request.getContextPath()%>/lecorder/lecorder.do">
+			       <input type="hidden" name="lodrno" value="<%=lodrno%>">
+			       <input type="hidden" name="lecno" value="<%=lecno%>">
+			       <input id="count" type="hidden" name="count" readonly>
+			 	   <input id="lecamt" type="hidden" name="lecamt" readonly>
+				   <input id="lecprice" type="hidden" value=<%=lecprice%> readonly>
+			  	   <input id="seatno" type="hidden" name="seatno" readonly>
+			  	   <!-- catch currseat from seat layout for sending request -->
+			  	   <input id="currseat" type="hidden" name="currseat" readonly>
+			  	   <input type="hidden" name="action" value="update">
+		       </form>
+                   <button id="confirm" class="hide btn btn-border" style="border: 1px solid #0099cc;">確定變更</button>
+                </div>
             </div>
         </div>
     </div>
 </div> 
- <div class="row">
-   <div class="col-sm-6">
-   <div class="lecinfo">
-   	<ul>
-   	<li>講座名稱：${lecVO.lecname}</li>
-   	<li>講師姓名：${lecVO.spkrno}</li>
-   	<li>講座日期：<%=startdate%></li>
-	<li>講座時間：<%=starttime%> - <%=endtime%></li>
-	<li>講座地點：<%=roomname%>教室</li>
-   	</ul>
-   	</div>
-   </div>
-		
-       <div class="col-sm-6"><button class="modify">修改座位</button><form method="post" action="<%=request.getContextPath()%>/lecorder/lecorder.do">
-      <button id="confirm" class="hide" style="margin-left:250px">確定變更</button>
-      <%@ include file="/front-end/lecseat/bookedSeats.jsp" %>
-       <input type="hidden" name="lodrno" value="<%=lodrno%>">
-       <input type="hidden" name="lecno" value="<%=lecno%>">
-       <input type="hidden" name="action" value="update">
-         <input id="count" type="hidden" name="count" readonly>
-  <input id="lecamt" type="text" name="lecamt" readonly>
-  <input id="lecprice" type="hidden" value=<%=lecprice%> readonly>
-  <input id="seatno" type="text" name="seatno" readonly>
-       </form>
-       
-      </div>
-      </div>
-      <%@ include file="/index/front-index/footer.jsp" %>
-	<script>
-		$(".modify").click(function(e){
-			e.preventDefault();
-			alert("請點選綠色區塊取消指定座位");
-			addClickForCancel();
-			$("#confirm").removeClass("hide");
-		});
-		$("#confirm").mouseenter(function(){
-			 var arr = document.getElementsByClassName("cancelled");
-			    let txt = "";
-			    if (arr.length > 0) {
-			        for (let i = 0; i < arr.length; i++) {
-			            txt += arr[i].textContent + " ";
-			        }
-			    }
-			    $("#seatno").val(txt);
-		});
-		
-		function verify(){
-			var c = confirm("座位即將被取消，請問是否確認？");
-			return c;
-		}
-		
-	</script>
+<div id="table-area" class="container-xl">
+    <div class="table-responsive">
+        <div class="table-wrapper">			
+            <div class="table-title">
+                <div class="row" id="seat-area">
+                    <div class="col-sm-4">
+                    	<img id="cus-service" src="<%=request.getContextPath()%>/index/front-index/assets/img/head/cus-service.png"><br>
+                    </div>
+                    <div class="col-sm-4" id="lecinfo">
+	                    <ul style="margin-top: 120px; margin-left: 50px">
+						   	<li>${lecVO.lecname}</li>
+						   	<li>講師姓名：${lecVO.spkrno}</li>
+						   	<li>講座日期：<%=startdate%></li>
+							<li>講座時間：<%=starttime%> - <%=endtime%></li>
+							<li>講座地點：<%=roomname%>教室</li>
+					   	</ul>
+                    </div>
+                    <div class="col-sm-4" style="margin-left: 300px">
+                   		<%@ include file="/front-end/lecseat/bookedSeats.jsp" %>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> 
+<%@ include file="/index/front-index/footer.jsp" %>
+<script>
+	$(".modify").click(function(e){
+		e.preventDefault();
+		alert("請點選綠色區塊取消指定座位");
+		addClickForCancel();
+		$("#confirm").removeClass("hide");
+		$(".booked").addClass("cursor");
+		$(".cancelled").addClass("cursor");
+	});
+	
+	$("#confirm").mouseenter(function(){
+		 var arr = document.getElementsByClassName("cancelled");
+		    let txt = "";
+		    if (arr.length > 0) {
+		        for (let i = 0; i < arr.length; i++) {
+		            txt += arr[i].textContent + " ";
+		        }
+		    }
+		    $("#seatno").val(txt);
+		    
+		 var currseat = $("#defaultseat").val();
+		 $("#currseat").val(currseat);
+		 
+	});
+	
+	$("#confirm").click(function(){
+		confirm("座位即將被取消，請問是否確認？");
+		$("#modifyForm").submit();
+	});
+	
+</script>
 </body>
 </html>                                		

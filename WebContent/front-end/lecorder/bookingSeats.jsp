@@ -38,8 +38,8 @@
 					<input type="hidden" id="roomcolumn" class="roomSpace" name="roomcolumn" value="${roomVO.roomcolumn}">
 					<input type="text" id="defaultseat" name="currseat" value="<%=defseat%>" readonly>
 				</div>
-				<div>
-				<div id="seatAppend">
+				<div style="display:inline-block">
+				<div id="seatAppend" style="display:inline-block">
 				剩餘座位數量：<span id="seatCount"></span> / <span id="blockCount"></span><br>
 				</div>
 	</div>

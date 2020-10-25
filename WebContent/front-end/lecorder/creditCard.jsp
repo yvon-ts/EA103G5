@@ -73,7 +73,7 @@
                     <font style="color: #e0eaf4;">-</font>
                     <input class="num" type="tel">
                 </div>
-                <input placeholder="FULL NAME" type="text" name="name">
+                <input id="card-name"placeholder="FULL NAME" type="text" name="name">
             </form>
         </div>
     </div>
@@ -82,8 +82,8 @@
         <div class="card-wrapper"></div>
         <div class="form-container active">
             <form action="">
-                <input class="num" placeholder="MM/YY" type="tel" name="expiry">
-                <input class="num" placeholder="CVC" type="tel" name="cvc">
+                <input id="exp" placeholder="MM/YY" type="tel" name="expiry">
+                <input id="cvc" placeholder="CVC" type="tel" name="cvc">
             </form>
         </div>
     </div>

@@ -42,11 +42,15 @@
 
 <!DOCTYPE html>
 <html>
+<%@ include file="/index/front-index/header.jsp" %>
 <link href="<%=request.getContextPath()%>/front-end/lecture/listOneLec/vendor/bootstrap/css/bootstrap-grid.min.css" rel="stylesheet" />
 <head>
 <meta charset="UTF-8">
 <title>Xducation - 陪你成長的學習好夥伴</title>
 <style>
+body{
+	margin: 0;
+}
 	#credit-card{
 		background-color: #fff;
 		padding: 30px;
@@ -89,15 +93,25 @@ html{
   box-shadow:1em 1em 0 0 rgba(0,0,0,.2);
   font-family:Raleway, sans-serif;
 }
+	#padd{
+	padding: 40px 0;
+	background-color: #fff;
+	color: #fff;
+	margin-bottom: 50px;
+ 	} 
 </style>
 </head>
 <body>
+<div id="padd"></div>
 <div class="container">
  <div class="row">
    <div id="credit-card" class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
    <%@ include file="/front-end/lecorder/creditCard.jsp"%>
-   <div>
-   		<button id="btn">+</button>
+   <button id="btn">+</button>
+   <div style="text-align: center">
+   	請再次檢查您的訂購資訊<br>
+   	並於上方填寫您的信用卡資料
+   	<img src="<%=request.getContextPath()%>/index/front-index/assets/img/head/cus-service.png" style="max-height: 500px; width: auto">
    </div>
    </div>
 <div id="form"><form class="login-form" method="post" action="<%=request.getContextPath()%>/lecorder/lecorder.do">
@@ -129,11 +143,14 @@ html{
 </div>
 </div>
 <!-- Bootstrap core JavaScript -->
-	
+	<%@ include file="/index/front-index/footer.jsp" %>
 	<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 	<script>
 		$("#btn").click(function(){
-			console.log("hi");
+			$(".num").val("1111");
+			$("#card-name").val("TZENG KAI SYUAN");
+			$("#exp").val("11/20");
+			$("#cvc").val("666");
 		});
 	</script>
 	<script src="vendor/jquery/jquery.min.js"></script>

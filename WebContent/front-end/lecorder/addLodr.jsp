@@ -34,14 +34,20 @@
 
 <!DOCTYPE html>
 <html>
+<%@ include file="/index/front-index/header.jsp" %>
 <link href="<%=request.getContextPath()%>/front-end/lecture/listOneLec/vendor/bootstrap/css/bootstrap-grid.min.css" rel="stylesheet" />
 <link href="<%=request.getContextPath()%>/front-end/lecorder/css/addLodr.css" rel="stylesheet" />
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
-
+<title>Xducation - 陪你成長的學習好夥伴</title>
+<style>
+body{
+	margin: 0;
+}
+</style>
 </head>
 <body>
+<div id="padd"></div>
 <form class="login-form" method="post" action="<%=request.getContextPath()%>/front-end/lecorder/confirmLodr.jsp">
 <div class="container">
 	<div class="row">
@@ -67,13 +73,14 @@
 				付款方式：&nbsp;<input type="radio" style="width: 20px"checked>&nbsp;信用卡
 			
 				會員編號：<input type="text" name="memno">
-				  <input id="submit" type="submit" value="確認付款">
+				<input id="submit" type="submit" value="確認付款">
   				<input type="hidden" name="lecno" value="<%=lecno%>">
 			</div>
  	</div>
 </div>
 </form>
 <!-- Bootstrap core JavaScript -->
+<%@ include file="/index/front-index/footer.jsp" %>
 	<script src="vendor/jquery/jquery.min.js"></script>
 	<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 	<script>

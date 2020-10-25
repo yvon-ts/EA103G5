@@ -46,7 +46,7 @@
 		<input type="hidden" id="roomrow" class="roomSpace" name="roomrow" value="${roomVO.roomrow}">
 		<input type="hidden" id="roomcolumn" class="roomSpace" name="roomcolumn" value="${roomVO.roomcolumn}">
 		<input type="hidden" id="fixedseat" name="initseat" value="${lvo.initseat}" readonly>
-		<input type="hidden" id="defaultseat" name="currseat" value="${lvo.currseat}" readonly>
+		<input type="text" id="defaultseat" name="currseat" value="${lvo.currseat}" readonly>
 	</div>
 	<div>
 	</div>
