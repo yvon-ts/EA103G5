@@ -4,7 +4,7 @@
 <%@ page import="com.speaker.model.*" %>
 <%@ page import="java.util.*" %>
 
-<%@ include file="/back-end/pool/bstage1.jsp" %>
+<%@ include file="/back-end/index/homepage.jsp" %>
 
 <!DOCTYPE html>
 <%
@@ -14,15 +14,15 @@
 %>
 <html>
 <head>
-<title>select_page.jsp</title>
+<title>Xducation - 陪你成長的學習好夥伴</title>
 <style>
 	#ctnt{
-	margin-left: 400px;
 	margin-top: 150px;
 	}
 </style>
 </head>
 <body>
+<main class="app-content">
 <div id="ctnt">
 
 	<c:if test="${not empty errorMsgs}">
@@ -60,7 +60,7 @@
 	<h2>講座管理</h2>
 	<%@ include file="/back-end/lecture/select_page.jsp" %>
 	</div>
-
+</main>
 </body>
 </html>
 

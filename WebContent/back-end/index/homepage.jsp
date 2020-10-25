@@ -113,7 +113,7 @@
                 <ul class="treeview-menu">
                     <li><a class="treeview-item" href="bootstrap-components.html"><i class="icon fa fa-circle-o"></i> 教室管理</a></li>
                     <li><a class="treeview-item" href="https://fontawesome.com/v4.7.0/icons/" target="_blank" rel="noopener"><i class="icon fa fa-circle-o"></i>報名管理 </a></li>
-                    <li><a class="treeview-item" href="bootstrap-components.html"><i class="icon fa fa-circle-o"></i> 講座管理</a></li>
+                    <li><a class="treeview-item" href="<%=request.getContextPath()%>/back-end/lecture/lectureIndex.jsp"><i class="icon fa fa-circle-o"></i> 講座管理</a></li>
                 </ul>
             </li>
             <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="fa fa-cart-plus" aria-hidden="true"></i>

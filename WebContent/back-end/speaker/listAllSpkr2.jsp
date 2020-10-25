@@ -44,11 +44,11 @@
             <table class="table table-bordered">
                 <thead>
                     <tr>
-                        <th>訂單編號</th>
-                        <th>講座名稱</th>
-                        <th>訂單金額</th>
-                        <th>訂單狀態</th>
-                        <th>成立時間</th>
+                        <th>講師編號</th>
+                        <th>講師姓名</th>
+                        <th>講師電話</th>
+                        <th>講師信箱</th>
+                        <th>點選操作</th>
                         <th>查看座位</th>
                     </tr>
                 </thead>

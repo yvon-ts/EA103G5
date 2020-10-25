@@ -114,7 +114,7 @@ table.table td i {
     text-align: center;
 }
 .pagination li a:hover {
-    color: #666;
+    color: #03A9F4;
 }	
 .pagination li.active a {
     background: #03A9F4;

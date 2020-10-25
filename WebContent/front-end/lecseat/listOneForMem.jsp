@@ -61,30 +61,6 @@
 <link rel="stylesheet" href="<%=request.getContextPath()%>/back-end/css/bootTable.css">
 <link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/lecseat/css/listOneForMem.css">
 <style>
-body { 
-    color: #566787; 
-    background: #f5f5f5; 
-    font-family: 'Roboto', sans-serif; 
-    margin: 0; 
- } 
-.hide{
-	display: none;
-}
-#cus-service{
-	max-height: 300px;
-    width: auto;
-}
-#lecinfo{
-	margin-top:20px;
-	color: #333;
-}
-.cursor{
-	cursor: pointer;
-}
-#confrim{
-	position: absolute;
-	right: 180px;
-}
 </style>
 <script>
 </script>
