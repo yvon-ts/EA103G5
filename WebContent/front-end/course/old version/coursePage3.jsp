@@ -158,7 +158,7 @@
 				<div class="tab-content" id="subpage">
 					<div id="courseinfo" class="tab-pane fade show active">
 						<h3>課程簡介</h3>
-						<jsp:include page="/front-end/course/subpage_courseinfo.html" />
+<%-- 						<jsp:include page="/front-end/course/subpage_courseinfo.html" /> --%>
 					</div>
 					<div id="downloadfile" class="tab-pane fade">
 						<h3>教材下載</h3>
