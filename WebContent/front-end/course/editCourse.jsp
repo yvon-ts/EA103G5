@@ -35,7 +35,7 @@
 	<link rel="stylesheet" href="<%=request.getContextPath()%>/library/font-awesome/5.15.1/css/all.min.css">
 	<!-- 自己的 CSS 一定放在最下面 -->
 	<link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/course/css/editCourse.css">
-<%-- 	<link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/course/css/editCourseChapter.css"> --%>
+	<%-- 	<link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/course/css/editCourseChapter.css"> --%>
 	<!-- ========== CSS Area ========== -->
 	<title>課程管理 - ${courseVO.coursename}</title>
 </head>
@@ -60,6 +60,7 @@
 				<h5>老師：${membersSvc.getOneMembers(teacherSvc.getOneTeacher(courseVO.tchrno).memno).memname}</h5>
 				<h5>類別：${courseTypeSvc.getOneCourseType(courseVO.cstypeno).cstypename}</h5>
 				<h5>單價：${courseVO.courseprice}</h5>
+				<h5>總時數：${courseVO.ttltime} 秒</h5>
 				<h5>狀態：${courseVO.csstatus}</h5>
 				<h5>評分：<%= courseScore %></h5>
 
@@ -78,7 +79,7 @@
 								<h5>基本資訊管理</h5>
 							</a>
 						</li>
-						
+
 						<li class="nav-item">
 							<a class="nav-link" data-toggle="pill" href="#">
 								<h5>附件上傳</h5>
@@ -124,9 +125,9 @@
 	<jsp:include page="/index/front-index/footer.jsp" />
 	<!-- include 前台頁面的 footer -->
 
-	
-	
-	
+
+
+
 	<!-- Sortable API JS (放到 include 那邊會出事，且須放在 footer 之下)-->
 	<script src="<%=request.getContextPath()%>/front-end/course/js/bootstrap-html5sortable-master/jquery.sortable.min.js"></script>
 </body>
