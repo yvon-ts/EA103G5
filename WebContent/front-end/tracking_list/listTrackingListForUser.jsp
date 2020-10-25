@@ -259,11 +259,21 @@
 							 src="<%=request.getContextPath()%>/index/front-index/assets/img/empty-box.svg"
 								alt="shoppingCart Empty"/>
 								<div>購物車空空的，來去逛逛吧!!!</div>	
-						<button class="btn btn-common"  onclick="location.href='<%=request.getContextPath()%>/front-end/course/listAllCourseForUser.jsp'" style="margin-top:3%;">
+						<button class="btn btn-common"  id="goToSearch" style="margin-top:3%;">
         						搜尋課程
         				</button>`;
 						
         				$('.shoppingCartArea').append(str);
+        				
+        				$('#goToSearch').click(function(e){
+        					e.preventDefault();
+        					
+
+        					var a = document.createElement('a');
+        					a.href = '<%=request.getContextPath()%>/front-end/course/listAllCourseForUser.jsp';
+        					a.click();
+        					
+        				});
 					}
 					
 					$.ajax({
@@ -419,11 +429,21 @@
 										 src="<%=request.getContextPath()%>/index/front-index/assets/img/empty-box.svg"
 											alt="shoppingCart Empty"/>
 											<div>購物車空空的，來去逛逛吧!!!</div>	
-									<button class="btn btn-common"  onclick="location.href='<%=request.getContextPath()%>/front-end/course/listAllCourseForUser.jsp'" style="margin-top:3%;">
+									<button class="btn btn-common"  id="goToSearch" style="margin-top:3%;">
 			        						搜尋課程
 			        				</button>`;
 									
 			        				$('.shoppingCartArea').append(str);
+			        				
+			        				$('#goToSearch').click(function(e){
+			        					e.preventDefault();
+			        					
+
+			        					var a = document.createElement('a');
+			        					a.href = '<%=request.getContextPath()%>/front-end/course/listAllCourseForUser.jsp';
+			        					a.click();
+			        					
+			        				});
 								}
 								
 								
