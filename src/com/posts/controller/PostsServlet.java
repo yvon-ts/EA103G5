@@ -143,7 +143,7 @@ public class PostsServlet extends HttpServlet {
 				/*************************** 其他可能的錯誤處理 **********************************/
 			} catch (Exception e) {
 				errorMsgs.add("無法取得要修改的資料:" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/posts/listAllPosts.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/posts/posts.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -224,7 +224,7 @@ public class PostsServlet extends HttpServlet {
 
 				/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
 				req.setAttribute("postsVO", postsVO); 
-				String url = "/back-end/posts/listOnePosts.jsp";
+				String url = "/front-end/posts/posts.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); 
 				successView.forward(req, res);
 
@@ -232,7 +232,7 @@ public class PostsServlet extends HttpServlet {
 			} catch (Exception e) {
 				errorMsgs.add("修改資料失敗:" + e.getMessage());
 				e.printStackTrace();
-				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/posts/update_posts_input.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/posts/posts.jsp");
 				failureView.forward(req, res);
 			}
 		}
