@@ -5,6 +5,7 @@
 
 <%
 MembersVO membersVO = (MembersVO) session.getAttribute("membersVO");
+String inform6 = (String)request.getAttribute("inform6");
 %>
 
 <jsp:useBean id="teacherSvc" scope="page" class="com.teacher.model.TeacherService" />
@@ -180,6 +181,13 @@ background:rgba(57, 63, 84, 0.6);
 									<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
 										<a class="dropdown-item"
 											href="<%=request.getContextPath()%>/front-end/members/updateMembersV2.jsp">個人檔案</a>
+											<a class="dropdown-item"
+											href='<%=request.getContextPath()%>/front-end/Order_Master/listAllByMemno.jsp'>課程訂單紀錄</a>
+											
+											<a class="dropdown-item"
+											href='<%=request.getContextPath()%>/front-end/coup_code/listAllByMemno.jsp'>持有折扣券</a> 
+													
+											
 											
 										
 										<c:if test="${teacherSvc.getStatus(membersVO.memno).tchrstatus eq '待審核'}">
@@ -427,14 +435,8 @@ background:rgba(57, 63, 84, 0.6);
             </div>
         </section>
     </footer>
-    
-    <div class='loader-'>
-    
-    
-    
-    </div>
-    
-    
+    <input type="hidden" id="inform6" value="${requestScope.inform6}">
+   
     
     
     
@@ -445,6 +447,12 @@ background:rgba(57, 63, 84, 0.6);
     
     
     <script type="text/javascript">
+    var inform6 = document.getElementById('inform6').value;
+	if(inform6 ==='200'){
+		swal('申請成功', '我們會盡快審核並告知您審核結果,請耐心等候通知', 'success');
+	}
+    
+    
     function status(){
 		
 		 swal('老師資格審核中', '請耐心等候1~3個工作天，一但審核完畢，即會立刻通知', 'info');
