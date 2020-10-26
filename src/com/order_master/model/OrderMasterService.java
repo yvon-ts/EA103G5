@@ -14,15 +14,13 @@ public class OrderMasterService {
 	}
 	
 	public OrderMasterVO addOrder(String memno, Integer orderamt, String coupno, String payby, List<OrderDetailVO> list){
-		System.out.println("進入service");
 		OrderMasterVO vo = new OrderMasterVO();
 		
 		vo.setMemno(memno);
 		vo.setOrderamt(orderamt);
 		vo.setCoupno(coupno);
 		vo.setPayby(payby);
-		dao.insert(vo,list);
-		
+		vo.setOrderno(dao.insert(vo,list));
 		return vo;
 	}
 	
