@@ -361,8 +361,7 @@ function getData(offset,size){
 				
 				result +=   `<div class="signin-content">`;
 				result += 	`<div class="signin-image">`;
-				result +=	`<a href=''>`;
-				result += `<img class="pic" src='<%=request.getContextPath()%>/back-end/members/MprofileDisplayServlet?MEMNO=` + JSONarray[i].memno  +`' alt='sing up image'></a>`;
+				result += `<img class="pic" src='<%=request.getContextPath()%>/back-end/members/MprofileDisplayServlet?MEMNO=` + JSONarray[i].memno  +`' alt='sing up image'>`;
 				result +=	`<h4 style="font-family:Gochi Hand" class="nkname">`+JSONarray[i].nkname
 				
 				if(JSONarray[i].tchrstatus===null){
