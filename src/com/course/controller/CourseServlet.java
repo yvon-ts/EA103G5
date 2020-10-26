@@ -31,7 +31,7 @@ public class CourseServlet extends HttpServlet {
 		String action = req.getParameter("action");
 		System.out.println("***action = " + action);
 
-		if ("getOne_For_Display".equals(action)) {// 取得特定物件
+		if ("showCourseMainPage".equals(action)) {// 取得特定物件
 
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);

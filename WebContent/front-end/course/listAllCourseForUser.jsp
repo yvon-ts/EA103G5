@@ -137,6 +137,7 @@
 						<c:forEach var="courseVO" items="${Courselist}">
 							<div class="col-md-6 col-lg-3 col-xs-12">
 								<div class="services-item wow fadeInRight" data-wow-delay="0.3s">
+									<a href="<%=request.getContextPath()%>/course/course.do?action=showCourseMainPage&courseno=${courseVO.courseno}">
 									<div class="icon">
 										<!-- 顯鈞：替換成新版本讀圖測試2020/10/22 -->
 										<%-- <img src="<%=request.getContextPath()%>/course/coursephoto.do?action=searchPhoto&courseno=${courseVO.courseno}" style="width:200px;height:150px" class="pic"> --%>
@@ -148,7 +149,8 @@
 <!--                         	 -->
                         	&nbsp;&nbsp;&nbsp;<div class="rateit" data-rateit-value="${courseVO.csscore / courseVO.csscoretimes }" data-rateit-ispreset="true" data-rateit-readonly="true"></div> 
                         	<br>&nbsp;&nbsp;&nbsp;${courseVO.csscoretimes}則評價
-                            <h3><a href="#">${courseVO.coursename}</a></h3>
+                        	<h3>${courseVO.coursename}</h3></a>
+<%--                             <h3><a href="<%=request.getContextPath()%>/course/course.do?action=getOne_For_Display&courseno=${courseVO.courseno}">${courseVO.coursename}</a></h3> --%>
                             <p>課程共${courseVO.ttltime}分鐘</p>
 <!--                             <p>同學累計9487人</p> -->
 							
@@ -290,14 +292,16 @@
 		                
 		                str +=  `<div class="col-md-6 col-lg-3 col-xs-12">`;
 			            str +=  `<div class="services-item wow fadeInRight" data-wow-delay="0.3s">`;
-			            str +=  `<div class="icon"><img src=  "` + pictureURL + `"style="width:200px;height:150px"></div>`;
+			            str +=  `<div class="icon">`
+			            str +=  `<a href="<%=request.getContextPath()%>/course/course.do?action=showCourseMainPage&courseno=` + JSONarray[i].courseno + `">`
+			            str +=  `<img src=  "` + pictureURL + `"style="width:200px;height:150px"></div>`;
 			                    
 			            str +=  `<div class="services-content">`;
 						str +=  `&nbsp;&nbsp;<div class="rateit" data-rateit-value="` + JSONarray[i].csscore / JSONarray[i].csscoretimes + `" data-rateit-ispreset="true" data-rateit-readonly="true"></div><br>`;
 								
 								
 		                str +=  `&nbsp;&nbsp;&nbsp;` + JSONarray[i].csscoretimes + `則評價`;
-		                str +=  `<h3><a href="#">` + JSONarray[i].coursename + `</a></h3>`;
+		                str +=  `<h3>` + JSONarray[i].coursename + `</h3></a>`;
 		                str +=  `<p>課程共`+JSONarray[i].ttltime+`分鐘</p>`;
 		<!--                             <p>同學累計9487人</p> -->
 						str +=	`<label class="shoppingcart"><i class="fa fa-shopping-cart" aria-hidden="true"><input type ="hidden" name="courseno" 	 id="courseno"   value ="`+ JSONarray[i].courseno +`"/></i>加入購物車</label>`;

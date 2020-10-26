@@ -85,12 +85,11 @@
 						<div class="col-lg-4">
 							<!-- 單元選擇欄位 -->
 							<div>
-								<h2>課程單元清單</h2>
+								<h2 style="color:#0099CC;">課程單元清單</h2>
 							</div>
 							<div class="list-group" id="videolist">
 								<!-- 宣告複合查詢使用的 map -->
 								<%
-									//CourseVO courseVO = (CourseVO) request.getAttribute("courseVO");
 									String courseno = courseVO.getCourseno();
 									Map<String, String[]> map = new TreeMap<String, String[]>();
 									map.put("courseno", new String[]{courseno});
@@ -100,15 +99,19 @@
 								<jsp:useBean id="videoSvc" scope="page" class="com.video.model.VideoService" />
 								<c:forEach var="videoVO" items="${videoSvc.getAll(map)}">
 									<a
-										class="list-group-item list-group-item-action list-group-item-primary d-flex"
+										class="list-group-item list-group-item-action list-group-item-primary"
 										href="<%=request.getContextPath()%>/video/VideoReaderFromDB?videono=${videoVO.videono}"  chaptername="${videoVO.chaptername}">
+										<div class="d-flex">
 										<div class="w-75">
-											<h3>單元 ${videoVO.chapterno}</h3>
-											<h3>${videoVO.chaptername}</h3>
+											<h3 style="color:#0099CC;">單元 ${videoVO.chapterno}</h3>
 										</div>
 										<div class="w-25">
 											<p class="showVideoLen text-right"></p>
 											<input type="hidden" name="chapterlen" value=${videoVO.chapterlen } min=0 step=1 readonly>
+										</div>
+										</div>
+										<div>
+											<h5>${videoVO.chaptername}</h5>
 										</div>
 									</a>
 								</c:forEach>
