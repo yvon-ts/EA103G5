@@ -74,11 +74,11 @@ height:36px;
 						<li class="nav-item"><a class="nav-link" href="<%=request.getContextPath()%>/front-end/lecture/listAllLec.jsp">
 								名人講座&nbsp;<i class="lni-bulb"></i>
 						</a></li>
-						<c:if test="${teacherSvc.getStatus(sessionScope.membersVO.memno).tchrstatus eq '已通過'}">
-						<li class="nav-item"><a class="nav-link" href="#">
-								我要開課&nbsp;<i class="lni-bulb"></i>
-						</a></li>
-						</c:if>
+<%-- 						<c:if test="${teacherSvc.getStatus(sessionScope.membersVO.memno).tchrstatus eq '已通過'}"> --%>
+<!-- 						<li class="nav-item"><a class="nav-link" href="#"> -->
+<!-- 								我要開課&nbsp;<i class="lni-bulb"></i> -->
+<!-- 						</a></li> -->
+<%-- 						</c:if> --%>
 						
 						<c:if test="${not empty sessionScope.membersVO}">
 							

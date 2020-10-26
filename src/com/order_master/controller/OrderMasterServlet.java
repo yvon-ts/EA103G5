@@ -165,8 +165,6 @@ public class OrderMasterServlet extends HttpServlet {
 		}
 		if ("insert".equals(action)) {
 
-			System.out.println("進入INSERT");
-
 			List<String> errorMsgs = new LinkedList<String>();
 			// Store this set in the request scope, in case we need to
 			// send the ErrorPage view.
@@ -230,16 +228,19 @@ public class OrderMasterServlet extends HttpServlet {
 				//產生綠界訂單
 				AioCheckOutOneTime checkoutonetime = new AioCheckOutOneTime();
 //				checkoutonetime.setMerchantTradeNo(orderMasterVO.getOrderno());
-				checkoutonetime.setMerchantTradeNo("ZZZ00001"); // fortest
+				checkoutonetime.setMerchantTradeNo("ZZSDA"); // for test
 
 //				checkoutonetime.setTotalAmount(orderamt.toString());
-				checkoutonetime.setTotalAmount("2000"); //for test
 
 //				StringBuffer itemname = new StringBuffer();
+//				StringBuffer itemprice = new StringBuffer();
 //				for(CourseVO a : buylist) {
-//					itemname.append(a.getCoursename()).append(", ");
+//					itemname.append(a.getCourseno()).append(", ");
+//					itemprice.append(a.getCourseprice()).append(", ");
 //				}
-				checkoutonetime.setItemName("中文");
+				checkoutonetime.setItemName("itemname.toString()");
+				checkoutonetime.setTotalAmount("itemprice.toString()");
+					
 				java.sql.Timestamp time = new java.sql.Timestamp(System.currentTimeMillis());
 				DateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 				checkoutonetime.setMerchantTradeDate(sdf.format(time));
@@ -262,7 +263,7 @@ public class OrderMasterServlet extends HttpServlet {
 				
 //				/*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
 //				String url = "/front-end/Shop/Test2.jsp";
-//				RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
+//				RequestDispatcher successView = req.getRequestDispatcher(url);
 //				successView.forward(req, res);
 
 				/*************************** 其他可能的錯誤處理 **********************************/
