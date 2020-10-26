@@ -75,7 +75,7 @@
 			<%@ include file="/back-end/lecture/roomsetting/updateLayout.jsp"%><br>
 			講座資訊：
 			<%@ include file="/back-end/lecture/ckLec.file"%>
-			<input id="action" type="hidden" name="action" value="update">
+			<input id="action" type="hidden" name="action" value="updateText">
 		</form>
 	</div>
 	<script type="text/javascript">
@@ -269,8 +269,8 @@
 		}
 		$("#btn").mouseenter(function(){
 			var fileInput = $("#upimg").get(0).files[0];
-			if(fileInput == null){
-				var val = $("#action").val("updateText");
+			if(fileInput){
+				$("#action").val("update");
 			}
 		});
 		

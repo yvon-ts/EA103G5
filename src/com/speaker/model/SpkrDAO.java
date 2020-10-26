@@ -15,8 +15,13 @@ public class SpkrDAO implements SpkrDAO_Interface {
 	private static final String INSERT_STMT =
 			"INSERT INTO SPEAKER (SPKRNO, SPKRNAME, SPKRPHONE, SPKREMAIL, SPKRINFO, SPKRICON)"
 			+ "VALUES ('SPKR' || LPAD(SEQ_SPKRNO.NEXTVAL, 4, 0), ?, ?, ?, ?, ?)";
+	private static final String INSERT_NO_PIC =
+			"INSERT INTO SPEAKER (SPKRNO, SPKRNAME, SPKRPHONE, SPKREMAIL, SPKRINFO)"
+			+ "VALUES ('SPKR' || LPAD(SEQ_SPKRNO.NEXTVAL, 4, 0), ?, ?, ?, ?)";
 	private static final String UPDATE_STMT =
 			"UPDATE SPEAKER SET SPKRNAME = ?, SPKRPHONE = ?, SPKREMAIL = ?, SPKRINFO = ?, SPKRICON = ? WHERE SPKRNO = ?";
+	private static final String UPDATE_NO_PIC =
+			"UPDATE SPEAKER SET SPKRNAME = ?, SPKRPHONE = ?, SPKREMAIL = ?, SPKRINFO = ? WHERE SPKRNO = ?";
 	private static final String DELETE_STMT =
 			"DELETE FROM SPEAKER WHERE SPKRNO = ?";
 	private static final String GETONE_STMT =
@@ -78,6 +83,49 @@ public class SpkrDAO implements SpkrDAO_Interface {
 	}
 	
 	@Override
+	public void insertNoPic(SpkrVO spkrVO) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			con = ds.getConnection();
+			con.setAutoCommit(false);
+			pstmt = con.prepareStatement(INSERT_NO_PIC);
+			
+			pstmt.setString(1, spkrVO.getSpkrname());
+			pstmt.setString(2, spkrVO.getSpkrphone());
+			pstmt.setString(3, spkrVO.getSpkremail());
+			pstmt.setBytes(4, spkrVO.getSpkrinfo());
+			pstmt.executeUpdate();
+			con.commit();
+			
+		} catch (SQLException se) {
+			try {
+				con.rollback();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			throw new RuntimeException("Database error." + se.getMessage());
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se){
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.setAutoCommit(true);
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+	}
+	
+	@Override
 	public void update(SpkrVO spkrVO) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -93,6 +141,51 @@ public class SpkrDAO implements SpkrDAO_Interface {
 			pstmt.setBytes(4, spkrVO.getSpkrinfo());
 			pstmt.setBytes(5, spkrVO.getSpkricon());
 			pstmt.setString(6, spkrVO.getSpkrno());
+			
+			pstmt.executeUpdate();
+			con.commit();
+			
+		} catch (SQLException se) {
+			try {
+				con.rollback();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			throw new RuntimeException("Database error." + se.getMessage());
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se){
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.setAutoCommit(true);
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+	}
+	
+	@Override
+	public void updateNoPic(SpkrVO spkrVO) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			con = ds.getConnection();
+			con.setAutoCommit(false);
+			pstmt = con.prepareStatement(UPDATE_NO_PIC);
+			
+			pstmt.setString(1, spkrVO.getSpkrname());
+			pstmt.setString(2, spkrVO.getSpkrphone());
+			pstmt.setString(3, spkrVO.getSpkremail());
+			pstmt.setBytes(4, spkrVO.getSpkrinfo());
+			pstmt.setString(5, spkrVO.getSpkrno());
 			
 			pstmt.executeUpdate();
 			con.commit();

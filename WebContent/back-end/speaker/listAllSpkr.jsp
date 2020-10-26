@@ -51,6 +51,16 @@
                     <div class="col-sm-4">
                         <h2 class="text-center">講師清單</h2>
                     </div>
+                    <!-- search box start -->
+                    <div class="col-sm-4">
+                        <div class="search-box">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="material-icons">&#xE8B6;</i></span>
+                                <input type="text" class="form-control" placeholder="Search&hellip;">
+                            </div>
+                        </div>
+                    </div>
+                    <!-- search box end -->
                 </div>
             </div>
             <table class="table table-bordered">
@@ -78,7 +88,7 @@
 			<form method="post" action="<%=request.getContextPath()%>/speaker/speaker.do">
 			
 <!-- 			<input type="submit" value="資訊"> -->
-			<button type="submit" class="btn view"><i class="material-icons">&#xE417;</i></button>
+			<button type="submit" class="btn view" style="color: #03A9F4"><i class="material-icons">&#xE417;</i></button>
 			<input type="hidden" name="spkrno" value="${spkrVO.spkrno}">
 			<input type="hidden" name="action" value="display_fromList"></form>
 			</td>

@@ -23,6 +23,19 @@ public class SpkrService {
 		
 		return spkrVO;
 	}
+	
+public SpkrVO addSpkrText(String spkrname, String spkrphone, String spkremail, byte[] spkrinfo) {
+		
+		SpkrVO spkrVO = new SpkrVO();
+		
+		spkrVO.setSpkrname(spkrname);
+		spkrVO.setSpkrphone(spkrphone);
+		spkrVO.setSpkremail(spkremail);
+		spkrVO.setSpkrinfo(spkrinfo);
+		dao.insertNoPic(spkrVO);
+		
+		return spkrVO;
+	}
 
 	public SpkrVO updateSpkr(String spkrno, String spkrname, String spkrphone, String spkremail, byte[] spkrinfo, byte[] spkricon) {
 		
@@ -35,6 +48,20 @@ public class SpkrService {
 		spkrVO.setSpkrinfo(spkrinfo);
 		spkrVO.setSpkricon(spkricon);
 		dao.update(spkrVO);
+		
+		return spkrVO;
+	}
+	
+public SpkrVO updateSpkrText(String spkrno, String spkrname, String spkrphone, String spkremail, byte[] spkrinfo) {
+		
+		SpkrVO spkrVO = new SpkrVO();
+		
+		spkrVO.setSpkrno(spkrno);
+		spkrVO.setSpkrname(spkrname);
+		spkrVO.setSpkrphone(spkrphone);
+		spkrVO.setSpkremail(spkremail);
+		spkrVO.setSpkrinfo(spkrinfo);
+		dao.updateNoPic(spkrVO);
 		
 		return spkrVO;
 	}

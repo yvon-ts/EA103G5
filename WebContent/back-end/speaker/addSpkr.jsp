@@ -61,7 +61,7 @@
 			講師圖片：<input type="file" id="upimg" name="spkricon" value="${spkrVO.spkricon}"><br>
 			講師資訊：
 			<%@ include file="/back-end/pool/ck.file"%>
-			<input type="hidden" name="action" value="insert">
+			<input type="hidden" name="action" value="insertText">
 		</form>
 	</div>
 	<script type="text/javascript">
@@ -81,6 +81,12 @@
 				reader.readAsDataURL(input.files[0]);
 			}
 		}
+		$("#btn").mouseenter(function(){
+			var fileInput = $("#upimg").get(0).files[0];
+			if(fileInput){
+				$("#action").val("updateOne");
+			}
+		});
 	</script>
 </body>
 </html>

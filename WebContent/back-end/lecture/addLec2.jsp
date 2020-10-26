@@ -67,7 +67,7 @@
 			&emsp;講座圖片：<input name="lecpic" id="upimg" type="file"><br>
 			<%@ include file="/back-end/lecture/roomsetting/layout.jsp"%><br>
 			講座資訊：
-			<input id="action" type="hidden" name="action" value="insert"><br>
+			<input id="action" type="text" name="action" value="insertText"><br>
 			<%@ include file="/back-end/lecture/ckLec.file"%>
 			
 			
@@ -246,8 +246,8 @@
         //      }});
 		$("#btn").mouseenter(function(){
 			var fileInput = $("#upimg").get(0).files[0];
-			if(fileInput == null){
-				var val = $("#action").val("insertText");
+			if(fileInput){
+				$("#action").val("insert");
 			}
 		});
 </script>
