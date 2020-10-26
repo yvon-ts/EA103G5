@@ -6,14 +6,7 @@
 
 	List<CourseVO> shoppingList = (List<CourseVO>)request.getSession().getAttribute("shoppingList");
 	
-	MembersVO Membersvo = (MembersVO) session.getAttribute("Membersvo");
-	Membersvo = new MembersVO();
-	Membersvo.setMemno("MEM0002");
-	
-	session.setAttribute("Membersvo",Membersvo);//此處須修改
-	String memno = "MEM0002";
-	
-// 	pageContext.setAttribute("Membersvo", Membersvo);	
+	MembersVO membersVO = (MembersVO) session.getAttribute("membersVO");
 	
 	
 	int productNumber = 0;
@@ -202,15 +195,15 @@
 		$(document).ready(function(){
 			
 			
-// 			$('#goToSearch').click(function(e){
-// 				e.preventDefault();
+			$('#goToSearch').click(function(e){
+				e.preventDefault();
 				
 
-// 				var a = document.createElement('a');
-<%-- 				a.href = '<%=request.getContextPath()%>/front-end/course/listAllCourseForUser.jsp'; --%>
-// 				a.click();
+				var a = document.createElement('a');
+				a.href = '<%=request.getContextPath()%>/front-end/course/listAllCourseForUser.jsp';
+				a.click();
 				
-// 			});
+			});
 			//此頁面取消追蹤
 			$('body').on('click','.deleteTrack',function(){
 				
