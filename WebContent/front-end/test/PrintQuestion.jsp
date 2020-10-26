@@ -99,11 +99,48 @@
 			$(this).parents('ul').removeClass('notWritten');
 		});
 		
-		$('label').click(function(){//正確作答則移除
+// 		$('label').click(function(){//正確作答則移除
+// 			$(this).parents('ul').removeClass('notWritten');
+// 			event.stopPropagation();
+// 			console.log($(this).children());
+// 		});
+		
+		$('input[type=checkbox]').click(function(){
+			if($(this).prop('checked')){
+				$(this).parents('li.option').css('border','1px solid #14bdcc');
+				$(this).parents('li.option').css('background-color','rgba(20, 189, 204, .1)');
+			}else{
+				$(this).parents('li.option').css('border','');
+				$(this).parents('li.option').css('background-color','');
+			}
+			
 			$(this).parents('ul').removeClass('notWritten');
-
-			console.log($(this).find('input')));
+			
 		});
+		
+		
+		$('input[type=radio]').click(function(){//正確作答則移除
+			
+			var ul = $(this).parents('ul');
+			var liCount = ul.find('li.option').length;	
+		
+			for(let i = 0 ; i < liCount ; i++ ){
+				ul.find('li.option')[i].style.border = '';
+				
+				ul.find('li.option')[i].style.backgroundColor = '';
+			}
+			
+			
+			if($(this).prop('checked')){
+				$(this).parents('li.option').css('border','1px solid #14bdcc');
+				$(this).parents('li.option').css('background-color','rgba(20, 189, 204, .1)');
+			}
+			
+			$(this).parents('ul').removeClass('notWritten');
+		});
+		
+		
+		
 		
 		$('#turnin').click(function(e) {//全部題目做完繳交判定
 			e.preventDefault();

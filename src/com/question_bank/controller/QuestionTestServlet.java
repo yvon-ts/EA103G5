@@ -106,6 +106,9 @@ public class QuestionTestServlet extends HttpServlet {
 		List<AnwserListVO> AnwserListVoList = new ArrayList<>();
 		AnwserListVO AnwserListVo = null;
 		Collections.shuffle(list);
+		
+		System.out.println(list.get(0));
+		
 		/*
 		 * Collections.shuffle(List<?> list) Randomly permutes the specified list using
 		 * a default source of randomness.
@@ -179,7 +182,7 @@ public class QuestionTestServlet extends HttpServlet {
 
 		if ("-1".equals(level)) {
 			errorMsgs.add("請點選難易度");
-			RequestDispatcher failureView = request.getRequestDispatcher("/front-end/question/SelectedQuestion.jsp");
+			RequestDispatcher failureView = request.getRequestDispatcher("/front-end/test/SelectedTest.jsp");
 			failureView.forward(request, response);
 		}
 
