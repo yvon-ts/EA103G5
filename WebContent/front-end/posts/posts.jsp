@@ -35,10 +35,12 @@ System.out.println("測試的課程編號=" + courseno + "，課程名稱=" + co
 
 <jsp:useBean id="postSvc" scope="page" class="com.posts.model.PostsService"/>
 <jsp:useBean id="memSvc" scope="page" class="com.members.model.MembersService"/>
+<jsp:useBean id="reportSvc" scope="page" class="com.report_detail.model.ReportDetailService"/>
 
 <!DOCTYPE html>
 <html>
-<head>
+<head>	
+		<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 		<script src="/library/jquery/jquery-3.5.1.js"></script>
 		<script>
 			function toggleA(name){
@@ -54,8 +56,9 @@ System.out.println("測試的課程編號=" + courseno + "，課程名稱=" + co
 
 </head>
 <style>
-.button{
+.button1{
 	display:inline-block;
+	color: -internal-light-dark(white);
 }
 
 </style>
@@ -108,7 +111,7 @@ body {
  * Lineas / Detalles
  -----------------------*/
 .comments-list:before {
-	content: '';
+	
 	width: 2px;
 	height: 100%;
 	background: #c7cacb;
@@ -117,7 +120,7 @@ body {
 	top: 0;
 }
 .comments-list:after {
-	content: '';
+	
 	position: absolute;
 	background: #c7cacb;
 	bottom: 0;
@@ -133,7 +136,7 @@ body {
 	display: none;
 }
 .reply-list li:before {
-	content: '';
+	
 	width: 60px;
 	height: 2px;
 	background: #c7cacb;
@@ -203,14 +206,14 @@ body {
 	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15);
 }
 .comments-list .comment-box:before, .comments-list .comment-box:after {
-	content: '';
+	
 	height: 0;
 	width: 0;
 	position: absolute;
 	display: block;
 	border-width: 10px 12px 10px 0;
 	border-style: solid;
-	border-color: transparent #FCFCFC;
+	border-color: transparent #A2D9FF;
 	top: 8px;
 	left: -11px;
 }
@@ -223,7 +226,7 @@ body {
 	width: 610px;
 }
 .comment-box .comment-head {
-	background: #FCFCFC;
+	background: #A2D9FF;
 	padding: 10px 12px;
 	border-bottom: 1px solid #E5E5E5;
 	overflow: hidden;
@@ -236,7 +239,7 @@ body {
 	margin-left: 14px;
 	position: relative;
 	top: 2px;
-	color: #A6A6A6;
+	color: #42d7f5;
 	cursor: pointer;
 	-webkit-transition: color 0.3s ease;
 	-o-transition: color 0.3s ease;
@@ -366,19 +369,28 @@ body {
 									${memVO.memname}&nbsp;&nbsp;|&nbsp;&nbsp;<fmt:formatDate value="${postsVO.posttime}" pattern="yyyy-MM-dd HH:mm"/>
 								</h6>
 								
-								<span></span><i class="fa fa-reply"></i> <i class="fa fa-heart"></i>
+								<span></span>
 								<div align="right">
 									<c:if test="${membersVO.memno == memVO.memno}">
-										<input type="button" onclick="toggleA('${postsVO.postno}_reply')" class="button" value="修改"></input>
+										<input type="button" onclick="toggleA('${postsVO.postno}_reply')" class="button1" value="修改"></input>
 									
-											<form METHOD="post"  ACTION="<%=request.getContextPath()%>/posts/posts.do" class="button" accept-charset="utf-8">
+											<form METHOD="post"  ACTION="<%=request.getContextPath()%>/posts/posts.do" class="button1" accept-charset="utf-8">
 											<input type="submit"  value="刪除"></input>
 											<input type="hidden" name="action" value="update_Status_Remove" />
 											<input type="hidden" name="postno" value="${postsVO.postno}"/>
 											</form>
 									</c:if>
-									<button><img src="<%=request.getContextPath() %>/front-end/posts/images/flag.png" style="width:15px;height:15px"></button>
-	<%-- 									<input type="button" onclick="toggleA('${postsVO.postno }')" value="回覆"> --%>
+									<!--檢舉 -->
+									<button onclick="Report()"><img src="<%=request.getContextPath() %>/front-end/posts/images/flag.png" style="width:15px;height:15px"></button>
+									
+									<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/report_detail/report_detail.do" name="form1">
+										<input type="hidden" name="memno" value="${reportdetailVO.getMemno()}"/>
+										<input type="hidden" name="postno" value="${reportdetailVO.getPostno()}"/>
+										<input type="hidden" name="action"	value="getOne_For_Update_AddReport">
+										<input type="submit" value="送出檢舉">
+										</FORM>
+									
+									<%--<input type="button" onclick="toggleA('${postsVO.postno }')" value="回覆"> --%>
 									<button onclick="toggleA('${postsVO.postno}')" type="button"><img src="<%=request.getContextPath() %>/front-end/posts/images/reply.png" style="width:15px;height:15px;"></button>
 									
 								</div>				
@@ -419,22 +431,21 @@ body {
 								<div class="comment-box">
 									<div class="comment-head">
 										<h6 class="comment-name">
-											${memVOSub.memname}&nbsp;&nbsp;|&nbsp;&nbsp;<fmt:formatDate value="${postsVO.posttime}" pattern="yyyy-MM-dd HH:mm"/>
+											${memVOSub.memname}&nbsp;&nbsp;|&nbsp;&nbsp;<fmt:formatDate value="${postsVOSub.posttime}" pattern="yyyy-MM-dd HH:mm"/>
 					
 										</h6>
-										<span></span> <i class="fa fa-reply"></i> <i class="fa fa-heart"></i>
 										<div align="right">
 											<c:if test="${membersVO.memno == memVOSub.memno}">
-												<input type="button" onclick="toggleA('${postsVO.postno}_reply')" class="button" value="修改"></input>
+												<input type="button" onclick="toggleA('${postsVOSub.postno}_reply')" class="button1" value="修改"></input>
 												
-												<form METHOD="post" ACTION="<%=request.getContextPath()%>/posts/posts.do" class="button" accept-charset="utf-8">
+												<form METHOD="post" ACTION="<%=request.getContextPath()%>/posts/posts.do" class="button1" accept-charset="utf-8">
 												<input type="submit"  value="刪除"></input>
 												<input type="hidden" name="action" value="update_Status_Remove" />
 												<input type="hidden" name="postno" value="${postsVOSub.postno}"/>
 												</form>
 											</c:if>
-										
-											<button><img src="<%=request.getContextPath() %>/front-end/posts/images/flag.png" style="width:15px;height:15px"></button>
+											<!--檢舉 -->
+											<button  onclick="report()"><img src="<%=request.getContextPath() %>/front-end/posts/images/flag.png" style="width:15px;height:15px"></button>
 										</div>
 									</div>
 									<div class="comment-content">${postsVOSub.postcontent}</div>
@@ -486,7 +497,12 @@ body {
 <%-- 		</c:forEach> --%>
 	</c:forEach>
 	
-	</div>
+	</div>	
+<script>
+function Report(){
 
+	swal("檢舉成功!", "", "success");
+}
+</script>
 </body>
 </html>

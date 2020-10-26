@@ -137,7 +137,7 @@ public class ReportDetailServlet extends HttpServlet {
 				/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
 				
 				req.setAttribute("reportdetailVO", reportdetailVO); // 資料庫取出的empVO物件,存入req
-				String url = "/front-end/report_detail/listOneReportFront.jsp";
+				String url = "/front-end/posts/posts.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);// 成功轉交 update_emp_input.jsp
 				successView.forward(req, res);
 					
