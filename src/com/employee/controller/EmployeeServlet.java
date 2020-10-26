@@ -11,11 +11,6 @@ import com.employee.model.*;
 
 public class EmployeeServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	
-	
-       
- 
-	
 
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		doPost(req, res);
@@ -24,8 +19,6 @@ public class EmployeeServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
-		
-	
 
 //--------------------------新增員工------------------------------------
 		if ("insert".equals(action)) {
@@ -40,9 +33,9 @@ public class EmployeeServlet extends HttpServlet {
 				} else if (!empacc.trim().matches(empaccReg)) {
 					errMsgs.add("*員工帳號:請輸入英文數字，且長度必須在4以上*");
 				}
-				
+
 				String emppwd = genAuthCode(8);
-				
+
 				String empname = req.getParameter("empname");
 				String enameReg = "^[(\u4e00-\u9fa5)]{2,10}$";
 				if (empname == null || empname.trim().length() == 0) {
@@ -74,17 +67,17 @@ public class EmployeeServlet extends HttpServlet {
 				if (empemail == null || empemail.trim().length() == 0) {
 					errMsgs.add("*員工email:請勿為空白*");
 				}
-				
+
 				String[] functionx = req.getParameterValues("functionx");
 
-				EmployeeVO employeeVO = new EmployeeVO();												
+				EmployeeVO employeeVO = new EmployeeVO();
 				employeeVO.setEmpacc(empacc);
 				employeeVO.setEmppwd(emppwd);
 				employeeVO.setEmpname(empname);
 				employeeVO.setEmpsalary(empsalary);
 				employeeVO.setHiredate(hiredate);
 				employeeVO.setEmpemail(empemail);
-				
+
 				if (!errMsgs.isEmpty()) {
 					req.setAttribute("EmployeeVO", employeeVO);
 					RequestDispatcher failureView = req.getRequestDispatcher("/back-end/employee/newadd_emp.jsp");
@@ -94,13 +87,13 @@ public class EmployeeServlet extends HttpServlet {
 //1.random 密碼 >123
 //2.email寄出 ran密碼>123
 //3.123轉碼成456存在DB
-				EmployeeService newEmp = new EmployeeService();				
-				EmployeeVO VO =  newEmp.addEmp(empacc, emppwd, empname, empsalary, hiredate, empemail);
-				
-				//拿到員工編號新增權限
+				EmployeeService newEmp = new EmployeeService();
+				EmployeeVO VO = newEmp.addEmp(empacc, emppwd, empname, empsalary, hiredate, empemail);
+
+				// 拿到員工編號新增權限
 				EmpAuthorityService newEmpAuthority = new EmpAuthorityService();
 				EmpAuthorityVO empAuthorityVO = new EmpAuthorityVO();
-				String empno = VO.getEmpno();				
+				String empno = VO.getEmpno();
 				if (functionx == null) {
 					newEmpAuthority.deleteEmpAuth(empno);
 				} else {
@@ -110,27 +103,26 @@ public class EmployeeServlet extends HttpServlet {
 						empAuthorityVO.setFuncno(functionx[i]);
 					}
 				}
-				
-			    MailService mailService = new MailService();
-			    
-				  String to = "furongkuang9@gmail.com";     
-			      String subject = "密碼通知";     
-			      String ch_name = "peter1";
-			      String passRandom = "111";
-			    
-			      to = empemail;
-			      ch_name = empname;
-			      passRandom = emppwd;
-			    
-			    String messageText = "Hello! " + empname + "(" + empacc  +")"+ "請謹記此密碼: " + emppwd + "\n" +" (已經啟用)"; 
-			    mailService.sendMail(empemail, subject, messageText);
-			     
-			    
+
+				MailService mailService = new MailService();
+
+				String to = "furongkuang9@gmail.com";
+				String subject = "密碼通知";
+				String ch_name = "peter1";
+				String passRandom = "111";
+
+				to = empemail;
+				ch_name = empname;
+				passRandom = emppwd;
+
+				String messageText = "Hello! " + empname + "(" + empacc + ")" + "請謹記此密碼: " + emppwd + "\n" + " (已經啟用)";
+				mailService.sendMail(empemail, subject, messageText);
+
 				req.setAttribute("empAuthorityVO", empAuthorityVO);
 				RequestDispatcher succesView = req.getRequestDispatcher("/back-end/employee/newallemp.jsp");
 				succesView.forward(req, res);
 			} catch (Exception e) {
-				 e.printStackTrace();
+				e.printStackTrace();
 				errMsgs.add(e.getMessage());
 				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/employee/newadd_emp.jsp");
 				failureView.forward(req, res);
@@ -146,18 +138,20 @@ public class EmployeeServlet extends HttpServlet {
 
 				EmployeeService empSvc = new EmployeeService();
 				EmployeeVO employeeVO = empSvc.getEmp(empno);
-				
+
 				EmpAuthorityService empAuthSvc = new EmpAuthorityService();
 				List<EmpAuthorityVO> empAuthorityVO = empAuthSvc.findByEmp(empno);
-				
-				req.setAttribute("employeeVO", employeeVO);	
-				req.setAttribute("empAuthorityVO", empAuthorityVO);									
+
+				req.setAttribute("employeeVO", employeeVO);
+				req.setAttribute("empAuthorityVO", empAuthorityVO);
+				System.out.println("TETTTET");
 				RequestDispatcher successView = req.getRequestDispatcher("/back-end/employee/newupdate_emp.jsp");
 				successView.forward(req, res);
 			} catch (Exception e) {
+				System.out.println("無法");
 				errMsgs.add("無法取得要修改的資料: " + e.getMessage());
-				RequestDispatcher successView = req.getRequestDispatcher("/back-end/employee/allemplist.jsp");
-				successView.forward(req, res);
+				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/back-endHomePage.jsp");
+				failureView.forward(req, res);
 			}
 		}
 //-------------------------------------------權限-----------------------------------------------		
@@ -198,13 +192,13 @@ public class EmployeeServlet extends HttpServlet {
 //-------------------------------------------------------------------------------------------	
 
 		if ("empupdate".equals(action)) {
-			
+
 			List<String> errMsgs = new LinkedList<String>();
 			req.setAttribute("errMsgs", errMsgs);
 
 			try {
 				String empno = req.getParameter("empno");
-				
+
 				String empacc = req.getParameter("empacc");
 				String empaccReg = "^[a-zA-Z0-9]{4,10}$";
 				if (empacc == null || empacc.trim().length() == 0) {
@@ -212,7 +206,7 @@ public class EmployeeServlet extends HttpServlet {
 				} else if (!empacc.trim().matches(empaccReg)) {
 					errMsgs.add("*員工帳號:請輸入英文數字，且長度必須在4以上*");
 				}
-				
+
 				String emppwd = req.getParameter("emppwd");
 				if (emppwd == null || emppwd.trim().length() == 0) {
 					errMsgs.add("*員工密碼:請勿為空白*");
@@ -228,7 +222,7 @@ public class EmployeeServlet extends HttpServlet {
 
 				Integer empsalary = null;
 				try {
-					 empsalary = new Integer(req.getParameter("empsalary").trim());
+					empsalary = new Integer(req.getParameter("empsalary").trim());
 					if (empsalary < 0) {
 						errMsgs.add("*員工薪水:請勿為負數*");
 					}
@@ -252,9 +246,9 @@ public class EmployeeServlet extends HttpServlet {
 				}
 
 				Integer empdelete = new Integer(req.getParameter("empdelete").trim());
-				
-				//權限修改
-				String[] functionx = req.getParameterValues("functionx");				
+
+				// 權限修改
+				String[] functionx = req.getParameterValues("functionx");
 				EmpAuthorityService newEmpAuthority = new EmpAuthorityService();
 				EmpAuthorityVO empAuthorityVO = new EmpAuthorityVO();
 				if (functionx == null) {
@@ -298,7 +292,6 @@ public class EmployeeServlet extends HttpServlet {
 
 		}
 
-
 		if ("getone_show".equals(action)) {
 			List<String> errMsgs = new LinkedList<String>();
 			req.setAttribute("errMsgs", errMsgs);
@@ -334,7 +327,7 @@ public class EmployeeServlet extends HttpServlet {
 		}
 
 	}
-	
+
 	protected static String genAuthCode(int n) {
 		String data = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890";
 		char[] ch = new char[n]; // 宣告一個字元陣列物件ch 儲存 驗證碼
@@ -349,6 +342,5 @@ public class EmployeeServlet extends HttpServlet {
 		String result = String.valueOf(ch);// 方法二： String方法 valueOf(char c) ：返回 char 引數的字串表示形式。
 		return result;
 	}
-
 
 }

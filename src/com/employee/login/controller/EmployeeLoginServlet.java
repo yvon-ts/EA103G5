@@ -58,7 +58,7 @@ public class EmployeeLoginServlet extends HttpServlet {
 			
 				session.setAttribute("empacc", empacc); // *工作1: 才在session內做已經登入過的標識
 				session.setAttribute("empname", empname);
-//				session.setAttribute("empno", empno);
+				session.setAttribute("empno", empno);
 				session.setAttribute("empauth", empAuthorityVO);
 
 				

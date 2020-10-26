@@ -143,7 +143,7 @@
     <!-- Essential javascripts for application to work-->
     <script src="<%=request.getContextPath() %>/front-end/js/jquery-3.3.1.min.js"></script>
     <script src="<%=request.getContextPath() %>/front-end/js/popper.min.js"></script>
-<%--     <script src="<%=request.getContextPath() %>/front-end/js/bootstrap.min.js"></script> --%>
+    <script src="<%=request.getContextPath() %>/front-end/js/bootstrap.min.js"></script>
     <script src="<%=request.getContextPath() %>/front-end/js/main.js"></script>
     <script>		
 
