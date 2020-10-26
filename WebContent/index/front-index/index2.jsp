@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="BIG5"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*"%>
 <%@ page import="java.sql.*"%>
@@ -7,33 +7,16 @@
 <%@ page import="java.text.SimpleDateFormat"%>
 <%@ page import="com.lecture.model.*"%>
 <%@ page import="com.speaker.model.*"%>
-<%@ page import="com.members.model.*"%>
-<%@ page import="com.teacher.model.*"%>
-<%
-MembersVO membersVO = (MembersVO) session.getAttribute("membersVO");
-String inform2 = (String)request.getAttribute("inform2"); 
-
-%>
-
-<jsp:useBean id="teacherSvc" scope="page" class="com.teacher.model.TeacherService" />
-
 <!DOCTYPE html>
 
 
 <html lang="en">
 
 <head>
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js">
-</script>
-<link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.3/sweetalert2.css" />
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.3/sweetalert2.js"
-	type="text/javascript"></script>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Xducation - И≥╙Д╫═Ф┬░И∙╥Г └Е╜╦Г©▓Е╔╫Е╓╔Д╪╢</title>
+    <title>Xducation - Ё╜╖A╕╗╙Ь╙╨╬г╡ъ╕n╧ы╕Я</title>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="<%=request.getContextPath()%>/index/front-index/assets/css/bootstrap.min.css">
     <!-- Icon -->
@@ -59,23 +42,6 @@ String inform2 = (String)request.getAttribute("inform2");
     max-height:320px;  /* Increase / Decrease value as per your need */
     overflow-x: hidden;
 }
-img.img-fluid{
-transform-origin: 70% 88%;
-    animation: hand 2s infinite;
-    animation-delay: 1s;
-   
-	border-radius:10px;
-  
-}
-@keyframes hand {
-	0% { transform: rotate(0deg); }
-	50% { transform: rotate(5deg) }
-	100% { transform: rotate(0deg); }
-}
-img#nav_icon{
-width:36px;
-height:36px;
-}
 	</style>
 </head>
 
@@ -99,107 +65,29 @@ height:36px;
                         
   
 <%--                             <a class="nav-link" href="<%=request.getContextPath()%>/front-end/course/listAllCourse.jsp"> --%>
-<!--                                И─╡Е┘╔Ф░°Е╟▀&nbsp;<i class="lni-search"></i>  -->
+<!--                                ╤i╓J╥j╢M&nbsp;<i class="lni-search"></i>  -->
 <!--                             </a> -->
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="<%=request.getContextPath()%>/front-end/tracking_list/listTrackingListForUser.jsp">
-                   	ХЁ╪Г┴╘Х╩┼&nbsp;<i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                   	ай╙╚╗╝&nbsp;<i class="fa fa-shopping-cart" aria-hidden="true"></i>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#">
-                                Г╡╬И│╦Х╙╡Г╗▀&nbsp;<i class="lni-leaf"></i>
+                                ╨К©О╫р╣{&nbsp;<i class="lni-leaf"></i>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="<%=request.getContextPath()%>/front-end/lecture/listAllLec.jsp">
-                                Е░█Д╨╨Х╛⌡Е╨╖&nbsp;<i class="lni-bulb"></i>
+                                ╕W╓Hа©╝y&nbsp;<i class="lni-bulb"></i>
                             </a>
                         </li>
-                        <c:if test="${not empty sessionScope.membersVO}">
-							
-							
-							<li class="nav-item">
-								<div class="dropdown" id="dropdown">
-									<button class="btn btn-secondary dropdown-toggle" type="button"
-										id="dropdownMenuButton" data-toggle="dropdown"
-										aria-haspopup="true" aria-expanded="false">
-										${sessionScope.membersVO.memname}</button>
-									<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-										<a class="dropdown-item"
-											href="<%=request.getContextPath()%>/front-end/members/updateMembersV2.jsp">Е─▀Д╨╨Ф╙■Ф║┬</a>
-											
-											<a class="dropdown-item"
-											href='<%=request.getContextPath()%>/front-end/Order_Master/listAllByMemno.jsp'>Х╙╡Г╗▀Х╗┌Е√╝Г╢─И▄└</a>
-											
-											<a class="dropdown-item"
-											href='<%=request.getContextPath()%>/front-end/coup_code/listAllByMemno.jsp'>Ф▄│Ф°┴Ф┼≤Ф┴ёЕ┬╦</a> 
-																
-										
-										<c:if test="${teacherSvc.getStatus(sessionScope.membersVO.memno).tchrstatus eq 'Е╬┘Е╞╘Ф═╦'}">
-										<a class="dropdown-item" onclick="status()" >Х─│Е╦╚Ф╙■Ф║┬</a> 
-											
-										</c:if>
-										<c:if test="${teacherSvc.getStatus(sessionScope.membersVO.memno).tchrstatus eq 'Е╥╡И─ И│▌'}">
-										<a class="dropdown-item"
-											href="<%=request.getContextPath()%>/front-end/teacher/teacherDisplay.jsp">Х─│Е╦╚Ф╙■Ф║┬</a> 
-											
-										</c:if>
-											<c:if test="${teacherSvc.getStatus(sessionScope.membersVO.memno).tchrstatus eq 'Ф°╙И─ И│▌'}">
-										<a class="dropdown-item"
-											href="<%=request.getContextPath()%>/front-end/teacher/teacherUpdate.jsp">Х─│Е╦╚Ф╙■Ф║┬</a>
-											
-										</c:if>
-										<a class="dropdown-item"
-											href='<%=request.getContextPath()%>/members/members.do?action=signout'>Ф°┐Е⌠║Г≥╩Е┤╨</a> 
-											
-											
-											
-										
-											
-											
-											
-									</div>
-								</div>
-								
-							</li>
-							
-							</c:if>
-							<c:if test="${not empty sessionScope.membersVO.memno}">
-							<c:if test="${empty teacherSvc.getStatus(sessionScope.membersVO.memno)}">
-							<img id="nav_icon" src='<%=request.getContextPath()%>/front-end/members/assets/img/students.svg'>
-							</c:if>
-							<c:if test="${teacherSvc.getStatus(sessionScope.membersVO.memno).tchrstatus eq 'Е╬┘Е╞╘Ф═╦'}">
-							<img id="nav_icon" src='<%=request.getContextPath()%>/front-end/members/assets/img/students.svg'>
-							</c:if>
-							
-							<c:if test="${teacherSvc.getStatus(sessionScope.membersVO.memno).tchrstatus eq 'Е╥╡И─ И│▌'}">
-							<img id="nav_icon" src='<%=request.getContextPath()%>/front-end/members/assets/img/teacher.svg'>
-							</c:if>
-							<c:if test="${teacherSvc.getStatus(sessionScope.membersVO.memno).tchrstatus eq 'Ф°╙И─ И│▌'}">
-							<img id="nav_icon" src='<%=request.getContextPath()%>/front-end/members/assets/img/students.svg'>
-							
-							</c:if>
-							</c:if>
-					
-
-						<c:if test="${empty sessionScope.membersVO}">
-							<li class="nav-item"><a class='nav-link'
-								href='<%=request.getContextPath()%>/front-end/members/signIn.jsp'>Ф┬▒Х╕│Г≥╩Е┘╔&nbsp;<i
-									class='lni-bulb'></i></a></li>
-						</c:if>
-						
-
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" style="color: #0099CC">
+                                ╖з╜n╣n╓J&nbsp;<i class="lni-home"></i>
+                            </a>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -212,9 +100,9 @@ height:36px;
                     <div class="col-lg-7 col-md-12 col-sm-12 col-xs-12">
                         <div class="contents">
                             <div class="about-wrapper wow fadeInLeft" data-wow-delay="0.3s">
-                                <h2 class="head-title">И≥╙Д╫═Ф┬░И∙╥Г └Е╜╦Г©▓Е╔╫Е╓╔Д╪╢</h2>
+                                <h2 class="head-title">Ё╜╖A╕╗╙Ь╙╨╬г╡ъ╕n╧ы╕Я</h2>
                                 <i class="lni-rocket"></i>&nbsp;
-                                Xducation - Ф°─Ф°┴Х╤ёГ └Г╥ Д╦┼Е╜╦Г©▓Е╧ЁЕ▐╟
+                                Xducation - Ёл╕Ё╫Л╙╨╫u╓W╬г╡ъ╔╜╔x
                             </div>
                             <br>
                             <div class="about-wrapper wow fadeInLeft" data-wow-delay="0.4s">
@@ -225,7 +113,7 @@ height:36px;
                                         	
                                             <td><i class="lni-search"></i></td>
                                             <td>
-                                                <input type="text" size="30" placeholder="&nbsp;&nbsp;Д╩┼Е╓╘Ф┐ЁЕ╜╦Д╩─И╨╪Е▒╒О╪÷"  name="searchText">
+                                                <input type="text" size="30" placeholder="&nbsp;&nbsp;╓╣╓я╥Q╬г╓╟╩Р╘O║H"  name="searchText">
                                             </td>
                                         </tr>
                                     </table>
@@ -238,9 +126,9 @@ height:36px;
 <!--                 											<li><a href="#">Third</a></li> -->
 <!--             											</ul> -->
 <!--         											</li>		 -->
-                                    <button class="btn btn-common">Ф▌╒Г╢╒Х╙╡Г╗▀</button>
+                                    <button class="btn btn-common">╠╢╞а╫р╣{</button>
                                     <input type="hidden" name="action" value="search"/>
-                                    <a href="<%=request.getContextPath()%>/front-end/members/addMembersV2.jsp" class="btn btn-border video-popup">Ф┬▒Х╕│Х╗╩Е├┼</a>
+                                    <a href="<%=request.getContextPath()%>/course/coursephoto.do" class="btn btn-border video-popup">╖з╜n╣Ы╔U</a>
                                 </div>
                              </form>   
                             </div>
@@ -262,7 +150,7 @@ height:36px;
     <section id="services" class="section-padding">
         <div class="container">
             <div class="section-header text-center">
-                <h2 class="section-title wow fadeInDown" data-wow-delay="0.3s"><i class="lni-rocket"></i> Г╡╬И│╦Х╙╡Г╗▀</h2>
+                <h2 class="section-title wow fadeInDown" data-wow-delay="0.3s"><i class="lni-rocket"></i> ╨К©О╫р╣{</h2>
                 <div class="shape wow fadeInDown" data-wow-delay="0.3s"></div>
             </div>
             <div class="row">
@@ -276,10 +164,10 @@ height:36px;
                             <i class="lni-star-filled"></i><i class="lni-star-filled"></i><i
                                 class="lni-star-filled"></i><i class="lni-star-filled"></i><i
                                 class="lni-star-filled"></i>
-                            &nbsp;101Е┴┤Х╘∙Е┐╧
-                            <h3><a href="#">Х│╥Д╨╨Г╢┘И┘▓Е°╟Е°√О╪ MimmoЕ╦╤Д╫═Ф▌╒Г╢╒Д╦√Г∙▄Е█│Е╓╖И┘▓Х▌┼</a></h3>
-                            <p>Х╙╡Г╗▀Е┘╠300Е┬├И░≤</p>
-                            <p>Е░▄Е╜╦Г╢╞Х╗┬9487Д╨╨</p>
+                            &nbsp;101╚h╣Ш╩Ы
+                            <h3><a href="#">б╬╓H╛У╟s╕a╧о║GMimmo╠a╖A╠╢╞а╔@╛и╓Q╓j╟s╡Ь</a></h3>
+                            <p>╫р╣{╕@300╓юда</p>
+                            <p>╕P╬г╡ж╜p9487╓H</p>
                             <h5>NT$1680</h5>
                         </div>
                     </div>
@@ -294,10 +182,10 @@ height:36px;
                             <i class="lni-star-filled"></i><i class="lni-star-filled"></i><i
                                 class="lni-star-filled"></i><i class="lni-star-filled"></i><i
                                 class="lni-star-filled"></i>
-                            &nbsp;101Е┴┤Х╘∙Е┐╧
-                            <h3><a href="#">Е▓▄DianeД╦─Х╣╥Ф▀┬Х┼╠Ф┐╧Х█┴О╪▄Ф┴⌠И─═Е─▀Д╨╨Г■÷Ф╢╩И╒╗Ф═╪</a></h3>
-                            <p>Х╙╡Г╗▀Е┘╠300Е┬├И░≤</p>
-                            <p>Е░▄Е╜╦Г╢╞Х╗┬9487Д╨╨</p>
+                            &nbsp;101╚h╣Ш╩Ы
+                            <h3><a href="#">╘MDiane╓@╟_╘Ю╙А╥S╞С║A╔╢Ёy╜с╓H╔м╛║╜╥╝Ф</a></h3>
+                            <p>╫р╣{╕@300╓юда</p>
+                            <p>╕P╬г╡ж╜p9487╓H</p>
                             <h5>NT$1680</h5>
                         </div>
                     </div>
@@ -312,10 +200,10 @@ height:36px;
                             <i class="lni-star-filled"></i><i class="lni-star-filled"></i><i
                                 class="lni-star-filled"></i><i class="lni-star-filled"></i><i
                                 class="lni-star-filled"></i>
-                            &nbsp;101Е┴┤Х╘∙Е┐╧
-                            <h3><a href="#">Х│╥Д╨╨Г╢┘И┘▓Е°╟Е°√О╪ MimmoЕ╦╤Д╫═Ф▌╒Г╢╒Д╦√Г∙▄Е█│Е╓╖И┘▓Х▌┼</a></h3>
-                            <p>Х╙╡Г╗▀Е┘╠300Е┬├И░≤</p>
-                            <p>Е░▄Е╜╦Г╢╞Х╗┬9487Д╨╨</p>
+                            &nbsp;101╚h╣Ш╩Ы
+                            <h3><a href="#">б╬╓H╛У╟s╕a╧о║GMimmo╠a╖A╠╢╞а╔@╛и╓Q╓j╟s╡Ь</a></h3>
+                            <p>╫р╣{╕@300╓юда</p>
+                            <p>╕P╬г╡ж╜p9487╓H</p>
                             <h5>NT$1680</h5>
                         </div>
                     </div>
@@ -330,10 +218,10 @@ height:36px;
                             <i class="lni-star-filled"></i><i class="lni-star-filled"></i><i
                                 class="lni-star-filled"></i><i class="lni-star-filled"></i><i
                                 class="lni-star-filled"></i>
-                            &nbsp;101Е┴┤Х╘∙Е┐╧
-                            <h3><a href="#">Х│╥Д╨╨Г╢┘И┘▓Е°╟Е°√О╪ MimmoЕ╦╤Д╫═Ф▌╒Г╢╒Д╦√Г∙▄Е█│Е╓╖И┘▓Х▌┼</a></h3>
-                            <p>Х╙╡Г╗▀Е┘╠300Е┬├И░≤</p>
-                            <p>Е░▄Е╜╦Г╢╞Х╗┬9487Д╨╨</p>
+                            &nbsp;101╚h╣Ш╩Ы
+                            <h3><a href="#">б╬╓H╛У╟s╕a╧о║GMimmo╠a╖A╠╢╞а╔@╛и╓Q╓j╟s╡Ь</a></h3>
+                            <p>╫р╣{╕@300╓юда</p>
+                            <p>╕P╬г╡ж╜p9487╓H</p>
                             <h5>NT$1680</h5>
                         </div>
                     </div>
@@ -348,10 +236,10 @@ height:36px;
                             <i class="lni-star-filled"></i><i class="lni-star-filled"></i><i
                                 class="lni-star-filled"></i><i class="lni-star-filled"></i><i
                                 class="lni-star-filled"></i>
-                            &nbsp;101Е┴┤Х╘∙Е┐╧
-                            <h3><a href="#">Х│╥Д╨╨Г╢┘И┘▓Е°╟Е°√О╪ MimmoЕ╦╤Д╫═Ф▌╒Г╢╒Д╦√Г∙▄Е█│Е╓╖И┘▓Х▌┼</a></h3>
-                            <p>Х╙╡Г╗▀Е┘╠300Е┬├И░≤</p>
-                            <p>Е░▄Е╜╦Г╢╞Х╗┬9487Д╨╨</p>
+                            &nbsp;101╚h╣Ш╩Ы
+                            <h3><a href="#">б╬╓H╛У╟s╕a╧о║GMimmo╠a╖A╠╢╞а╔@╛и╓Q╓j╟s╡Ь</a></h3>
+                            <p>╫р╣{╕@300╓юда</p>
+                            <p>╕P╬г╡ж╜p9487╓H</p>
                             <h5>NT$1680</h5>
                         </div>
                     </div>
@@ -366,10 +254,10 @@ height:36px;
                             <i class="lni-star-filled"></i><i class="lni-star-filled"></i><i
                                 class="lni-star-filled"></i><i class="lni-star-filled"></i><i
                                 class="lni-star-filled"></i>
-                            &nbsp;101Е┴┤Х╘∙Е┐╧
-                            <h3><a href="#">Х│╥Д╨╨Г╢┘И┘▓Е°╟Е°√О╪ MimmoЕ╦╤Д╫═Ф▌╒Г╢╒Д╦√Г∙▄Е█│Е╓╖И┘▓Х▌┼</a></h3>
-                            <p>Х╙╡Г╗▀Е┘╠300Е┬├И░≤</p>
-                            <p>Е░▄Е╜╦Г╢╞Х╗┬9487Д╨╨</p>
+                            &nbsp;101╚h╣Ш╩Ы
+                            <h3><a href="#">б╬╓H╛У╟s╕a╧о║GMimmo╠a╖A╠╢╞а╔@╛и╓Q╓j╟s╡Ь</a></h3>
+                            <p>╫р╣{╕@300╓юда</p>
+                            <p>╕P╬г╡ж╜p9487╓H</p>
                             <h5>NT$1680</h5>
                         </div>
                     </div>
@@ -390,15 +278,15 @@ height:36px;
                     <div class="about-wrapper wow fadeInRight" data-wow-delay="0.3s">
                         <div>
                             <div class="site-heading">
-                                <h2 class="section-title">Ф┬░Г┌╨Ф┬▒Е─▒Г └Х─│Е╦╚</h2>
+                                <h2 class="section-title">╕╗╛╟╖з╜л╙╨╕я╝v</h2>
                             </div>
                             <div class="content">
                                 <p>
-                                    V&emsp;Е┬├Д╨╚Ф┌╗Г └Ф┴█Х▐╞<br>
-                                    V&emsp;Е┴╣И─═Х╒╚Е▀∙Ф■╤Е┘╔<br>
-                                    V&emsp;Х┤╙Ф┬▒Ф©─Е▀╣Ф┬░И∙╥
+                                    V&emsp;╓ю╗и╠z╙╨╓~╣ь<br>
+                                    V&emsp;ЁпЁyЁQ╟й╕╛╓J<br>
+                                    V&emsp;╕ш╖з©Eюy╕╗╙Ь
                                 </p>
-                                <a href="<%=request.getContextPath()%>/front-end/teacher/teacherIndex.jsp" class="btn btn-common mt-3">Ф┬▒Ф┐ЁГ·╜Х╖ё</a>
+                                <a href="#" class="btn btn-common mt-3">╖з╥QаA╦я</a>
                             </div>
                         </div>
                     </div>
@@ -411,22 +299,22 @@ height:36px;
     <section id="features" class="section-padding">
         <div class="container">
             <div class="section-header text-center">
-                <h2 class="section-title wow fadeInDown" data-wow-delay="0.3s"><i class="lni-rocket"></i> Е░█Д╨╨Х╛⌡Е╨╖</h2>
+                <h2 class="section-title wow fadeInDown" data-wow-delay="0.3s"><i class="lni-rocket"></i> ╕W╓Hа©╝y</h2>
                 <div class="shape wow fadeInDown" data-wow-delay="0.3s"></div>
             </div>
             <div class="row">
                 <div class="col-lg-7 col-md-12 col-sm-12 col-xs-12">
                     <div class="content-left">
                         <div class="box-item wow fadeInLeft" data-wow-delay="0.3s">
-                            <!-- Х╛⌡Е╨╖Ф≈╔Ф°÷ -->
+                            <!-- а©╝y╓И╢а -->
                             <div class="lec_day">
                                 <span>28<br>
                                     <span style="font-size:16px; font-weight:500;">SEP</span>
                                 </span>
                             </div>
                             <div class="text">
-                                <h4>Д╦╩Е╩ Х╛⌡Е═┌О╪ Х╥ЁИ─╡Е≤╢Хё║Г └Х╠░Г⌡⌡Г╬╘Е╓╖Е┬╘</h4>
-                                <p>Ц─░ANTICO FORNOД╦╩Е╩ Е░ЁФ╡╩Е░⌡Ц─▒Г▐╬Е═╢Г╓╨Г╞└3И│⌠Г╬╘Е╪▐Г╤⌠Е┘╦Ф√≥Г░├ X Г╬╘Е╓╖Е┬╘Иё╡Иё÷Ф√┤Е▄√</p>
+                                <h4>╔D╪pа©╟С║G╦У╤i╪L╦л╙╨бв╡╠╦q╓j╖Q</h4>
+                                <p>║iANTICO FORNO╔D╪p╖d╙v╖g║j╡{ЁУ╔э╫d3╧D╦q╕║╦g╗Е╝ф╡z X ╦q╓j╖Q╤╪╜╧╓Е╓ф</p>
                             </div>
                         </div>
                         <div class="box-item wow fadeInLeft" data-wow-delay="0.6s">
@@ -436,8 +324,8 @@ height:36px;
                                 </span>
                             </div>
                             <div class="text">
-                                <h4>Д╦╩Е╩ Х╛⌡Е═┌О╪ Х╥ЁИ─╡Е≤╢Хё║Г └Х╠░Г⌡⌡Г╬╘Е╓╖Е┬╘</h4>
-                                <p>Ц─░ANTICO FORNOД╦╩Е╩ Е░ЁФ╡╩Е░⌡Ц─▒Г▐╬Е═╢Г╓╨Г╞└3И│⌠Г╬╘Е╪▐Г╤⌠Е┘╦Ф√≥Г░├ X Г╬╘Е╓╖Е┬╘Иё╡Иё÷Ф√┤Е▄√</p>
+                                <h4>╔D╪pа©╟С║G╦У╤i╪L╦л╙╨бв╡╠╦q╓j╖Q</h4>
+                                <p>║iANTICO FORNO╔D╪p╖d╙v╖g║j╡{ЁУ╔э╫d3╧D╦q╕║╦g╗Е╝ф╡z X ╦q╓j╖Q╤╪╜╧╓Е╓ф</p>
                             </div>
                         </div>
                         <div class="box-item wow fadeInLeft" data-wow-delay="0.9s">
@@ -447,13 +335,13 @@ height:36px;
                                 </span>
                             </div>
                             <div class="text">
-                                <h4>Д╦╩Е╩ Х╛⌡Е═┌О╪ Х╥ЁИ─╡Е≤╢Хё║Г └Х╠░Г⌡⌡Г╬╘Е╓╖Е┬╘</h4>
-                                <p>Ц─░ANTICO FORNOД╦╩Е╩ Е░ЁФ╡╩Е░⌡Ц─▒Г▐╬Е═╢Г╓╨Г╞└3И│⌠Г╬╘Е╪▐Г╤⌠Е┘╦Ф√≥Г░├ X Г╬╘Е╓╖Е┬╘Иё╡Иё÷Ф√┤Е▄√</p>
+                                <h4>╔D╪pа©╟С║G╦У╤i╪L╦л╙╨бв╡╠╦q╓j╖Q</h4>
+                                <p>║iANTICO FORNO╔D╪p╖d╙v╖g║j╡{ЁУ╔э╫d3╧D╦q╕║╦g╗Е╝ф╡z X ╦q╓j╖Q╤╪╜╧╓Е╓ф</p>
                             </div>
                         </div>
                     </div>
                 </div>
-                <!-- Х╛⌡Е╨╖Е█─Е°√Г┴┤ -->
+                <!-- а©╝y╟о╧о╓Ы -->
                 <div class="col-lg-5 col-md-12 col-sm-12 col-xs-12">
                     <div class="show-box wow fadeInUp" data-wow-delay="0.3s">
                         <img src="assets/img/head/calendar.gif" alt="">
@@ -470,7 +358,7 @@ height:36px;
         <div class="container">
             <div class="section-header text-center">
                 <h2 class="section-title wow fadeInDown" data-wow-delay="0.3s" style="color: #fff"><i
-                        class="lni-rocket"></i>&nbsp;Е╔╫Х╘∙Е╓╖Х│╡Х╙╙</h2>
+                        class="lni-rocket"></i>&nbsp;╕n╣Ш╓jаn╩║</h2>
                 <div class="shape wow fadeInDown" data-wow-delay="0.3s"></div>
             </div>
             <div class="row justify-content-center">
@@ -583,22 +471,22 @@ height:36px;
                     </div>
                 </div>
                 <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-                    <h3 class="footer-titel">И≈°Ф√╪Ф┬▒Е─▒</h3>
-                    Е╦╦Х╕▀Е∙▐И║▄<br>
-                    И ╠Г╖│Ф■©Г╜√<br>
-                    Е┼÷Х┐╫Ф⌡╢Ф√╟
+                    <h3 class="footer-titel">цЖ╘С╖з╜л</h3>
+                    ╠`╗ё╟щцD<br>
+                    аТ╗p╛F╣╕<br>
+                    ╔\╞Ю╖С╥s
                 </div>
                 <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-                    <h3 class="footer-titel">Е┘╤Д╩√Ф°█Е▀≥</h3>
-                    Д╪│Ф╔╜Ф√╧Ф║┬<br>
-                    Г∙╟Ф╔╜Е░┬Д╫°<br>
-                    Е╩ёЕ▒┼Ф╢╫Х╚┤
+                    <h3 class="footer-titel">╗Д╔L╙A╟х</h3>
+                    ╔Ь╥~╓Х╝в<br>
+                    ╡╖╥~╕X╖@<br>
+                    ╪s╖i╛╒╫м
                 </div>
                 <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-                    <h3 class="footer-titel">Г╤╡Г╚≥Е°╟Е°√</h3>
-                    Г╡╬И│╦Х╙╡Г╗▀<br>
-                    Е░█Д╨╨Х╛⌡Е╨╖<br>
-                    Х─│Е╦╚Е┼÷Х┐╫
+                    <h3 class="footer-titel">╨Т╞╦╕a╧о</h3>
+                    ╨К©О╫р╣{<br>
+                    ╕W╓Hа©╝y<br>
+                    ╕я╝v╔\╞Ю
                 </div>
             </div>
         </div>
@@ -627,8 +515,6 @@ height:36px;
     <script src="<%=request.getContextPath()%>/index/front-index/assets/js/jquery.counterup.min.js"></script>
     <script src="<%=request.getContextPath()%>/index/front-index/assets/js/waypoints.min.js"></script>
     <script src="<%=request.getContextPath()%>/index/front-index/assets/js/main.js"></script>
-    <script
-		src="<%=request.getContextPath()%>/front-end/members/assets/js/members&teacher&course_assess.js"></script>
     
     
     <script>

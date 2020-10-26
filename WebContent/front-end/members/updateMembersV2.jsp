@@ -135,7 +135,7 @@ background: url("<%=request.getContextPath()%>/front-end/members/assets/img/bgPi
 			<div class="container">
 				<!-- Brand and toggle get grouped for better mobile display -->
 				<a
-					href="<%=request.getContextPath()%>/front-end/members/indexV1.jsp"
+					href="<%=request.getContextPath()%>/index/front-index/index.jsp"
 					class="navbar-brand"><img src="<%=request.getContextPath()%>/front-end/members/assets/img/logo.svg" alt="">
 					<div id="logo">Xducation</div> </a>
 				<button class="navbar-toggler" type="button" data-toggle="collapse"

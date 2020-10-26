@@ -5,7 +5,7 @@
 <%String inform3 = (String)request.getAttribute("inform3"); %>
 
 
-<%@ include file="/index/front-index/headtest.jsp" %>
+<%@ include file="/index/front-index/header.jsp" %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -166,7 +166,7 @@ background: url("<%=request.getContextPath()%>/front-end/members/assets/img/bgPi
             <div id="bg" class="container">
                 <div class="signin-content">
                     <div class="signin-image">
-                        <a href="<%=request.getContextPath()%>/front-end/members/indexV1.jsp"><img class="pic" src="<%=request.getContextPath()%>/front-end/members/assets/img/head/02.png" alt="sing up image"></a>
+                        <a href="<%=request.getContextPath()%>/index/front-index/index.jsp"><img class="pic" src="<%=request.getContextPath()%>/front-end/members/assets/img/head/02.png" alt="sing up image"></a>
                         <a href="<%=request.getContextPath()%>/front-end/members/addMembersV2.jsp" class="signup-image-link" style="font-family:'Gochi Hand';">Create an account</a>
                     </div>
 

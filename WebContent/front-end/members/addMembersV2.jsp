@@ -178,7 +178,7 @@ background: url("<%=request.getContextPath()%>/front-end/members/assets/img/bgPi
         <!-- Sign up form -->
         <section class="signup">
             <div class="container" id="bg">
-            <a href="<%=request.getContextPath()%>/front-end/members/indexV1.jsp"><img  id='preview_progressbarTW_img' src="<%=request.getContextPath()%>/front-end/members/assets/img/head/01.png" alt="sing up image"></a>
+            <a href="<%=request.getContextPath()%>/index/front-index/index.jsp"><img  id='preview_progressbarTW_img' src="<%=request.getContextPath()%>/front-end/members/assets/img/head/01.png" alt="sing up image"></a>
             <div class="signup-image">
              <a href="<%=request.getContextPath()%>/front-end/members/signIn.jsp" class="signup-image-link" style="font-family:'Gochi Hand';">I am already member</a>
                     
