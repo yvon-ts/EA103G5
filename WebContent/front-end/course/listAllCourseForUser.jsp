@@ -16,7 +16,14 @@
 
 	List<Integer> averageScore = new ArrayList<>();
 	for (CourseVO vo : list) {
-		averageScore.add(vo.getCsscore() / vo.getCsscoretimes());
+		// 處理課程評分精度以及分母為零的問題
+		Integer csscore = vo.getCsscore();
+		Integer csscoretimes = vo.getCsscoretimes();
+		if (csscoretimes > 0) {
+			averageScore.add(csscore/csscoretimes);
+		} else {
+			averageScore.add(0);
+		}				
 	}
 
 	int i = 0;
@@ -141,9 +148,10 @@
 									<div class="icon">
 										<!-- 顯鈞：替換成新版本讀圖測試2020/10/22 -->
 										<%-- <img src="<%=request.getContextPath()%>/course/coursephoto.do?action=searchPhoto&courseno=${courseVO.courseno}" style="width:200px;height:150px" class="pic"> --%>
-										<img src="<%=request.getContextPath()%>/course/CoursePictureReaderFromDB?courseno=${courseVO.courseno}" style="width: 200px; height: 150px;" class="pic">
-                        </div>
-                        <div class="services-content">
+										<%-- <img src="<%=request.getContextPath()%>/course/CoursePictureReaderFromDB?courseno=${courseVO.courseno}" style="width: 200px; height: 150px;" class="pic"> --%>
+										<img src="<%=request.getContextPath()%>/course/CoursePictureReaderFromDB?courseno=${courseVO.courseno}" style="max-width: 100%; height: 150px;" class="pic">
+                        			</div>
+                        			<div class="services-content">
                         	
                   
 <!--                         	 -->
@@ -294,7 +302,8 @@
 			            str +=  `<div class="services-item wow fadeInRight" data-wow-delay="0.3s">`;
 			            str +=  `<div class="icon">`
 			            str +=  `<a href="<%=request.getContextPath()%>/course/course.do?action=showCourseMainPage&courseno=` + JSONarray[i].courseno + `">`
-			            str +=  `<img src=  "` + pictureURL + `"style="width:200px;height:150px"></div>`;
+						// str +=  `<img src=  "` + pictureURL + `"style="width:200px;height:150px"></div>`;
+						str +=  `<img src=  "` + pictureURL + `"style="max-width:100%;height:150px"></div>`;
 			                    
 			            str +=  `<div class="services-content">`;
 						str +=  `&nbsp;&nbsp;<div class="rateit" data-rateit-value="` + JSONarray[i].csscore / JSONarray[i].csscoretimes + `" data-rateit-ispreset="true" data-rateit-readonly="true"></div><br>`;

@@ -9,7 +9,6 @@ MembersVO membersVO = (MembersVO) session.getAttribute("membersVO");
 
 <jsp:useBean id="teacherSvc" scope="page" class="com.teacher.model.TeacherService" />
 
-
 <!DOCTYPE html>
 <html lang="en">
 
