@@ -25,14 +25,15 @@ public class EmployeeJNDIDAO implements EmployeeDAO_interface {
 		}
 	}
 
-	private static final String INSERT_STMT = "INSERT INTO employee (empno, empacc, emppwd, empname, empsalary, hiredate, empemail) VALUES (('EMP' || LPAD(SEQ_EMPLOYEE.NEXTVAL, 4, 0)), ?, ?, ?, ?, ?, ?)";
+	private static final String INSERT_STMT = "INSERT INTO employee (empno, empacc, emppwd, empname, empsalary, hiredate, empemail, emppic) VALUES (('EMP' || LPAD(SEQ_EMPLOYEE.NEXTVAL, 4, 0)), ?, ?, ?, ?, ?, ?, ?)";
 	private static final String GET_ALL_STMT = "SELECT empno, empacc, emppwd, empname, empsalary, to_char(hiredate,'yyyy-mm-dd') hiredate, empemail, empdelete FROM employee order by empno ";
 	private static final String GET_ONE_STMT = "SELECT empno, empacc, emppwd, empname, empsalary, to_char(hiredate,'yyyy-mm-dd') hiredate, empemail, empdelete FROM employee where empno = ?";
 	private static final String DELETE = "DELETE FROM employee where empno = ?";
-	private static final String UPDATE = "UPDATE employee set empacc=?, emppwd=?, empname=?, empsalary=?, hiredate=?, empemail=?, empdelete=? where empno=? ";
+	private static final String UPDATE = "UPDATE employee set empacc=?, emppwd=?, empname=?, empsalary=?, hiredate=?, empemail=?, empdelete=?, emppic=? where empno=? ";
 	private static final String UPDATESTATUS = "UPDATE employee set empdelete? where empno=? ";
 	private static final String LOGIN = "SELECT * FROM employee where empacc=? and emppwd=? ";
 	private static final String GET_ONE_ACC = "SELECT * FROM employee where empacc = ?";
+	private static final String FIND_BY_EMPNO = "SELECT * FROM  employee where empno = ?";
 	
 	
 
@@ -103,7 +104,8 @@ public class EmployeeJNDIDAO implements EmployeeDAO_interface {
 			pstmt.setDate(5, employeeVO.getHiredate());
 			pstmt.setString(6, employeeVO.getEmpemail());
 			pstmt.setInt(7, employeeVO.getEmpdelete());
-			pstmt.setString(8, employeeVO.getEmpno());
+			pstmt.setBytes(9, employeeVO.getEmppic());
+			pstmt.setString(9, employeeVO.getEmpno());
 
 			pstmt.executeUpdate();
 			con.commit();
@@ -415,7 +417,8 @@ public class EmployeeJNDIDAO implements EmployeeDAO_interface {
 			pstmt.setInt(4, employeeVO.getEmpsalary());
 			pstmt.setDate(5, employeeVO.getHiredate());
 			pstmt.setString(6, employeeVO.getEmpemail());
-
+			pstmt.setBytes(7, employeeVO.getEmppic());
+			
 			pstmt.executeUpdate();
 			ResultSet rs = pstmt.getGeneratedKeys();
 			if (rs.next()) {
@@ -513,6 +516,61 @@ public class EmployeeJNDIDAO implements EmployeeDAO_interface {
 		}
 
 		return employeeVO;
+	}
+
+	@Override
+	public Optional<EmployeeVO> findEmpPicByEmpno(String empno) {
+		EmployeeVO employeeVO = null;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+			con = ds.getConnection();
+			con.setAutoCommit(false);
+			pstmt = con.prepareStatement(FIND_BY_EMPNO);
+
+			pstmt.setString(1, empno);
+
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				employeeVO = new EmployeeVO();
+				employeeVO.setEmppic(rs.getBytes("emppic"));
+			}
+			con.commit();
+		} catch (SQLException e) {
+			try {
+				con.rollback();
+			} catch (SQLException se) {
+				throw new RuntimeException("A database error occured. " + se.getMessage());
+			}
+			throw new RuntimeException("A database error occured. " + e.getMessage());
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.setAutoCommit(true);
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+
+		return Optional.ofNullable(employeeVO);
 	}
 	
 }

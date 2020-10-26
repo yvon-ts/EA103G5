@@ -1,16 +1,18 @@
 package com.employee.controller;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.*;
 import javax.servlet.*;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.*;
-
 import com.emp_authority.model.EmpAuthorityService;
 import com.emp_authority.model.EmpAuthorityVO;
 import com.employee.model.*;
 
+@MultipartConfig(fileSizeThreshold = 1024 * 1024, maxFileSize = 5 * 1024 * 1024, maxRequestSize = 5 * 5 * 1024 * 1024)
 public class EmployeeServlet extends HttpServlet {
-	private static final long serialVersionUID = 1L;
+	private static final long sesrialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		doPost(req, res);
@@ -20,7 +22,7 @@ public class EmployeeServlet extends HttpServlet {
 		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
 
-//--------------------------新增員工------------------------------------
+//--------------------------新增員工------------------------------------//
 		if ("insert".equals(action)) {
 			List<String> errMsgs = new LinkedList<String>();
 			req.setAttribute("errMsgs", errMsgs);
@@ -67,6 +69,16 @@ public class EmployeeServlet extends HttpServlet {
 				if (empemail == null || empemail.trim().length() == 0) {
 					errMsgs.add("*員工email:請勿為空白*");
 				}
+				
+				byte[] emppic = null;
+				Part part = req.getPart("emppic");
+				if (part == null || part.getSize() == 0) {
+					errMsgs.add("*請上傳一張圖片*");
+				}
+				InputStream in = part.getInputStream();
+				emppic = new byte[in.available()];
+				in.read(emppic);
+				in.close();
 
 				String[] functionx = req.getParameterValues("functionx");
 
@@ -84,11 +96,9 @@ public class EmployeeServlet extends HttpServlet {
 					failureView.forward(req, res);
 					return;
 				}
-//1.random 密碼 >123
-//2.email寄出 ran密碼>123
-//3.123轉碼成456存在DB
+
 				EmployeeService newEmp = new EmployeeService();
-				EmployeeVO VO = newEmp.addEmp(empacc, emppwd, empname, empsalary, hiredate, empemail);
+				EmployeeVO VO = newEmp.addEmp(empacc, emppwd, empname, empsalary, hiredate, empemail, emppic);
 
 				// 拿到員工編號新增權限
 				EmpAuthorityService newEmpAuthority = new EmpAuthorityService();
@@ -246,6 +256,23 @@ public class EmployeeServlet extends HttpServlet {
 				}
 
 				Integer empdelete = new Integer(req.getParameter("empdelete").trim());
+				
+				byte[] emppic = null;
+				Part part = req.getPart("emppic");
+//				if (part == null || part.getSize() == 0) {
+//					req.setAttribute("employeeVO", employeeVO);
+//					req.setAttribute("permissiondelimitVO", list2);
+//					AdminsService adminsSvc2 = new AdminsService();
+//					AdminsVO adminsVO2 = adminsSvc2.getOneAdmin(admin_id);
+//					admin_pic = adminsVO2.getAdmin_pic();
+//				} else {
+//					req.setAttribute("adminsVO", adminsVO);
+//					req.setAttribute("permissiondelimitVO", list2);
+//					InputStream in = part.getInputStream();
+//					admin_pic = new byte[in.available()];
+//					in.read(admin_pic);
+//					in.close();
+//				}
 
 				// 權限修改
 				String[] functionx = req.getParameterValues("functionx");
@@ -271,6 +298,7 @@ public class EmployeeServlet extends HttpServlet {
 				employeeVO.setHiredate(hiredate);
 				employeeVO.setEmpemail(empemail);
 				employeeVO.setEmpdelete(empdelete);
+				employeeVO.setEmppic(emppic);
 
 				if (!errMsgs.isEmpty()) {
 					req.setAttribute("employeeVO", employeeVO);
@@ -280,7 +308,7 @@ public class EmployeeServlet extends HttpServlet {
 				}
 
 				EmployeeService newEmp = new EmployeeService();
-				employeeVO = newEmp.updateEmp(empno, empacc, emppwd, empname, empsalary, hiredate, empemail, empdelete);
+				employeeVO = newEmp.updateEmp(empno, empacc, emppwd, empname, empsalary, hiredate, empemail, empdelete, emppic);
 				req.setAttribute("employeeVO", employeeVO);
 				RequestDispatcher successView = req.getRequestDispatcher("/back-end/employee/newallemp.jsp");
 				successView.forward(req, res);

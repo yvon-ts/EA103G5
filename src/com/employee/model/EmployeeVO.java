@@ -12,6 +12,8 @@ public class EmployeeVO implements Serializable {
 	private Date hiredate;
 	private String empemail;
 	private Integer empdelete;
+	private byte[] emppic;
+	
 	
 	
 	public String getEmpno() {
@@ -61,5 +63,11 @@ public class EmployeeVO implements Serializable {
 	}
 	public void setEmpdelete(Integer empdelete) {
 		this.empdelete = empdelete;
+	}
+	public byte[] getEmppic() {
+		return emppic;
+	}
+	public void setEmppic(byte[] emppic) {
+		this.emppic = emppic;
 	}
 }

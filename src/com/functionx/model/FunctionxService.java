@@ -53,7 +53,5 @@ public class FunctionxService {
 		return dao.getAll();
 	}
 	
-	public FunctionxVO getUrl(String urls) {
-		return dao.findByUrl(urls);
-	}
+
 }
