@@ -32,6 +32,7 @@ public class SpkrServlet extends HttpServlet {
 			baos.flush();
 		}
 		baos.close();
+		System.out.println("baos有執行已關閉");
 		return baos.toByteArray();
 	}
 
@@ -115,11 +116,11 @@ public class SpkrServlet extends HttpServlet {
 				Part part = req.getPart("spkricon");
 				System.out.println(part);
 				
-				if (part == null) {
-					errorMsgs.add("查無圖片");
+				if (part == null || ("application/octet-stream").equals(part.getContentType())) {
+					errorMsgs.add("請上傳圖片");
 				} else if (part.getContentType().indexOf("image/jpeg") < 0 && part.getContentType().indexOf("image/gif") < 0 && part.getContentType().indexOf("image/png") < 0) {
 					System.out.println(part.getContentType());
-					errorMsgs.add("請上傳圖片");
+					errorMsgs.add("僅支援.jpg .jpeg .gif .png 格式");
 				}
 				InputStream in = part.getInputStream();
 				spkricon = getFileByteArray(in);
@@ -150,6 +151,53 @@ public class SpkrServlet extends HttpServlet {
 				e.printStackTrace();
 			}
 		}
+		
+		// =========開始新增(無圖片)=========//
+				if ("insertText".equals(action)) {
+					List<String> errorMsgs = new LinkedList<String>();
+					req.setAttribute("errorMsgs", errorMsgs);
+
+					try {
+						String spkrname = req.getParameter("spkrname").trim();
+						/************************* 姓名驗證 ****************************/
+						if (spkrname == null || spkrname.length() == 0) {
+							errorMsgs.add("請輸入講師姓名");
+						} else if (!spkrname.matches("[\u4e00-\u9fa5a-zA-Z.\\s]{2,16}")) {
+							errorMsgs.add("姓名格式錯誤（限中英文2-16字）");
+						}
+						/************************* 其他欄位 ****************************/
+						String spkrphone = req.getParameter("spkrphone").trim();
+						String spkremail = req.getParameter("spkremail").trim();
+						String infoString = req.getParameter("spkrinfo");
+						
+						//CKeditor - String to bytes
+						byte[] spkrinfo = getByteArray(infoString);
+						
+						SpkrVO spkrVO = new SpkrVO();
+						spkrVO.setSpkrname(spkrname);
+						spkrVO.setSpkrphone(spkrphone);
+						spkrVO.setSpkremail(spkremail);
+						spkrVO.setSpkrinfo(spkrinfo);
+						
+						if (!errorMsgs.isEmpty()) {
+							req.setAttribute("spkrVO", spkrVO);
+							RequestDispatcher failureView = req.getRequestDispatcher("/back-end/speaker/addSpkr.jsp");
+							failureView.forward(req, res);
+							return;
+						}
+
+						SpkrService spkrSvc = new SpkrService();
+						spkrVO = spkrSvc.addSpkrText(spkrname, spkrphone, spkremail, spkrinfo);
+						
+						RequestDispatcher successView = req.getRequestDispatcher("/back-end/speaker/listAllSpkr.jsp");
+						successView.forward(req, res);
+						return;
+						
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+		
 		// =========開始修改=========//
 		if ("updateOne".equals(action)) {
 
@@ -171,27 +219,20 @@ public class SpkrServlet extends HttpServlet {
 				String infoString = req.getParameter("spkrinfo");
 				//CKeditor - String to Bytes
 				byte[] spkrinfo = getByteArray(infoString);
+				
 				//file upload
-				byte[] spkricon = null;
+				SpkrService dbSvc = new SpkrService();
+				SpkrVO dbVO = dbSvc.getOne(spkrno);
+				byte[] spkricon = dbVO.getSpkricon();
+
 				Part part = req.getPart("spkricon");
-				
-				if (part == null) {
-					errorMsgs.add("查無圖片");
-				}
-				
-				System.out.println(part.getContentType());
-				
-				if (("application/octet-stream").equals(part.getContentType())) {
-					SpkrService spkrSvc = new SpkrService();
-					SpkrVO spkrVO = spkrSvc.getOne(spkrno);
-					spkricon = spkrVO.getSpkricon();
-					System.out.println("從DB叫出byte[]有成功");
-				} else if (part.getContentType().indexOf("image/gif") > 0 || part.getContentType().indexOf("image/png") > 0 || part.getContentType().indexOf("image/jpeg") > 0) {
+				if(("image/gif").equals(part.getContentType()) || ("image/jpeg").equals(part.getContentType()) || ("image/png").equals(part.getContentType())) {
 					InputStream in = part.getInputStream();
 					spkricon = getFileByteArray(in);
 					in.close();
-					System.out.println("line 193有執行");
-				} 
+				} else {
+					errorMsgs.add("僅支援.jpg .jpeg .gif .png 格式");
+				}
 				
 				SpkrVO spkrVO = new SpkrVO();
 				spkrVO.setSpkrname(spkrname);
@@ -219,6 +260,54 @@ public class SpkrServlet extends HttpServlet {
 				e.printStackTrace();
 			}
 		}
+		
+		// =========開始修改(無圖片)=========//
+				if ("updateText".equals(action)) {
+
+					List<String> errorMsgs = new LinkedList<String>();
+					req.setAttribute("errorMsgs", errorMsgs);
+
+					try {
+						String spkrno = req.getParameter("spkrno");
+						String spkrname = req.getParameter("spkrname");
+						/************************* 姓名驗證 ****************************/
+						if ((spkrname.trim()).length() == 0) {
+							errorMsgs.add("請輸入講師姓名");
+						} else if (!spkrname.matches("[\\u4e00-\\u9fa5a-zA-Z.\\\\s]{2,16}")) {
+							errorMsgs.add("姓名格式錯誤（限中英文2-16字）");
+						}
+						/************************* 其他欄位 ****************************/
+						String spkrphone = req.getParameter("spkrphone").trim();
+						String spkremail = req.getParameter("spkremail").trim();
+						String infoString = req.getParameter("spkrinfo");
+						//CKeditor - String to Bytes
+						byte[] spkrinfo = getByteArray(infoString);
+						
+						SpkrVO spkrVO = new SpkrVO();
+						spkrVO.setSpkrname(spkrname);
+						spkrVO.setSpkrphone(spkrphone);
+						spkrVO.setSpkremail(spkremail);
+						spkrVO.setSpkrinfo(spkrinfo);
+						
+						if (!errorMsgs.isEmpty()) {
+							req.setAttribute("spkrVO", spkrVO);
+							RequestDispatcher failureView = req.getRequestDispatcher("/back-end/speaker/updateSpkr.jsp");
+							failureView.forward(req, res);
+							return;
+						}
+
+						SpkrService spkrSvc = new SpkrService();
+						spkrVO = spkrSvc.updateSpkrText(spkrno, spkrname, spkrphone, spkremail, spkrinfo);
+
+						req.setAttribute("spkrVO", spkrVO);
+
+						RequestDispatcher successView = req.getRequestDispatcher("/back-end/speaker/listOneSpkr.jsp");
+						successView.forward(req, res);
+						return;
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
 		
 		// =========全部查詢跳轉單一查詢=========//
 		if ("display_fromList".equals(action)) {

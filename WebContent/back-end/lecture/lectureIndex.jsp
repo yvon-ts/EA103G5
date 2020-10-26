@@ -10,10 +10,7 @@
 		background-color: #fff; !important
 	}
 	#link-area{
-		position: absolute;
-		top: 20%;
-		left: 30%;
-		margin: 0 auto;
+		margin-top: 100px;
 	}
 	.link{
 		display: inline-block;
@@ -49,17 +46,22 @@
 </head>
 <body>
 	<main class="app-content">
-	<div id="link-area">
-		<div id="spkr" class="link">
-			<img src="<%=request.getContextPath()%>/index/front-index/assets/img/head/05.png"><br>
-		</div>
-		<div id="lec" class="link">
-		<img src="<%=request.getContextPath()%>/index/front-index/assets/img/head/lecture.png"><br>
-		</div>
-		<br>
-		<div class="title">講師管理</div>
-		<div class="title">講座管理</div>
-	</div>
+	<div class="container">
+    	<div id="link-area" class="row">
+        	<div class="col-md-6">
+        		<div id="spkr" class="link">
+					<img src="<%=request.getContextPath()%>/index/front-index/assets/img/head/05.png"><br>
+				</div>
+				<div class="title">講師管理</div>
+            </div>
+            <div class="col-md-6">
+            	<div id="lec" class="link">
+					<img src="<%=request.getContextPath()%>/index/front-index/assets/img/head/lecture.png"><br>
+				</div>
+				<div class="title">講座管理</div>
+            </div>
+        </div>
+    </div>
 	</main>
 	<script src="<%=request.getContextPath()%>/library/jquery/jquery-3.5.1.js"></script>
 	<script>

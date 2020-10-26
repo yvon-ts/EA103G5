@@ -70,7 +70,7 @@
 	</table>
 	<%@ include file="/back-end/pool/ck.file" %>
 	<input type="hidden" name="spkrno" value="${spkrVO.spkrno}">
-	<input type="hidden" name="action" value="updateOne"></form>
+	<input id="action" type="hidden" name="action" value="updateText"></form>
 	</div>
 	<script type="text/javascript">		
 		//upload image preview
@@ -91,6 +91,13 @@
 				reader.readAsDataURL(input.files[0]);
 			}
 		}
+		
+		$("#btn").mouseenter(function(){
+			var fileInput = $("#upimg").get(0).files[0];
+			if(fileInput){
+				$("#action").val("updateOne");
+			}
+		});
 	</script>
 </body>
 </html>
