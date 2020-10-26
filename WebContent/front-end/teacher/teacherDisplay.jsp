@@ -4,27 +4,19 @@
 
 <%@ include file="/index/front-index/header.jsp" %>
 
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Xducation-老師檔案</title>
+    <title>Xducation - 老師檔案</title>
 
     <!-- Font Icon -->
     <link rel="stylesheet" href="fonts/material-icon/css/material-design-iconic-font.min.css">
-
-   <link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.3/sweetalert2.css" />
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.3/sweetalert2.js"
-	type="text/javascript"></script>
-	
-	 <script src="http://code.jquery.com/jquery-1.12.4.min.js"></script>
-
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.3/sweetalert2.css" />
+	<script	src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.3/sweetalert2.js" type="text/javascript"></script>
+	<script src="http://code.jquery.com/jquery-1.12.4.min.js"></script>
     <link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/teacher/teacherRegister_css/style.css">
 <%--     <link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/teacher/nav_css_ForTeacherRegister/css/bootstrap.min.css"> --%>
 <%--     <link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/teacher/nav_css_ForTeacherRegister/css/nivo-lightbox.css"> --%>
@@ -101,11 +93,6 @@ body {
     margin-top: 0;
   }
 }
-
-
-
-
-
 
 
 
@@ -197,8 +184,7 @@ img.fti{
   height:20px;
   }
   div.main{
-background: url("<%=request.getContextPath()%>/front-end/members/assets/img/bgPic.png");
-}
+  	background: url("<%=request.getContextPath()%>/front-end/members/assets/img/bgPic.png");}
     
 </style>
 <body>
@@ -340,8 +326,9 @@ background: url("<%=request.getContextPath()%>/front-end/members/assets/img/bgPi
     
   </div>
   <div id="tab03" class="tab-contents">
-    <h2>Tab 3</h2>
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eius quos aliquam consequuntur, esse provident impedit minima porro! Laudantium laboriosam culpa quis fugiat ea, architecto velit ab, deserunt rem quibusdam voluptatum.</p>
+    <h2>我所開設的課程</h2>
+	<%@ include file="/front-end/course/listTeacherCourseInclude.file"%>
+	<%-- <jsp:include page="/front-end/course/listTeacherCourseInclude.jsp" /> --%>
   </div>
   <div id="tab04" class="tab-contents">
     <h2>Tab 4</h2>
