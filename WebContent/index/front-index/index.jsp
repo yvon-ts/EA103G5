@@ -108,8 +108,8 @@ height:36px;
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                精選課程&nbsp;<i class="lni-leaf"></i>
+                            <a class="nav-link" href="<%=request.getContextPath()%>/front-end/course/listAllCourseForUser.jsp">
+                                搜尋課程&nbsp;<i class="lni-leaf"></i>
                             </a>
                         </li>
                         <li class="nav-item">
