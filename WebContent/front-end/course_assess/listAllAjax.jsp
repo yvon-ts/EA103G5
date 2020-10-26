@@ -5,19 +5,23 @@
 <%@ page import="com.course_assess.model.*"%>
 <%@ page import="com.teacher.model.*"%>
 <%@ page import="java.util.*"%>
+<%@ page import="com.course.model.*"%>
 
 <%
+String courseno =(String)request.getParameter("courseno");
 Course_assessService course_assessSvc = new Course_assessService();
-String avg = course_assessSvc.avgScore("COUR0001");
-List<Course_assessVO> list = course_assessSvc.getAll("COUR0001");
+String avg = course_assessSvc.avgScore(courseno);
+List<Course_assessVO> list = course_assessSvc.getAll(courseno);
+pageContext.setAttribute("courseno", courseno);
 pageContext.setAttribute("list", list);
 pageContext.setAttribute("avg",avg);
 pageContext.setAttribute("course_assessSvc",course_assessSvc);
-String inform5 = (String)request.getAttribute("inform5");		
+String inform5 = (String)request.getAttribute("inform5");
+MembersVO membersVO = (MembersVO) session.getAttribute("membersVO");
 %>
 
-<%@ include file="/index/front-index/header.jsp" %>
 <jsp:useBean id="membersSvc" scope="page" class="com.members.model.MembersService" />
+<jsp:useBean id="teacherSvc" scope="page" class="com.teacher.model.TeacherService" />
 
 
 <!DOCTYPE html>
@@ -35,8 +39,7 @@ String inform5 = (String)request.getAttribute("inform5");
 	type="text/javascript"></script>
 	<link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-	<link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/jquery.rateit/1.1.3/rateit.css" />
+	
     <!-- Main css -->
     <link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/members/signIn&updateMembers_css/style.css">
 <%--     <link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/members/nav_css_ForSignIn&addMembers/css/bootstrap.min.css"> --%>
@@ -44,11 +47,7 @@ String inform5 = (String)request.getAttribute("inform5");
 <%--     <link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/members/nav_css_ForSignIn&addMembers/css/animate.css"> --%>
 <%--     <link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/members/nav_css_ForSignIn&addMembers/css/main.css"> --%>
 <%--     <link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/members/nav_css_ForSignIn&addMembers/css/responsive.css"> --%>
-<link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.3/sweetalert2.css" />
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.3/sweetalert2.js"
-	type="text/javascript"></script>
+
 </head>
 
 <style>
@@ -110,8 +109,13 @@ margin:-240px 0 0 -30px;
   width: auto;
  border:1px;
   border-radius: 5px;
-  margin-left: 5px;
+  margin-left: 330px;
   cursor: pointer; 
+  width:150px;
+  height:50px;
+  font-family:'Gochi Hand';
+  border-radius:5px;
+  
   
   }
   a#add{
@@ -191,7 +195,7 @@ margin:25px 0 0 170px ;
 h4.nkname{
 width:200px;
 height:50px;
-margin:12px 0 0 25px ;
+margin:12px 0 0 30px ;
 
 }
 .signup-image-link {
@@ -235,8 +239,7 @@ margin:12px 0 0 25px ;
     
     
 div.main{
-padding:150px 0 0 0;
-background: url("<%=request.getContextPath()%>/front-end/members/assets/img/bgPic.png");
+padding:0px 0 0 0;
 
 
 }
@@ -247,18 +250,18 @@ background: url("<%=request.getContextPath()%>/front-end/members/assets/img/bgPi
 
 <body>
 
+
       <div class="main">
-<section class="sign-in">
             <div id="bg" class="container">
             
              <%@ include file="page1.file"%>
             <div id="avg">${avg}</div>
             <c:if test="${not empty sessionScope.membersVO}">
-           <c:if test="${empty course_assessSvc.getOneCourse_assess(sessionScope.membersVO.memno)}">
-				 <a id='add' href="<%=request.getContextPath()%>/front-end/course_assess/addCourse_assess.jsp">發表評價</a>							
+           <c:if test="${empty course_assessSvc.checkMembers(sessionScope.membersVO.memno,courseno)}">
+				 <a id='add' href="<%=request.getContextPath()%>/front-end/course_assess/addCourse_assess.jsp?courseno=${courseno}">發表評價</a>							
 		   </c:if>
-            <c:if test="${not empty course_assessSvc.getOneCourse_assess(sessionScope.membersVO.memno)}">
-				 <a id='add' href="<%=request.getContextPath()%>/front-end/course_assess/updateCourse_assess.jsp">修改評價</a>
+            <c:if test="${not empty course_assessSvc.checkMembers(sessionScope.membersVO.memno,courseno)}">
+				 <a id='add' href="<%=request.getContextPath()%>/front-end/course_assess/updateCourse_assess.jsp?courseno=${courseno}">修改評價</a>
 		   </c:if>
 		   </c:if>
             
@@ -270,9 +273,9 @@ background: url("<%=request.getContextPath()%>/front-end/members/assets/img/bgPi
                 
                 
                 <div>
-                
-                <input type="hidden" id="courseno" value="COUR0001" />
-                <button class="register" id="js-load-more" >載入更多</button>
+                <input type="hidden" id="inform5" value="${requestScope.inform5}">
+                <input type="hidden" id="courseno" value="${courseno}" />
+                <button class="register" id="js-load-more" >More</button>
                 </div>
                 
                 
@@ -284,23 +287,10 @@ background: url("<%=request.getContextPath()%>/front-end/members/assets/img/bgPi
                 
                 
             </div>
-        </section>
-         <footer id="footer" >
-        <section id="copyright" class="">
-            <div >
-                <div >
-                    <div >
-                        <div class="copyright-content">Xducation<p><a href="#">關於我們</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="#">其他服務</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="#">網站地圖</a></p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </footer>
+         
 
     </div>
     
-  
 
     <!-- JS -->
     <%-- <%@ include file="/index/front-index/foottest.jsp" %> --%>
@@ -314,7 +304,7 @@ function status(){
 	 swal('老師資格審核中', '請耐心等候1~3個工作天，一但審核完畢，即會立刻通知', 'info');
 }
 
- var inform5 = ${inform5};
+var inform5 = document.getElementById('inform5').value;
 
 if(inform5 == 200){
 	swal('新增成功', '感謝您撥空留下您寶貴的意見', 'success');
@@ -443,7 +433,6 @@ function getData(offset,size){
 
 </script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.rateit/1.1.3/jquery.rateit.min.js"></script>
 <%-- <script src="<%=request.getContextPath()%>/front-end/members/assets/js/members&teacher&course_assess.js"></script>
 
  --%>

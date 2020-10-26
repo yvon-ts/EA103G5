@@ -227,7 +227,7 @@ public class MembersServlet extends HttpServlet {
 			sb.append("歡迎註冊Xducation線上學習平台,");
 			sb.append("這是您的驗證碼:");
 			sb.append(vercode);
-//			sms.Process(sb, mphone);
+			sms.Process(sb, mphone);
 			session.setAttribute("memVO", memVO);
 			session.setAttribute("vercode", vercode);
 			session.setAttribute("count", count);
@@ -399,8 +399,9 @@ public class MembersServlet extends HttpServlet {
 			}else if (!(Rmempwd.equals(mempwd))) {
 				errorMsgs.add("重複輸入密碼:必須一致");
 			}
+			
 			String nkname = req.getParameter("nkname");
-			String nknameReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{2,10}";
+			String nknameReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{2,10}$";
 			if (nkname == null || nkname.trim().length() == 0) {
 				nkname = membersVO.getNkname();
 			} else if (!nkname.trim().matches(nknameReg)) { // 以下練習正則(規)表示式(regular-expression)

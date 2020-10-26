@@ -185,7 +185,10 @@
 					</div>
 					<div id="coursescope" class="tab-pane fade">
 						<h3>課程評價</h3>
-						<jsp:include page="/front-end/course/subpage_coursescope.html" />
+						<jsp:include page="/front-end/course_assess/listAllAjax.jsp" flush="true">
+						<jsp:param name="courseno" value="${courseVO.courseno}"/>
+						</jsp:include>
+						
 					</div>
 					<div id="post" class="tab-pane fade">
 						<h3>問題討論</h3>

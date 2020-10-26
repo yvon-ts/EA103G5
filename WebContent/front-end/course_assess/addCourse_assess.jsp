@@ -2,6 +2,12 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.members.model.*"%>
 
+<%@ page import="com.course_assess.model.*"%>
+<%@ page import="java.util.*"%>
+<%
+String courseno = (String)request.getParameter("courseno");
+pageContext.setAttribute("courseno", courseno);
+%>
 
 
 
@@ -248,7 +254,7 @@ background: url("<%=request.getContextPath()%>/front-end/members/assets/img/bgPi
         <textarea class="text" name="comments" placeholder="有什麼想對這門課程說的話呢" maxlength="40" ></textarea>
         
     </div>
-     <input type="hidden" name="courseno" value="COUR0001">
+     <input type="hidden" name="courseno" value="${courseno}">
     <input type="hidden" name="memno" value="${membersVO.memno}">
     
     <input type="hidden" name="action" value="insert">

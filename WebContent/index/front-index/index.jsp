@@ -636,12 +636,11 @@ height:36px;
 	if(inform2 ==='200'){
 		swal('完了', '沒辦法開始您的線上之旅了!', 'error');
 	}else if(inform2 ==='100'){
-		swal('登入成功', '您可以開始您的線上之旅了!', 'success');
+		swal('登入成功', '您可以開始您的線上學習之旅了!', 'success');
 	}else if(inform2 ==='300'){
 		swal('登出成功', '我們會在這裡等您回來一起學習!', 'success');
 	}
 	function status(){
-		
 		 swal('老師資格審核中', '請耐心等候1~3個工作天，一但審核完畢，即會立刻通知', 'info');
 	}
 	

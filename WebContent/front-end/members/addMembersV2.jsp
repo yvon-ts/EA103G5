@@ -101,6 +101,15 @@ div#msg{
     padding-top: 165px;
 
 }
+div#msg2{
+   margin-left: 160px;
+    width: 100%;
+    height: 100px;
+    position: absolute;
+    padding-top: 550px;
+    color:red;
+
+}
 div.signup-image{
    width: 400px;
     height: 400px;
@@ -191,6 +200,7 @@ background: url("<%=request.getContextPath()%>/front-end/members/assets/img/bgPi
 </c:if>
                        </div>
             <div id="msg"></div>
+            <div id="msg2"></div>
                 <div class="signup-content" >
                     <div class="signup-form">
                         <h2 class="form-title">Sign up</h2>
@@ -227,7 +237,7 @@ background: url("<%=request.getContextPath()%>/front-end/members/assets/img/bgPi
                             <div class="form-group">
                                <img class="icon" src="<%=request.getContextPath()%>/front-end/members/signIn&updateMembers_css/images/new-email.svg" alt="">
                                 <label for="memail"></label><div id="msg7"></div>
-                                <input type="email" id="memail" value="${requestScope.membersVO.memail}" class="input" name="memail" placeholder="Your Email"/>
+                                <input type="email" id="memail" value="${requestScope.membersVO.memail}" onblur="sendRequest2()" class="input" name="memail" placeholder="Your Email"/>
                             </div>
                             <div class="form-group">
                                 <img class="icon" src="<%=request.getContextPath()%>/front-end/members/signIn&updateMembers_css/images/birthday-present.svg" alt="">
@@ -298,139 +308,6 @@ var message = document.getElementById('message').value;
 if(message.length !== 0){
 	 swal('注意', message, 'warning');
 }
-/* $(function(){
-    $('#myform').validate({
-    /* 常用檢測屬性
-   required:必填
-   noSpace:空白
-   minlength:最小長度
-   maxlength:最大長度
-   email:信箱格式
-   number:數字格式
-   url:網址格式https://www.minwt.com
-   */
-  /*  onkeyup: function(element, event) { */
-     //去除左側空白
-  /*    var value = this.elementValue(element).replace(/^\s+/g, "");
-     $(element).val(value);
-    },
-    rules: {
-      memacc: {
-        required: true,
-        noSpace:true
-      },
-      mempwd: {
-          required: true,
-          rangelength:[6,16],
-          noSpace:true
-          
-        },
-        Rmempwd: {
-            required: true,
-            rangelength:[6,16],
-            equalTo:"#mempwd"
-            
-          },
-          memname:{
-              required: true,
-              rangelength:[2,5],
-              
-            },
-            nkname:{
-                required: true,
-                rangelength:[2,10],
-                
-              },
-      mphone:{
-        required: true,
-        minlength: 10,
-        number: true
-      },
-      memail: {
-        required: true,
-        email: true
-      }
-    },
-    
-    
-    
-    
-    
-    messages: {
-      memacc: {
-        required:'會員帳號:不可空白'
-      },
-      mempwd: {
-          required: '會員密碼:不可空白',
-          rangelength:'長度為6~16',
-          
-        },
-        Rmempwd: {
-            required: '重複密碼:不可空白',
-            rangelength:[6,16],
-            equalTo:"重複密碼:必須一致",
-          },
-          memname:{
-              required:'會員姓名:不可空白',
-              rangelength:'字數必須2~5字',
-            },
-            nkname:{
-                required:'會員暱稱:不可空白',
-                rangelength:'字數必須2~10字',
-              },
-              mphone:{
-                  required: '會員號碼:不可空白',
-                  minlength:'手機號碼為10碼',
-                  number: '必須為'
-                },
-                memail: {
-                  required: ,
-                  email: true
-                }
-    },
-    submitHandler: function(form) {
-      form.submit();
-    }
-});
-
-});
- */ 
-
-
-
-
-	
-	
-	
-	
-	
-	
-	
-	
-	/*  swal('老師資格審核中', '請耐心等候1~3個工作天，一但審核完畢，即會立刻通知', 'info').then(function(){
-		 myform.submit();
-	 }); */
-
-
-
-
-
- 
- 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 function readURL(input){
@@ -560,18 +437,62 @@ function sendRequest() {
     	 register.disabled = true;
     	 
     }else{
+    	var action = 'memaccCheck';
     	request.open("POST", "<%=request.getContextPath()%>/front-end/members/MemaccCheckServlet", true);
 	    request.setRequestHeader("Content-Type",
 	        "application/x-www-form-urlencoded");
 	   
-	    	request.send("memacc=" + memacc);
+	    	request.send("action="+action+"&memacc=" + memacc);
+    }
+}
+    
+    
+    var request2;
+    function createXMLHttpRequest2() {
+      if (window.ActiveXObject) {
+        request2 = new ActiveXObject("Microsoft.XMLHTTP");
+      } else if (window.XMLHttpRequest) {
+        request2 = new XMLHttpRequest();
+      } else {
+        window.alert("建議使用GOOGLE CHROME瀏覽器");
+      }
     }
     
-   
- 
-    	 
+    function processResult2() {
+        if ((request2.readyState == 4) && (request2.status == 200)) {
+          var str = request2.responseText;
+          if(str==="non"){
+            var msg2 = document.getElementById("msg2").innerHTML ="<span style='color:#00cc00'>此電子郵件可以使用</span>" ;
+            var register = document.getElementById("register");
+            register.disabled = false;
+          }else{
+            var msg2 = document.getElementById("msg2").innerHTML ="<span style='color:#cc0000'>此電子郵件已被註冊</span>" ;
+            var register = document.getElementById("register");
+            register.disabled = true;
+          }
+          
+        }
+      }
     
-    // request.open("GET", "AccountCheckServlet?username="+username, true); 
+    function sendRequest2() {
+        createXMLHttpRequest2();
+        request2.onreadystatechange = processResult2;
+        var memail = document.getElementById("memail").value;
+        if(memail.length===0){
+        	var msg2 = document.getElementById("msg2").innerHTML = "";
+        }else if(memail.search(/^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z]+$/)){
+        	 var msg2 = document.getElementById("msg2").innerHTML ="<span style='color:#cc0000'>必須符合電子郵件格式</span>";
+        	 register.disabled = true;
+        	 
+        }else{
+        	var action = 'memailCheck';
+        	request2.open("POST", "<%=request.getContextPath()%>/front-end/members/MemaccCheckServlet", true);
+    	    request2.setRequestHeader("Content-Type",
+    	        "application/x-www-form-urlencoded");
+    	   
+    	    	request2.send("action="+action+"&memail=" + memail);
+        }
+    
    
     
   }
