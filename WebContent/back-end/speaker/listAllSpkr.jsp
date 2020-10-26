@@ -101,12 +101,12 @@
 			<td>${spkrVO.spkrphone}</td>
 			<td>${spkrVO.spkremail}</td>
 			<td>
-			<form method="post" action="<%=request.getContextPath()%>/speaker/speaker.do">
-			
-<!-- 			<input type="submit" value="資訊"> -->
-			<button type="submit" class="btn view" style="color: #03A9F4"><i class="material-icons">&#xE417;</i></button>
-			<input type="hidden" name="spkrno" value="${spkrVO.spkrno}">
-			<input type="hidden" name="action" value="display_fromList"></form>
+				<form method="post" action="<%=request.getContextPath()%>/speaker/speaker.do">
+				
+	<!-- 			<input type="submit" value="資訊"> -->
+				<button type="submit" class="btn view" style="color: #03A9F4"><i class="material-icons">&#xE417;</i></button>
+				<input type="hidden" name="spkrno" value="${spkrVO.spkrno}">
+				<input type="hidden" name="action" value="display_fromList"></form>
 			</td>
 			<td>
 				<form method="post"	action="<%=request.getContextPath()%>/speaker/speaker.do">

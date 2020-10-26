@@ -22,12 +22,10 @@
 <body>
 	<div class="container">
 		
-
-		<div class="row">
-			<div class="col-md-4">
+		<div class="col-md-12">
 				
 				<jsp:useBean id="roomSvc" scope="page" class="com.classroom.model.ClassroomService" />
-		選擇教室：<select id="select" required>
+		選擇教室：<select id="select" style="outline: none; border: 0;border-bottom: 1px solid #e5e5e5"required>
 			<option>------請選擇教室------</option>
 			<c:forEach var="roomVO" items="${roomSvc.all}">
 				<option value="${roomVO.roomno}" ${(lecVO.roomno==roomVO.roomno)? 'selected':'' } >${roomVO.roomno}&nbsp;${roomVO.roomname}</option>
@@ -35,8 +33,6 @@
 		</select><br>
 		座位數量：<span id="seatCount"></span> / <span id="blockCount"></span> 
 			</div>
-
-			<div class="col-md-4">
 				<div id="classroom">
 					<div id="stage">
 						Stage
@@ -50,11 +46,7 @@
 					<input type="hidden" id="fixedseat" name="initseat" value="" readonly>
 					<input type="hidden" id="defaultseat" name="currseat" value="111111111" readonly>
 				</div>
-			</div>
-			
 		</div>
-		
-	</div>
 	
 		
 	<div id="div"></div>
