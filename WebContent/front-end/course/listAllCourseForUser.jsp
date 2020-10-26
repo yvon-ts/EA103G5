@@ -20,11 +20,9 @@
 	}
 
 	int i = 0;
-
-	MembersVO Membersvo = (MembersVO) session.getAttribute("Membersvo");
-	Membersvo = new MembersVO();
-	Membersvo.setMemno("MEM0002");
-	pageContext.setAttribute("Membersvo", Membersvo);
+	
+	MembersVO membersVO = (MembersVO) session.getAttribute("membersVO");
+	
 
 	// 	TrackingListService test = new TrackingListService();
 	// 	List<TrackingListVO>  listall = test.getOneByMemno(Membersvo.getMemno());
@@ -65,7 +63,7 @@
 <body>
 
 	<!-- member -->
-	<input type="hidden" id="memno" value="${Membersvo.memno}" />
+	<input type="hidden" id="memno" value="${membersVO.memno}" />
 	<jsp:useBean id="courseTypeSvc" scope="page"
 		class="com.course_type.model.CourseTypeService" />
 	<jsp:useBean id="TrackingListSvc" scope="page"
@@ -164,7 +162,7 @@
 							
 							
 							
-							<c:forEach var="TrackingListVO" items="${TrackingListSvc.getOneByMemno(Membersvo.memno)}">
+							<c:forEach var="TrackingListVO" items="${TrackingListSvc.getOneByMemno(membersVO.memno)}">
 								<c:choose>
 									<c:when test="${ courseVO.courseno eq TrackingListVO.courseno}">
 										<label class="bookmark"><i class="fa fa-heart" aria-hidden="true" style="color:red">
@@ -200,6 +198,9 @@
 <script>
 	$(document).ready(function(){
 		
+		
+		
+		
 		$('body').on('click' , '.shoppingcart',function(){
 			$.ajax({
 				url	:"<%=request.getContextPath()%>/tracking_list/tracking_list.do",
@@ -209,6 +210,7 @@
 					action: "shoppingCart"
 				},
 				success: function(data){
+					console.log(123);
 					if(data !== 'false'){
 						swal({ 
 							title: "成功加入購物車",
