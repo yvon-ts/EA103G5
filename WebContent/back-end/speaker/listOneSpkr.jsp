@@ -32,43 +32,31 @@
 	#displayInfo{
 		width: 100%;
 		padding: 30px;
-		background-color: #F3F3F3;
+		background-color: #fff;
 		border-radius: 5px;
 	}
 	#displayInfo img{
-		max-height: 200px;
-		width: auto;
+		height: 50px;
+		width: 50px;
+		border: 2px solid #999;
 	}
-/* 	#btn1{ */
-/* 		margin-left: 400px; */
-/* 		margin-top: 150px; */
-/* 		display: inline-block; */
-/* 	} */
-/* 	#btn2{ */
-/* 		margin-top: 150px; */
-/* 		display: inline-block; */
-/* 	} */
+	}
 </style>
 
 </head>
 <body>
-<main class="app-content">
+<main class="app-content" style="background-color: #f3f3f3">
 <div id="table-area" class="container-xl">
     <div class="table-responsive">
         <div class="table-wrapper">			
             <div class="table-title">
                 <div class="row">
-                    <div class="col-sm-3">
-                    <div id="btn1">
-<form method="post"	action="<%=request.getContextPath()%>/back-end/speaker/listAllSpkr.jsp">
-		<input type="submit" value="回列表">
-	</form></div>
-	<div id="btn2">
-	<form method="post"	action="<%=request.getContextPath()%>/back-end/speaker/select_page.jsp">
-	<input type="submit" value="回首頁"></form></div>
-	<br>
-                    </div>
-                    <div class="col-sm-4">
+                    <div class="col-sm-2">
+						<form method="post"	action="<%=request.getContextPath()%>/back-end/speaker/listAllSpkr.jsp">
+						<button class="bttn" type="submit">回列表</button>
+						</form>
+					</div>
+                    <div class="col-sm-7">
                         <h2 class="text-center">講師清單</h2>
                     </div>
                 </div>
@@ -84,44 +72,37 @@
                         <th>刪除</th>
                     </tr>
                 </thead>
-	<tr>
-		<td>${spkrVO.spkrno}</td>
-		<td>${spkrVO.spkrname}</td>
-		<td>${spkrVO.spkrphone}</td>
-		<td>${spkrVO.spkremail}</td>
-		<td>
-				<form method="post"	action="<%=request.getContextPath()%>/speaker/speaker.do">
-<!-- 				<input type="submit" value="修改"> -->
-				<button class="btn edit" style="color: orange"><i class="material-icons">&#xE254;</i></button>
-				<input type="hidden" name="spkrno" value="${spkrVO.spkrno}">
-				<input type="hidden" name="action" value="update_fromList"></form>
-			</td>
-			<td>
-				<form method="post"	action="<%=request.getContextPath()%>/speaker/speaker.do">
-<!-- 				<input type="submit" value="刪除"> -->
-				<button class="btn delete" style="color: red"><i class="material-icons">&#xE872;</i></button>
-				<input type="hidden" name="spkrno" value="${spkrVO.spkrno}">
-				<input type="hidden" name="action" value="delete"></form>
-			</td>
-	</tr>
-</table>
+					<tr>
+						<td>${spkrVO.spkrno}</td>
+						<td>${spkrVO.spkrname}</td>
+						<td>${spkrVO.spkrphone}</td>
+						<td>${spkrVO.spkremail}</td>
+						<td>
+							<form method="post"	action="<%=request.getContextPath()%>/speaker/speaker.do">
+							<button class="btn edit" style="color: orange"><i class="material-icons">&#xE254;</i></button>
+							<input type="hidden" name="spkrno" value="${spkrVO.spkrno}">
+							<input type="hidden" name="action" value="update_fromList"></form>
+						</td>
+						<td>
+							<form method="post"	action="<%=request.getContextPath()%>/speaker/speaker.do">
+							<button class="btn delete" style="color: red"><i class="material-icons">&#xE872;</i></button>
+							<input type="hidden" name="spkrno" value="${spkrVO.spkrno}">
+							<input type="hidden" name="action" value="delete"></form>
+						</td>
+					</tr>
+			</table>
+		</div>
+	</div>
+	<div id="displayInfo">
+		<div class="media mt-4">
+	         <img class="d-flex mr-3 rounded-circle" src="<%=request.getContextPath()%>/speaker/iconreader?spkrno=${spkrVO.spkrno}" alt="">
+	         	<div class="media-body">
+	           		<h5 class="mt-0" style="font-weight: 600">${spkrVO.spkrname}</h5>
+	           		<%=info %>
+	         	</div>
+	     </div>
+	</div>
 </div>
-</div>
-
-<div id="displayInfo">
-<div class="media mt-4">
-              <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
-              <div class="media-body">
-                <h5 class="mt-0">${spkrVO.spkrname}</h5>
-                <%=info %>
-              </div>
-            </div>
-            </div>
-            </div>
-
-<br>
-<img src="<%=request.getContextPath()%>/speaker/iconreader?spkrno=${spkrVO.spkrno}"><br><%=info %></div>
-</div>	
 </main>
 </body>
 </html>

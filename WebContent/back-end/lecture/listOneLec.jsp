@@ -139,6 +139,4 @@
 <jsp:include page="/back-end/lecture/roomsetting/singleLayout.jsp"></jsp:include>
 </div>
 </body>
-
 </html>
-<%@ include file="/back-end/pool/bstage2.jsp" %>

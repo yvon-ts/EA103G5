@@ -22,21 +22,34 @@
 <link rel="stylesheet" href="<%=request.getContextPath()%>/library/bootstrap/4.5.3/css/bootstrap.min.css">
 <link rel="stylesheet" href="<%=request.getContextPath()%>/back-end/css/bootTable.css">
 <style>
-/* 	h1{ */
-/* 		margin-top: 150px; */
-/* 		margin-left: 400px; */
-/* 	} */
-/* 	#include{ */
-/* 		margin-left: 400px; */
-/* 		padding: 30px; */
-/* 		background-color: #F3F3F3; */
-/* 		border-radius: 1%; */
-/* 	} */
+.bttn{
+	display: inline-block;
+	background-color: #fff;
+	outline: none;
+	border: 1px solid #0099cc;
+	color: #0099cc;
+	font-size: 16px;
+    padding: 5px 30px;
+    cursor: pointer;
+    font-weight: 550;
+    border-radius: 30px;
+    -webkit-transition: all 0.2s linear;
+    -moz-transition: all 0.2s linear;
+    -o-transition: all 0.2s linear;
+    transition: all 0.2s linear;
+    display: inline-block;
+}
+.bttn:hover{
+	background-color: #0099cc;
+	outline: none;
+	border: 1px solid #0099cc;
+	color: #fff;
+}
 </style>
 </head>
 
 <body>
-<main class="app-content">
+<main class="app-content" style="background-color: #f3f3f3">
 <div id="include">
 <%if (list == null || list.size() == 0){%>
 	<b style="color: red">查無資料</b>		
@@ -46,13 +59,16 @@
         <div class="table-wrapper">			
             <div class="table-title">
                 <div class="row">
-                    <div class="col-sm-3">
-                    </div>
-                    <div class="col-sm-4">
+                    <div class="col-sm-2">
+						<form method="post"	action="<%=request.getContextPath()%>/back-end/lecture/lectureIndex.jsp">
+						<button class="bttn" type="submit">回首頁</button>
+						</form>
+					</div>
+                    <div class="col-sm-7">
                         <h2 class="text-center">講師清單</h2>
                     </div>
                     <!-- search box start -->
-                    <div class="col-sm-4">
+                    <div class="col-sm-3">
                         <div class="search-box">
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="material-icons">&#xE8B6;</i></span>

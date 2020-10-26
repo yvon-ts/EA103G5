@@ -45,7 +45,7 @@
 </style>
 </head>
 <body>
-	<main class="app-content">
+	<main class="app-content" style="background-color: #f3f3f3">
 	<div class="container">
     	<div id="link-area" class="row">
         	<div class="col-md-6">
@@ -66,7 +66,7 @@
 	<script src="<%=request.getContextPath()%>/library/jquery/jquery-3.5.1.js"></script>
 	<script>
 		$("#spkr").click(function(){
-			window.location = "<%=request.getContextPath()%>/back-end/speaker/select_page.jsp";
+			window.location = "<%=request.getContextPath()%>/back-end/speaker/listAllSpkr.jsp";
 		})
 		$("#lec").click(function(){
 			window.location = "<%=request.getContextPath()%>/back-end/lecture/select_page.jsp";
