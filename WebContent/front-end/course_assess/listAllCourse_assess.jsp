@@ -16,7 +16,7 @@ pageContext.setAttribute("course_assessSvc",course_assessSvc);
 String inform5 = (String)request.getAttribute("inform5");
 %>
 
-<%@ include file="/index/front-index/headtest.jsp" %>
+<%@ include file="/index/front-index/header.jsp" %>
 <jsp:useBean id="membersSvc" scope="page" class="com.members.model.MembersService" />
 
 
@@ -321,7 +321,7 @@ background: url("<%=request.getContextPath()%>/front-end/members/assets/img/bgPi
 								end="<%=pageIndex+rowsPerPage-1%>" varStatus="s">
                 <div class="signin-content">
                     <div class="signin-image">
-                        <a href="<%=request.getContextPath()%>/front-end/members/indexV1.jsp"><img class="pic" src="<%=request.getContextPath()%>/back-end/members/MprofileDisplayServlet?MEMNO=${course_assessVO.memno}" alt="sing up image"></a>
+                        <a href=""><img class="pic" src="<%=request.getContextPath()%>/back-end/members/MprofileDisplayServlet?MEMNO=${course_assessVO.memno}" alt="sing up image"></a>
                         
                         <h4 style="font-family:Gochi Hand" class="nkname">${membersSvc.getOneMembers(course_assessVO.memno).nkname}
                         

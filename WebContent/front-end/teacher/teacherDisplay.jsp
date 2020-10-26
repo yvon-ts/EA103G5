@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.members.model.*"%>
 
-<%@ include file="/index/front-index/headtest.jsp" %>
+<%@ include file="/index/front-index/header.jsp" %>
 
 
 

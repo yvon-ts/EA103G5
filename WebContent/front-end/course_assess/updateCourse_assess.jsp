@@ -5,7 +5,7 @@
 <%@ page import="java.util.*"%>
 
 
-<%@ include file="/index/front-index/headtest.jsp" %>
+<%@ include file="/index/front-index/header.jsp" %>
 <jsp:useBean id="course_assessSvc" scope="page" class="com.course_assess.model.Course_assessService" />
 
 

@@ -3,7 +3,7 @@
 <%@ page import="com.members.model.*"%>
 <%String inform = (String)request.getAttribute("inform"); %>
 
-<%@ include file="/index/front-index/headtest.jsp" %>
+<%@ include file="/index/front-index/header.jsp" %>
 
 <html lang="en">
 <head>

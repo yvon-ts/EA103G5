@@ -8,7 +8,7 @@ TeacherVO teacherVO = (TeacherVO) request.getAttribute("teacherVO");
 
 <%-- <jsp:useBean id="teacherSvc" scope="page" class="com.teacher.model.TeacherService" />
  --%>
-<%@ include file="/index/front-index/headtest.jsp" %>
+<%@ include file="/index/front-index/header.jsp" %>
 
 
 
