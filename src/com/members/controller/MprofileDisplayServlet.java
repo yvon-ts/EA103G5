@@ -6,6 +6,8 @@ import javax.servlet.*;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 
+import com.course_assess.controller.ImageUtil;
+
 
 public class MprofileDisplayServlet extends HttpServlet {
 
@@ -26,10 +28,12 @@ public class MprofileDisplayServlet extends HttpServlet {
 			if (rs.next()) {
 				BufferedInputStream in = new BufferedInputStream(rs.getBinaryStream("MPROFILE"));
 				byte[] buf = new byte[4 * 1024]; // 4K buffer
+				
 				int len;
 				while ((len = in.read(buf)) != -1) {
 					out.write(buf, 0, len);
-				}
+					}
+				ImageUtil.shrink(buf, 200);
 				in.close();
 			} else {
 				res.sendError(HttpServletResponse.SC_NOT_FOUND);

@@ -86,7 +86,7 @@ height:36px;
         <nav class="navbar navbar-expand-md bg-inverse fixed-top scrolling-navbar">
             <div class="container">
                 <!-- Brand and toggle get grouped for better mobile display -->
-                <a href="<%=request.getContextPath()%>/index/front-index/index.jsp" class="navbar-brand"><img src="assets/img/logo.svg" alt="">
+                <a href="<%=request.getContextPath()%>/index/front-index/index.jsp" class="navbar-brand"><img src="<%=request.getContextPath()%>/index/front-index/assets/img/logo.svg" alt="">
                     <div id="logo">Xducation</div>
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"

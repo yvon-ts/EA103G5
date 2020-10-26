@@ -55,8 +55,9 @@ public class Course_assessServlet extends HttpServlet {
 	
 	private void getAll(HttpServletRequest req, HttpServletResponse res)throws ServletException, IOException{
 		List<String> errorMsgs = new LinkedList<String>();
-
 		req.setAttribute("errorMsgs", errorMsgs);
+		
+		
 		
 		try {
 			Course_assessService course_assessSvc = new Course_assessService();
