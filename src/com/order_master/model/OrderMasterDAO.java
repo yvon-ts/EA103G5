@@ -36,8 +36,7 @@ public class OrderMasterDAO implements OrderMasterDAO_interface {
 	private static final String UPDATE = "UPDATE order_master set orderstatus=? where orderno = ?";
 
 	@Override
-	public void insert(OrderMasterVO orderMasterVO, List<OrderDetailVO> detailList) {
-		System.out.println("進入DAO");
+	public String insert(OrderMasterVO orderMasterVO, List<OrderDetailVO> detailList) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		String ord_next_no = null;
@@ -53,8 +52,6 @@ public class OrderMasterDAO implements OrderMasterDAO_interface {
 			pstmt.setInt(2, orderMasterVO.getOrderamt());
 			pstmt.setString(3, orderMasterVO.getCoupno());
 			pstmt.setString(4, orderMasterVO.getPayby());
-			System.out.println(orderMasterVO.getMemno());
-			System.out.println(orderMasterVO.getPayby());
 			pstmt.executeUpdate();
 			
 			
@@ -68,7 +65,6 @@ public class OrderMasterDAO implements OrderMasterDAO_interface {
 			
 			for (OrderDetailVO orderDetailVO : detailList) {
 				orderDetailVO.setOrderno(ord_next_no);
-				System.out.println(orderDetailVO.getOrderno());
 				orderDetailDAO.insert(orderDetailVO, con);
 			}
 			System.out.println("訂單成立成功");
@@ -100,7 +96,7 @@ public class OrderMasterDAO implements OrderMasterDAO_interface {
 				e.printStackTrace();
 			}
 		}
-
+		return ord_next_no;
 	}
 
 	@Override

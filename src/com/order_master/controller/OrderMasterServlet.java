@@ -1,6 +1,9 @@
 package com.order_master.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -20,6 +23,9 @@ import com.order_detail.model.OrderDetailVO;
 import com.order_master.model.OrderMasterService;
 import com.order_master.model.OrderMasterVO;
 
+import ecpay.payment.integration.AllInOne;
+import ecpay.payment.integration.domain.AioCheckOutOneTime;
+
 public class OrderMasterServlet extends HttpServlet {
 	public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		doPost(req, res);
@@ -32,8 +38,8 @@ public class OrderMasterServlet extends HttpServlet {
 		List<CourseVO> buylist = (List<CourseVO>) session.getAttribute("shoppingList");
 		String action = req.getParameter("action");
 
-		System.out.println(action);
-
+		PrintWriter out = res.getWriter();
+		
 		if ("getOne_For_Display".equals(action)) { // 來自OrderMasterDB.jsp的請求
 
 			List<String> errorMsgs = new LinkedList<String>();
@@ -158,9 +164,9 @@ public class OrderMasterServlet extends HttpServlet {
 			}
 		}
 		if ("insert".equals(action)) {
-			
+
 			System.out.println("進入INSERT");
-			
+
 			List<String> errorMsgs = new LinkedList<String>();
 			// Store this set in the request scope, in case we need to
 			// send the ErrorPage view.
@@ -168,65 +174,102 @@ public class OrderMasterServlet extends HttpServlet {
 
 			try {
 
-				/*********************** 1.接收請求參數 - 輸入格式的錯誤處理 *************************/
-
-				String memno = req.getParameter("memno");
-				Integer orderamt = new Integer(req.getParameter("orderamt"));
-				
-				String coupno = req.getParameter("coupno");
-				System.out.println(coupno);
-				CoupCodeService coupSvc = new CoupCodeService();
-				CoupCodeVO coupCodeVO = coupSvc.getOneCoupCode(coupno);
-				Integer discamt = coupCodeVO.getDiscamt();
-				System.out.println(discamt);
-				
-				if (!(coupno == "empty")) {
-					orderamt = orderamt - discamt;
-					coupSvc.updateCoupCode(coupno, 1);
-				} else {
-					coupno = null;
-				}
-
-				String payby = req.getParameter("payby");
-//						.trim();
-//				if (payby == null || payby.trim().length() == 0) {
-//					errorMsgs.add("付款方式請勿空白");
+//				/*********************** 1.接收請求參數 - 輸入格式的錯誤處理 *************************/
+//
+//				String memno = req.getParameter("memno");
+//				Integer orderamt = new Integer(req.getParameter("orderamt"));
+//
+//				String coupno = req.getParameter("coupno");
+//				System.out.println(coupno);
+//				
+//				if (!(coupno.equals("empty"))) {
+//					
+//					CoupCodeService coupSvc = new CoupCodeService();
+//					CoupCodeVO coupCodeVO = coupSvc.getOneCoupCode(coupno);
+//					Integer discamt = coupCodeVO.getDiscamt();
+//
+//					orderamt = orderamt - discamt;
+//					coupSvc.updateCoupCode(coupno, 1);
+//				} else {
+//					coupno = null;
 //				}
+//
+//				String payby = req.getParameter("payby");
+////						.trim();
+////				if (payby == null || payby.trim().length() == 0) {
+////					errorMsgs.add("付款方式請勿空白");
+////				}
+//
+//				OrderMasterVO orderMasterVO = new OrderMasterVO();
+//
+//				List<OrderDetailVO> list = new Vector<OrderDetailVO>();
+//				for (CourseVO abuylist : buylist) {
+//
+//					OrderDetailVO odVO = new OrderDetailVO();
+//					odVO.setCourseno(abuylist.getCourseno());
+//					odVO.setSellprice(abuylist.getCourseprice());
+//					odVO.setPromono(null);
+//
+//					list.add(odVO);
+//				}
+//
+//				// Send the use back to the form, if there were errors
+//				if (!errorMsgs.isEmpty()) {
+//					req.setAttribute("orderMasterVO", orderMasterVO);
+//					RequestDispatcher failureView = req
+//							.getRequestDispatcher("/front-end/tracking_list/listTrackingListForUser.jsp");
+//					failureView.forward(req, res);
+//					return;
+//				}
+//
+//				/*************************** 2.開始新增資料 ***************************************/
+//				OrderMasterService ordermasterSvc = new OrderMasterService();
+//				orderMasterVO = ordermasterSvc.addOrder(memno, orderamt, coupno, payby, list);
 
-				OrderMasterVO orderMasterVO = new OrderMasterVO();
+				/*************************** 3.新增完成,準備轉交綠界(Send the Success view) ***********/
+				//產生綠界訂單
+				AioCheckOutOneTime checkoutonetime = new AioCheckOutOneTime();
+//				checkoutonetime.setMerchantTradeNo(orderMasterVO.getOrderno());
+				checkoutonetime.setMerchantTradeNo("ZZZ00001"); // fortest
 
-				List<OrderDetailVO> list = new Vector<OrderDetailVO>();
-				for (CourseVO abuylist : buylist) {
+//				checkoutonetime.setTotalAmount(orderamt.toString());
+				checkoutonetime.setTotalAmount("2000"); //for test
+
+//				StringBuffer itemname = new StringBuffer();
+//				for(CourseVO a : buylist) {
+//					itemname.append(a.getCoursename()).append(", ");
+//				}
+				checkoutonetime.setItemName("中文");
+				java.sql.Timestamp time = new java.sql.Timestamp(System.currentTimeMillis());
+				DateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+				checkoutonetime.setMerchantTradeDate(sdf.format(time));
+				checkoutonetime.setReturnURL("http://localhost:8081/EA103G5/Order_Master/Order_Master.do");
+				checkoutonetime.setClientBackURL("http://localhost:8081/EA103G5/front-end/tracking_list/listTrackingListForUser.jsp");
+				checkoutonetime.setTradeDesc("123");
+				AllInOne all = new AllInOne("");
+				String form = all.aioCheckOut(checkoutonetime, null);
+				//轉送綠界訂單
+				out.print("<!DOCTYPE html>\r\n" + 
+						"<html lang=\"en\">\r\n" + 
+						"<head>\r\n" + 
+						"	<meta charset=\"UTF-8\">\r\n" + 
+						"	<title>Document</title>\r\n" + 
+						"</head>\r\n" + 
+						"<body>");
+				out.print(form);
+				out.print("</body>" +
+				"</html>");
 				
-					OrderDetailVO odVO = new OrderDetailVO();
-					odVO.setCourseno(abuylist.getCourseno());
-					odVO.setSellprice(abuylist.getCourseprice());
-					odVO.setPromono(null);
-
-					list.add(odVO);
-				}
-
-				// Send the use back to the form, if there were errors
-				if (!errorMsgs.isEmpty()) {
-					req.setAttribute("orderMasterVO", orderMasterVO);
-					RequestDispatcher failureView = req.getRequestDispatcher("/front-end/tracking_list/listTrackingListForUser.jsp");
-					failureView.forward(req, res);
-					return;
-				}
-
-				/*************************** 2.開始新增資料 ***************************************/
-				OrderMasterService ordermasterSvc = new OrderMasterService();
-				orderMasterVO = ordermasterSvc.addOrder(memno, orderamt, coupno, payby, list);
-
-				/*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
-				String url = "/front-end/Shop/Test2.jsp";
-				RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
-				successView.forward(req, res);
+//				/*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
+//				String url = "/front-end/Shop/Test2.jsp";
+//				RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
+//				successView.forward(req, res);
 
 				/*************************** 其他可能的錯誤處理 **********************************/
 			} catch (Exception e) {
 				errorMsgs.add(e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/tracking_list/listTrackingListForUser.jsp");
+				RequestDispatcher failureView = req
+						.getRequestDispatcher("/front-end/tracking_list/listTrackingListForUser.jsp");
 				failureView.forward(req, res);
 			}
 		}

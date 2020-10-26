@@ -103,8 +103,7 @@
             <table id="shoppingCart" class="table table-condensed table-responsive  wow fadeInDown" data-wow-delay="0.3s">
                 <thead>
                     <tr>
-                        <th style="width:60%">課程名稱</th>
-                        <th style="width:12%">課程狀態</th>
+                        <th style="width:70%">課程名稱</th>
                         <th style="width:10%">售價</th>
                         <th style="width:16%"></th>
                     </tr>
@@ -122,12 +121,9 @@
                                 </div>
                                 <div class="col-md-9 text-left mt-sm-2">
                                     <h5>${courseVO.coursename}</h5>
-                                    <p class="font-weight-light">${courseVO.courseinfo}</p>
                                 </div>
                             </div>
                         </td>
-                        <td data-th="Price">${courseVO.csstatus}</td>
-                        
                         <td data-th="Price">${courseVO.courseprice}</td>
                         <c:set var="totalPrice" value="${totalPrice + courseVO.courseprice}" />
                       
