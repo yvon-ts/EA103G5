@@ -111,7 +111,7 @@ public class Course_assessServlet extends HttpServlet {
 		if (comments == null || comments.trim().length() == 0) {
 		comments = "這是一門很\"固固\"的課程唷^^d";
 		}else if(comments.length()>=40) {
-			String url = req.getContextPath()+ "/front-end/members/indexV1.jsp";
+			String url = req.getContextPath()+ "/index/front-index/index.jsp";
 			res.sendRedirect(url);
 		}
 		
@@ -138,7 +138,7 @@ public class Course_assessServlet extends HttpServlet {
 		if (comments == null || comments.trim().length() == 0) {
 			comments = "這是一門很\"固固\"的課程唷^^d";
 			}else if(comments.length()>=40) {
-				String url = req.getContextPath()+ "/front-end/members/indexV1.jsp";
+				String url = req.getContextPath()+ "/index/front-index/index.jsp";
 				res.sendRedirect(url);
 			}
 		String inform5 = "100";

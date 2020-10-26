@@ -353,7 +353,7 @@ public class MembersServlet extends HttpServlet {
 			failView.forward(req, res);
 		} else {
 			session.setAttribute("membersVO", membersVO);
-			String url = "/front-end/members/indexV1.jsp";
+			String url = "/index/front-index/index.jsp";
 			RequestDispatcher successView = req.getRequestDispatcher(url);
 			successView.forward(req, res);
 //			http://localhost:8081/EA103G5/front-end/members/signIn.jsp
@@ -365,7 +365,7 @@ public class MembersServlet extends HttpServlet {
 	private void signout(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		HttpSession session = req.getSession();
 		session.removeAttribute("membersVO");
-		String url = req.getContextPath()+ "/front-end/members/indexV1.jsp";
+		String url = req.getContextPath()+ "/index/front-index/index.jsp";
 		res.sendRedirect(url);
 	}
 
