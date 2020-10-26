@@ -72,7 +72,7 @@ height:36px;
 						<li class="nav-item"><a class="nav-link" href="#">
 								精選課程&nbsp;<i class="lni-leaf"></i>
 						</a></li>
-						<li class="nav-item"><a class="nav-link" href="#">
+						<li class="nav-item"><a class="nav-link" href="<%=request.getContextPath()%>/front-end/lecture/listAllLec.jsp">
 								名人講座&nbsp;<i class="lni-bulb"></i>
 						</a></li>
 						<c:if test="${teacherSvc.getStatus(sessionScope.membersVO.memno).tchrstatus eq '已通過'}">

@@ -12,6 +12,7 @@
 	LecVO lecVO = (LecVO) request.getAttribute("lecVO");
 	String lecno = lecVO.getLecno();
 	String roomno = lecVO.getRoomno();
+	String spkrno = lecVO.getSpkrno();
 	
 	ClassroomService roomSvc = new ClassroomService();
 	ClassroomVO roomVO = roomSvc.getOneClassroom(roomno);
@@ -74,7 +75,13 @@
 
   <!-- Custom styles for this template -->
   <link href="css/blog-post.css" rel="stylesheet">
-
+<style>
+	.img-border{
+		border: 2px solid #999;
+		width: 100px;
+		height: 100px;
+	}
+</style>
 </head>
 
 <body>
@@ -133,13 +140,13 @@
       <div class="col-lg-8">
 
         <!-- Title -->
-        <h1 class="mt-4">${lecVO.lecname}</h1>
+        <h1 class="mt-4" style="font-weight: 700">${lecVO.lecname}</h1>
 
         <!-- Author -->
        <div class="media mt-4">
-              <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
+              <img class="d-flex mr-3 rounded-circle img-border" src="<%=request.getContextPath()%>/speaker/iconreader?spkrno=<%=spkrno%>" alt="">
               <div class="media-body">
-                <h5 class="mt-0"><%=spkrname%></h5>
+                <h5 class="mt-0" style="font-weight: 600"><%=spkrname%></h5>
                 <%=spkrinfo %>
               </div>
             </div>

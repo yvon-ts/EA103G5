@@ -135,7 +135,7 @@ table.table td i {
     font-size: 13px;
 }
 body {
-    color: #566787;
+    /*color: #566787;*/
     background: #f5f5f5;
     font-family: 'Roboto', sans-serif;
     margin: 0;
@@ -147,4 +147,52 @@ body {
 }
 #table-area{
 	padding: 20px 50px;
+}
+#btn{
+	margin-top: 20px;
+	background-color: #0099cc;
+	outline: none;
+	border: 1px solid #0099cc;
+	color: #fff;
+	font-size: 16px;
+    padding: 5px 30px;
+    cursor: pointer;
+    font-weight: 550;
+    border-radius: 30px;
+    -webkit-transition: all 0.2s linear;
+    -moz-transition: all 0.2s linear;
+    -o-transition: all 0.2s linear;
+    transition: all 0.2s linear;
+    display: inline-block;
+}
+#btn:hover{
+	background-color: #fff;
+	outline: none;
+	border: 1px solid #0099cc;
+	color: #0099cc;
+}
+.bttn{
+	background-color: #fff;
+	outline: none;
+	border: 1px solid #0099cc;
+	color: #0099cc;
+	font-size: 16px;
+    padding: 5px 30px;
+    cursor: pointer;
+    font-weight: 550;
+    border-radius: 30px;
+    -webkit-transition: all 0.2s linear;
+    -moz-transition: all 0.2s linear;
+    -o-transition: all 0.2s linear;
+    transition: all 0.2s linear;
+    display: inline-block;
+}
+.bttn:hover{
+	background-color: #0099cc;
+	outline: none;
+	border: 1px solid #0099cc;
+	color: #fff;
+}
+h2{
+	font-weight: 600;
 }
