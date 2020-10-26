@@ -172,10 +172,10 @@ body {
 	color: #0099cc;
 }
 .bttn{
-	background-color: #fff;
+	background-color: #0099cc;
 	outline: none;
 	border: 1px solid #0099cc;
-	color: #0099cc;
+	color: #fff;
 	font-size: 16px;
     padding: 5px 30px;
     cursor: pointer;
@@ -188,10 +188,10 @@ body {
     display: inline-block;
 }
 .bttn:hover{
-	background-color: #0099cc;
+	background-color: #fff;
 	outline: none;
 	border: 1px solid #0099cc;
-	color: #fff;
+	color: #0099cc;
 }
 h2{
 	font-weight: 600;

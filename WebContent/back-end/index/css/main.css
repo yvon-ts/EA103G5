@@ -14646,12 +14646,12 @@ temporary rendered events).
             padding: 5px;
             line-height: 1.3;
             border-radius: 3px;
-            border: 1px solid #009688;
-            background-color: #009688;
+/*             border: 1px solid #009688; */
+/*             background-color: #009688; */
             font-weight: normal;
             /* undo jqui's ui-widget-header bold */
             margin-bottom: 5px;
-            cursor: all-scroll;
+            cursor: pointer;
         }
 
         /* overpower some of bootstrap's and jqui's styles on <a> tags */

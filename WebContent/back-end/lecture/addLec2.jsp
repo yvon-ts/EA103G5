@@ -5,7 +5,7 @@
 <%@ page import="java.util.*"%> 
 <%@ page import="java.text.SimpleDateFormat"%>
 <%@ page import="com.lecture.model.*"%>
-<%@ include file="/back-end/pool/bstage1.jsp"%>
+<%@ include file="/back-end/index/homepage.jsp" %>
 
 <!DOCTYPE html>
 
@@ -22,35 +22,65 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>addLec.jsp</title>
+<title>Xducation - 陪你成長的學習好夥伴</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<link rel="stylesheet" href="<%=request.getContextPath()%>/library/bootstrap/4.5.3/css/bootstrap.min.css">
+<link rel="stylesheet" href="<%=request.getContextPath()%>/back-end/css/bootTable.css">
 <style>
 	#newimg{
 		max-height: 200px;
 		width: auto;
 		position: absolute;
-		margin-top: -70px;
-		margin-left: 320px;
-		}
+		margin-top: -250px;
+		margin-left: 500px;
+	}
+	#form-area{
+		font-size: 1em;
+	}
+	#form-area input{
+		outline: none;
+		border: 0;
+		border-bottom: 1px solid #e5e5e5;
+		width: 200px;
+	}
+		#form-area select{
+		outline: none;
+	}
+	.btm-line{
+		margin-left: 4%;
+		font-size: 1.1em;
+		border-bottom:2px dashed #999;
+		padding-bottom: 20px;
+	}
 </style>
 </head>
 <body>
-	<div style="margin-left: 400px; margin-top: 150px;">
-		<c:if test="${not empty errorMsgs}">
-			<ul>
-				<c:forEach var="err" items="${errorMsgs}">
-					<li style="color: red">${err}</li>
-				</c:forEach>
-			</ul>
-		</c:if>
-		<form method="post"
-			action="<%=request.getContextPath()%>/back-end/speaker/select_page.jsp">
-			<input type="submit" value="回首頁">
-		</form>
-		<div id="preivew"><img id="newimg" src=""></div>
-	<form method="post"	action="<%=request.getContextPath()%>/lecture/lecture.do" enctype="multipart/form-data">
+<main class="app-content" style="background-color: #f3f3f3">
+
+	<div id="table-area" class="container-xl">
+		<div class="table-responsive">
+			<form method="post"	action="<%=request.getContextPath()%>/back-end/lecture/listAllLec.jsp">
+				<button class="bttn" type="submit">放棄新增</button>
+			</form><p>
+			<div class="table-wrapper">
+               		<div class="row">
+						<c:if test="${not empty errorMsgs}">
+							<ul>
+								<c:forEach var="err" items="${errorMsgs}">
+									<li style="color: red">${err}</li>
+								</c:forEach>
+							</ul>
+						</c:if>
+		
+					<form method="post"	action="<%=request.getContextPath()%>/lecture/lecture.do" enctype="multipart/form-data">
+				<div class="table-title">
+				<div class="row">
+				<div id="form-area" class="col-sm-7 btm-line">
+				
 			<%-- hidden roomno --%>
-			<input id="roomnoForm" type="hidden" name="roomno" value="${lecVO.roomno}"><br>
-			&emsp;講座名稱：<input type="text" name="lecname" value="${lecVO.lecname}"><br>
+			<input id="roomnoForm" type="text" name="roomno" value="${lecVO.roomno}"><br>
+			&emsp;講座名稱：&emsp;<input type="text" name="lecname" value="${lecVO.lecname}"><br>
 			&emsp;講師姓名：
 			<jsp:useBean id="spkrSvc" scope="page" class="com.speaker.model.SpkrService" />
 			<select name="spkrno">
@@ -59,21 +89,36 @@
 			</c:forEach>
 		</select><br>
 			<%-- 要擋註銷的教室 --%>
-			&emsp;講座票價：<input name="lecprice" type="text" value="${lecVO.lecprice}"><br>
-			&emsp;講座時間：<input name="lecstart" id="f_date1" type="text"><br>
-			&emsp;結束時間：<input name="lecend" id="f_date2" type="text"><br>
-			&emsp;開始報名：<input name="signstart" id="f_date3" type="text"><br>
-			&emsp;結束報名：<input name="signend" id="f_date4" type="text"><br>
-			&emsp;講座圖片：<input name="lecpic" id="upimg" type="file"><br>
-			<%@ include file="/back-end/lecture/roomsetting/layout.jsp"%><br>
-			講座資訊：
-			<input id="action" type="text" name="action" value="insertText"><br>
-			<%@ include file="/back-end/lecture/ckLec.file"%>
-			
-			
-			
-		</form>
+			&emsp;講座票價：&emsp;<input name="lecprice" type="text" value="${lecVO.lecprice}"><br>
+			&emsp;講座時間：&emsp;<input name="lecstart" id="f_date1" type="text"><br>
+			&emsp;結束時間：&emsp;<input name="lecend" id="f_date2" type="text"><br>
+			&emsp;開始報名：&emsp;<input name="signstart" id="f_date3" type="text"><br>
+			&emsp;結束報名：&emsp;<input name="signend" id="f_date4" type="text"><br>
+			&emsp;講座圖片：&emsp;<input name="lecpic" id="upimg" type="file" style="border: 0;"><br>
+		</div>
 	</div>
+	<div id="preivew" ><img id="newimg" src=""></div>
+				</div>
+				<div class="col-sm-5">
+								<%@ include file="/back-end/lecture/roomsetting/layout.jsp"%>
+				
+				
+				</div>
+				<div class="col-sm-7 btm-line">
+				</div>
+				<div class="col-sm-8" style="margin-left: 4%; margin-top: 20px">
+				講座資訊：
+				<input id="action" type="text" name="action" value="insertText"><br>
+				<%@ include file="/back-end/lecture/ckLec.file"%>
+				</div>
+				
+				</form>
+                </div>
+           </div>
+	</div>
+	</div>
+	
+	</main>
 	<script type="text/javascript">
 		//圖片預覽
 		var upimg = document.getElementById("upimg");
