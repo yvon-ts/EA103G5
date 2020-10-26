@@ -9,6 +9,7 @@ public interface Course_assessDAO_interface {
 	public Course_assessVO findByPrimaryKey(String memno);
 	public List<Course_assessVO> getAll(String courseno);
 	public String avgScore(String courseno);
+	public Course_assessVO checkMembers(String memno,String courseno);
 	
 	
 

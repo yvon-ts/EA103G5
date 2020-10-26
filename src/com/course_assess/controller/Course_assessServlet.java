@@ -17,6 +17,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.course.model.CourseService;
+import com.course.model.CourseVO;
 import com.course_assess.model.Course_assessService;
 import com.course_assess.model.Course_assessVO;
 import com.members.model.MembersService;
@@ -119,7 +121,10 @@ public class Course_assessServlet extends HttpServlet {
 		course_assessSvc.addCourse_assess(courseno, memno, coursescore, comments);
 		String inform5 = "200";
 		req.setAttribute("inform5", inform5);
-		RequestDispatcher SuccessView = req.getRequestDispatcher("/front-end/course_assess/listAllAjax.jsp");
+		CourseService courseSvc = new CourseService();
+		CourseVO courseVO = courseSvc.getOneCourse(courseno);
+		req.setAttribute("courseVO", courseVO);
+		RequestDispatcher SuccessView = req.getRequestDispatcher("/front-end/course/mainCoursePage.jsp");
 		SuccessView.forward(req, res);
 		return;
 		
@@ -135,6 +140,7 @@ public class Course_assessServlet extends HttpServlet {
 		String cs = req.getParameter("coursescore");
 		Integer coursescore = Integer.parseInt(cs);
 		String comments = req.getParameter("comments");
+		String courseno = req.getParameter("courseno");
 		if (comments == null || comments.trim().length() == 0) {
 			comments = "這是一門很\"固固\"的課程唷^^d";
 			}else if(comments.length()>=40) {
@@ -143,9 +149,12 @@ public class Course_assessServlet extends HttpServlet {
 			}
 		String inform5 = "100";
 		req.setAttribute("inform5", inform5);
+		CourseService courseSvc = new CourseService();
+		CourseVO courseVO = courseSvc.getOneCourse(courseno);
+		req.setAttribute("courseVO", courseVO);
 		Course_assessService course_assessSvc = new Course_assessService();
 		course_assessSvc.updateCourse_assess(asesno, coursescore, comments);
-		RequestDispatcher SuccessView = req.getRequestDispatcher("/front-end/course_assess/listAllAjax.jsp");
+		RequestDispatcher SuccessView = req.getRequestDispatcher("/front-end/course/mainCoursePage.jsp");
 		SuccessView.forward(req, res);
 		return;
 	}

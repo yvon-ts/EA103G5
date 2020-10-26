@@ -3,7 +3,10 @@
 <%@ page import="com.members.model.*"%>
 <%@ page import="com.course_assess.model.*"%>
 <%@ page import="java.util.*"%>
-
+<%
+String courseno = (String)request.getParameter("courseno");
+pageContext.setAttribute("courseno", courseno);
+%>
 
 <%@ include file="/index/front-index/header.jsp" %>
 <jsp:useBean id="course_assessSvc" scope="page" class="com.course_assess.model.Course_assessService" />
@@ -252,7 +255,7 @@ background: url("<%=request.getContextPath()%>/front-end/members/assets/img/bgPi
         
     </div>
      <input type="hidden" name="asesno" value="${course_assessSvc.getOneCourse_assess(sessionScope.membersVO.memno).asesno}">
-    
+    <input type="hidden" name="courseno" value="${courseno}">
     <input type="hidden" name="action" value="update">
     <input type="submit" style="font-family:'Gochi Hand'" id="register" name="signup" id="signup" class="form-submit" value="Submit"/>
   </div>

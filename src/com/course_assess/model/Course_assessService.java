@@ -44,4 +44,12 @@ public class Course_assessService {
 	public String avgScore(String courseno) {
 		return dao.avgScore(courseno);
 	}
+	
+	public Course_assessVO checkMembers(String memno,String courseno) {
+		return dao.checkMembers(memno, courseno);
+		
+		
+	}
+	
+	
 }

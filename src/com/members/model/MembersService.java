@@ -64,6 +64,10 @@ public class MembersService {
 		int a = dao.checkMemacc(memacc);
 		return a;
 	}
+	public Integer checkMemail(String memail) {
+		int a = dao.checkMemail(memail);
+		return a;
+	}
 	
 
 }

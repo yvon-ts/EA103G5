@@ -9,6 +9,6 @@ public interface MembersDAO_interface {
 	public MembersVO signIn(String memacc,String mempwd);
 	public List<MembersVO> getAll();
 	public Integer checkMemacc(String memacc);
-	public MembersVO checkMemail(String memail);
+	public Integer checkMemail(String memail);
 	public void updateMembers(MembersVO membersVO);
 }

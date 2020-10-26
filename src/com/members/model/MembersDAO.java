@@ -295,7 +295,7 @@ public class MembersDAO implements MembersDAO_interface {
 
 	
 	public Integer checkMemacc(String memacc) {
-		MembersVO membersVO = new MembersVO();;
+		MembersVO membersVO = new MembersVO();
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -348,23 +348,33 @@ public class MembersDAO implements MembersDAO_interface {
 	
 
 	@Override
-	public MembersVO checkMemail(String memail) {
-		MembersVO membersVO = null;
+	public Integer checkMemail(String memail) {
+		MembersVO membersVO = new MembersVO();
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
+		Integer a =null;
 		try {
 //			Class.forName(driver);
 //			con = DriverManager.getConnection(url, userid, passwd);
-//			con = ds.getConnection();
+			con = ds.getConnection();
 			pstmt = con.prepareStatement("SELECT MEMAIL FROM MEMBERS WHERE MEMAIL = ? ORDER BY MEMAIL");
 			pstmt.setString(1, memail);
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
 				membersVO = new MembersVO();
-				membersVO.setMemacc(rs.getString("memail"));
+				membersVO.setMemail(rs.getString("memail"));
+				
 			
 			}
+			if(membersVO.getMemail()==null) {
+				a = 0;
+				return a;
+			}else{
+				a=1;
+				return a;
+			}
+			
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 			// Clean up JDBC resources
@@ -384,7 +394,6 @@ public class MembersDAO implements MembersDAO_interface {
 				}
 			}
 		}
-		return membersVO;
 	}
 
 	

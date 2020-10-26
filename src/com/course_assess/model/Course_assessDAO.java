@@ -25,7 +25,7 @@ public class Course_assessDAO implements Course_assessDAO_interface {
 	String passwd = "123456";
 	
 	private static final String INSERT_STMT = "INSERT INTO COURSE_ASSESS(ASESNO,COURSENO,MEMNO,COURSESCORE,COMMENTS) VALUES ('ASES' || LPAD(SEQ_ASESNO.NEXTVAL, 4, 0),?,?,?,?)";
-	private static final String GET_ALL_STMT = "SELECT ASESNO,COURSENO,MEMNO,COURSESCORE,COMMENTS,COMMENTTIME FROM COURSE_ASSESS WHERE COURSENO = ? ORDER BY ASESNO";
+	private static final String GET_ALL_STMT = "SELECT ASESNO,COURSENO,MEMNO,COURSESCORE,COMMENTS,COMMENTTIME FROM COURSE_ASSESS WHERE COURSENO = ? ORDER BY ASESNO DESC";
 	private static final String GET_ONE_STMT = "SELECT ASESNO,COURSENO,MEMNO,COURSESCORE,COMMENTS,COMMENTTIME FROM COURSE_ASSESS WHERE MEMNO = ?";
 	private static final String UPDATE = "UPDATE COURSE_ASSESS SET COURSESCORE=?,COMMENTS=? WHERE ASESNO =?";
 	private static final String DELETE = "DELETE FROM COURSE_ASSESS WHERE ASESNO=?";
@@ -348,8 +348,67 @@ public class Course_assessDAO implements Course_assessDAO_interface {
 //		
 //			
 		}
-	
 
+
+
+	@Override
+	public Course_assessVO checkMembers(String memno, String courseno) {
+		Course_assessVO course_assessVO =null;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String str=null;
+		try {
+
+			con = ds.getConnection();
+			pstmt = con.prepareStatement("SELECT ASESNO,COURSENO,MEMNO,COURSESCORE,COMMENTS,COMMENTTIME FROM COURSE_ASSESS WHERE MEMNO = ? AND COURSENO = ?");
+
+			pstmt.setString(1, memno);
+			pstmt.setString(2, courseno);
+
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				course_assessVO = new Course_assessVO();
+				course_assessVO.setAsesno(rs.getString("asesno"));
+				course_assessVO.setCourseno(rs.getString("courseno"));
+				course_assessVO.setMemno(rs.getString("memno"));
+				course_assessVO.setCoursescore(rs.getInt("coursescore"));
+				course_assessVO.setComments(rs.getString("comments"));
+				course_assessVO.setCommenttime(rs.getTimestamp("commenttime"));
+			}
+
+			// Handle any driver errors
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return course_assessVO;
+	}
+	
 
 
 }
