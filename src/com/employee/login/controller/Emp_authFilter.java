@@ -47,19 +47,25 @@ public class Emp_authFilter implements Filter {
 		for(int i=0 ; i<empauthlist.size() ; i++) {
 			list.add(empauthlist.get(i).getFuncno());
 		}
-		
+		for(String e:list) {
+			System.out.println(e);
+		}
 		String urls = req.getRequestURI();
 		List<String> FUN0001 = new ArrayList<>();
-		FUN0001.add(req.getContextPath()+"/front-end/back-endHomePage.jsp");
 		FUN0001.add(req.getContextPath()+"/back-end/employee/newallemp.jsp");
 		FUN0001.add(req.getContextPath()+"/back-end/employee/newadd_emp.jsp");
 		FUN0001.add(req.getContextPath()+"/back-end/employee/newupdate_emp.jsp");
+		
+		List<String> FUN0022 = new ArrayList<>();
+		FUN0022.add(req.getContextPath()+"/back-end/classroom/select_page.jsp");
 
 		
 		if(list.contains("FUN0001") && FUN0001.contains(urls)) {
 			chain.doFilter(request, response);	
-		}else {
-//			chain.doFilter(request, response);	
+		}else if(list.contains("FUN0022") && FUN0022.contains(urls)) {
+			chain.doFilter(request, response);
+		}else {			
+			session.setAttribute("error", "你沒有權限!");
 			res.sendRedirect(req.getContextPath() + "/front-end/back-endHomePage.jsp");
 		}
 		

@@ -44,7 +44,7 @@ public class LoginFilter implements Filter {
 		HttpSession session = req.getSession();
 		Object empacc = session.getAttribute("empacc");
 
-		List<EmpAuthorityVO> empauthlist = (List<EmpAuthorityVO>) session.getAttribute("empauth");
+//		List<EmpAuthorityVO> empauthlist = (List<EmpAuthorityVO>) session.getAttribute("empauth");
 
 	
 		
@@ -53,27 +53,27 @@ public class LoginFilter implements Filter {
 			res.sendRedirect(req.getContextPath() + "/back-end/login/login.jsp");
 			return;
 		}
-		String urls = req.getRequestURI();
-		FunctionxService funSvc = new FunctionxService();
-		FunctionxVO funurl = funSvc.getUrl(urls);
+//		String urls = req.getRequestURI();
+//		FunctionxService funSvc = new FunctionxService();
+//		FunctionxVO funurl = funSvc.getUrl(urls);
 		
-		if (funurl == null) {
-			chain.doFilter(request, response);
-			return;
-		}
-		
-		String funcno = funurl.getFuncno();
-		List<String> list = new ArrayList<>();
-
-		for (int i = 0; i < empauthlist.size(); i++) {
-			list.add(empauthlist.get(i).getFuncno());
-		}
-
-		if (!list.contains(funcno)) {
-			session.setAttribute("error", "你沒有權限!");
-			res.sendRedirect(req.getContextPath() + "/front-end/back-endHomePage.jsp");
-			return;
-		}
+//		if (funurl == null) {
+//			chain.doFilter(request, response);
+//			return;
+//		}
+//		
+//		String funcno = funurl.getFuncno();
+//		List<String> list = new ArrayList<>();
+//
+//		for (int i = 0; i < empauthlist.size(); i++) {
+//			list.add(empauthlist.get(i).getFuncno());
+//		}
+//
+//		if (!list.contains(funcno)) {
+//			session.setAttribute("error", "你沒有權限!");
+//			res.sendRedirect(req.getContextPath() + "/front-end/back-endHomePage.jsp");
+//			return;
+//		}
 
 		chain.doFilter(request, response);
 

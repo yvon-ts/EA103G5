@@ -71,7 +71,6 @@ public class EmployeeLoginServlet extends HttpServlet {
 					}
 				} catch (Exception ignored) {
 				}
-
 				res.sendRedirect(req.getContextPath() + "/front-end/back-endHomePage.jsp"); // *工作3:
 			} // (-->如無來源網頁:則重導至login_success.jsp)
 		}
