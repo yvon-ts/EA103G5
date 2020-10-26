@@ -6,6 +6,7 @@
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -18,12 +19,13 @@
 	<script	src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.3/sweetalert2.js" type="text/javascript"></script>
 	<script src="http://code.jquery.com/jquery-1.12.4.min.js"></script>
     <link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/teacher/teacherRegister_css/style.css">
-<%--     <link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/teacher/nav_css_ForTeacherRegister/css/bootstrap.min.css"> --%>
-<%--     <link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/teacher/nav_css_ForTeacherRegister/css/nivo-lightbox.css"> --%>
-<%--     <link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/teacher/nav_css_ForTeacherRegister/css/animate.css"> --%>
-<%--     <link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/teacher/nav_css_ForTeacherRegister/css/main.css"> --%>
-<%--     <link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/teacher/nav_css_ForTeacherRegister/css/responsive.css"> --%>
+	<%-- <link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/teacher/nav_css_ForTeacherRegister/css/bootstrap.min.css"> --%>
+	<%-- <link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/teacher/nav_css_ForTeacherRegister/css/nivo-lightbox.css"> --%>
+	<%-- <link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/teacher/nav_css_ForTeacherRegister/css/animate.css"> --%>
+	<%-- <link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/teacher/nav_css_ForTeacherRegister/css/main.css"> --%>
+	<%-- <link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/teacher/nav_css_ForTeacherRegister/css/responsive.css"> --%>
 </head>
+
 <style type="text/css">
 body {
   font-family: 'Open Sans', sans-serif;
