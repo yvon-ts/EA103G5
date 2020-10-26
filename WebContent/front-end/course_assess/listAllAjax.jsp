@@ -9,12 +9,14 @@
 <%
 Course_assessService course_assessSvc = new Course_assessService();
 String avg = course_assessSvc.avgScore("COUR0001");
-
+List<Course_assessVO> list = course_assessSvc.getAll("COUR0001");
+pageContext.setAttribute("list", list);
 pageContext.setAttribute("avg",avg);
-String inform5 = (String)request.getAttribute("inform5");
+pageContext.setAttribute("course_assessSvc",course_assessSvc);
+String inform5 = (String)request.getAttribute("inform5");		
 %>
 
-<%@ include file="/index/front-index/headtest.jsp" %>
+<%@ include file="/index/front-index/header.jsp" %>
 <jsp:useBean id="membersSvc" scope="page" class="com.members.model.MembersService" />
 
 
@@ -31,6 +33,10 @@ String inform5 = (String)request.getAttribute("inform5");
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.3/sweetalert2.js"
 	type="text/javascript"></script>
+	<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/jquery.rateit/1.1.3/rateit.css" />
     <!-- Main css -->
     <link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/members/signIn&updateMembers_css/style.css">
 <%--     <link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/members/nav_css_ForSignIn&addMembers/css/bootstrap.min.css"> --%>
@@ -47,8 +53,6 @@ String inform5 = (String)request.getAttribute("inform5");
 
 <style>
 img.pic{
--webkit-box-shadow: 3px 3px 5px 5px #BEBEBE;
-	-moz-box-shadow: 3px 3px 5px 5px #BEBEBE;
 	box-shadow: 3px 3px 5px 5px #BEBEBE;
 	width:100px;
 height:100px;
@@ -69,63 +73,9 @@ margin:-240px 0 0 -30px;
 
 
 }
-input#signin{
-margin:10px 0 0 70px ;
 
-}
 
-select {
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  -ms-appearance: none;
-  appearance: none;
-  outline: 0;
-  box-shadow: none;
-  border: 0 !important;
-  background: #2c3e50;
-  background-image: none;
-}
-/* Remove IE arrow */
-select::-ms-expand {
-  display: none;
-}
-/* Custom Select */
-.select {
-  position: relative;
-  display: flex;
-  width: 20em;
-  height: 3em;
-  line-height: 3;
-  background: #2c3e50;
-  overflow: hidden;
-  border-radius: .25em;
  
-}
-select {
-  flex: 1;
-  padding: 0 .5em;
-  color: #fff;
-  cursor: pointer;
-}
-/* Arrow */
-.select::after {
-  content: '\25BC';
-  position: absolute;
-  top: 0;
-  right: 0;
-  padding: 0 1em;
-  background: #34495e;
-  cursor: pointer;
-  pointer-events: none;
-  -webkit-transition: .25s all ease;
-  -o-transition: .25s all ease;
-  transition: .25s all ease;
-   margin-left:10px;
-}
-/* Transition */
-.select:hover::after {
-  color: #f39c12;
-}
 
 
 
@@ -152,7 +102,7 @@ select {
  vertical-align:unset;
  
  }
- input.register{
+ button.register{
   display: inline-block;
   background: #6dabe4;
   color: #fff;
@@ -234,7 +184,7 @@ font-size:18px;
 p.date{
 width:100%;
 text-align:center;
-margin:25px 0 0 200px ;
+margin:25px 0 0 170px ;
 
 
 }
@@ -301,7 +251,7 @@ background: url("<%=request.getContextPath()%>/front-end/members/assets/img/bgPi
 <section class="sign-in">
             <div id="bg" class="container">
             
-            
+             <%@ include file="page1.file"%>
             <div id="avg">${avg}</div>
             <c:if test="${not empty sessionScope.membersVO}">
            <c:if test="${empty course_assessSvc.getOneCourse_assess(sessionScope.membersVO.memno)}">
@@ -314,59 +264,16 @@ background: url("<%=request.getContextPath()%>/front-end/members/assets/img/bgPi
             
             
             
-							
-                <div class="signin-content">
-                    <div class="signin-image">
-                        <a href="<%=request.getContextPath()%>/front-end/members/indexV1.jsp"><img class="pic" src="<%=request.getContextPath()%>/back-end/members/MprofileDisplayServlet?MEMNO=${course_assessVO.memno}" alt="sing up image"></a>
-                        
-                        <h4 style="font-family:Gochi Hand" class="nkname">${membersSvc.getOneMembers(course_assessVO.memno).nkname}
-                        
-                            <c:if test="${empty teacherSvc.getStatus(course_assessVO.memno)}">
-							<img id="nav_icon" src='<%=request.getContextPath()%>/front-end/members/assets/img/students.svg'>
-							</c:if>
-							
-							<c:if test="${teacherSvc.getStatus(course_assessVO.memno).tchrstatus eq '待審核'}">
-							<img id="nav_icon" src='<%=request.getContextPath()%>/front-end/members/assets/img/students.svg'>
-							</c:if>
-							
-							<c:if test="${teacherSvc.getStatus(course_assessVO.memno).tchrstatus eq '已通過'}">
-							<img id="nav_icon" src='<%=request.getContextPath()%>/front-end/members/assets/img/teacher.svg'>
-							</c:if>
-							
-							<c:if test="${teacherSvc.getStatus(course_assessVO.memno).tchrstatus eq '未通過'}">
-							<img id="nav_icon" src='<%=request.getContextPath()%>/front-end/members/assets/img/students.svg'>
-							
-							</c:if>
-                        
-                        
-                        
-                        
-                          </h4>
-                        
-                    </div>
-                    
-                    <div class="signin-form">
-                           <div class="form-group">
-                           <c:forEach var="num" begin="1" end="${course_assessVO.coursescore}" step="1">
-
-                           <img class="icon" src="<%=request.getContextPath()%>/front-end/members/signIn&updateMembers_css/images/star.svg">
-                              
-                           </c:forEach> 
-                           
-                        	   
-                           
-                           
-                                </div>
-                            <div class="form-group">
-                                <p class="text">${course_assessVO.comments}</p>
-                                <p class="date"><fmt:formatDate value="${course_assessVO.commenttime}" type="date" dateStyle="full"/></p>
-                            </div>
-                    </div>
-                </div>
+					<div class="course_assessArea"></div>		
+              
+               
+                
+                
                 <div>
+                
                 <input type="hidden" id="courseno" value="COUR0001" />
                 <button class="register" id="js-load-more" >載入更多</button>
-    </div>
+                </div>
                 
                 
                 
@@ -402,13 +309,18 @@ background: url("<%=request.getContextPath()%>/front-end/members/assets/img/bgPi
 
 
 <script>
-var inform5 = ${inform5};
+function status(){
+	
+	 swal('老師資格審核中', '請耐心等候1~3個工作天，一但審核完畢，即會立刻通知', 'info');
+}
+
+ var inform5 = ${inform5};
 
 if(inform5 == 200){
 	swal('新增成功', '感謝您撥空留下您寶貴的意見', 'success');
 }else if(inform5 == 100){
 	swal('修改成功', '感謝您撥空修改您寶貴的意見', 'success');
-}
+} 
 
 
 
@@ -417,7 +329,7 @@ $(document).ready(function(){
 	
 	var counter = 0; /*計數器*/
 	var pageStart = 0; /*offset*/
-	var pageSize = 6; /*size*/
+	var pageSize = 2; /*size*/
 	/*首次載入*/
 	getData(pageStart, pageSize);
 	/*監聽載入更多*/
@@ -457,28 +369,41 @@ function getData(offset,size){
 			
 			for(let i=offset; i< (offset+size); i ++){
 				
+				result +=   `<div class="signin-content">`;
+				result += 	`<div class="signin-image">`;
+				result +=	`<a href=''>`;
+				result += `<img class="pic" src='<%=request.getContextPath()%>/back-end/members/MprofileDisplayServlet?MEMNO=` + JSONarray[i].memno  +`' alt='sing up image'></a>`;
+				result +=	`<h4 style="font-family:Gochi Hand" class="nkname">`+JSONarray[i].nkname
 				
-				result += 	`<div class="col-md-6 col-lg-4 col-xs-12">`;
-				result +=	`<div class="services-item wow fadeInRight" data-wow-delay="0.3s">`;
-				result +=	`<div class="icon">`
-				result +=	`<img src="<%=request.getContextPath()%>/course/CoursePictureReaderFromDB?courseno=` + JSONarray[i].courseno  +`" style="width: 200px; height: 150px;" class="pic"></div>`;
-        			
-				result +=   `<div class="services-content">`;
-        		result += 	`&nbsp;&nbsp;&nbsp;<div class="rateit" data-rateit-value="`+ JSONarray[i].csscore / JSONarray[i].csscoretimes + `" data-rateit-ispreset="true" data-rateit-readonly="true"></div> `; 
-  	
-        		result +=	`<br>&nbsp;&nbsp;&nbsp;`+ JSONarray[i].csscoretimes  + `則評價`;
-        		result +=   `<h3><a href="#">`+ JSONarray[i].coursename + `</a></h3>`;
-        		result +=   `<p>課程共` + JSONarray[i].ttltime + `分鐘</p>`;
-            
+				if(JSONarray[i].tchrstatus===null){
+				result += `<img id="nav_icon" src='<%=request.getContextPath()%>/front-end/members/assets/img/students.svg'></h4></div>`;
+				}else if(JSONarray[i].tchrstatus==='待審核'){
+				result += `<img id="nav_icon" src='<%=request.getContextPath()%>/front-end/members/assets/img/students.svg'></h4></div>`;
+				}else if(JSONarray[i].tchrstatus==='已通過'){
+			    result += `<img id="nav_icon" src='<%=request.getContextPath()%>/front-end/members/assets/img/teacher.svg'></h4></div>`;
+		        }else if(JSONarray[i].tchrstatus==='待審核'){
+		        result += `<img id="nav_icon" src='<%=request.getContextPath()%>/front-end/members/assets/img/students.svg'></h4></div>`;
+		        }
+					
+			    result += `<div class="signin-form">`;
+			    result += `<div class="form-group">`;
+			    
+			    for(var x = JSONarray[i].coursescore;x >0;x-- ){
+			    	 result += `<img class="icon" src="<%=request.getContextPath()%>/front-end/members/signIn&updateMembers_css/images/star.svg">`;
+			    }
+			    result += `</div>`;
+			    result += ` <div class="form-group">`;
+			    result += `<p class="text">`+JSONarray[i].comments+`</p>`;
+			  
+			    result += `<p class="date">`+JSONarray[i].string_commenttime +`</p></div></div></div>`;
+			    
+			
         		
-				result += `<h5>NT$` + JSONarray[i].courseprice + `</h5></div></div></div></div>`;
-        
 			}
 			
 			
-			$('.trackingArea').append(result);
+			$('.course_assessArea').append(result);
 			
-			$("div.rateit, span.rateit").rateit();
 
 
 //			/*隱藏more按鈕*/
@@ -518,10 +443,10 @@ function getData(offset,size){
 
 </script>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.rateit/1.1.3/jquery.rateit.min.js"></script>
+<%-- <script src="<%=request.getContextPath()%>/front-end/members/assets/js/members&teacher&course_assess.js"></script>
 
-<script src="<%=request.getContextPath()%>/front-end/members/assets/js/members&teacher&course_assess.js"></script>
-
-
+ --%>
 
 
 

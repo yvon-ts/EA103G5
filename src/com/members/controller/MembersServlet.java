@@ -153,14 +153,14 @@ public class MembersServlet extends HttpServlet {
 				errorMsgs.add("重複輸入密碼必須一致");
 			}
 			String memname = req.getParameter("memname");
-			String memnameReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{2,5}";
+			String memnameReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)(/S)]{2,10}";
 			if (memname == null || memname.trim().length() == 0) {
 				errorMsgs.add("會員姓名: 請勿空白");
 			} else if (!memname.trim().matches(memnameReg)) { // 以下練習正則(規)表示式(regular-expression)
-				errorMsgs.add("會員姓名: 只能是中、英文字母、數字 , 且長度必需在2到5之間");
+				errorMsgs.add("會員姓名: 只能是中、英文字母、數字 , 且長度必需在2到10之間");
 			}
 			String nkname = req.getParameter("nkname");
-			String nknameReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{2,10}";
+			String nknameReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{2,10}$";
 			if (nkname == null || nkname.trim().length() == 0) {
 				nkname = "X-learner";
 			} else if (!nkname.trim().matches(nknameReg)) { // 以下練習正則(規)表示式(regular-expression)
@@ -227,7 +227,7 @@ public class MembersServlet extends HttpServlet {
 			sb.append("歡迎註冊Xducation線上學習平台,");
 			sb.append("這是您的驗證碼:");
 			sb.append(vercode);
-			sms.Process(sb, mphone);
+//			sms.Process(sb, mphone);
 			session.setAttribute("memVO", memVO);
 			session.setAttribute("vercode", vercode);
 			session.setAttribute("count", count);
@@ -273,7 +273,9 @@ public class MembersServlet extends HttpServlet {
 			session.removeAttribute("memVO");
 			session.removeAttribute("vercode");
 			session.removeAttribute("count");
-			String url = "/front-end/members/indexV1.jsp";
+			String inform2 = "200";
+			req.setAttribute("inform2", inform2);
+			String url = "/index/front-index/index.jsp";
 			RequestDispatcher successView = req.getRequestDispatcher(url); 
 			successView.forward(req, res);
 			return;
@@ -286,7 +288,6 @@ public class MembersServlet extends HttpServlet {
 				errorMsgs.add("您不想成為我們的會員了嗎:(");
 				count +=1;
 				session.setAttribute("count", count);
-				System.out.println("這行有執行到...？");
 			}
 		}
 	
@@ -294,8 +295,7 @@ public class MembersServlet extends HttpServlet {
 		
 		
 		if (!errorMsgs.isEmpty()) {
-			String inform2 = "200";
-			req.setAttribute("inform2", inform2);
+			
 			RequestDispatcher failureView = req.getRequestDispatcher("/front-end/members/vCodeMembers.jsp");
 			failureView.forward(req, res);
 			return;
@@ -353,6 +353,8 @@ public class MembersServlet extends HttpServlet {
 			failView.forward(req, res);
 		} else {
 			session.setAttribute("membersVO", membersVO);
+			String inform2 = "100";
+			req.setAttribute("inform2", inform2);
 			String url = "/index/front-index/index.jsp";
 			RequestDispatcher successView = req.getRequestDispatcher(url);
 			successView.forward(req, res);
@@ -365,8 +367,12 @@ public class MembersServlet extends HttpServlet {
 	private void signout(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		HttpSession session = req.getSession();
 		session.removeAttribute("membersVO");
-		String url = req.getContextPath()+ "/index/front-index/index.jsp";
-		res.sendRedirect(url);
+		String inform2 = "300";
+		req.setAttribute("inform2", inform2);
+		String url = "/index/front-index/index.jsp";
+		RequestDispatcher successView = req.getRequestDispatcher(url);
+		successView.forward(req, res);
+		
 	}
 
 	private void updatemembers(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {

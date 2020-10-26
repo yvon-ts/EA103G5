@@ -14,11 +14,11 @@ MembersVO membersVO = (MembersVO) session.getAttribute("membersVO");
 <html lang="en">
 
 <head>
-<!-- <link rel="stylesheet"
+<link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.3/sweetalert2.css" />
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.3/sweetalert2.js"
-	type="text/javascript"></script> -->
+	type="text/javascript"></script> 
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -93,6 +93,13 @@ height:36px;
 									<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
 										<a class="dropdown-item"
 											href="<%=request.getContextPath()%>/front-end/members/updateMembersV2.jsp">個人檔案</a>
+											
+											<a class="dropdown-item"
+											href='<%=request.getContextPath()%>/front-end/Order_Master/listAllByMemno.jsp'>課程訂單紀錄</a>
+											
+											<a class="dropdown-item"
+											href='<%=request.getContextPath()%>/front-end/coup_code/listAllByMemno.jsp'>持有折扣券</a> 
+													
 											
 										
 										<c:if test="${teacherSvc.getStatus(sessionScope.membersVO.memno).tchrstatus eq '待審核'}">
@@ -174,5 +181,14 @@ height:36px;
     <script src="<%=request.getContextPath()%>/index/front-index/assets/js/waypoints.min.js"></script>
     <script src="<%=request.getContextPath()%>/index/front-index/assets/js/main.js"></script>
 </body>
+<script>
+function status(){
+	
+	 swal('老師資格審核中', '請耐心等候1~3個工作天，一但審核完畢，即會立刻通知', 'info');
+}
+
+</script>
+
+
 
 </html>

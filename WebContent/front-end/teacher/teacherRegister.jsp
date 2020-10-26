@@ -2,9 +2,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.members.model.*"%>
 <%@ page import="com.teacher.model.*"%>
-<%
-TeacherVO teacherVO = (TeacherVO) request.getAttribute("teacherVO");
-%>
 
 <%-- <jsp:useBean id="teacherSvc" scope="page" class="com.teacher.model.TeacherService" />
  --%>
@@ -312,7 +309,7 @@ input.form-submit {
   
   }
   input#bankacc{
-    width: 100%;
+    width: 400px;
     display: block;
     border: none;
     border-bottom: 1px solid #999;
@@ -320,10 +317,14 @@ input.form-submit {
     font-family: Poppins;
     box-sizing: border-box;
     margin:20px auto;
+    text-align:center;
 
   
 
   }
+  h1{
+  padding-bottom:15px;}
+  
   
  div.form-submit:hover {
     background: #4292dc; }
@@ -390,6 +391,7 @@ background: url("<%=request.getContextPath()%>/front-end/members/assets/img/bgPi
 
         <!-- Sign up form -->
         <section class="signup">
+        
         <form method="POST" action="<%=request.getContextPath()%>/teacher/teacher.do" enctype='multipart/form-data' >
         
             
@@ -425,6 +427,7 @@ background: url("<%=request.getContextPath()%>/front-end/members/assets/img/bgPi
         <tr>
         <td>
        <ul style="color:#0099CC; font-family:'Gochi Hand';">
+       
        <li>1.老師在 Xducation 上架的課程皆為專屬授權，授權範圍包括募資影片、課程影片及課程講義</li>
        <li>2.授權期間為 2 年。若未經 Xducation 同意單方面提前下架課程，將依違約條款處理</li>
        <li>3.授權期間內，未經 Xducation 事前書面同意，老師不可以將課程上架到其它付費或免費平台、翻譯重製，或作其他利用</li>
@@ -433,8 +436,7 @@ background: url("<%=request.getContextPath()%>/front-end/members/assets/img/bgPi
        <li>6.「第三方服務」提供者包含多管道行銷平台（Shopback、LINE 購物、蝦皮商城等），以及金流服務平台。</li>
        <li>7.課程開課日需提供「完整」課程影片給購課學員，而非分批提供，才算是「開課」。且在 Xducation 提供課程製作服務時，老師亦需提供必要的協助，確保課程於預定開課日上架開課。</li>
        <li>8.新增即便合約終止後，消費者可繼續使用「已購買」之課程。</li>
-       <li>9.將折價券（coupon）分為「甲方折價券」、「乙方折價券」、「共同折價券」三種，約定其折扣負擔方式： 「甲方折價券」及「乙方折價券」由甲 / 乙一方負擔、「共同折價券」由甲乙雙方共同負擔。</li>
-       <li>10.試看單元的選定，須經過 Xducation 與老師雙方同意</li>
+       
        </ul>
        </td>
         
@@ -460,7 +462,7 @@ background: url("<%=request.getContextPath()%>/front-end/members/assets/img/bgPi
                        
                          <th>
         
-                         <textarea style="margin:0px 50px;width: 480px;height: 150px;  position:absolute;z-index: 10;" name="tchrintro" placeholder="資料的詳細度將會影響審核成功的機率，祝好運"></textarea> 
+                         <textarea style="margin:0px 50px;width: 480px;height: 150px;  position:absolute;z-index: 10;" name="tchrintro" placeholder="資料的詳細度將會影響審核成功的機率，祝好運">${requestScope.teacherVO.tchrintro}</textarea> 
 
 
                          </th>
@@ -538,7 +540,7 @@ background: url("<%=request.getContextPath()%>/front-end/members/assets/img/bgPi
 
       <div style="width: 100%;height: 500px; position:absolute;z-index: 9;" class='tab tab-3' >
         <h1>銀行帳號</h1>
-        <input style="width: 300px;height:30px " type="text" name="bankacc" id="bankacc" placeholder="只能輸入數字，限制20字" value=""/>
+        <input style="width: 400px;height:30px " type="text" name="bankacc" id="bankacc" placeholder="只能輸入數字，限制20字" value="${teacherVO.bankacc}"/>
         <table>
         <tr><th style="color:#0099CC; font-family:'Gochi Hand';">我們只接受以下銀行	</th></tr>
             <tr>
@@ -630,7 +632,12 @@ background: url("<%=request.getContextPath()%>/front-end/members/assets/img/bgPi
             
             
         </section>
-        
+        <c:if test="${not empty errorMsgs}">
+		<c:forEach var="message" items="${errorMsgs}">
+			<input type="hidden" id="message" value="${message}">
+		</c:forEach>
+	
+</c:if>
         
         
         
@@ -663,7 +670,10 @@ background: url("<%=request.getContextPath()%>/front-end/members/assets/img/bgPi
 
     <!-- JS -->
     <script type="text/javascript">
-    
+    var message = document.getElementById('message').value;
+    if(message.length !== 0){
+    	 swal('注意', message, 'warning');
+    }
   
    
     

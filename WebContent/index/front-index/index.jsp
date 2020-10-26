@@ -579,7 +579,6 @@ height:36px;
                 <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6 col-mb-12">
                     <div class="widget" style="text-align: center">
                         <img src="<%=request.getContextPath()%>/index/front-index/assets/img/logo.svg" style="width: 100px; height: auto" alt="">
-                        </a>
                     </div>
                 </div>
                 <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
@@ -604,6 +603,8 @@ height:36px;
         </div>
         <div class="col-md-12" style="padding-bottom: 100px">
         </div>
+        <input type="hidden" id="inform2" value="${requestScope.inform2}">
+	
     </footer>
     <!-- Footer Section End -->
     <!-- Go to Top Link -->
@@ -627,11 +628,29 @@ height:36px;
     <script src="<%=request.getContextPath()%>/index/front-index/assets/js/jquery.counterup.min.js"></script>
     <script src="<%=request.getContextPath()%>/index/front-index/assets/js/waypoints.min.js"></script>
     <script src="<%=request.getContextPath()%>/index/front-index/assets/js/main.js"></script>
-    <script
-		src="<%=request.getContextPath()%>/front-end/members/assets/js/members&teacher&course_assess.js"></script>
     
     
     <script>
+    //宇臣的===============
+    var inform2 = document.getElementById('inform2').value;
+	if(inform2 ==='200'){
+		swal('完了', '沒辦法開始您的線上之旅了!', 'error');
+	}else if(inform2 ==='100'){
+		swal('登入成功', '您可以開始您的線上之旅了!', 'success');
+	}else if(inform2 ==='300'){
+		swal('登出成功', '我們會在這裡等您回來一起學習!', 'success');
+	}
+	function status(){
+		
+		 swal('老師資格審核中', '請耐心等候1~3個工作天，一但審核完畢，即會立刻通知', 'info');
+	}
+	
+	//===================
+    
+    
+    
+    
+    
 //     $(document).ready(function(e){
 // 	      $('.search-panel .dropdown-menu').find('a').click(function(e) {
 // 				e.preventDefault();

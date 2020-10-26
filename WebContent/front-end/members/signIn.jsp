@@ -226,6 +226,11 @@ background: url("<%=request.getContextPath()%>/front-end/members/assets/img/bgPi
 
 
 <script>
+var inform3 = document.getElementById('inform3').value;
+
+if(inform3 ==='200'){
+	swal('恭喜啦', '您已經成為我們的會員囉<br>趕快來登入並且開始瀏覽課程吧', 'success');
+}
 
 
 var message = document.getElementById('message').value;

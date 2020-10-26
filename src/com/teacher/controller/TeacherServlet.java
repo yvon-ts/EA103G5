@@ -52,10 +52,8 @@ public class TeacherServlet extends HttpServlet {
 	}
 
 	private void insert(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException{
-		System.out.println("有執行Teacher_insert");
 		List<String> errorMsgs = new LinkedList<String>();
 		req.setAttribute("errorMsgs", errorMsgs);
-		HttpSession session = req.getSession();
 		try {
 			String memno = req.getParameter("memno");
 			String tchrintro = req.getParameter("tchrintro");
@@ -75,7 +73,7 @@ public class TeacherServlet extends HttpServlet {
 //			byte[] tchrcert1 = null;
 //			byte[] tchrcert2 = null;
 			byte[] pic = null;
-			TeacherVO tVO = null;
+			TeacherVO teacherVO = null;
 			
 			Collection<Part> parts = req.getParts();
 			// Servlet3.0新增了Part介面，讓我們方便的進行檔案上傳處理
@@ -97,32 +95,34 @@ public class TeacherServlet extends HttpServlet {
 			
 			
 			for(int i = 0; i < picArr.size(); i++) {
-				tVO = new TeacherVO();
+				teacherVO = new TeacherVO();
 				if(i==0) {
 					tchrcert1 = picArr.get(i);
-					tVO.setTchrcert1(picArr.get(i));
+					teacherVO.setTchrcert1(picArr.get(i));
 				}else {
 					tchrcert2 = picArr.get(i);
-					tVO.setTchrcert2(picArr.get(i));
+					teacherVO.setTchrcert2(picArr.get(i));
 				}
 			}
 			
 			if(tchrcert1==null||tchrcert2==null) {
 				errorMsgs.add("專業證照:一定要上傳");
 			}
-			tVO.setMemno(memno);
-			tVO.setTchrintro(tchrintro);
-			tVO.setBankacc(bankacc);
+			teacherVO.setMemno(memno);
+			teacherVO.setTchrintro(tchrintro);
+			teacherVO.setBankacc(bankacc);
 //			tVO.setTchrcert1(tchrcert1);
 //			tVO.setTchrcert2(tchrcert2);
 			if (!errorMsgs.isEmpty()) {
-				req.setAttribute("teacherVO", tVO); // 含有輸入格式錯誤的empVO物件,也存入req
+				req.setAttribute("teacherVO", teacherVO); // 含有輸入格式錯誤的empVO物件,也存入req
 				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/teacher/teacherRegister.jsp");
 				failureView.forward(req, res);
 				return;
 			}
 			TeacherService teacherSvc = new TeacherService();
-			tVO = teacherSvc.addTeacher(memno, tchrintro, tchrcert1, tchrcert2, bankacc);
+			teacherVO = teacherSvc.addTeacher(memno, tchrintro, tchrcert1, tchrcert2, bankacc);
+			String inform6 = "200";
+			req.setAttribute("inform6", inform6);
 			String url = "/front-end/teacher/teacherIndex.jsp";
 			RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
 			successView.forward(req, res);
