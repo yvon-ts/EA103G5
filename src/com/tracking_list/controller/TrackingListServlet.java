@@ -40,8 +40,8 @@ public class TrackingListServlet extends HttpServlet {
 		System.out.println(action);
 		
 		
-		MembersVO Membersvo = (MembersVO) req.getSession().getAttribute("Membersvo");
-		String memno = Membersvo.getMemno();
+		MembersVO membersVO = (MembersVO) req.getSession().getAttribute("membersVO");
+		String memno = membersVO.getMemno();
 		
 		String courseno = req.getParameter("courseno");
 
