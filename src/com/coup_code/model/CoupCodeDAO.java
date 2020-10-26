@@ -313,6 +313,7 @@ public class CoupCodeDAO implements CoupCodeDAO_interface {
 
 			while (rs.next()) {
 				coupCodeVO = new CoupCodeVO();
+				coupCodeVO.setCoupno(rs.getString("coupno"));
 				coupCodeVO.setCoupcode(rs.getString("coupcode"));
 				coupCodeVO.setDiscamt(rs.getInt("discamt"));
 				coupCodeVO.setCouptime(rs.getDate("couptime"));

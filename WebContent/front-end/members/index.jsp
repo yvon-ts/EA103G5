@@ -153,13 +153,6 @@ height:36px;
 										</c:if>
 										<a class="dropdown-item"
 											href='<%=request.getContextPath()%>/members/members.do?action=signout'>會員登出</a> 
-											
-											
-											
-										
-											
-											
-											
 									</div>
 								</div>
 								
@@ -189,17 +182,6 @@ height:36px;
 								href='<%=request.getContextPath()%>/front-end/members/signIn.jsp'>我要登入&nbsp;<i
 									class='lni-bulb'></i></a></li>
 						</c:if>
-						
-
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
                     </ul>
                 </div>
             </div>

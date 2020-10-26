@@ -1,6 +1,7 @@
 package com.order_master.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Vector;
@@ -157,13 +158,9 @@ public class OrderMasterServlet extends HttpServlet {
 			}
 		}
 		if ("insert".equals(action)) {
-
-			List<CourseVO> shoppingList = (List<CourseVO>) req.getSession().getAttribute("shoppingList");
-
-			for (CourseVO vo : shoppingList) {
-				System.out.println(vo);
-			}
-
+			
+			System.out.println("進入INSERT");
+			
 			List<String> errorMsgs = new LinkedList<String>();
 			// Store this set in the request scope, in case we need to
 			// send the ErrorPage view.
@@ -175,16 +172,15 @@ public class OrderMasterServlet extends HttpServlet {
 
 				String memno = req.getParameter("memno");
 				Integer orderamt = new Integer(req.getParameter("orderamt"));
-				System.out.println(orderamt);
-				// 折扣碼轉換
-				String coupcode = req.getParameter("coupcode");
-				CoupCodeService coupSvc = new CoupCodeService();
-				CoupCodeVO coupCodeVO = coupSvc.getOneCoupno(coupcode);
-				String coupno = coupCodeVO.getCoupno();
+				
+				String coupno = req.getParameter("coupno");
 				System.out.println(coupno);
-				// 折扣碼扣除
+				CoupCodeService coupSvc = new CoupCodeService();
+				CoupCodeVO coupCodeVO = coupSvc.getOneCoupCode(coupno);
 				Integer discamt = coupCodeVO.getDiscamt();
-				if (!(coupno.length() == 0)) {
+				System.out.println(discamt);
+				
+				if (!(coupno == "empty")) {
 					orderamt = orderamt - discamt;
 					coupSvc.updateCoupCode(coupno, 1);
 				} else {
@@ -192,22 +188,16 @@ public class OrderMasterServlet extends HttpServlet {
 				}
 
 				String payby = req.getParameter("payby");
-				System.out.println(payby);
 //						.trim();
 //				if (payby == null || payby.trim().length() == 0) {
 //					errorMsgs.add("付款方式請勿空白");
 //				}
-				System.out.println(buylist.size());
+
 				OrderMasterVO orderMasterVO = new OrderMasterVO();
 
-//				orderMasterVO.setMemno(memno);
-//				orderMasterVO.setOrderamt(orderamt);
-//				orderMasterVO.setCoupno(coupno);
-//				orderMasterVO.setPayby(payby);
-
 				List<OrderDetailVO> list = new Vector<OrderDetailVO>();
-
 				for (CourseVO abuylist : buylist) {
+				
 					OrderDetailVO odVO = new OrderDetailVO();
 					odVO.setCourseno(abuylist.getCourseno());
 					odVO.setSellprice(abuylist.getCourseprice());
@@ -219,8 +209,7 @@ public class OrderMasterServlet extends HttpServlet {
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					req.setAttribute("orderMasterVO", orderMasterVO);
-					RequestDispatcher failureView = req
-							.getRequestDispatcher("/front-end/tracking_list/listTrackingListForUser.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/front-end/tracking_list/listTrackingListForUser.jsp");
 					failureView.forward(req, res);
 					return;
 				}
@@ -237,8 +226,7 @@ public class OrderMasterServlet extends HttpServlet {
 				/*************************** 其他可能的錯誤處理 **********************************/
 			} catch (Exception e) {
 				errorMsgs.add(e.getMessage());
-				RequestDispatcher failureView = req
-						.getRequestDispatcher("/front-end/tracking_list/listTrackingListForUser.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/tracking_list/listTrackingListForUser.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -259,6 +247,7 @@ public class OrderMasterServlet extends HttpServlet {
 				}
 
 				/*************************** 2.開始查詢資料 *****************************************/
+				System.out.println(memno);
 				OrderMasterService ordSvc = new OrderMasterService();
 				List<OrderMasterVO> orderMasterVO = ordSvc.getOnesOrder(memno);
 				if (orderMasterVO == null) {
