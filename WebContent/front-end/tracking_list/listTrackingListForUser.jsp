@@ -202,15 +202,15 @@
 		$(document).ready(function(){
 			
 			
-			$('#goToSearch').click(function(e){
-				e.preventDefault();
+// 			$('#goToSearch').click(function(e){
+// 				e.preventDefault();
 				
 
-				var a = document.createElement('a');
-				a.href = '<%=request.getContextPath()%>/front-end/course/listAllCourseForUser.jsp';
-				a.click();
+// 				var a = document.createElement('a');
+<%-- 				a.href = '<%=request.getContextPath()%>/front-end/course/listAllCourseForUser.jsp'; --%>
+// 				a.click();
 				
-			});
+// 			});
 			//此頁面取消追蹤
 			$('body').on('click','.deleteTrack',function(){
 				
@@ -233,9 +233,9 @@
 			
 			
 			//註冊繳交表單
-			$('body').on('click' , '#checkout',function(){ 
-				$('#myForm').submit(); 
-			 });
+// 			$('body').on('click' , '#checkout',function(){ 
+// 				$('#myForm').submit(); 
+// 			 });
 	
 			//刪除的按鈕不知道why 一定要註冊兩次@@@
 			//註冊移除按鈕
@@ -379,7 +379,7 @@
 				            <div class="title wow "></div>
 				            <div class="row mt-4 d-flex align-items-center">
 				                <div class="col-sm-6 order-md-2 text-right">
-				                    <button type="button" class="btn btn-primary" id="checkout">Checkout</button>
+				                <a href="<%=request.getContextPath()%>/front-end/Shop/Checkout.jsp"><button type="button" class="btn btn-primary" id= "checkout">Checkout</button></a>
 				                    <input type="hidden" name="action" value="insert">
 				                </div>
 				                <div class="col-sm-6 mb-3 mb-m-1 order-md-1 text-md-left">
@@ -409,9 +409,9 @@
 							
 							$('#number').text($('#shoppingCart tr').length - 1);
 							
-							$('body').on('click' , '#checkout',function(){
-									$('#myForm').submit(); 
-							});
+// 							$('body').on('click' , '#checkout',function(){
+// 									$('#myForm').submit(); 
+// 							});
 							
 							
 							$('body').on('click' , '#remove' + count,function(){

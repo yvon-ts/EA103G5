@@ -159,7 +159,7 @@
 									<input type ="hidden" name="courseno" 	 id="courseno"   value ="${courseVO.courseno}"/>
 <%-- 									<input type ="hidden" name="courseprice" id="courseprice" value ="${courseVO.courseprice}"/> --%>
 <%-- 									<input type ="hidden" name="courseinfo"  id="courseinfo"  value ="${courseVO.courseinfo}"/> --%>
-								</i>&nbsp;加入購物車
+								</i>加入購物車
 							</label>
 							
 							
@@ -169,7 +169,7 @@
 									<c:when test="${ courseVO.courseno eq TrackingListVO.courseno}">
 										<label class="bookmark"><i class="fa fa-heart" aria-hidden="true" style="color:red">
 											<input type ="hidden"  id="courseno" value ="${courseVO.courseno}"/>
-										</i>&nbsp;加入追蹤</label>
+										</i>加入追蹤</label>
 										<c:set var="flag" value="true"/>
 									</c:when>
 								</c:choose>
@@ -178,7 +178,7 @@
 							<c:if test="${empty flag}">
 								<label class="bookmark"><i class="fa fa-heart-o" aria-hidden="true" style="color:red">
 									<input type ="hidden"  id="courseno" value ="${courseVO.courseno}"/>
-								</i>&nbsp;加入追蹤</label>
+								</i>加入追蹤</label>
 							</c:if>
 							<c:remove var="flag"/>
 								
@@ -298,10 +298,10 @@
 		                str +=  `<h3><a href="#">` + JSONarray[i].coursename + `</a></h3>`;
 		                str +=  `<p>課程共`+JSONarray[i].ttltime+`分鐘</p>`;
 		<!--                             <p>同學累計9487人</p> -->
-						str +=	`<label class="shoppingcart"><i class="fa fa-shopping-cart" aria-hidden="true"><input type ="hidden" name="courseno" 	 id="courseno"   value ="`+ JSONarray[i].courseno +`"/></i>&nbsp;加入購物車</label>`;
+						str +=	`<label class="shoppingcart"><i class="fa fa-shopping-cart" aria-hidden="true"><input type ="hidden" name="courseno" 	 id="courseno"   value ="`+ JSONarray[i].courseno +`"/></i>加入購物車</label>`;
 									
 									
-						str +=	`<label class="bookmark"><i class="` + JSONarray[i].class +`" aria-hidden="true" style="color:red"><input type ="hidden"  id="courseno" value ="`+ JSONarray[i].courseno +`"/></i>&nbsp;加入追蹤</label>`;
+						str +=	`<label class="bookmark"><i class="` + JSONarray[i].class +`" aria-hidden="true" style="color:red"><input type ="hidden"  id="courseno" value ="`+ JSONarray[i].courseno +`"/></i>加入追蹤</label>`;
 						str +=	`<h5>NT$` + JSONarray[i].courseprice + `</h5></div></div></div>`;
 		                        
 					}
