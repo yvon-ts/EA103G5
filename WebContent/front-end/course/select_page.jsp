@@ -30,7 +30,7 @@
 		<li>
 			<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/course/course.do">
 				<span> 請輸入課程編號 (如 COUR0001)：</span> <input type="text" name="courseno">
-				<input type="hidden" name="action" value="getOne_For_Display">
+				<input type="hidden" name="action" value="showCourseMainPage">
 				<input type="submit" value="送出">
 			</FORM>
 		</li>
@@ -43,7 +43,7 @@
 						<option value="${courseVO.courseno}">
 							${courseVO.courseno}
 					</c:forEach>
-				</select> <input type="hidden" name="action" value="getOne_For_Display">
+				</select> <input type="hidden" name="action" value="showCourseMainPage">
 				<input type="submit" value="送出">
 			</FORM>
 		</li>
@@ -56,7 +56,7 @@
 							${courseVO.coursename}
 					</c:forEach>
 				</select>
-				<input type="hidden" name="action" value="getOne_For_Display">
+				<input type="hidden" name="action" value="showCourseMainPage">
 				<input type="submit" value="送出">
 			</FORM>
 		</li>
