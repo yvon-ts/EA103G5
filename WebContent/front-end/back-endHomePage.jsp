@@ -119,15 +119,15 @@
                     <li><a class="treeview-item" href="https://fontawesome.com/v4.7.0/icons/" target="_blank" rel="noopener"><i class="icon fa fa-circle-o"></i>會員課程 </a></li>
                 </ul>
             </li>
-             <li class="treeview" id="FUN0003" ><a class="app-menu__item" href="#" data-toggle="treeview"><i class="fa fa-user-plus" aria-hidden="true"></i>
+             <li class="treeview" id="FUN0022" ><a class="app-menu__item" href="#" data-toggle="treeview"><i class="fa fa-user-plus" aria-hidden="true"></i>
                     <span class="app-menu__label"> 實體講座 </span><i class="treeview-indicator fa fa-angle-right"></i></a>
                 <ul class="treeview-menu">
-                    <li><a class="treeview-item" href="bootstrap-components.html"><i class="icon fa fa-circle-o"></i> 教室管理</a></li>
+                    <li><a class="treeview-item" href="<%=request.getContextPath() %>/back-end/classroom/select_page.jsp"><i class="icon fa fa-circle-o"></i> 教室管理</a></li>
                     <li><a class="treeview-item" href="https://fontawesome.com/v4.7.0/icons/" target="_blank" rel="noopener"><i class="icon fa fa-circle-o"></i>報名管理 </a></li>
                     <li><a class="treeview-item" href="bootstrap-components.html"><i class="icon fa fa-circle-o"></i> 講座管理</a></li>
                 </ul>
             </li>
-            <li class="treeview" id="FUN0004" ><a class="app-menu__item" href="#" data-toggle="treeview"><i class="fa fa-cart-plus" aria-hidden="true"></i>
+            <li class="treeview" id="FUN0004" style="display:none"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="fa fa-cart-plus" aria-hidden="true"></i>
                     <span class="app-menu__label"> 課程商城 </span><i class="treeview-indicator fa fa-angle-right"></i></a>
                 <ul class="treeview-menu">
                     <li><a class="treeview-item" href="bootstrap-components.html"><i class="icon fa fa-circle-o"></i> 訂單管理</a></li>
@@ -135,7 +135,7 @@
                     <li><a class="treeview-item" href="bootstrap-components.html"><i class="icon fa fa-circle-o"></i> 課程管理</a></li>
                 </ul>
             </li>
-            <li  id="FUN0005"><a class="app-menu__item" href="docs.html"><i class="fa fa-exclamation-circle" aria-hidden="true"></i><span class="app-menu__label">檢舉管理</span></a></li>
+            <li  id="FUN0005" style="display:none"><a class="app-menu__item" href="docs.html"><i class="fa fa-exclamation-circle" aria-hidden="true"></i><span class="app-menu__label">檢舉管理</span></a></li>
         </ul>
     </aside>
     <!-- 內容放在下面 -->
@@ -143,7 +143,7 @@
     <!-- Essential javascripts for application to work-->
     <script src="<%=request.getContextPath() %>/front-end/js/jquery-3.3.1.min.js"></script>
     <script src="<%=request.getContextPath() %>/front-end/js/popper.min.js"></script>
-    <script src="<%=request.getContextPath() %>/front-end/js/bootstrap.min.js"></script>
+<%--     <script src="<%=request.getContextPath() %>/front-end/js/bootstrap.min.js"></script> --%>
     <script src="<%=request.getContextPath() %>/front-end/js/main.js"></script>
     <script>		
 

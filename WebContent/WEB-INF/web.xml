@@ -30,12 +30,28 @@
    	<filter-name>LoginFilter</filter-name>
    	<url-pattern>/back-end/employee/*</url-pattern>
    	<url-pattern>/front-end/back-endHomePage.jsp</url-pattern>
+   	<url-pattern>/back-end/classroom/*</url-pattern>
    	<dispatcher>REQUEST</dispatcher>
    	<dispatcher>FORWARD</dispatcher>
    	<dispatcher>INCLUDE</dispatcher>
    	<dispatcher>ERROR</dispatcher>
    	<dispatcher>ASYNC</dispatcher>
   </filter-mapping>
+  
+<!--     <filter> -->
+<!--     <filter-name>Emp_authFilter</filter-name> -->
+<!--     <filter-class>com.employee.login.controller.Emp_authFilter</filter-class> -->
+<!--   </filter> -->
+<!--   <filter-mapping> -->
+<!--    	<filter-name>Emp_authFilter</filter-name> -->
+<!--    	<url-pattern>/back-end/employee/*</url-pattern> -->
+<!--    	<url-pattern>/front-end/back-endHomePage.jsp</url-pattern> -->
+<!--    	<dispatcher>REQUEST</dispatcher> -->
+<!--    	<dispatcher>FORWARD</dispatcher> -->
+<!--    	<dispatcher>INCLUDE</dispatcher> -->
+<!--    	<dispatcher>ERROR</dispatcher> -->
+<!--    	<dispatcher>ASYNC</dispatcher> -->
+<!--   </filter-mapping> -->
   
   
   
