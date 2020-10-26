@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*,com.test_type.model.*"%>
-<%@ page import="com.question_bank.model.*"%>
+<%@ page import="com.question_bank.model.*,com.course.model.*"%>
 <% 
 		QuestionBankService questionbankSvc = new QuestionBankService();
 		List<QuestionBankVO> list = questionbankSvc.getAll();
@@ -15,6 +15,10 @@
 		pageContext.setAttribute("typeList", typeList);
 
 		pageContext.setAttribute("list", list);
+		
+		CourseVO courseVO = (CourseVO) request.getSession().getAttribute("courseVO");
+		
+		
 %>
 <jsp:useBean id="ttSvc" scope="page" class="com.test_type.model.TestTypeService" />
 
@@ -41,13 +45,23 @@
 
 </head>
 <body>
-<c:if test="${not empty errorMsgs}">
-	<ul>
-	    <c:forEach var="message" items="${errorMsgs}">
-			<li style="color:red">${message}</li>
-		</c:forEach>
-	</ul>
-</c:if>
+
+	<jsp:include page="/index/front-index/header.jsp" />
+
+<%-- <c:if test="${not empty errorMsgs}"> --%>
+<!-- 	<ul> -->
+<%-- 	    <c:forEach var="message" items="${errorMsgs}"> --%>
+<%-- 			<li style="color:red">${message}</li> --%>
+<%-- 		</c:forEach> --%>
+<!-- 	</ul> -->
+<%-- </c:if> --%>
+	<div class="container-fluid" style="margin-top: 90px;">
+
+		<div class="row">
+			<div class="col" style="text-align:center;color:white;">
+				<h1 id="pageTitle" >考題管理 - ${courseVO.coursename}</h1>
+			</div>
+		</div>
 	 <div class="container-xl">
         <div class="table-responsive">
             <div class="table-wrapper">
@@ -145,7 +159,10 @@
         </div>
     </div>
     
-    
+    <!-- include 前台頁面的 footer -->
+	<jsp:include page="/index/front-index/footer.jsp" />
+	<!-- include 前台頁面的 footer -->
+ </div>   
     
     
 	<script type="text/javascript">

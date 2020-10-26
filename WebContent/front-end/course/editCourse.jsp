@@ -20,6 +20,10 @@
 	if (csscoretimes > 0) {
 		courseScore = formatter.format(Double.valueOf(csscore) / Double.valueOf(csscoretimes));
 	}
+	
+	//開玄-->爛方法 要把名字傳到題庫
+	request.getSession().setAttribute("coursename", courseVO.getCoursename());
+	
 %>
 
 <!DOCTYPE html>
@@ -48,7 +52,7 @@
 
 		<div class="row">
 			<div class="col">
-				<h1 id="pageTitle">課程管理 - ${courseVO.coursename}</h1>
+				<h1 id="pageTitle">課程管理 - ${coursename}</h1>
 			</div>
 		</div>
 
@@ -85,14 +89,21 @@
 								<h5>附件上傳</h5>
 							</a>
 						</li>
-						<li class="nav-item">
-							<a class="nav-link" data-toggle="pill" href="#editCourseChapter">
-								<h5>考試管理</h5>
-							</a>
-						</li>
+						
 					</ul>
 				</nav>
-
+				<h2>題庫管理</h2>
+				<nav>
+					<ul class="nav flex-column nav-pills">
+						<li class="nav-item">
+							<a class="nav-link " href="<%= request.getContextPath()%>/front-end/question/ListAllQuestion.jsp?coursename=${courseVO.coursename}">
+								<h5>課程題目編輯</h5>
+							</a>
+						</li>
+					
+						
+					</ul>
+				</nav>
 			</div>
 
 			<div class="col-md-9">
@@ -104,9 +115,11 @@
 						<h2>基本資訊管理</h2>
 						<jsp:include page="/front-end/course/editCourseBasicInfo.jsp" />
 					</div>
+					
+					
 				</div>
 			</div>
-
+			
 		</div>
 	</div>
 
@@ -120,11 +133,9 @@
 	<script src="<%=request.getContextPath()%>/front-end/video/js/videoDurationCaculation.js"></script>
 	<!-- ========== JavaScript Area ========== -->
 
-
 	<!-- include 前台頁面的 footer -->
 	<jsp:include page="/index/front-index/footer.jsp" />
 	<!-- include 前台頁面的 footer -->
-
 
 
 

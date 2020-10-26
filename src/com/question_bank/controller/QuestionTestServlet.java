@@ -107,8 +107,6 @@ public class QuestionTestServlet extends HttpServlet {
 		AnwserListVO AnwserListVo = null;
 		Collections.shuffle(list);
 		
-		System.out.println(list.get(0));
-		
 		/*
 		 * Collections.shuffle(List<?> list) Randomly permutes the specified list using
 		 * a default source of randomness.

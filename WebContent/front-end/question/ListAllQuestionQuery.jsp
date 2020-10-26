@@ -43,6 +43,16 @@
 </head>
 <body>
 
+	<jsp:include page="/index/front-index/header.jsp" />
+	
+	<div class="container-fluid" style="margin-top: 90px;">
+
+		<div class="row">
+			<div class="col" style="text-align:center;color:white;">
+				<h1 id="pageTitle" >考題管理 - ${coursename}</h1>
+			</div>
+		</div>
+	
 	<c:if test="${not empty errorMsgs}">
 		<ul>
 			<c:forEach var="message" items="${errorMsgs}">
@@ -155,6 +165,7 @@
 			</div>
 		</div>
 	</div>
+</div>
 	<script type="text/javascript">
 		$(document).ready(function() {
 			for (let i = 1; i <= `${list.size()}`; i++) {
@@ -178,5 +189,9 @@
 		});
 	</script>
 
+	<!-- include 前台頁面的 footer -->
+	<jsp:include page="/index/front-index/footer.jsp" />
+	<!-- include 前台頁面的 footer -->
+	
 </body>
 </html>

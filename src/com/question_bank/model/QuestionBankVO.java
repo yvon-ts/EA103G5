@@ -140,6 +140,23 @@ public class QuestionBankVO implements Serializable{
 				+ ", quans=" + quans + ", qustatus=" + qustatus + ", optionList=" + optionList + "]";
 	}
 
+	public QuestionBankVO(String qbankno, String courseno, Integer typeno, String testscope, String qustmt, String op1,
+			String op2, String op3, String op4, String quans, Integer qustatus) {
+		super();
+		this.qbankno = qbankno;
+		this.courseno = courseno;
+		this.typeno = typeno;
+		this.testscope = testscope;
+		this.qustmt = qustmt;
+		this.op1 = op1;
+		this.op2 = op2;
+		this.op3 = op3;
+		this.op4 = op4;
+		this.quans = quans;
+		this.qustatus = qustatus;
+		this.optionList = optionList;
+	}
+
 
 	
 	
