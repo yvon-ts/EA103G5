@@ -74,6 +74,18 @@ public class CourseService {
 
 		return courseVO;
 	}
+	
+	public CourseVO updateCourseStatus(String courseno, String csstatus) {
+		// 不更新課程圖片，保有原本的檔案
+
+		CourseVO courseVO = new CourseVO();
+
+		courseVO.setCourseno(courseno);
+		courseVO.setCsstatus(csstatus);
+		dao.updateStatus(courseVO);
+
+		return courseVO;
+	}
 
 	public CourseVO getOneCourse(String courseno) {
 		return dao.findPrimaryKey(courseno);

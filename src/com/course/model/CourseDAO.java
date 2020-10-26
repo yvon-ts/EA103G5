@@ -29,6 +29,7 @@ public class CourseDAO implements CourseDAO_interface {
 	private static final String GET_ONE_STMT = "SELECT courseno, cstypeno, tchrno, coursename, courseinfo, courseprice, ttltime, csstatus, csscore, csscoretimes ,courseimg ,courlmod FROM course where courseno = ?";
 	private static final String UPDATE = "UPDATE course set cstypeno=?, tchrno=?, coursename=?, courseinfo=?, courseprice=?, ttltime=?, csstatus=?, csscore=?, csscoretimes=? , courseimg=? , courlmod=CURRENT_TIMESTAMP where courseno = ?";
 	private static final String UPDATE_NO_PICTURE = "UPDATE course set cstypeno=?, tchrno=?, coursename=?, courseinfo=?, courseprice=?, ttltime=?, csstatus=?, csscore=?, csscoretimes=? , courlmod=CURRENT_TIMESTAMP where courseno = ?";
+	private static final String UPDATE_STATUS = "UPDATE course set csstatus=?, courlmod=CURRENT_TIMESTAMP where courseno = ?";
 
 	@Override
 	public String insert(CourseVO courseVO) {
@@ -149,9 +150,53 @@ public class CourseDAO implements CourseDAO_interface {
 				pstmt.setString(7, courseVO.getCsstatus());
 				pstmt.setInt(8, courseVO.getCsscore());
 				pstmt.setInt(9, courseVO.getCsscoretimes());
-				
+
 				pstmt.setString(10, courseVO.getCourseno());
 			}
+
+			pstmt.executeUpdate();
+
+			con.commit();
+			// Handle any driver errors
+		} catch (SQLException se) {
+			try {
+				con.rollback();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.setAutoCommit(true);
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+	}
+
+	@Override
+	public void updateStatus(CourseVO courseVO) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+
+		try {
+			con = ds.getConnection();
+			con.setAutoCommit(false);
+			pstmt = con.prepareStatement(UPDATE_STATUS);
+
+			pstmt.setString(1, courseVO.getCsstatus());
+			pstmt.setString(2, courseVO.getCourseno());
 
 			pstmt.executeUpdate();
 

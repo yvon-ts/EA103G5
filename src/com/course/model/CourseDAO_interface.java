@@ -8,6 +8,7 @@ public interface CourseDAO_interface {
 
 	public void update(CourseVO courseVO);
 	public void update(CourseVO courseVO, Boolean updatePicture);
+	public void updateStatus(CourseVO courseVO);
 
 	public CourseVO findPrimaryKey(String courseno);
 

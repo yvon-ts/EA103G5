@@ -3,22 +3,25 @@ package com.teacher.model;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
+//import java.sql.Connection;
+//import java.sql.DriverManager;
+//import java.sql.PreparedStatement;
+//import java.sql.ResultSet;
+//import java.sql.SQLException;
+//import java.util.ArrayList;
+//import java.util.List;
+import java.util.*;
+import java.sql.*;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
-import com.members.model.MembersVO;
+import com.members.model.*;
 
 public class TeacherDAO implements TeacherDAO_interface {
+	
 	private static DataSource ds = null;
 	static {
 		try {
@@ -28,6 +31,7 @@ public class TeacherDAO implements TeacherDAO_interface {
 			e.printStackTrace();
 		}
 	}
+	
 	String driver = "oracle.jdbc.driver.OracleDriver";
 	String url = "jdbc:oracle:thin:@localhost:1521:XE";
 	String userid = "XDU";
@@ -38,6 +42,7 @@ public class TeacherDAO implements TeacherDAO_interface {
 	private static final String GET_ONE_STMT = "SELECT TCHRNO,MEMNO,TCHRINTRO,TCHRCERT1,TCHRCERT2,BANKACC,TCHRSTATUS,REJREASON FROM TEACHER WHERE TCHRNO = ?";
 	private static final String UPDATE = "UPDATE TEACHER SET TCHRINTRO=?,TCHRCERT1=?,TCHRCERT2=?,BANKACC=?,TCHRSTATUS = ? WHERE TCHRNO =?";
 	private static final String UPDATESTATUS = "UPDATE TEACHER SET TCHRSTATUS = ?,REJREASON = ? WHERE TCHRNO=?";
+	//private static final String GET_STATUS = "SELECT TCHRSTATUS,TCHRNO FROM TEACHER WHERE MEMNO = ?";
 	private static final String GET_STATUS = "SELECT TCHRSTATUS,TCHRNO FROM TEACHER WHERE MEMNO = ?";
 
 	@Override
@@ -297,13 +302,15 @@ public class TeacherDAO implements TeacherDAO_interface {
 
 	@Override
 	public TeacherVO getStatus(String memno) {
+		TeacherVO teacherVO=null;
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		TeacherVO teacherVO=null;
+
 		try {
 //			Class.forName(driver);
 //			con = DriverManager.getConnection(url, userid, passwd);
+		
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(GET_STATUS);
 			
@@ -311,8 +318,8 @@ public class TeacherDAO implements TeacherDAO_interface {
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
 				teacherVO = new TeacherVO();
-			 teacherVO.setTchrstatus(rs.getString("tchrstatus"));
-			 teacherVO.setTchrno(rs.getString("tchrno"));
+				teacherVO.setTchrstatus(rs.getString("tchrstatus"));
+				teacherVO.setTchrno(rs.getString("tchrno"));
 			
 			}
 			
@@ -321,6 +328,13 @@ public class TeacherDAO implements TeacherDAO_interface {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 			// Clean up JDBC resources
 		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
 			if (pstmt != null) {
 				try {
 					pstmt.close();
@@ -351,15 +365,5 @@ public class TeacherDAO implements TeacherDAO_interface {
 //		tv.setTchrno("TCHR0054");
 //		td.update(tv);
 
-		
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
 }

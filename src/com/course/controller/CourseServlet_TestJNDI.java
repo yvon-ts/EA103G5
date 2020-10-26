@@ -32,7 +32,9 @@ public class CourseServlet_TestJNDI extends HttpServlet {
 		CourseService courseSvc = new CourseService();
 
 		out.println("=== TEST === GET ONE ===");
-		CourseVO courseVO = courseSvc.getOneCourse("COUR0001");
+		CourseVO courseVO = courseSvc.getOneCourse("COUR0099");
+		if (courseVO != null) {
+			
 		
 		out.println("Courseno:\t" + courseVO.getCourseno());
 		out.println("Cstypeno:\t" + courseVO.getCstypeno());
@@ -45,6 +47,9 @@ public class CourseServlet_TestJNDI extends HttpServlet {
 		out.println("Csscore:\t" + courseVO.getCsscore());
 		out.println("Csscoretimes:\t" + courseVO.getCsscoretimes());
 		out.println();
+		} else {
+			out.println("吃雞雞");
+		}
 		
 //		out.println("=== TEST === ADD ONE ===");
 //		courseSvc.addCourse("TYPE0002", "TCHR0002", "真空吸引", "TEST", 666, 666, "下架", 666, 666);
@@ -70,24 +75,24 @@ public class CourseServlet_TestJNDI extends HttpServlet {
 //			out.println();
 //		}
 		
-		out.println("=== TEST === GET ALL ===");
-		Map<String, String[]> map = new TreeMap<String, String[]>();
-		map.put("tchrno", new String[] { "0001" });
-		List<CourseVO> list2 = courseSvc.getAll(map);
-		
-		for (CourseVO courseVO_L : list2) {
-			out.println("Courseno:\t" + courseVO_L.getCourseno());
-			out.println("Cstypeno:\t" + courseVO_L.getCstypeno());
-			out.println("Tchrno:\t" + courseVO_L.getTchrno());
-			out.println("Coursename:\t" + courseVO_L.getCoursename());
-			out.println("Courseinfo:\t" + courseVO_L.getCourseinfo());
-			out.println("Courseprice:\t" + courseVO_L.getCourseprice());
-			out.println("Ttltime:\t" + courseVO_L.getTtltime());
-			out.println("Csstatus:\t" + courseVO_L.getCsstatus());
-			out.println("Csscore:\t" + courseVO_L.getCsscore());
-			out.println("Csscoretimes:\t" +courseVO_L.getCsscoretimes());
-			out.println();
-		}
+//		out.println("=== TEST === GET ALL ===");
+//		Map<String, String[]> map = new TreeMap<String, String[]>();
+//		map.put("tchrno", new String[] { "0001" });
+//		List<CourseVO> list2 = courseSvc.getAll(map);
+//		
+//		for (CourseVO courseVO_L : list2) {
+//			out.println("Courseno:\t" + courseVO_L.getCourseno());
+//			out.println("Cstypeno:\t" + courseVO_L.getCstypeno());
+//			out.println("Tchrno:\t" + courseVO_L.getTchrno());
+//			out.println("Coursename:\t" + courseVO_L.getCoursename());
+//			out.println("Courseinfo:\t" + courseVO_L.getCourseinfo());
+//			out.println("Courseprice:\t" + courseVO_L.getCourseprice());
+//			out.println("Ttltime:\t" + courseVO_L.getTtltime());
+//			out.println("Csstatus:\t" + courseVO_L.getCsstatus());
+//			out.println("Csscore:\t" + courseVO_L.getCsscore());
+//			out.println("Csscoretimes:\t" +courseVO_L.getCsscoretimes());
+//			out.println();
+//		}
 	}
 
 }
