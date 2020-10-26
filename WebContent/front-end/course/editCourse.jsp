@@ -11,6 +11,12 @@
 
 <%
 	CourseVO courseVO = (CourseVO) request.getAttribute("courseVO");
+
+// 	開玄修改
+	if(courseVO == null){
+		courseVO = new CourseService().getOneCourse(request.getParameter("courseno"));
+		request.setAttribute("courseVO",courseVO);
+	}
 	
 	// 處理課程評分精度以及分母為零的問題
 	Integer csscore = courseVO.getCsscore();
@@ -22,7 +28,7 @@
 	}
 	
 	//開玄-->爛方法 要把名字傳到題庫
-	request.getSession().setAttribute("coursename", courseVO.getCoursename());
+	request.getSession().setAttribute("courseno", courseVO.getCourseno());
 	
 %>
 
@@ -52,7 +58,7 @@
 
 		<div class="row">
 			<div class="col">
-				<h1 id="pageTitle">課程管理 - ${coursename}</h1>
+				<h1 id="pageTitle">課程管理 - ${courseVO.coursename}</h1>
 			</div>
 		</div>
 

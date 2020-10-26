@@ -31,7 +31,7 @@ if(QuestionBankvo !=null && QuestionBankvo.getQuans()!= null && QuestionBankvo.g
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <!-- include summernote css/js -->
     <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+    
     
     <style type="text/css">
           .container {
@@ -47,7 +47,7 @@ if(QuestionBankvo !=null && QuestionBankvo.getQuans()!= null && QuestionBankvo.g
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	width: 40%;
+	width: 60%;
 	/*background: #efefef;*/
 	background: linear-gradient(to bottom, #e8e8e8 0, #f5f5f5 100%);
 	border: 1px solid #dfdfdf;
@@ -154,11 +154,16 @@ option[value=""] {
 }
 
 .note-handle .note-control-selection .note-control-se{display:none}
+
+
     </style>
     
 </head>
 
 <body>
+
+<jsp:include page="/index/front-index/header.jsp" />
+
 <c:if test="${not empty errorMsgs}">
 	<ul>
 	    <c:forEach var="message" items="${errorMsgs}">
@@ -166,6 +171,13 @@ option[value=""] {
 		</c:forEach>
 	</ul>
 </c:if>
+<div class="container-fluid" style="margin-top: 90px;">
+
+		<div class="row">
+			<div class="col" style="text-align:center;color:white;">
+				<h1 id="pageTitle" >新增考題</h1>
+			</div>
+		</div>
    
         <div class="container">
         <form id="myform" class="flexform-column" action="<%= request.getContextPath()%>/question/questionBank.do" method="post">
@@ -204,6 +216,7 @@ option[value=""] {
         		</div>
         </form>
         </div>
+    </div>    
     <script type="text/javascript">
        
         		
@@ -244,7 +257,7 @@ option[value=""] {
                     <li><label><input type="radio" name="single" value="C" ${opAns[2] eq '1'? 'checked':''}> C. <input type="text" name="op3" value="${QuestionBankvo.op3}" placeholder="請輸入選項" style="width:209px"></label></li>
                     <li><label><input type="radio" name="single" value="D" ${opAns[3] eq '1'? 'checked':''}> D. <input type="text" name="op4" value="${QuestionBankvo.op4}" placeholder="請輸入選項" style="width:209px"></label></li>
                 </ul>
-            <h5>答案:</h5><input type="text" name="quans" id="writeanswer" value="${testAns}" readonly>`);
+            <h5>答案:</h5><input type="text" name="quans" id="writeanswer" value="${testAns}" readonly="readonly">`);
 
                             $('.summernote').summernote({
                                 width: 480,
@@ -273,7 +286,7 @@ option[value=""] {
                     <li><label><input type="checkbox" name="multiple" value="C" ${opAns[2] eq '1'? 'checked':''}> C. <input type="text" name="op3" value="${QuestionBankvo.op3}" placeholder="請輸入選項" style="width:209px"></label></li>
                     <li><label><input type="checkbox" name="multiple" value="D" ${opAns[3] eq '1'? 'checked':''}> D. <input type="text" name="op4" value="${QuestionBankvo.op4}" placeholder="請輸入選項" style="width:209px"></label></li>
                 </ul>
-            <h5>答案:</h5><input type="text" name="quans" id="writeanswer" value="${testAns}" readonly> `);
+            <h5>答案:</h5><input type="text" name="quans" id="writeanswer" value="${testAns}" readonly="readonly"> `);
                             
                             $('.summernote').summernote({
                                 width: 480,
@@ -311,6 +324,9 @@ option[value=""] {
                     
                 });
             </script>
+            
+            <jsp:include page="/index/front-index/footer.jsp" />
+            <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
         </body>
 
         </html>        	

@@ -22,7 +22,7 @@
 <html>
 <head>
 <meta charset="BIG5">
-<title>Insert title here</title>
+<title>考題管理 - ${CourseSvc.getOneCourse(courseno).coursename}</title>
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <!--     <title>Bootstrap CRUD Data Table for Database with Modal Form</title> -->
@@ -49,7 +49,7 @@
 
 		<div class="row">
 			<div class="col" style="text-align:center;color:white;">
-				<h1 id="pageTitle" >考題管理 - ${coursename}</h1>
+				<h1 id="pageTitle" >考題管理 - ${CourseSvc.getOneCourse(courseno).coursename}</h1>
 			</div>
 		</div>
 	
@@ -66,15 +66,19 @@
 				<div class="table-title">
 					<div class="row">
 						<div class="col-sm-6">
-							<h2>
-								Manage <b>TestQuestion</b>
+							<h2 style="color:white">
+								考題管理
 							</h2>
 						</div>
 						<div class="col-sm-6">
 							<a
+								href='<%=request.getContextPath()%>/front-end/course/editCourse.jsp?courseno=${CourseSvc.getOneCourse(courseno).courseno}'
+								class="btn btn-info"><i class="fa fa-undo" aria-hidden="true"></i>
+								<span>回到課程編輯</span></a>
+							<a
 								href='<%=request.getContextPath()%>/front-end/question/inputQuestion.jsp'
-								class="btn btn-success"><i class="material-icons">&#xE147;</i>
-								<span>Add New Question</span></a>
+								class="btn btn-info"><i class="material-icons">&#xE147;</i>
+								<span>新增考題</span></a>
 						</div>
 					</div>
 				</div>
@@ -106,7 +110,9 @@
 					</select> <input type="text" name="qustmt"> <input type="hidden"
 						name="action" value="listEmps_ByCompositeQuery"> <input
 						type="submit" value="送出查詢">
+						
 				</form>
+				
 				<table class="table table-striped table-hover">
 					<thead>
 						<tr>

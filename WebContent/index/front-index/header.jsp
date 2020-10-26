@@ -68,8 +68,8 @@ height:36px;
                             購物車&nbsp;<i class="fa fa-shopping-cart" aria-hidden="true"></i>
                             </a>
                         </li>
-						<li class="nav-item"><a class="nav-link" href="#">
-								精選課程&nbsp;<i class="lni-leaf"></i>
+						<li class="nav-item"><a class="nav-link" href="<%=request.getContextPath()%>/front-end/course/listAllCourseForUser.jsp">
+								搜尋課程&nbsp;<i class="lni-leaf"></i>
 						</a></li>
 						<li class="nav-item"><a class="nav-link" href="<%=request.getContextPath()%>/front-end/lecture/listAllLec.jsp">
 								名人講座&nbsp;<i class="lni-bulb"></i>
