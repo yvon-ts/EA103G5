@@ -249,7 +249,7 @@ height:36px;
                     <div class="col-lg-5 col-md-12 col-sm-12 col-xs-12">
                         <div class="about-wrapper wow fadeInRight" data-wow-delay="0.3s">
                             <div id="introimg">
-                                <img class="img-fluid" src="assets/img/head/intro.png" alt="">
+                                <img class="img-fluid" src="<%=request.getContextPath()%>/index/front-index/assets/img/head/intro.png" alt="">
                             </div>
                         </div>
                     </div>
@@ -270,7 +270,7 @@ height:36px;
                 <div class="col-md-6 col-lg-4 col-xs-12">
                     <div class="services-item wow fadeInRight" data-wow-delay="0.3s">
                         <div class="icon">
-                            <img src="assets/img/course/img1.jpg">
+                            <img src="<%=request.getContextPath()%>/index/front-index/assets/img/course/img1.jpg">
                         </div>
                         <div class="services-content">
                             <i class="lni-star-filled"></i><i class="lni-star-filled"></i><i
@@ -288,7 +288,7 @@ height:36px;
                 <div class="col-md-6 col-lg-4 col-xs-12">
                     <div class="services-item wow fadeInRight" data-wow-delay="0.3s">
                         <div class="icon">
-                            <img src="assets/img/course/img2.jpg">
+                            <img src="<%=request.getContextPath()%>/index/front-index/assets/img/course/img2.jpg">
                         </div>
                         <div class="services-content">
                             <i class="lni-star-filled"></i><i class="lni-star-filled"></i><i
@@ -306,7 +306,7 @@ height:36px;
                 <div class="col-md-6 col-lg-4 col-xs-12">
                     <div class="services-item wow fadeInRight" data-wow-delay="0.3s">
                         <div class="icon">
-                            <img src="assets/img/course/img3.jpg">
+                            <img src="<%=request.getContextPath()%>/index/front-index/assets/img/course/img3.jpg">
                         </div>
                         <div class="services-content">
                             <i class="lni-star-filled"></i><i class="lni-star-filled"></i><i
@@ -324,7 +324,7 @@ height:36px;
                 <div class="col-md-6 col-lg-4 col-xs-12">
                     <div class="services-item wow fadeInRight" data-wow-delay="0.3s">
                         <div class="icon">
-                            <img src="assets/img/course/img3.jpg">
+                            <img src="<%=request.getContextPath()%>/index/front-index/assets/img/course/img3.jpg">
                         </div>
                         <div class="services-content">
                             <i class="lni-star-filled"></i><i class="lni-star-filled"></i><i
@@ -342,7 +342,7 @@ height:36px;
                 <div class="col-md-6 col-lg-4 col-xs-12">
                     <div class="services-item wow fadeInRight" data-wow-delay="0.3s">
                         <div class="icon">
-                            <img src="assets/img/course/img1.jpg">
+                            <img src="<%=request.getContextPath()%>/index/front-index/assets/img/course/img1.jpg">
                         </div>
                         <div class="services-content">
                             <i class="lni-star-filled"></i><i class="lni-star-filled"></i><i
@@ -360,7 +360,7 @@ height:36px;
                 <div class="col-md-6 col-lg-4 col-xs-12">
                     <div class="services-item wow fadeInRight" data-wow-delay="0.3s">
                         <div class="icon">
-                            <img src="assets/img/course/img2.jpg">
+                            <img src="<%=request.getContextPath()%>/index/front-index/assets/img/course/img2.jpg">
                         </div>
                         <div class="services-content">
                             <i class="lni-star-filled"></i><i class="lni-star-filled"></i><i
@@ -383,7 +383,7 @@ height:36px;
         <div class="container">
             <div class="row">
                 <div class="col-lg-6 col-md-12 col-xs-12 wow fadeInLeft" data-wow-delay="0.3s">
-                    <img class="img-fluid" src="assets/img/head/tchr.png" alt="">
+                    <img class="img-fluid" src="<%=request.getContextPath()%>/index/front-index/assets/img/head/tchr.png" alt="">
                 </div>
                 <div class="col-lg-1 col-md-12 col-xs-12"></div>
                 <div class="col-lg-5 col-md-12 col-xs-12 info">
@@ -456,7 +456,7 @@ height:36px;
                 <!-- 講座區圖片 -->
                 <div class="col-lg-5 col-md-12 col-sm-12 col-xs-12">
                     <div class="show-box wow fadeInUp" data-wow-delay="0.3s">
-                        <img src="assets/img/head/calendar.gif" alt="">
+                        <img src="<%=request.getContextPath()%>/index/front-index/assets/img/head/calendar.gif" alt="">
                     </div>
                 </div>
             </div>
@@ -479,7 +479,7 @@ height:36px;
                         <div class="item">
                             <div class="testimonial-item">
                                 <div class="img-thumb">
-                                    <img src="assets/img/testimonial/img1.jpg" alt="">
+                                    <img src="<%=request.getContextPath()%>/index/front-index/assets/img/testimonial/img1.jpg" alt="">
                                 </div>
                                 <div class="info">
                                     <h2><a href="#">David Smith</a></h2>
@@ -501,7 +501,7 @@ height:36px;
                         <div class="item">
                             <div class="testimonial-item">
                                 <div class="img-thumb">
-                                    <img src="assets/img/testimonial/img2.jpg" alt="">
+                                    <img src="<%=request.getContextPath()%>/index/front-index/assets/img/testimonial/img2.jpg" alt="">
                                 </div>
                                 <div class="info">
                                     <h2><a href="#">Domeni GEsson</a></h2>
@@ -523,7 +523,7 @@ height:36px;
                         <div class="item">
                             <div class="testimonial-item">
                                 <div class="img-thumb">
-                                    <img src="assets/img/testimonial/img3.jpg" alt="">
+                                    <img src="<%=request.getContextPath()%>/index/front-index/assets/img/testimonial/img3.jpg" alt="">
                                 </div>
                                 <div class="info">
                                     <h2><a href="#">Dommini Albert</a></h2>
@@ -545,7 +545,7 @@ height:36px;
                         <div class="item">
                             <div class="testimonial-item">
                                 <div class="img-thumb">
-                                    <img src="assets/img/testimonial/img4.jpg" alt="">
+                                    <img src="<%=request.getContextPath()%>/index/front-index/assets/img/testimonial/img4.jpg" alt="">
                                 </div>
                                 <div class="info">
                                     <h2><a href="#">Fernanda Anaya</a></h2>
@@ -578,7 +578,7 @@ height:36px;
                 </div>
                 <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6 col-mb-12">
                     <div class="widget" style="text-align: center">
-                        <img src="assets/img/logo.svg" style="width: 100px; height: auto" alt="">
+                        <img src="<%=request.getContextPath()%>/index/front-index/assets/img/logo.svg" style="width: 100px; height: auto" alt="">
                         </a>
                     </div>
                 </div>

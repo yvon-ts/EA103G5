@@ -14,11 +14,11 @@ MembersVO membersVO = (MembersVO) session.getAttribute("membersVO");
 <html lang="en">
 
 <head>
-<link rel="stylesheet"
+<!-- <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.3/sweetalert2.css" />
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.3/sweetalert2.js"
-	type="text/javascript"></script>
+	type="text/javascript"></script> -->
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -54,7 +54,7 @@ height:36px;
 			<div class="container">
 				<!-- Brand and toggle get grouped for better mobile display -->
 				<a
-					href="<%=request.getContextPath()%>//index/front-index/index.jsp"
+					href="<%=request.getContextPath()%>/index/front-index/index.jsp"
 					class="navbar-brand"><img src="<%=request.getContextPath()%>/front-end/members/assets/img/logo.svg" alt="">
 					<div id="logo">Xducation</div> </a>
 				<button class="navbar-toggler" type="button" data-toggle="collapse"

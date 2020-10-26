@@ -5,7 +5,7 @@
 
 
 
-<%@ include file="/index/front-index/headtest.jsp" %>
+<%@ include file="/index/front-index/header.jsp" %>
 
 <!DOCTYPE html>
 <html lang="en">
