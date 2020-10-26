@@ -1,6 +1,7 @@
 package com.employee.model;
 
 import java.util.List;
+import java.util.Optional;
 
 import com.emp_authority.model.EmpAuthorityVO;
 import com.functionx.model.FunctionxVO;
@@ -15,4 +16,5 @@ public interface EmployeeDAO_interface {
 	public List<EmployeeVO> getAll();
 	public String insertWithEmp(EmployeeVO employeeVO);
 	public EmployeeVO getOneAcc(String empacc);
+	Optional<EmployeeVO> findEmpPicByEmpno(String empno);//show圖片
 }

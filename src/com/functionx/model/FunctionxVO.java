@@ -7,7 +7,6 @@ public class FunctionxVO implements Serializable{
 
 	private String funcno;
 	private String funcname;
-	private String urls;
 	private Date funclmod;
 	
 	
@@ -19,12 +18,6 @@ public class FunctionxVO implements Serializable{
 	}
 	public String getFuncname() {
 		return funcname;
-	}
-	public String getUrl() {
-		return urls;
-	}
-	public void setUrl(String urls) {
-		this.urls = urls;
 	}
 	public void setFuncname(String funcname) {
 		this.funcname = funcname;

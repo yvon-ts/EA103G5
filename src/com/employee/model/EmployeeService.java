@@ -1,6 +1,7 @@
 package com.employee.model;
 
 import java.util.List;
+import java.util.Optional;
 
 public class EmployeeService {
 	
@@ -16,22 +17,23 @@ public class EmployeeService {
 //	
 	//增加員工
 	public EmployeeVO addEmp(String empacc, String emppwd, String empname, Integer empsalary
-			, java.sql.Date hiredate, String empemail) {
+			, java.sql.Date hiredate, String empemail, byte[] emppic) {
 		
 		EmployeeVO employeeVO = new EmployeeVO();
 		
 		employeeVO.setEmpacc(empacc);
-		employeeVO.setEmppwd(emppwd);//先暫時寫這樣
+		employeeVO.setEmppwd(emppwd);
 		employeeVO.setEmpname(empname);
 		employeeVO.setEmpsalary(empsalary);
 		employeeVO.setHiredate(hiredate);
 		employeeVO.setEmpemail(empemail);
+		employeeVO.setEmppic(emppic);
 		employeeVO.setEmpno(dao.insertWithEmp(employeeVO));
 		return employeeVO;	
 	}
 	//更新員工資料
 	 public EmployeeVO updateEmp(String empno,String empacc, String emppwd, String empname, Integer empsalary
-			 , java.sql.Date hiredate, String empemail, Integer empdelete) {
+			 , java.sql.Date hiredate, String empemail, Integer empdelete, byte[] emppic) {
 		 
 		 EmployeeVO employeeVO = new EmployeeVO();
 		 employeeVO.setEmpno(empno);
@@ -42,6 +44,7 @@ public class EmployeeService {
 		 employeeVO.setHiredate(hiredate);
 		 employeeVO.setEmpemail(empemail);
 		 employeeVO.setEmpdelete(empdelete);
+		 employeeVO.setEmppic(emppic);
 		 dao.update(employeeVO);
 		 return employeeVO;		 
 	 }
@@ -63,4 +66,8 @@ public class EmployeeService {
 	 public EmployeeVO getEmpAcc(String empacc) {
 		 return dao.getOneAcc(empacc);
 	 }
+	 
+	 public Optional<EmployeeVO> getEmpPicByEmpno(String empno){
+			return dao.findEmpPicByEmpno(empno);
+		}
 }

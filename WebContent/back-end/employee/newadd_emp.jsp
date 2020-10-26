@@ -344,7 +344,7 @@ table.table .avatar {
 					</div>
 				</div>
 			
-				<form method="post" ACTION="<%=request.getContextPath() %>/employee/employee.do" name="form1">
+				<form method="post" ACTION="<%=request.getContextPath() %>/employee/employee.do" name="form1" enctype="multipart/form-data">
 					<table class="table table-striped table-hover" id="test">
 						<tbody>
 							<c:if test="${not empty errMsgs}">
@@ -396,6 +396,13 @@ table.table .avatar {
       							</th>     							
 							</tr>
 							<tr>
+								<th>員工照片</th>
+							
+																																			
+     								<th><input type="file" name="emppic" placeholder="請上傳圖片" id="emp_pic"></th>							          							
+                                    <th width="100" height="100" id="preview"></th>                                							
+							</tr>
+							<tr>
 								<th>								
 									<input type="hidden" name="action" value="insert"> 
 									<input type="submit" class="view" value="新增員工">									
@@ -438,5 +445,36 @@ table.table .avatar {
 		}
 	}	
 </script>
+<script type="text/javascript">
+    var admin_pic = document.getElementById("emp_pic");
+    var preview = document.getElementById('preview');
+
+    admin_pic.addEventListener('change', function() {
+
+        var files = admin_pic.files;
+
+        if (files !== null) {
+            for (var i = 0; i < files.length; i++) {
+                var file = files[i];
+                console.log(file);
+
+                if (file.type.indexOf('image') > -1) {
+
+                    var reader = new FileReader();
+
+                    reader.addEventListener('load', function(e) {
+
+                        var img = document.createElement('img');
+                        img.setAttribute('src', e.target.result);
+                        preview.append(img);
+                    });
+                    reader.readAsDataURL(file); // ***** trigger
+                } else {
+                    alert('請上傳圖片！');
+                }
+            }
+        }
+    });
+    </script>
 
 </html>
