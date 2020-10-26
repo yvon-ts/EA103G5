@@ -192,7 +192,7 @@
 					</div>
 					<div id="post" class="tab-pane fade">
 						<h3>問題討論</h3>
-						<jsp:include page="/front-end/course/subpage_post.html" />
+						<jsp:include page="/front-end/posts/posts.jsp" />
 					</div>
 				</div>
 
