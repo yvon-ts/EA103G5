@@ -20,18 +20,20 @@ System.out.println("目前登入的是:" + membersVO.getMemno());
 %>
 
 <% 
-/* String courseno = (String)request.getParameter("courseno");*/
+String courseno = (String)request.getParameter("courseno");
 
 //須由前端給值
-String courseno = "COUR0002";
+// String courseno = "COUR0001";
 pageContext.setAttribute("courseno", courseno);
 
-CourseService courseSrv = new CourseService();
-CourseVO courseVO = courseSrv.getOneCourse(courseno);
-pageContext.setAttribute("courseVO", courseVO);
-System.out.println("測試的課程編號=" + courseno + "，課程名稱=" + courseVO.getCoursename() );
+// CourseService courseSrv = new CourseService();
+// CourseVO courseVO = courseSrv.getOneCourse(courseno);
+// pageContext.setAttribute("courseVO", courseVO);
+// System.out.println("測試的課程編號=" + courseno + "，課程名稱=" + courseVO.getCoursename() );
 
 %>
+
+
 
 <jsp:useBean id="postSvc" scope="page" class="com.posts.model.PostsService"/>
 <jsp:useBean id="memSvc" scope="page" class="com.members.model.MembersService"/>
@@ -40,17 +42,7 @@ System.out.println("測試的課程編號=" + courseno + "，課程名稱=" + co
 <!DOCTYPE html>
 <html>
 <head>	
-		<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-		<script src="/library/jquery/jquery-3.5.1.js"></script>
-		<script>
-			function toggleA(name){
-				if	(document.getElementById(name).style.display=="none"){
-					document.getElementById(name).style.display = "block";
-				} else{
-					document.getElementById(name).style.display = "none";
-				}
-			}
-		</script>
+		
 <meta charset="UTF-8">
 <title>Insert title here</title>
 
@@ -59,6 +51,15 @@ System.out.println("測試的課程編號=" + courseno + "，課程名稱=" + co
 .button1{
 	display:inline-block;
 	color: -internal-light-dark(white);
+}
+#btn{
+width:60px;
+height: 44px;
+background-color:#6dabe4;
+color:white;
+font-weight: bolder;
+border-radius:10px;
+
 }
 
 </style>
@@ -85,7 +86,7 @@ ul {
 }
 body {
 	font-family: 'Roboto', Arial, Helvetica, Sans-serif, Verdana;
-	background: #dee1e3;
+	background: #ffffff;
 }
 /** ====================
  * Lista de Comentarios
@@ -174,9 +175,9 @@ body {
 	-webkit-border-radius: 4px;
 	-moz-border-radius: 4px;
 	border-radius: 4px;
-	-webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
-	-moz-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
-	box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+	-webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, 1);
+	-moz-box-shadow: 0 1px 2px rgba(0, 0, 0, 1);
+	box-shadow: 0 1px 2px rgba(0, 0, 0, 1);
 	overflow: hidden;
 }
 .comments-list .comment-avatar img {
@@ -201,9 +202,9 @@ body {
 	width: 680px;
 	float: right;
 	position: relative;
-	-webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15);
-	-moz-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15);
-	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15);
+  	-webkit-box-shadow: 0px 0px 0px 0px rgba(0, 1, 0, 1);  
+  	-moz-box-shadow: 1px 1px 1px 1px rgba(0, 1, 0, 1);  
+   	box-shadow: 1px 1px 1px 1px rgba(1, 1, 1, 1);   
 }
 .comments-list .comment-box:before, .comments-list .comment-box:after {
 	
@@ -219,7 +220,7 @@ body {
 }
 .comments-list .comment-box:before {
 	border-width: 11px 13px 11px 0;
-	border-color: transparent rgba(0, 0, 0, 0.05);
+	border-color: transparent rgba(0, 0, 0, 0);
 	left: -12px;
 }
 .reply-list .comment-box {
@@ -228,11 +229,11 @@ body {
 .comment-box .comment-head {
 	background: #A2D9FF;
 	padding: 10px 12px;
-	border-bottom: 1px solid #E5E5E5;
+ 	border-bottom: 4px solid #E5E5E5;
 	overflow: hidden;
-	-webkit-border-radius: 4px 4px 0 0;
-	-moz-border-radius: 4px 4px 0 0;
-	border-radius: 4px 4px 0 0;
+	-webkit-border-radius: 4px 4px 0 4px;
+	-moz-border-radius: 4px 4px 0 4px;
+	border-radius: 4px 4px 0 4px;
 }
 .comment-box .comment-head i {
 	float: right;
@@ -266,7 +267,7 @@ body {
 	top: 1px;
 }
 .comment-box .comment-content {
-	background: #FFF;
+	background: #fff;
 	padding: 12px;
 	font-size: 15px;
 	color: #595959;
@@ -286,9 +287,9 @@ body {
 	padding: 3px 5px;
 	font-weight: 700;
 	margin-left: 10px;
-	-webkit-border-radius: 3px;
-	-moz-border-radius: 3px;
-	border-radius: 3px;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	border-radius: 4px;
 }
 .add {
 	postion: absolute;
@@ -308,6 +309,8 @@ body {
 		width: 320px;
 	}
 }
+
+
 </style>
 <body>
 
@@ -328,8 +331,9 @@ body {
 						<!-- textarea -->
 						<div class="comment-box">
 							<textarea rows="4" cols="50" style="width: 680px;" name="postcontent" placeholder="please leave a message...">${memVO.memno}</textarea>
+						
 							<div align="right">
-								<button>送出</button>
+								<button id = btn>送出</button>
 							</div>
 						</div>
 					</div>
@@ -372,29 +376,34 @@ body {
 								<span></span>
 								<div align="right">
 									<c:if test="${membersVO.memno == memVO.memno}">
-										<input type="button" onclick="toggleA('${postsVO.postno}_reply')" class="button1" value="修改"></input>
+<%-- 										<input type="button" onclick="toggleA('${postsVO.postno}_reply')" class="button1" value="修改"></input> --%>
 									
-											<form METHOD="post"  ACTION="<%=request.getContextPath()%>/posts/posts.do" class="button1" accept-charset="utf-8">
-											<input type="submit"  value="刪除"></input>
-											<input type="hidden" name="action" value="update_Status_Remove" />
-											<input type="hidden" name="postno" value="${postsVO.postno}"/>
-											</form>
+											<img onclick="toggleA('${postsVO.postno}_reply')" src="<%=request.getContextPath() %>/front-end/posts/images/edit.png" style="width:15px;height:15px;"/>
+											
+											<a href="<%=request.getContextPath()%>/posts/posts.do?postno=${postsVO.postno}&action=update_Status_Remove"><img src="<%=request.getContextPath() %>/front-end/posts/images/delete.png" style="width:15px;height:15px"></a>
+											
+<%-- 											<form METHOD="post"  ACTION="<%=request.getContextPath()%>/posts/posts.do" class="button1" accept-charset="utf-8"> --%>
+<!-- 											<input type="submit"  value="刪除"></input> -->
+<!-- 											<input type="hidden" name="action" value="update_Status_Remove" /> -->
+<%-- 											<input type="hidden" name="postno" value="${postsVO.postno}"/> --%>
+<!-- 											</form> -->
 									</c:if>
 									<!--檢舉 -->
-									<button onclick="report()"><img src="<%=request.getContextPath() %>/front-end/posts/images/flag.png" style="width:15px;height:15px"></button>
-									
-									<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/report_detail/report_detail.do" name="form1">
-										<input type="hidden" name="memno" value="${reportdetailVO.getMemno()}"/>
-										<input type="hidden" name="postno" value="${reportdetailVO.getPostno()}"/>
-										<input type="hidden" name="action"	value="getOne_For_Update_AddReport">
-										<input type="submit" value="送出檢舉">
-										</FORM>
+<%-- 									<button onclick="report()"><img src="<%=request.getContextPath() %>/front-end/posts/images/flag.png" style="width:15px;height:15px"></button> --%>
+									<a href="<%=request.getContextPath()%>/report_detail/report_detail.do?memno=${memVO.memno}&postno=${postsVO.postno}&action=getOne_For_Update_AddReport"><img src="<%=request.getContextPath() %>/front-end/posts/images/flag.png" style="width:15px;height:15px"></a>
+<%-- 									<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/report_detail/report_detail.do"> --%>
+<%-- 										<input type="hidden" name="memno" value="${memVO.memno}"/> --%>
+<%-- 										<input type="hidden" name="postno" value="${postsVO.postno}"/> --%>
+<!-- 										<input type="hidden" name="action"	value="getOne_For_Update_AddReport"> -->
+<!-- 										<input id="reportBtn" type="submit" value="檢舉"> -->
+<!-- 										</FORM> -->
 									
 									<%--<input type="button" onclick="toggleA('${postsVO.postno }')" value="回覆"> --%>
-									<button onclick="toggleA('${postsVO.postno}')" type="button"><img src="<%=request.getContextPath() %>/front-end/posts/images/reply.png" style="width:15px;height:15px;"></button>
-									
+<%-- 									<button id="btn" onclick="toggleA('${postsVO.postno}')" type="button"><img onclick="toggleA('${postsVO.postno}'" src="<%=request.getContextPath() %>/front-end/posts/images/reply.png" style="width:15px;height:15px;"></button> --%>
+<%-- 										<button id="btn" onclick="toggleA('${postsVO.postno}')" type="button">cancel</button> --%>
+										<img onclick="toggleA('${postsVO.postno}')" src="<%=request.getContextPath() %>/front-end/posts/images/message.png" style="width:15px;height:15px;"/>
+									</div>				
 								</div>				
-							</div>				
 							<div class="comment-content">${postsVO.postcontent}</div>
 							<div class="comment-content">
 								<form METHOD="post" id="${postsVO.postno}_reply" ACTION="<%=request.getContextPath()%>/posts/posts.do" style="display:none" accept-charset="utf-8">
@@ -404,7 +413,7 @@ body {
 									<input type="hidden" name="superpostno" value="${postsVO.superpostno}"/>
 									<input type="hidden" name="memno" value="${postsVO.memno}"/>
 									<input type="hidden" name="courseno" value="${postsVO.courseno}"/>
-									<input type="submit" value="送出"/> 
+									<input id = btn type="submit" value="送出"/> 
 								
 								</form>
 								</div>
@@ -436,16 +445,22 @@ body {
 										</h6>
 										<div align="right">
 											<c:if test="${membersVO.memno == memVOSub.memno}">
-												<input type="button" onclick="toggleA('${postsVOSub.postno}_reply')" class="button1" value="修改"></input>
+<%-- 												<input type="button" onclick="toggleA('${postsVOSub.postno}_reply')" class="button1" value="修改"></input> --%>
 												
-												<form METHOD="post" ACTION="<%=request.getContextPath()%>/posts/posts.do" class="button1" accept-charset="utf-8">
-												<input type="submit"  value="刪除"></input>
-												<input type="hidden" name="action" value="update_Status_Remove" />
-												<input type="hidden" name="postno" value="${postsVOSub.postno}"/>
-												</form>
+												<img onclick="toggleA('${postsVOSub.postno}_reply')" src="<%=request.getContextPath() %>/front-end/posts/images/edit.png" style="width:15px;height:15px;"/>
+												
+												
+												<a href="<%=request.getContextPath()%>/posts/posts.do?postno=${postsVOSub.postno}&action=update_Status_Remove"><img src="<%=request.getContextPath() %>/front-end/posts/images/delete.png" style="width:15px;height:15px"></a>
+												
+<%-- 												<form METHOD="post" ACTION="<%=request.getContextPath()%>/posts/posts.do" class="button1" accept-charset="utf-8"> --%>
+<!-- 												<input type="submit"  value="刪除"></input> -->
+<!-- 												<input type="hidden" name="action" value="update_Status_Remove" /> -->
+<%-- 												<input type="hidden" name="postno" value="${postsVOSub.postno}"/> --%>
+<!-- 												</form> -->
 											</c:if>
 											<!--檢舉 -->
-											<button type ="button" onclick="report()"><img src="<%=request.getContextPath() %>/front-end/posts/images/flag.png" style="width:15px;height:15px"></button>
+<%-- 											<button type ="button" onclick="report()"><img src="<%=request.getContextPath() %>/front-end/posts/images/flag.png" style="width:15px;height:15px"></button> --%>
+										<a href="<%=request.getContextPath()%>/report_detail/report_detail.do?memno=${memVO.memno}&postno=${postsVO.postno}&action=getOne_For_Update_AddReport"><img src="<%=request.getContextPath() %>/front-end/posts/images/flag.png" style="width:15px;height:15px"></a>
 										</div>
 									</div>
 									<div class="comment-content">${postsVOSub.postcontent}</div>
@@ -457,7 +472,7 @@ body {
 											<input type="hidden" name="superpostno" value="${postsVOSub.superpostno}"/>
 											<input type="hidden" name="memno" value="${postsVOSub.memno}"/>
 											<input type="hidden" name="courseno" value="${postsVOSub.courseno}"/>
-											<input type="submit" value="送出"/> 
+											<input id = btn type="submit" value="送出"/> 
 										
 										</form>
 									</div>
@@ -486,7 +501,7 @@ body {
 								<div class="comment-box">
 									<textarea rows="4" cols="50" style="width: 680px;" name="postcontent"></textarea>
 									<div align="right">
-										<button>新增回覆</button>
+										<button id = btn>新增回覆</button>
 									</div>
 								</div>
 							</div>
@@ -497,10 +512,39 @@ body {
 <%-- 		</c:forEach> --%>
 	</c:forEach>
 	
-	</div>	
+	</div>
+	
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+		<script src="/library/jquery/jquery-3.5.1.js"></script>
+		
 <script>
+	
+// 	function init(){
+	
+	var reportBtn = document.getElementById("reportBtn");
+	reportBtn.addEventListener('click',function (){
+// 		confirm('test');
+		swal("檢舉成功!", "1", "success");
+// 		alert('111');
+	});
+	
+	
+	function toggleA(name){
+		if	(document.getElementById(name).style.display=="none"){
+			document.getElementById(name).style.display = "block";
+		} else{
+			document.getElementById(name).style.display = "none";
+		}
+	}
+	
+	
 
-	swal("檢舉成功!", "", "success");
+	
+	
+	
+// 	};
+	 
+//   	window.onload = init;
 
 </script>
 </body>

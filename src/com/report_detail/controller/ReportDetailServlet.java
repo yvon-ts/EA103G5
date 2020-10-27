@@ -16,7 +16,7 @@ import javax.servlet.http.HttpSession;
 import com.report_detail.model.ReportDetailService;
 import com.report_detail.model.ReportDetailVO;
 
-@WebServlet("/ReportDetailServlet")
+//@WebServlet("/ReportDetailServlet")
 public class ReportDetailServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -122,10 +122,11 @@ public class ReportDetailServlet extends HttpServlet {
 		
 			req.setAttribute("errorMsgs", errorMsgs);
 
-			try {
+//			try {
 				/*************************** 1.接收請求參數 ****************************************/
 				
 				String memno = req.getParameter("memno");
+				System.out.println(memno);
 				String postno = req.getParameter("postno");
 				
 				
@@ -142,11 +143,11 @@ public class ReportDetailServlet extends HttpServlet {
 				successView.forward(req, res);
 					
 				/*************************** 其他可能的錯誤處理 **********************************/
-			} catch (Exception e) {
-				errorMsgs.add("無法取得要修改的資料:" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/report_detail/select_page.jsp");
-				failureView.forward(req, res);
-			}
+//			} catch (Exception e) {
+//				errorMsgs.add("無法取得要修改的資料:" + e.getMessage());
+//				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/posts/posts.jsp");
+//				failureView.forward(req, res);
+//			}
 		}
 		if ("getOne_For_Update_removeReportFront".equals(action)) { // 來自listAllEmp.jsp的請求
 
