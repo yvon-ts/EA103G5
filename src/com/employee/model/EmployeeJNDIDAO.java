@@ -104,7 +104,7 @@ public class EmployeeJNDIDAO implements EmployeeDAO_interface {
 			pstmt.setDate(5, employeeVO.getHiredate());
 			pstmt.setString(6, employeeVO.getEmpemail());
 			pstmt.setInt(7, employeeVO.getEmpdelete());
-			pstmt.setBytes(9, employeeVO.getEmppic());
+			pstmt.setBytes(8, employeeVO.getEmppic());
 			pstmt.setString(9, employeeVO.getEmpno());
 
 			pstmt.executeUpdate();

@@ -397,10 +397,8 @@ table.table .avatar {
 							</tr>
 							<tr>
 								<th>員工照片</th>
-							
-																																			
-     								<th><input type="file" name="emppic" placeholder="請上傳圖片" id="emp_pic"></th>							          							
-                                    <th width="100" height="100" id="preview"></th>                                							
+								 <th width="100" height="100" id="preview"></th>  																																		
+     							<th><input type="file" name="emppic"   placeholder="請上傳圖片" id="emp_pic"></th>							          							                                                             							
 							</tr>
 							<tr>
 								<th>								
@@ -464,8 +462,11 @@ table.table .avatar {
 
                     reader.addEventListener('load', function(e) {
 
-                        var img = document.createElement('img');
+                        var img = document.createElement('img');                   
                         img.setAttribute('src', e.target.result);
+                        img.setAttribute('class', 'rounded-circle');
+                        img.style.width="350px";
+                        img.style.height="350px";
                         preview.append(img);
                     });
                     reader.readAsDataURL(file); // ***** trigger
