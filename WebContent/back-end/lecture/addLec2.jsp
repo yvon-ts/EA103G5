@@ -15,8 +15,11 @@
 //========================Init lecstart========================//
 	String param = request.getParameter("lecinit");
 	SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+	SimpleDateFormat format2 = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
 	java.util.Date paramDate = format.parse(param);
+	java.util.Date paramDate2 = format2.parse(param);
 	Timestamp lecinit = new java.sql.Timestamp(paramDate.getTime());
+	
 %>
 
 <html>
@@ -35,23 +38,25 @@
 		margin-top: -250px;
 		margin-left: 500px;
 	}
-	#form-area{
-		font-size: 1em;
-	}
 	#form-area input{
 		outline: none;
 		border: 0;
-		border-bottom: 1px solid #e5e5e5;
+		border-bottom: 1px solid #999;
 		width: 200px;
 	}
 		#form-area select{
 		outline: none;
+		border-bottom: 1px solid #999;
 	}
 	.btm-line{
 		margin-left: 4%;
 		font-size: 1.1em;
 		border-bottom:2px dashed #999;
 		padding-bottom: 20px;
+	}
+	.blank{
+		color:#ff6680;
+		font-weight: 600;
 	}
 </style>
 </head>
@@ -79,27 +84,29 @@
 				<div id="form-area" class="col-sm-7 btm-line">
 				
 			<%-- hidden roomno --%>
-			<input id="roomnoForm" type="text" name="roomno" value="${lecVO.roomno}"><br>
-			&emsp;講座名稱：&emsp;<input type="text" name="lecname" value="${lecVO.lecname}"><br>
-			&emsp;講師姓名：
+			<h2 style="font-weight: 700;">&nbsp;【修改講師資料】</h2>
+			<input type="hidden" name="signstart" id="f_date3">
+			<input type="hidden" name="signend" id="f_date4">
+			<input id="roomnoForm" type="hidden" name="roomno" value="${lecVO.roomno}"><br>
+			<span id="theme">&emsp;講座名稱</span>&emsp;<input id="lecname" type="text" name="lecname" value="${lecVO.lecname}"><br>
+			<span id="name">&emsp;講師姓名</span>
 			<jsp:useBean id="spkrSvc" scope="page" class="com.speaker.model.SpkrService" />
-			<select name="spkrno">
+			<select id="spkrno" name="spkrno">
+				<option>------請選擇講師------</option>
 			<c:forEach var="spkrVO" items="${spkrSvc.list}">
 				<option value="${spkrVO.spkrno}" ${(lecVO.spkrno==spkrVO.spkrno)? 'selected':'' } >${spkrVO.spkrno}${spkrVO.spkrname}</option>
 			</c:forEach>
 		</select><br>
 			<%-- 要擋註銷的教室 --%>
-			&emsp;講座票價：&emsp;<input name="lecprice" type="text" value="${lecVO.lecprice}"><br>
-			&emsp;講座時間：&emsp;<input name="lecstart" id="f_date1" type="text"><br>
-			&emsp;結束時間：&emsp;<input name="lecend" id="f_date2" type="text"><br>
-			&emsp;開始報名：&emsp;<input name="signstart" id="f_date3" type="text"><br>
-			&emsp;結束報名：&emsp;<input name="signend" id="f_date4" type="text"><br>
-			&emsp;講座圖片：&emsp;<input name="lecpic" id="upimg" type="file" style="border: 0;"><br>
+			<span id="price">&emsp;講座票價</span>&emsp;<input id="lecprice" name="lecprice" type="text" value="${lecVO.lecprice}"><br>
+			<span id="start">&emsp;開始時間</span>&emsp;<input name="lecstart" id="f_date1" type="text"><br>
+			<span id="end">&emsp;結束時間</span>&emsp;<input name="lecend" id="f_date2" type="text"><br>
+			<span id="pic">&emsp;講座圖片</span>&emsp;<input name="lecpic" id="upimg" type="file" style="border: 0;"><br>
 		</div>
 	</div>
 	<div id="preivew" ><img id="newimg" src=""></div>
 				</div>
-				<div class="col-sm-5">
+				<div class="col-sm-6">
 								<%@ include file="/back-end/lecture/roomsetting/layout.jsp"%>
 				
 				
@@ -107,8 +114,8 @@
 				<div class="col-sm-7 btm-line">
 				</div>
 				<div class="col-sm-8" style="margin-left: 4%; margin-top: 20px">
-				講座資訊：
-				<input id="action" type="text" name="action" value="insertText"><br>
+				講座資訊
+				<input id="action" type="hidden" name="action" value="insertText"><br>
 				<%@ include file="/back-end/lecture/ckLec.file"%>
 				</div>
 				
@@ -172,7 +179,6 @@
 
 <script>
 		//----------------------------------------------------------格式化日期-----------------------------------------------------------
-
         $.datetimepicker.setLocale('zh');
         $('#f_date1').datetimepicker({
 	       theme: '',              //theme: 'dark',
@@ -201,7 +207,7 @@
 	       timepicker:true,       //timepicker:true,
 	       step: 60,                //step: 60 (這是timepicker的預設間隔60分鐘)
 	       format:'Y-m-d H:00:00',         //format:'Y-m-d H:i:s',
-		   value: '<%=signstart%>', // value:   new Timestamp(),
+		   value: '<%=lecend%>', // value:   new Timestamp(),
         });
         
         $.datetimepicker.setLocale('zh');
@@ -210,26 +216,25 @@
 	       timepicker:true,       //timepicker:true,
 	       step: 60,                //step: 60 (這是timepicker的預設間隔60分鐘)
 	       format:'Y-m-d H:00:00',         //format:'Y-m-d H:i:s',
-		   value: '<%=signend%>', // value:   new Timestamp(),
+		   value: '<%=lecend%>', // value:   new Timestamp(),
         });
         
-   
         // ----------------------------------------------------------排定無法選擇的日期(待修改)-----------------------------------------------------------
 
         //      1.以下為某一天之前的日期無法選擇
         		
-              /* //講座開始日期(無法選擇昨天以前)
-              var lecdate1 = new Date();
-              $('#f_date1').datetimepicker({
-                  beforeShowDay: function(date) {
-                	  if (  date.getYear() <  lecdate1.getYear() || 
-        		           (date.getYear() == lecdate1.getYear() && date.getMonth() <  lecdate1.getMonth()) || 
-        		           (date.getYear() == lecdate1.getYear() && date.getMonth() == lecdate1.getMonth() && date.getDate() < lecdate1.getDate())
-                      ) {
-                           return [false, ""]
-                      }
-                      return [true, ""];
-              }});
+//                //講座開始日期(無法選擇昨天以前)
+               var lecdate1 = new Date("<%=paramDate2%>");
+//               $('#f_date1').datetimepicker({
+//                   beforeShowDay: function(date) {
+//                 	  if (  date.getYear() <  lecdate1.getYear() || 
+//         		           (date.getYear() == lecdate1.getYear() && date.getMonth() <  lecdate1.getMonth()) || 
+//         		           (date.getYear() == lecdate1.getYear() && date.getMonth() == lecdate1.getMonth() && date.getDate() < lecdate1.getDate())
+//                       ) {
+//                            return [false, ""]
+//                       }
+//                       return [true, ""];
+//               }});
               //講座結束日期(無法選擇昨天以前)
               $('#f_date2').datetimepicker({
                   beforeShowDay: function(date) {
@@ -240,61 +245,67 @@
                            return [false, ""]
                       }
                       return [true, ""];
-              }}); */
-      //以下待修改(動態抓講座日期)  
-      /*   //      2.以下為某一天之後的日期無法選擇
-              //報名開始日期(無法選擇講座之後)
-              var lecdate0 = new Date();
-              lecdate0.setDate(lecdate0.getDate() - 1); //講座的昨天
-              $('#f_date3').datetimepicker({
-                  beforeShowDay: function(date) {
-                	  if (  date.getYear() >  lecdate0.getYear() || 
-        		           (date.getYear() == lecdate0.getYear() && date.getMonth() >  lecdate0.getMonth()) || 
-        		           (date.getYear() == lecdate0.getYear() && date.getMonth() == lecdate0.getMonth() && date.getDate() > lecdate0.getDate())
-                      ) {
-                           return [false, ""]
-                      }
-                      return [true, ""];
-              }});
-              
-            //報名結束日期(無法選擇講座之後)
-              var lecdate0 = new Date();
-              lecdate0.setDate(lecdate0.getDate() - 1); //講座的昨天
-              $('#f_date4').datetimepicker({
-                  beforeShowDay: function(date) {
-                	  if (  date.getYear() >  lecdate0.getYear() || 
-        		           (date.getYear() == lecdate0.getYear() && date.getMonth() >  lecdate0.getMonth()) || 
-        		           (date.getYear() == lecdate0.getYear() && date.getMonth() == lecdate0.getMonth() && date.getDate() > lecdate0.getDate())
-                      ) {
-                           return [false, ""]
-                      }
-                      return [true, ""];
-              }});
- */
-
-        //      3.以下為兩個日期之外的日期無法選擇 (也可按需要換成其他日期)
-        //      var somedate1 = new Date('2017-06-15');
-        //      var somedate2 = new Date('2017-06-25');
-        //      $('#f_date1').datetimepicker({
-        //          beforeShowDay: function(date) {
-        //        	  if (  date.getYear() <  somedate1.getYear() || 
-        //		           (date.getYear() == somedate1.getYear() && date.getMonth() <  somedate1.getMonth()) || 
-        //		           (date.getYear() == somedate1.getYear() && date.getMonth() == somedate1.getMonth() && date.getDate() < somedate1.getDate())
-        //		             ||
-        //		            date.getYear() >  somedate2.getYear() || 
-        //		           (date.getYear() == somedate2.getYear() && date.getMonth() >  somedate2.getMonth()) || 
-        //		           (date.getYear() == somedate2.getYear() && date.getMonth() == somedate2.getMonth() && date.getDate() > somedate2.getDate())
-        //              ) {
-        //                   return [false, ""]
-        //              }
-        //              return [true, ""];
-        //      }});
-		$("#btn").mouseenter(function(){
-			var fileInput = $("#upimg").get(0).files[0];
-			if(fileInput){
-				$("#action").val("insert");
-			}
-		});
+              }}); 
+        $("#btn").mouseover(function(){
+            //講座名稱
+            if($("#lecname").val() === ""){
+            	//$("#theme").attr("style", "color:#ff6680");
+            	$("#theme").addClass("blank");
+            }
+            else{
+            	//$("#theme").removeAttr("style", "color:#ff6680");
+            	$("#theme").removeClass("blank");
+            }
+          	//講師姓名
+            if ($("#spkrno").prop("selectedIndex") === 0){
+            	//$("#name").attr("style", "color:#ff6680");
+            	$("#name").addClass("blank");
+            }
+            else{
+            	//$("#name").removeAttr("style", "color:#ff6680");
+            	$("#name").removeClass("blank");
+        	}
+          	//講座票價
+            if($("#lecprice").val() === ""){
+            	//$("#price").attr("style", "color:#ff6680");
+            	$("#price").addClass("blank");
+            }
+            else{
+            	//$("#price").removeAttr("style", "color:#ff6680");
+            	$("#price").removeClass("blank");
+            }	
+            //教室名稱
+            if($("#roomSelect").prop("selectedIndex") === 0){
+            	//$("#room").attr("style", "color:#ff6680");
+            	$("#room").addClass("blank");
+            }
+            else{
+            	//$("#room").removeAttr("style", "color:#ff6680");
+            	$("#room").removeClass("blank");
+            }
+            //講座圖片
+            var fileInput = $("#upimg").get(0).files[0];
+            if(fileInput){
+                $("#action").val("insert");
+            }
+            
+    		var arr = document.getElementsByClassName("blank");
+    		console.log(arr);
+    		let blankItem = "";
+    	    if (arr.length > 0) {
+    	        for (let i = 0; i < arr.length; i++) {
+    	        	blankItem += arr[i].textContent + " ";
+    	        }
+   	        var inputAlert = document.createElement("span");
+       		inputAlert.textContent = "紅字部分尚未填寫：" + blankItem;
+       		inputAlert.setAttribute("style", "color:#ff6680;font-weight:600;");
+       		$("#alert").html(inputAlert);
+    	    } else {
+    	    	$("#alert").html("");
+    	    }
+        });
+        
+   
 </script>
 
 </html>
