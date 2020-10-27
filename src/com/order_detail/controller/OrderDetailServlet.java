@@ -149,6 +149,38 @@ public class OrderDetailServlet extends HttpServlet {
 				failureView.forward(req, res);
 			}
 		}
+		
+		if ("refund".equals(action)) {
+
+			List<String> errorMsgs = new LinkedList<String>();
+			// Store this set in the request scope, in case we need to
+			// send the ErrorPage view.
+			req.setAttribute("errorMsgs", errorMsgs);
+
+			try {
+				/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
+				String orderno = req.getParameter("orderno");
+				String courseno = req.getParameter("courseno");
+				
+				OrderDetailService orderDetailSvc = new OrderDetailService();
+
+				/*************************** 2.開始修改資料 *****************************************/
+				OrderDetailVO orderDetailVO = orderDetailSvc.updateRefund(orderno, courseno);
+				
+				/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
+				req.setAttribute("orderDetailVO", orderDetailVO);
+				String url = "/front-end/Order_Master/listAllByMemno.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url);
+				successView.forward(req, res);
+
+				/*************************** 其他可能的錯誤處理 *************************************/
+			} catch (Exception e) {
+				errorMsgs.add("修改資料失敗:" + e.getMessage());
+				RequestDispatcher failureView = req
+						.getRequestDispatcher("/back-end/Order_Master/ListAllOrder.jsp");
+				failureView.forward(req, res);
+			}
+		}
 		if ("getOne_For_Display_ByMember".equals(action)) { // 前台訂單管理
 			List<String> errorMsgs = new LinkedList<String>();
 			// Store this set in the request scope, in case we need to

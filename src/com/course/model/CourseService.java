@@ -90,7 +90,7 @@ public class CourseService {
 	public CourseVO getOneCourse(String courseno) {
 		return dao.findPrimaryKey(courseno);
 	}
-
+	
 	public List<CourseVO> getAllForUser() {
 		return dao.getAllForUser();
 	}
