@@ -6,7 +6,6 @@
 <% 
   QuestionBankVO QuestionBankvo = (QuestionBankVO) request.getAttribute("QuestionBankvo");
   
-// 	System.out.println(QuestionBankvo.getQustmt());
 	
   if(QuestionBankvo.getOp1()!=null){
     StringBuilder testAns = new StringBuilder();
@@ -52,7 +51,7 @@
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	width: 40%;
+	width: 60%;
 	/*background: #efefef;*/
 	background: linear-gradient(to bottom, #e8e8e8 0, #f5f5f5 100%);
 	border: 1px solid #dfdfdf;
@@ -165,13 +164,21 @@ option[value=""] {
 
 <body>
 <c:if test="${not empty errorMsgs}">
-	<ul>
+	<ul class="error" style="display:none;">
 	    <c:forEach var="message" items="${errorMsgs}">
 			<li style="color:red">${message}</li>
 		</c:forEach>
 	</ul>
 </c:if>
+   <jsp:include page="/index/front-index/header.jsp" />
    
+   <div class="container-fluid" style="margin-top: 90px;">
+
+		<div class="row">
+			<div class="col" style="text-align:center;color:white;">
+				<h1 id="pageTitle" >更新考題</h1>
+			</div>
+		</div>
         <div class="container">
         <form id="myform" class="flexform-column" action="<%= request.getContextPath()%>/question/questionBank.do" method="post">
         <div class="user"> 
@@ -188,7 +195,7 @@ option[value=""] {
                 
                  <select id="idatype" name="courseno" class="select-text" required>
                 		<c:forEach var="CourseVo" items="${CourseSvc.allForEmployee}">
-                			 <option value="${CourseVo.courseno }" ${QuestionBankvo.courseno eq "${CourseVo.courseno} " ? 'selected' :''} readonly>${CourseVo.coursename }</option>
+                			 <option value="${CourseVo.courseno }" ${QuestionBankvo.courseno eq CourseVo.courseno? 'selected' :''} >${CourseVo.coursename }</option>
                 		</c:forEach>
                 </select>
                 
@@ -207,9 +214,25 @@ option[value=""] {
         </div>
 
 
-
+</div>
     <script type="text/javascript">
                 $(document).ready(function() {
+                	
+						if($(".error").find('li').length > 0){
+                		
+                		var str = "" ; 
+                		for(let i = 0 ; i < $(".error").find('li').length ; i++ ){
+							str += $(".error").find('li')[i].innerText + "<br>";
+						}
+                		
+                		sweetAlert(
+                				  '輸入錯誤',
+                				  str,
+                				  'error'
+                				);
+                	}
+                	
+                	
                 	$('#idatype').hide();
 
                     $(".choose").change(function() {
@@ -227,7 +250,20 @@ option[value=""] {
                             $('.summernote').summernote({
                                 width: 480,
                                 height: 300,
+                                toolbar: [
+                                    // [groupName, [list of button]]
+                                    ['style', ['bold', 'italic', 'underline']],
+                                    ['fontsize', ['fontsize']],
+                                    ['color', ['color']],
+                                    ['para', ['ul', 'ol', 'paragraph']],
+                                    ['height', ['height']],
+                                    ['Insert',['picture','table']]
+                                  ]
                             });
+                            
+                            
+                            $('.btn').css("padding","5px");
+                            $('.btn').css("color","black");
                             
                             
                             
@@ -247,10 +283,25 @@ option[value=""] {
                     <li><label><input type="radio" name="single" value="D" ${opAns[3] eq '1'? 'checked':''}> D. <input type="text" name="op4" value="${QuestionBankvo.op4}" placeholder="請輸入選項" style="width:209px"></label></li>
                 </ul>
             <h5>答案:</h5><input type="text" name="quans" id="writeanswer" value="${testAns}">`);
+                            
                             $('.summernote').summernote({
                                 width: 480,
                                 height: 300,
+                                toolbar: [
+                                    // [groupName, [list of button]]
+                                    ['style', ['bold', 'italic', 'underline']],
+                                    ['fontsize', ['fontsize']],
+                                    ['color', ['color']],
+                                    ['para', ['ul', 'ol', 'paragraph']],
+                                    ['height', ['height']],
+                                    ['Insert',['picture','table']]
+                                  ]
                             });
+                            
+                            
+                            $('.btn').css("padding","5px");
+                            $('.btn').css("color","black");
+                            
                             $('li').css("listStyle", "none");
                             $('li').click(function() {
                                 var check = $(this).find('input[type=radio]');
@@ -274,10 +325,25 @@ option[value=""] {
                     <li><label><input type="checkbox" name="multiple" value="D" ${opAns[3] eq '1'? 'checked':''}> D. <input type="text" name="op4" value="${QuestionBankvo.op4}" placeholder="請輸入選項" style="width:209px"></label></li>
                 </ul>
             <h5>答案:</h5><input type="text" name="quans" id="writeanswer" value="${testAns}">`);
+                            
                             $('.summernote').summernote({
                                 width: 480,
                                 height: 300,
+                                toolbar: [
+                                    // [groupName, [list of button]]
+                                    ['style', ['bold', 'italic', 'underline']],
+                                    ['fontsize', ['fontsize']],
+                                    ['color', ['color']],
+                                    ['para', ['ul', 'ol', 'paragraph']],
+                                    ['height', ['height']],
+                                    ['Insert',['picture','table']]
+                                  ]
                             });
+                            
+                            
+                            $('.btn').css("padding","5px");
+                            $('.btn').css("color","black");
+                            
                             $('li').css("listStyle", "none");
                             $('li').click(function() {
                                 var check = $(this).find('input[type=checkbox]');
@@ -302,6 +368,14 @@ option[value=""] {
                     $("#idatype").trigger('change');
                 });
             </script>
+            
+            
+             <!-- include 前台頁面的 footer -->
+			<jsp:include page="/index/front-index/footer.jsp" />
+			<!-- include 前台頁面的 footer -->
+            <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+            
+            
         </body>
 
         </html>        	

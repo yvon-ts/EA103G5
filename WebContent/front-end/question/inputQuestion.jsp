@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="BIG5"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="com.question_bank.model.*" %>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>    
@@ -19,6 +19,8 @@ if(QuestionBankvo !=null && QuestionBankvo.getQuans()!= null && QuestionBankvo.g
   }
 %>
 <jsp:useBean id="testTypeSvc" scope="page" class="com.test_type.model.TestTypeService" />
+<jsp:useBean id="CourseSvc" scope="page" class="com.course.model.CourseService" />
+
 
 <!DOCTYPE html>
 <html>
@@ -26,9 +28,9 @@ if(QuestionBankvo !=null && QuestionBankvo.getQuans()!= null && QuestionBankvo.g
 <head>
     <title></title>
     <!-- include libraries(jQuery, bootstrap) -->
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
+<!--     <link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet"> -->
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<!--     <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script> -->
     <!-- include summernote css/js -->
     <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
     
@@ -156,63 +158,67 @@ option[value=""] {
 .note-handle .note-control-selection .note-control-se{display:none}
 
 
+
     </style>
     
 </head>
 
 <body>
 
-<jsp:include page="/index/front-index/header.jsp" />
 
 <c:if test="${not empty errorMsgs}">
-	<ul>
+	<ul class="error" style="display:none;">
 	    <c:forEach var="message" items="${errorMsgs}">
 			<li style="color:red">${message}</li>
 		</c:forEach>
 	</ul>
 </c:if>
+
+<jsp:include page="/index/front-index/header.jsp" />
+
+
 <div class="container-fluid" style="margin-top: 90px;">
 
 		<div class="row">
 			<div class="col" style="text-align:center;color:white;">
-				<h1 id="pageTitle" >∑sºW¶“√D</h1>
+				<h1 id="pageTitle" >Êñ∞Â¢ûËÄÉÈ°å</h1>
 			</div>
 		</div>
    
         <div class="container">
         <form id="myform" class="flexform-column" action="<%= request.getContextPath()%>/question/questionBank.do" method="post">
         <div class="user"> 
-            	<!--     ≤ƒ§@¶∏∂Òºg -->
+            	<!--     Á¨¨‰∏ÄÊ¨°Â°´ÂØ´ -->
     	<c:if test="${empty errorMsgs}"> 
         	<select id="idatype" name="testtype" class="select-text choose" required>
-        		<option value="-1" >Ω–øÔæ‹√D´¨</option>
-        		<option value="text" >∂Ò™≈√D</option>
-        		<option value="radio" >øÔæ‹√D</option>
-        		<option value="checkbox">¶høÔ√D</option>
+        		<option value="-1" >Ë´ãÈÅ∏ÊìáÈ°åÂûã</option>
+        		<option value="text"  >Â°´Á©∫È°å</option>
+        		<option value="radio" >ÈÅ∏ÊìáÈ°å</option>
+        		<option value="checkbox">Â§öÈÅ∏È°å</option>
     		</select>
     	</c:if>
-<!--     	ø˘ª~≥B≤z∂Òºg -->
+<!--     	ÈåØË™§ËôïÁêÜÂ°´ÂØ´ -->
     	<c:if test="${not empty errorMsgs}">
         	<select id="idatype" name="testtype" class="select-text choose" required>
-        		<option value="text" ${testTypeSvc.getOnebyNO(QuestionBankvo.typeno).testtype eq 'text'? 'selected':'disabled'} >∂Ò™≈√D</option>
-        		<option value="radio" ${testTypeSvc.getOnebyNO(QuestionBankvo.typeno).testtype eq 'radio'? 'selected':'disabled'}>øÔæ‹√D</option>
-        		<option value="checkbox" ${testTypeSvc.getOnebyNO(QuestionBankvo.typeno).testtype eq 'checkbox'? 'selected':'disabled'}>¶høÔ√D</option>
+        		<option value="text" ${testTypeSvc.getOnebyNO(QuestionBankvo.typeno).testtype eq 'text'? 'selected':'disabled'} >Â°´Á©∫È°å</option>
+        		<option value="radio" ${testTypeSvc.getOnebyNO(QuestionBankvo.typeno).testtype eq 'radio'? 'selected':'disabled'}>ÈÅ∏ÊìáÈ°å</option>
+        		<option value="checkbox" ${testTypeSvc.getOnebyNO(QuestionBankvo.typeno).testtype eq 'checkbox'? 'selected':'disabled'}>Â§öÈÅ∏È°å</option>
     		</select>
     	</c:if>
-                
-                <select id="idatype" name="courseno" class="select-text" required>
-                    <option value="COUR0001" ${QuestionBankvo.courseno eq "COUR0001" ? 'selected' :''}>courseName1</option>
-                    <option value="COUR0002" ${QuestionBankvo.courseno eq "COUR0002" ? 'selected' :''}>courseName2</option>
-                    <option value="COUR0003" ${QuestionBankvo.courseno eq "COUR0003" ? 'selected' :''}>courseName3</option>
+               <select id="idatype" name="courseno" class="select-text" required>
+                		<c:forEach var="CourseVo" items="${CourseSvc.getAllForEmployee()}">
+                			 <option value="${CourseVo.courseno }" ${QuestionBankvo.courseno eq CourseVo.courseno ? 'selected' :''} >${CourseVo.coursename }</option>
+                		</c:forEach>
                 </select>
+                
                 <select id="idatype" name="testscope" class="select-text" required>
-                    <option value="1" value="1" ${QuestionBankvo.testscope eq '1' ? 'selected' :''}>≥Ê§∏§@</option>
-                    <option value="2" ${QuestionBankvo.testscope eq '2' ? 'selected' :''}>≥Ê§∏§G</option>
-                    <option value="3" value="3" ${QuestionBankvo.testscope eq '3' ? 'selected' :''}>≥Ê§∏§T</option>
+                    <option value="1" ${QuestionBankvo.testscope eq '1' ? 'selected' :''}>ÂñÆÂÖÉ‰∏Ä</option>
+                    <option value="2" ${QuestionBankvo.testscope eq '2' ? 'selected' :''}>ÂñÆÂÖÉ‰∫å</option>
+                    <option value="3" ${QuestionBankvo.testscope eq '3' ? 'selected' :''}>ÂñÆÂÖÉ‰∏â</option>
                 </select>
                 <div id="parentDiv"></div>
                 <input type="hidden" name="action" value="inputQuestion">
-                <input type='submit' id="turnin" value='©Ò∏m√DÆw' style="display:block ">
+                <input type='submit' id="turnin" value='ÊîæÁΩÆÈ°åÂ∫´' style="display:block ">
         		</div>
         </form>
         </div>
@@ -221,6 +227,23 @@ option[value=""] {
        
         		
                 $(document).ready(function() {
+                	
+                	
+                	if($(".error").find('li').length > 0){
+                		
+                		var str = "" ; 
+                		for(let i = 0 ; i < $(".error").find('li').length ; i++ ){
+							str += $(".error").find('li')[i].innerText + "<br>";
+						}
+                		
+                		sweetAlert(
+                				  'Ëº∏ÂÖ•ÈåØË™§',
+                				  str,
+                				  'error'
+                				);
+                	}
+                	
+                	
                 	
                 	$('#turnin').prop("disabled",true);
                 	
@@ -231,38 +254,63 @@ option[value=""] {
                         if ($(this).val() == 'text') {
                             $('#parentDiv').html(`
                     <select id="idatype" name="typeno" class="select-text" required>
-                        <option value="1" >¬≤≥Ê</option>
-                        <option value="2" >§§µ•</option>
-                        <option value="3" >ßx√¯</option>
-                    </select><h5>√D•ÿ:</h5><textarea class="summernote" id="saveToLocal" name="qustmt">${QuestionBankvo.qustmt}</textarea>
-                		    <h5>µ™Æ◊:</h5><textarea name="quans" style="width = 480px">${QuestionBankvo.quans}</textarea>`);
+                        <option value="1" >Á∞°ÂñÆ</option>
+                        <option value="2" >‰∏≠Á≠â</option>
+                        <option value="3" >Âõ∞Èõ£</option>
+                    </select><h5>È°åÁõÆ:</h5><textarea class="summernote" id="saveToLocal" name="qustmt">${QuestionBankvo.qustmt}</textarea>
+                		    <h5>Á≠îÊ°à:</h5><textarea name="quans" style="width = 480px;" >${QuestionBankvo.quans}</textarea>`);
                             
                             $('#turnin').prop("disabled",false);
                             $('.summernote').summernote({
                                 width: 480,
                                 height: 300,
+                                toolbar: [
+                                    // [groupName, [list of button]]
+                                    ['style', ['bold', 'italic', 'underline']],
+                                    ['fontsize', ['fontsize']],
+                                    ['color', ['color']],
+                                    ['para', ['ul', 'ol', 'paragraph']],
+                                    ['height', ['height']],
+                                    ['Insert',['picture','table']]
+                                  ]
                             });
                             
+                            
+                            $('.btn').css("padding","5px");
+                            $('.btn').css("color","black");
                             
                         } else if ($(this).val() == 'radio') {
 
                             $('#parentDiv').html(`<select id="idatype" name="typeno" class="select-text" required>
-                        <option value="4" >¬≤≥Ê</option>
-                        <option value="5" >§§µ•</option>
-                        <option value="6" >ßx√¯</option>
-                    </select><h5>√D•ÿ:</h5><textarea class="summernote" name="qustmt">${QuestionBankvo.qustmt}</textarea>
+                        <option value="4" >Á∞°ÂñÆ</option>
+                        <option value="5" >‰∏≠Á≠â</option>
+                        <option value="6" >Âõ∞Èõ£</option>
+                    </select><h5>È°åÁõÆ:</h5><textarea class="summernote" name="qustmt">${QuestionBankvo.qustmt}</textarea>
                     <ul class="option">
-                    <li><label><input type="radio" name="single" value="A" ${opAns[0] eq '1'? 'checked':''}> A. <input type="text" name="op1" value="${QuestionBankvo.op1}" placeholder="Ω–øÈ§JøÔ∂µ" style="width:209px"></label></li>
-                    <li><label><input type="radio" name="single" value="B" ${opAns[1] eq '1'? 'checked':''}> B. <input type="text" name="op2" value="${QuestionBankvo.op2}" placeholder="Ω–øÈ§JøÔ∂µ" style="width:209px"></label></li>
-                    <li><label><input type="radio" name="single" value="C" ${opAns[2] eq '1'? 'checked':''}> C. <input type="text" name="op3" value="${QuestionBankvo.op3}" placeholder="Ω–øÈ§JøÔ∂µ" style="width:209px"></label></li>
-                    <li><label><input type="radio" name="single" value="D" ${opAns[3] eq '1'? 'checked':''}> D. <input type="text" name="op4" value="${QuestionBankvo.op4}" placeholder="Ω–øÈ§JøÔ∂µ" style="width:209px"></label></li>
+                    <li><label><input type="radio" name="single" value="A" ${opAns[0] eq '1'? 'checked':''}> A. <input type="text" name="op1" value="${QuestionBankvo.op1}" placeholder="Ë´ãËº∏ÂÖ•ÈÅ∏È†Ö" style="width:209px"></label></li>
+                    <li><label><input type="radio" name="single" value="B" ${opAns[1] eq '1'? 'checked':''}> B. <input type="text" name="op2" value="${QuestionBankvo.op2}" placeholder="Ë´ãËº∏ÂÖ•ÈÅ∏È†Ö" style="width:209px"></label></li>
+                    <li><label><input type="radio" name="single" value="C" ${opAns[2] eq '1'? 'checked':''}> C. <input type="text" name="op3" value="${QuestionBankvo.op3}" placeholder="Ë´ãËº∏ÂÖ•ÈÅ∏È†Ö" style="width:209px"></label></li>
+                    <li><label><input type="radio" name="single" value="D" ${opAns[3] eq '1'? 'checked':''}> D. <input type="text" name="op4" value="${QuestionBankvo.op4}" placeholder="Ë´ãËº∏ÂÖ•ÈÅ∏È†Ö" style="width:209px"></label></li>
                 </ul>
-            <h5>µ™Æ◊:</h5><input type="text" name="quans" id="writeanswer" value="${testAns}" readonly="readonly">`);
+            <h5>Á≠îÊ°à:</h5><input type="text" name="quans" id="writeanswer" value="${testAns}" readonly="readonly">`);
 
                             $('.summernote').summernote({
                                 width: 480,
                                 height: 300,
+                                toolbar: [
+                                    // [groupName, [list of button]]
+                                    ['style', ['bold', 'italic', 'underline']],
+                                    ['fontsize', ['fontsize']],
+                                    ['color', ['color']],
+                                    ['para', ['ul', 'ol', 'paragraph']],
+                                    ['height', ['height']],
+                                    ['Insert',['picture','table']]
+                                  ]
                             });
+                            
+                            
+                            $('.btn').css("padding","5px");
+                            $('.btn').css("color","black");
                             
                             $('li').css("listStyle", "none");
                             $('li').click(function() {
@@ -276,22 +324,35 @@ option[value=""] {
                         } else if ($(this).val() == 'checkbox') {
 
                             $('#parentDiv').html(`<select id="idatype" name="typeno" class="select-text" required>
-                        <option value="7" >¬≤≥Ê</option>
-                        <option value="8" >§§µ•</option>
-                        <option value="9" >ßx√¯</option>
-                    </select><h5>√D•ÿ:</h5><textarea class="summernote" name="qustmt">${QuestionBankvo.qustmt}</textarea>
+                        <option value="7" >Á∞°ÂñÆ</option>
+                        <option value="8" >‰∏≠Á≠â</option>
+                        <option value="9" >Âõ∞Èõ£</option>
+                    </select><h5>È°åÁõÆ:</h5><textarea class="summernote" name="qustmt">${QuestionBankvo.qustmt}</textarea>
                     <ul class="option">
-                    <li><label><input type="checkbox" name="multiple" value="A" ${opAns[0] eq '1'? 'checked':''}> A. <input type="text" name="op1" value="${QuestionBankvo.op1}" placeholder="Ω–øÈ§JøÔ∂µ" style="width:209px"></label></li>
-                    <li><label><input type="checkbox" name="multiple" value="B" ${opAns[1] eq '1'? 'checked':''}> B. <input type="text" name="op2" value="${QuestionBankvo.op2}" placeholder="Ω–øÈ§JøÔ∂µ" style="width:209px"></label></li>
-                    <li><label><input type="checkbox" name="multiple" value="C" ${opAns[2] eq '1'? 'checked':''}> C. <input type="text" name="op3" value="${QuestionBankvo.op3}" placeholder="Ω–øÈ§JøÔ∂µ" style="width:209px"></label></li>
-                    <li><label><input type="checkbox" name="multiple" value="D" ${opAns[3] eq '1'? 'checked':''}> D. <input type="text" name="op4" value="${QuestionBankvo.op4}" placeholder="Ω–øÈ§JøÔ∂µ" style="width:209px"></label></li>
+                    <li><label><input type="checkbox" name="multiple" value="A" ${opAns[0] eq '1'? 'checked':''}> A. <input type="text" name="op1" value="${QuestionBankvo.op1}" placeholder="Ë´ãËº∏ÂÖ•ÈÅ∏È†Ö" style="width:209px"></label></li>
+                    <li><label><input type="checkbox" name="multiple" value="B" ${opAns[1] eq '1'? 'checked':''}> B. <input type="text" name="op2" value="${QuestionBankvo.op2}" placeholder="Ë´ãËº∏ÂÖ•ÈÅ∏È†Ö" style="width:209px"></label></li>
+                    <li><label><input type="checkbox" name="multiple" value="C" ${opAns[2] eq '1'? 'checked':''}> C. <input type="text" name="op3" value="${QuestionBankvo.op3}" placeholder="Ë´ãËº∏ÂÖ•ÈÅ∏È†Ö" style="width:209px"></label></li>
+                    <li><label><input type="checkbox" name="multiple" value="D" ${opAns[3] eq '1'? 'checked':''}> D. <input type="text" name="op4" value="${QuestionBankvo.op4}" placeholder="Ë´ãËº∏ÂÖ•ÈÅ∏È†Ö" style="width:209px"></label></li>
                 </ul>
-            <h5>µ™Æ◊:</h5><input type="text" name="quans" id="writeanswer" value="${testAns}" readonly="readonly"> `);
+            <h5>Á≠îÊ°à:</h5><input type="text" name="quans" id="writeanswer" value="${testAns}" readonly="readonly"> `);
                             
                             $('.summernote').summernote({
                                 width: 480,
                                 height: 300,
+                                toolbar: [
+                                    // [groupName, [list of button]]
+                                    ['style', ['bold', 'italic', 'underline']],
+                                    ['fontsize', ['fontsize']],
+                                    ['color', ['color']],
+                                    ['para', ['ul', 'ol', 'paragraph']],
+                                    ['height', ['height']],
+                                    ['Insert',['picture','table']]
+                                  ]
                             });
+                            
+                            
+                            $('.btn').css("padding","5px");
+                            $('.btn').css("color","black");
                             
                             $('li').css("listStyle", "none");
                             $('li').click(function() {
@@ -325,7 +386,11 @@ option[value=""] {
                 });
             </script>
             
-            <jsp:include page="/index/front-index/footer.jsp" />
+            
+            
+            <!-- include ÂâçÂè∞È†ÅÈù¢ÁöÑ footer -->
+			<jsp:include page="/index/front-index/footer.jsp" />
+			<!-- include ÂâçÂè∞È†ÅÈù¢ÁöÑ footer -->
             <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
         </body>
 
