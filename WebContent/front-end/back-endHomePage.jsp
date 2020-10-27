@@ -80,7 +80,7 @@
             <li class="dropdown"><a class="app-nav__item" href="#" data-toggle="dropdown" aria-label="Open Profile Menu"><i class="fa fa-user fa-lg"></i></a>
                 <ul class="dropdown-menu settings-menu dropdown-menu-right">
                     <li><a class="dropdown-item" href="page-user.html"><i class="fa fa-cog fa-lg"></i> Settings</a></li>
-                    <a class="dropdown-item" href="">
+                    <a class="dropdown-item" href="#">
                     	<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/employee/employee.do">
                     		<li><i class="fa fa-user fa-lg"></i>
                     		<input type="submit" value="個人資料" ">

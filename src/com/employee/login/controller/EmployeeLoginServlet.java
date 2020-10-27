@@ -59,7 +59,6 @@ public class EmployeeLoginServlet extends HttpServlet {
 				session.setAttribute("empacc", empacc); // *工作1: 才在session內做已經登入過的標識
 				session.setAttribute("empname", empname);
 				session.setAttribute("empno", empno);
-				session.setAttribute("emppic",emppic);
 				session.setAttribute("empauth", empAuthorityVO);
 
 				
@@ -72,7 +71,7 @@ public class EmployeeLoginServlet extends HttpServlet {
 					}
 				} catch (Exception ignored) {
 				}
-				res.sendRedirect(req.getContextPath() + "/front-end/back-endHomePage.jsp"); // *工作3:
+				res.sendRedirect(req.getContextPath() + "/back-end/index/homepage.jsp"); // *工作3:
 			} // (-->如無來源網頁:則重導至login_success.jsp)
 		}
 

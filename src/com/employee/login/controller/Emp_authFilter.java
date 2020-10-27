@@ -67,7 +67,7 @@ public class Emp_authFilter implements Filter {
 		}else {			
 			session.setAttribute("error", "你沒有權限!");
 			System.out.println("跑到這");
-			res.sendRedirect(req.getContextPath() + "/front-end/back-endHomePage.jsp");
+			res.sendRedirect(req.getContextPath() + "/back-end/index/homepage.jsp");
 		}
 		
 	}

@@ -160,7 +160,7 @@ public class EmployeeServlet extends HttpServlet {
 			} catch (Exception e) {
 				System.out.println("無法");
 				errMsgs.add("無法取得要修改的資料: " + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/back-endHomePage.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/index/homepage.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -328,7 +328,7 @@ public class EmployeeServlet extends HttpServlet {
 					errMsgs.add("請輸入員工編號");
 				}
 				if (!errMsgs.isEmpty()) {
-					RequestDispatcher failureView = req.getRequestDispatcher("/front-end/back-endHomePage.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/back-end/index/homepage.jsp");
 					failureView.forward(req, res);
 					return;
 				}
@@ -399,7 +399,7 @@ public class EmployeeServlet extends HttpServlet {
 				EmployeeService newEmp = new EmployeeService();
 				employeeVO = newEmp.updatepwd(empno, emppwd, empemail, emppic);
 				req.setAttribute("employeeVO", employeeVO);
-				RequestDispatcher successView = req.getRequestDispatcher("/front-end/back-endHomePage.jsp");
+				RequestDispatcher successView = req.getRequestDispatcher("/back-end/index/homepage.jsp");
 				successView.forward(req, res);
 			} catch (Exception e) {
 				errMsgs.add("資料修改失敗: " + e.getMessage());

@@ -77,8 +77,15 @@
             <li class="dropdown"><a class="app-nav__item" href="#" data-toggle="dropdown" aria-label="Open Profile Menu"><i class="fa fa-user fa-lg"></i></a>
                 <ul class="dropdown-menu settings-menu dropdown-menu-right">
                     <li><a class="dropdown-item" href="page-user.html"><i class="fa fa-cog fa-lg"></i> Settings</a></li>
-                    <li><a class="dropdown-item" href="page-user.html"><i class="fa fa-user fa-lg"></i> Profile</a></li>
-                    <li><a class="dropdown-item" href="page-login.html"><i class="fa fa-sign-out fa-lg"></i> Logout</a></li>
+                    <a class="dropdown-item" href="#">
+                    	<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/employee/employee.do">
+                    		<li><i class="fa fa-user fa-lg"></i>
+                    		<input type="submit" value="個人資料" ">
+			     			<input type="hidden" name="empno"  value="${empno}">
+			     			<input type="hidden" name="action"	value=getone_show></li>									
+			     		</FORM>
+			     	</a>
+                    <li><a class="dropdown-item" href="<%=request.getContextPath() %>/back-end/login/login.jsp"><i class="fa fa-sign-out fa-lg"></i> 登出</a></li>
                 </ul>
             </li>
         </ul>
@@ -86,19 +93,18 @@
     <!-- Sidebar menu-->
     <div class="app-sidebar__overlay" data-toggle="sidebar"></div>
     <aside class="app-sidebar">
-        <div class="app-sidebar__user"><img class="app-sidebar__user-avatar" src="<%=request.getContextPath() %>/back-end/index/images/美短.jpg" alt="User Image" width="80px" height="80px">
+        <div class="app-sidebar__user"><img class="app-sidebar__user-avatar" src="${pageContext.request.contextPath}/ShowEmpPic?empno=${empno}" alt="User Image" width="80px" height="80px">
             <div>
-                <p class="app-sidebar__user-name">Jason</p>
-                <p class="app-sidebar__user-designation">Employee</p>
+            	 <p class="app-sidebar__user-name"> </p>
+                <p class="app-sidebar__user-designation">${empname}</p>
             </div>
         </div>
         <ul class="app-menu">
-            <li><a class="app-menu__item active" href="#"><i class="fa fa-home" aria-hidden="true"> </i><span class="app-menu__label"> 首頁 </span></a></li>
+            <li><a class="app-menu__item active" href="<%=request.getContextPath() %>/back-end/index/homepage.jsp"><i class="fa fa-home" aria-hidden="true"> </i><span class="app-menu__label"> 首頁 </span></a></li>
             <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="fa fa-user" aria-hidden="true"></i>
                     <span class="app-menu__label"> 員工管理 </span><i class="treeview-indicator fa fa-angle-right"></i></a>
                 <ul class="treeview-menu">
-                    <li><a class="treeview-item" href="bootstrap-components.html"><i class="icon fa fa-circle-o"></i> 員工資料</a></li>
-                    <li><a class="treeview-item" href="https://fontawesome.com/v4.7.0/icons/" target="_blank" rel="noopener"><i class="icon fa fa-circle-o"></i>員工權限 </a></li>
+                    <li><a class="treeview-item" href="<%=request.getContextPath() %>/back-end/employee/newallemp.jsp"><i class="icon fa fa-circle-o"></i> 員工資料</a></li>
                 </ul>
             </li>
             <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="fa fa-users" aria-hidden="true"></i>
@@ -141,6 +147,15 @@
     <script src="<%=request.getContextPath() %>/back-end/index/js/popper.min.js"></script>
     <script src="<%=request.getContextPath() %>/back-end/index/js/bootstrap.min.js"></script>
     <script src="<%=request.getContextPath() %>/back-end/index/js/main.js"></script>
+    <script>
+    	<c:if test="${not empty error}">
+			swal({
+	  			   title: "${error}",
+	  			   icon: "error",
+				});
+		<%request.getSession().removeAttribute("error");%>		
+		</c:if>	
+   </script>
     
 </body>
 
