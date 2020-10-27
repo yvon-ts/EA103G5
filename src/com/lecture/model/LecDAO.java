@@ -28,7 +28,7 @@ public class LecDAO implements LecDAO_Interface {
 			+ " initseat = ?, currseat = ?, lecinfo = ?, lecstatus = ?, leclmod = ? WHERE lecno = ?";
 
 	private static final String GETONE_STMT = "SELECT * FROM LECTURE WHERE lecno = ?";
-	private static final String GETALL_STMT = "SELECT * FROM LECTURE ORDER BY LECNO";
+	private static final String GETALL_STMT = "SELECT * FROM LECTURE ORDER BY LECNO DESC";
 
 	private static final String UPDATE_SEAT = "UPDATE LECTURE SET currseat = ?, leclmod = ? WHERE lecno = ?";
 
@@ -441,8 +441,12 @@ public class LecDAO implements LecDAO_Interface {
 			where = " WHERE LECNAME LIKE '%"+ query +"%' OR SPKRNAME LIKE '%"+ query +"%' ";
 		
 		String condition = "";
-
-		if ("priceAsc".contentEquals(orderBy))
+		
+		if ("noAsc".contentEquals(orderBy))
+			condition = " ORDER BY LECNO ASC";
+		else if ("noDesc".contentEquals(orderBy))
+			condition = " ORDER BY LECNO DESC";
+		else if ("priceAsc".contentEquals(orderBy))
 			condition = " ORDER BY LECPRICE ASC";
 		else if ("priceDesc".contentEquals(orderBy))
 			condition = " ORDER BY LECPRICE DESC";
@@ -519,84 +523,84 @@ public class LecDAO implements LecDAO_Interface {
 		return list;
 	}
 
-	@Override
-	public List<LecVO> queryOrderBy(String query) {
-		
-		String condition = "";
-		String sqlHead = "SELECT * FROM LECTURE ORDER BY ";
-		
-		switch(query) {
-			case "price_asc":
-				condition = " PRICE ASC";
-			case "price_desc":
-				condition = " PRICE DESC";
-			case "time_asc":
-				condition = " LECSTART ASC";
-			case "time_desc":
-				condition = " LECSTART DESC";
-		}
-		
-		String sql = sqlHead + condition;
-		
-		List<LecVO> list = new ArrayList<LecVO>();
-		LecVO lecVO = null;
-		
-		Connection con = null;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-
-		try {
-			con = ds.getConnection();
-			pstmt = con.prepareStatement(sql);
-			rs = pstmt.executeQuery();
-
-			while (rs.next()) {
-				lecVO = new LecVO();
-				lecVO.setLecno(rs.getString("lecno"));
-				lecVO.setLecname(rs.getString("lecname"));
-				lecVO.setLecprice(rs.getInt("lecprice"));
-				lecVO.setSpkrno(rs.getString("spkrno"));
-				lecVO.setRoomno(rs.getString("roomno"));
-				lecVO.setLecstart(rs.getTimestamp("lecstart"));
-				lecVO.setLecend(rs.getTimestamp("lecend"));
-				lecVO.setSignstart(rs.getTimestamp("signstart"));
-				lecVO.setSignend(rs.getTimestamp("signend"));
-				lecVO.setInitseat(rs.getString("initseat"));
-				lecVO.setCurrseat(rs.getString("currseat"));
-				lecVO.setLecstatus(rs.getInt("lecstatus"));
-				lecVO.setLecinfo(rs.getBytes("lecinfo"));
-				lecVO.setLecpic(rs.getBytes("lecpic"));
-				lecVO.setLeclmod(rs.getTimestamp("leclmod"));
-				list.add(lecVO);
-			}
-
-		} catch (SQLException se) {
-			throw new RuntimeException("Database error." + se.getMessage());
-		} finally {
-			if (rs != null) {
-				try {
-					rs.close();
-				} catch (SQLException se) {
-					se.printStackTrace();
-				}
-			}
-
-			if (pstmt != null) {
-				try {
-					pstmt.close();
-				} catch (SQLException se) {
-					se.printStackTrace();
-				}
-			}
-			if (con != null) {
-				try {
-					con.close();
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		}
-		return list;
-	}
+//	@Override
+//	public List<LecVO> queryOrderBy(String query) {
+//		
+//		String condition = "";
+//		String sqlHead = "SELECT * FROM LECTURE ORDER BY ";
+//		
+//		switch(query) {
+//			case "price_asc":
+//				condition = " PRICE ASC";
+//			case "price_desc":
+//				condition = " PRICE DESC";
+//			case "time_asc":
+//				condition = " LECSTART ASC";
+//			case "time_desc":
+//				condition = " LECSTART DESC";
+//		}
+//		
+//		String sql = sqlHead + condition;
+//		
+//		List<LecVO> list = new ArrayList<LecVO>();
+//		LecVO lecVO = null;
+//		
+//		Connection con = null;
+//		PreparedStatement pstmt = null;
+//		ResultSet rs = null;
+//
+//		try {
+//			con = ds.getConnection();
+//			pstmt = con.prepareStatement(sql);
+//			rs = pstmt.executeQuery();
+//
+//			while (rs.next()) {
+//				lecVO = new LecVO();
+//				lecVO.setLecno(rs.getString("lecno"));
+//				lecVO.setLecname(rs.getString("lecname"));
+//				lecVO.setLecprice(rs.getInt("lecprice"));
+//				lecVO.setSpkrno(rs.getString("spkrno"));
+//				lecVO.setRoomno(rs.getString("roomno"));
+//				lecVO.setLecstart(rs.getTimestamp("lecstart"));
+//				lecVO.setLecend(rs.getTimestamp("lecend"));
+//				lecVO.setSignstart(rs.getTimestamp("signstart"));
+//				lecVO.setSignend(rs.getTimestamp("signend"));
+//				lecVO.setInitseat(rs.getString("initseat"));
+//				lecVO.setCurrseat(rs.getString("currseat"));
+//				lecVO.setLecstatus(rs.getInt("lecstatus"));
+//				lecVO.setLecinfo(rs.getBytes("lecinfo"));
+//				lecVO.setLecpic(rs.getBytes("lecpic"));
+//				lecVO.setLeclmod(rs.getTimestamp("leclmod"));
+//				list.add(lecVO);
+//			}
+//
+//		} catch (SQLException se) {
+//			throw new RuntimeException("Database error." + se.getMessage());
+//		} finally {
+//			if (rs != null) {
+//				try {
+//					rs.close();
+//				} catch (SQLException se) {
+//					se.printStackTrace();
+//				}
+//			}
+//
+//			if (pstmt != null) {
+//				try {
+//					pstmt.close();
+//				} catch (SQLException se) {
+//					se.printStackTrace();
+//				}
+//			}
+//			if (con != null) {
+//				try {
+//					con.close();
+//				} catch (Exception e) {
+//					e.printStackTrace();
+//				}
+//			}
+//		}
+//		return list;
+//	}
 
 }

@@ -109,7 +109,7 @@ public LecVO updateLec(String lecno, String lecname, Integer lecprice, String sp
 		return dao.getTextQuery(query, orderBy);
 	}
 	
-	public List<LecVO> getQueryOrderBy(String query){
-		return dao.queryOrderBy(query);
-	}
+//	public List<LecVO> getQueryOrderBy(String query){
+//		return dao.queryOrderBy(query);
+//	}
 }
