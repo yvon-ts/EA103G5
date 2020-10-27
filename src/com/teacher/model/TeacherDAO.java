@@ -416,4 +416,55 @@ public class TeacherDAO implements TeacherDAO_interface {
 		return teacherVO;
 	
 	}
+
+	@Override
+	public List<TeacherVO> getAll(Map<String, String[]> map) {
+		List<TeacherVO>list =new ArrayList<TeacherVO>();
+		TeacherVO teacherVO = null;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			con = ds.getConnection();
+			String finalSQL = "SELECT * from TEACHER"
+					+ jdbcUtil_CompositeQuery_Teacher.get_WhereCondition(map)
+					+ "ORDER BY TCHRNO";
+			pstmt = con.prepareStatement(finalSQL);
+			System.out.println("finalSQL(by DAO)="+finalSQL);
+			rs = pstmt.executeQuery();
+			
+			while (rs.next()) {
+				teacherVO = new TeacherVO();
+				teacherVO.setTchrno(rs.getString("tchrno"));
+				teacherVO.setMemno(rs.getString("memno"));
+				teacherVO.setTchrintro(rs.getString("tchrintro"));
+				teacherVO.setTchrcert1(rs.getBytes("tchrcert1"));
+				teacherVO.setTchrcert2(rs.getBytes("tchrcert2"));
+				teacherVO.setBankacc(rs.getString("bankacc"));
+				teacherVO.setTchrstatus(rs.getString("tchrstatus"));
+				teacherVO.setRejreason(rs.getString("rejreason"));
+				list.add(teacherVO);
+			}
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return list;
+	}
 }

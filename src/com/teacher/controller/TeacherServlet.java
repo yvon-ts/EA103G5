@@ -39,9 +39,46 @@ public class TeacherServlet extends HttpServlet {
 		if("updateTeacher".equals(action)) {
 			updateTeacher(req,res);
 		}
+		if("listTeacher_ByCompositeQuery".equals(action)) {
+			listTeacher_ByCompositeQuery(req,res);
+		}
 		
 		
 	}
+	private void listTeacher_ByCompositeQuery(HttpServletRequest req, HttpServletResponse res)throws ServletException, IOException {
+		List<String>errorMsgs = new LinkedList<String>();
+		req.setAttribute("errorMsgs",errorMsgs );
+		try {
+			/************將輸入資料轉為MAP****************/
+			//採用Map<String,String[]>getParameterMap()的方法
+			//注意:an immutable java.util.Map
+			//Map<String,String[]>map = req.getParameterMap();
+			HttpSession session = req.getSession();
+			Map<String,String[]>map = (Map<String,String[]>)session.getAttribute("map");
+			if(req.getParameter("whichPage")==null) {
+				HashMap<String,String[]>map1 = new HashMap<String,String[]>(req.getParameterMap());
+				session.setAttribute("map", map1);
+				map = map1;
+			}
+			TeacherService teacherSvc = new TeacherService();
+			List<TeacherVO>list = teacherSvc.getAll(map);
+			
+			req.setAttribute("list", list);
+			RequestDispatcher successView = req.getRequestDispatcher("/back-end/teacher/listAllTeachers.jsp");
+			successView.forward(req, res);
+			
+			
+			
+			
+			
+		}catch(Exception e) {
+			errorMsgs.add(e.getMessage());
+			RequestDispatcher failureView = req.getRequestDispatcher("");
+			failureView.forward(req, res);
+		}
+		
+	}
+
 	public String getFileNameFromPart(Part part) {
 		String header = part.getHeader("content-disposition");
 		String filename = new File(header.substring(header.lastIndexOf("=") + 2, header.length() - 1)).getName();
@@ -147,7 +184,7 @@ public class TeacherServlet extends HttpServlet {
 		
 		TeacherService teacherSvc = new TeacherService();
 		teacherSvc.updateStatusTeacher(tchrno, tchrstatus,rejreason);
-		String url = "/back-end/teacher/showOneTeacher.jsp";
+		String url = "/back-end/teacher/listAllTeachers.jsp";
 		RequestDispatcher successView = req.getRequestDispatcher(url);
 		successView.forward(req, res);
 		}catch (Exception e) {
