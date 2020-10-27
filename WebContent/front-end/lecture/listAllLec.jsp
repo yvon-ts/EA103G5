@@ -40,11 +40,12 @@
     	border-radius: 10px;
     	margin-left: 60px;
 	}
-	.chosen {
-	    color: #fff;
-	    border-color: #0099CC;
-	    background-color: #A2D9FF;
-	}
+	/*不知為何只有dev tool開著才能看*/
+ 	.chosen {
+ 	    color: #0099CC; 
+ 	    border-color: #0099CC; 
+	    background-color: #fff; 
+ 	} 
 </style>
 </head>
 
@@ -100,10 +101,10 @@
             		<input id="query" name="query" type="text" placeholder="&nbsp;&rArr;&nbsp;想找什麼呢？">
             	</div>
             	<div id="orderBy" style="display: inline-block">
-            		<div id="priceAsc" class="btn" style="padding: 0;"><button class="filter btn btn-common " style="margin: 0 10px;">價格低至高</button></div>
-            		<div id="priceDesc" class="btn" style="padding: 0"><button class="filter btn btn-common" style="margin: 0 10px;">價格高至低</button></div>
-            		<div id="timeAsc" class="btn" style="padding: 0"><button class="filter btn btn-common" style="margin: 0 10px;">時間新到舊</button></div>
-            		<div id="timeDesc" class="btn" style="padding: 0"><button class="filter btn btn-common" style="margin: 0 10px;">時間舊到新</button></div>
+            		<div id="priceAsc" class="btn" style="padding: 0;"><button id="btnPriceAsc" class="filter btn btn-common " style="margin: 0 10px;">價格低至高</button></div>
+            		<div id="priceDesc" class="btn" style="padding: 0"><button id="btnPriceDesc" class="filter btn btn-common" style="margin: 0 10px;">價格高至低</button></div>
+            		<div id="timeAsc" class="btn" style="padding: 0"><button id="btnTimeAsc" class="filter btn btn-common" style="margin: 0 10px;">時間新到舊</button></div>
+            		<div id="timeDesc" class="btn" style="padding: 0"><button id="btnTimeDesc" class="filter btn btn-common" style="margin: 0 10px;">時間舊到新</button></div>
             	</div>
             </div>
             <div id="row" class="row">
@@ -181,6 +182,7 @@
 	var orderBy = "";
 	$("#orderBy div").click(function(){
 		if ($(this).attr("id") === "priceAsc"){
+			//$("#btnPriceAsc").html("<i class='lni-rocket'>價格低至高");
 			orderBy = "priceAsc";
 			$("#priceAsc button").addClass("chosen");
 			$("#priceDesc button").removeClass("chosen");
@@ -213,15 +215,15 @@
 			orderBy = "";
 		}
 		
-		console.log("orderBy="+orderBy);
+		//console.log("orderBy="+orderBy);
 		$("#row").empty();
 		sendAjaxQuery();
-		console.log("ajax sent");
+		//console.log("ajax sent");
 	});
 	
 	$("#query").keyup(function(e){
 		 if (e.keyCode === 13){
-		 	console.log("press");
+		 	//console.log("press");
 		 	$("#row").empty();
 		 	sendAjaxQuery();
 		 }
@@ -241,7 +243,6 @@
  		success: function(data){
 //   	  			var lecs = JSON.parse(data);
 			var lecs = data;
- 			//$("#row").empty();
  			if (lecs.length != 0){
  				
 	  			for (let i = 0; i < lecs.length; i++){

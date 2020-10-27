@@ -83,17 +83,20 @@ public class LecAjaxServlet extends HttpServlet {
 	
 				SpkrService spkrSvc = new SpkrService();
 				SpkrVO spkrVO = spkrSvc.getOne(lecVO.getSpkrno());
-//					
-//				ClassroomService roomSvc = new ClassroomService();
-//				ClassroomVO roomVO = roomSvc.getOneClassroom(lecVO.getRoomno());
+					
+				ClassroomService roomSvc = new ClassroomService();
+				ClassroomVO roomVO = roomSvc.getOneClassroom(lecVO.getRoomno());
 				
 				//date format
+				SimpleDateFormat fmt = new SimpleDateFormat("yyyy/MM/dd");
 				SimpleDateFormat fmtdate = new SimpleDateFormat("dd");
 				SimpleDateFormat fmtmonth = new SimpleDateFormat("MMM");
 				SimpleDateFormat fmttime = new SimpleDateFormat("HH:mm");
+				String startlec = fmt.format(lecVO.getLecstart());
 				String startdate = fmtdate.format(lecVO.getLecstart());
 				String startmonth = fmtmonth.format(lecVO.getLecstart());
 				String starttime = fmttime.format(lecVO.getLecstart());
+				String endtime = fmttime.format(lecVO.getLecend());
 				
 				//info processing
 				String lecinfo = "講座資訊更新中";
@@ -113,12 +116,15 @@ public class LecAjaxServlet extends HttpServlet {
 				obj.put("roomno", lecVO.getRoomno());
 				obj.put("lecstart", lecVO.getLecstart());
 				obj.put("lecend", lecVO.getLecend());
+				obj.put("startlec", startlec);
 				obj.put("startdate", startdate);
 				obj.put("startmonth", startmonth);
 				obj.put("starttime", starttime);
+				obj.put("endtime", endtime);
 				obj.put("lecinfo", lecinfo);
+				obj.put("lecstatus", lecVO.getLecstatus());
 				
-//				obj.put("roomname", roomVO.getRoomname());
+				obj.put("roomname", roomVO.getRoomname());
 				obj.put("spkrname", spkrVO.getSpkrname());
 				
 				arr.put(obj);

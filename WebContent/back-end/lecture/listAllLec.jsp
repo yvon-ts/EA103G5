@@ -62,30 +62,29 @@
                         <div class="search-box">
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="material-icons">&#xE8B6;</i></span>
-                                <input type="text" class="form-control" placeholder="Search&hellip;">
+                                <input id="query" name="query" type="text" class="form-control" placeholder="Search&hellip;">
                             </div>
                         </div>
                     </div>
                     <!-- search box end -->
                 </div>
             </div>
-            <table class="table table-bordered">
+            <table id="table" class="table table-bordered">
                 <thead>
 					<tr>
-						<th>講座編號</th>
-						<th>講座名稱</th>
-						<th>講師姓名</th>
-						<th>講座地點</th>
-						<th>講座票價</th>
-						<th>講座日期</th>
+						<th>編號<i id="no" class="fa fa-sort noDesc"></i></th>
+						<th>名稱</th>
+						<th>講師</th>
+						<th>地點</th>
+						<th>票價<i id="price" class="fa fa-sort priceAsc"></i></th>
+						<th>日期<i id="time" class="fa fa-sort timeAsc"></i></th>
 						<th>開始時間</th>
 						<th>結束時間</th>
-<!-- 						<th>開始報名</th> -->
-<!-- 						<th>結束報名</th> -->
-						<th>講座狀態</th>
+						<th>狀態</th>
 						<th>檢視</th>
 						<th>修改</th>
 					</tr>
+					<tbody>
 					<% int listindex = 0; %>
 					<%@ include file="/back-end/pool/page1.file" %>
 					<c:forEach var="lecVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
@@ -129,19 +128,15 @@
 						<td data-title="講座日期"><%=startdate%></td>
 			 			<td data-title="開始時間"><%=starttime%></td>
 						<td data-title="結束時間"><%=endtime%></td>
-<%-- 						<td data-title="報名開始"><%=opendate%></td> --%>
-<%-- 						<td data-title="報名結束"><%=closedate%></td> --%>
 						<td data-title="講座狀態"><%=status%></td>
 						<td>
 							<form method="post" action="<%=request.getContextPath()%>/lecture/lecture.do">
-<!-- 								<input type="submit" value="資訊"> -->
 								<button class="btn view" style="color: #03A9F4"><i class="material-icons">&#xE417;</i></button>
 								<input type="hidden" name="lecno" value="${lecVO.lecno}">
 								<input type="hidden" name="action" value="getOne"></form>
 							</td>
 						<td>
 							<form method="post"	action="<%=request.getContextPath()%>/lecture/lecture.do">
-<!-- 								<input type="submit" value="修改"> -->
 								<button class="btn edit" style="color: orange"><i class="material-icons">&#xE254;</i></button>
 								<input type="hidden" name="lecno" value="${lecVO.lecno}">
 								<input type="hidden" name="action" value="update_fromList">
@@ -150,16 +145,168 @@
 					</tr>
 					<% listindex++;%>
 					</c:forEach>
+					</tbody>
 			</table>
 			<%@ include file="/back-end/pool/page2.file" %>
 			<div id="calendar">
 			<%@ include file="/calendar/calendar.jsp" %>
+			</div>
 		</div>
 	</div>
-	</div>
-	</div>
-	
-	</main>
-</body>
+</div>
+</main>
+<script>
+var orderBy = "";
 
+$(".fc-event-title").click(function(){
+	console.log($(this).text());
+});
+
+$("#no").click(function(){
+	if ($(this).hasClass("noAsc")){
+		$(this).removeClass("noAsc");
+		$(this).addClass("noDesc");
+		orderBy = "noDesc";
+	} else if ($(this).hasClass("noDesc")){
+		$(this).removeClass("noDesc");
+		$(this).addClass("noAsc");
+		orderBy = "noAsc";
+	}
+	console.log("orderBy="+orderBy);
+ 	$("#table tbody").empty();
+ 	sendAjaxQuery();
+	console.log("ajax sent");
+});
+
+$("#price").click(function(){
+	 if ($(this).hasClass("priceAsc")){
+		$(this).removeClass("priceAsc");
+		$(this).addClass("priceDesc");
+		orderBy = "priceDesc";
+	} else if ($(this).hasClass("priceDesc")){
+		$(this).removeClass("priceDesc");
+		$(this).addClass("priceAsc");
+		orderBy = "priceAsc";
+	}
+// 	else if ($(this).attr("id") === "timeAsc"){
+// 		orderBy = "timeDesc";
+// 		$("#timeAsc button").addClass("chosen");
+// 		$("#priceDesc button").removeClass("chosen");
+// 		$("#priceAsc button").removeClass("chosen");
+// 		$("#timeDesc button").removeClass("chosen");
+// 	}
+// 	else if ($(this).attr("id") === "timeDesc"){
+// 		orderBy = "timeAsc";
+// 		$("#timeDesc button").addClass("chosen");
+// 		$("#priceAsc button").removeClass("chosen");
+// 		$("#priceDesc button").removeClass("chosen");
+// 		$("#timeAsc button").removeClass("chosen");
+// 	}
+// 	else{
+// 		orderBy = "";
+// 	}
+	console.log("orderBy="+orderBy);
+ 	$("#table tbody").empty();
+ 	sendAjaxQuery();
+	console.log("ajax sent");
+});
+
+$("#time").click(function(){
+	if ($(this).hasClass("timeAsc")){
+		$(this).removeClass("timeAsc");
+		$(this).addClass("timeDesc");
+		orderBy = "timeDesc";
+	} else if ($(this).hasClass("timeDesc")){
+		$(this).removeClass("timeDesc");
+		$(this).addClass("timeAsc");
+		orderBy = "timeAsc";
+	}
+	console.log("orderBy="+orderBy);
+ 	$("#table tbody").empty();
+ 	sendAjaxQuery();
+	console.log("ajax sent");
+});
+
+
+$("#query").keyup(function(e){
+	 if (e.keyCode === 13){
+	 	console.log("press");
+	 	$("#table tbody").html("");
+	 	sendAjaxQuery();
+	 }
+	});
+
+function sendAjaxQuery(){
+	$.ajax({
+	  		url: "<%=request.getContextPath()%>/lecture/lecJson.get",
+			type: "POST",
+			data:{
+				action: "sendQuery",
+				query: $("#query").val(),
+				condition: orderBy
+			},
+			dataType: 'json',
+			success: function(data){
+//	  			var lecs = JSON.parse(data);
+			var lecs = data;
+			if (lecs.length != 0){
+ 				for (let i = 0; i < lecs.length; i++){
+	 				jQuery('<tr/>', {
+		 		    id: 'tr'+ i,
+		 		    "html" : `<td class="lecno"></td>
+								<td class="lecname"></td>
+		           				<td class="spkrname"></td>
+		            			<td class="roomname"></td>
+								<td class="lecprice"></td>
+								<td class="startlec"></td>
+					 			<td class="starttime"></td>
+								<td class="endtime"></td>
+								<td class="lecstatus"></td>
+								<td>
+									<form method="post" action="<%=request.getContextPath()%>/lecture/lecture.do">
+										<button class="btn view" style="color: #03A9F4"><i class="material-icons">&#xE417;</i></button>
+										<input class="sendLecno" type="hidden" name="lecno" value=lecs[i].lecno>
+										<input type="hidden" name="action" value="getOne">
+									</form>
+								</td>
+								<td>
+									<form method="post"	action="<%=request.getContextPath()%>/lecture/lecture.do">
+										<button class="btn edit" style="color: orange"><i class="material-icons">&#xE254;</i></button>
+										<input class="sendLecno" type="hidden" name="lecno" value=lecs[i].lecno>
+										<input type="hidden" name="action" value="update_fromList">
+									</form>
+								</td>`
+ 				}).appendTo('#table tbody');
+
+	 			$("#tr"+i+" .lecno").text(lecs[i].lecno);
+	 			$("#tr"+i+" .lecname").text(lecs[i].lecname);
+	 			$("#tr"+i+" .roomname").text(lecs[i].roomname);
+	 			$("#tr"+i+" .spkrname").text(lecs[i].spkrname);
+	 			$("#tr"+i+" .lecprice").text(lecs[i].lecprice);
+	 			$("#tr"+i+" .startlec").text(lecs[i].startlec);
+	 			$("#tr"+i+" .starttime").text(lecs[i].starttime);
+	 			$("#tr"+i+" .endtime").text(lecs[i].endtime);
+	 			$("#tr"+i+" .sendLecno").text(lecs[i].lecno);
+	 			
+	 			if (lecs[i].lecstatus === 1)
+	 				$("#tr"+i+" .lecstatus").text("正常");
+	 			else if (lecs[i].lecstatus === 0)
+	 				$("#tr"+i+" .lecstatus").text("取消");
+	 			else if (lecs[i].lecstatus === 2)
+	 				$("#tr"+i+" .lecstatus").text("額滿");
+	 			else if (lecs[i].lecstatus === 3)
+	 				$("#tr"+i+" .lecstatus").text("取消");
+	 		}
+ 			
+ 		console.log($("#query").val());
+ 		console.log("orderBy="+orderBy);
+ 		console.log(data);
+ 		} else {
+ 			alert("查無資料");
+ 		}
+	}
+})
+}
+</script>
+</body>
 </html>

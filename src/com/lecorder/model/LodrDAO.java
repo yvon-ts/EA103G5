@@ -33,7 +33,7 @@ public class LodrDAO implements LodrDAO_Interface{
 	private static final String GETONE_STMT =
 			"SELECT * FROM LEC_ORDER WHERE LODRNO = ?";
 	private static final String GETALL_STMT =
-			"SELECT * FROM LEC_ORDER ORDER BY LODRNO";
+			"SELECT * FROM LEC_ORDER ORDER BY LODRNO DESC";
 	
 	
 	static {
