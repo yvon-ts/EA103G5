@@ -22,7 +22,7 @@
 	href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 	<link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/jquery.rateit/1.1.3/rateit.css" />
-	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<!-- 	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script> -->
 	<style>
 	.title{
             height: 1px;
@@ -299,10 +299,7 @@
 						let count = 1 ;
 						
 						if(data !== 'false'){
-							swal({ 
-								title: "成功加入購物車",
-							    icon: "success",
-							    button: true});
+							swal('成功提交！', '你已將課程加入購物車！', 'success');
 									
 							var JSONObj = JSON.parse(data);
 							
