@@ -249,7 +249,6 @@ public class TeacherServlet extends HttpServlet {
 			
 			if(tchrcert1==null||tchrcert2==null) {
 				System.out.println("照片空的");
-				errorMsgs.add("專業證照:一定要上傳");
 				TeacherDAO dao = new TeacherDAO();
 				TeacherVO teacherVO = dao.findByPrimaryKey(tchrno);
 				tchrcert1 = teacherVO.getTchrcert1();
@@ -257,6 +256,7 @@ public class TeacherServlet extends HttpServlet {
 				
 			}
 			if (!errorMsgs.isEmpty()) {
+				
 				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/teacher/teacherUpdate.jsp");
 				failureView.forward(req, res);
 				return;

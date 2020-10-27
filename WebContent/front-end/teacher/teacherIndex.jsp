@@ -44,7 +44,8 @@ String inform6 = (String)request.getAttribute("inform6");
     <link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/teacher/nav_css/css/responsive.css">
     <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/front-end/members/assets/fonts/line-icons.css">
-    
+    <script src="https://kit.fontawesome.com/b99e675b6e.js"></script>
+	
     </head>
     
     <style>
@@ -141,35 +142,40 @@ background:rgba(57, 63, 84, 0.6);
 <!--         </nav> -->
         <!-- Masthead-->
         <nav class="navbar navbar-expand-md bg-inverse fixed-top scrolling-navbar">
-			<div class="container">
-				<!-- Brand and toggle get grouped for better mobile display -->
-				<a
-					href="<%=request.getContextPath()%>/index/front-index/index.jsp"
-					class="navbar-brand"><img src="<%=request.getContextPath()%>/front-end/members/assets/img/logo.svg" alt="">
-					<div id="logo">Xducation</div> </a>
-				<button class="navbar-toggler" type="button" data-toggle="collapse"
-					data-target="#navbarCollapse" aria-controls="navbarCollapse"
-					aria-expanded="false" aria-label="Toggle navigation">
-					<i class="lni-menu"></i>
-				</button>
-				<div class="collapse navbar-collapse" id="navbarCollapse">
-					<ul class="navbar-nav mr-auto w-100 justify-content-end clearfix">
-						<li class="nav-item"><a class="nav-link" href="#">
-								進入搜尋&nbsp;<i class="lni-search"></i>
-						</a></li>
-						<li class="nav-item"><a class="nav-link" href="#">
-								精選課程&nbsp;<i class="lni-leaf"></i>
-						</a></li>
-						<li class="nav-item"><a class="nav-link" href="#">
-								名人講座&nbsp;<i class="lni-bulb"></i>
-						</a></li>
-						<c:if test="${teacherSvc.getStatus(membersVO.memno).tchrstatus eq '已通過'}">
-						<li class="nav-item"><a class="nav-link" href="#">
-								我要開課&nbsp;<i class="lni-bulb"></i>
-						</a></li>
-						</c:if>
-						
-						<c:if test="${not empty membersVO}">
+            <div class="container">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <a href="<%=request.getContextPath()%>/index/front-index/index.jsp" class="navbar-brand"><img src="<%=request.getContextPath()%>/index/front-index/assets/img/logo.svg" alt="">
+                    <div id="logo">Xducation</div>
+                </a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
+                    aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <i class="lni-menu"></i>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarCollapse">
+                    <ul class="navbar-nav mr-auto w-100 justify-content-end clearfix">
+                        <li class="nav-item">
+                        
+  
+<%--                             <a class="nav-link" href="<%=request.getContextPath()%>/front-end/course/listAllCourse.jsp"> --%>
+<!--                                進入搜尋&nbsp;<i class="lni-search"></i>  -->
+<!--                             </a> -->
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="<%=request.getContextPath()%>/front-end/tracking_list/listTrackingListForUser.jsp">
+                   	購物車&nbsp;<i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="<%=request.getContextPath()%>/front-end/course/listAllCourseForUser.jsp">
+                                搜尋課程&nbsp;<i class="lni-leaf"></i>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="<%=request.getContextPath()%>/front-end/lecture/listAllLec.jsp">
+                                名人講座&nbsp;<i class="lni-bulb"></i>
+                            </a>
+                        </li>
+                        <c:if test="${not empty sessionScope.membersVO}">
 							
 							
 							<li class="nav-item">
@@ -177,37 +183,35 @@ background:rgba(57, 63, 84, 0.6);
 									<button class="btn btn-secondary dropdown-toggle" type="button"
 										id="dropdownMenuButton" data-toggle="dropdown"
 										aria-haspopup="true" aria-expanded="false">
-										${membersVO.memname}</button>
+										${sessionScope.membersVO.memname}</button>
 									<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
 										<a class="dropdown-item"
 											href="<%=request.getContextPath()%>/front-end/members/updateMembersV2.jsp">個人檔案</a>
+											
 											<a class="dropdown-item"
 											href='<%=request.getContextPath()%>/front-end/Order_Master/listAllByMemno.jsp'>課程訂單紀錄</a>
 											
 											<a class="dropdown-item"
 											href='<%=request.getContextPath()%>/front-end/coup_code/listAllByMemno.jsp'>持有折扣券</a> 
-													
-											
-											
+																
 										
-										<c:if test="${teacherSvc.getStatus(membersVO.memno).tchrstatus eq '待審核'}">
+										<c:if test="${teacherSvc.getStatus(sessionScope.membersVO.memno).tchrstatus eq '待審核'}">
 										<a class="dropdown-item" onclick="status()" >老師檔案</a> 
 											
 										</c:if>
-										<c:if test="${teacherSvc.getStatus(membersVO.memno).tchrstatus eq '已通過'}">
+										<c:if test="${teacherSvc.getStatus(sessionScope.membersVO.memno).tchrstatus eq '已通過'}">
 										<a class="dropdown-item"
 											href="<%=request.getContextPath()%>/front-end/teacher/teacherDisplay.jsp">老師檔案</a> 
 											
 										</c:if>
-											<c:if test="${teacherSvc.getStatus(membersVO.memno).tchrstatus eq '未通過'}">
+											<c:if test="${teacherSvc.getStatus(sessionScope.membersVO.memno).tchrstatus eq '未通過'}">
 										<a class="dropdown-item"
 											href="<%=request.getContextPath()%>/front-end/teacher/teacherUpdate.jsp">老師檔案</a>
 											
 										</c:if>
-										<c:if test="${not empty membersVO}">
+										<c:if test="${not empty sessionScope.membersVO}">
 										<a class="dropdown-item"
 											href='<%=request.getContextPath()%>/members/members.do?action=signout'>會員登出</a> 
-											
 										</c:if>
 											
 											
@@ -221,36 +225,44 @@ background:rgba(57, 63, 84, 0.6);
 							</li>
 							
 							</c:if>
-							<c:if test="${not empty membersVO.memno}">
-							<c:if test="${empty teacherSvc.getStatus(membersVO.memno)}">
+							<c:if test="${not empty sessionScope.membersVO.memno}">
+							<c:if test="${empty sessionScope.teacherVO}">
 							<img id="nav_icon" src='<%=request.getContextPath()%>/front-end/members/assets/img/students.svg'>
 							</c:if>
-							<c:if test="${teacherSvc.getStatus(membersVO.memno).tchrstatus eq '待審核'}">
+							<c:if test="${sessionScope.teacherVO.tchrstatus eq '待審核'}">
 							<img id="nav_icon" src='<%=request.getContextPath()%>/front-end/members/assets/img/students.svg'>
 							</c:if>
 							
-							<c:if test="${teacherSvc.getStatus(membersVO.memno).tchrstatus eq '已通過'}">
+							<c:if test="${sessionScope.teacherVO.tchrstatus eq '已通過'}">
 							<img id="nav_icon" src='<%=request.getContextPath()%>/front-end/members/assets/img/teacher.svg'>
 							</c:if>
-							<c:if test="${teacherSvc.getStatus(membersVO.memno).tchrstatus eq '未通過'}">
+							<c:if test="${sessionScope.teacherVO.tchrstatus eq '未通過'}">
 							<img id="nav_icon" src='<%=request.getContextPath()%>/front-end/members/assets/img/students.svg'>
-							</c:if>
-							</c:if>
 							
+							</c:if>
+							</c:if>
+					
 
-						<c:if test="${empty membersVO}">
+						<c:if test="${empty sessionScope.membersVO}">
 							<li class="nav-item"><a class='nav-link'
 								href='<%=request.getContextPath()%>/front-end/members/signIn.jsp'>我要登入&nbsp;<i
 									class='lni-bulb'></i></a></li>
 						</c:if>
+						
 
-
-
-
-					</ul>
-				</div>
-			</div>
-		</nav>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                    </ul>
+                </div>
+            </div>
+        </nav>
         <header class="masthead">
 
             <div class="container h-100">
