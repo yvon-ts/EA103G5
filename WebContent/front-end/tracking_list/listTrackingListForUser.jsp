@@ -295,7 +295,7 @@
 						let count = 1 ;
 						
 						if(data !== 'false'){
-							swal('成功提交！', '你已將課程加入購物車！', 'success');
+							swal('你已將課程加入購物車！！', '', 'success');
 									
 							var JSONObj = JSON.parse(data);
 							
