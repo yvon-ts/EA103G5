@@ -12,7 +12,7 @@
 	String lec = odrVO.getLecno();
 	String seat = odrVO.getLodrseat();
 %>
-
+<!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
@@ -26,9 +26,9 @@
 	.hide{
 		display: none;
 	}
+	
 	#classroom{
 		width: 235px;
-}
 	}
 </style>
 </head>
@@ -44,41 +44,35 @@
 		<input type="hidden" id="roomrow" class="roomSpace" name="roomrow" value="${roomVO.roomrow}">
 		<input type="hidden" id="roomcolumn" class="roomSpace" name="roomcolumn" value="${roomVO.roomcolumn}">
 		<input type="hidden" id="fixedseat" name="initseat" value="${lvo.initseat}" readonly>
-		<input type="text" id="defaultseat" name="currseat" value="${lvo.currseat}" readonly>
+		<input type="hidden" id="defaultseat" name="currseat" value="${lvo.currseat}" readonly>
 	</div>
-	<div>
-	</div>
-	
-		
-	<div id="div"></div>
 	<script src="<%=request.getContextPath()%>/back-end/lecture/roomsetting/javascript/classroom.js"></script>
   	<script>
-  		$.ajax({
-  	  		url: "<%=request.getContextPath()%>/lecture/currLayout.show",
-  	  		type: "POST",
-  	  		data:{
-  	  			lecno: "<%=lec%>"
-  	  		},
-  	  		success: function(data){
-  	  			console.log(data);
-  	  			var layout = JSON.parse(data);
-  	  			for (let i = 0; i < layout.length; i++){
-  	  	  			$("#roomrow").val(layout[i].roomrow);
-  	  	  			$("#roomcolumn").val(layout[i].roomcolumn);
-  	  	  			var seat = "<%=seat%>";
-  	  	  			$("#defaultseat").val(seat);
-  	  			}
-  	  	         let roomRow = $("#roomrow").val();
-  	  	         let roomColumn = $("#roomcolumn").val();
-  	  	         let statusStr = $("#defaultseat").val();
+	$.ajax({
+  		url: "<%=request.getContextPath()%>/lecture/currLayout.show",
+  		type: "POST",
+  		data:{
+  			lecno: "<%=lec%>"
+  		},
+  		success: function(data){
+  			console.log(data);
+  			var layout = JSON.parse(data);
+  			for (let i = 0; i < layout.length; i++){
+  	  			$("#roomrow").val(layout[i].roomrow);
+  	  			$("#roomcolumn").val(layout[i].roomcolumn);
+  	  			var seat = "<%=seat%>";
+  	  			$("#defaultseat").val(seat);
+  			}
+  	         let roomRow = $("#roomrow").val();
+  	         let roomColumn = $("#roomcolumn").val();
+  	         let statusStr = $("#defaultseat").val();
 
-  	  	        // print layout
-  	  	        setCurrseatValue(statusStr);
-  	  	        showSeatMapping();
-	  	  	    //addClickForBooking();
-  	  		}
-  	  	});
-  	
+  	        // print layout
+  	        setCurrseatValue(statusStr);
+  	        showSeatMapping();
+	  	    //addClickForBooking();
+  		}
+  	});
     </script>
 </body>
 </html>
