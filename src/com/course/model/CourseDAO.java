@@ -371,10 +371,9 @@ public class CourseDAO implements CourseDAO_interface {
 			con = ds.getConnection();
 
 			String finalSQL = "select * from course " + jdbcUtil_CompositeQuery_course.get_WhereCondition(map);
+			System.out.println("SQL = " + finalSQL);
 
 			pstmt = con.prepareStatement(finalSQL);
-			System.out.println(finalSQL);
-
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
