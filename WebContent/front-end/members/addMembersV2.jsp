@@ -79,7 +79,7 @@ position: absolute;
  }
  
  section#copyright{
- height:400px;
+ height:200px;
  }
  .help-block.error {
      margin-bottom: 5px;
@@ -133,6 +133,7 @@ div#bg{
 
 
 div.main{
+padding-bottom:0px;
 background: url("<%=request.getContextPath()%>/front-end/members/assets/img/bgPic.png");
 }
 
@@ -264,7 +265,9 @@ background: url("<%=request.getContextPath()%>/front-end/members/assets/img/bgPi
                     
                 </div>
             </div>
-            <footer id="footer" >
+            
+        </section>
+        <footer id="footer" >
         <section id="copyright" class="">
             <div >
                 <div >
@@ -276,7 +279,6 @@ background: url("<%=request.getContextPath()%>/front-end/members/assets/img/bgPi
             </div>
         </section>
     </footer>
-        </section>
          
         </div>       
          </body><!-- This templates was made by Colorlib (https://colorlib.com) -->

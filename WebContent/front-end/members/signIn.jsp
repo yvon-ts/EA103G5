@@ -86,7 +86,7 @@ margin:10px 0 0 70px ;
 	box-shadow: 0 0 15px #5B5B5B;
  }
  section#copyright{
- height:400px;
+ height:200px;
  }
  input.input{
 font-family:'Gochi Hand';
@@ -107,6 +107,7 @@ margin-top:470px;
 margin-left:-40px;
 } 
 div.main{
+padding:150px 0 0 0 ;
 background: url("<%=request.getContextPath()%>/front-end/members/assets/img/bgPic.png");
 
 
@@ -191,18 +192,11 @@ background: url("<%=request.getContextPath()%>/front-end/members/assets/img/bgPi
                             </div>
                         </form>
                          <input type="hidden" id="inform3" value="${requestScope.inform3}">
-                        <div class="social-login">
-                            <span class="social-label">
-                            
-                            </span>
-                            <ul class="socials">
-                            </ul>
-                        </div>
+                        
                     </div>
                 </div>
             </div>
-        </section>
-         <footer id="footer" >
+             <footer id="footer" >
         <section id="copyright" class="">
             <div >
                 <div >
@@ -214,6 +208,8 @@ background: url("<%=request.getContextPath()%>/front-end/members/assets/img/bgPi
             </div>
         </section>
     </footer>
+        </section>
+        
 
     </div>
     

@@ -23,6 +23,7 @@
  --%>
  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.3/sweetalert2.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.3/sweetalert2.js" type="text/javascript"></script>
+    <script src="https://cdn.ckeditor.com/ckeditor5/23.0.0/classic/ckeditor.js"></script>
  
      <%-- 
  <link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/teacher/teacherRegister_css/style.css"> --%>
@@ -308,6 +309,15 @@ input.form-submit {
  
   
   }
+  div#editor{
+  width:100px;
+  height:100px;
+  position:absolute;
+  z-index:20;
+  
+  
+  
+  }
   input#bankacc{
     width: 400px;
     display: block;
@@ -461,9 +471,10 @@ background: url("<%=request.getContextPath()%>/front-end/members/assets/img/bgPi
 
                        
                          <th>
+                         <div id="editor"><textarea style="margin:0px 50px;width: 480px;height: 150px;  position:absolute;z-index: 10;" name="tchrintro" placeholder="資料的詳細度將會影響審核成功的機率，祝好運">djfjdskfjspfks</textarea></div>
         
-                         <textarea style="margin:0px 50px;width: 480px;height: 150px;  position:absolute;z-index: 10;" name="tchrintro" placeholder="資料的詳細度將會影響審核成功的機率，祝好運">${requestScope.teacherVO.tchrintro}</textarea> 
-
+                        <%--  <textarea style="margin:0px 50px;width: 480px;height: 150px;  position:absolute;z-index: 10;" name="tchrintro" placeholder="資料的詳細度將會影響審核成功的機率，祝好運">${requestScope.teacherVO.tchrintro}</textarea> 
+ --%>
 
                          </th>
                         <!--  <th><div style="width: 250px;"></div></th> -->
@@ -670,6 +681,18 @@ background: url("<%=request.getContextPath()%>/front-end/members/assets/img/bgPi
 
     <!-- JS -->
     <script type="text/javascript">
+    ClassicEditor
+    .create( document.querySelector( '#editor' ) )
+    .catch( error => {
+        console.error( error );
+    } );
+    
+    
+    
+    
+    
+    
+    
     var message = document.getElementById('message').value;
     if(message.length !== 0){
     	 swal('注意', message, 'warning');

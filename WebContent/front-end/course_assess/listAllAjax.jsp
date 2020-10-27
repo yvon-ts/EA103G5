@@ -30,7 +30,7 @@ MembersVO membersVO = (MembersVO) session.getAttribute("membersVO");
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Xducation-會員登入</title>
+    <title>Xducation-會員評價</title>
 
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.3/sweetalert2.css" />
@@ -41,8 +41,8 @@ MembersVO membersVO = (MembersVO) session.getAttribute("membersVO");
 	href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 	
     <!-- Main css -->
-    <link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/members/signIn&updateMembers_css/style.css">
-<%--     <link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/members/nav_css_ForSignIn&addMembers/css/bootstrap.min.css"> --%>
+    <%-- <link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/members/signIn&updateMembers_css/style.css">
+     <link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/members/nav_css_ForSignIn&addMembers/css/bootstrap.min.css"> --%>
 <%--     <link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/members/nav_css_ForSignIn&addMembers/css/nivo-lightbox.css"> --%>
 <%--     <link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/members/nav_css_ForSignIn&addMembers/css/animate.css"> --%>
 <%--     <link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/members/nav_css_ForSignIn&addMembers/css/main.css"> --%>
@@ -73,32 +73,15 @@ margin:-240px 0 0 -30px;
 
 }
 
-
- 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
  img.icon{
  width:33px;
  height:33px;
  
  }
- img.icon1{
+ img.nav_icon{
  width:36px;
  height:36px;
- margin:1px 0 0 10px;
- vertical-align:unset;
+ margin:0px 0 0 5px;
  
  }
  button.register{
@@ -116,8 +99,13 @@ margin:-240px 0 0 -30px;
   font-family:'Gochi Hand';
   border-radius:5px;
   
-  
   }
+  div.form-group1{
+  width:500px;
+  height:50px;
+  margin:-150px 0 0 200px;
+ }
+  
   a#add{
    display: inline-block;
   background: #6dabe4;
@@ -133,7 +121,7 @@ margin:-240px 0 0 -30px;
   margin-top:-80px;
   height:80px;
   font-size:30px;
-  padding:16px;
+  padding:27px;
   text-align:center;
 
   }
@@ -151,9 +139,7 @@ margin:-240px 0 0 -30px;
  section#copyright{
  height:200px;
  }
- input.input{
-font-family:'Gochi Hand';
-}
+
 div.signin-form{
 margin-right: 10px;
 margin-left:0px;
@@ -183,28 +169,30 @@ p.text{
 width:100%;
 height:100%;
 font-size:18px;
-
+text-align:center;
+padding-top:10px;
+font-family:'Gochi Hand';
 }
 p.date{
 width:100%;
 text-align:center;
-margin:25px 0 0 170px ;
+margin:30px 0 0 300px;
+font-family:'Gochi Hand';
 
 
 }
 h4.nkname{
 width:200px;
 height:50px;
-margin:12px 0 0 30px ;
+margin:12px 0 0 40px;
+
 
 }
 .signup-image-link {
     margin-top: 20px;
     margin-left:5px;
     }
-    div,p{
-    font-family:'Gochi Hand';
-    }
+   
     div#count{
     width:300px;
     height:100px;
@@ -212,7 +200,8 @@ margin:12px 0 0 30px ;
     z-index:2;
     margin:-25px 0 0 140px;
     font-size:20px;
-    color:#D0D0D0;
+    color:#ADADAD;
+    font-family:'Gochi Hand';
     
     }
     div#title{
@@ -223,6 +212,7 @@ margin:12px 0 0 30px ;
     margin:-25px 0 0 23px;
     font-size:20px;
     color:#FF0000;
+    font-family:'Gochi Hand';
     
     }
     div#avg{
@@ -230,9 +220,10 @@ margin:12px 0 0 30px ;
     height:50px;
     position:absolute;
     z-index:2;
-    margin:-130px 0 0 10px;
+    margin:-75px 0 0 10px;
     font-size:80px;
     color:#0099CC;
+    font-family:'Gochi Hand';
     }
   
     
@@ -319,7 +310,7 @@ $(document).ready(function(){
 	
 	var counter = 0; /*計數器*/
 	var pageStart = 0; /*offset*/
-	var pageSize = 2; /*size*/
+	var pageSize = 6; /*size*/
 	/*首次載入*/
 	getData(pageStart, pageSize);
 	/*監聽載入更多*/
@@ -365,23 +356,23 @@ function getData(offset,size){
 				result +=	`<h4 style="font-family:Gochi Hand" class="nkname">`+JSONarray[i].nkname
 				
 				if(JSONarray[i].tchrstatus===null){
-				result += `<img id="nav_icon" src='<%=request.getContextPath()%>/front-end/members/assets/img/students.svg'></h4></div>`;
+				result += `<img class="nav_icon" src='<%=request.getContextPath()%>/front-end/members/assets/img/students.svg'></h4></div>`;
 				}else if(JSONarray[i].tchrstatus==='待審核'){
-				result += `<img id="nav_icon" src='<%=request.getContextPath()%>/front-end/members/assets/img/students.svg'></h4></div>`;
+				result += `<img class="nav_icon" src='<%=request.getContextPath()%>/front-end/members/assets/img/students.svg'></h4></div>`;
 				}else if(JSONarray[i].tchrstatus==='已通過'){
-			    result += `<img id="nav_icon" src='<%=request.getContextPath()%>/front-end/members/assets/img/teacher.svg'></h4></div>`;
+			    result += `<img class="nav_icon" src='<%=request.getContextPath()%>/front-end/members/assets/img/teacher.svg'></h4></div>`;
 		        }else if(JSONarray[i].tchrstatus==='待審核'){
-		        result += `<img id="nav_icon" src='<%=request.getContextPath()%>/front-end/members/assets/img/students.svg'></h4></div>`;
+		        result += `<img class="nav_icon" src='<%=request.getContextPath()%>/front-end/members/assets/img/students.svg'></h4></div>`;
 		        }
 					
 			    result += `<div class="signin-form">`;
-			    result += `<div class="form-group">`;
+			    result += `<div class="form-group1">`;
 			    
 			    for(var x = JSONarray[i].coursescore;x >0;x-- ){
 			    	 result += `<img class="icon" src="<%=request.getContextPath()%>/front-end/members/signIn&updateMembers_css/images/star.svg">`;
 			    }
 			    result += `</div>`;
-			    result += ` <div class="form-group">`;
+			    result += ` <div class="form-group2">`;
 			    result += `<p class="text">`+JSONarray[i].comments+`</p>`;
 			  
 			    result += `<p class="date">`+JSONarray[i].string_commenttime +`</p></div></div></div>`;

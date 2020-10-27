@@ -117,13 +117,14 @@ width:36px;
 height:36px;
 }
  section#copyright{
- height:400px;
+ height:200px;
  }
  body{
  font-family:'Gochi Hand';
  }
  
 div.main{
+padding:150px 0 0 0 ;
 background: url("<%=request.getContextPath()%>/front-end/members/assets/img/bgPic.png");
 }
 
@@ -362,7 +363,11 @@ background: url("<%=request.getContextPath()%>/front-end/members/assets/img/bgPi
                 
             </div>
  </form>
-            <footer id="footer" >
+            
+    <input type="hidden" id="inform4" value="${requestScope.inform4}">
+    
+        </section>
+        <footer id="footer" >
         <section id="copyright" class="">
             <div >
                 <div >
@@ -374,9 +379,6 @@ background: url("<%=request.getContextPath()%>/front-end/members/assets/img/bgPi
             </div>
         </section>
     </footer>
-    <input type="hidden" id="inform4" value="${requestScope.inform4}">
-    
-        </section>
         
 </div>
 
