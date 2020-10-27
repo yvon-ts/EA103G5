@@ -5,10 +5,36 @@
 <%@ page import="com.course.model.*"%>
 <%@ page import="com.functionx.model.*"%>
 
+<jsp:useBean id="courseSvc" scope="page" class="com.course.model.CourseService" />
+<jsp:useBean id="courseTypeSvc" scope="page" class="com.course_type.model.CourseTypeService" />
+<jsp:useBean id="membersSvc" scope="page" class="com.members.model.MembersService" />
+<jsp:useBean id="teacherSvc" scope="page" class="com.teacher.model.TeacherService" />
+
 <%
-// 	EmployeeService empSvc = new EmployeeService();
-// 	List<EmployeeVO> list = empSvc.getAll();
-// 	pageContext.setAttribute("list", list);
+// 	System.out.println("==========");
+	request.setCharacterEncoding("UTF-8");
+	Map<String, String[]> map = new TreeMap<String, String[]>();
+	
+	String newSearchStatus = (String) request.getParameter("searchStatus");
+// 	System.out.println("newSearchStatus 1 = " + newSearchStatus);
+	String searchStatus = (String) session.getAttribute("searchStatus");
+// 	System.out.println("searchStatus 1 = " + searchStatus);
+	if (searchStatus == null) {
+		searchStatus = "所有";
+	}
+// 	System.out.println("searchStatus 2 = " + searchStatus);
+
+	if (newSearchStatus != null) {
+		searchStatus = newSearchStatus;
+	}
+// 	System.out.println("searchStatus 2 = " + searchStatus);
+	session.setAttribute("searchStatus", searchStatus);
+	
+	if (!("所有".equals(searchStatus))) {
+		map.put("csstatus", new String[]{searchStatus});
+	}
+	List<CourseVO> list = courseSvc.getAll(map);
+	pageContext.setAttribute("list", list);
 %>
 
 <jsp:useBean id="funSvc" scope="page" class="com.functionx.model.FunctionxService" />
@@ -18,7 +44,7 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	
+
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
 	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
@@ -329,8 +355,8 @@
 </head>
 
 <body>
-
 	<jsp:include page="/front-end/back-endHomePage.jsp" />
+	<%-- <jsp:include page="/back-end/index/homepage.jsp" /> --%>
 
 	<main class="app-content">
 		<div class="container-xl">
@@ -343,11 +369,18 @@
 									<b>課程列表</b>
 								</h2>
 							</div>
-							<div class="col-sm-8">
-								<a href="<%=request.getContextPath() %>/back-end/employee/newadd_emp.jsp" class="btn btn-primary">
-									<i class="material-icons">&#xe03b;</i>
-									<span>新增員工</span>
-								</a>
+							<div class="col-sm-6">
+								<form method="post" action="<%=request.getContextPath()%>/back-end/course/editCourseStatus.jsp">
+									<select class="custom-select" name="searchStatus">
+										<option value="所有" ${searchStatus=="所有" ? 'selected' : '' }>所有
+										<option value="審核中" ${searchStatus=="審核中" ? 'selected' : '' }>審核中
+										<option value="上架" ${searchStatus=="上架" ? 'selected' : '' }>上架
+										<option value="下架" ${searchStatus=="下架" ? 'selected' : '' }>下架
+									</select>
+							</div>
+							<div class="col-sm-2">
+								<input type="submit" value="查詢" class="view show">
+								</form>
 							</div>
 						</div>
 					</div>
@@ -358,31 +391,26 @@
 								<th>名稱</th>
 								<th>類別</th>
 								<th>老師</th>
-								<th>狀態</th>
 								<th>單價</th>
-								<th>最後更新時間</th>
+								<th>更新時間</th>
+								<th>狀態</th>
 								<th>修改</th>
 							</tr>
 						</thead>
 						<tbody>
-							<jsp:useBean id="courseSvc" scope="page" class="com.course.model.CourseService" />
-							<jsp:useBean id="courseTypeSvc" scope="page" class="com.course_type.model.CourseTypeService" />
-							<jsp:useBean id="membersSvc" scope="page" class="com.members.model.MembersService" />
-							<jsp:useBean id="teacherSvc" scope="page" class="com.teacher.model.TeacherService" />
-							<%
-								List<CourseVO> list = courseSvc.getAllForEmployee();
-								pageContext.setAttribute("list", list);
-							%>
+
 							<%@ include file="page1.file"%>
-							<c:forEach var="courseVO" items="${courseSvc.allForEmployee}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
-<%-- 								<c:forEach var="courseVO" items="${courseSvc.allForEmployee}"> --%>
+							<c:forEach var="courseVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
+								<%-- 								<c:forEach var="courseVO" items="${courseSvc.allForEmployee}"> --%>
 								<tr>
 									<td>${courseVO.courseno}</td>
 									<td>${courseVO.coursename}</td>
 									<td>${courseTypeSvc.getOneCourseType(courseVO.cstypeno).cstypename}</td>
 									<td>${membersSvc.getOneMembers(teacherSvc.getOneTeacher(courseVO.tchrno).memno).memname}</td>
 									<td>${courseVO.courseprice}</td>
-									<td><fmt:formatDate value="${courseVO.courlmod}" pattern="yyyy-MM-dd HH:mm:ss" /></td>
+									<td>
+										<fmt:formatDate value="${courseVO.courlmod}" pattern="yyyy-MM-dd HH:mm:ss" />
+									</td>
 									<td>
 										<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/CourseServlet_Ajax">
 											<select class="custom-select" name="csstatus">
@@ -405,38 +433,34 @@
 				</div>
 			</div>
 		</div>
-		
+
 		<script>
 			// 上傳單一單元的影片
 			$(".updateButton").click(function (e) {
 				e.preventDefault();
 				var formData = new FormData($(this).parents("tr").find("form")[0]);
-	
+
 				for (let key of formData.keys()) {
-				    console.log(key + " : " + formData.get(key));
+					console.log(key + " : " + formData.get(key));
 				}
-	
+
 				$.ajax({
 					url: "<%=request.getContextPath()%>/CourseServlet_Ajax",
 					type: "POST",
 					data: formData,
 					processData: false,
 					contentType: false,
-					success:function(data){
+					success: function (data) {
 						console.log("成功");
-	 					alert(data);
-	 				},
-	 				error:function(data){
-	 					console.log("失敗");
-	 					alert(data);
-	 				}
+						alert(data);
+					},
+					error: function (data) {
+						console.log("失敗");
+						alert(data);
+					}
 				});
 			});
 		</script>
-		
-		
-		
-		
 </body>
 
 </html>

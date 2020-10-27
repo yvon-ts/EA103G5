@@ -12,18 +12,12 @@ public class jdbcUtil_CompositeQuery_course {
 		if("cstypeno".equals(columnName) ) {
 			aCondition.append( columnName + "='" +  value + "'");
 		}
-		else if ("tchrno".equals(columnName) || "ccstatus".equals(columnName) || "courseno".equals(columnName)) 
+		else if ("tchrno".equals(columnName) || "csstatus".equals(columnName) || "courseno".equals(columnName)) 
 			aCondition.append(columnName + " like '%" + value + "%'");
 		else if( "searchText".equals(columnName) ) {
 			aCondition.append("(upper(coursename)" + " like upper('%" + value + "%')");
 			aCondition.append("or upper( courseinfo)" + " like upper('%" + value + "%'))");
 		}
-		
-		
-		
-			
-		
-			
 //		else if ("hiredate".equals(columnName))                          // ��Oracle��ate
 //			aCondition = "to_char(" + columnName + ",'yyyy-mm-dd')='" + value + "'";
 
@@ -31,7 +25,6 @@ public class jdbcUtil_CompositeQuery_course {
 	}
 
 	public static String get_WhereCondition(Map<String, String[]> map) {
-		
 		
 		Map<String,String> priceRange = new HashMap<>();//價錢範圍
 		
@@ -92,14 +85,12 @@ public class jdbcUtil_CompositeQuery_course {
 
 		// ���� req.getParameterMap()�瘜� �� java.util.Map<java.lang.String,java.lang.String[]> 銋葫閰�
 		Map<String, String[]> map = new TreeMap<String, String[]>();
+		String XX = "上架";
+		System.out.println(XX);
 //		map.put("courseno", new String[] { "COUR0001" });
-		map.put("cstypeno", new String[] { "TYPE0001" });
-//		map.put("job", new String[] { "PRESIDENT" });
-//		map.put("hiredate", new String[] { "1981-11-17" });
-//		map.put("sal", new String[] { "5000.5" });
-//		map.put("comm", new String[] { "0.0" });
-//		map.put("deptno", new String[] { "10" });
-		map.put("action", new String[] { "getXXX" }); // 瘜冽�ap鋆⊿����ction��ey
+//		map.put("cstypeno", new String[] { "TYPE0001" });
+		map.put("csstatus", new String[] { XX });
+//		map.put("action", new String[] { "getXXX" }); // 瘜冽�ap鋆⊿����ction��ey
 
 		String finalSQL = "select * from course "
 				          + jdbcUtil_CompositeQuery_course.get_WhereCondition(map)
