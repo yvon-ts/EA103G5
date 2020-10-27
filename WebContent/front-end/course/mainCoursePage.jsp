@@ -115,6 +115,14 @@
 										</div>
 									</a>
 								</c:forEach>
+								
+<!-- 								顯鈞家回來list-item 20201027-->
+								<a
+										class="list-group-item-action list-group-item-primary"
+										target="_blank"
+										href="<%=request.getContextPath()%>/front-end/test/SelectedTest.jsp">
+											<h3 style="color:#0099CC;">測驗單元</h3>
+									</a>
 							</div>
 						</div>
 					</div>
@@ -142,13 +150,41 @@
 								<sapn id="courseprice">${courseVO.courseprice}</sapn>
 							</i>
 						</div>
-						<div class="col-md col-3 courseInfo ">
+						
+						
 							<!-- 須要查詢該使用者是否已加入收藏 -->
-							<i id="track"></i>
-						</div>
+						
 						<div class="col-md col-3 courseInfo ">
-							<!-- 須要查詢該使用者是否已購買 -->
-							<i id="addShopCart" class="fas fa-cart-plus"></i>
+						<c:forEach var="TrackingListVO" items="${TrackingListSvc.getOneByMemno(membersVO.memno)}">
+								<c:choose>
+									<c:when test="${ courseVO.courseno eq TrackingListVO.courseno}">
+										<label class="bookmark"><i class="fa fa-heart" aria-hidden="true" >
+											<input type ="hidden"  id="courseno" value ="${courseVO.courseno}"/>
+										</i></label>
+										<c:set var="flag" value="true"/>
+									</c:when>
+								</c:choose>
+						</c:forEach>
+							
+							<c:if test="${empty flag}">
+								<label class="bookmark"><i class="fa fa-heart-o" aria-hidden="true" >
+									<input type ="hidden"  id="courseno" value ="${courseVO.courseno}"/>
+								</i></label>
+							</c:if>
+							<c:remove var="flag"/>
+						</div>
+						
+						<!-- 須要查詢該使用者是否已購買 -->
+					
+						<div class="col-md col-3 courseInfo ">
+							<label class="shoppingcart">
+								<i class="fa fa-shopping-cart" aria-hidden="true">
+									<input type ="hidden" name="courseno" 	 id="courseno"   value ="${courseVO.courseno}"/>
+<%-- 									<input type ="hidden" name="courseprice" id="courseprice" value ="${courseVO.courseprice}"/> --%>
+<%-- 									<input type ="hidden" name="courseinfo"  id="courseinfo"  value ="${courseVO.courseinfo}"/> --%>
+								</i>
+							</label>
+<!-- 							<i id="addShopCart" class="fas fa-cart-plus"></i> -->
 						</div>
 					</div>
 				</div>
@@ -227,32 +263,92 @@
 				$("#nowPlaying").text(" → " + $(this).attr('chaptername'));
 			});
 
+			
+// 			trackingOrNot(false);
+
 			// 追蹤清單
-			trackingOrNot(false);
+			$('body').on('click' , '.bookmark',function(){
+				
+				var updateTrackingList;
+				
+				if ($(this).children().attr("class") === "fa fa-heart-o"){
+					updateTrackingList = "insert";
+					$(this).children().attr("class","fa fa-heart");
+				}
+				else{
+					updateTrackingList = "delete";
+					$(this).children().attr("class","fa fa-heart-o");
+				}
+				
+				console.log(updateTrackingList + "," + $(this).find('#courseno').val() );
+				
+				$.ajax({
+					url	:"<%=request.getContextPath()%>/tracking_list/tracking_list.do", 
+					data:{
+						courseno : $(this).find('#courseno').val(),
+						memno    : $("#memno").val(),
+						action   : updateTrackingList ,
+					},
+					success: function(data){
+						console.log('操作成功--->mainCoursePage');
+					}
+				});
+				
+				
+			});
+			
+			// 購物車
+			$('body').on('click' , '.shoppingcart',function(){
+				$.ajax({
+					url	:"<%=request.getContextPath()%>/tracking_list/tracking_list.do",
+					data:{
+						courseno:$(this).find('#courseno').val(),
+						memno    : $("#memno").val(),
+						action: "shoppingCart"
+					},
+					success: function(data){
+						
+						if(data !== 'false'){
+							  console.log('加入購物車');	
+							  swal('你已將課程加入購物車！！', '', 'success');
+				        
+						}
+						else{
+							console.log('刪除購物車');
+						}
+					}
+				});
+			});
+			
+			
+			
+			
+			
 		});
 
-		function trackingOrNot(isTracking) {
-			// 追蹤清單初始化
-			if (isTracking) {
-				// 實心愛心
-				$("#track").addClass("fas fa-heart");
-			} else {
-				// 空心愛心
-				$("#track").addClass("far fa-heart");
-			}
+// 		function trackingOrNot(isTracking) {
+// 			// 追蹤清單初始化
+// 			if (isTracking) {
+// 				// 實心愛心
+// 				$("#track").addClass("fas fa-heart");
+// 			} else {
+// 				// 空心愛心
+// 				$("#track").addClass("far fa-heart");
+// 			}
 
-			// 註冊切換追蹤清單事件
-			$("#track").click(function () {
-				$(this).toggleClass("fas fa-heart");
-				$(this).toggleClass("far fa-heart");
+// 			// 註冊切換追蹤清單事件
+// 			$("#track").click(function () {
+// 				$(this).toggleClass("fas fa-heart");
+// 				$(this).toggleClass("far fa-heart");
 
-				if ($(this).hasClass("fas fa-heart")) {
-					console.log("**增加追蹤清單");
-				} else if ($(this).hasClass("far fa-heart")) {
-					console.log("**刪除追蹤清單");
-				}
-			});
-		}
+// 				if ($(this).hasClass("fas fa-heart")) {
+// 					console.log("**增加追蹤清單");
+// 				} else if ($(this).hasClass("far fa-heart")) {
+// 					console.log("**刪除追蹤清單");
+// 				}
+// 			});
+// 		}
+
 	</script>
 
 	<!-- include 前台頁面的 footer -->
