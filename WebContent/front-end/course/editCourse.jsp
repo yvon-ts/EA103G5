@@ -65,12 +65,19 @@
 		<div class="row">
 
 			<div class="col-md-3 sideBar">
+
+
 				<h2>基本資訊</h2>
 				<h5>編號：${courseVO.courseno}</h5>
 				<h5>老師：${membersSvc.getOneMembers(teacherSvc.getOneTeacher(courseVO.tchrno).memno).memname}</h5>
 				<h5>類別：${courseTypeSvc.getOneCourseType(courseVO.cstypeno).cstypename}</h5>
 				<h5>單價：${courseVO.courseprice}</h5>
-				<h5>總時數：${courseVO.ttltime} 秒</h5>
+	
+				<% 
+					// 將課程總時數換算為分鐘
+                    Integer ttltimeInMin = ((CourseVO)request.getAttribute("courseVO")).getTtltime()/60;
+                %>                            
+                <h5>總時數：<%= ttltimeInMin %>分鐘</h5>
 				<h5>狀態：${courseVO.csstatus}</h5>
 				<h5>評分：<%= courseScore %></h5>
 

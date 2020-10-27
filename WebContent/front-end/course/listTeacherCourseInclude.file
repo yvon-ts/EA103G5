@@ -26,7 +26,6 @@
 %>
 
 <div class="container-fluid">
-	Services item1
 	<div class="row seacharea">
 		<c:forEach var="courseVO" items="${Courselist}">
 			<div class="col-md-12 col-lg-6 col-xs-12">
@@ -36,10 +35,14 @@
 							<img src="<%=request.getContextPath()%>/course/CoursePictureReaderFromDB?courseno=${courseVO.courseno}" style="max-width: 100%; height: 150px;">
 						</div>
 						<div class="services-content">
-							<h4>${courseVO.coursename}</h4>
+							<h3 style="line-height: 40px;">${courseVO.coursename}</h3>
 						</div>
 					</a>
-					<p>課程共${courseVO.ttltime}分鐘</p>
+					<% 
+						// 將課程總時數換算為分鐘
+                    	Integer ttltimeInMin = ((CourseVO)pageContext.getAttribute("courseVO")).getTtltime()/60;
+                    %>                            
+                    <p>課程總長 <%= ttltimeInMin %> 分鐘</p>
 					<h5>NT$${courseVO.courseprice}</h5>
 				</div>
 			</div>

@@ -3,6 +3,12 @@
 <%@ page import="java.util.*"%>
 <%@ page import="com.course.model.*"%>
 
+<%-- <%@ page import="com.members.model.*"%> --%>
+
+<%
+// 	MembersVO membersVO = (MembersVO) session.getAttribute("membersVO");
+%>
+
 <%
 	CourseVO courseVO = (CourseVO) request.getAttribute("courseVO");
 %>

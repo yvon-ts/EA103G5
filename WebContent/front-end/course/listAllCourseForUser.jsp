@@ -157,9 +157,15 @@
 <!--                         	 -->
                         	&nbsp;&nbsp;&nbsp;<div class="rateit" data-rateit-value="${courseVO.csscore / courseVO.csscoretimes }" data-rateit-ispreset="true" data-rateit-readonly="true"></div> 
                         	<br>&nbsp;&nbsp;&nbsp;${courseVO.csscoretimes}則評價
-                        	<h3>${courseVO.coursename}</h3></a>
+                        	<h3 style="line-height:40px;">${courseVO.coursename}</h3></a>
 <%--                             <h3><a href="<%=request.getContextPath()%>/course/course.do?action=getOne_For_Display&courseno=${courseVO.courseno}">${courseVO.coursename}</a></h3> --%>
-                            <p>課程共${courseVO.ttltime}分鐘</p>
+                            
+<%--                             <p>課程共${courseVO.ttltime}分鐘</p> --%>
+							<% 
+								// 將課程總時數換算為分鐘
+                            	Integer ttltimeInMin = ((CourseVO)pageContext.getAttribute("courseVO")).getTtltime()/60;
+                            %>                            
+                            <p>課程總長 <%= ttltimeInMin %> 分鐘</p>
 <!--                             <p>同學累計9487人</p> -->
 							
 							<label class="shoppingcart">
@@ -308,8 +314,9 @@
 								
 								
 		                str +=  `&nbsp;&nbsp;&nbsp;` + JSONarray[i].csscoretimes + `則評價`;
-		                str +=  `<h3>` + JSONarray[i].coursename + `</h3></a>`;
-		                str +=  `<p>課程共`+JSONarray[i].ttltime+`分鐘</p>`;
+		                str +=  `<h3 style="line-height:40px;">` + JSONarray[i].coursename + `</h3></a>`;
+		                
+		                str +=  `<p>課程總長 `+ ~~(JSONarray[i].ttltime/60) +` 分鐘</p>`;
 		<!--                             <p>同學累計9487人</p> -->
 						str +=	`<label class="shoppingcart"><i class="fa fa-shopping-cart" aria-hidden="true"><input type ="hidden" name="courseno" 	 id="courseno"   value ="`+ JSONarray[i].courseno +`"/></i>加入購物車</label>`;
 									

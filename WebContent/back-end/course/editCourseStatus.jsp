@@ -15,12 +15,12 @@
 	request.setCharacterEncoding("UTF-8");
 	Map<String, String[]> map = new TreeMap<String, String[]>();
 	
-	String newSearchStatus = (String) request.getParameter("searchStatus");
+	String newSearchStatus = (String) request.getParameter("show");
 // 	System.out.println("newSearchStatus 1 = " + newSearchStatus);
 	String searchStatus = (String) session.getAttribute("searchStatus");
 // 	System.out.println("searchStatus 1 = " + searchStatus);
 	if (searchStatus == null) {
-		searchStatus = "所有";
+		searchStatus = "all";
 	}
 // 	System.out.println("searchStatus 2 = " + searchStatus);
 
@@ -30,7 +30,7 @@
 // 	System.out.println("searchStatus 2 = " + searchStatus);
 	session.setAttribute("searchStatus", searchStatus);
 	
-	if (!("所有".equals(searchStatus))) {
+	if (!("all".equals(searchStatus))) {
 		map.put("csstatus", new String[]{searchStatus});
 	}
 	List<CourseVO> list = courseSvc.getAll(map);
@@ -48,10 +48,10 @@
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
 	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
-	<link rel="stylesheet" href="<%=request.getContextPath()%>/library/bootstrap/4.5.3/css/bootstrap.min.css">
 	<link rel="stylesheet" href="<%=request.getContextPath()%>/library/font-awesome/5.15.1/css/all.min.css">
-	<script src="<%=request.getContextPath()%>/library/jquery/jquery-3.5.1.js"></script>
+	<link rel="stylesheet" href="<%=request.getContextPath()%>/library/bootstrap/4.5.3/css/bootstrap.min.css">
 	<script src="<%=request.getContextPath()%>/library/bootstrap/4.5.3/js/bootstrap.min.js"></script>
+	<script src="<%=request.getContextPath()%>/library/jquery/jquery-3.5.1.js"></script>
 
 	<style>
 		body {
@@ -371,8 +371,8 @@
 							</div>
 							<div class="col-sm-6">
 								<form method="post" action="<%=request.getContextPath()%>/back-end/course/editCourseStatus.jsp">
-									<select class="custom-select" name="searchStatus">
-										<option value="所有" ${searchStatus=="所有" ? 'selected' : '' }>所有
+									<select class="custom-select" name="show">
+										<option value="all" ${searchStatus=="all" ? 'selected' : '' }>所有
 										<option value="審核中" ${searchStatus=="審核中" ? 'selected' : '' }>審核中
 										<option value="上架" ${searchStatus=="上架" ? 'selected' : '' }>上架
 										<option value="下架" ${searchStatus=="下架" ? 'selected' : '' }>下架
@@ -433,34 +433,35 @@
 				</div>
 			</div>
 		</div>
+	</main>
 
-		<script>
-			// 上傳單一單元的影片
-			$(".updateButton").click(function (e) {
-				e.preventDefault();
-				var formData = new FormData($(this).parents("tr").find("form")[0]);
+	<script>
+		// 上傳單一單元的影片
+		$(".updateButton").click(function (e) {
+			e.preventDefault();
+			var formData = new FormData($(this).parents("tr").find("form")[0]);
 
-				for (let key of formData.keys()) {
-					console.log(key + " : " + formData.get(key));
+			for (let key of formData.keys()) {
+				console.log(key + " : " + formData.get(key));
+			}
+
+			$.ajax({
+				url: "<%=request.getContextPath()%>/CourseServlet_Ajax",
+				type: "POST",
+				data: formData,
+				processData: false,
+				contentType: false,
+				success: function (data) {
+					console.log("成功");
+					alert(data);
+				},
+				error: function (data) {
+					console.log("失敗");
+					alert(data);
 				}
-
-				$.ajax({
-					url: "<%=request.getContextPath()%>/CourseServlet_Ajax",
-					type: "POST",
-					data: formData,
-					processData: false,
-					contentType: false,
-					success: function (data) {
-						console.log("成功");
-						alert(data);
-					},
-					error: function (data) {
-						console.log("失敗");
-						alert(data);
-					}
-				});
 			});
-		</script>
+		});
+	</script>
 </body>
 
 </html>
