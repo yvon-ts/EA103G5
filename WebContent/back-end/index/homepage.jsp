@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -11,6 +13,7 @@
     <link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/back-end/index/css/main.css">
     <!-- Font-icon css-->
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 </head>
 
 <body class="app sidebar-mini">
@@ -152,9 +155,9 @@
 			swal({
 	  			   title: "${error}",
 	  			   icon: "error",
-				});
-		<%request.getSession().removeAttribute("error");%>		
-		</c:if>	
+				});	
+		</c:if>
+		<%request.getSession().removeAttribute("error");%>
    </script>
     
 </body>

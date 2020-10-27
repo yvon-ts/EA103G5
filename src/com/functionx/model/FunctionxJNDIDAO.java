@@ -23,12 +23,11 @@ public class FunctionxJNDIDAO implements FunctionxDAO_interface {
 		}
 	}
 
-	private static final String INSERT_STMT = "INSERT INTO functionx (funcno, funcname, funclmod) VALUES (('FUN' || LPAD(SEQ_EMPLOYEE.NEXTVAL, 4, 0)), ?, ?)";
-	private static final String GET_ALL_STMT = "SELECT funcno, funcname, to_char(funclmod,'yyyy-mm-dd') funclmod FROM functionx order by funcno";
-	private static final String GET_ONE_STMT = "SELECT funcno, funcname, to_char(funclmod,'yyyy-mm-dd') funclmod FROM functionx where funcno = ?";
-	private static final String GET_URL = "SELECT funcno, funcname, to_char(funclmod,'yyyy-mm-dd') funclmod FROM functionx where urls = ?";
+	private static final String INSERT_STMT = "INSERT INTO functionx (funcno, funcname) VALUES (('FUN' || LPAD(SEQ_EMPLOYEE.NEXTVAL, 4, 0)), ?)";
+	private static final String GET_ALL_STMT = "SELECT funcno, funcname FROM functionx order by funcno";
+	private static final String GET_ONE_STMT = "SELECT funcno, funcname FROM functionx where funcno = ?";
 	private static final String DELETE = "DELETE FROM functionx where funcno = ?";
-	private static final String UPDATE = "UPDATE functionx set funcname=?, funclmod=? where funcno=? ";
+	private static final String UPDATE = "UPDATE functionx set funcname=? where funcno=? ";
 
 	@Override
 	public void insert(FunctionxVO functionxVO) {
@@ -41,7 +40,6 @@ public class FunctionxJNDIDAO implements FunctionxDAO_interface {
 			pstmt = con.prepareStatement(INSERT_STMT);
 
 			pstmt.setString(1, functionxVO.getFuncname());
-			pstmt.setDate(2, functionxVO.getFunclmod());
 
 			pstmt.executeUpdate();
 			con.commit();
@@ -83,8 +81,7 @@ public class FunctionxJNDIDAO implements FunctionxDAO_interface {
 			pstmt = con.prepareStatement(UPDATE);
 
 			pstmt.setString(1, functionxVO.getFuncname());
-			pstmt.setDate(2, functionxVO.getFunclmod());
-			pstmt.setString(3, functionxVO.getFuncno());
+			pstmt.setString(2, functionxVO.getFuncno());
 
 			pstmt.executeUpdate();
 			con.commit();
@@ -174,7 +171,7 @@ public class FunctionxJNDIDAO implements FunctionxDAO_interface {
 				functionxVO = new FunctionxVO();
 				functionxVO.setFuncno(rs.getString("funcno"));
 				functionxVO.setFuncname(rs.getString("funcname"));
-				functionxVO.setFunclmod(rs.getDate("funclmod"));
+
 			}
 			con.commit();
 		} catch (SQLException e) {
@@ -231,7 +228,6 @@ public class FunctionxJNDIDAO implements FunctionxDAO_interface {
 				functionxVO = new FunctionxVO();
 				functionxVO.setFuncno(rs.getString("funcno"));
 				functionxVO.setFuncname(rs.getString("funcname"));
-				functionxVO.setFunclmod(rs.getDate("funclmod"));
 				list.add(functionxVO);
 			}
 			con.commit();

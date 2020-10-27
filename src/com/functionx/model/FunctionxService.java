@@ -15,11 +15,10 @@ public class FunctionxService {
 	}
 	
 	//新增功能
-	public FunctionxVO addFunc(String funcname, java.sql.Date funclmod) {
+	public FunctionxVO addFunc(String funcname) {
 		
 		FunctionxVO functionxVO = new FunctionxVO();
 		functionxVO.setFuncname(funcname);
-		functionxVO.setFunclmod(funclmod);
 		dao.insert(functionxVO);
 		
 		return functionxVO;		
@@ -27,12 +26,11 @@ public class FunctionxService {
 	
 	//更新功能資料
 	
-	public FunctionxVO updateFunc(String funcno, String funcname, java.sql.Date funclmod) {
+	public FunctionxVO updateFunc(String funcno, String funcname) {
 		
 		FunctionxVO functionxVO = new FunctionxVO();
 		functionxVO.setFuncno(funcno);
 		functionxVO.setFuncname(funcname);
-		functionxVO.setFunclmod(funclmod);
 		dao.update(functionxVO);
 		
 		return functionxVO;
