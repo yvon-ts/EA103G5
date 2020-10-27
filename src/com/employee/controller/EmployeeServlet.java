@@ -259,20 +259,16 @@ public class EmployeeServlet extends HttpServlet {
 				
 				byte[] emppic = null;
 				Part part = req.getPart("emppic");
-//				if (part == null || part.getSize() == 0) {
-//					req.setAttribute("employeeVO", employeeVO);
-//					req.setAttribute("permissiondelimitVO", list2);
-//					AdminsService adminsSvc2 = new AdminsService();
-//					AdminsVO adminsVO2 = adminsSvc2.getOneAdmin(admin_id);
-//					admin_pic = adminsVO2.getAdmin_pic();
-//				} else {
-//					req.setAttribute("adminsVO", adminsVO);
-//					req.setAttribute("permissiondelimitVO", list2);
-//					InputStream in = part.getInputStream();
-//					admin_pic = new byte[in.available()];
-//					in.read(admin_pic);
-//					in.close();
-//				}
+				if (part == null || part.getSize() == 0) {
+					EmployeeService empSvc = new EmployeeService();
+					EmployeeVO employeeVO = empSvc.getEmp(empno);
+					emppic = employeeVO.getEmppic();
+				} else {
+					InputStream in = part.getInputStream();
+					emppic = new byte[in.available()];
+					in.read(emppic);
+					in.close();
+				}
 
 				// 權限修改
 				String[] functionx = req.getParameterValues("functionx");
@@ -299,6 +295,7 @@ public class EmployeeServlet extends HttpServlet {
 				employeeVO.setEmpemail(empemail);
 				employeeVO.setEmpdelete(empdelete);
 				employeeVO.setEmppic(emppic);
+
 
 				if (!errMsgs.isEmpty()) {
 					req.setAttribute("employeeVO", employeeVO);

@@ -28,6 +28,7 @@
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script
 	src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+<script src="https://code.jquery.com/jquery-2.1.4.js"></script>
 <style>
 body {
 	color: #566787;
@@ -398,9 +399,9 @@ table.table .avatar {
       							</th>     							
 							</tr>
 							<tr>
-								<th>員工照片</th>																																									
-     							<th><input type="file" name="emppic" placeholder="請上傳圖片" id="emp_pic" multiple></th>							          							
-                                <th id="preview"></th>                                							
+								<th>員工照片</th>																																							
+     							<th><img id="myimg" class="rounded-circle" width="350px" height="350px" src="${pageContext.request.contextPath}/ShowEmpPic?empno=${employeeVO.empno}" /></th>							          							
+                                <th><input type="file" name="emppic" placeholder="請上傳圖片" id="emp_pic"></th>							          							                             							
 							</tr>
 							<tr>
 								<th>
@@ -502,9 +503,7 @@ table.table .avatar {
 
                         reader.addEventListener('load', function(e) {
 
-                            var img = document.createElement('img');
-                            img.setAttribute('src', e.target.result);
-                            preview.append(img);
+                            var img = document.getElementById('myimg').src= e.target.result;
                         });
                         reader.readAsDataURL(file); // ***** trigger
                     } else {
@@ -516,4 +515,5 @@ table.table .avatar {
     }
     window.onload = init;
     </script>
+    
 </html>
