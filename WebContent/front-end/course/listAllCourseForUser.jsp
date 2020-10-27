@@ -228,7 +228,7 @@
 				success: function(data){
 					console.log(123);
 					if(data !== 'false'){
-						  swal('成功提交！', '你已將課程加入購物車！', 'success');
+						  swal('你已將課程加入購物車！', '', 'success');
 			        
 					}
 				}
