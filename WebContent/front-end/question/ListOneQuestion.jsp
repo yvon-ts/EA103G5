@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="BIG5"%>
+    pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.question_bank.model.*"%>
@@ -39,57 +39,60 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
 </head>
 <body>
+<jsp:include page="/index/front-index/header.jsp" />
+   
+   <div class="container-fluid" style="margin-top: 90px;">
 	<div class="container-xl">
         <div class="table-responsive">
             <div class="table-wrapper">
                 <div class="table-title">
                     <div class="row">
                         <div class="col-sm-6">
-                            <h2>Manage <b>TestQuestion</b></h2>
+                            <h2>è€ƒé¡Œè³‡æ–™</h2>
                         </div>
                         <div class="col-sm-6">
-                            <a href='<%= request.getContextPath()%>/front-end/question/ListAllQuestion.jsp' class="btn btn-success" ><span>
-Back to the question bank</span></a>
+                            <a href='<%= request.getContextPath()%>/front-end/question/ListAllQuestion.jsp' class="btn btn-info" ><span>
+å›åˆ°è€ƒé¡Œç®¡ç†</span></a>
                         </div>
                     </div>
                 </div>
                 <table class="table table-striped table-hover">
                    
                         <tr>
-                            <td>ÃD¥Ø½s¸¹</td><td>${QuestionBankvo.qbankno }</td>
+                            <td>é¡Œç›®ç·¨è™Ÿ</td><td>${QuestionBankvo.qbankno }</td>
                         </tr>
                         <tr>
-                            <td>½Òµ{¦WºÙ</td><td>${CourseSvc.getOneCourse(QuestionBankvo.courseno).coursename }</td>
+                            <td>èª²ç¨‹åç¨±</td><td>${CourseSvc.getOneCourse(QuestionBankvo.courseno).coursename }</td>
                         </tr>
                         <tr>    
-                            <td>½Òµ{Ãø©ö«×</td><td>${QuestionBankvo.typeno }</td>
+                            <td>èª²ç¨‹é›£æ˜“åº¦</td><td>${QuestionBankvo.typeno }</td>
                         </tr>
                         <tr>                            
-                        	<td>³æ¤¸½d³ò</td><td>${QuestionBankvo.testscope }</td>
+                        	<td>å–®å…ƒç¯„åœ</td><td>${QuestionBankvo.testscope }</td>
                         </tr>
                         <tr>
-                            <td>ÃD¥Ø±Ô­z</td>	<td>${QuestionBankvo.qustmt}</td>
+                            <td>é¡Œç›®æ•˜è¿°</td>	<td>${QuestionBankvo.qustmt}</td>
                         </tr>
                        <c:if test="${not empty QuestionBankvo.op1}">
                         <tr>    
-                            <td>¿ï¶µA</td><td>${QuestionBankvo.op1}</td>
+                            <td>é¸é …A</td><td>${QuestionBankvo.op1}</td>
                         </tr>
                         <tr>    
-                            <td>¿ï¶µB</td><td>${QuestionBankvo.op2}</td>
+                            <td>é¸é …B</td><td>${QuestionBankvo.op2}</td>
                         </tr>
                         <tr>    
-                            <td>¿ï¶µC</td><td>${QuestionBankvo.op3}</td>
+                            <td>é¸é …C</td><td>${QuestionBankvo.op3}</td>
                         </tr>
                         <tr>    
-                            <td>¿ï¶µD</td><td>${QuestionBankvo.op4}</td>
+                            <td>é¸é …D</td><td>${QuestionBankvo.op4}</td>
                         </tr>
                         <tr>   
-                            <td>µª®×</td><td>${testAns}</td>
+                            <td>ç­”æ¡ˆ</td><td>${testAns}</td>
                         </tr>
                         </c:if>
                         <c:if test="${empty QuestionBankvo.op1}">
                         <tr>   
-                            <td>µª®×</td><td>${QuestionBankvo.quans}</td>
+                            <td>ç­”æ¡ˆ</td><td>${QuestionBankvo.quans}</td>
                         </tr>
                         </c:if>
                    
@@ -98,5 +101,9 @@ Back to the question bank</span></a>
               </div>
         </div>
     </div>     
+    </div>
+     <!-- include å‰å°é é¢çš„ footer -->
+			<jsp:include page="/index/front-index/footer.jsp" />
+			<!-- include å‰å°é é¢çš„ footer -->
 </body>
 </html>

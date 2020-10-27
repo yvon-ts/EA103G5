@@ -31,6 +31,7 @@ public class QuestionBankServlet extends HttpServlet {
 
 
 		if ("inputQuestion".equals(action)) {// 新增考題
+			
 			inputQuestion(request, response);
 		}
 

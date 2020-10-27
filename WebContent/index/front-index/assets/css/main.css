@@ -102,7 +102,7 @@
             left: 0px;
             background: rgba(61, 96, 244, 0.3);
         }
-        /*����*/
+        /*嚙踝蕭�嚙踝蕭*/
         .btn {
             font-size: 17px;
             padding: 5px 30px;
@@ -116,7 +116,9 @@
             transition: all 0.2s linear;
             display: inline-block;
         }
+		
 
+		
         .btn:focus,
         .btn:active {
             box-shadow: none;
@@ -226,7 +228,7 @@
             background: #CE332A;
         }
 
-        /* ScrollToTop ����予*/
+        /* ScrollToTop 嚙踐�蕭嚙踐�蕭��鈭�*/
         a.back-to-top {
             display: none;
             position: fixed;
@@ -446,10 +448,10 @@
             -webkit-transition: all 0.3s ease-in-out 0s;
             -o-transition: all 0.3s ease-in-out 0s;
         }
-        /*隤脩����*/
+        /*��嚙踝�蕭謘橘蕭嚙�*/
         .services-item .icon img {
             max-width: 200px;
-            /*撖砍漲憒�wd*/
+            /*���撞���蕭��d*/
             height: 150px;
             overflow: hidden;
             border-radius: 5%;
@@ -634,10 +636,10 @@
             outline: none;
         }
 
-        /*placeholder��*/
+        /*placeholder嚙踐�蕭�*/
         ::placeholder {
             color: #afafaf;
-            /* CSS 3 璅�� */
+            /* CSS 3 ���蕭嚙� */
         }
 
         ::-webkit-input-placeholder {
@@ -884,7 +886,7 @@
             background: #34363a;
         }
 
-        /*�����*/
+        /*嚙踝蕭謚迎蕭��蕭嚙�*/
 
         #searchbox {
             border-collapse: separate;
