@@ -16,8 +16,15 @@
     <!-- Font Icon -->
     <link rel="stylesheet" href="fonts/material-icon/css/material-design-iconic-font.min.css">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.3/sweetalert2.css" />
+	
+	<link rel="stylesheet" href="<%=request.getContextPath()%>/library/bootstrap/4.5.3/css/bootstrap.min.css">
+	<script src="<%=request.getContextPath()%>/library/bootstrap/4.5.3/js/bootstrap.min.js"></script>
+	
+	
+	
 	<script	src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.3/sweetalert2.js" type="text/javascript"></script>
 	<script src="http://code.jquery.com/jquery-1.12.4.min.js"></script>
+	
     <link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/teacher/teacherRegister_css/style.css">
 	<%-- <link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/teacher/nav_css_ForTeacherRegister/css/bootstrap.min.css"> --%>
 	<%-- <link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/teacher/nav_css_ForTeacherRegister/css/nivo-lightbox.css"> --%>
@@ -332,8 +339,14 @@ img.fti{
     
   </div>
   <div id="tab03" class="tab-contents">
-    <h2>我所開設的課程</h2>
+    	<h2>我所開設的課程</h2>    
+    	
 	<%@ include file="/front-end/course/listTeacherCourseInclude.file"%>
+	<a href="<%=request.getContextPath()%>/front-end/course/addCourse.jsp">
+    		<button type="button" class="btn btn-block btn-lg btn-info h4">
+    			新增課程
+    		</button>
+    	</a>
 	<%-- <jsp:include page="/front-end/course/listTeacherCourseInclude.jsp" /> --%>
   </div>
   <div id="tab04" class="tab-contents">

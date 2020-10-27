@@ -131,7 +131,7 @@
                     <span class="app-menu__label"> 課程商城 </span><i class="treeview-indicator fa fa-angle-right"></i></a>
                 <ul class="treeview-menu">
                     <li><a class="treeview-item" href="bootstrap-components.html"><i class="icon fa fa-circle-o"></i> 訂單管理</a></li>
-                    <li><a class="treeview-item" href="<%=request.getContextPath()%>/back-end/course/editCourseStatus.jsp"><i class="icon fa fa-circle-o"></i> 課程管理</a></li>
+                    <li><a class="treeview-item" href="<%=request.getContextPath()%>/back-end/course/editCourseStatus.jsp?show=all"><i class="icon fa fa-circle-o"></i> 課程管理</a></li>
                     <li><a class="treeview-item" href="https://fontawesome.com/v4.7.0/icons/" target="_blank" rel="noopener"><i class="icon fa fa-circle-o"></i>課程管理 </a></li>
                 </ul>
             </li>
