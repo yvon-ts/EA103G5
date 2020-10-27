@@ -2,10 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.lecture.model.*"%>
-
-<%@ include file="/back-end/pool/bstage1.jsp"%>
-
-<!DOCTYPE html>
+<%@ include file="/back-end/index/homepage.jsp" %>
 
 <%
 	LecVO lecVO = (LecVO) request.getAttribute("lecVO");
@@ -17,19 +14,30 @@
 		info = "資訊更新中";
 	}
 %>
-
+<!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>updateLec.jsp</title>
+<title>Xducation - 陪你成長的學習好夥伴</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<link rel="stylesheet" href="<%=request.getContextPath()%>/library/bootstrap/4.5.3/css/bootstrap.min.css">
+<link rel="stylesheet" href="<%=request.getContextPath()%>/back-end/css/bootTable.css">
 <style>
+	#dbimg{
+		max-height: 200px;
+		width: auto;
+		position: absolute;
+		margin-top: -250px;
+		margin-left: 500px;
+	}
 	#newimg{
 		max-height: 200px;
 		width: auto;
 		position: absolute;
-		margin-top: -70px;
-		margin-left: 320px;
-		}
+		margin-top: -250px;
+		margin-left: 500px;
+	}
 	input:read-only {
 		background: #E3E3E3;
 		color: #333333;
@@ -38,46 +46,92 @@
 	input:focus {
 		outline: none;
 	}
+	#form-area input{
+		outline: none;
+		border: 0;
+		border-bottom: 1px solid #999;
+		width: 200px;
+	}
+		#form-area select{
+		outline: none;
+		border: 0;
+		border-bottom: 1px solid #999;
+	}
+	.btm-line{
+		margin-left: 4%;
+		font-size: 1.1em;
+		border-bottom:2px dashed #999;
+		padding-bottom: 20px;
+	}
+	.blank{
+		color:#ff6680;
+		font-weight: 600;
+	}
 </style>
 </head>
 <body>
-
-	<div style="margin-left: 400px; margin-top: 150px;">
-		<c:if test="${not empty errorMsgs}">
-			<ul>
-				<c:forEach var="err" items="${errorMsgs}">
-					<li style="color: red">${err}</li>
-				</c:forEach>
-			</ul>
-		</c:if>
-		<form method="post"
-			action="<%=request.getContextPath()%>/back-end/lecture/listAllLec.jsp">
-			<input type="submit" value="回列表">
-		</form>
-		<div id="preivew"><img id="dbimg" src="<%=request.getContextPath()%>/lecture/picreader?lecno=${lecVO.lecno}"><img id="newimg" src=""></div>
-		<form method="post"	action="<%=request.getContextPath()%>/lecture/lecture.do" enctype="multipart/form-data">
-			講座編號：<input type="text" name="lecno" value="${lecVO.lecno}" readonly><br>
-			講座名稱：<input type="text" name="lecname" value="${lecVO.lecname}"><br>
-			講師姓名：<jsp:useBean id="spkrSvc" scope="page" class="com.speaker.model.SpkrService" />
-			<select name="spkrno">
-			<c:forEach var="spkrVO" items="${spkrSvc.list}">
-				<option value="${spkrVO.spkrno}" ${(lecVO.spkrno==spkrVO.spkrno)? 'selected':'' } >${spkrVO.spkrno}${spkrVO.spkrname}</option>
-			</c:forEach>
-			</select><br>
-			講座地點：<input type="text" name="roomno" value="${lecVO.roomno}" readonly><br>
-			講座票價：<input type="text" name="lecprice" value="${lecVO.lecprice}"><br>
-			講座時間：<input name="lecstart" id="f_date1" type="text"><br>
-			結束時間：<input name="lecend" id="f_date2" type="text"><br>
-			開始報名：<input name="signstart" id="f_date3" type="text"><br>
-			結束報名：<input name="signend" id="f_date4" type="text"><br>
-			講座狀態：<select name="lecstatus"><option value="1">正常</option><option value="0">取消</option></select>
-			講座圖片：<input name="lecpic" id="upimg" type="file"><br>
-			<%@ include file="/back-end/lecture/roomsetting/updateLayout.jsp"%><br>
-			講座資訊：
-			<%@ include file="/back-end/lecture/ckLec.file"%>
-			<input id="action" type="hidden" name="action" value="updateText">
-		</form>
-	</div>
+<main class="app-content" style="background-color: #f3f3f3">
+	<div id="table-area" class="container-xl">
+		<div class="table-responsive">
+			<form method="post"	action="<%=request.getContextPath()%>/back-end/lecture/listAllLec.jsp">
+				<button class="bttn" type="submit">放棄變更</button>
+			</form><p>
+			<div class="table-wrapper">
+				<div class="row">
+				<c:if test="${not empty errorMsgs}">
+					<ul>
+						<c:forEach var="err" items="${errorMsgs}">
+							<li style="color: red">${err}</li>
+						</c:forEach>
+					</ul>
+				</c:if>
+			<form method="post"	action="<%=request.getContextPath()%>/lecture/lecture.do" enctype="multipart/form-data">
+			
+				<div class="row">
+				
+				<div id="form-area" class="col-sm-6 btm-line">
+					<h3 style="font-weight: 700;font-size: 24px">&nbsp;【修改講座資料】</h3>
+					<p></p>
+					講座編號&emsp;<input type="text" name="lecno" value="${lecVO.lecno}" readonly><br>
+					講座名稱&emsp;<input type="text" name="lecname" value="${lecVO.lecname}"><br>
+					講師姓名&emsp;<jsp:useBean id="spkrSvc" scope="page" class="com.speaker.model.SpkrService" />
+					<select name="spkrno">
+					<c:forEach var="spkrVO" items="${spkrSvc.list}">
+						<option value="${spkrVO.spkrno}" ${(lecVO.spkrno==spkrVO.spkrno)? 'selected':'' } >${spkrVO.spkrno}${spkrVO.spkrname}</option>
+					</c:forEach>
+					</select><br>
+					講座地點&emsp;<input type="text" name="roomno" value="${lecVO.roomno}" readonly><br>
+					講座票價&emsp;<input type="text" name="lecprice" value="${lecVO.lecprice}"><br>
+					講座時間&emsp;<input name="lecstart" id="f_date1" type="text"><br>
+					結束時間&emsp;<input name="lecend" id="f_date2" type="text"><br>
+					講座狀態&emsp;<select name="lecstatus" style="width:200px">
+						<option value="1">正常</option>
+						<option value="0">取消</option>
+						<option value="2">額滿</option>
+						<option value="3">結束</option>
+					</select><br>
+					
+					講座圖片&emsp;<input name="lecpic" id="upimg" type="file"><br>
+					</div>
+					<div class="col-sm-6"><div id="preivew"><img id="dbimg" src="<%=request.getContextPath()%>/lecture/picreader?lecno=${lecVO.lecno}"><img id="newimg" src=""></div></div>
+					<%@ include file="/back-end/lecture/roomsetting/updateLayout.jsp"%><br>
+					<div class="col-sm-7 btm-line">
+					</div><br>
+					<div id="form-area" class="col-sm-7" style="margin-top:2%;margin-left:3%; font-size: 1.1em">
+					講座資訊<br>
+					<%@ include file="/back-end/lecture/ckLec.file"%><input name="signstart" id="f_date3" type="hidden"><br>
+					<input name="signend" id="f_date4" type="hidden"><br>
+					</div>
+					<input id="action" type="hidden" name="action" value="updateText">
+					
+					</div>
+					
+					</form>
+					</div>
+					</div>
+					</div>
+					</div>
+					</main>
 	<script type="text/javascript">
 		//圖片預覽
 		var upimg = document.getElementById("upimg");
@@ -96,6 +150,10 @@
 			}
 		}
 	</script>
+	
+	
+	
+	
 </body>
 <!-- =========================================以下為 datetimepicker 之相關設定========================================== -->
 

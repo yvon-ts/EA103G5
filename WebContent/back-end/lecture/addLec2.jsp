@@ -62,7 +62,6 @@
 </head>
 <body>
 <main class="app-content" style="background-color: #f3f3f3">
-
 	<div id="table-area" class="container-xl">
 		<div class="table-responsive">
 			<form method="post"	action="<%=request.getContextPath()%>/back-end/lecture/listAllLec.jsp">
@@ -80,52 +79,50 @@
 		
 					<form method="post"	action="<%=request.getContextPath()%>/lecture/lecture.do" enctype="multipart/form-data">
 				<div class="table-title">
-				<div class="row">
-				<div id="form-area" class="col-sm-7 btm-line">
+					<div class="row">
+						<div id="form-area" class="col-sm-7 btm-line">
 				
-			<%-- hidden roomno --%>
-			<h2 style="font-weight: 700;">&nbsp;【修改講師資料】</h2>
-			<input type="hidden" name="signstart" id="f_date3">
-			<input type="hidden" name="signend" id="f_date4">
-			<input id="roomnoForm" type="hidden" name="roomno" value="${lecVO.roomno}"><br>
-			<span id="theme">&emsp;講座名稱</span>&emsp;<input id="lecname" type="text" name="lecname" value="${lecVO.lecname}"><br>
-			<span id="name">&emsp;講師姓名</span>
-			<jsp:useBean id="spkrSvc" scope="page" class="com.speaker.model.SpkrService" />
-			<select id="spkrno" name="spkrno">
-				<option>------請選擇講師------</option>
-			<c:forEach var="spkrVO" items="${spkrSvc.list}">
-				<option value="${spkrVO.spkrno}" ${(lecVO.spkrno==spkrVO.spkrno)? 'selected':'' } >${spkrVO.spkrno}${spkrVO.spkrname}</option>
-			</c:forEach>
-		</select><br>
-			<%-- 要擋註銷的教室 --%>
-			<span id="price">&emsp;講座票價</span>&emsp;<input id="lecprice" name="lecprice" type="text" value="${lecVO.lecprice}"><br>
-			<span id="start">&emsp;開始時間</span>&emsp;<input name="lecstart" id="f_date1" type="text"><br>
-			<span id="end">&emsp;結束時間</span>&emsp;<input name="lecend" id="f_date2" type="text"><br>
-			<span id="pic">&emsp;講座圖片</span>&emsp;<input name="lecpic" id="upimg" type="file" style="border: 0;"><br>
-		</div>
-	</div>
-	<div id="preivew" ><img id="newimg" src=""></div>
+							<h2 style="font-weight: 700;">&nbsp;【新增講座資料】</h2>
+							
+							<input type="hidden" name="signstart" id="f_date3">
+							<input type="hidden" name="signend" id="f_date4">
+							<input id="roomnoForm" type="hidden" name="roomno" value="${lecVO.roomno}"><br>
+							<span id="theme">&emsp;講座名稱</span>&emsp;<input id="lecname" type="text" name="lecname" value="${lecVO.lecname}"><br>
+							<span id="name">&emsp;講師姓名</span>
+							<jsp:useBean id="spkrSvc" scope="page" class="com.speaker.model.SpkrService" />
+							<select id="spkrno" name="spkrno">
+								<option>------請選擇講師------</option>
+								<c:forEach var="spkrVO" items="${spkrSvc.list}">
+									<option value="${spkrVO.spkrno}" ${(lecVO.spkrno==spkrVO.spkrno)? 'selected':'' } >${spkrVO.spkrno}${spkrVO.spkrname}</option>
+								</c:forEach>
+							</select><br>
+							<%-- 要擋註銷的教室 --%>
+							<span id="price">&emsp;講座票價</span>&emsp;<input id="lecprice" name="lecprice" type="text" value="${lecVO.lecprice}"><br>
+							<span id="start">&emsp;開始時間</span>&emsp;<input name="lecstart" id="f_date1" type="text"><br>
+							<span id="end">&emsp;結束時間</span>&emsp;<input name="lecend" id="f_date2" type="text"><br>
+							<span id="pic">&emsp;講座圖片</span>&emsp;<input name="lecpic" id="upimg" type="file" style="border: 0;"><br>
+						</div>
+					</div>
+				<div id="preivew" >
+					<img id="newimg" src="">
 				</div>
-				<div class="col-sm-6">
-								<%@ include file="/back-end/lecture/roomsetting/layout.jsp"%>
-				
-				
-				</div>
-				<div class="col-sm-7 btm-line">
-				</div>
-				<div class="col-sm-8" style="margin-left: 4%; margin-top: 20px">
+			</div>
+			<div class="col-sm-6">
+				<%@ include file="/back-end/lecture/roomsetting/layout.jsp"%>
+			</div>
+			<div class="col-sm-7 btm-line">
+			</div>
+			<div class="col-sm-8" style="margin-left: 4%; margin-top: 20px">
 				講座資訊
 				<input id="action" type="hidden" name="action" value="insertText"><br>
 				<%@ include file="/back-end/lecture/ckLec.file"%>
-				</div>
-				
-				</form>
-                </div>
-           </div>
+			</div>
+			</form>
+          </div>
+		</div>
 	</div>
-	</div>
-	
-	</main>
+</div>
+</main>
 	<script type="text/javascript">
 		//圖片預覽
 		var upimg = document.getElementById("upimg");
@@ -146,23 +143,22 @@
 	</script>
 </body>
 <!-- =========================================以下為 datetimepicker 之相關設定========================================== -->
-
 <% 
-  	java.sql.Timestamp lecstart = null;
+	java.sql.Timestamp lecstart = null;
 	java.sql.Timestamp lecend = null;
 	java.sql.Timestamp signstart = null;
 	java.sql.Timestamp signend = null;
-  try {
+	try {
 	    lecstart = lecVO.getLecstart();
 	    lecend = lecVO.getLecend();
 	    signstart = lecVO.getSignstart();
 	    signend = lecVO.getSignend();
-   } catch (Exception e) {
+	} catch (Exception e) {
 	    lecstart = lecinit;
 	    lecend = lecinit;
 	    signstart = new java.sql.Timestamp(System.currentTimeMillis());
 	    signend = new java.sql.Timestamp(System.currentTimeMillis());
-   }
+	}
 %>
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/datetimepicker/jquery.datetimepicker.css" />
 <script src="<%=request.getContextPath()%>/datetimepicker/jquery.js"></script>
@@ -178,7 +174,7 @@
 </style>
 
 <script>
-		//----------------------------------------------------------格式化日期-----------------------------------------------------------
+//----------------------------------------------------------格式化日期-----------------------------------------------------------
         $.datetimepicker.setLocale('zh');
         $('#f_date1').datetimepicker({
 	       theme: '',              //theme: 'dark',
@@ -219,93 +215,79 @@
 		   value: '<%=lecend%>', // value:   new Timestamp(),
         });
         
-        // ----------------------------------------------------------排定無法選擇的日期(待修改)-----------------------------------------------------------
-
-        //      1.以下為某一天之前的日期無法選擇
-        		
-//                //講座開始日期(無法選擇昨天以前)
-               var lecdate1 = new Date("<%=paramDate2%>");
-//               $('#f_date1').datetimepicker({
-//                   beforeShowDay: function(date) {
-//                 	  if (  date.getYear() <  lecdate1.getYear() || 
-//         		           (date.getYear() == lecdate1.getYear() && date.getMonth() <  lecdate1.getMonth()) || 
-//         		           (date.getYear() == lecdate1.getYear() && date.getMonth() == lecdate1.getMonth() && date.getDate() < lecdate1.getDate())
-//                       ) {
-//                            return [false, ""]
-//                       }
-//                       return [true, ""];
-//               }});
-              //講座結束日期(無法選擇昨天以前)
-              $('#f_date2').datetimepicker({
-                  beforeShowDay: function(date) {
-                	  if (  date.getYear() <  lecdate1.getYear() || 
-        		           (date.getYear() == lecdate1.getYear() && date.getMonth() <  lecdate1.getMonth()) || 
-        		           (date.getYear() == lecdate1.getYear() && date.getMonth() == lecdate1.getMonth() && date.getDate() < lecdate1.getDate())
-                      ) {
-                           return [false, ""]
-                      }
-                      return [true, ""];
-              }}); 
-        $("#btn").mouseover(function(){
-            //講座名稱
-            if($("#lecname").val() === ""){
-            	//$("#theme").attr("style", "color:#ff6680");
-            	$("#theme").addClass("blank");
-            }
-            else{
-            	//$("#theme").removeAttr("style", "color:#ff6680");
-            	$("#theme").removeClass("blank");
-            }
-          	//講師姓名
-            if ($("#spkrno").prop("selectedIndex") === 0){
-            	//$("#name").attr("style", "color:#ff6680");
-            	$("#name").addClass("blank");
-            }
-            else{
-            	//$("#name").removeAttr("style", "color:#ff6680");
-            	$("#name").removeClass("blank");
-        	}
-          	//講座票價
-            if($("#lecprice").val() === ""){
-            	//$("#price").attr("style", "color:#ff6680");
-            	$("#price").addClass("blank");
-            }
-            else{
-            	//$("#price").removeAttr("style", "color:#ff6680");
-            	$("#price").removeClass("blank");
-            }	
-            //教室名稱
-            if($("#roomSelect").prop("selectedIndex") === 0){
-            	//$("#room").attr("style", "color:#ff6680");
-            	$("#room").addClass("blank");
-            }
-            else{
-            	//$("#room").removeAttr("style", "color:#ff6680");
-            	$("#room").removeClass("blank");
-            }
-            //講座圖片
-            var fileInput = $("#upimg").get(0).files[0];
-            if(fileInput){
-                $("#action").val("insert");
-            }
-            
-    		var arr = document.getElementsByClassName("blank");
-    		console.log(arr);
-    		let blankItem = "";
-    	    if (arr.length > 0) {
-    	        for (let i = 0; i < arr.length; i++) {
-    	        	blankItem += arr[i].textContent + " ";
-    	        }
-   	        var inputAlert = document.createElement("span");
-       		inputAlert.textContent = "紅字部分尚未填寫：" + blankItem;
-       		inputAlert.setAttribute("style", "color:#ff6680;font-weight:600;");
-       		$("#alert").html(inputAlert);
-    	    } else {
-    	    	$("#alert").html("");
-    	    }
-        });
-        
+// ----------------------------------------------------------排定無法選擇的日期(待修改)-----------------------------------------------------------
+//      1.以下為某一天之前的日期無法選擇
+//      //講座開始日期(無法選擇昨天以前)
+        var lecdate1 = new Date("<%=paramDate2%>");
+//      $('#f_date1').datetimepicker({
+//      	beforeShowDay: function(date) {
+//          	if (  date.getYear() <  lecdate1.getYear() || 
+//         			(date.getYear() == lecdate1.getYear() && date.getMonth() <  lecdate1.getMonth()) || 
+//         		    (date.getYear() == lecdate1.getYear() && date.getMonth() == lecdate1.getMonth() && date.getDate() < lecdate1.getDate())
+//                  ) {
+//                  return [false, ""]
+//                  }
+//                  return [true, ""];
+//       }});
+//
+        //講座結束日期(無法選擇昨天以前)
+        $('#f_date2').datetimepicker({
+            beforeShowDay: function(date) {
+          	  if (  date.getYear() <  lecdate1.getYear() || 
+  		           (date.getYear() == lecdate1.getYear() && date.getMonth() <  lecdate1.getMonth()) || 
+  		           (date.getYear() == lecdate1.getYear() && date.getMonth() == lecdate1.getMonth() && date.getDate() < lecdate1.getDate())
+                ) {
+                     return [false, ""]
+                }
+                return [true, ""];
+        }}); 
+/* =========================================以下為表單錯誤處理========================================== */        
+   $("#btn").mouseover(function(){
+	
+	//講座名稱
+   	if ($("#lecname").val() === "")
+	   $("#theme").addClass("blank");
+   	else
+	   $("#theme").removeClass("blank");
+	
+ 	//講師姓名
+    if ($("#spkrno").prop("selectedIndex") === 0)
+   	   $("#name").addClass("blank");
+    else
+   	   $("#name").removeClass("blank");
+ 	
+ 	//講座票價
+   if ($("#lecprice").val() === "")
+   	  $("#price").addClass("blank");
+   else
+   	  $("#price").removeClass("blank");
    
+   //教室名稱
+   if ($("#roomSelect").prop("selectedIndex") === 0)
+   	   $("#room").addClass("blank");
+   else
+       $("#room").removeClass("blank");
+   
+   //講座圖片
+   var fileInput = $("#upimg").get(0).files[0];
+   if (fileInput)
+       $("#action").val("insert");
+           
+	var arr = document.getElementsByClassName("blank");
+	console.log(arr);
+	let blankItem = "";
+    if (arr.length > 0) {
+        for (let i = 0; i < arr.length; i++) {
+        	blankItem += arr[i].textContent + " ";
+        }
+        var inputAlert = document.createElement("span");
+ 		inputAlert.textContent = "紅字部分尚未填寫：" + blankItem;
+ 		inputAlert.setAttribute("style", "color:#ff6680;font-weight:600;");
+ 		$("#alert").html(inputAlert);
+ 	} else {
+ 	    $("#alert").html("");
+ 	}
+});
 </script>
 
 </html>

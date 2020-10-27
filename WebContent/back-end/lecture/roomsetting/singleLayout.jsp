@@ -26,9 +26,7 @@
 	<div class="container">
 		
 
-		<div class="row">
-			<div class="col-md-8">
-			<span>剩餘座位數量：</span><span id="seatCount"></span> / <span id="blockCount"></span>
+			
 				<div id="classroom">
 					<div id="stage">
 						Stage hi
@@ -41,10 +39,10 @@
 					<input type="hidden" id="roomcolumn" class="roomSpace" name="roomcolumn">
 					<input type="hidden" id="fixedseat" name="initseat" readonly>
 					<input type="hidden" id="defaultseat" name="currseat" value="${lecVO.currseat}" readonly>
+					<br>
+					<span>剩餘座位數量：</span><span id="seatCount"></span> / <span id="blockCount"></span>
 				</div>
-			</div>
-			
-		</div>
+				
 		
 	</div>
 	

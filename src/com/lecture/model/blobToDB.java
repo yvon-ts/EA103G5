@@ -26,8 +26,8 @@ public class blobToDB {
 			pstmt = con.prepareStatement(SQL);
 
 			for (int i = 1; i <= 10; i++) {
-				byte[] pic = getPictureByteArray("/Users/yvon/Desktop/lecimg/img" + i + ".jpg");
-				//windows: "C:\Users\Big data\Desktop\lecimage/img" + i + ".jpg"
+				byte[] pic = getPictureByteArray("C:/Users/Big data/Desktop/lecimg/img" + i + ".jpg");
+				//windows: "C:/Users/Big data/Desktop/lecimg/img" + i + ".jpg"
 				//mac: "/Users/yvon/Desktop/lecimg/img" + i + ".jpg"
 				pstmt.setBytes(1, pic);
 				pstmt.setString(2, "LEC000"+ i);

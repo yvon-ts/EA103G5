@@ -31,7 +31,6 @@
 				<option value="${roomVO.roomno}" ${(lecVO.roomno==roomVO.roomno)? 'selected':'' } >${roomVO.roomno}&nbsp;${roomVO.roomname}</option>
 			</c:forEach>
 		</select><br>
-		&nbsp;座位數量&emsp;<span id="seatCount"></span> / <span id="blockCount"></span> 
 			</div>
 				<div id="classroom">
 					<div id="stage">
@@ -45,6 +44,7 @@
 					<input type="hidden" id="roomcolumn" class="roomSpace" name="roomcolumn" value="3">
 					<input type="hidden" id="fixedseat" name="initseat" value="" readonly>
 					<input type="hidden" id="defaultseat" name="currseat" value="111111111" readonly>
+					座位數量：<span id="seatCount"></span> / <span id="blockCount"></span>
 				</div>
 		</div>
 	

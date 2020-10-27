@@ -69,7 +69,7 @@
 			window.location = "<%=request.getContextPath()%>/back-end/speaker/listAllSpkr.jsp";
 		})
 		$("#lec").click(function(){
-			window.location = "<%=request.getContextPath()%>/back-end/lecture/select_page.jsp";
+			window.location = "<%=request.getContextPath()%>/back-end/lecture/listAllLec.jsp";
 		})
 	</script>
 </body>
