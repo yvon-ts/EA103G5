@@ -136,9 +136,7 @@ margin:-240px 0 0 -30px;
 	padding-top:100px;
 	padding-bottom:50px;
  }
- section#copyright{
- height:200px;
- }
+ 
 
 div.signin-form{
 margin-right: 10px;

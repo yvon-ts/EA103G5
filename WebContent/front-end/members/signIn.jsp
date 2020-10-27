@@ -85,9 +85,9 @@ margin:10px 0 0 70px ;
 	-moz-box-shadow: 0 0 15px #8E8E8E;
 	box-shadow: 0 0 15px #5B5B5B;
  }
- section#copyright{
- height:200px;
- }
+ .signup{
+margin-bottom: 50px;;
+}
  input.input{
 font-family:'Gochi Hand';
 }
