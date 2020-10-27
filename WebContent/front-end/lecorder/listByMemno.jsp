@@ -37,7 +37,7 @@
                     <div class="col-sm-3">
                     </div>
                     <div class="col-sm-4">
-                        <h2 class="text-center">我的講座清單</h2>
+                        <h2 class="text-center">我的講座訂單</h2>
                     </div>
                 </div>
             </div>

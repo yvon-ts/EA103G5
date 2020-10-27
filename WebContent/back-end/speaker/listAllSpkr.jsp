@@ -2,10 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.speaker.model.*"%>
-
 <%@ include file="/back-end/index/homepage.jsp" %>
-
-<!DOCTYPE html>
 
 <%
 	SpkrService spkrSvc = new SpkrService(); 
@@ -13,7 +10,7 @@
 	pageContext.setAttribute("list", list);
 	
 %>
-
+<!DOCTYPE html>
 <html>
 <head>
 <title>Xducation - 陪你成長的學習好夥伴</title>

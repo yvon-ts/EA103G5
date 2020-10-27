@@ -1,16 +1,34 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ page import="com.lecorder.model.*" %>
 <%@ page import="java.util.*" %>
+<%@ page import="com.lecture.model.*" %>
+<%@ page import="com.lecorder.model.*" %>
+<%@ page import="com.lecseat.model.*" %>
 <%@ include file="/back-end/index/homepage.jsp" %>
 
 <%
+	//lecseat
+	String lodrno = request.getParameter("lodrno").trim();
+	LecseatService seatSvc = new LecseatService();
+	List<LecseatVO> list = seatSvc.getSeatsByOrder(lodrno);
+	//lecorder
 	LodrService lodrSvc = new LodrService();
-	List<LodrVO> list = lodrSvc.getList();
+	LodrVO lodrVO = lodrSvc.getOne(lodrno);
+	String lecno = lodrVO.getLecno();
+	String lodrseat = lodrVO.getLodrseat();
+	//lecture
+	LecService lecSvc = new LecService();
+	LecVO lecVO = lecSvc.getOne(lecno);
+	
 	pageContext.setAttribute("list", list);
+	pageContext.setAttribute("lodrVO", lodrVO);
+	pageContext.setAttribute("lecVO", lecVO);
 %>
+
 <!DOCTYPE html>
-<jsp:useBean id="memSvc" scope="page" class="com.members.model.MembersService" />
+<%
+%>
 <html>
 <head>
 <meta charset="utf-8">
@@ -27,6 +45,8 @@ body {
     font-family: 'Roboto', sans-serif;
 }
 </style>
+<script>
+</script>
 </head>
 <body>
 <main class="app-content" style="background-color: #f3f3f3">
@@ -35,18 +55,13 @@ body {
         <div class="table-wrapper">			
             <div class="table-title">
                 <div class="row">
-                    <div class="col-sm-4">
-                    </div>
-                    <div class="col-sm-4">
-                        <h2 class="text-center">講座報名清單</h2>
-                    </div>
-                    <div class="col-sm-4">
-                        <div class="search-box">
-                            <div class="input-group">
-                                <span class="input-group-addon"><i class="material-icons">&#xE8B6;</i></span>
-                                <input type="text" class="form-control" placeholder="Search&hellip;">
-                            </div>
-                        </div>
+                    <div class="col-sm-2">
+						<form method="post"	action="<%=request.getContextPath()%>/back-end/lecorder/listAllLodr.jsp">
+						<button class="bttn" type="submit">回列表</button>
+						</form>
+					</div>
+                    <div class="col-sm-8">
+                        <h2 class="text-center">報名座位查詢</h2>
                     </div>
                 </div>
             </div>
@@ -54,42 +69,28 @@ body {
                 <thead>
                     <tr>
                         <th>訂單編號</th>
-                        <th>會員姓名</th>
-                        <th>訂單金額</th>
+                        <th>講座名稱</th>
+                        <th>講座票價</th>
+                        <th>座位號碼</th>
                         <th>訂單狀態</th>
-                        <th>成立時間</th>
-                        <th>更新時間</th>
-                        <th>檢視</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <%@ include file="/back-end/pool/page1.file" %>
-                    <c:forEach var="lodrVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
-						<tr><td>${lodrVO.lodrno}</td>
-						<c:forEach var="memVO" items="${memSvc.all}">
-							<c:if test="${lodrVO.memno == memVO.memno}">
-								<td>${memVO.memname}</td>
-							</c:if>
-						</c:forEach>
-						<td>${lodrVO.lecamt}</td>
-						<td>${lodrVO.lodrstatus}</td>
-						<td>${lodrVO.lodrtime}</td>
-						<td>${lodrVO.lodrlmod}</td>
-                        <td>
-                        	<form id="formGetOne" method="post" action="<%=request.getContextPath()%>/back-end/lecseat/listOneSeat.jsp">
-                        		<input type="hidden" name="lodrno" value="${lodrVO.lodrno}">
-								<button type="submit" class="btn view"><i class="material-icons">&#xE417;</i></button>
-                            </form>
-                        </td>
-                        </tr>
-		</c:forEach>
-                    
-                          
+                <%@ include file="/back-end/pool/page1.file" %>
+                <c:forEach var="seatVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
+					<tr>
+						<td>${seatVO.lodrno}</td>
+						<td>${lecVO.lecname}</td>
+						<td>${lecVO.lecprice}</td>
+						<td>${seatVO.seatno}</td>
+						<td>${seatVO.seatstatus}</td>
+	            	</tr>
+				</c:forEach>
                 </tbody>
             </table>
             <%@ include file="/back-end/pool/page2.file" %>
             <div class="clearfix">
-                <div><b>查詢結果共有<font color=#19B3D3><%=rowNumber%></font>筆資料</b></div>
+                <div><b>本訂單共預定<font color=#19B3D3><%=rowNumber%></font>個座位</b></div>
                 <ul class="pagination">
                     <li class="page-item disabled"><a href="#">Previous</a></li>
                     <li class="page-item"><a href="#" class="page-link">1</a></li>
@@ -100,8 +101,9 @@ body {
                     <li class="page-item"><a href="#" class="page-link">Next</a></li>
                 </ul>
             </div>
+            <%@ include file="/front-end/lecseat/bookedSeats.jsp" %>
         </div>
-    </div>        
+    </div>
 </div> 
 </main>
 </body>
