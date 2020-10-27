@@ -56,13 +56,13 @@ public class Emp_authFilter implements Filter {
 		FUN0001.add(req.getContextPath()+"/back-end/employee/newupdate_emp.jsp");
 		FUN0001.add(req.getContextPath()+"/back-end/employee/empone.jsp");
 		
-		List<String> FUN0022 = new ArrayList<>();
-		FUN0022.add(req.getContextPath()+"/back-end/classroom/select_page.jsp");
+		List<String> FUN0002 = new ArrayList<>();
+		FUN0002.add(req.getContextPath()+"/back-end/classroom/select_page.jsp");
 
 		
 		if(list.contains("FUN0001") && FUN0001.contains(urls)) {
 			chain.doFilter(request, response);	
-		}else if(list.contains("FUN0022") && FUN0022.contains(urls)) {
+		}else if(list.contains("FUN0022") && FUN0002.contains(urls)) {
 			chain.doFilter(request, response);
 		}else {			
 			session.setAttribute("error", "你沒有權限!");

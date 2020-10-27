@@ -7,7 +7,7 @@ public class FunctionxVO implements Serializable{
 
 	private String funcno;
 	private String funcname;
-	private Date funclmod;
+	
 	
 	
 	public String getFuncno() {
@@ -21,12 +21,5 @@ public class FunctionxVO implements Serializable{
 	}
 	public void setFuncname(String funcname) {
 		this.funcname = funcname;
-	}
-	public Date getFunclmod() {
-		return funclmod;
-	}
-	public void setFunclmod(Date funclmod) {
-		this.funclmod = funclmod;
-	}
-	
+	}	
 }
