@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Vector;
@@ -256,6 +255,9 @@ public class OrderMasterServlet extends HttpServlet {
 				out.print(form);
 				out.print("</body>" +
 				"</html>");
+				
+				//清空購物車
+				session.setAttribute("shoppingList", null);
 				
 //				/*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
 //				String url = "/front-end/Shop/Test2.jsp";

@@ -25,6 +25,7 @@ public class OrderDetailDAO implements OrderDetailDAO_interface {
 	private static final String INSERT_STMT = "INSERT INTO order_detail(orderno, courseno, sellprice, promono) VALUES (?, ?, ?, ?)";
 	private static final String GET_ALL_STMT = "SELECT orderno, courseno, sellprice, odstatus, promono FROM order_detail order by orderno";
 	private static final String UPDATE = "UPDATE order_detail set odstatus=? where orderno = ? and courseno = ?";
+	private static final String UPDATE_REFUND = "UPDATE order_detail set odstatus = '申請退款' where orderno = ? and courseno = ?";
 	private static final String GET_SPE_STMT = "SELECT * FROM order_detail where orderno = ?";
 	private static final String GET_ONE_STMT = "SELECT * FROM order_detail where orderno = ? and courseno = ?";
 
@@ -70,6 +71,55 @@ public class OrderDetailDAO implements OrderDetailDAO_interface {
 			pstmt.setString(1, orderDetailVO.getOdstatus());
 			pstmt.setString(2, orderDetailVO.getOrderno());
 			pstmt.setString(3, orderDetailVO.getCourseno());
+			pstmt.executeUpdate();
+			con.commit();
+			
+		} catch (Exception se) {
+			try {
+				con.rollback();
+			} catch (SQLException e) {
+				try {
+					con.rollback();
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}
+			}
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+		} finally {
+			try {
+				if (pstmt != null)
+					pstmt.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			try {
+				if (con != null) {
+					con.setAutoCommit(true);
+
+					con.close();
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	@Override
+	public void refund(OrderDetailVO orderDetailVO) {
+
+		Connection con = null;
+		PreparedStatement pstmt = null;
+
+		try {
+
+			con = ds.getConnection();
+			con.setAutoCommit(false);
+
+			pstmt = con.prepareStatement(UPDATE_REFUND);
+			pstmt.setString(1, orderDetailVO.getOrderno());
+			pstmt.setString(2, orderDetailVO.getCourseno());
 			pstmt.executeUpdate();
 			con.commit();
 
@@ -232,6 +282,7 @@ public class OrderDetailDAO implements OrderDetailDAO_interface {
 
 			while (rs.next()) {
 				orderDetailVO = new OrderDetailVO();
+				System.out.println(rs.getString("odstatus"));
 				orderDetailVO.setOrderno(rs.getString("orderNo"));
 				orderDetailVO.setCourseno(rs.getString("courseNo"));
 				orderDetailVO.setSellprice(rs.getInt("sellprice"));

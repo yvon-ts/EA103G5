@@ -152,16 +152,16 @@ center
 											<h5>請填寫訂購人資訊</h5>
 											<div class="row">
 												<div class="col-2">訂購人姓名</div>
-												<div class="col-3"><Input type="text" id="name"></div>
+												<div class="col-3"><input type="text" id="name"></div>
 												<div class="col-2">連絡電話</div>
 												<div class="col-3"><Input type="text" id="phone"></div>
 											</div>
 											<br>
 											<div class="row">
 												<div class="col-2">電子信箱</div>
-												<div class="col-3"><Input type="text" id="name"></div>
+												<div class="col-3"><Input type="text" id="email"></div>
 												<div class="col-2">連絡地址</div>
-												<div class="col-3"><Input type="text" id="phone"></div>
+												<div class="col-3"><Input type="text" id="address"></div>
 											</div>
 											
 										</div>
@@ -169,7 +169,7 @@ center
 										<input type="hidden" name="memno" value="<%=membersVO.getMemno()%>"> 
 										<input type="hidden" name="orderamt" value="<%=orderamt%>">
 										<div class="col-sm-6 order-md-2 text-right">
-											<input type="submit" value="結帳">
+											<button id="add">+</button><input type="submit" value="結帳">
 										</div>
 									</div>
 								</div>
@@ -180,9 +180,20 @@ center
 			</div>
 		</section>
 	</form>
-
 	<jsp:include page="/index/front-index/footer.jsp" />
 	<script
-		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.rateit/1.1.3/jquery.rateit.min.js"></script>
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.rateit/1.1.3/jquery.rateit.min.js">
+</script>
+	<script >
+	
+	
+	$("#add").click(function(e){
+		e.preventDefault();
+		$("#name").val("1111");
+		$("#phone").val("0912345678");
+		$("#email").val("amy123@gmail.com");
+		$("#address").val("320桃園市中壢區中大路300號");
+	})
+	</script>
 </body>
 </html>
