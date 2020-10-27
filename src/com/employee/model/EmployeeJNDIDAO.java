@@ -30,12 +30,10 @@ public class EmployeeJNDIDAO implements EmployeeDAO_interface {
 	private static final String GET_ONE_STMT = "SELECT empno, empacc, emppwd, empname, empsalary, to_char(hiredate,'yyyy-mm-dd') hiredate, empemail, empdelete FROM employee where empno = ?";
 	private static final String DELETE = "DELETE FROM employee where empno = ?";
 	private static final String UPDATE = "UPDATE employee set empacc=?, emppwd=?, empname=?, empsalary=?, hiredate=?, empemail=?, empdelete=?, emppic=? where empno=? ";
-	private static final String UPDATESTATUS = "UPDATE employee set empdelete? where empno=? ";
+	private static final String UPDATEPWD = "UPDATE employee set emppwd=?, empemail=?, emppic=? where empno=? ";
 	private static final String LOGIN = "SELECT * FROM employee where empacc=? and emppwd=? ";
 	private static final String GET_ONE_ACC = "SELECT * FROM employee where empacc = ?";
 	private static final String FIND_BY_EMPNO = "SELECT * FROM  employee where empno = ?";
-	
-	
 
 	@Override
 	public void insert(EmployeeVO employeeVO) {
@@ -180,32 +178,6 @@ public class EmployeeJNDIDAO implements EmployeeDAO_interface {
 	}
 
 	@Override
-	public void updateStatus(EmployeeVO employeeVO) {
-
-		Connection con = null;
-		PreparedStatement pstmt = null;
-		try {
-			con = ds.getConnection();
-			con.setAutoCommit(false);
-			pstmt = con.prepareStatement(UPDATESTATUS);
-
-			pstmt.setInt(1, employeeVO.getEmpdelete());
-			pstmt.executeUpdate();
-			con.commit();
-		} catch (SQLException e) {
-			try {
-				con.rollback();
-			} catch (SQLException se) {
-				throw new RuntimeException("A database error occured. " + se.getMessage());
-			}
-			throw new RuntimeException("A database error occured. " + e.getMessage());
-		} finally{
-			
-		}
-
-	}
-
-	@Override
 	public EmployeeVO findByPrimaryKey(String empno) {
 
 		EmployeeVO employeeVO = null;
@@ -333,7 +305,7 @@ public class EmployeeJNDIDAO implements EmployeeDAO_interface {
 
 	@Override
 	public EmployeeVO logIn(String empacc, String emppwd) {
-		
+
 		EmployeeVO employeeVO = null;
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -343,9 +315,9 @@ public class EmployeeJNDIDAO implements EmployeeDAO_interface {
 			con = ds.getConnection();
 			con.setAutoCommit(false);
 			pstmt = con.prepareStatement(LOGIN);
-			
-			pstmt.setString(1,empacc);
-			pstmt.setString(2,emppwd);
+
+			pstmt.setString(1, empacc);
+			pstmt.setString(2, emppwd);
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
 				employeeVO = new EmployeeVO();
@@ -357,7 +329,7 @@ public class EmployeeJNDIDAO implements EmployeeDAO_interface {
 				employeeVO.setHiredate(rs.getDate("hiredate"));
 				employeeVO.setEmpemail(rs.getString("empemail"));
 				employeeVO.setEmpdelete(rs.getInt("empdelete"));
-				
+
 			}
 			con.commit();
 
@@ -395,10 +367,7 @@ public class EmployeeJNDIDAO implements EmployeeDAO_interface {
 
 		return employeeVO;
 	}
-	
-	
 
-	
 	@Override
 	public String insertWithEmp(EmployeeVO employeeVO) {
 		Connection con = null;
@@ -407,10 +376,10 @@ public class EmployeeJNDIDAO implements EmployeeDAO_interface {
 		try {
 
 			con = ds.getConnection();
-			
-			String cols[] = {"empno"};
-			
-			pstmt = con.prepareStatement(INSERT_STMT, cols);			
+
+			String cols[] = { "empno" };
+
+			pstmt = con.prepareStatement(INSERT_STMT, cols);
 			pstmt.setString(1, employeeVO.getEmpacc());
 			pstmt.setString(2, employeeVO.getEmppwd());
 			pstmt.setString(3, employeeVO.getEmpname());
@@ -418,7 +387,7 @@ public class EmployeeJNDIDAO implements EmployeeDAO_interface {
 			pstmt.setDate(5, employeeVO.getHiredate());
 			pstmt.setString(6, employeeVO.getEmpemail());
 			pstmt.setBytes(7, employeeVO.getEmppic());
-			
+
 			pstmt.executeUpdate();
 			ResultSet rs = pstmt.getGeneratedKeys();
 			if (rs.next()) {
@@ -456,7 +425,7 @@ public class EmployeeJNDIDAO implements EmployeeDAO_interface {
 
 	@Override
 	public EmployeeVO getOneAcc(String empacc) {
-		
+
 		EmployeeVO employeeVO = null;
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -572,5 +541,51 @@ public class EmployeeJNDIDAO implements EmployeeDAO_interface {
 
 		return Optional.ofNullable(employeeVO);
 	}
-	
+
+	@Override
+	public void updatePwd(EmployeeVO employeeVO) {
+
+		Connection con = null;
+		PreparedStatement pstmt = null;
+
+		try {
+
+			con = ds.getConnection();
+			con.setAutoCommit(false);
+			pstmt = con.prepareStatement(UPDATEPWD);
+
+			pstmt.setString(1, employeeVO.getEmppwd());
+			pstmt.setString(2, employeeVO.getEmpemail());
+			pstmt.setBytes(3, employeeVO.getEmppic());
+			pstmt.setString(4, employeeVO.getEmpno());
+
+			pstmt.executeUpdate();
+			con.commit();
+		} catch (SQLException e) {
+			try {
+				con.rollback();
+			} catch (SQLException se) {
+				throw new RuntimeException("A database error occured. " + se.getMessage());
+			}
+			throw new RuntimeException("A database error occured. " + e.getMessage());
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.setAutoCommit(true);
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+
+	}
+
 }

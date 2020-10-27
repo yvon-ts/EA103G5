@@ -69,7 +69,7 @@ public class EmployeeServlet extends HttpServlet {
 				if (empemail == null || empemail.trim().length() == 0) {
 					errMsgs.add("*員工email:請勿為空白*");
 				}
-				
+
 				byte[] emppic = null;
 				Part part = req.getPart("emppic");
 				if (part == null || part.getSize() == 0) {
@@ -256,13 +256,13 @@ public class EmployeeServlet extends HttpServlet {
 				}
 
 				Integer empdelete = new Integer(req.getParameter("empdelete").trim());
-				
+
 				byte[] emppic = null;
 				Part part = req.getPart("emppic");
 				if (part == null || part.getSize() == 0) {
 					EmployeeService empSvc = new EmployeeService();
-					EmployeeVO employeeVO = empSvc.getEmp(empno);
-					emppic = employeeVO.getEmppic();
+					Optional<EmployeeVO> employeeVO = empSvc.getEmpPicByEmpno(empno);
+					emppic = employeeVO.get().getEmppic();
 				} else {
 					InputStream in = part.getInputStream();
 					emppic = new byte[in.available()];
@@ -295,7 +295,7 @@ public class EmployeeServlet extends HttpServlet {
 				employeeVO.setEmpemail(empemail);
 				employeeVO.setEmpdelete(empdelete);
 				employeeVO.setEmppic(emppic);
-
+				System.out.println(emppic);
 
 				if (!errMsgs.isEmpty()) {
 					req.setAttribute("employeeVO", employeeVO);
@@ -305,7 +305,8 @@ public class EmployeeServlet extends HttpServlet {
 				}
 
 				EmployeeService newEmp = new EmployeeService();
-				employeeVO = newEmp.updateEmp(empno, empacc, emppwd, empname, empsalary, hiredate, empemail, empdelete, emppic);
+				employeeVO = newEmp.updateEmp(empno, empacc, emppwd, empname, empsalary, hiredate, empemail, empdelete,
+						emppic);
 				req.setAttribute("employeeVO", employeeVO);
 				RequestDispatcher successView = req.getRequestDispatcher("/back-end/employee/newallemp.jsp");
 				successView.forward(req, res);
@@ -327,20 +328,13 @@ public class EmployeeServlet extends HttpServlet {
 					errMsgs.add("請輸入員工編號");
 				}
 				if (!errMsgs.isEmpty()) {
-					RequestDispatcher failureView = req.getRequestDispatcher("/back-end/employee/select_emp.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/front-end/back-endHomePage.jsp");
 					failureView.forward(req, res);
 					return;
 				}
 
 				EmployeeService empSvc = new EmployeeService();
 				EmployeeVO employeeVO = empSvc.getEmp(empno);
-				// 查無資料錯誤處理
-				if (employeeVO == null) {
-					errMsgs.add("查無此員工");
-					RequestDispatcher failureView = req.getRequestDispatcher("/back-end/employee/select_emp.jsp");
-					failureView.forward(req, res);
-					return;
-				}
 
 				req.setAttribute("employeeVO", employeeVO);
 				RequestDispatcher successView = req.getRequestDispatcher("/back-end/employee/empone.jsp");
@@ -349,6 +343,70 @@ public class EmployeeServlet extends HttpServlet {
 			} catch (Exception e) {
 				errMsgs.add("無法取得資料:" + e.getMessage());
 			}
+		}
+
+		if ("pwdupdate".equals(action)) {
+
+			List<String> errMsgs = new LinkedList<String>();
+			req.setAttribute("errMsgs", errMsgs);
+
+			try {
+				String empno = req.getParameter("empno");
+
+				String emppwd = req.getParameter("emppwd");
+				if (emppwd == null || emppwd.trim().length() == 0) {
+					errMsgs.add("*員工密碼:請勿為空白*");
+				}
+
+				String empemail = req.getParameter("empemail");
+				if (empemail == null || (empemail.trim()).length() == 0) {
+					errMsgs.add("*員工email:請勿為空白*");
+				}
+
+				byte[] emppic = null;
+				Part part = req.getPart("emppic");
+				if (part == null || part.getSize() == 0) {
+					EmployeeService empSvc = new EmployeeService();
+					Optional<EmployeeVO> employeeVO = empSvc.getEmpPicByEmpno(empno);
+					emppic = employeeVO.get().getEmppic();
+				} else {
+					InputStream in = part.getInputStream();
+					emppic = new byte[in.available()];
+					in.read(emppic);
+					in.close();
+				}
+				
+				String empacc = req.getParameter("empacc");
+				String empname = req.getParameter("empname");
+				java.sql.Date hiredate = java.sql.Date.valueOf(req.getParameter("hiredate"));
+				
+				EmployeeVO employeeVO = new EmployeeVO();
+				employeeVO.setEmpno(empno);
+				employeeVO.setEmppwd(emppwd);
+				employeeVO.setEmpemail(empemail);
+				employeeVO.setEmppic(emppic);
+				employeeVO.setEmpacc(empacc);
+				employeeVO.setEmpname(empname);
+				employeeVO.setHiredate(hiredate);
+				
+				if (!errMsgs.isEmpty()) {
+					req.setAttribute("employeeVO", employeeVO);
+					RequestDispatcher failureView = req.getRequestDispatcher("/back-end/employee/empone.jsp");
+					failureView.forward(req, res);
+					return;
+				}
+
+				EmployeeService newEmp = new EmployeeService();
+				employeeVO = newEmp.updatepwd(empno, emppwd, empemail, emppic);
+				req.setAttribute("employeeVO", employeeVO);
+				RequestDispatcher successView = req.getRequestDispatcher("/front-end/back-endHomePage.jsp");
+				successView.forward(req, res);
+			} catch (Exception e) {
+				errMsgs.add("資料修改失敗: " + e.getMessage());
+				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/employee/empone.jsp");
+				failureView.forward(req, res);
+			}
+
 		}
 
 	}
