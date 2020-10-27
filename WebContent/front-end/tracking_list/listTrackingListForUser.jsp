@@ -149,15 +149,11 @@
     <div class="title wow "></div>
     <div class="row mt-4 d-flex align-items-center">
         <div class="col-sm-6 order-md-2 text-right">
-            <a href="<%=request.getContextPath()%>/front-end/Shop/Checkout.jsp"><button type="button" class="btn btn-primary" id= "checkout">Checkout</button></a>
-<!--             <input type="hidden" name="action" value="insert"> -->
-<!--             <input type="hidden" name="coupcode" value="XXXX-ZXCV"> -->
-<!--             <input type="hidden" name="memno" value="MEM0002"> -->
-<%--             <input type="hidden" name="orderamt" value="${totalPrice}"> --%>
+            <a href="<%=request.getContextPath()%>/front-end/Shop/Checkout.jsp"><button type="button" class="btn btn-primary" id= "checkout">填寫訂購人資料</button></a>
         </div>
         <div class="col-sm-6 mb-3 mb-m-1 order-md-1 text-md-left">
             <a href="<%=request.getContextPath()%>/front-end/course/listAllCourseForUser.jsp">
-               <i class="fa fa-undo" aria-hidden="true"></i>&nbsp;&nbsp;Continue Shopping</a>
+               <i class="fa fa-undo" aria-hidden="true"></i>&nbsp;&nbsp;返回商店頁面</a>
         </div>
     </div>
 	</div>
@@ -319,11 +315,9 @@
                                 					</div>
                                 					<div class="col-md-9 text-left mt-sm-2">
                                     						<h5>` + JSONObj.coursename + `</h5>
-                                    						<p class="font-weight-light"> ` + JSONObj.courseinfo + `</p>
                                 					</div>
                             					</div>
                         					</td>
-                        					<td data-th="Price">` + JSONObj.csstatus + `</td>
                         
                         					<td data-th="Price">` + JSONObj.courseprice + `</td>
                       
@@ -346,7 +340,6 @@
 				                str +=  `<thead>
 				                    		<tr>
 				                        		<th style="width:60%">課程名稱</th>
-				                        		<th style="width:12%">課程狀態</th>
 				                        		<th style="width:10%">售價</th>
 				                        		<th style="width:16%"></th>
 				                    		</tr>
