@@ -58,6 +58,27 @@ height:30px;
 	border: 1px solid #0099cc;
 	color: #fff;
 }
+button#bt1{
+position:absolute;
+z-index:3;
+margin:0 0 0 0;
+
+}
+button#bt2{
+position:absolute;
+z-index:3;
+margin:0 0 0 130px;
+
+}
+button#bt3{
+position:absolute;
+z-index:3;
+margin:0 0 0 260px;
+
+}
+
+
+
 </style>
 </head>
 
@@ -73,9 +94,12 @@ height:30px;
             <div class="table-title">
                 <div class="row">
                     <div class="col-sm-2">
-						<%-- <form method="post"	action="<%=request.getContextPath()%>/back-end/lecture/lectureIndex.jsp">
-						<button class="bttn" type="submit">回首頁</button>
-						</form> --%>
+						 <form method="post" action="<%=request.getContextPath()%>/teacher/teacher.do">
+						 <button id="bt1" class="bttn" name="tchrstatus" value="待審核" type="submit">待審核</button>
+						 <button id="bt2" class="bttn" name="tchrstatus" value="已通過" type="submit">已通過</button>
+						 <button id="bt3" class="bttn" name="tchrstatus" value="未通過" type="submit">未通過</button>
+						 <input type="hidden" name="action" value="listTeacher_ByCompositeQuery">
+						</form> 
 					</div>
                     <div class="col-sm-7">
                         <h2 class="text-center">老師名單</h2>

@@ -158,7 +158,7 @@ cursor:pointer;
                 <td class="number">
                  <input type="hidden" name="tchrno" value="${teacherVO.tchrno}">
                 <input type="hidden" name="action" value="updateStatus">
-                 <input type="submit" value="修改">
+                 <input type="submit" value="送出">
               
                 
                 </td>

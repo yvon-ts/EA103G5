@@ -63,15 +63,19 @@ div.signup-form {
 h5.h5 {
 	color: black;
 }
-div.ck-rounded-corners .ck.ck-editor__main>.ck-editor__editable, .ck.ck-editor__main>.ck-editor__editable.ck-rounded-corners {
-    height: 200px;
-    width:300px;
+
+div.ck-rounded-corners .ck.ck-editor__main>.ck-editor__editable, .ck.ck-editor__main>.ck-editor__editable.ck-rounded-corners
+	{
+	height: 200px;
+	width: 300px;
 }
- .ck-rounded-corners .ck.ck-editor__top .ck-sticky-panel .ck-toolbar, .ck.ck-editor__top .ck-sticky-panel .ck-toolbar.ck-rounded-corners {
-    border-radius: var(--ck-border-radius);
-    border-bottom-left-radius: 0;
-    border-bottom-right-radius: 0;
-    width: 300px;
+
+.ck-rounded-corners .ck.ck-editor__top .ck-sticky-panel .ck-toolbar, .ck.ck-editor__top .ck-sticky-panel .ck-toolbar.ck-rounded-corners
+	{
+	border-radius: var(- -ck-border-radius);
+	border-bottom-left-radius: 0;
+	border-bottom-right-radius: 0;
+	width: 300px;
 }
 
 div#form-group {
@@ -240,11 +244,10 @@ div.main {
 
 							<div class="form-group">
 								<c:if test="${not empty errorMsgs}">
-									<ul>
-										<c:forEach var="message" items="${errorMsgs}">
-											<li style="color: red">${message}</li>
-										</c:forEach>
-									</ul>
+									<c:forEach var="message" items="${errorMsgs}">
+										<input type="hidden" id="message" value="${message}">
+									</c:forEach>
+
 								</c:if>
 
 							</div>
@@ -305,6 +308,10 @@ div.main {
         console.log(editor);
     })
     
+     var message = document.getElementById('message').value;
+    if(message.length !== 0){
+    	 swal('注意', message, 'warning');
+    }
     
     
     
