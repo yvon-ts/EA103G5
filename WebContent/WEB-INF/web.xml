@@ -27,9 +27,11 @@
     <filter-class>com.employee.login.controller.LoginFilter</filter-class>
   </filter>
   <filter-mapping>
-   	<filter-name>LoginFilter</filter-name>
-   	<url-pattern>/back-end/employee/*</url-pattern>
+   	<filter-name>LoginFilter</filter-name>  	
    	<url-pattern>/back-end/index/homepage.jsp</url-pattern>
+   	<url-pattern>/back-end/employee/*</url-pattern>
+   	<url-pattern>/back-end/members/*</url-pattern>
+   	<url-pattern>/back-end/teacher/*</url-pattern>
    	<url-pattern>/back-end/lecture/*</url-pattern>
    	<dispatcher>REQUEST</dispatcher>
    	<dispatcher>FORWARD</dispatcher>
@@ -45,6 +47,8 @@
   <filter-mapping>
    	<filter-name>Emp_authFilter</filter-name>
    	<url-pattern>/back-end/employee/*</url-pattern>
+   	<url-pattern>/back-end/members/*</url-pattern>
+   	<url-pattern>/back-end/teacher/*</url-pattern>
    	<dispatcher>REQUEST</dispatcher>
    	<dispatcher>FORWARD</dispatcher>
    	<dispatcher>INCLUDE</dispatcher>
