@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<jsp:include page="/front-end/back-endHomePage.jsp"/>
+<jsp:include page="/back-end/index/homepage.jsp"/>
 <%@ page import="com.report_detail.model.*"%>
 <%@ page import="com.employee.model.*"%>
 
@@ -12,9 +12,9 @@
     request.setAttribute("list",list);
 %>
 
-<%-- <% --%>
-// EmployeeVO EmployeeVO = (EmployeeVO) session.getAttribute("employeeVO");
-// System.out.println("目前登入的是:" + employeeVO.getempno());
+<%-- <%  --%>
+<!-- // 	EmployeeVO EmployeeVO = (EmployeeVO) session.getAttribute("employeeVO"); -->
+<!-- // 	System.out.println("目前登入的是:" + employeeVO.getempno()); -->
 <%-- %> --%>
 
 <html>
@@ -99,7 +99,7 @@
   </thead>
   <tbody>
   <c:forEach var="reportdetailVO" items="${list}">
-    <th scope="row">1</th>
+    <th scope="row"></th>
       <td>${reportdetailVO.reportno}</td>
 			<td>${reportdetailVO.memno}</td>
 			<td>${reportdetailVO.postno}</td>

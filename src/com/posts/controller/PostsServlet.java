@@ -136,14 +136,14 @@ public class PostsServlet extends HttpServlet {
 				postsSvc.updateStatusRemove(postno);
 
 				/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
-				String url = "/front-end/posts/posts.jsp";
+				String url = "/front-end/course/mainCoursePage.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
 
 				/*************************** 其他可能的錯誤處理 **********************************/
 			} catch (Exception e) {
 				errorMsgs.add("無法取得要修改的資料:" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/posts/posts.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/course/mainCoursePage.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -224,7 +224,7 @@ public class PostsServlet extends HttpServlet {
 
 				/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
 				req.setAttribute("postsVO", postsVO); 
-				String url = "/front-end/posts/posts.jsp";
+				String url = "/front-end/course/mainCoursePage.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); 
 				successView.forward(req, res);
 
@@ -232,7 +232,7 @@ public class PostsServlet extends HttpServlet {
 			} catch (Exception e) {
 				errorMsgs.add("修改資料失敗:" + e.getMessage());
 				e.printStackTrace();
-				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/posts/posts.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/course/mainCoursePage.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -271,7 +271,7 @@ public class PostsServlet extends HttpServlet {
 
 				/*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
 				req.setAttribute("postsVO", postsVO);
-				String url = "/front-end/posts/posts.jsp";
+				String url = "/front-end/course/mainCoursePage.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); 
 				successView.forward(req, res);
 
@@ -279,7 +279,7 @@ public class PostsServlet extends HttpServlet {
 			} catch (Exception e) {
 				System.out.println("空值" + e);
 				errorMsgs.add(e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/posts/posts.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/course/mainCoursePage.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -308,7 +308,7 @@ public class PostsServlet extends HttpServlet {
 
 				/*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
 				req.setAttribute("postsVO", postsVO);
-				String url = "/front-end/posts/post.jsp";
+				String url = "/front-end/course/mainCoursePage.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); 
 				successView.forward(req, res);
 
@@ -316,7 +316,7 @@ public class PostsServlet extends HttpServlet {
 			} catch (Exception e) {
 				System.out.println("空值");
 				errorMsgs.add(e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/posts/addPosts.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/course/mainCoursePage.jsp");
 				failureView.forward(req, res);
 			}
 		}
