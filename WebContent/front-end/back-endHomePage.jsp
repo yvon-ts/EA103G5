@@ -85,7 +85,7 @@
                     		<li><i class="fa fa-user fa-lg"></i>
                     		<input type="submit" value="個人資料" ">
 			     			<input type="hidden" name="empno"  value="${empno}">
-			     			<input type="hidden" name="action"	value="forupdate"></li>									
+			     			<input type="hidden" name="action"	value=getone_show></li>									
 			     		</FORM>
 			     		</a>
                     <li><a class="dropdown-item" href="<%=request.getContextPath() %>/back-end/login/login.jsp"><i class="fa fa-sign-out fa-lg"></i>登出</a></li>
@@ -96,7 +96,7 @@
     <!-- Sidebar menu-->
     <div class="app-sidebar__overlay" data-toggle="sidebar"></div>
     <aside class="app-sidebar">
-        <div class="app-sidebar__user"><img class="app-sidebar__user-avatar" src="<%=request.getContextPath() %>/front-end/images/美短.jpg" alt="User Image" width="80px" height="80px">
+        <div class="app-sidebar__user"><img class="app-sidebar__user-avatar" src="${pageContext.request.contextPath}/ShowEmpPic?empno=${empno}" alt="User Image" width="80px" height="80px">
             <div>
                 <p class="app-sidebar__user-name">${empname}</p>
                 <p class="app-sidebar__user-designation">Employee</p>

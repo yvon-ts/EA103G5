@@ -9,7 +9,7 @@ import com.functionx.model.FunctionxVO;
 public interface EmployeeDAO_interface {
 	public void insert(EmployeeVO employeeVO);
 	public void update(EmployeeVO employeeVO);
-	public void updateStatus(EmployeeVO employeeVO);
+	public void updatePwd(EmployeeVO employeeVO);
 	public void delete(String empno);
 	public EmployeeVO findByPrimaryKey(String empno);
 	public EmployeeVO logIn(String empacc, String emppwd);

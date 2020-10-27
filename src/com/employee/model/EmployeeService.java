@@ -48,6 +48,17 @@ public class EmployeeService {
 		 dao.update(employeeVO);
 		 return employeeVO;		 
 	 }
+	 
+	 public EmployeeVO updatepwd(String empno, String emppwd, String empemail, byte[] emppic) {
+		 
+		 EmployeeVO employeeVO = new EmployeeVO();
+		 employeeVO.setEmpno(empno);
+		 employeeVO.setEmppwd(emppwd);
+		 employeeVO.setEmpemail(empemail);
+		 employeeVO.setEmppic(emppic);
+		 dao.updatePwd(employeeVO);
+		 return employeeVO;		 
+	 }
 
 	 
 	 //查詢

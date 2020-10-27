@@ -50,7 +50,7 @@ public class EmployeeLoginServlet extends HttpServlet {
 			} else {// 【帳號 , 密碼有效時, 才做以下工作】
 				String empname = employeeVO.getEmpname();
 				String empno = employeeVO.getEmpno();
-//				System.out.println(empno);
+				byte[] emppic	= employeeVO.getEmppic();
 				HttpSession session = req.getSession();
 
 				EmpAuthorityService empAuthSvc = new EmpAuthorityService();
@@ -59,6 +59,7 @@ public class EmployeeLoginServlet extends HttpServlet {
 				session.setAttribute("empacc", empacc); // *工作1: 才在session內做已經登入過的標識
 				session.setAttribute("empname", empname);
 				session.setAttribute("empno", empno);
+				session.setAttribute("emppic",emppic);
 				session.setAttribute("empauth", empAuthorityVO);
 
 				
