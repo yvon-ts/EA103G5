@@ -172,83 +172,79 @@ public class OrderMasterServlet extends HttpServlet {
 
 			try {
 
-//				/*********************** 1.接收請求參數 - 輸入格式的錯誤處理 *************************/
-//
-//				String memno = req.getParameter("memno");
-//				Integer orderamt = new Integer(req.getParameter("orderamt"));
-//
-//				String coupno = req.getParameter("coupno");
-//				System.out.println(coupno);
-//				
-//				if (!(coupno.equals("empty"))) {
-//					
-//					CoupCodeService coupSvc = new CoupCodeService();
-//					CoupCodeVO coupCodeVO = coupSvc.getOneCoupCode(coupno);
-//					Integer discamt = coupCodeVO.getDiscamt();
-//
-//					orderamt = orderamt - discamt;
-//					coupSvc.updateCoupCode(coupno, 1);
-//				} else {
-//					coupno = null;
-//				}
-//
-//				String payby = req.getParameter("payby");
-////						.trim();
-////				if (payby == null || payby.trim().length() == 0) {
-////					errorMsgs.add("付款方式請勿空白");
-////				}
-//
-//				OrderMasterVO orderMasterVO = new OrderMasterVO();
-//
-//				List<OrderDetailVO> list = new Vector<OrderDetailVO>();
-//				for (CourseVO abuylist : buylist) {
-//
-//					OrderDetailVO odVO = new OrderDetailVO();
-//					odVO.setCourseno(abuylist.getCourseno());
-//					odVO.setSellprice(abuylist.getCourseprice());
-//					odVO.setPromono(null);
-//
-//					list.add(odVO);
-//				}
-//
-//				// Send the use back to the form, if there were errors
-//				if (!errorMsgs.isEmpty()) {
-//					req.setAttribute("orderMasterVO", orderMasterVO);
-//					RequestDispatcher failureView = req
-//							.getRequestDispatcher("/front-end/tracking_list/listTrackingListForUser.jsp");
-//					failureView.forward(req, res);
-//					return;
-//				}
-//
-//				/*************************** 2.開始新增資料 ***************************************/
-//				OrderMasterService ordermasterSvc = new OrderMasterService();
-//				orderMasterVO = ordermasterSvc.addOrder(memno, orderamt, coupno, payby, list);
+				/*********************** 1.接收請求參數 - 輸入格式的錯誤處理 *************************/
 
+				String memno = req.getParameter("memno");
+				Integer orderamt = new Integer(req.getParameter("orderamt"));
+				String coupno = req.getParameter("coupno");
+				System.out.println(coupno);
+				
+				if (!(coupno.equals("empty"))) {
+					
+					CoupCodeService coupSvc = new CoupCodeService();
+					CoupCodeVO coupCodeVO = coupSvc.getOneCoupCode(coupno);
+					Integer discamt = coupCodeVO.getDiscamt();
+
+					orderamt = orderamt - discamt;
+					coupSvc.updateCoupCode(coupno, 1);
+				} else {
+					coupno = null;
+				}
+
+				String payby = req.getParameter("payby");
+//						.trim();
+//				if (payby == null || payby.trim().length() == 0) {
+//					errorMsgs.add("付款方式請勿空白");
+//				}
+
+				OrderMasterVO orderMasterVO = new OrderMasterVO();
+
+				List<OrderDetailVO> list = new Vector<OrderDetailVO>();
+				for (CourseVO abuylist : buylist) {
+
+					OrderDetailVO odVO = new OrderDetailVO();
+					odVO.setCourseno(abuylist.getCourseno());
+					odVO.setSellprice(abuylist.getCourseprice());
+					odVO.setPromono(null);
+
+					list.add(odVO);
+				}
+
+				// Send the use back to the form, if there were errors
+				if (!errorMsgs.isEmpty()) {
+					req.setAttribute("orderMasterVO", orderMasterVO);
+					RequestDispatcher failureView = req
+							.getRequestDispatcher("/front-end/tracking_list/listTrackingListForUser.jsp");
+					failureView.forward(req, res);
+					return;
+				}
+
+				/*************************** 2.開始新增資料 ***************************************/
+				OrderMasterService ordermasterSvc = new OrderMasterService();
+				orderMasterVO = ordermasterSvc.addOrder(memno, orderamt, coupno, payby, list);
 				/*************************** 3.新增完成,準備轉交綠界(Send the Success view) ***********/
 				//產生綠界訂單
 				AioCheckOutOneTime checkoutonetime = new AioCheckOutOneTime();
-//				checkoutonetime.setMerchantTradeNo(orderMasterVO.getOrderno());
-				checkoutonetime.setMerchantTradeNo("ZZSDA"); // for test
+				checkoutonetime.setMerchantTradeNo(orderMasterVO.getOrderno());
 
-//				checkoutonetime.setTotalAmount(orderamt.toString());
-
-//				StringBuffer itemname = new StringBuffer();
-//				StringBuffer itemprice = new StringBuffer();
-//				for(CourseVO a : buylist) {
-//					itemname.append(a.getCourseno()).append(", ");
-//					itemprice.append(a.getCourseprice()).append(", ");
-//				}
-				checkoutonetime.setItemName("itemname.toString()");
-				checkoutonetime.setTotalAmount("itemprice.toString()");
+				StringBuffer itemname = new StringBuffer();
+				for(CourseVO a : buylist) {
+					itemname.append(a.getCourseno()).append(", ");
+				}
+				checkoutonetime.setItemName(itemname.toString());
+				checkoutonetime.setTotalAmount(orderamt.toString());
 					
 				java.sql.Timestamp time = new java.sql.Timestamp(System.currentTimeMillis());
 				DateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 				checkoutonetime.setMerchantTradeDate(sdf.format(time));
 				checkoutonetime.setReturnURL("http://localhost:8081/EA103G5/Order_Master/Order_Master.do");
-				checkoutonetime.setClientBackURL("http://localhost:8081/EA103G5/front-end/tracking_list/listTrackingListForUser.jsp");
+				checkoutonetime.setClientBackURL("http://localhost:8081/EA103G5/index/front-index/index.jsp");
 				checkoutonetime.setTradeDesc("123");
+				
+				
 				AllInOne all = new AllInOne("");
 				String form = all.aioCheckOut(checkoutonetime, null);
+				
 				//轉送綠界訂單
 				out.print("<!DOCTYPE html>\r\n" + 
 						"<html lang=\"en\">\r\n" + 
