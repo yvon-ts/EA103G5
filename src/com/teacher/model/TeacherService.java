@@ -50,6 +50,9 @@ public class TeacherService {
 		
 		
 	}
+	public TeacherVO getOneTeacherByMemno(String memno) {
+		return dao.getOneTeacherByMemno(memno);
+	}
 	
 	
 	

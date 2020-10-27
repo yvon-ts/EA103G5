@@ -4,6 +4,7 @@
 <%@ page import="com.teacher.model.*"%>
 
 <%
+TeacherVO teacherVO = (TeacherVO) session.getAttribute("teacherVO");
 MembersVO membersVO = (MembersVO) session.getAttribute("membersVO");
 %>
 
@@ -115,6 +116,7 @@ height:36px;
 											href="<%=request.getContextPath()%>/front-end/teacher/teacherUpdate.jsp">老師檔案</a>
 											
 										</c:if>
+										
 										<c:if test="${not empty sessionScope.membersVO}">
 										<a class="dropdown-item"
 											href='<%=request.getContextPath()%>/members/members.do?action=signout'>會員登出</a> 
@@ -134,17 +136,17 @@ height:36px;
 							</c:if>
 							
 							<c:if test="${not empty sessionScope.membersVO.memno}">
-							<c:if test="${empty teacherSvc.getStatus(sessionScope.membersVO.memno)}">
+							<c:if test="${empty sessionScope.teacherVO}">
 							<img id="nav_icon" src='<%=request.getContextPath()%>/front-end/members/assets/img/students.svg'>
 							</c:if>
-							<c:if test="${teacherSvc.getStatus(sessionScope.membersVO.memno).tchrstatus eq '待審核'}">
+							<c:if test="${sessionScope.teacherVO.tchrstatus eq '待審核'}">
 							<img id="nav_icon" src='<%=request.getContextPath()%>/front-end/members/assets/img/students.svg'>
 							</c:if>
 							
-							<c:if test="${teacherSvc.getStatus(sessionScope.membersVO.memno).tchrstatus eq '已通過'}">
+							<c:if test="${sessionScope.teacherVO.tchrstatus eq '已通過'}">
 							<img id="nav_icon" src='<%=request.getContextPath()%>/front-end/members/assets/img/teacher.svg'>
 							</c:if>
-							<c:if test="${teacherSvc.getStatus(sessionScope.membersVO.memno).tchrstatus eq '未通過'}">
+							<c:if test="${sessionScope.teacherVO.tchrstatus eq '未通過'}">
 							<img id="nav_icon" src='<%=request.getContextPath()%>/front-end/members/assets/img/students.svg'>
 							
 							</c:if>
