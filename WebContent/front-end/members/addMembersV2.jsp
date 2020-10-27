@@ -31,7 +31,9 @@
 
 
 
-
+.signup{
+margin-bottom: 50px;;
+}
 
 
 input.input{
@@ -78,9 +80,7 @@ position: absolute;
  padding:6px 50px;
  }
  
- section#copyright{
- height:200px;
- }
+ 
  .help-block.error {
      margin-bottom: 5px;
     }

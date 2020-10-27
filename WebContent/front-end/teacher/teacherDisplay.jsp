@@ -96,7 +96,9 @@ body {
   }
 }
 
-
+.signup{
+margin-bottom: 50px;;
+}
 
 div#fti{
 width:300px;
@@ -180,12 +182,14 @@ img.fti{
   }
   section#copyright{
   margin-top:0px;
+ 
   }
   img#bankpic{
   width:110px;
   height:20px;
   }
   div.main{
+  padding:150px 0 0 0 ;
   	background: url("<%=request.getContextPath()%>/front-end/members/assets/img/bgPic.png");}
     
 </style>
@@ -342,7 +346,11 @@ img.fti{
   </div>
 </div>
             </div>
-           <footer id="footer" >
+           
+ 
+           
+        </section>
+       <footer id="footer" >
         <section id="copyright" class="">
             <div >
                 <div >
@@ -354,10 +362,6 @@ img.fti{
             </div>
         </section>
     </footer>
- 
-           
-        </section>
-       
 
 
     </div>

@@ -23,8 +23,7 @@
  --%>
  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.3/sweetalert2.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.3/sweetalert2.js" type="text/javascript"></script>
-    <script src="https://cdn.ckeditor.com/ckeditor5/23.0.0/classic/ckeditor.js"></script>
- 
+   <script src="https://cdn.ckeditor.com/ckeditor5/23.0.0/classic/ckeditor.js"></script>
      <%-- 
  <link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/teacher/teacherRegister_css/style.css"> --%>
 <%--     <link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/teacher/nav_css_ForTeacherRegister/css/bootstrap.min.css"> --%>
@@ -270,10 +269,12 @@ div.signup-content{
 padding:0px;
 height:800px;
 }
+.signup{
+margin-bottom: 50px;;
+}
    
     section#copyright{
- height:200px;
- margin-top:850px;
+ margin-top:890px;
  }
  nav.navbar{
  background-color:white;
@@ -309,11 +310,21 @@ input.form-submit {
  
   
   }
-  div#editor{
-  width:100px;
-  height:100px;
+  p{
+  width:100%;
+  height:20px;
+  
+  }
+  div.ck-rounded-corners .ck.ck-editor__main>.ck-editor__editable, .ck.ck-editor__main>.ck-editor__editable.ck-rounded-corners {
+    height: 300px;
+}
+  
+  div#text{
+  width:500px;
+  height:200px;
+  margin: -30px 0 30px 30px; 
   position:absolute;
-  z-index:20;
+  z-index: 13;
   
   
   
@@ -471,8 +482,10 @@ background: url("<%=request.getContextPath()%>/front-end/members/assets/img/bgPi
 
                        
                          <th>
-                         <div id="editor"><textarea style="margin:0px 50px;width: 480px;height: 150px;  position:absolute;z-index: 10;" name="tchrintro" placeholder="資料的詳細度將會影響審核成功的機率，祝好運">djfjdskfjspfks</textarea></div>
-        
+                         <div id="text">
+        <textarea id="editor" name="tchrintro" placeholder="資料的詳細度將會影響審核成功的機率，祝好運">${requestScope.teacherVO.tchrintro}</textarea>
+    </div>
+                         
                         <%--  <textarea style="margin:0px 50px;width: 480px;height: 150px;  position:absolute;z-index: 10;" name="tchrintro" placeholder="資料的詳細度將會影響審核成功的機率，祝好運">${requestScope.teacherVO.tchrintro}</textarea> 
  --%>
 
@@ -682,10 +695,10 @@ background: url("<%=request.getContextPath()%>/front-end/members/assets/img/bgPi
     <!-- JS -->
     <script type="text/javascript">
     ClassicEditor
-    .create( document.querySelector( '#editor' ) )
-    .catch( error => {
-        console.error( error );
-    } );
+    .create(document.querySelector('#editor'))
+    .then(editor => {
+        console.log(editor);
+    })
     
     
     

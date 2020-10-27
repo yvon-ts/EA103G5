@@ -64,18 +64,30 @@
     width:250px;
     
     }
+    div#bg{
+ -webkit-box-shadow: 0 0 15px #8E8E8E;
+	-moz-box-shadow: 0 0 15px #8E8E8E;
+	box-shadow: 0 0 15px #5B5B5B;
+}
     figure.license{
    width:200px;
    height:200px;
    margin:auto;
+   
     }
     img#license1{
     margin-bottom:40px;
     margin-top:0px;
+    -webkit-box-shadow: 3px 3px 5px 5px #BEBEBE;
+	-moz-box-shadow: 3px 3px 5px 5px #BEBEBE;
+	box-shadow: 3px 3px 5px 5px #BEBEBE;
     
    }
     img#license2{
     margin-top:40px;
+    -webkit-box-shadow: 3px 3px 5px 5px #BEBEBE;
+	-moz-box-shadow: 3px 3px 5px 5px #BEBEBE;
+	box-shadow: 3px 3px 5px 5px #BEBEBE;
     }
     div.signup-image{
     margin:0px 50px;
@@ -84,7 +96,11 @@
     margin-top:75px;
     margin-left:125px;
     }
+    .signup{
+margin-bottom: 50px;;
+}
     div.main{
+    padding:150px 0 0 0;
 background: url("<%=request.getContextPath()%>/front-end/members/assets/img/bgPic.png");
 }
     
@@ -135,7 +151,7 @@ background: url("<%=request.getContextPath()%>/front-end/members/assets/img/bgPi
 
         <!-- Sign up form -->
         <section class="signup">
-            <div class="container">
+            <div class="container" id="bg">
                 <div class="signup-content">
                 
                        
@@ -196,7 +212,10 @@ background: url("<%=request.getContextPath()%>/front-end/members/assets/img/bgPi
                 </div>
 
             </div>
- <footer id="footer" >
+ 
+           
+        </section>
+        <footer id="footer" >
         <section id="copyright" class="">
             <div >
                 <div >
@@ -208,9 +227,6 @@ background: url("<%=request.getContextPath()%>/front-end/members/assets/img/bgPi
             </div>
         </section>
     </footer>
-           
-        </section>
-        
 
 
     </div>

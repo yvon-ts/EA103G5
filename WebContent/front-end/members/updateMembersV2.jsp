@@ -91,6 +91,9 @@ height:350px;
   margin:60px 0px 0px -60px;
   
   }
+  .signup{
+margin-bottom: 50px;;
+}
   th#mpic{
   padding-top:0px;
   
@@ -116,9 +119,7 @@ img#nav_icon{
 width:36px;
 height:36px;
 }
- section#copyright{
- height:200px;
- }
+ 
  body{
  font-family:'Gochi Hand';
  }
