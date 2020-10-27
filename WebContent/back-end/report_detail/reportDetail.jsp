@@ -1,16 +1,21 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*"%>
-<jsp:include page="/back-end/index/js/homepage.jsp"></jsp:include>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<jsp:include page="/front-end/back-endHomePage.jsp"/>
 <%@ page import="com.report_detail.model.*"%>
+<%@ page import="com.employee.model.*"%>
 
 <%
     ReportDetailService reportdetailSvc = new ReportDetailService();
-    List<ReportDetailVO> list = reportdetailSvc.getPending();
+    List<ReportDetailVO> list = reportdetailSvc.getAll();
     request.setAttribute("list",list);
 %>
 
-
+<%-- <% --%>
+// EmployeeVO EmployeeVO = (EmployeeVO) session.getAttribute("employeeVO");
+// System.out.println("目前登入的是:" + employeeVO.getempno());
+<%-- %> --%>
 
 <html>
 <head>
@@ -77,132 +82,63 @@
 </td>
 </tr>
 </table>
-
-
+ 
 
 <hr>
 <table class="table table-striped">
   <thead>
     <tr>
       <th scope="col">#</th>
-      <th scope="col">First</th>
-      <th scope="col">Last</th>
-      <th scope="col">Handle</th>
+      <th scope="col">文章檢舉編號</th>
+      <th scope="col">檢舉者會員編號</th>
+      <th scope="col">文章編號</th>
+      <th scope="col">處理狀態編號</th>
+      <th scope="col">處理者員工編號</th>
+      <th scope="col">處理時間</th>
     </tr>
   </thead>
   <tbody>
   <c:forEach var="reportdetailVO" items="${list}">
-    <tr>
-      <th scope="row">1</th>
-      <td>Mark</td>
-      <td>Otto</td>
-      <td>@mdo</td>
+    <th scope="row">1</th>
+      <td>${reportdetailVO.reportno}</td>
+			<td>${reportdetailVO.memno}</td>
+			<td>${reportdetailVO.postno}</td>
+			<td>${reportdetailVO.poststatus}</td>
+			<td>${reportdetailVO.empno}</td>
+			<td><fmt:formatDate value="${reportdetailVO.reportlmod}" pattern="yyyy-MM-dd HH:mm"/></td>
+			
+			<td>
+			  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/report_detail/report_detail.do" style="margin-bottom: 0px;">
+			     <input type="submit" value="下架">
+			     <input type="hidden" name="reportno" value="${reportdetailVO.reportno}">
+			     <input type="hidden" name="action"	value="update"></FORM>
+			</td>
+			<td>
+			  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/report_detail/report_detail.do" style="margin-bottom: 0px;">
+			     <input type="submit" value="上架">
+			     <input type="hidden" name="reportno" value="${reportdetailVO.reportno}">
+			     <input type="hidden" name="action"	value="getOne_For_Update_removeReportBack"></FORM>
+			</td>
+			
+			
+			
     </tr>
     </c:forEach>
   </tbody>
 </table>
-<ul>
-  <li><a href="<%=request.getContextPath()%>/back-end/report_detail/listAllReport.jsp">List All Report</a>.  <br><br></li>
-  
-  
-  <li>
-    <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/report_detail/report_detail.do">
-        <b>輸入檢舉編號 (如REPO0001):</b>
-        <input type="text" name="reportno">
-        <input type="hidden" name="action" value="getOne_For_Display_Front">
-        <input type="submit" value="送出">
-    </FORM>
-  </li>
-
-  <jsp:useBean id="reportdetailSvc1" scope="page" class="com.report_detail.model.ReportDetailService" />
-   
-  <li>
-     <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/report_detail/report_detail.do">
-       <b>選擇欲查詢被檢舉編號:</b>
-       <select size="1" name="reportno">
-         <c:forEach var="reportdetailVO" items="${reportdetailSvc.all}" > 
-          <option value="${reportdetailVO.reportno}">${reportdetailVO.reportno}
-         </c:forEach>   
-       </select>
-       <input type="hidden" name="action" value="getOne_For_Display_Back">
-       <input type="submit" value="送出">
-    </FORM>
-  </li>
-  
-<%--    <jsp:useBean id="reportdetailSvc" scope="page" class="com.report_detail.model.ReportDetailService" /> --%>
-  <li>
-     <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/report_detail/report_detail.do">
-       <b>會員編號查詢檢舉:</b>
-       <select size="1" name="memno">
-         <c:forEach var="reportdetailVO" items="${reportdetailSvc.all}" > 
-          <option value="${reportdetailVO.memno}">${reportdetailVO.memno}
-         </c:forEach>   	
-       </select>
-       <input type="hidden" name="action" value="findByMemno">
-       <input type="submit" value="送出">
-     </FORM>
-  </li>
-<%--    <jsp:useBean id="reportdetailSvc" scope="page" class="com.report_detail.model.ReportDetailService" /> --%>
-  <li>
-     <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/report_detail/report_detail.do">
-       <b>員工編號查詢檢舉:</b>
-       <select size="1" name="empno">
-         <c:forEach var="reportdetailVO" items="${reportdetailSvc.all}" > 
-          <option value="${reportdetailVO.empno}">${reportdetailVO.empno}
-         </c:forEach>   
-       </select>
-       <input type="hidden" name="action" value="findByEmpno">
-       <input type="submit" value="送出">
-     </FORM>
-  </li>
-  
-</ul>
 
 
 
-<h3>前台-新增檢舉</h3>
-
-<ul>
-  <li><a href='<%= request.getContextPath()%>/front-end/report_detail/addReport.jsp'>Add</a> a new Reports.</li>
-</ul>
-
-<h3>前台-取消檢舉</h3>
-<ul>
-  <li><a href='<%= request.getContextPath()%>/front-end/report_detail/removeReport.jsp'>Remove</a> a new Reports.</li>
-</ul>
-
-<hr>
-<div>
-<div class="card" style="width: 18rem;display:inline-block;">
-  <div class="card-body">
-    <h5 class="card-title">Card title</h5>
-    <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-    <a href="#" class="card-link">Card link</a>
-    <a href="#" class="card-link">Another link</a>
-  </div>
-</div>
-<div class="card" style="width: 18rem;display:inline-block;marign-right:100px;">
-  <div class="card-body">
-    <h5 class="card-title">Card title</h5>
-    <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-    <a href="#" class="card-link">Card link</a>
-    <a href="#" class="card-link">Another link</a>
-  </div>
-</div>
-</div>
 
 
-</div>
-</div>
-</div>
+
 
 <script
 		src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 	<script
 		src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.bundle.min.js"></script>
 		<script src="https://code.jquery.com/jquery-1.12.4.js" integrity="sha256-Qw82+bXyGq6MydymqBxNPYTaUXXq7c8v3CwiYwLLNXU=" crossorigin="anonymous"></script>
+		
 		<script type="text/javascript">
 		$("#test").click(function({
 			alert("OK")

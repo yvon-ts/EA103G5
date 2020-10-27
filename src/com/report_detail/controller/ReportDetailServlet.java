@@ -215,7 +215,7 @@ public class ReportDetailServlet extends HttpServlet {
 				/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
 				reportdetailVO = reportdetailSvc.getOneReport(reportno);
 				req.setAttribute("reportdetailVO", reportdetailVO); // 資料庫update成功後,正確的的empVO物件,存入req
-				String url = "/back-end/report_detail/listOneReportBack.jsp";
+				String url = "/back-end/report_detail/reportDetail.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交listOneEmp.jsp
 				successView.forward(req, res);
 
@@ -266,7 +266,7 @@ public class ReportDetailServlet extends HttpServlet {
 				/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
 				reportdetailVO = reportdetailSvc.getOneReport(reportno);
 				req.setAttribute("reportdetailVO", reportdetailVO); // 資料庫update成功後,正確的的empVO物件,存入req
-				String url = "/back-end/report_detail/listOneReportBack.jsp";
+				String url = "/back-end/report_detail/reportDetail.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交listOneEmp.jsp
 				successView.forward(req, res);
 
@@ -399,7 +399,7 @@ public class ReportDetailServlet extends HttpServlet {
 
 				/*************************** 3.查詢完成,準備轉交(Send the Success view) *************/
 				session.setAttribute("list", reportdetailVO); 
-				String url = "/back-end/report_detail/listPendingReport.jsp";
+				String url = "/back-end/report_detail/reportDetail.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); 
 				successView.forward(req, res);
 
@@ -441,7 +441,7 @@ public class ReportDetailServlet extends HttpServlet {
 
 				/*************************** 3.查詢完成,準備轉交(Send the Success view) *************/
 				req.setAttribute("list", reportdetailVO);
-				String url = "/back-end/report_detail/listSettledReport.jsp";
+				String url = "/back-end/report_detail/reportDetail.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); 
 				successView.forward(req, res);
 

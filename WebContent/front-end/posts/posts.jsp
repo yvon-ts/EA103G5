@@ -381,7 +381,7 @@ body {
 											</form>
 									</c:if>
 									<!--檢舉 -->
-									<button onclick="Report()"><img src="<%=request.getContextPath() %>/front-end/posts/images/flag.png" style="width:15px;height:15px"></button>
+									<button onclick="report()"><img src="<%=request.getContextPath() %>/front-end/posts/images/flag.png" style="width:15px;height:15px"></button>
 									
 									<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/report_detail/report_detail.do" name="form1">
 										<input type="hidden" name="memno" value="${reportdetailVO.getMemno()}"/>
@@ -445,12 +445,12 @@ body {
 												</form>
 											</c:if>
 											<!--檢舉 -->
-											<button  onclick="report()"><img src="<%=request.getContextPath() %>/front-end/posts/images/flag.png" style="width:15px;height:15px"></button>
+											<button type ="button" onclick="report()"><img src="<%=request.getContextPath() %>/front-end/posts/images/flag.png" style="width:15px;height:15px"></button>
 										</div>
 									</div>
 									<div class="comment-content">${postsVOSub.postcontent}</div>
 									<div class="comment-content">
-										<form METHOD="post" id="${postsVOSub.postno}_reply" ACTION="<%=request.getContextPath()%>/posts/posts.do" style="display:none" accept-charset="utf-8">
+										<form METHOD="post"  id="${postsVOSub.postno}_reply" ACTION="<%=request.getContextPath()%>/posts/posts.do" style="display:none" accept-charset="utf-8">
 											<input type="hidden" name="action" value="update" />
 											<textarea name="postcontent" style="width:100%">${postsVOSub.postcontent}</textarea>
 											<input type="hidden" name="postno" value="${postsVOSub.postno}"/>
@@ -499,10 +499,9 @@ body {
 	
 	</div>	
 <script>
-function Report(){
 
 	swal("檢舉成功!", "", "success");
-}
+
 </script>
 </body>
 </html>
