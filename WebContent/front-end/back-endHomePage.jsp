@@ -135,7 +135,7 @@
                     <li><a class="treeview-item" href="https://fontawesome.com/v4.7.0/icons/" target="_blank" rel="noopener"><i class="icon fa fa-circle-o"></i>課程管理 </a></li>
                 </ul>
             </li>
-            <li  id="FUN0005"><a class="app-menu__item" href="docs.html"><i class="fa fa-exclamation-circle" aria-hidden="true"></i><span class="app-menu__label">檢舉管理</span></a></li>
+            <li  id="FUN0005"><a class="app-menu__item" href="<%=request.getContextPath() %>/back-end/report_detail/reportDetail.jsp"><i class="fa fa-exclamation-circle" aria-hidden="true"></i><span class="app-menu__label">檢舉管理</span></a></li>
         </ul>
     </aside>
     <!-- 內容放在下面 -->

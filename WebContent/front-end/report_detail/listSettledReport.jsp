@@ -54,6 +54,12 @@ List<ReportDetailVO> list = (List) session.getAttribute("list");
 <body bgcolor='white'>
 
 
+<table id="table-1">
+	<tr><td>
+		 <h3>所有已處理檢舉資料 - listSettledReport.jsp</h3>
+		 <h4><a href="<%= request.getContextPath() %>/back-end/report_detail/select_page.jsp"><img src="<%= request.getContextPath() %>/back-end/report_detail/images/back1.gif" width="100" height="32" border="0">回首頁</a></h4>
+	</td></tr>
+</table>
 
 <%-- 錯誤表列 --%>
 <c:if test="${not empty errorMsgs}">

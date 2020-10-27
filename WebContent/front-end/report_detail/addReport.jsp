@@ -5,8 +5,8 @@
 <%
   //????-如何先get到session member登入資料  才能夠去檢舉
 		  ReportDetailVO reportdetailVO2 = new ReportDetailVO();//假資料
-		  reportdetailVO2.setMemno("MEM0005");//假資料
-		  reportdetailVO2.setPostno("POST0005");//假資料
+		  reportdetailVO2.setMemno("MEM0001");//假資料
+		  reportdetailVO2.setPostno("POST0001");//假資料
 // 		  reportdetailVO2.setReportno("REPO0005");//假資料
 			reportdetailVO2.setEmpno("EMP0002");//假資料
 			//reportdetailVO2.setCourseno("COUR0002");//假資料

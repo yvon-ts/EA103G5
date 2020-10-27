@@ -192,7 +192,9 @@
 					</div>
 					<div id="post" class="tab-pane fade">
 						<h3>問題討論</h3>
-						<jsp:include page="/front-end/posts/posts.jsp" />
+						<jsp:include page="/front-end/posts/posts.jsp">
+						<jsp:param name="courseno" value="${courseVO.courseno}"/>
+						</jsp:include>
 					</div>
 				</div>
 

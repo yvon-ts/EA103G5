@@ -5,17 +5,17 @@
 <%@ page import="com.report_detail.model.*"%>
 <%-- 此頁練習採用 EL 的寫法取值 --%>
 
-<%
-List<ReportDetailVO> list = (List) session.getAttribute("list");
+<%	
+	List<ReportDetailVO> list = (List) session.getAttribute("list");
 //     ReportDetailService reportdetailSvc = new ReportDetailService();
-//     List<ReportDetailVO> list = reportdetailSvc.getSettled();
+//     List<ReportDetailVO> list = reportdetailSvc.getPending();
 //     request.setAttribute("list",list);
 %>
 
 
 <html>
 <head>
-<title>所有已處理資料 - listSettledReport.jsp</title>
+<title>所有員工資料 - listAllReport.jsp</title>
 
 <style>
   table#table-1 {
@@ -52,6 +52,7 @@ List<ReportDetailVO> list = (List) session.getAttribute("list");
 
 </head>
 <body bgcolor='white'>
+
 
 
 
