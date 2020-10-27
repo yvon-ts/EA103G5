@@ -104,8 +104,15 @@
             <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="fa fa-users" aria-hidden="true"></i>
                     <span class="app-menu__label"> 會員管理 </span><i class="treeview-indicator fa fa-angle-right"></i></a>
                 <ul class="treeview-menu">
-                    <li><a class="treeview-item" href="bootstrap-components.html"><i class="icon fa fa-circle-o"></i> 會員資料</a></li>
+                    <li><a class="treeview-item" href="<%=request.getContextPath() %>/back-end/members/select_members.jsp"><i class="icon fa fa-circle-o"></i> 會員資料</a></li>
                     <li><a class="treeview-item" href="https://fontawesome.com/v4.7.0/icons/" target="_blank" rel="noopener"><i class="icon fa fa-circle-o"></i>會員課程 </a></li>
+                </ul>
+            </li>
+            <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="fa fa-users" aria-hidden="true"></i>
+                    <span class="app-menu__label"> 老師管理 </span><i class="treeview-indicator fa fa-angle-right"></i></a>
+                <ul class="treeview-menu">
+                    <li><a class="treeview-item" href="<%=request.getContextPath() %>/back-end/teacher/listAllTeachers.jsp"><i class="icon fa fa-circle-o"></i> 老師資料</a></li>
+                    <li><a class="treeview-item" href="https://fontawesome.com/v4.7.0/icons/" target="_blank" rel="noopener"><i class="icon fa fa-circle-o"></i>老師課程 </a></li>
                 </ul>
             </li>
             <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="fa fa-user-plus" aria-hidden="true"></i>

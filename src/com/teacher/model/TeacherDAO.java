@@ -101,9 +101,9 @@ public class TeacherDAO implements TeacherDAO_interface {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		try {
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
-//			con = ds.getConnection();
+//			Class.forName(driver);
+//			con = DriverManager.getConnection(url, userid, passwd);
+			con = ds.getConnection();
 			
 			pstmt = con.prepareStatement(UPDATE);
 			pstmt.setString(1, teacherVO.getTchrintro());
@@ -120,9 +120,6 @@ public class TeacherDAO implements TeacherDAO_interface {
 				// TODO Auto-generated catch block
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 			// Clean up JDBC resources
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		} finally {
 			if (pstmt != null) {
 				try {
@@ -357,7 +354,10 @@ public class TeacherDAO implements TeacherDAO_interface {
 	
 	public static void main(String[] args) {
 //		TeacherDAO td = new TeacherDAO();
+//		
 //		TeacherVO tv = new TeacherVO();
+//		tv = td.getOneTeacherByMemno("MEM0003");
+//		System.out.println(tv);
 //		tv.setBankacc("123456789");
 //		tv.setTchrcert1(null);
 //		tv.setTchrcert2(null);
@@ -365,5 +365,55 @@ public class TeacherDAO implements TeacherDAO_interface {
 //		tv.setTchrno("TCHR0054");
 //		td.update(tv);
 
+	}
+
+	@Override
+	public TeacherVO getOneTeacherByMemno(String memno) {
+		TeacherVO teacherVO = null;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+//		Class.forName(driver);
+//		con = DriverManager.getConnection(url, userid, passwd);
+			con = ds.getConnection();
+			pstmt = con.prepareStatement("SELECT TCHRNO,MEMNO,TCHRINTRO,TCHRCERT1,TCHRCERT2,BANKACC,TCHRSTATUS,REJREASON FROM TEACHER WHERE MEMNO = ?");
+
+			pstmt.setString(1, memno);
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				
+				teacherVO = new TeacherVO();
+				teacherVO.setTchrno(rs.getString("tchrno"));
+				teacherVO.setMemno(rs.getString("memno"));
+				teacherVO.setTchrintro(rs.getString("tchrintro"));
+				teacherVO.setTchrcert1(rs.getBytes("tchrcert1"));
+				teacherVO.setTchrcert2(rs.getBytes("tchrcert2"));
+				teacherVO.setBankacc(rs.getString("bankacc"));
+				teacherVO.setTchrstatus(rs.getString("tchrstatus"));
+				teacherVO.setRejreason(rs.getString("rejreason"));
+			}
+
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return teacherVO;
+	
 	}
 }

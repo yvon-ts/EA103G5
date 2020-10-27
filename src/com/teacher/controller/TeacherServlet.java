@@ -147,7 +147,7 @@ public class TeacherServlet extends HttpServlet {
 		
 		TeacherService teacherSvc = new TeacherService();
 		teacherSvc.updateStatusTeacher(tchrno, tchrstatus,rejreason);
-		String url = "/back-end/teacher/listAllPendingTeachers.jsp";
+		String url = "/back-end/teacher/showOneTeacher.jsp";
 		RequestDispatcher successView = req.getRequestDispatcher(url);
 		successView.forward(req, res);
 		}catch (Exception e) {
@@ -189,7 +189,7 @@ public class TeacherServlet extends HttpServlet {
 			return;//程式中斷
 		}
 		req.setAttribute("teacherVO", teacherVO); // 資料庫取出的empVO物件,存入req
-		String url = "/back-end/teacher/listOneTeacher.jsp";
+		String url = "/back-end/teacher/showOneTeacher.jsp";
 		RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 listOneEmp.jsp
 		successView.forward(req, res);
 		

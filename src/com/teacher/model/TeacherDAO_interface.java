@@ -8,5 +8,6 @@ public interface TeacherDAO_interface {
 	public TeacherVO findByPrimaryKey(String tchrno);
 	public List<TeacherVO>getAll();
 	public TeacherVO getStatus(String memno);
+	public TeacherVO getOneTeacherByMemno(String memno);
 
 }

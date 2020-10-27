@@ -10,6 +10,7 @@
 <%@ page import="com.members.model.*"%>
 <%@ page import="com.teacher.model.*"%>
 <%
+TeacherVO teacherVO = (TeacherVO) session.getAttribute("teacherVO");
 MembersVO membersVO = (MembersVO) session.getAttribute("membersVO");
 String inform2 = (String)request.getAttribute("inform2"); 
 
@@ -137,16 +138,16 @@ height:36px;
 											href='<%=request.getContextPath()%>/front-end/coup_code/listAllByMemno.jsp'>持有折扣券</a> 
 																
 										
-										<c:if test="${teacherSvc.getStatus(sessionScope.membersVO.memno).tchrstatus eq '待審核'}">
+										<c:if test="${sessionScope.teacherVO.tchrstatus eq '待審核'}">
 										<a class="dropdown-item" onclick="status()" >老師檔案</a> 
 											
 										</c:if>
-										<c:if test="${teacherSvc.getStatus(sessionScope.membersVO.memno).tchrstatus eq '已通過'}">
+										<c:if test="${sessionScope.teacherVO.tchrstatus eq '已通過'}">
 										<a class="dropdown-item"
 											href="<%=request.getContextPath()%>/front-end/teacher/teacherDisplay.jsp">老師檔案</a> 
 											
 										</c:if>
-											<c:if test="${teacherSvc.getStatus(sessionScope.membersVO.memno).tchrstatus eq '未通過'}">
+											<c:if test="${sessionScope.teacherVO.tchrstatus eq '未通過'}">
 										<a class="dropdown-item"
 											href="<%=request.getContextPath()%>/front-end/teacher/teacherUpdate.jsp">老師檔案</a>
 											
@@ -167,17 +168,17 @@ height:36px;
 							
 							</c:if>
 							<c:if test="${not empty sessionScope.membersVO.memno}">
-							<c:if test="${empty teacherSvc.getStatus(sessionScope.membersVO.memno)}">
+							<c:if test="${empty sessionScope.teacherVO}">
 							<img id="nav_icon" src='<%=request.getContextPath()%>/front-end/members/assets/img/students.svg'>
 							</c:if>
-							<c:if test="${teacherSvc.getStatus(sessionScope.membersVO.memno).tchrstatus eq '待審核'}">
+							<c:if test="${sessionScope.teacherVO.tchrstatus eq '待審核'}">
 							<img id="nav_icon" src='<%=request.getContextPath()%>/front-end/members/assets/img/students.svg'>
 							</c:if>
 							
-							<c:if test="${teacherSvc.getStatus(sessionScope.membersVO.memno).tchrstatus eq '已通過'}">
+							<c:if test="${sessionScope.teacherVO.tchrstatus eq '已通過'}">
 							<img id="nav_icon" src='<%=request.getContextPath()%>/front-end/members/assets/img/teacher.svg'>
 							</c:if>
-							<c:if test="${teacherSvc.getStatus(sessionScope.membersVO.memno).tchrstatus eq '未通過'}">
+							<c:if test="${sessionScope.teacherVO.tchrstatus eq '未通過'}">
 							<img id="nav_icon" src='<%=request.getContextPath()%>/front-end/members/assets/img/students.svg'>
 							
 							</c:if>
@@ -634,11 +635,11 @@ height:36px;
     //宇臣的===============
     var inform2 = document.getElementById('inform2').value;
 	if(inform2 ==='200'){
-		swal('完了', '沒辦法開始您的線上之旅了!', 'error');
+		swal('註冊失敗', '可以再考慮一下嗎?', 'error');
 	}else if(inform2 ==='100'){
-		swal('登入成功', '您可以開始您的線上學習之旅了!', 'success');
+		swal('登入成功', '準備好要來一場線上學習之旅了嗎?', 'success');
 	}else if(inform2 ==='300'){
-		swal('登出成功', '我們會在這裡等您回來一起學習!', 'success');
+		swal('登出成功', '我們會一直在這裡等您回來<br>一起學習!', 'success');
 	}
 	function status(){
 		 swal('老師資格審核中', '請耐心等候1~3個工作天，一但審核完畢，即會立刻通知', 'info');

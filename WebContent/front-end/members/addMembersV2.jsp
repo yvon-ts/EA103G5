@@ -250,10 +250,7 @@ background: url("<%=request.getContextPath()%>/front-end/members/assets/img/bgPi
                                 <label for="name"></label>
                                 <input type="file" onchange="readURL(this)" targetID="preview_progressbarTW_img" id="picture" class="input" name="picture" placeholder="Your Profile"/>
                             </div>
-                            <div class="form-group">
-                                <input type="checkbox" name="agree-term" id="agree-term" class="agree-term" />
-                                <label for="agree-term" class="label-agree-term"><span><span></span></span>I agree all statements in  <a href="" class="term-service">Terms of service</a></label>
-                            </div>
+                            
                             <div class="form-group form-button">
                                <%--  <input id="inform" type="hidden" value="${inform}"> --%>
                                 <input type="hidden" name="action" value="insert">

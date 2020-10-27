@@ -11,6 +11,7 @@ import javax.servlet.http.*;
 
 
 import com.members.model.*;
+import com.teacher.model.*;
 
 @MultipartConfig(fileSizeThreshold = 1024 * 1024, maxFileSize = 10 * 1024 * 1024, maxRequestSize = 5 * 5 * 1024 * 1024)
 
@@ -227,7 +228,7 @@ public class MembersServlet extends HttpServlet {
 			sb.append("歡迎註冊Xducation線上學習平台,");
 			sb.append("這是您的驗證碼:");
 			sb.append(vercode);
-			sms.Process(sb, mphone);
+//			sms.Process(sb, mphone);
 			session.setAttribute("memVO", memVO);
 			session.setAttribute("vercode", vercode);
 			session.setAttribute("count", count);
@@ -329,20 +330,18 @@ public class MembersServlet extends HttpServlet {
 
 	private void signin(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		List<String> errorMsgs = new LinkedList<String>();
-
-
-		// Store this set in the request scope, in case we need to
-		// send the ErrorPage view.
 		req.setAttribute("errorMsgs", errorMsgs);
-		
 		HttpSession session = req.getSession();
 		String memacc = req.getParameter("memacc");
 		String mempwd = req.getParameter("mempwd");
 		
 		
+		TeacherService teacherSvc = new TeacherService();
+		TeacherVO teacherVO = new TeacherVO();
 		
 		MembersService membersSvc = new MembersService();
 		MembersVO membersVO = membersSvc.signIn(memacc, mempwd);
+		
 		if (membersVO == null) {
 			errorMsgs.add("會員帳號or密碼有誤，請重新輸入");
 			membersVO = new MembersVO();
@@ -352,6 +351,8 @@ public class MembersServlet extends HttpServlet {
 			RequestDispatcher failView = req.getRequestDispatcher(url);
 			failView.forward(req, res);
 		} else {
+			teacherVO = teacherSvc.getOneTeacherByMemno(membersVO.getMemno());
+			session.setAttribute("teacherVO", teacherVO);
 			session.setAttribute("membersVO", membersVO);
 			String inform2 = "100";
 			req.setAttribute("inform2", inform2);
@@ -367,6 +368,7 @@ public class MembersServlet extends HttpServlet {
 	private void signout(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		HttpSession session = req.getSession();
 		session.removeAttribute("membersVO");
+		session.removeAttribute("teacherVO");
 		String inform2 = "300";
 		req.setAttribute("inform2", inform2);
 		String url = "/index/front-index/index.jsp";
