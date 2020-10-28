@@ -16,10 +16,24 @@
 
 <%
 MembersVO membersVO = (MembersVO) session.getAttribute("membersVO");
-System.out.println("目前登入的是:" + membersVO.getMemno());
+
+
+boolean flag = true;
+
+if(membersVO == null){
+	flag = false;
+	System.out.println("我是訪客");
+	
+}
+else{
+	System.out.println("目前登入的是:" + membersVO.getMemno());
+}
+
 %>
 
-<% 
+
+
+<%
 String courseno = (String)request.getParameter("courseno");
 
 //須由前端給值
@@ -55,7 +69,7 @@ pageContext.setAttribute("courseno", courseno);
 #btn{
 width:60px;
 height: 44px;
-background-color:#6dabe4;
+background-color:#0099CC;
 color:white;
 font-weight: bolder;
 border-radius:10px;
@@ -315,12 +329,14 @@ body {
 <body>
 
 	<!--上方留言區塊 -->
+
 	<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/posts/posts.do" name="form1"  accept-charset="utf-8">
 		<div class="comments-container">
 			<ul id="comments-list" class="comments-list">
 				<li>
 					<div class="comment-main-level">
 						<!-- 新增留言  -->
+							<c:if test="${sessionScope.membersVO.memno != null}">
 						<div class="comment-avatar">
 							<img id='mprofile' src="<%=request.getContextPath()%>/front-end/members/MprofileDisplayServlet?MEMNO=${membersVO.memno}" alt="sing up image">
 						</div>
@@ -336,6 +352,7 @@ body {
 								<button id = btn>送出</button>
 							</div>
 						</div>
+						</c:if>
 					</div>
 				</li>
 			</ul>
