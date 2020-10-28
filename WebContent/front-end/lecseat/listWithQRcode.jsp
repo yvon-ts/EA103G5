@@ -61,6 +61,14 @@
 <link rel="stylesheet" href="<%=request.getContextPath()%>/back-end/css/bootTable.css">
 <link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/lecseat/css/listOneForMem.css">
 <style>
+#codeOutput{
+    width: fit-content;
+    margin-left: 25%;
+    margin-top: 15%;
+    padding: 20px;
+    border-radius: 2%;
+    background-color: rgba(245, 222, 179, 0.5);
+}
 </style>
 <script>
 </script>
@@ -75,7 +83,7 @@
                     <div class="col-sm-4">
                     </div>
                     <div class="col-sm-4">
-                        <h2 class="text-center">修改座位</h2>
+                        <h2 class="text-center">查看座位</h2>
                     </div>
                     <div class="col-sm-4">
                     </div>
@@ -89,7 +97,7 @@
                         <th>講座票價</th>
                         <th>座位號碼</th>
                         <th>座位狀態</th>
-                        <th>取消座位</th>
+                        <th>檢視票券</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -100,12 +108,13 @@
 						<td>${lecVO.lecname}</td>
 						<td>${lecVO.lecprice}</td>
 						<td>${seatVO.seatno}</td>
-						<td>${seatVO.seatstatus}</td>
+						<td id="${seatVO.seatno}seat">${seatVO.seatstatus}</td>
 			            <td>
-				            <form id="${seatVO.seatno}modi" method="post" action="<%=request.getContextPath()%>/lecseat/lecseat.do">
-					            <input type="hidden" name="lodrno" value="${lodrVO.lodrno}">
-								<button class="btn edit modify" style="color: orange"><i class="material-icons">&#xE254;</i></button>
-							</form>
+				            <div id="${seatVO.seatno}">
+					            <input type="hidden" class="lodrno" name="lodrno" value="${lodrVO.lodrno}">
+					            <input type="hidden" class="seatno" name="seatno" value="${seatVO.seatno}">
+								<button class="btn view"><i class="material-icons">&#xE417;</i></button>
+							</div>
 			            </td>
 		            </tr>
 					
@@ -136,9 +145,9 @@
         	<div class="container">
             	<div class="row">
                 	<div class="col-md-4">
-               		  <img id="cus-service" src="<%=request.getContextPath()%>/index/front-index/assets/img/head/cus-service.png">
-               		  <br>
-               		  <br>編輯完畢後請點選右方【確定變更】按鈕
+                		<div id="codeOutput" class="hide"></div>
+               		  		<img id="cus-service" src="<%=request.getContextPath()%>/index/front-index/assets/img/head/cus-service.png">
+               		  <br><span id="caption"></span>
                		</div>
 		          	<div class="col-md-4">
 					    <%@ include file="/front-end/lecseat/bookedSeats.jsp" %>
@@ -162,35 +171,39 @@
     </div>
 </div>
 <%@ include file="/index/front-index/footer.jsp" %>
+<%-- <script src="<%=request.getContextPath()%>/library/jquery/jquery-3.5.1.js"></script> --%>
+<script src="<%=request.getContextPath()%>/front-end/lecseat/qrcode/qrcode.js"></script>
 <script>
-	$(".modify").click(function(e){
+	var lodrno = "";
+	var seatno = "";
+	
+	function generateQRCode(){
+		var qrcode = new QRCode("codeOutput",{
+			text: "http://0bc80c9d5136.ngrok.io/EA103G5/lecseat/updateSeat?lodrno=" + lodrno + "&seatno=" + seatno,
+			width: 150,
+			height: 150,
+			correctLevel: QRCode.CorrectLevel.H
+		});
+	}
+	$(".view").click(function(e){
 		e.preventDefault();
-		alert("請點選綠色區塊取消指定座位");
-		addClickForCancel();
-		$("#confirm").removeClass("hide");
-		$(".booked").addClass("cursor");
-		$(".cancelled").addClass("cursor");
+		var id = $(this).parent().attr("id");
+		lodrno = $("#"+id+" .lodrno").val();
+		seatno = $("#"+id+" .seatno").val();
+		console.log($("#"+id+"seat").text());
+		if ($("#"+id+"seat").text() === "正常"){
+			$("#codeOutput").html("");
+			$("#codeOutput").removeClass("hide");
+			$("#cus-service").addClass("hide");
+			generateQRCode();
+			$("#caption").text("請保存座位" + seatno + "的QRcode");
+			$("#caption").attr("style", "margin-left: 25%");
+		} else {
+			alert("該座位已取消！");
+		}
+		
 	});
 	
-	$("#confirm").mouseenter(function(){
-		 var arr = document.getElementsByClassName("cancelled");
-		    let txt = "";
-		    if (arr.length > 0) {
-		        for (let i = 0; i < arr.length; i++) {
-		            txt += arr[i].textContent + " ";
-		        }
-		    }
-		    $("#seatno").val(txt);
-		    
-		 var currseat = $("#defaultseat").val();
-		 $("#currseat").val(currseat);
-		 
-	});
-	
-	$("#confirm").click(function(){
-		confirm("座位即將被取消，請問是否確認？");
-		$("#modifyForm").submit();
-	});
 	
 </script>
 </body>

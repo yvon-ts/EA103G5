@@ -205,6 +205,15 @@
   </servlet-mapping>
   
   <servlet>
+  	<servlet-name>QRCodeServlet</servlet-name>
+  	<servlet-class>com.lecseat.controller.QRCodeServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>QRCodeServlet</servlet-name>
+  	<url-pattern>/lecseat/updateSeat</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
     <servlet-name>OrderMasterServlet</servlet-name>
     <servlet-class>com.order_master.controller.OrderMasterServlet</servlet-class>
   </servlet>
