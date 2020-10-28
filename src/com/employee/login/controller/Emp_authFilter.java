@@ -63,14 +63,26 @@ public class Emp_authFilter implements Filter {
 		FUN0003.add(req.getContextPath() + "/back-end/teacher/listAllPendingTeachers.jsp");
 		FUN0003.add(req.getContextPath() + "/back-end/teacher/showOneTeacher.jsp");
 		FUN0003.add(req.getContextPath() + "/back-end/teacher/listOneTeacher.jsp");
-
+		
+		List<String> FUN0004 = new ArrayList<>();
+		FUN0004.add(req.getContextPath() + "/back-end/lecture/addLec2.jsp");
+		FUN0004.add(req.getContextPath() + "/back-end/lecture/addLecIndex.jsp");
+		FUN0004.add(req.getContextPath() + "/back-end/lecture/lectureIndex.jsp");
+		FUN0004.add(req.getContextPath() + "/back-end/lecture/listAllLec.jsp");
+		FUN0004.add(req.getContextPath() + "/back-end/lecture/listOneLec.jsp");
+		FUN0004.add(req.getContextPath() + "/back-end/lecture/select_page.jsp");
+		FUN0004.add(req.getContextPath() + "/back-end/lecture/updateLec.jsp");
+		FUN0004.add(req.getContextPath() + "/back-end/lecorder/listAllLodr.jsp");
+		
 		if (list.contains("FUN0001") && FUN0001.contains(urls)) {
 			chain.doFilter(request, response);
 		} else if (list.contains("FUN0002") && FUN0002.contains(urls)) {
 			chain.doFilter(request, response);
 		} else if (list.contains("FUN0003") && FUN0003.contains(urls)) {
 			chain.doFilter(request, response);
-		} else {
+		} else if (list.contains("FUN0004") && FUN0004.contains(urls)) {
+			chain.doFilter(request, response);
+		}else {
 			session.setAttribute("error", "你沒有權限!");
 			System.out.println("跑到這");
 			res.sendRedirect(req.getContextPath() + "/back-end/index/homepage.jsp");

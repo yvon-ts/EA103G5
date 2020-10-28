@@ -49,6 +49,8 @@
    	<url-pattern>/back-end/employee/*</url-pattern>
    	<url-pattern>/back-end/members/*</url-pattern>
    	<url-pattern>/back-end/teacher/*</url-pattern>
+   	<url-pattern>/back-end/lecorder/*</url-pattern>
+   	<url-pattern>/back-end/lecture/*</url-pattern>
    	<dispatcher>REQUEST</dispatcher>
    	<dispatcher>FORWARD</dispatcher>
    	<dispatcher>INCLUDE</dispatcher>
