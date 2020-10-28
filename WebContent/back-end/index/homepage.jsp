@@ -13,7 +13,8 @@
     <link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/back-end/index/css/main.css">
     <!-- Font-icon css-->
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.3/sweetalert2.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.3/sweetalert2.js" type="text/javascript"></script>
 </head>
 
 <body class="app sidebar-mini">
@@ -107,7 +108,7 @@
             <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="fa fa-user" aria-hidden="true"></i>
                     <span class="app-menu__label"> 員工管理 </span><i class="treeview-indicator fa fa-angle-right"></i></a>
                 <ul class="treeview-menu">
-                    <li><a class="treeview-item" href="<%=request.getContextPath() %>/back-end/employee/newallemp.jsp"><i class="icon fa fa-circle-o"></i> 員工資料</a></li>
+                    <li><a class="treeview-item" href="<%=request.getContextPath() %>/back-end/employee/empall/newallemp.jsp"><i class="icon fa fa-circle-o"></i> 員工資料</a></li>
                 </ul>
             </li>
             <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="fa fa-users" aria-hidden="true"></i>
@@ -154,7 +155,7 @@
     	<c:if test="${not empty error}">
 			swal({
 	  			   title: "${error}",
-	  			   icon: "error",
+	  			   type: "error",
 				});	
 		</c:if>
 		<%request.getSession().removeAttribute("error");%>

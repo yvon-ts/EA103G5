@@ -46,7 +46,7 @@
   </filter>
   <filter-mapping>
    	<filter-name>Emp_authFilter</filter-name>
-   	<url-pattern>/back-end/employee/*</url-pattern>
+   	<url-pattern>/back-end/employee/empall/*</url-pattern>
    	<url-pattern>/back-end/members/*</url-pattern>
    	<url-pattern>/back-end/teacher/*</url-pattern>
    	<url-pattern>/back-end/lecorder/*</url-pattern>

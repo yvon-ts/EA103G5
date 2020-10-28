@@ -47,10 +47,10 @@ public class Emp_authFilter implements Filter {
 		String urls = req.getRequestURI();
 		System.out.println(urls);
 		List<String> FUN0001 = new ArrayList<>();
-		FUN0001.add(req.getContextPath() + "/back-end/employee/newallemp.jsp");
-		FUN0001.add(req.getContextPath() + "/back-end/employee/newadd_emp.jsp");
-		FUN0001.add(req.getContextPath() + "/back-end/employee/newupdate_emp.jsp");
-		FUN0001.add(req.getContextPath() + "/back-end/employee/empone.jsp");
+		FUN0001.add(req.getContextPath() + "/back-end/employee/empall/newallemp.jsp");
+		FUN0001.add(req.getContextPath() + "/back-end/employee/empall/newadd_emp.jsp");
+		FUN0001.add(req.getContextPath() + "/back-end/employee/empall/newupdate_emp.jsp");
+
 
 		List<String> FUN0002 = new ArrayList<>();
 		FUN0002.add(req.getContextPath() + "/back-end/members/select_members.jsp");
