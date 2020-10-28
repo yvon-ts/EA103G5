@@ -5,16 +5,39 @@
 <%@ page import="com.course.model.*"%>
 <%@ page import="com.video.model.*"%>
 
+
+<%@ page import="com.members.model.*"%>
+<%@ page import="com.teacher.model.*"%>
+
+
 <%
 
-// ========== 假的送 ==========
+// ========== 真的 ==========
+// 	CourseVO courseVO = (CourseVO) request.getAttribute("courseVO");
+
+// ========== 假的 ==========
 	CourseService courseSvc = new CourseService();
 	CourseVO courseVO = courseSvc.getOneCourse("COUR0002");
 	request.setAttribute("courseVO",courseVO);
-// ========== 假的送 ==========
-
-// ========== 下面是真的 ==========
-// 	CourseVO courseVO = (CourseVO) request.getAttribute("courseVO");
+	
+// ==============================================================================
+	Boolean isMyCourse = false;
+	
+	TeacherVO teacherVO = (TeacherVO) session.getAttribute("teacherVO");
+	if (teacherVO != null) {
+		System.out.println("我是 " + teacherVO.getTchrno());
+		if (courseVO.getTchrno().equals(teacherVO.getTchrno())){
+			System.out.println("這是林北開的課啦");
+			isMyCourse = true;
+		} else {
+			System.out.println("我也只是個學生");					
+		}
+	}
+	else { // ELSE 其實可以不要
+		System.out.println("我是不是老師啦");		
+	} 
+	
+// ==============================================================================
 
 	// 處理課程評分精度以及分母為零的問題
 	Integer csscore = courseVO.getCsscore();
@@ -110,7 +133,7 @@
 <!-- --------------- 改這邊 --------------- --><!-- --------------- 改這邊 --------------- -->
 <% 
 	Boolean alreadyBuyIt = false;
-	Boolean isMyCourse = false;
+	
 	Boolean canViewThisCourse = isMyCourse || alreadyBuyIt; 
 %>
 
