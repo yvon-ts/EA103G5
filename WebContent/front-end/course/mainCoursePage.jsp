@@ -9,28 +9,34 @@
 
 <%
 	CourseVO courseVO = (CourseVO) request.getAttribute("courseVO");
-	
 
-Boolean isMyCourse = false;
-Boolean alreadyBuyIt = false;
-
-
-TeacherVO teacherVO = (TeacherVO) session.getAttribute("teacherVO");
-if (teacherVO != null) {
-	System.out.println("我是 " + teacherVO.getTchrno());
-	if (courseVO.getTchrno().equals(teacherVO.getTchrno())){
-		System.out.println("這是林北開的課啦");
-		isMyCourse = true;
-	} else {
-		System.out.println("我也只是個學生");					
+	// 10/28因應留言板根本導不回來而加 by CHC
+	if(courseVO == null){
+		courseVO = new CourseService().getOneCourse(request.getParameter("courseno"));
+		request.setAttribute("courseVO",courseVO);
 	}
-}
-else { // ELSE 其實可以不要
-	System.out.println("我是不是老師啦");		
-} 
+
+	Boolean isMyCourse = false;
+	Boolean alreadyBuyIt = false;
+	// TO DO：這個使用者買過沒？
+
+	// 判斷是不是我自己的課程 CHC
+	TeacherVO teacherVO = (TeacherVO) session.getAttribute("teacherVO");
+	if (teacherVO != null) {
+		System.out.println("我是 " + teacherVO.getTchrno());
+		if (courseVO.getTchrno().equals(teacherVO.getTchrno())){
+			System.out.println("這是林北開的課啦");
+			isMyCourse = true;
+		} else {
+			System.out.println("我也只是個學生");					
+		}
+	}
+	else { // ELSE 其實可以不要
+		System.out.println("我是不是老師啦");		
+	} 
 
 
-Boolean canViewThisCourse = isMyCourse || alreadyBuyIt; 
+	Boolean canViewThisCourse = isMyCourse || alreadyBuyIt; 
 
 
 	// 處理課程評分精度以及分母為零的問題
@@ -51,10 +57,10 @@ Boolean canViewThisCourse = isMyCourse || alreadyBuyIt;
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 	<!-- ========== CSS Area ========== -->
-	<!-- Bootstrap 的 CSS -->
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+	<!-- Bootstrap CSS -->
+	<link rel="stylesheet" href="<%=request.getContextPath()%>/library/bootstrap/4.5.3/css/bootstrap.min.css">
 	<!-- Font Awesome CSS -->
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css">
+	<link rel="stylesheet" href="<%=request.getContextPath()%>/library/font-awesome/5.15.1/css/all.min.css">
 	<!-- 自己的 CSS 一定放在最下面 -->
 	<link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/course/css/mainCoursePage.css">
 	<!-- ========== CSS Area ========== -->
@@ -254,9 +260,9 @@ Boolean canViewThisCourse = isMyCourse || alreadyBuyIt;
 						<li class="nav-item">
 							<a class="nav-link active" data-toggle="pill" href="#courseinfo">課程簡介</a>
 						</li>
-						<li class="nav-item">
-							<a class="nav-link" data-toggle="pill" href="#downloadfile">教材下載</a>
-						</li>
+<!-- 						<li class="nav-item"> -->
+<!-- 							<a class="nav-link" data-toggle="pill" href="#downloadfile">教材下載</a> -->
+<!-- 						</li> -->
 						<li class="nav-item">
 							<a class="nav-link" data-toggle="pill" href="#coursescope">課程評價</a>
 						</li>
@@ -270,22 +276,20 @@ Boolean canViewThisCourse = isMyCourse || alreadyBuyIt;
 					<div id="courseinfo" class="tab-pane fade show active">
 						<div>${courseVO.courseinfo}</div>
 					</div>
-					<div id="downloadfile" class="tab-pane fade">
-						<h3>教材下載</h3>
-						<jsp:include page="/front-end/course/subpage_downloadfile.html" />
-					</div>
+<!-- 					<div id="downloadfile" class="tab-pane fade"> -->
+<!-- 						<h3>教材下載</h3> -->
+<%-- 						<jsp:include page="/front-end/course/subpage_downloadfile.html" /> --%>
+<!-- 					</div> -->
 					<div id="coursescope" class="tab-pane fade">
-						<h3>課程評價</h3>
 						<jsp:include page="/front-end/course_assess/listAllAjax.jsp" flush="true">
 							<jsp:param name="courseno" value="${courseVO.courseno}"/>
 						</jsp:include>
-						
 					</div>
 					<div id="post" class="tab-pane fade">
 						<h3>問題討論</h3>
-<%-- 						<jsp:include page="/front-end/posts/posts.jsp"> --%>
-<%-- 						<jsp:param name="courseno" value="${courseVO.courseno}"/> --%>
-<%-- 						</jsp:include> --%>
+						<jsp:include page="/front-end/posts/posts.jsp">
+							<jsp:param name="courseno" value="${courseVO.courseno}"/>
+						</jsp:include>
 					</div>
 				</div>
 
@@ -296,9 +300,9 @@ Boolean canViewThisCourse = isMyCourse || alreadyBuyIt;
 
 	<!-- ========== JavaScript Area ========== -->
 	<!-- Bootstrap 的 JS (jquery 改為完整版)-->
-	<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
-	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+	<script src="<%=request.getContextPath()%>/library/jquery/jquery-3.5.1.js"></script>
+	<script src="<%=request.getContextPath()%>/library/bootstrap/4.5.3/js/bootstrap.bundle.min.js"></script>
+<!-- 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script> -->
 	<!-- 計算 video durarion 相關的 JS -->
 	<script src="<%=request.getContextPath()%>/front-end/video/js/videoDurationCaculation.js"></script>
 
@@ -323,7 +327,7 @@ Boolean canViewThisCourse = isMyCourse || alreadyBuyIt;
 						// 註冊影片清單點擊事件
 						$("#videolist .locked").click(function (e) {
 							e.preventDefault();
-							alert("此為付費課程\n請先登入驗證身分\n或購買課程");
+							swal('付費課程','請先登入或購買課程',  'warning')
 						});
 			//-- --------------- 改這邊 --------------- --><!-- --------------- 改這邊 --------------- -->
 
@@ -375,7 +379,6 @@ Boolean canViewThisCourse = isMyCourse || alreadyBuyIt;
 						if(data !== 'false'){
 							  console.log('加入購物車');	
 							  swal('你已將課程加入購物車！！', '', 'success');
-				        
 						}
 						else{
 							console.log('刪除購物車');
@@ -383,11 +386,6 @@ Boolean canViewThisCourse = isMyCourse || alreadyBuyIt;
 					}
 				});
 			});
-			
-			
-			
-			
-			
 		});
 
 // 		function trackingOrNot(isTracking) {
@@ -412,7 +410,6 @@ Boolean canViewThisCourse = isMyCourse || alreadyBuyIt;
 // 				}
 // 			});
 // 		}
-
 	</script>
 
 	<!-- include 前台頁面的 footer -->
