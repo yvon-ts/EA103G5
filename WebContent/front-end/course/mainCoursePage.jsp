@@ -9,7 +9,8 @@
 
 <%
 	CourseVO courseVO = (CourseVO) request.getAttribute("courseVO");
-
+	
+	
 	// 10/28因應留言板根本導不回來而加 by CHC
 	if(courseVO == null){
 		courseVO = new CourseService().getOneCourse(request.getParameter("courseno"));
@@ -47,6 +48,9 @@
 	if (csscoretimes > 0) {
 		courseScore = formatter.format(Double.valueOf(csscore) / Double.valueOf(csscoretimes));
 	}
+	
+	//開玄
+	request.getSession().setAttribute("coursenoForTest",courseVO.getCourseno());
 %>
 
 <!DOCTYPE html>

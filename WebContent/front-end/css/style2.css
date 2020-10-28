@@ -1,11 +1,11 @@
-        .container {
-            width: 100%;
-            height: calc(100% - 60px);
-            padding: 0 60px 60px;
-            background: #f5f5f5;
-            border-right: 2px solid #dbdbdc;
-            overflow-y: auto
-        }
+/*         .container { */
+/*             width: 100%; */
+/*             height: calc(100% - 60px); */
+/*             padding: 0 60px 60px; */
+/*             background: #f5f5f5; */
+/*             border-right: 2px solid #dbdbdc; */
+/*             overflow-y: auto */
+/*         } */
 	
         .box1 {
             width: 1400px;
@@ -36,17 +36,14 @@
             margin: 0px;
         }
 
-		#turnin{
-			float:right;
-		}
 		
-        .testtype {
-            position: absolute;
-            left: 350px;
-            white-space: nowrap;
-            font-size: 12px;
-            color: rgba(0, 0, 0, .45);
-        }
+/*         .testtype { */
+/*             position: absolute; */
+/*             left: 350px; */
+/*             white-space: nowrap; */
+/*             font-size: 12px; */
+/*             color: rgba(0, 0, 0, .45); */
+/*         } */
 
         .question {
         	margin-top: 20px;
@@ -62,11 +59,10 @@
         	width:87%;
         	margin:10px -5px;
         }
-       a{
-       float:right;
-       }
 
         input[type="radio"], input[type="checkbox"] {
+        	margin-left: 7px;
+    		margin-top: 7px;
             width: 26px;
             height: 26px;
             border-radius: 50%;
@@ -75,40 +71,48 @@
             line-height: 26px;
             text-align: center;
             -webkit-appearance: none;
-            /*to disable the default appearance of radio button*/
+            to disable the default appearance of radio button
             -moz-appearance: none;
         }
 
         input[type="radio"]:focus, input[type="checkbox"]:focus {
-            /*no need, if you don't disable default appearance*/
+            no need, if you don't disable default appearance
             outline: none;
-            /*to remove the square border on focus*/
+            to remove the square border on focus
+        }
+        input[type="radio"]:blur, input[type="checkbox"]:blur {
+            no need, if you don't disable default appearance
+            outline: none;
+            to remove the square border on focus
         }
 
-        input[type="radio"]:hover, input[type="radio"]:checked, input[type="checkbox"]:checked, input[type="checkbox"]:hover {
-            /*no need, if you don't disable default appearance*/
-            background-color: #1FBED6;
-        }
+/*         INPUT[TYPE="RADIO"]:HOVER, INPUT[TYPE="RADIO"]:CHECKED, INPUT[TYPE="CHECKBOX"]:CHECKED, INPUT[TYPE="CHECKBOX"]:HOVER { */
+/*             NO NEED, IF YOU DON'T DISABLE DEFAULT APPEARANCE */
+/*             BACKGROUND-COLOR: #1FBED6; */
+/*         } */
 
-        input[type="radio"]:checked~span:first-of-type, input[type="checkbox"]:checked~span:first-of-type, input[type="radio"]:hover~span:first-of-type, input[type="checkbox"]:hover~span:first-of-type {
+        input[type="radio"]:checked~span:first-of-type, input[type="checkbox"]:checked~span:first-of-type {
             color: white;
+           
         }
+       
 
         label span:first-of-type {
             position: relative;
-            top: -10px;
-            left: -25px;
+            top: -7px;
+            left: -22px;
             font-size: 15px;
             color: #000;
         }
 			
         li input[type="radio"]:checked, li input[type="checkbox"]:checked {
             background-color: #1FBED6;
+             outline:none;
         }
 
         label span {
             position: relative;
-            top: -8px;
+            top: -7px;
         }
 
         ul li.option {

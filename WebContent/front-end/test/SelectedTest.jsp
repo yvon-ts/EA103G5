@@ -5,34 +5,85 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Insert title here</title>
 </head>
 <body>
 
-<c:if test="${not empty errorMsgs}">
-	<ul>
-	    <c:forEach var="message" items="${errorMsgs}">
-			<li style="color:red">${message}</li>
-		</c:forEach>
-	</ul>
-</c:if>
-	<ul>
-	 	<li><form action='<%= request.getContextPath()%>/question/questionTest.do' method='post'>
-        <select name='level'>
-            <option value="-1">請選擇考題難易度</option>
-            <option value="simple">簡單</option>
-            <option value="medium">中等</option>
-            <option value="hard">困難</option>
-        </select>
-        
+<jsp:include page="/index/front-index/header.jsp" />
+
+<%-- <c:if test="${not empty errorMsgs}"> --%>
+<!-- 	<ul> -->
+<%-- 	    <c:forEach var="message" items="${errorMsgs}"> --%>
+<%-- 			<li style="color:red">${message}</li> --%>
+<%-- 		</c:forEach> --%>
+<!-- 	</ul> -->
+<%-- </c:if> --%>
+<div class="container-fluid" style="margin-top: 90px;">
+
+		
+	<form action='<%= request.getContextPath()%>/question/questionTest.do' method='post' id="myForm">
+<!--         <select name='level'> -->
+<!--             <option value="-1">請選擇考題難易度</option> -->
+<!--             <option value="simple">簡單</option> -->
+<!--             <option value="medium">中等</option> -->
+<!--             <option value="hard">困難</option> -->
+<!--         </select> -->
+        		<div class="row">
+					<div class="col">
+						<h1 id="pageTitle" style="text-align:center">測驗單元</h1>
+					</div>
+				</div>
+
+				<div class="row  justify-content-center">
+				
+					<div class="col-2">
+        				<div class="form-group">
+    						<select class="form-control" id="exampleFormControlSelect1" name ="level">
+      				 			<option value="-1">請選擇考題難易度</option>
+            		 			<option value="simple">簡單</option>
+            		 			<option value="medium">中等</option>
+            		 			<option value="hard">困難</option>
+			    			</select>
+  						</div>
+        			</div>
+        			
+        			<div class="col-2">
+        				<div class="form-group">
+    						<select class="form-control" id="exampleFormControlSelect2" name ="unit">
+      				 			<option value="-1">請選擇測驗單元</option>
+            		 			<option value="1">單元一</option>
+            		 			<option value="2">單元二</option>
+            		 			<option value="3">單元三</option>
+			    			</select>
+  						</div>
+        			</div>
+        			
+        			<div class="col-2">
+						<button type="button" class="btn btn-info" id="enterTest">進入測驗</button>
+					</div>
+				
+				</div>
+				
+				
+				
+		</div>
         <input type="hidden" name="action" value="printPaper">
-        <input type="submit" value='生成考卷'>
-    	</form></li>
+    	</form>
     	
-    	<li>
-    		<a href='<%= request.getContextPath()%>/front-end/test/ListAllTestRecord.jsp'>查看</a>考試紀錄<br><br>
-    	</li>
-    </ul>
-    
+	</div>
+	
+</div>
+<script>
+	$(document).ready(function(){
+		$('#enterTest').click(function(){
+			if($('#exampleFormControlSelect1').find('option:selected').val() === '-1'  || $('#exampleFormControlSelect2').find('option:selected').val() === '-1' ){
+				swal('請選擇難易度及單元', '', 'error');
+			}
+			else{
+				$('#myForm').submit();
+			}
+		});
+	});
+</script>
+    <jsp:include page="/index/front-index/footer.jsp" />
 </body>
 </html>

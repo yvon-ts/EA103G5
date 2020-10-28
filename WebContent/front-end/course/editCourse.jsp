@@ -27,7 +27,7 @@
 		courseScore = formatter.format(Double.valueOf(csscore) / Double.valueOf(csscoretimes));
 	}
 	
-	//開玄-->爛方法 要把名字傳到題庫
+	//開玄修改
 	request.getSession().setAttribute("courseno", courseVO.getCourseno());
 	
 %>
@@ -101,7 +101,7 @@
 				<h2>題庫管理</h2>
 					<ul class="nav flex-column nav-pills">
 						<li class="nav-item">
-							<a class="nav-link " href="<%= request.getContextPath()%>/front-end/question/ListAllQuestion.jsp?coursename=${courseVO.coursename}">
+							<a class="nav-link " href="<%= request.getContextPath()%>/front-end/question/ListAllQuestion.jsp?coursename=${courseVO.coursename}" target="_blank">
 								<h5>課程題目編輯</h5>
 							</a>
 						</li>

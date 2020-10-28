@@ -2,12 +2,14 @@
     pageEncoding="BIG5"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>  
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ page import="java.util.*,com.tests.model.*" %>
+<%@ page import="java.util.*,com.tests.model.*,com.members.model.*" %>
 
 <%
+	MembersVO Membersvo = (MembersVO) request.getSession().getAttribute("membersVO");
+
 	TestsService testSvc = new TestsService();
-	List<TestsVO> list = testSvc.getAll("MEM0001");//先寫死，之後必須抓會員的資料處理這一塊
-	pageContext.setAttribute("list",list);
+	List<TestsVO>  recordList = testSvc.getAll(Membersvo.getMemno());
+	pageContext.setAttribute("recordList",recordList);
 	
 %>
 
@@ -64,8 +66,8 @@
 		<th>測驗分數</th>
 		<th><a href="<%= request.getContextPath()%>/front-end/test/SelectedTest.jsp">回首頁</a></th>
 	</tr>
-	<%@ include file="page/page1.file" %> 
-	<c:forEach var="TestsVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
+	 <%@ include file="page/page1.file" %>
+	<c:forEach var="TestsVO" items="${recordList}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
 		
 		<tr>
 			<td>${TestsVO.courseno}</td>
@@ -76,6 +78,7 @@
 			  <FORM METHOD="post" ACTION="<%= request.getContextPath()%>/question/questionTest.do" style="margin-bottom: 0px;">
 			     <input type="submit" value="檢視">
 			     <input type="hidden" name="selectedTestno"  value="${TestsVO.testno}">
+			     <input type="hidden" name="coursenoForTest"  value="${TestsVO.courseno}">
 			     <input type="hidden" name="action"	value="reviewByTestNo">
 			     
 			  </FORM>

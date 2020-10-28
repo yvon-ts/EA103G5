@@ -276,13 +276,14 @@ public class TestsDAO implements TestsDAO_interface {
 			pstmt.setString(3, test.getTestscope());
 
 			pstmt.executeUpdate();
-
+			
 			rs = pstmt.getGeneratedKeys();
 			
 			
 			rs.next();
-			 testno = rs.getString(1);
+			testno = rs.getString(1);
 			
+			 
 			for(AnwserListVO vo : list) {
 				vo.setTestno(testno);
 				dao.insert(vo,con);

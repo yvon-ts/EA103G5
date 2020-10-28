@@ -26,7 +26,7 @@ if(QuestionBankvo !=null && QuestionBankvo.getQuans()!= null && QuestionBankvo.g
 <html>
 
 <head>
-    <title></title>
+    <title>題庫管理 - ${CourseSvc.getOneCourse(courseno).coursename}</title>
     <!-- include libraries(jQuery, bootstrap) -->
 <!--     <link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet"> -->
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
@@ -156,9 +156,6 @@ option[value=""] {
 }
 
 .note-handle .note-control-selection .note-control-se{display:none}
-
-
-
     </style>
     
 </head>

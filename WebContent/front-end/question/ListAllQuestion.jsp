@@ -29,7 +29,7 @@
 <html>
 <head>
 <meta charset="BIG5">
-<title>考題管理 - ${CourseSvc.getOneCourse(courseno).coursename}</title>
+<title>題庫管理 - ${CourseSvc.getOneCourse(courseno).coursename}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <!--     <title>Bootstrap CRUD Data Table for Database with Modal Form</title> -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
@@ -59,7 +59,7 @@
 
 		<div class="row">
 			<div class="col" style="text-align:center;color:white;">
-				<h1 id="pageTitle" >考題管理 - ${CourseSvc.getOneCourse(courseno).coursename}</h1>
+				<h1 id="pageTitle" >題庫管理 - ${CourseSvc.getOneCourse(courseno).coursename}</h1>
 			</div>
 		</div>
 	 <div class="container-xl">

@@ -22,7 +22,7 @@
 <html>
 <head>
 <meta charset="BIG5">
-<title>考題管理 - ${CourseSvc.getOneCourse(courseno).coursename}</title>
+<title>考題管理 - ${CourseSvc.getOneCourse(editCourseno).coursename}</title>
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <!--     <title>Bootstrap CRUD Data Table for Database with Modal Form</title> -->

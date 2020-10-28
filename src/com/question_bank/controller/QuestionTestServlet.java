@@ -20,6 +20,7 @@ import javax.servlet.http.HttpSession;
 
 import com.anwser_list.model.AnwserListService;
 import com.anwser_list.model.AnwserListVO;
+import com.members.model.MembersVO;
 import com.question_bank.model.QuestionBankService;
 import com.question_bank.model.QuestionBankVO;
 import com.tests.model.TestsService;
@@ -42,6 +43,7 @@ public class QuestionTestServlet extends HttpServlet {
 		}
 
 		if ("printPaper".equals(action)) {// 印考卷
+			
 			printPaper(request, response);
 		}
 		if ("reviewByTestNo".equals(action)) {// 查看某次考試編號測驗卷
@@ -52,19 +54,28 @@ public class QuestionTestServlet extends HttpServlet {
 
 	private void correct(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {// 對答案
+		
+		
+		
 		Enumeration<String> enums = request.getParameterNames();
 		Map<String, String> studentAns = new HashMap<>();
 
-		AnwserListService ase = (AnwserListService) request.getSession().getAttribute("ase");
-		TestsService tse = (TestsService) request.getSession().getAttribute("tse");
+		AnwserListService ase = new AnwserListService();
+		TestsService tse = new TestsService();
 		QuestionBankService qse = new QuestionBankService();
 
+		
+		
+		
 		while (enums.hasMoreElements()) {
 			StringBuilder ansBox = new StringBuilder("0000");
 			String name = (String) enums.nextElement();
 			String value[] = request.getParameterValues(name);
-
-			if (value != null && !(value[0].equals("correct"))) {
+			
+			
+				
+			if (value != null && !(value[0].equals("correct")) && !("testno".equals(name))) {
+				
 				if (qse.getOneByNO(name).getOp1() == null) {
 					studentAns.put(name, value[0]);
 				} else {
@@ -73,11 +84,17 @@ public class QuestionTestServlet extends HttpServlet {
 					}
 					studentAns.put(name, ansBox.toString());
 				}
+			}else if("testno".equals(name)) {
+				tse.setTestno(value[0]);
 			}
 			ase.submitAns(studentAns, tse.getTestno());
+			
 		}
 		tse.writeScore(ase.compareToAns(tse.getTestno()), tse.getTestno());
-
+		
+		request.setAttribute("testsVo", tse.getOneByNO(tse.getTestno()));
+		System.out.println(tse.getOneByNO(tse.getTestno()));
+		
 		RequestDispatcher ResultView = request.getRequestDispatcher("/front-end/test/Result.jsp");
 		ResultView.forward(request, response);
 	}
@@ -175,23 +192,30 @@ public class QuestionTestServlet extends HttpServlet {
 
 		String level = request.getParameter("level");
 
-		List<String> errorMsgs = new LinkedList<String>();
-		request.setAttribute("errorMsgs", errorMsgs);
-
-		if ("-1".equals(level)) {
-			errorMsgs.add("請點選難易度");
-			RequestDispatcher failureView = request.getRequestDispatcher("/front-end/test/SelectedTest.jsp");
-			failureView.forward(request, response);
-		}
+//		List<String> errorMsgs = new LinkedList<String>();
+//		request.setAttribute("errorMsgs", errorMsgs);
+//
+//		if ("-1".equals(level)) {
+//			errorMsgs.add("請點選難易度");
+//			RequestDispatcher failureView = request.getRequestDispatcher("/front-end/test/SelectedTest.jsp");
+//			failureView.forward(request, response);
+//		}
 
 		AnwserListService ase = new AnwserListService();
 		List<AnwserListVO> randomQuestion = new ArrayList<>();
 
 		TestsService tse = new TestsService();
 		TestsVO testsVo = new TestsVO();
-		testsVo.setCourseno("COUR0001");
-		testsVo.setMemno("MEM0001");
-		testsVo.setTestscope("1");
+		
+		
+		MembersVO membersVO = (MembersVO) request.getSession().getAttribute("membersVO");
+		String courseno = (String)request.getSession().getAttribute("coursenoForTest");
+		
+		String unit = request.getParameter("unit");
+		
+		testsVo.setCourseno(courseno);//課程編號
+		testsVo.setMemno(membersVO.getMemno());
+		testsVo.setTestscope(unit);//單元
 
 		List<QuestionBankVO> QuestionList = new ArrayList<>();
 		int number = 10;
@@ -209,13 +233,12 @@ public class QuestionTestServlet extends HttpServlet {
 			randomQuestion = produce(QuestionList);
 		}
 
-		tse.insertToAnwserList(testsVo, randomQuestion);// 之後要抓取會員編號、課程編號與範圍編號
-
+		String testno = tse.insertToAnwserList(testsVo, randomQuestion);// 之後要抓取會員編號、課程編號與範圍編號
+		
+		
 		try {
-
-			request.getSession().setAttribute("ase", ase);
-			request.getSession().setAttribute("tse", tse);
-			request.getSession().setAttribute("list", QuestionList);
+			request.setAttribute("testno", testno);
+			request.getSession().setAttribute("QuestionList", QuestionList);
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/front-end/test/PrintQuestion.jsp");
 			dispatcher.forward(request, response);
 		} catch (ServletException e) {
@@ -230,7 +253,8 @@ public class QuestionTestServlet extends HttpServlet {
 	private void reviewByTestNo(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException { // 查看答案紀錄
 		String selectedTestno = request.getParameter("selectedTestno");
-		TestsService tse = new TestsService(selectedTestno);
+		
+		TestsService tse = new TestsService();
 		AnwserListService ase = new AnwserListService();
 		QuestionBankService qse = new QuestionBankService();
 
@@ -259,9 +283,11 @@ public class QuestionTestServlet extends HttpServlet {
 			qblist.add(qbvo);
 
 		}
-		request.getSession().setAttribute("ase", ase);
-		request.getSession().setAttribute("tse", tse);
-		request.getSession().setAttribute("list", qblist);
+		request.setAttribute("testsVo", tse.getOneByNO(selectedTestno));
+		request.getSession().setAttribute("QuestionList", qblist);
+		request.getSession().setAttribute("courseno",tse.getOneByNO(selectedTestno).getCourseno());
+		
+		
 		RequestDispatcher ResultView = request.getRequestDispatcher("/front-end/test/Result.jsp");
 		ResultView.forward(request, response);
 	}
