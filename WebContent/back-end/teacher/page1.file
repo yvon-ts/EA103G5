@@ -1,5 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%  int rowsPerPage = 7;  //�C��������    
+<%  int rowsPerPage = 5;  //�C��������    
     int rowNumber=0;      //�`����
     int pageNumber=0;     //�`����      
     int whichPage=1;      //�ĴX��
@@ -33,7 +33,7 @@
 %>
 
 <%if (pageNumber>0){%>
-  <b><font color=red>第<%=whichPage%>/<%=pageNumber%>頁</font></b>
+  <b><font color=#19B3D3>第<%=whichPage%>/<%=pageNumber%>頁</font></b>
 <%}%>
 
-<b>符合查詢的結果如下所示 共<font color=red><%=rowNumber%></font>筆</b>
+<b>符合查詢的結果如下所示 共<font color=#19B3D3><%=rowNumber%></font>筆</b>

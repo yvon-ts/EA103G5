@@ -55,14 +55,14 @@ public class jdbcUtil_CompositeQuery_Teacher {
 
 		// 配合req.getParameterMap()的方法java.util.Map<java.lang.String,java.lang.String[]> 之測試
 		Map<String, String[]> map = new TreeMap<String, String[]>();
-		map.put("empno", new String[] { "7001" });
-		map.put("ename", new String[] { "KING" });
-		map.put("job", new String[] { "PRESIDENT" });
-		map.put("hiredate", new String[] { "1981-11-17" });
-		map.put("sal", new String[] { "5000.5" });
-		map.put("comm", new String[] { "0.0" });
-		map.put("deptno", new String[] { "10" });
-		map.put("action", new String[] { "getXXX" }); // 注意Map裡面會含有action的key
+		map.put("tchrno", new String[] { "" });
+		map.put("memno", new String[] { "" });
+		map.put("TCHRSTATUS", new String[] { "已通過" });
+		map.put("rejreason", new String[] { "" });
+		map.put("bankacc", new String[] { "" });
+		map.put("tchrintro", new String[] { "" });
+		map.put("tchrcert1", new String[] { "" });
+		map.put("tchrcert2", new String[] { "" }); // 注意Map裡面會含有action的key
 
 		String finalSQL = "select * from emp2 "
 				          + jdbcUtil_CompositeQuery_Teacher.get_WhereCondition(map)

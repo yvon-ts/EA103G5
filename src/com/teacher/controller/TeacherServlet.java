@@ -64,7 +64,7 @@ public class TeacherServlet extends HttpServlet {
 			List<TeacherVO>list = teacherSvc.getAll(map);
 			
 			req.setAttribute("list", list);
-			RequestDispatcher successView = req.getRequestDispatcher("/back-end/teacher/listAllTeachers.jsp");
+			RequestDispatcher successView = req.getRequestDispatcher("/back-end/teacher/listAllTeachersCompositeQuery.jsp");
 			successView.forward(req, res);
 			
 			
