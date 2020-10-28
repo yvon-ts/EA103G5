@@ -155,7 +155,7 @@ public class EmployeeServlet extends HttpServlet {
 				req.setAttribute("employeeVO", employeeVO);
 				req.setAttribute("empAuthorityVO", empAuthorityVO);
 				System.out.println("TETTTET");
-				RequestDispatcher successView = req.getRequestDispatcher("/back-end/employee/newupdate_emp.jsp");
+				RequestDispatcher successView = req.getRequestDispatcher("/back-end/employee/empall/newupdate_emp.jsp");
 				successView.forward(req, res);
 			} catch (Exception e) {
 				System.out.println("無法");
@@ -299,7 +299,7 @@ public class EmployeeServlet extends HttpServlet {
 
 				if (!errMsgs.isEmpty()) {
 					req.setAttribute("employeeVO", employeeVO);
-					RequestDispatcher failureView = req.getRequestDispatcher("/back-end/employee/newupdate_emp.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/back-end/employee/empall/newupdate_emp.jsp");
 					failureView.forward(req, res);
 					return;
 				}
@@ -308,11 +308,11 @@ public class EmployeeServlet extends HttpServlet {
 				employeeVO = newEmp.updateEmp(empno, empacc, emppwd, empname, empsalary, hiredate, empemail, empdelete,
 						emppic);
 				req.setAttribute("employeeVO", employeeVO);
-				RequestDispatcher successView = req.getRequestDispatcher("/back-end/employee/newallemp.jsp");
+				RequestDispatcher successView = req.getRequestDispatcher("/back-end/employee/empall/newallemp.jsp");
 				successView.forward(req, res);
 			} catch (Exception e) {
 				errMsgs.add("資料修改失敗: " + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/employee/newupdate_emp.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/employee/empall/newupdate_emp.jsp");
 				failureView.forward(req, res);
 			}
 

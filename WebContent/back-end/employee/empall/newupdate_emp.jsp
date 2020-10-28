@@ -3,16 +3,11 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.employee.model.*"%>
+
+
 <%
-	EmployeeVO employeeVO = (EmployeeVO) request.getAttribute("EmployeeVO");
-%>
-<%
-	java.sql.Date hiredate = null;
-	try {
-		hiredate = employeeVO.getHiredate();
-	} catch (Exception e) {
-		hiredate = new java.sql.Date(System.currentTimeMillis());
-	}
+	EmployeeVO employeeVO = (EmployeeVO) request.getAttribute("employeeVO");
+			
 %>
 <jsp:useBean id="funSvc" scope="page" class="com.functionx.model.FunctionxService"/>
 <!DOCTYPE html>
@@ -21,7 +16,7 @@
 <meta charset="UTF-8">
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>新增員工</title>
+<title>員工資料修改</title>
 <link rel="stylesheet"
 	href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
 <link rel="stylesheet"
@@ -31,9 +26,9 @@
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-
 <script
 	src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+<script src="https://code.jquery.com/jquery-2.1.4.js"></script>
 <style>
 body {
 	color: #566787;
@@ -211,8 +206,8 @@ table.table td a.view {
 	text-align: center;
 }
 
-table tr th input[type="submit"].view {
-	width: 100px;
+input[type="submit"].view {
+	width: 80px;
 	height: 30px;
 	color: #2196F3;
 	border: 2px solid;
@@ -220,8 +215,13 @@ table tr th input[type="submit"].view {
 	text-align: center;
 }
 
-table tr th input[type="submit"].view:hover  {
-	color: #2196F3;
+input[type="submit"].test{
+	width: 80px;
+	height: 30px;
+	color: black;
+	border: 0px solid;
+	border-radius: 30px;
+	text-align: center;
 }
 
 table.table td a.view i {
@@ -344,42 +344,54 @@ table.table .avatar {
 					</div>
 				</div>
 			
-				<form method="post" ACTION="<%=request.getContextPath() %>/employee/employee.do" name="form1" enctype="multipart/form-data">
+				<form method="post"
+					ACTION="<%=request.getContextPath()%>/employee/employee.do" enctype="multipart/form-data">
 					<table class="table table-striped table-hover" id="test">
-						<tbody>
-							<c:if test="${not empty errMsgs}">
-								<font style="color:red">請修正以下錯誤:</font>
+						<c:if test="${not empty errMsgs}">
+							<font style="color:red">請修正以下錯誤:</font>
 								<ul>
 									<c:forEach var="message" items="${errMsgs}">
 										<li style="color:red">${message}</li>
 									</c:forEach>
 								</ul>
-							</c:if>						
+						</c:if>	
+					<tbody>
+							<tr>
+								<th>員工編號</th>
+								<th><label><%=employeeVO.getEmpno()%></label></th>
+							</tr>
 							<tr>
 								<th>員工帳號</th>
-								<th><input type="text" name="empacc" placeholder="請輸入員工帳號" value="<%= (employeeVO==null)? "" : employeeVO.getEmpacc()%>"></th>
+								<th><input type="hidden" name="empacc" value="<%=employeeVO.getEmpacc()%>"><%=employeeVO.getEmpacc()%></th>
 							</tr>
-<!-- 							<tr> -->
-<!-- 								<th>員工密碼</th> -->
-<%-- 								<th><input type="password" name="emppwd" placeholder="請輸入員工密碼" autocomplete="off" value="${param.empacc}"></th> --%>
-<!-- 							</tr> -->
+							<tr>
+								<th>員工密碼</th>
+								<th><input type="password" name="emppwd" placeholder="請輸入員工密碼" autocomplete="off" value="<%=employeeVO.getEmppwd()%>"></th>
+							</tr>
 							<tr>
 								<th>員工姓名</th>
-								<th><input type="text" name="empname" placeholder="請輸入員工姓名" autocomplete="off" value="<%= (employeeVO==null)? "" : employeeVO.getEmpname()%>"></th>
+								<th><input type="text" name="empname" placeholder="請輸入員工姓名" autocomplete="off" value="<%=employeeVO.getEmpname()%>"></th>
 							</tr>
 							<tr>
 								<th>員工薪水</th>
-								<th><input type="text" name="empsalary" placeholder="請輸入員工薪水" autocomplete="off" value="<%= (employeeVO==null)? "" : employeeVO.getEmpsalary()%>"></th>
+								<th><input type="hidden" name="empsalary" placeholder="請輸入員工薪水" autocomplete="off" value="<%=employeeVO.getEmpsalary()%>"><%=employeeVO.getEmpsalary()%></th>
 							</tr>
 							<tr>
 								<th>員工到職日期</th>
-								<th><input type="text" id="f_date1" name="hiredate"  placeholder="請輸入員工到職日" 
-								value="<%= (employeeVO==null)? "" : employeeVO.getHiredate()%>">
+								<th><input type="text" id="f_date1" name="hiredate" value="<%=employeeVO.getHiredate()%>">
 								</th>
 							</tr>
 							<tr>
 								<th>員工Email</th>
-								<th><input type="email" name="empemail" placeholder="請輸入email" value="<%= (employeeVO==null)? "" : employeeVO.getEmpemail()%>" ></th>
+								<th><input type="email" name="empemail" placeholder="請輸入email" value="<%=employeeVO.getEmpemail()%>" ></th>
+							</tr>
+							<tr>
+								<th>員工狀態</th>
+								<th><select name="empdelete">
+										<option value=0 <%=(employeeVO.getEmpdelete() == 0) ? "selected" : ""%>>啟用
+										<option value=1 <%=(employeeVO.getEmpdelete() == 1) ? "selected" : ""%>>停用						
+									</select>
+								</th>
 							</tr>
 							<tr>
 								<th>員工權限</th>
@@ -389,23 +401,44 @@ table.table .avatar {
 	                   				<label for="${functionxVO.funcno}">${functionxVO.funcname}</label><br>	                   			
 	                   			    </c:forEach>
 	                   			    
-<%-- 	                   			    <c:forEach var="empAuthorityVO" items="${empAuthorityVO}"> --%>
-<%-- 	                   			    <input type="hidden" name="emp" value="${empAuthorityVO.funcno}">                 																								                											 								     							 		    		       		    						     								 --%>
-<%--      								</c:forEach> --%>
+	                   			    <c:forEach var="empAuthorityVO" items="${empAuthorityVO}">
+	                   			    <input type="hidden" name="emp" value="${empAuthorityVO.funcno}">                 																								                											 								     							 		    		       		    						     								
+     								</c:forEach>
      															  
       							</th>     							
 							</tr>
 							<tr>
-								<th>員工照片</th>
-								 <th width="100" height="100" id="preview"></th>  																																		
-     							<th><input type="file" name="emppic"   placeholder="請上傳圖片" id="emp_pic"></th>							          							                                                             							
+								<th>員工照片</th>																																							
+     							<th><img id="myimg" class="rounded-circle" width="350px" height="350px" src="${pageContext.request.contextPath}/ShowEmpPic?empno=${employeeVO.empno}" /></th>							          							
+                                <th><input type="file" name="emppic" placeholder="請上傳圖片" id="emp_pic"></th>							          							                             							
 							</tr>
 							<tr>
-								<th>								
-									<input type="hidden" name="action" value="insert"> 
-									<input type="submit" class="view" value="新增員工">									
+								<th>
+									<input type="hidden" name="action" value="empupdate">
+									<input type="hidden" name="empno" value="<%=employeeVO.getEmpno()%>"> 
+									<input type="submit" value="送出修改" class="view">
 								</th>
 							</tr>
+
+
+							<%-- 								<td>${employeeVO.hiredate}</td> --%>
+							<!-- 								<td> -->
+							<%-- 								<c:if test="${(employeeVO.empdelete==1)}"> --%>
+							<!-- 									<span class="status text-danger">&bull;</span> -->
+							<%-- 									${(employeeVO.empdelete==0)?'啟用':'停用'} --%>
+							<%-- 								</c:if> --%>
+							<%-- 								<c:if test="${(employeeVO.empdelete==0)}"> --%>
+							<!-- 								<span class="status text-success">&bull;</span> -->
+							<%-- 									${(employeeVO.empdelete==0)?'啟用':'停用'} --%>
+							<%-- 								</c:if> --%>
+							<!-- 								<td></td> -->
+							<%-- 								<td><FORM METHOD="post" ACTION="<%=request.getContextPath()%>/employee/employee.do" > --%>
+							<!-- 										<input type="submit" value="修改" class="view" title="View Details"> -->
+							<%-- 			     						<input type="hidden" name="empno"  value="${employeeVO.empno}"> --%>
+							<!-- 			     						<input type="hidden" name="action"	value="forupdate"> -->
+							<!-- 			     					</FORM> -->
+							<!-- 								</td> -->
+							<!-- 							</tr> -->
 						</tbody>
 					</table>
 				</form>
@@ -414,23 +447,21 @@ table.table .avatar {
 	</div>
 </body>
 
-<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/datetimepicker/jquery.datetimepicker.css" />
+<link rel="stylesheet" type="text/css"
+	href="<%=request.getContextPath()%>/datetimepicker/jquery.datetimepicker.css" />
 <script src="<%=request.getContextPath()%>/datetimepicker/jquery.js"></script>
-<script src="<%=request.getContextPath()%>/datetimepicker/jquery.datetimepicker.full.js"></script>
-<script>
-        $.datetimepicker.setLocale('zh');
-        $('#f_date1').datetimepicker({
-           theme: '',              //theme: 'dark',
- 	       timepicker:false,       //timepicker:true,
- 	       step: 1,                //step: 60 (這是timepicker的預設間隔60分鐘)
- 	       format:'Y-m-d',         //format:'Y-m-d H:i:s',
- 		   value: '${param.hiredate}', // value:   new Date(),
-           //disabledDates:        ['2017/06/08','2017/06/09','2017/06/10'], // 去除特定不含
-           //startDate:	            '2017/07/10',  // 起始日
-//            minDate:               '-1970-01-01', // 去除今日(不含)之前
-           maxDate:               '+1970-01-01'  // 去除今日(不含)之後
-        });
- </script>
+<script
+	src="<%=request.getContextPath()%>/datetimepicker/jquery.datetimepicker.full.js"></script>
+
+<style>
+.xdsoft_datetimepicker .xdsoft_datepicker {
+	width: 300px; /* width:  300px; */
+}
+
+.xdsoft_datetimepicker .xdsoft_timepicker .xdsoft_time_box {
+	height: 151px; /* height:  151px; */
+}
+</style>
 <script>
 	var x = document.getElementsByName("functionx");
 	var y = document.getElementsByName("emp");
@@ -441,41 +472,57 @@ table.table .avatar {
 			}
 			
 		}
-	}	
+	}
+
+	
 </script>
-<script type="text/javascript">
-    var admin_pic = document.getElementById("emp_pic");
-    var preview = document.getElementById('preview');
+<script>
+        $.datetimepicker.setLocale('zh');
+        $('#f_date1').datetimepicker({
+           theme: '',              //theme: 'dark',
+ 	       timepicker:false,       //timepicker:true,
+ 	       step: 1,                //step: 60 (這是timepicker的預設間隔60分鐘)
+ 	       format:'Y-m-d',         //format:'Y-m-d H:i:s',
+ 		   value: '<%=employeeVO.getHiredate()%>', // value:   new Date(),
+           //disabledDates:        ['2017/06/08','2017/06/09','2017/06/10'], // 去除特定不含
+           //startDate:	            '2017/07/10',  // 起始日
+           //minDate:               '-1970-01-01', // 去除今日(不含)之前
+           maxDate:               '+1970-01-01'  // 去除今日(不含)之後
+        });
+</script>
+ <!-- 圖片 -->
+    <script type="text/javascript">
+    function init() {
 
-    admin_pic.addEventListener('change', function() {
+        var admin_pic = document.getElementById("emp_pic");
+        var preview = document.getElementById('preview');
 
-        var files = admin_pic.files;
+        admin_pic.addEventListener('change', function() {
 
-        if (files !== null) {
-            for (var i = 0; i < files.length; i++) {
-                var file = files[i];
-                console.log(file);
+            var files = admin_pic.files;
 
-                if (file.type.indexOf('image') > -1) {
+            if (files !== null) {
+                for (var i = 0; i < files.length; i++) {
+                    var file = files[i];
+                    console.log(file);
 
-                    var reader = new FileReader();
+                    if (file.type.indexOf('image') > -1) {
 
-                    reader.addEventListener('load', function(e) {
+                        var reader = new FileReader();
 
-                        var img = document.createElement('img');                   
-                        img.setAttribute('src', e.target.result);
-                        img.setAttribute('class', 'rounded-circle');
-                        img.style.width="350px";
-                        img.style.height="350px";
-                        preview.append(img);
-                    });
-                    reader.readAsDataURL(file); // ***** trigger
-                } else {
-                    alert('請上傳圖片！');
+                        reader.addEventListener('load', function(e) {
+
+                            var img = document.getElementById('myimg').src= e.target.result;
+                        });
+                        reader.readAsDataURL(file); // ***** trigger
+                    } else {
+                        alert('請上傳圖片！');
+                    }
                 }
             }
-        }
-    });
+        });
+    }
+    window.onload = init;
     </script>
-
+    
 </html>

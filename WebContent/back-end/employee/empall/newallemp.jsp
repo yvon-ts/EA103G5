@@ -341,7 +341,7 @@ table.table .avatar {
 							</h2>
 						</div>
 						<div class="col-sm-8">
-							<a href="<%=request.getContextPath() %>/back-end/employee/newadd_emp.jsp" class="btn btn-primary"><i class="material-icons">&#xe03b;</i>
+							<a href="<%=request.getContextPath() %>/back-end/employee/empall/newadd_emp.jsp" class="btn btn-primary"><i class="material-icons">&#xe03b;</i>
 								<span>新增員工</span></a>
 						</div>
 					</div>

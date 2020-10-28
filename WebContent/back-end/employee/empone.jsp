@@ -215,6 +215,15 @@ input[type="submit"].view {
 	text-align: center;
 }
 
+input[type="submit"].test{
+	width: 80px;
+	height: 30px;
+	color: black;
+	border: 0px solid;
+	border-radius: 30px;
+	text-align: center;
+}
+
 table.table td a.view i {
 	font-size: 22px;
 	margin: 2px 0 0 1px;
