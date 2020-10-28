@@ -6,8 +6,8 @@
 <%@ page import="com.course.model.*, com.order_detail.model.*"%>
 <%@ page import="com.functionx.model.*"%>
 
-<jsp:useBean id="courseSvc" scope="page"
-	class="com.course.model.CourseService" />
+<jsp:useBean id="ordSvc" scope="page"
+	class="com.order_detail.model.OrderDetailService" />
 
 <%
 	// 	System.out.println("==========");
@@ -30,9 +30,9 @@
 	session.setAttribute("searchStatus", searchStatus);
 
 	if (!("所有".equals(searchStatus))) {
-		map.put("csstatus", new String[]{searchStatus});
+		map.put("odstatus", new String[]{searchStatus});
 	}
-	List<CourseVO> list = courseSvc.getAll(map);
+	List<OrderDetailVO> list = ordSvc.getAll(map);
 	pageContext.setAttribute("list", list);
 
 	OrderDetailVO ordVO = (OrderDetailVO) request.getAttribute("orderDetailVO");
@@ -355,7 +355,8 @@ table.table .avatar {
 
 <body>
 	<jsp:include page="/front-end/back-endHomePage.jsp" />
-	<%-- <jsp:include page="/back-end/index/homepage.jsp" /> --%>
+	<jsp:useBean id="courSvc" scope="page" class="com.course.model.CourseService" />
+	<jsp:useBean id="courVO" scope="page" class="com.course.model.CourseVO" />
 
 	<main class="app-content">
 		<div class="container-xl">
@@ -370,7 +371,7 @@ table.table .avatar {
 							</div>
 							<div class="col-sm-6">
 								<form method="post"
-									action="<%=request.getContextPath()%>/back-end/Order_Detail/listOneOrderDetail1.jsp">
+									action="<%=request.getContextPath()%>/back-end/Order_Detail/listAllOrderDetail.jsp">
 									<select class="custom-select" name="searchStatus">
 										<option value="所有" ${searchStatus=="所有" ? 'selected' : '' }>所有
 										<option value="審核中" ${searchStatus=="鑑賞期" ? 'selected' : '' }>鑑賞期
@@ -397,32 +398,25 @@ table.table .avatar {
 						<tbody>
 
 							<%@ include file="page1.file"%>
-							<c:forEach var="courseVO" items="${list}" begin="<%=pageIndex%>"
+							<c:forEach var="ordVO" items="${list}" begin="<%=pageIndex%>"
 								end="<%=pageIndex+rowsPerPage-1%>">
-								<%-- 								<c:forEach var="courseVO" items="${courseSvc.allForEmployee}"> --%>
 								<tr>
-									<td>${courseVO.courseno}</td>
-									<td>${courseVO.coursename}</td>
-									<td>${courseTypeSvc.getOneCourseType(courseVO.cstypeno).cstypename}</td>
-									<td>${membersSvc.getOneMembers(teacherSvc.getOneTeacher(courseVO.tchrno).memno).memname}</td>
-									<td>${courseVO.courseprice}</td>
-									<td><fmt:formatDate value="${courseVO.courlmod}"
-											pattern="yyyy-MM-dd HH:mm:ss" /></td>
+									<td>${ordVO.orderno}</td>
+									<td>${courSvc.getOneCourse(ordVO.courseno).coursename}</td>
+									<td>${ordVO.sellprice}</td>
 									<td>
-										<FORM METHOD="post"
-											ACTION="<%=request.getContextPath()%>/CourseServlet_Ajax">
-											<select class="custom-select" name="csstatus">
-												<option value="審核中"
-													${courseVO.csstatus=="審核中" ? 'selected' : '' }>審核中
-
-												
-												<option value="上架"
-													${courseVO.csstatus=="上架" ? 'selected' : '' }>上架
-												<option value="下架"
-													${courseVO.csstatus=="下架" ? 'selected' : '' }>下架
-											</select> <input type="hidden" name="courseno"
-												value="${courseVO.courseno}"> <input type="hidden"
-												name="action" value="updateCourseStatus">
+										<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/CourseServlet_Ajax">
+											
+											<select class="custom-select" name="odstatus">
+												<option value="鑑賞期"${ordVO.odstatus=="鑑賞期" ? 'selected' : '' }>鑑賞期
+												<option value="申請退款"${ordVO.odstatus=="申請退款" ? 'selected' : '' }>申請退款
+												<option value="退款完成"${ordVO.odstatus=="退款完成" ? 'selected' : '' }>退款完成
+												<option value="交易完成"${ordVO.odstatus=="交易完成" ? 'selected' : '' }>交易完成
+											</select> 
+											
+											<input type="hidden" name="courseno" value="${ordVO.courseno}">
+											<input type="hidden" name="courseno" value="${ordVO.orderno}"> 
+											<input type="hidden" name="action" value="updateCourseStatus">
 										</FORM>
 									</td>
 									<td><input type="submit" value="修改"
@@ -435,34 +429,6 @@ table.table .avatar {
 				</div>
 			</div>
 		</div>
-
-		<script>
-			// 上傳單一單元的影片
-			$(".updateButton").click(function (e) {
-				e.preventDefault();
-				var formData = new FormData($(this).parents("tr").find("form")[0]);
-
-				for (let key of formData.keys()) {
-					console.log(key + " : " + formData.get(key));
-				}
-
-				$.ajax({
-					url: "<%=request.getContextPath()%>/CourseServlet_Ajax",
-					type: "POST",
-					data: formData,
-					processData: false,
-					contentType: false,
-					success: function (data) {
-						console.log("成功");
-						alert(data);
-					},
-					error: function (data) {
-						console.log("失敗");
-						alert(data);
-					}
-				});
-			});
-		</script>
 </body>
 
 </html>

@@ -8,7 +8,10 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
+import com.course.model.CourseVO;
 import com.order_master.model.OrderMasterVO;
+
+import jdbcUtil_CompositeQuery.jdbcUtil_CompositeQuery_course;
 
 public class OrderDetailDAO implements OrderDetailDAO_interface {
 
@@ -23,7 +26,7 @@ public class OrderDetailDAO implements OrderDetailDAO_interface {
 	}
 
 	private static final String INSERT_STMT = "INSERT INTO order_detail(orderno, courseno, sellprice, promono) VALUES (?, ?, ?, ?)";
-	private static final String GET_ALL_STMT = "SELECT orderno, courseno, sellprice, odstatus, promono FROM order_detail order by orderno";
+//	private static final String GET_ALL_STMT = "SELECT orderno, courseno, sellprice, odstatus, promono FROM order_detail order by orderno";
 	private static final String UPDATE = "UPDATE order_detail set odstatus=? where orderno = ? and courseno = ?";
 	private static final String UPDATE_REFUND = "UPDATE order_detail set odstatus = '申請退款' where orderno = ? and courseno = ?";
 	private static final String GET_SPE_STMT = "SELECT * FROM order_detail where orderno = ?";
@@ -155,11 +158,11 @@ public class OrderDetailDAO implements OrderDetailDAO_interface {
 		}
 	}
 
-	@Override
-	public List<OrderDetailVO> getAll() {
+//	@Override
+	public List<OrderDetailVO> getAll(Map<String, String[]> map) { // 複合查詢
 
 		List<OrderDetailVO> list = new ArrayList<OrderDetailVO>();
-		OrderDetailVO orderDetailVO = null;
+		OrderDetailVO OrderDetailVO = null;
 
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -168,18 +171,23 @@ public class OrderDetailDAO implements OrderDetailDAO_interface {
 		try {
 
 			con = ds.getConnection();
-			pstmt = con.prepareStatement(GET_ALL_STMT);
+
+			String finalSQL = "select * from order_detail " + jdbcUtil_CompositeQuery_course.get_WhereCondition(map);
+			System.out.println("SQL = " + finalSQL);
+
+			pstmt = con.prepareStatement(finalSQL);
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
-				orderDetailVO = new OrderDetailVO();
-				orderDetailVO.setOrderno(rs.getString("orderNo"));
-				orderDetailVO.setCourseno(rs.getString("courseNo"));
-				orderDetailVO.setSellprice(rs.getInt("sellprice"));
-				orderDetailVO.setOdstatus(rs.getString("odstatus"));
-				orderDetailVO.setPromono(rs.getString("promoNo"));
-				list.add(orderDetailVO);
+				OrderDetailVO = new OrderDetailVO();
+				OrderDetailVO.setCourseno(rs.getString("courseno"));
+				OrderDetailVO.setOrderno(rs.getString("orderno"));
+				OrderDetailVO.setSellprice(rs.getInt("sellprice"));
+				OrderDetailVO.setOdstatus(rs.getString("odstatus"));
+				OrderDetailVO.setPromono(rs.getString("promono"));
+				list.add(OrderDetailVO);
 			}
+			// Handle any driver errors
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 			// Clean up JDBC resources

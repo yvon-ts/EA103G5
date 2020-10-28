@@ -1,6 +1,9 @@
 package com.order_detail.model;
 
 import java.util.List;
+import java.util.Map;
+
+import com.course.model.CourseVO;
 
 public class OrderDetailService {
 
@@ -34,8 +37,8 @@ public class OrderDetailService {
 		return dao.findByPrimaryKey(orderno, courseno);
 	}
 
-	public List<OrderDetailVO> getAll() {
-		return dao.getAll();
+	public List<OrderDetailVO> getAll(Map<String, String[]> map) {
+		return dao.getAll(map);
 	}
 
 	public List<OrderDetailVO> getOneOrder(String orderno) {
