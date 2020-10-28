@@ -134,7 +134,7 @@ public class MembersServlet extends HttpServlet {
 		
 		try {
 
-			String memacc = req.getParameter("memacc");
+			String memacc = req.getParameter("memacc").toUpperCase();
 			String memaccReg = "[\\w]{6,16}$";
 			if (memacc == null || memacc.trim().length() == 0) {
 				errorMsgs.add("會員帳號: 請勿空白");
@@ -332,7 +332,7 @@ public class MembersServlet extends HttpServlet {
 		List<String> errorMsgs = new LinkedList<String>();
 		req.setAttribute("errorMsgs", errorMsgs);
 		HttpSession session = req.getSession();
-		String memacc = req.getParameter("memacc");
+		String memacc = req.getParameter("memacc").toUpperCase();
 		String mempwd = req.getParameter("mempwd");
 		
 		
