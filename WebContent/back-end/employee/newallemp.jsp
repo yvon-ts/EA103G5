@@ -213,6 +213,14 @@ table.table td a.view {
 	border-radius: 30px;
 	text-align: center;
 }
+ input[type="submit"].test{
+	width: 80px;
+	height: 30px;
+	color: black;
+	border: 0px solid;
+	border-radius: 30px;
+	text-align: center;
+}
  input[type="submit"].view:hover {
 	color: 	#000000;
 }

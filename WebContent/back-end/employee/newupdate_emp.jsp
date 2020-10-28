@@ -207,7 +207,7 @@ table.table td a.view {
 }
 
 input[type="submit"].view {
-	width: 60px;
+	width: 80px;
 	height: 30px;
 	color: #2196F3;
 	border: 2px solid;
@@ -365,7 +365,7 @@ table.table .avatar {
 							</tr>
 							<tr>
 								<th>員工薪水</th>
-								<th><input type="text" name="empsalary" placeholder="請輸入員工薪水" autocomplete="off" value="<%=employeeVO.getEmpsalary()%>"></th>
+								<th><input type="hidden" name="empsalary" placeholder="請輸入員工薪水" autocomplete="off" value="<%=employeeVO.getEmpsalary()%>"><%=employeeVO.getEmpsalary()%></th>
 							</tr>
 							<tr>
 								<th>員工到職日期</th>
@@ -407,7 +407,7 @@ table.table .avatar {
 								<th>
 									<input type="hidden" name="action" value="empupdate">
 									<input type="hidden" name="empno" value="<%=employeeVO.getEmpno()%>"> 
-									<input type="submit" value="送出修改">
+									<input type="submit" value="送出修改" class="view">
 								</th>
 							</tr>
 

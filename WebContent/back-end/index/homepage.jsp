@@ -83,7 +83,7 @@
                     <a class="dropdown-item" href="#">
                     	<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/employee/employee.do">
                     		<li><i class="fa fa-user fa-lg"></i>
-                    		<input type="submit" value="個人資料" ">
+                    		<input type="submit" value="個人資料" class="test">
 			     			<input type="hidden" name="empno"  value="${empno}">
 			     			<input type="hidden" name="action"	value=getone_show></li>									
 			     		</FORM>
