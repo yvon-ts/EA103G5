@@ -12,7 +12,7 @@
 <%
 	CourseVO courseVO = (CourseVO) request.getAttribute("courseVO");
 
-// 	開玄修改
+	// 	開玄修改
 	if(courseVO == null){
 		courseVO = new CourseService().getOneCourse(request.getParameter("courseno"));
 		request.setAttribute("courseVO",courseVO);
@@ -83,8 +83,8 @@
 
 				<br>
 
-				<h2>課程編輯</h2>
 				<nav>
+				<h2>課程編輯</h2>
 					<ul class="nav flex-column nav-pills">
 						<li class="nav-item">
 							<a class="nav-link active" data-toggle="pill" href="#editCourseChapter">
@@ -96,25 +96,23 @@
 								<h5>基本資訊管理</h5>
 							</a>
 						</li>
-
-						<li class="nav-item">
-							<a class="nav-link" data-toggle="pill" href="#">
-								<h5>附件上傳</h5>
-							</a>
-						</li>
-						
 					</ul>
-				</nav>
+				
 				<h2>題庫管理</h2>
-				<nav>
 					<ul class="nav flex-column nav-pills">
 						<li class="nav-item">
 							<a class="nav-link " href="<%= request.getContextPath()%>/front-end/question/ListAllQuestion.jsp?coursename=${courseVO.coursename}">
 								<h5>課程題目編輯</h5>
 							</a>
 						</li>
-					
-						
+					</ul>
+				<h2>課程預覽</h2>
+					<ul class="nav flex-column nav-pills">
+						<li class="nav-item">
+							<a class="nav-link " href="<%= request.getContextPath()%>/front-end/course/mainCoursePage.jsp?courseno=${courseVO.courseno}" target="_blank">
+								<h5>前往瀏覽課程頁面</h5>
+							</a>
+						</li>
 					</ul>
 				</nav>
 			</div>
@@ -128,11 +126,8 @@
 						<h2>基本資訊管理</h2>
 						<jsp:include page="/front-end/course/editCourseBasicInfo.jsp" />
 					</div>
-					
-					
 				</div>
 			</div>
-			
 		</div>
 	</div>
 
@@ -151,9 +146,7 @@
 	<!-- include 前台頁面的 footer -->
 
 
-
 	<!-- Sortable API JS (放到 include 那邊會出事，且須放在 footer 之下)-->
 	<script src="<%=request.getContextPath()%>/front-end/course/js/bootstrap-html5sortable-master/jquery.sortable.min.js"></script>
 </body>
-
 </html>
