@@ -73,7 +73,7 @@ cursor:pointer;
             <div class="table-title">
                 <div class="row">
                     <div class="col-sm-2">
-						<form method="post"	action="<%=request.getContextPath()%>/back-end/lecture/lectureIndex.jsp">
+						<form method="post"	action="<%=request.getContextPath()%>/back-end/teacher/listAllTeachers.jsp">
 						<button class="bttn" type="submit">回首頁</button>
 						</form>
 					</div>
