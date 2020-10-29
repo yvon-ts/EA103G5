@@ -23,14 +23,17 @@
 <%@ include file="/index/front-index/header.jsp" %>
 <link rel="stylesheet" href="<%=request.getContextPath()%>/back-end/css/bootTable.css">
 <style>
+#head{
+	max-height: 800px;
+	width: auto;
+}
 </style>
-<script>
-</script>
 </head>
 <body>
 <div id="padd">padd</div>
 <div id="table-area" class="container-xl">
     <div class="table-responsive">
+<%--     <img id="head" src="<%=request.getContextPath()%>/index/front-index/assets/img/head/lodr.png"> --%>
         <div class="table-wrapper">			
             <div class="table-title">
                 <div class="row">
