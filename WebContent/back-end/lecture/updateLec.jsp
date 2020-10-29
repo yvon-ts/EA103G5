@@ -114,7 +114,7 @@
 					講座圖片&emsp;<input name="lecpic" id="upimg" type="file"><br>
 					</div>
 					<div class="col-sm-6"><div id="preivew"><img id="dbimg" src="<%=request.getContextPath()%>/lecture/picreader?lecno=${lecVO.lecno}"><img id="newimg" src=""></div></div>
-					<%@ include file="/back-end/lecture/roomsetting/updateLayout.jsp"%><br>
+					<%@ include file="/roomsetting/updateLayout.jsp"%><br>
 					<div class="col-sm-7 btm-line">
 					</div><br>
 					<div id="form-area" class="col-sm-7" style="margin-top:2%;margin-left:3%; font-size: 1.1em">

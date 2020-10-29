@@ -6,7 +6,15 @@
 <%@ page import="java.util.*" %>
 <!DOCTYPE html>
 <%
-	String memno = request.getParameter("memno");
+	String memno = "";
+	MembersVO memVO = (MembersVO)session.getAttribute("loginMembersVO");
+	if (memVO != null){
+		memno = memVO.getMemno();
+		System.out.println("listByMemno的memno="+ memno);
+	} else {
+		System.out.println("listByMemno memno= == null");
+	}
+	
 	LodrService lodrSvc = new LodrService();
 	List<LodrVO> list = lodrSvc.getListByMem(memno);
 	pageContext.setAttribute("list", list);

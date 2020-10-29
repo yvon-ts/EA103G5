@@ -9,9 +9,14 @@
 <%@ page import="com.lecture.model.*"%>
 
 <%
-// 	MembersVO memVO = (MembersVO) request.getAttribute("loginMembersVO");
-// 	String memno = memVO.getMemno();
-// 	System.out.println(memno);
+	String memno = "";
+	MembersVO memVO = (MembersVO)session.getAttribute("loginMembersVO");
+	if (memVO != null){
+		memno = memVO.getMemno();
+		System.out.println("addLodr的memno="+ memno);
+	} else {
+		System.out.println("addLodr memno == null");
+	}
 
 	LecVO lecVO = (LecVO) request.getAttribute("lecVO");
 	String lecno = lecVO.getLecno();
@@ -75,8 +80,7 @@ body{
 				單一票價：<br>$<input class="txt" id="lecprice" type="text" name="lecprice" value="${lecVO.lecprice}" readonly><br>
 				金額小計：<br>$<input class="txt" id="lecamt" type="text" name="lecamt" readonly><br>
 				付款方式：&nbsp;<input type="radio" style="width: 20px"checked>&nbsp;信用卡
-			
-				會員編號：<input type="text" name="memno">
+				<input type="hidden" name="memno" value="<%=memno%>">
 				<input id="submit" type="submit" value="確認付款">
   				<input type="hidden" name="lecno" value="<%=lecno%>">
 			</div>
