@@ -29,7 +29,7 @@
 			
 				<div id="classroom">
 					<div id="stage">
-						Stage hi
+						Stage
 					</div>
 					<br>
 					<div id="seatmapping"></div>

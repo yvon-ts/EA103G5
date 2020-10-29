@@ -66,7 +66,8 @@
 			<td>${lodrVO.lodrstatus}</td>
 			<td>${lodrVO.lodrtime}</td>
             <td>
-            	<form method="post" action="<%=request.getContextPath()%>/front-end/lecseat/listWithQRcode.jsp">
+<%--  這裡有改           	<form method="post" action="<%=request.getContextPath()%>/front-end/lecseat/listWithQRcode.jsp"> --%>
+<form method="post" action="<%=request.getContextPath()%>/front-end/lecseat/testQRcode.jsp">
             	<input type="hidden" name="lodrno" value="${lodrVO.lodrno}">
 				<button type="submit" class="btn view"><i class="material-icons">&#xE417;</i></button>
             </form>

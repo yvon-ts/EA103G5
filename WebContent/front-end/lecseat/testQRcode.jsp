@@ -69,6 +69,9 @@
     border-radius: 2%;
     background-color: rgba(245, 222, 179, 0.5);
 }
+.signed{
+	background-color: #0099cc;
+}
 </style>
 <script>
 </script>
@@ -176,21 +179,49 @@
 <script>
 	var lodrno = "";
 	var seatno = "";
+	var newseat = "";
 	
 	function generateQRCode(){
 		var qrcode = new QRCode("codeOutput",{
-			text: "http://59f489681404.ngrok.io/EA103G5/lecseat/updateSeat?lodrno=" + lodrno + "&seatno=" + seatno,
+			text: "http://22839f63849d.ngrok.io/EA103G5/lecseat/updateSeat?lodrno=" + lodrno + "&seatno=" + seatno + "&newseat=" + newseat,
 			width: 150,
 			height: 150,
 			correctLevel: QRCode.CorrectLevel.H
 		});
 	}
+	
+	function getSignUpLayout(seatno){
+		let str = seatno.substring(0, 1);
+		let linechar = str.charCodeAt() - 65;
+		let linenum = parseInt(seatno.substring(1));
+		let roomcolumn = $("#roomcolumn").val();
+		let seatindex = parseInt(linechar * roomcolumn + linenum - 1);
+		console.log("seatindex=" + seatindex);
+		let defseat = $("#defaultseat").val();
+		console.log("defseat="+ defseat);
+		newseat = replaceCharAtStringIndex(defseat, seatindex, 3);
+		console.log("newseat"+newseat);
+		$("#signupseat").val(newseat);
+		//showSeatMapping();
+	}
+	
 	$(".view").click(function(e){
 		e.preventDefault();
 		var id = $(this).parent().attr("id");
 		lodrno = $("#"+id+" .lodrno").val();
 		seatno = $("#"+id+" .seatno").val();
 		console.log($("#"+id+"seat").text());
+		
+		getSignUpLayout(seatno);
+		
+		
+		//$("#seatindex").val(linechar * $("#roomcolumn").val() + linenum - 1);
+		//let seatindex = parseInt($("#seatindex").val());
+		//console.log("原seat=" + $("#defaultseat").val());
+		//let defseat = $("#defaultseat").val();
+		console.log("newseat=" + newseat);
+		//////////////////////////////////////////
+		
 		if ($("#"+id+"seat").text() === "正常"){
 			$("#codeOutput").html("");
 			$("#codeOutput").removeClass("hide");
