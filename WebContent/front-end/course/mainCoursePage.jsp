@@ -10,33 +10,40 @@
 <%
 	CourseVO courseVO = (CourseVO) request.getAttribute("courseVO");
 	
-	
-	// 10/28因應留言板根本導不回來而加 by CHC
+	// 如果只傳入courseno，沒有傳入courseVO時，使用courseno取一個courseVO
 	if(courseVO == null){
 		courseVO = new CourseService().getOneCourse(request.getParameter("courseno"));
 		request.setAttribute("courseVO",courseVO);
 	}
 
+	// 由此 2 個 Boolean 判斷登入者是否可以使用課程
 	Boolean isMyCourse = false;
 	Boolean alreadyBuyIt = false;
-	// TO DO：這個使用者買過沒？
+	
+	// 判斷登入者是否已買過此課程
+	//  TO DO TO DO TO DO TO DO TO DO TO DO TO DO TO DO TO DO 這個使用者買過沒
 
-	// 判斷是不是我自己的課程 CHC
-	TeacherVO teacherVO = (TeacherVO) session.getAttribute("teacherVO");
-	if (teacherVO != null) {
-		System.out.println("我是 " + teacherVO.getTchrno());
-		if (courseVO.getTchrno().equals(teacherVO.getTchrno())){
+	// 判斷是不是登入者自己開設的的課程
+	TeacherVO loginTeacherVO = (TeacherVO) session.getAttribute("loginTeacherVO");
+	if (loginTeacherVO != null && (courseVO.getTchrno().equals(loginTeacherVO.getTchrno()))) {
 			System.out.println("這是林北開的課啦");
 			isMyCourse = true;
-		} else {
-			System.out.println("我也只是個學生");					
-		}
 	}
-	else { // ELSE 其實可以不要
-		System.out.println("我是不是老師啦");		
-	} 
+	// 濃縮成上面那一行
+	// 	if (loginTeacherVO != null) {
+	// 		System.out.println("我是 " + loginTeacherVO.getTchrno());
+	// 		if (courseVO.getTchrno().equals(loginTeacherVO.getTchrno())){
+	// 			System.out.println("這是林北開的課啦");
+	// 			isMyCourse = true;
+	// 		} else {
+	// 			System.out.println("我也只是個學生");					
+	// 		}
+	// 	}
+	// 	else { // ELSE 其實可以不要
+	// 		System.out.println("我是不是老師啦");		
+	// 	} 
 
-
+	// 統整上面 2 個條件，看此登入者是否可以使用課程
 	Boolean canViewThisCourse = isMyCourse || alreadyBuyIt; 
 
 
@@ -49,7 +56,7 @@
 		courseScore = formatter.format(Double.valueOf(csscore) / Double.valueOf(csscoretimes));
 	}
 	
-	//開玄
+	// 開玄
 	request.getSession().setAttribute("coursenoForTest",courseVO.getCourseno());
 %>
 
@@ -124,7 +131,7 @@
 							</div>
 							<div class="list-group" id="videolist">
 
-								<!-- 測驗連結 -->
+							<!-- 測驗連結 -->
 							<% if (!canViewThisCourse){ %>
 								<a class="list-group-item list-group-item-action list-group-item-primary locked"
 									href="#">
@@ -137,7 +144,6 @@
 								</a>
 							<% } %>						
 								
-
 								<!-- 宣告複合查詢使用的 map -->
 								<%
 									String courseno = courseVO.getCourseno();
@@ -150,7 +156,6 @@
 								<jsp:useBean id="videoSvc" scope="page" class="com.video.model.VideoService" />
 								<c:forEach var="videoVO" items="${videoSvc.getAll(map)}">
 									
-<!-- --------------- 改這邊 --------------- --><!-- --------------- 改這邊 --------------- -->
 								<%
 									VideoVO videoVO = (VideoVO)(pageContext.getAttribute("videoVO"));
 									Integer chapterno = videoVO.getChapterno();
@@ -169,7 +174,6 @@
 											<h3 style="color:#0099CC;"><i class="fas fa-play"></i> 單元 ${videoVO.chapterno}</h3>
 										</div>
 								<%	} %>
-<!-- --------------- 改這邊 --------------- --><!-- --------------- 改這邊 --------------- -->
 
 										<div class="w-25">
 											<p class="showVideoLen text-right"></p>
@@ -189,7 +193,7 @@
 						<div class="col-md-2 col-4 courseInfo">
 							<!-- 須要查詢訂單中的購買人次 -->
 							<i class="fas fa-users"></i>
-<!-- NG -->
+<!-- NG  NG  NG  NG  NG  NG  NG  NG  NG  NG  NG  NG  NG  NG  NG  NG  NG  NG  NG  NG  NG  NG  NG  NG  NG  NG  NG  NG -->
 							<p><span>ToBeChange</span> 位同學</p>
 						</div>
 						<div class="col-md-2 col-4 courseInfo">
@@ -210,8 +214,7 @@
 						</div>
 						
 						
-							<!-- 須要查詢該使用者是否已加入收藏 -->
-						
+						<!-- 須要查詢該使用者是否已加入收藏 -->
 						<div class="col-md col-3 courseInfo">
 						<c:forEach var="TrackingListVO" items="${TrackingListSvc.getOneByMemno(membersVO.memno)}">
 								<c:choose>
@@ -291,9 +294,9 @@
 					</div>
 					<div id="post" class="tab-pane fade">
 						<h3>問題討論</h3>
-						<jsp:include page="/front-end/posts/posts.jsp">
-							<jsp:param name="courseno" value="${courseVO.courseno}"/>
-						</jsp:include>
+<%-- 						<jsp:include page="/front-end/posts/posts.jsp"> --%>
+<%-- 							<jsp:param name="courseno" value="${courseVO.courseno}"/> --%>
+<%-- 						</jsp:include> --%>
 					</div>
 				</div>
 

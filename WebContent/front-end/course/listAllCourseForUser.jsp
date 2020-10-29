@@ -48,13 +48,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>所有課程列表 - listAllCourse.jsp</title>
+<title>Xducation - 陪你成長的學習好夥伴</title>
 
-<link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/jquery.rateit/1.1.3/rateit.css" />
-<link rel="stylesheet"
-	href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-<!-- <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script> -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery.rateit/1.1.3/rateit.css" />
+	<!-- Font Awesome CSS -->
+	<link rel="stylesheet" href="<%=request.getContextPath()%>/library/font-awesome/5.15.1/css/all.min.css">
 
 <style>
 .rateit .rateit-preset {
@@ -152,21 +150,15 @@
 										<img src="<%=request.getContextPath()%>/course/CoursePictureReaderFromDB?courseno=${courseVO.courseno}" style="max-width: 100%; height: 150px;" class="pic">
                         			</div>
                         			<div class="services-content">
-                        	
-                  
 <!--                         	 -->
                         	&nbsp;&nbsp;&nbsp;<div class="rateit" data-rateit-value="${courseVO.csscore / courseVO.csscoretimes }" data-rateit-ispreset="true" data-rateit-readonly="true"></div> 
                         	<br>&nbsp;&nbsp;&nbsp;${courseVO.csscoretimes}則評價
                         	<h3 style="line-height:40px;">${courseVO.coursename}</h3></a>
 <%--                             <h3><a href="<%=request.getContextPath()%>/course/course.do?action=getOne_For_Display&courseno=${courseVO.courseno}">${courseVO.coursename}</a></h3> --%>
                             
-<%--                             <p>課程共${courseVO.ttltime}分鐘</p> --%>
-							<% 
-								// 將課程總時數換算為分鐘
-                            	Integer ttltimeInMin = ((CourseVO)pageContext.getAttribute("courseVO")).getTtltime()/60;
-                            %>                            
+							<!-- 將課程總時數換算為分鐘 -->
+							<% Integer ttltimeInMin = ((CourseVO)pageContext.getAttribute("courseVO")).getTtltime()/60; %>                            
                             <p>課程總長 <%= ttltimeInMin %> 分鐘</p>
-<!--                             <p>同學累計9487人</p> -->
 							
 							<label class="shoppingcart">
 								<i class="fa fa-shopping-cart" aria-hidden="true">
@@ -175,8 +167,6 @@
 <%-- 									<input type ="hidden" name="courseinfo"  id="courseinfo"  value ="${courseVO.courseinfo}"/> --%>
 								</i>加入購物車
 							</label>
-							
-							
 							
 							<c:forEach var="TrackingListVO" items="${TrackingListSvc.getOneByMemno(membersVO.memno)}">
 								<c:choose>
@@ -211,6 +201,9 @@
        </section>
        </div>
        </div>
+       
+       
+       
 <script>
 	$(document).ready(function(){
 		
@@ -327,9 +320,6 @@
 					
 					$(".seacharea").append(str);
 					$("div.rateit, span.rateit").rateit()
-					
-					
-					
 					
 				}
 			});

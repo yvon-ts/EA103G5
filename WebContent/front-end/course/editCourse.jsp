@@ -29,7 +29,6 @@
 	
 	//開玄修改
 	request.getSession().setAttribute("courseno", courseVO.getCourseno());
-	
 %>
 
 <!DOCTYPE html>

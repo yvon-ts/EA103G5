@@ -20,8 +20,7 @@ function setVideoDuration() {
 				//video = null;
 			}
 		} else {
-			alert("課程影片僅支援 MP4 格式之影片檔案")
-			// 須使之警告
+			swal('提醒', '課程影片僅支援 MP4 格式之影片檔案',  'warning');
 			$(this).val(null);
 			$(this).prevAll("input[name=chapterlen]").val(0);
 		}
