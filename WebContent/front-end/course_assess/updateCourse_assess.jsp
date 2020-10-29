@@ -251,7 +251,7 @@ background: url("<%=request.getContextPath()%>/front-end/members/assets/img/bgPi
         <input type="radio" id="rating-1" name="coursescore" value="1">
         <label class="ratingControl-stars ratingControl-stars--1" for="rating-1">1</label>
         <p>課程評分（點一下星星來評等，若未點選，則預設五顆星)</p>
-        <textarea class="text" name="comments" placeholder="有什麼想對這門課程說的話呢" maxlength="40" >${course_assessSvc.getOneCourse_assess(sessionScope.membersVO.memno).comments}</textarea>
+        <textarea class="text" name="comments" placeholder="有什麼想對這門課程說的話呢" maxlength="30" >${course_assessSvc.getOneCourse_assess(sessionScope.membersVO.memno).comments}</textarea>
         
     </div>
      <input type="hidden" name="asesno" value="${course_assessSvc.getOneCourse_assess(sessionScope.membersVO.memno).asesno}">

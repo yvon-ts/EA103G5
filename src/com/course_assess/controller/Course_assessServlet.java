@@ -23,6 +23,7 @@ import com.course_assess.model.Course_assessService;
 import com.course_assess.model.Course_assessVO;
 import com.members.model.MembersService;
 import com.teacher.model.TeacherService;
+import com.teacher.model.TeacherVO;
 
 public class Course_assessServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -57,42 +58,39 @@ public class Course_assessServlet extends HttpServlet {
 		List<String> errorMsgs = new LinkedList<String>();
 		req.setAttribute("errorMsgs", errorMsgs);
 		
-		
-		
 		try {
 			Course_assessService course_assessSvc = new Course_assessService();
 			MembersService membersSvc = new MembersService();
 			TeacherService teacherSvc = new TeacherService();
 			
 			String courseno = req.getParameter("courseno");
-			System.out.println(courseno);
 			List<Course_assessVO>list = course_assessSvc.getAll(courseno);
 			
 			 for(Course_assessVO vo : list) {
 				 
 				vo.setNkname(membersSvc.getOneMembers(vo.getMemno()).getNkname());
-				vo.setTchrstatus(teacherSvc.getStatus(vo.getMemno()).getTchrstatus());
+				TeacherVO tVo = teacherSvc.getStatus(vo.getMemno());
+				if(tVo != null) {
+					vo.setTchrstatus(tVo.getTchrstatus());
+				}else {
+					vo.setTchrstatus("未申請");
+				}
+					
 				Date date = vo.getCommenttime();
 				vo.setString_commenttime(new SimpleDateFormat("yyyy年MM月dd日 HH時:mm分").format(date));
 			 }
-			System.out.println(list);
 			String str = new JSONArray(list).toString();
-			System.out.println(str);
 			
 			res.setContentType("text/plain");
-			System.out.println("跑到這邊1");
 			res.setCharacterEncoding("UTF-8");
-			System.out.println("跑到這邊2");
 			PrintWriter out = res.getWriter();
-			System.out.println("跑到這邊3");
 			out.write(str);
-			System.out.println("跑到這邊4");
 			out.flush();
-			System.out.println("跑到這邊5");
 			out.close();
 			
 			
 		} catch (Exception e) {
+			e.printStackTrace();
 			errorMsgs.add("無法取得資料:" + e.getMessage());
 			RequestDispatcher failureView = req.getRequestDispatcher("新增失敗小視窗.jsp");
 			failureView.forward(req, res);

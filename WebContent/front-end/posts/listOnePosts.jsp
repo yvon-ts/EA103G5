@@ -34,7 +34,7 @@ th {
 <table>
 	<tr>
 <%-- 		<th><h4><a href="<%= request.getContextPath() %>/back-end/posts/select_page.jsp"><img src="<%= request.getContextPath() %>/back-end/posts/images/back1.gif" width="100" height="32" border="0"></a></h4></th> --%>
-		<th>文章編號</th>x
+		<th>文章編號111</th>x
 		<th>父文章編號</th>
 		<th>課程編號</th>
 		<th>會員編號</th>

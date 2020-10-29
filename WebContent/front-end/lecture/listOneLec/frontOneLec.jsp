@@ -8,7 +8,16 @@
 <%@ page import="com.speaker.model.*"%>
 <!DOCTYPE html>
 
-<% 
+<%
+	String memno = "";
+	MembersVO memVO = (MembersVO)session.getAttribute("loginMembersVO");
+	if (memVO != null){
+		memno = memVO.getMemno();
+		System.out.println("frontOneLec的memno="+ memno);
+	} else {
+		System.out.println("frontOneLec memno= == null");
+	}
+	
 	LecVO lecVO = (LecVO) request.getAttribute("lecVO");
 	String lecno = lecVO.getLecno();
 	String roomno = lecVO.getRoomno();
@@ -213,7 +222,7 @@
             <div class="input-group">
               <form method="post"	action="<%=request.getContextPath()%>/front-end/lecorder/listByMemno.jsp">
               <span class="input-group-append">
-              <input type="text" name="memno" value="memno"><br>
+              <input type="hidden" name="memno" value="<%=memno%>"><br>
                 <button class="btn btn-secondary" type="submit">查看我的講座清單</button>
                 </span>
                 </form>
@@ -225,7 +234,7 @@
         <div class="card my-4">
           <h5 class="card-header">Side Widget</h5>
           <div class="card-body">
-            <%@ include file="/back-end/lecture/roomsetting/singleLayout.jsp"%>
+            <%@ include file="/roomsetting/singleLayout.jsp"%>
           </div>
         </div>
 

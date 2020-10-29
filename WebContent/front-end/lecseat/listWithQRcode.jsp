@@ -9,6 +9,16 @@
 <%@ page import="com.lecseat.model.*" %>
 
 <%
+	String memno = "";
+	MembersVO memVO = (MembersVO)session.getAttribute("loginMembersVO");
+	if (memVO != null){
+		memno = memVO.getMemno();
+		System.out.println("listWithQRCOde的memno="+ memno);
+	} else {
+		System.out.println("ListWithQRCOde memno == null");
+	}
+	
+	
 	//lecseat
 	String lodrno = request.getParameter("lodrno").trim();
 	if(lodrno.length() == 0){
@@ -160,7 +170,7 @@
 						<li>講座地點：<%=roomname%>教室</li>
 						</ul>
 						<form method="post" action="<%=request.getContextPath()%>/front-end/lecorder/listByMemno.jsp">
-						<input type="text" name="memno"><br>
+						<input type="hidden" name="memno" value="<%=memno%>"><br>
 						<button id="return" class="btn btn-border" style="border: 1px solid #0099cc;">回上頁</button>
 						</form>
 						<button id="confirm" class="hide btn btn-border" style="border: 1px solid #0099cc;">確定變更</button>
