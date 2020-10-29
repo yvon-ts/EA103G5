@@ -73,9 +73,7 @@ center
 	<jsp:useBean id="coupSvc" scope="page"
 		class="com.coup_code.model.CoupCodeService" />
 
-	<form method="post"
-		action="<%=request.getContextPath()%>/Order_Master/Order_Master.do"
-		id="myForm">
+	<form method="post" action="<%=request.getContextPath()%>/Order_Master/Order_Master.do" id="myForm">
 		<section id="services" class="section-padding" style="padding: 90px 0">
 			<div class="container">
 				<div class="section-header">
@@ -169,7 +167,8 @@ center
 										<input type="hidden" name="memno" value="<%=membersVO.getMemno()%>"> 
 										<input type="hidden" name="orderamt" value="<%=orderamt%>">
 										<div class="col-sm-6 order-md-2 text-right">
-											<button id="add">+</button><input type="submit" value="結帳">
+											<button type="button" class="btn btn-primary" id="add">+</button>
+											<button type="submit" class="btn btn-primary" id="checkout">結帳</button>
 										</div>
 									</div>
 								</div>
@@ -181,11 +180,9 @@ center
 		</section>
 	</form>
 	<jsp:include page="/index/front-index/footer.jsp" />
-	<script
-		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.rateit/1.1.3/jquery.rateit.min.js">
-</script>
-	<script >
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.rateit/1.1.3/jquery.rateit.min.js"></script>
 	
+	<script >
 	
 	$("#add").click(function(e){
 		e.preventDefault();
@@ -194,6 +191,7 @@ center
 		$("#email").val("amy123@gmail.com");
 		$("#address").val("320桃園市中壢區中大路300號");
 	})
+	
 	</script>
 </body>
 </html>

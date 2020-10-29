@@ -12,72 +12,95 @@
 	List<OrderMasterVO> list = orderSvc.getOnesOrder(memno);
 	pageContext.setAttribute("list", list);
 %>
-
 <html>
 <head>
-<title>listAllByMemno.jsp</title>
-
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Xducation - 陪你成長的學習好夥伴</title>
+<link rel="stylesheet"
+	href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
+<link rel="stylesheet"
+	href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<link rel="stylesheet"
+	href="<%=request.getContextPath()%>/library/bootstrap/4.5.3/css/bootstrap.min.css">
+<%@ include file="/index/front-index/header.jsp"%>
+<link rel="stylesheet"
+	href="<%=request.getContextPath()%>/back-end/css/bootTable.css">
+<style>
+</style>
+<script>
+	
+</script>
 </head>
 <body>
 
+	<jsp:useBean id="courSvc" scope="page"
+		class="com.course.model.CourseService" />
+	<jsp:useBean id="courVO" scope="page" class="com.course.model.CourseVO" />
 
-<jsp:include page="/index/front-index/header.jsp" />
-
-	<table id="table-1">
-		<tr>
-			<td>
-				<h3>listAllByMemno.jsp</h3>
-				<h4>
-					<a
-						href="<%=request.getContextPath()%>/back-end/Order_Master/OrderMasterDB.jsp">回上頁</a>
-				</h4>
-			</td>
-		</tr>
-	</table>
-
-	<%-- 錯誤表列 --%>
-	<c:if test="${not empty errorMsgs}">
-		<font style="color: red">請修正以下錯誤:</font>
-		<ul>
-			<c:forEach var="message" items="${errorMsgs}">
-				<li style="color: red">${message}</li>
-			</c:forEach>
-		</ul>
-	</c:if>
-	
-	<c:if test="${empty list}">
-		<div>未持有訂單紀錄</div>
-	</c:if>
-
-	<c:if test="${not empty list}">
-
-	<table>
-		<tr>
-			<th>課程訂單編號</th>
-			<th>訂單成立時間</th>
-			<th>課程訂單狀態</th>
-			<th>總金額</th>
-			<th>折扣碼編號</th>
-			<th>付款方式</th>
-		</tr>
-		<%@ include file="page1.file"%>
-
-		<c:forEach var="ordermasterVO" items="${list}" begin="<%=pageIndex%>"
-			end="<%=pageIndex+rowsPerPage-1%>">
-
-			<tr>
-				<td><a
-					href="<%=request.getContextPath()%>/Order_Detail/Order_Detail.do?action=getOne_For_Display_ByMember&orderno=${ordermasterVO.orderno}">${ordermasterVO.orderno}</a></td>
-				<td>${ordermasterVO.orderdate}</td>
-				<td>${ordermasterVO.orderstatus}</td>
-				<td>${ordermasterVO.orderamt}</td>
-				<td>${ordermasterVO.coupno}</td>
-				<td>${ordermasterVO.payby}</td>
-			</tr>
-		</c:forEach>
-	</table>
-	<%@ include file="page2.file"%>
-	</c:if>
-
+	<div id="padd">padd</div>
+	<div id="table-area" class="container-xl">
+		<div class="table-responsive">
+			<div class="table-wrapper">
+				<div class="table-title">
+					<div class="row">
+						<div class="col-sm-3"></div>
+						<div class="col-sm-4">
+							<h2 class="text-center">我的訂單明細</h2>
+						</div>
+					</div>
+				</div>
+				<table class="table table-bordered">
+					<thead>
+						<tr>
+							<th>訂單編號</th>
+							<th>課程名稱</th>
+							<th>課程金額</th>
+							<th>訂單狀態</th>
+							<th>退款</th>
+						</tr>
+					</thead>
+					<tbody>
+						<%@ include file="/back-end/pool/page1.file"%>
+						<c:forEach var="orderDetailVO" items="${list}"
+							begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
+							<tr>
+								<td>${orderDetailVO.orderno}</td>
+								<td>${courSvc.getOneCourse(orderDetailVO.courseno).coursename}</td>
+								<td>${orderDetailVO.sellprice}</td>
+								<td>${orderDetailVO.odstatus}</td>
+								<td>
+									<FORM METHOD="post" onsubmit="return confirm('確定要申請退款嗎?');"
+										ACTION="<%=request.getContextPath()%>/Order_Detail/Order_Detail.do"
+										style="margin-bottom: 0px;">
+										<button type="submit" class="btn btn-primary">退款</button>
+										<input type="hidden" name="orderno"
+											value="${orderDetailVO.orderno}"> <input
+											type="hidden" name="courseno"
+											value="${orderDetailVO.courseno}"> <input
+											type="hidden" name="action" value="refund">
+									</FORM>
+								</td>
+							</tr>
+						</c:forEach>
+					</tbody>
+				</table>
+				<%@ include file="/back-end/pool/page2.file"%>
+				<div class="clearfix">
+					<ul class="pagination">
+						<li class="page-item disabled"><a href="#">Previous</a></li>
+						<li class="page-item"><a href="#" class="page-link">1</a></li>
+						<li class="page-item"><a href="#" class="page-link">2</a></li>
+						<li class="page-item active"><a href="#" class="page-link">3</a></li>
+						<li class="page-item"><a href="#" class="page-link">4</a></li>
+						<li class="page-item"><a href="#" class="page-link">5</a></li>
+						<li class="page-item"><a href="#" class="page-link">Next</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+	<%@ include file="/index/front-index/footer.jsp"%>
 </body>
 </html>

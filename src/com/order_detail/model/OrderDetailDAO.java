@@ -8,10 +8,7 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
-import com.course.model.CourseVO;
-import com.order_master.model.OrderMasterVO;
-
-import jdbcUtil_CompositeQuery.jdbcUtil_CompositeQuery_course;
+import jdbcUtil_CompositeQuery.jdbcUtil_CompositeQuery_orderdetail;
 
 public class OrderDetailDAO implements OrderDetailDAO_interface {
 
@@ -26,10 +23,11 @@ public class OrderDetailDAO implements OrderDetailDAO_interface {
 	}
 
 	private static final String INSERT_STMT = "INSERT INTO order_detail(orderno, courseno, sellprice, promono) VALUES (?, ?, ?, ?)";
-//	private static final String GET_ALL_STMT = "SELECT orderno, courseno, sellprice, odstatus, promono FROM order_detail order by orderno";
+	private static final String GET_ALL_STMT = "SELECT orderno, courseno, sellprice, odstatus, promono FROM order_detail order by orderno";
 	private static final String UPDATE = "UPDATE order_detail set odstatus=? where orderno = ? and courseno = ?";
 	private static final String UPDATE_REFUND = "UPDATE order_detail set odstatus = '申請退款' where orderno = ? and courseno = ?";
 	private static final String GET_SPE_STMT = "SELECT * FROM order_detail where orderno = ?";
+	private static final String GET_SPEM_STMT = "SELECT * FROM order_detail where memno = ?";
 	private static final String GET_ONE_STMT = "SELECT * FROM order_detail where orderno = ? and courseno = ?";
 
 	@Override
@@ -172,7 +170,7 @@ public class OrderDetailDAO implements OrderDetailDAO_interface {
 
 			con = ds.getConnection();
 
-			String finalSQL = "select * from order_detail " + jdbcUtil_CompositeQuery_course.get_WhereCondition(map);
+			String finalSQL = "select * from order_detail " + jdbcUtil_CompositeQuery_orderdetail.get_WhereCondition(map);
 			System.out.println("SQL = " + finalSQL);
 
 			pstmt = con.prepareStatement(finalSQL);
@@ -231,6 +229,60 @@ public class OrderDetailDAO implements OrderDetailDAO_interface {
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(GET_SPE_STMT);
 			pstmt.setString(1, orderno);
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				orderDetailVO = new OrderDetailVO();
+				orderDetailVO.setOrderno(rs.getString("orderNo"));
+				orderDetailVO.setCourseno(rs.getString("courseNo"));
+				orderDetailVO.setSellprice(rs.getInt("sellprice"));
+				orderDetailVO.setOdstatus(rs.getString("odstatus"));
+				orderDetailVO.setPromono(rs.getString("promoNo"));
+				list.add(orderDetailVO);
+			}
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return list;
+	}
+	
+	@Override
+	public List<OrderDetailVO> findByMemberNo(String memno) {
+
+		List<OrderDetailVO> list = new ArrayList<OrderDetailVO>();
+		OrderDetailVO orderDetailVO = null;
+
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(GET_SPE_STMT);
+			pstmt.setString(1, memno);
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {

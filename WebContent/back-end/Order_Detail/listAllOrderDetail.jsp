@@ -6,8 +6,7 @@
 <%@ page import="com.course.model.*, com.order_detail.model.*"%>
 <%@ page import="com.functionx.model.*"%>
 
-<jsp:useBean id="ordSvc" scope="page"
-	class="com.order_detail.model.OrderDetailService" />
+<jsp:useBean id="ordSvc" scope="page" class="com.order_detail.model.OrderDetailService" />
 
 <%
 	// 	System.out.println("==========");
@@ -32,6 +31,7 @@
 	if (!("所有".equals(searchStatus))) {
 		map.put("odstatus", new String[]{searchStatus});
 	}
+	
 	List<OrderDetailVO> list = ordSvc.getAll(map);
 	pageContext.setAttribute("list", list);
 
@@ -373,11 +373,11 @@ table.table .avatar {
 								<form method="post"
 									action="<%=request.getContextPath()%>/back-end/Order_Detail/listAllOrderDetail.jsp">
 									<select class="custom-select" name="searchStatus">
-										<option value="所有" ${searchStatus=="所有" ? 'selected' : '' }>所有
-										<option value="審核中" ${searchStatus=="鑑賞期" ? 'selected' : '' }>鑑賞期
-										<option value="上架" ${searchStatus=="申請退款" ? 'selected' : '' }>申請退款
-										<option value="下架" ${searchStatus=="退款完成" ? 'selected' : '' }>退款完成
-										<option value="下架" ${searchStatus=="交易完成" ? 'selected' : '' }>交易完成
+										<option value="" ${searchStatus=="所有" ? 'selected' : '' }>所有
+										<option value="鑑賞期" ${searchStatus=="鑑賞期" ? 'selected' : '' }>鑑賞期
+										<option value="申請退款" ${searchStatus=="申請退款" ? 'selected' : '' }>申請退款
+										<option value="退款完成" ${searchStatus=="退款完成" ? 'selected' : '' }>退款完成
+										<option value="交易完成" ${searchStatus=="交易完成" ? 'selected' : '' }>交易完成
 									</select>
 							</div>
 							<div class="col-sm-2">
@@ -399,13 +399,13 @@ table.table .avatar {
 
 							<%@ include file="page1.file"%>
 							<c:forEach var="ordVO" items="${list}" begin="<%=pageIndex%>"
-								end="<%=pageIndex+rowsPerPage-1%>">
+								end="<%=pageIndex+rowsPerPage-1%>" varStatus="order">
 								<tr>
 									<td>${ordVO.orderno}</td>
 									<td>${courSvc.getOneCourse(ordVO.courseno).coursename}</td>
 									<td>${ordVO.sellprice}</td>
 									<td>
-										<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/CourseServlet_Ajax">
+										<FORM METHOD="post" id="updateForm${order.index}" ACTION="<%=request.getContextPath()%>/Order_Detail/Order_Detail.do">
 											
 											<select class="custom-select" name="odstatus">
 												<option value="鑑賞期"${ordVO.odstatus=="鑑賞期" ? 'selected' : '' }>鑑賞期
@@ -415,12 +415,12 @@ table.table .avatar {
 											</select> 
 											
 											<input type="hidden" name="courseno" value="${ordVO.courseno}">
-											<input type="hidden" name="courseno" value="${ordVO.orderno}"> 
-											<input type="hidden" name="action" value="updateCourseStatus">
+											<input type="hidden" name="orderno" value="${ordVO.orderno}"> 
+											<input type="hidden" name="action" value="update">
 										</FORM>
 									</td>
 									<td><input type="submit" value="修改"
-										class="view updateButton"></td>
+										class="view updateButton" id="upBtn${order.index}"></td>
 								</tr>
 							</c:forEach>
 						</tbody>
@@ -429,6 +429,32 @@ table.table .avatar {
 				</div>
 			</div>
 		</div>
+		<script>
+		$(document).ready(function(){
+			for(let i = 0; i < ${list.size()} ; i++){
+				$("#upBtn" + i).click(()=> {
+					$.ajax({
+						url: "<%=request.getContextPath()%>/Order_Detail/Order_Detail.do?action=update",
+						type: "POST",
+						data: {
+							"orderno":$("#updateForm" + i).find('input[name="orderno"]').val(),
+							"courseno":$("#updateForm" + i).find('input[name="courseno"]').val(),
+							"odstatus":$("#updateForm" + i).find('select[name="odstatus"]').val()
+						}
+						,
+						success: function (data) {
+							console.log("成功");
+// 							alert(data);
+						},
+						error: function (data) {
+							console.log("失敗");
+							alert(data);
+						}
+					});
+				});
+			}
+		})
+	</script>
 </body>
 
 </html>
