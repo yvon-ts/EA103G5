@@ -14,8 +14,6 @@
 	pageContext.setAttribute("list", list);
 %>
 
-<%=list %>
-
 <html>
 <head>
 <meta charset="utf-8">
