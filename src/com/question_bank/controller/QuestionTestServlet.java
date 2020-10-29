@@ -93,7 +93,6 @@ public class QuestionTestServlet extends HttpServlet {
 		tse.writeScore(ase.compareToAns(tse.getTestno()), tse.getTestno());
 		
 		request.setAttribute("testsVo", tse.getOneByNO(tse.getTestno()));
-		System.out.println(tse.getOneByNO(tse.getTestno()));
 		
 		RequestDispatcher ResultView = request.getRequestDispatcher("/front-end/test/Result.jsp");
 		ResultView.forward(request, response);
@@ -125,8 +124,7 @@ public class QuestionTestServlet extends HttpServlet {
 		List<AnwserListVO> AnwserListVoList = new ArrayList<>();
 		AnwserListVO AnwserListVo = null;
 		Collections.shuffle(list);
-		
-		list.add(0,qse.getOneByNO("QNBK0066"));
+		list.set(0, qse.getOneByNO("QNBK0066"));
 		
 		/*
 		 * Collections.shuffle(List<?> list) Randomly permutes the specified list using

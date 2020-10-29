@@ -207,6 +207,8 @@ option[value=""] {
                 </select>
                 <div id="parentDiv"></div>
                 <input type="hidden" name="action" value="updateQuestion">
+                <input type="hidden" name="requestURL" value="<%=request.getParameter("requestURL")%>"> <!--接收原送出修改的來源網頁路徑後,再送給Controller準備轉交之用-->
+				<input type="hidden" name="whichPage"  value="<%=request.getParameter("whichPage")%>">  <!--只用於:istAllEmp.jsp-->
                 <input type="hidden" name="qbankno"  value="${QuestionBankvo.qbankno}">
                 <input type='submit' id="turnin" value='放置題庫' style="display:block ">
         		</div>

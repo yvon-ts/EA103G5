@@ -29,7 +29,9 @@ public class QuestionBankServlet extends HttpServlet {
 
 		String action = request.getParameter("action");
 
-
+		System.out.println(action);
+		
+		
 		if ("inputQuestion".equals(action)) {// 新增考題
 			
 			inputQuestion(request, response);
@@ -42,7 +44,7 @@ public class QuestionBankServlet extends HttpServlet {
 		if ("updateQuestion".equals(action)) { // 更新考題
 			updateQuestion(request, response);
 		}
-		System.out.println(action);
+		
 		if ("listEmps_ByCompositeQuery".equals(action)) {
 
 			compositeQuery(request, response);
@@ -167,8 +169,6 @@ public class QuestionBankServlet extends HttpServlet {
 			QuestionBankVO QuestionBankvo = qse.getOneByNO(qbankno);
 			
 			
-			
-			
 			request.setAttribute("QuestionBankvo", QuestionBankvo);
 			String url = "/front-end/question/update_Question_input.jsp";
 			RequestDispatcher successView = request.getRequestDispatcher(url);// 成功轉交 update_Question_input.jsp
@@ -282,7 +282,6 @@ public class QuestionBankServlet extends HttpServlet {
 		request.setAttribute("QuestionBankvo", QuestionBankvo);
 		
 		
-		 
 		RequestDispatcher successView = request.getRequestDispatcher("/front-end/question/ListOneQuestion.jsp");
 		successView.forward(request, response);
 

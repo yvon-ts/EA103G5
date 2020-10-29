@@ -25,7 +25,12 @@
 <head>
 <link rel="stylesheet" type="text/css" href="<%= request.getContextPath()%>/front-end/css/style2.css">
 <script defer src="https://use.fontawesome.com/releases/v5.0.0/js/all.js"></script>
+<style>
+	a{
+		margin:30px;
+	}
 
+</style>
 </head>
 <body>
 
@@ -119,7 +124,7 @@
 		</c:if>
 	</c:forEach>
 	</div>
-			<div style="text-align: center;"><a href="<%=request.getContextPath()%>/course/course.do?action=showCourseMainPage&courseno=${coursevoForNow.courseno}" class="btn btn-border">回到課程總攬</a><a href="<%=request.getContextPath()%>/front-end/test/ListAllTestRecord.jsp" class="btn btn-border">考試紀錄</a></div>
+			<div style="text-align: center; margin:20px;"><a href="<%=request.getContextPath()%>/course/course.do?action=showCourseMainPage&courseno=${coursevoForNow.courseno}" class="btn btn-border">回到課程總覽</a><a href="<%=request.getContextPath()%>/front-end/test/ListAllTestRecord.jsp" class="btn btn-border">考試紀錄</a></div>
 	<script src="https://code.jquery.com/jquery-3.5.1.js"
 	integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
 	crossorigin="anonymous"></script>
@@ -132,6 +137,10 @@
 		$('label span:first-of-type').css('top','-8px');
 		$('label span:first-of-type').css('left','-23px');
 		$('.fill').css('margin','0px 10px');
+		
+		$('input:checked').parents('li.option').css('border','1px solid #14bdcc');
+		$('input:checked').parents('li.option').css('background-color','rgba(20, 189, 204, .1)');
+		
 	});
 	
 	</script>

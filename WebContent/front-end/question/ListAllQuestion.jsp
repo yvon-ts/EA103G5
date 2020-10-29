@@ -5,7 +5,7 @@
 <%@ page import="com.question_bank.model.*,com.course.model.*"%>
 <% 
 		QuestionBankService questionbankSvc = new QuestionBankService();
-		List<QuestionBankVO> list = questionbankSvc.getAll();
+		List<QuestionBankVO> questionBankVoList = questionbankSvc.getAll();
 		
 		
 
@@ -14,7 +14,7 @@
 		
 		pageContext.setAttribute("typeList", typeList);
 
-		pageContext.setAttribute("list", list);
+		pageContext.setAttribute("questionBankVoList", questionBankVoList);
 		
 		
 		
@@ -45,7 +45,7 @@
 
 </head>
 <body>
-
+	
 	<jsp:include page="/index/front-index/header.jsp" />
 
 <%-- <c:if test="${not empty errorMsgs}"> --%>
@@ -84,32 +84,52 @@
                 </div>
                 
                 
-                <form action="<%= request.getContextPath()%>/question/questionBank.do" method="post">
+                <form action="<%= request.getContextPath()%>/question/questionBank.do" method="post" id = "myForm">
                 	
-                	<select name="courseno">
-                			<option value="" selected>請選擇課程</option>
-                		<c:forEach var="CourseVo" items="${CourseSvc.allForEmployee}">
-                			<option value="${CourseVo.courseno }">${CourseVo.coursename }</option>
-                		</c:forEach>
-                		
-                	</select>
-                	<select name="testtypeno">
-                			<option value="" selected>請選擇題型</option>
-                		<c:forEach var="testTypevo" items="${typeList}">
-                			<option value="${testTypevo.testtypeno}">${testTypevo.testdgee}-${(testTypevo.testtype eq 'checkbox' )? '多選題':(testTypevo.testtype eq 'radio' )? '單選題':'填空題' }</option>	
-                		</c:forEach>
-                	</select>
-                	
-                	<select name="testscope">
-                		<option value="" selected>請選擇單元</option>
-                		<option value="1">單元一</option>
-                		<option value="2">單元二</option>
-                		<option value="3">單元三</option>
-                		<option value="4">單元四</option>
-                	</select>
-                	<input type="text" name="qustmt">
+				<div class="container">
+
+				<div class="row">
+					<div class="col-2">
+					<div class="form-group">
+    					<select class="form-control" name="courseno">
+    								<option value="" selected>請選擇課程</option>
+                				<c:forEach var="CourseVo" items="${CourseSvc.allForEmployee}">
+                					<option value="${CourseVo.courseno }">${CourseVo.coursename }</option>
+                				</c:forEach>
+    					</select>
+  					</div>
+  					</div>
+  					<div class="col-2">
+  					<div class="form-group">
+    					<select class="form-control" name="testtypeno">
+    							<option value="" selected>請選擇題型</option>
+    						<c:forEach var="testTypevo" items="${typeList}">
+                				<option value="${testTypevo.testtypeno}">${testTypevo.testdgee}-${(testTypevo.testtype eq 'checkbox' )? '多選題':(testTypevo.testtype eq 'radio' )? '單選題':'填空題' }</option>	
+                			</c:forEach>
+    					</select>
+  					</div>
+  					</div>
+  					<div class="col-2">
+  					
+  					<div class="form-group">
+    					<select class="form-control" name="testscope">
+    							<option value="" selected>請選擇單元</option>
+    							<option value="1">單元一</option>
+                				<option value="2">單元二</option>
+                				<option value="3">單元三</option>
+                				<option value="4">單元四</option>
+    					</select>
+  					</div>
+  					</div>
+  					<div class="col-2">
+  					<input class="form-control" type="text" name="qustmt">
+                	</div>
+                	<div class="col-2">
                 	<input type="hidden" name="action" value="listEmps_ByCompositeQuery">
                 	<input type="submit" value="送出查詢">
+                	</div>
+                	</div>
+                </div>
                 </form>
               
                 <table class="table table-striped table-hover">
@@ -125,10 +145,10 @@
                         </tr>
                     </thead>
                     <tbody>
-                    	<%@ include file="page/page1.file" %> 
-                    
-                    	<c:forEach var="QuestionBankvo" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>" varStatus="counter">
-                        	
+                    	
+                    <%@ include file="page/page1.file" %>
+                    	<c:forEach var="QuestionBankvo" items="${questionBankVoList}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>" varStatus="counter">
+                        	 
                         <tr>
                             
                             <td>${QuestionBankvo.qbankno }</td>
@@ -150,6 +170,8 @@
 			     					<input style="font-family: FontAwesome" value="&#xf044;" type="submit">
 	
 			     					<input type="hidden" name="qbankno"  value="${QuestionBankvo.qbankno}">
+			     					<input type="hidden" name="requestURL"	value="<%=request.getServletPath()%>"><!--送出本網頁的路徑給Controller-->
+			     					<input type="hidden" name="whichPage"	value="<%=whichPage%>">               <!--送出當前是第幾頁給Controller-->
 			     					<input type="hidden" name="action"	value="getOne_For_Update">
 			     				</FORM>
 			     			</td>	
