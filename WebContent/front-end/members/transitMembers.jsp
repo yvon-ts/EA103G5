@@ -525,7 +525,7 @@ text-align:center;
         setTimeout(function () {
             // window.location.href = './input.html'
             window.open('<%=request.getContextPath()%>/front-end/members/vCodeMembers.jsp', '_self')
-        },5000)
+        },3000)
        </script> 
       
 </body>

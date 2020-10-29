@@ -1,22 +1,29 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.members.model.*"%>
-<%String inform = (String)request.getAttribute("inform"); %>
+<%
+	String inform = (String) request.getAttribute("inform");
+%>
 
-<%@ include file="/index/front-index/header.jsp" %>
+<%@ include file="/index/front-index/header.jsp"%>
 
 <html lang="en">
 <head>
 
 
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Xducation-會員註冊</title>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.3/sweetalert2.css" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.3/sweetalert2.js" type="text/javascript"></script>
-    <!-- Main css -->
-    <link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/members/addMembers_css/style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>Xducation-會員註冊</title>
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.3/sweetalert2.css" />
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.3/sweetalert2.js"
+	type="text/javascript"></script>
+<!-- Main css -->
+<link rel="stylesheet"
+	href="<%=request.getContextPath()%>/front-end/members/addMembers_css/style.css">
 <%--     <link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/members/nav_css_ForSignIn&addMembers/css/bootstrap.min.css"> --%>
 <%--     <link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/members/nav_css_ForSignIn&addMembers/css/nivo-lightbox.css"> --%>
 <%--     <link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/members/nav_css_ForSignIn&addMembers/css/animate.css"> --%>
@@ -24,282 +31,337 @@
 <%--     <link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/members/nav_css_ForSignIn&addMembers/css/responsive.css"> --%>
 </head>
 <style>
-
-
-
-
-
-
-
-.signup{
-margin-bottom: 50px;;
+.signup {
+	margin-bottom: 50px;;
 }
 
-
-input.input{
-width:300px;
-}
-
-img#preview_progressbarTW_img{
-width:400px;
-height:400px;
-
-position: absolute;
- z-index:1;
-
--webkit-box-shadow: 3px 3px 5px 5px #BEBEBE;
+img#preview_progressbarTW_img {
+	width: 400px;
+	height: 400px;
+	position: absolute;
+	z-index: 1;
+	-webkit-box-shadow: 3px 3px 5px 5px #BEBEBE;
 	-moz-box-shadow: 3px 3px 5px 5px #BEBEBE;
 	box-shadow: 3px 3px 5px 5px #BEBEBE;
-	
-    margin-left: 440px;
-    margin-top: 235px;
-    boder-radius: 10px;
-    border-radius: 20px;
+	margin-left: 440px;
+	margin-top: 300px;
+	boder-radius: 10px;
+	border-radius: 20px;
 }
-h2.form-title{
-width:600px;
-height:400px;
-position: absolute;
- z-index:1;
-font-size:150px;
-font-family:'Gochi Hand';
-margin:-230px 0 0 130px;
 
+h2.form-title {
+	width: 600px;
+	height: 400px;
+	position: absolute;
+	z-index: 1;
+	font-size: 150px;
+	font-family: 'Gochi Hand';
+	margin: -230px 0 0 130px;
 }
+
 div.signup-form {
-padding-top:130px;
+	padding-top: 130px;
 }
 
+img.icon {
+	width: 36px;
+	height: 36px;
+	position: absolute;
+}
 
-img.icon{
-width:36px;
-height:36px;
-position: absolute;
+.help-block.error {
+	margin-bottom: 5px;
 }
- input.input{
- padding:6px 50px;
- }
- 
- 
- .help-block.error {
-     margin-bottom: 5px;
-    }
-input.input{
-font-family:'Gochi Hand';
-}
-label.error{
-padding-left:160px;
-position: absolute;
-color:red;
-margin-top:0px;
-}
-div#msg{
-   margin-left: 140px;
-    width: 100%;
-    height: 100px;
-    position: absolute;
-    padding-top: 165px;
 
+input.input {
+	font-family: 'Gochi Hand';
+	font-size: 20px;
+	padding: 6px 50px;
+	width: 300px;
 }
-div#msg2{
-   margin-left: 160px;
-    width: 100%;
-    height: 100px;
-    position: absolute;
-    padding-top: 550px;
-    color:red;
 
+label.error {
+	padding-left: 160px;
+	position: absolute;
+	color: red;
+	margin-top: 0px;
 }
-div.signup-image{
-   width: 400px;
-    height: 400px;
-    position: absolute;
-    z-index: 5;
-    margin-left: 550px;
-    margin-top: 650px;
 
+div#msg {
+	margin-left: 140px;
+	width: 100%;
+	height: 100px;
+	position: absolute;
+	padding-top: 165px;
 }
-a.signup-image-link{
-margin-right:200px;
-margin-top:20px;
+
+div#msg2 {
+	margin-left: 160px;
+	width: 100%;
+	height: 100px;
+	position: absolute;
+	padding-top: 550px;
+	color: red;
 }
-div#bg{
- -webkit-box-shadow: 0 0 15px #8E8E8E;
+
+div.signup-image {
+	width: 900px;
+	height: 400px;
+	position: absolute;
+	z-index: 5;
+	margin-left: 550px;
+	margin-top: 650px;
+}
+
+a.signup-image-link {
+	margin-top: 100px;
+    font-size: 20px;
+    width: 600px;
+    margin-left:-210px;
+	
+}
+
+div#bg {
+	-webkit-box-shadow: 0 0 15px #8E8E8E;
 	-moz-box-shadow: 0 0 15px #8E8E8E;
 	box-shadow: 0 0 15px #5B5B5B;
 }
 
-
-
-
-div.main{
-padding-bottom:0px;
-background: url("<%=request.getContextPath()%>/front-end/members/assets/img/bgPic.png");
+div.main {
+	padding-bottom: 0px;
+	background:
+		url("<%=request.getContextPath()%>/front-end/members/assets/img/bgPic.png");
 }
-
-
 </style>
 
 
 
 <body>
-<!-- <nav class="navbar navbar-expand-md bg-inverse fixed-top scrolling-navbar"> -->
-<!--             <div class="container"> -->
-<!--                 左上角LOGO Start -->
-<%--                 <a href="<%=request.getContextPath()%>/front-end/members/indexV1.jsp" class="navbar-brand"><img src="<%=request.getContextPath()%>/front-end/members/nav_css_ForSignIn&addMembers/img/logo.svg" alt=""> --%>
-<!--                     <div id="logo">Xducation</div> -->
-<!--                 </a> -->
-<!--                 左上角LOGO End -->
-<!--                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation"> -->
-<!--                     <i class="lni-menu"></i> -->
-<!--                 </button> -->
-<!--                 <div class="collapse navbar-collapse" id="navbarCollapse"> -->
-<!--                     <ul class="navbar-nav mr-auto w-100 justify-content-end clearfix"> -->
-<!--                         <li class="nav-item"> -->
-<!--                             <a class="nav-link" href="#"> -->
-<!--                                 進入搜尋&nbsp;<i class="lni-search"></i> -->
-<!--                             </a> -->
-<!--                         </li> -->
-<!--                         <li class="nav-item"> -->
-<!--                             <a class="nav-link" href="#"> -->
-<!--                                 精選課程&nbsp;<i class="lni-leaf"></i> -->
-<!--                             </a> -->
-<!--                         </li> -->
-<!--                         <li class="nav-item"> -->
-<!--                             <a class="nav-link" href="#"> -->
-<!--                                 名人講座&nbsp;<i class="lni-bulb"></i> -->
-<!--                             </a> -->
-<!--                         </li> -->
-                       
-<!--                        <li class="nav-item"> -->
-<%--                             <a class="nav-link" href="<%=request.getContextPath()%>/front-end/members/signIn.jsp" style="color: #0099CC"> --%>
-<!--                                 我要登入&nbsp;<i class="lni-home"></i> -->
-<!--                             </a> -->
-<!--                         </li> -->
-<!--                         已登入 End -->
-<!--                     </ul> -->
-<!--                 </div> -->
-<!--             </div> -->
-<!--         </nav> -->
+	<!-- <nav class="navbar navbar-expand-md bg-inverse fixed-top scrolling-navbar"> -->
+	<!--             <div class="container"> -->
+	<!--                 左上角LOGO Start -->
+	<%--                 <a href="<%=request.getContextPath()%>/front-end/members/indexV1.jsp" class="navbar-brand"><img src="<%=request.getContextPath()%>/front-end/members/nav_css_ForSignIn&addMembers/img/logo.svg" alt=""> --%>
+	<!--                     <div id="logo">Xducation</div> -->
+	<!--                 </a> -->
+	<!--                 左上角LOGO End -->
+	<!--                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation"> -->
+	<!--                     <i class="lni-menu"></i> -->
+	<!--                 </button> -->
+	<!--                 <div class="collapse navbar-collapse" id="navbarCollapse"> -->
+	<!--                     <ul class="navbar-nav mr-auto w-100 justify-content-end clearfix"> -->
+	<!--                         <li class="nav-item"> -->
+	<!--                             <a class="nav-link" href="#"> -->
+	<!--                                 進入搜尋&nbsp;<i class="lni-search"></i> -->
+	<!--                             </a> -->
+	<!--                         </li> -->
+	<!--                         <li class="nav-item"> -->
+	<!--                             <a class="nav-link" href="#"> -->
+	<!--                                 精選課程&nbsp;<i class="lni-leaf"></i> -->
+	<!--                             </a> -->
+	<!--                         </li> -->
+	<!--                         <li class="nav-item"> -->
+	<!--                             <a class="nav-link" href="#"> -->
+	<!--                                 名人講座&nbsp;<i class="lni-bulb"></i> -->
+	<!--                             </a> -->
+	<!--                         </li> -->
 
-    <div class="main">
-    
+	<!--                        <li class="nav-item"> -->
+	<%--                             <a class="nav-link" href="<%=request.getContextPath()%>/front-end/members/signIn.jsp" style="color: #0099CC"> --%>
+	<!--                                 我要登入&nbsp;<i class="lni-home"></i> -->
+	<!--                             </a> -->
+	<!--                         </li> -->
+	<!--                         已登入 End -->
+	<!--                     </ul> -->
+	<!--                 </div> -->
+	<!--             </div> -->
+	<!--         </nav> -->
 
-        <!-- Sign up form -->
-        <section class="signup">
-            <div class="container" id="bg">
-            <a href="<%=request.getContextPath()%>/index/front-index/index.jsp"><img  id='preview_progressbarTW_img' src="<%=request.getContextPath()%>/front-end/members/assets/img/head/01.png" alt="sing up image"></a>
-            <div class="signup-image">
-             <a href="<%=request.getContextPath()%>/front-end/members/signIn.jsp" class="signup-image-link" style="font-family:'Gochi Hand';">I am already member</a>
-                    
-                        <a href="indexV1.jsp"></a>
-                        <c:if test="${not empty errorMsgs}">
-		<c:forEach var="message" items="${errorMsgs}">
-			<input type="hidden" id="message" value="${message}">
-		</c:forEach>
-	
-</c:if>
-                       </div>
-            <div id="msg"></div>
-            <div id="msg2"></div>
-                <div class="signup-content" >
-                    <div class="signup-form">
-                        <h2 class="form-title">Sign up</h2>
-                        <form method="POST" id="myform" class="register-form" ACTION="<%=request.getContextPath()%>/members/members.do" id="register-form" enctype="multipart/form-data">
-                            <div class="form-group">
-                               <img class="icon" src="<%=request.getContextPath()%>/front-end/members/signIn&updateMembers_css/images/memacc.svg"> <label for="memacc"></label>
-                               <input  value="${requestScope.membersVO.memacc}" id="memacc" name="memacc" class="input" onblur="sendRequest()" placeholder="Account"/>
-                            </div>
-                             <div class="form-group">
-                             <img class="icon" src="<%=request.getContextPath()%>/front-end/members/signIn&updateMembers_css/images/password.svg">
-                                <label for="mempwd"></label><div id="msg2"></div>
-                                <input style="font-family:'Gochi Hand';" type="password" value="" id="mempwd" class="input" name="mempwd" placeholder="Password"/>
-                            </div>
+	<div class="main">
 
-                            <div class="form-group">
-                                <img class="icon" src="<%=request.getContextPath()%>/front-end/members/signIn&updateMembers_css/images/Rmempwd.svg"><label for="Rmempwd"></label><div id="msg3"></div>
-                                <input type="password" id="Rmempwd" name="Rmempwd" class="input" placeholder="Repeat  password"/>
-                            </div>
-                            <div class="form-group">
-                            <img class="icon" src="<%=request.getContextPath()%>/front-end/members/signIn&updateMembers_css/images/id-card.svg" alt="">
-                                <label for="memname"></label><div id="msg4"></div>
-                                <input type="text" id="memname" value="${requestScope.membersVO.memname}" class="input" name="memname" placeholder="Your Name"/>
-                            </div>
-                            <div class="form-group">
-                                <img class="icon" src="<%=request.getContextPath()%>/front-end/members/signIn&updateMembers_css/images/nickname.svg" alt="">
-                                <label for="nkname"></label><div id="msg5"></div>
-                                <input type="text" id="nkname" value="${requestScope.membersVO.nkname}" class="input" name="nkname" placeholder="Your Nickname"/>
-                            </div>
-                            <div class="form-group">
-                                <img  class="icon" src="<%=request.getContextPath()%>/front-end/members/signIn&updateMembers_css/images/iphone.svg" alt="">
-                                <label for="mphone"></label><div id="msg6"></div>
-                                <input type="text" id="mphone" value="${requestScope.membersVO.mphone}" class="input" name="mphone" placeholder="Phone Number"/>
-                            </div>
-                            <div class="form-group">
-                               <img class="icon" src="<%=request.getContextPath()%>/front-end/members/signIn&updateMembers_css/images/new-email.svg" alt="">
-                                <label for="memail"></label><div id="msg7"></div>
-                                <input type="email" id="memail" value="${requestScope.membersVO.memail}" onblur="sendRequest2()" class="input" name="memail" placeholder="Your Email"/>
-                            </div>
-                            <div class="form-group">
-                                <img class="icon" src="<%=request.getContextPath()%>/front-end/members/signIn&updateMembers_css/images/birthday-present.svg" alt="">
-                                <label for="name"></label>
-                                <input type="text" name="membday" value="${requestScope.membersVO.membday}" class="input" id="f_date1" placeholder="Your Birthday" />
-                            </div>
-                            <div class="form-group">
-                               <img class="icon" src="<%=request.getContextPath()%>/front-end/members/signIn&updateMembers_css/images/pictures.svg" alt="">
-                                <label for="name"></label>
-                                <input type="file" onchange="readURL(this)" targetID="preview_progressbarTW_img" id="picture" class="input" name="picture" placeholder="Your Profile"/>
-                            </div>
-                            
-                            <div class="form-group form-button">
-                               <%--  <input id="inform" type="hidden" value="${inform}"> --%>
-                                <input type="hidden" name="action" value="insert">
-                                <input type="submit" style="font-family:'Gochi Hand'" id="register" name="signup" id="signup" class="form-submit" value="Register"/>
-                            </div>
-                        </form>
-                    </div>
-                    
-                    
-                </div>
-            </div>
-            
-        </section>
-        <footer id="footer" >
-        <section id="copyright" class="">
-            <div >
-                <div >
-                    <div >
-                        <div class="copyright-content">Xducation<p><a href="#">關於我們</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="#">其他服務</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="#">網站地圖</a></p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </footer>
-         
-        </div>       
-         </body><!-- This templates was made by Colorlib (https://colorlib.com) -->
 
-<% 
-  java.sql.Date membday = null;
-  try {
-	  membday = membersVO.getMembday();
-   } catch (Exception e) {
-	    membday = new java.sql.Date(System.currentTimeMillis());
-   }
+		<!-- Sign up form -->
+		<section class="signup">
+			<div class="container" id="bg">
+				<a href="<%=request.getContextPath()%>/index/front-index/index.jsp"><img
+					id='preview_progressbarTW_img'
+					src="<%=request.getContextPath()%>/front-end/members/assets/img/head/01.png"
+					alt="sing up image"></a>
+				<div class="signup-image">
+					<a
+						href="<%=request.getContextPath()%>/front-end/members/signIn.jsp"
+						class="signup-image-link" style="font-family: 'Gochi Hand';">I
+						am already member</a> <a href="indexV1.jsp"></a>
+					<c:if test="${not empty errorMsgs}">
+						<c:forEach var="message" items="${errorMsgs}">
+							<input type="hidden" id="message" value="${message}">
+						</c:forEach>
+
+					</c:if>
+				</div>
+				<div id="msg"></div>
+				<div id="msg2"></div>
+				<div class="signup-content">
+					<div class="signup-form">
+						<h2 class="form-title">Sign up</h2>
+						<form method="POST" id="myform" class="register-form"
+							ACTION="<%=request.getContextPath()%>/members/members.do"
+							id="register-form" enctype="multipart/form-data">
+							<div class="form-group">
+								<img class="icon"
+									src="<%=request.getContextPath()%>/front-end/members/signIn&updateMembers_css/images/memacc.svg">
+								<label for="memacc"></label> <input
+									value="${requestScope.membersVO.memacc}" id="memacc"
+									name="memacc" class="input" onblur="sendRequest()"
+									placeholder="Account" />
+							</div>
+							<div class="form-group">
+								<img class="icon"
+									src="<%=request.getContextPath()%>/front-end/members/signIn&updateMembers_css/images/password.svg">
+								<label for="mempwd"></label>
+								<div id="msg2"></div>
+								<input style="font-family: 'Gochi Hand';" type="password"
+									value="" id="mempwd" class="input" name="mempwd"
+									placeholder="Password" />
+							</div>
+
+							<div class="form-group">
+								<img class="icon"
+									src="<%=request.getContextPath()%>/front-end/members/signIn&updateMembers_css/images/Rmempwd.svg"><label
+									for="Rmempwd"></label>
+								<div id="msg3"></div>
+								<input type="password" id="Rmempwd" name="Rmempwd" class="input"
+									placeholder="Password again" />
+							</div>
+							<div class="form-group">
+								<img class="icon"
+									src="<%=request.getContextPath()%>/front-end/members/signIn&updateMembers_css/images/id-card.svg"
+									alt=""> <label for="memname"></label>
+								<div id="msg4"></div>
+								<input type="text" id="memname"
+									value="${requestScope.membersVO.memname}" class="input"
+									name="memname" placeholder="Your Name" />
+							</div>
+							<div class="form-group">
+								<img class="icon"
+									src="<%=request.getContextPath()%>/front-end/members/signIn&updateMembers_css/images/nickname.svg"
+									alt=""> <label for="nkname"></label>
+								<div id="msg5"></div>
+								<input type="text" id="nkname"
+									value="${requestScope.membersVO.nkname}" class="input"
+									name="nkname" placeholder="Your Nickname" />
+							</div>
+							<div class="form-group">
+								<img class="icon"
+									src="<%=request.getContextPath()%>/front-end/members/signIn&updateMembers_css/images/iphone.svg"
+									alt=""> <label for="mphone"></label>
+								<div id="msg6"></div>
+								<input type="text" id="mphone"
+									value="${requestScope.membersVO.mphone}" class="input"
+									name="mphone" placeholder="Phone Number" />
+							</div>
+							<div class="form-group">
+								<img class="icon"
+									src="<%=request.getContextPath()%>/front-end/members/signIn&updateMembers_css/images/new-email.svg"
+									alt=""> <label for="memail"></label>
+								<div id="msg7"></div>
+								<input type="email" id="memail"
+									value="${requestScope.membersVO.memail}"
+									onblur="sendRequest2()" class="input" name="memail"
+									placeholder="Your Email" />
+							</div>
+							<div class="form-group">
+								<img class="icon"
+									src="<%=request.getContextPath()%>/front-end/members/signIn&updateMembers_css/images/birthday-present.svg"
+									alt=""> <label for="name"></label> <input type="text"
+									name="membday" value="${requestScope.membersVO.membday}"
+									class="input" id="f_date1" placeholder="Your Birthday" />
+							</div>
+
+
+
+
+
+							<div class="form-group">
+								<div style="height: 50px;">
+									<img class="icon"
+										src="<%=request.getContextPath()%>/front-end/teacher/teacherRegister_css/images/pictures.svg">
+								</div>
+								<label id="cert"
+									style="font-family: 'Gochi Hand'; font-size: 30px; font-family: 'Gochi Hand'; margin-left: 40px;">點選上傳會員頭像
+
+									<input onchange="readURL(this)" targetID="preview_progressbarTW_img" type="file"
+									name="mprofile" style="display: none;" id="mprofile" />
+								</label>
+							</div>
+
+
+
+
+
+
+
+
+							<div class="form-group form-button">
+								<%--  <input id="inform" type="hidden" value="${inform}"> --%>
+								<input type="hidden" name="action" value="insert"> <input
+									type="submit"
+									style="font-family: 'Gochi Hand'; font-size: 30px;"
+									id="register" name="signup" id="signup" class="form-submit"
+									value="Register" />
+							</div>
+						</form>
+					</div>
+
+
+				</div>
+			</div>
+
+		</section>
+		<footer id="footer">
+			<section id="copyright" class="">
+				<div>
+					<div>
+						<div>
+							<div class="copyright-content">
+								Xducation
+								<p>
+									<a href="#">關於我們</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="#">其他服務</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a
+										href="#">網站地圖</a>
+								</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+		</footer>
+
+	</div>
+</body>
+<!-- This templates was made by Colorlib (https://colorlib.com) -->
+
+<%
+	java.sql.Date membday = null;
+try {
+	membday = membersVO.getMembday();
+} catch (Exception e) {
+	membday = new java.sql.Date(System.currentTimeMillis());
+}
 %>
-<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/front-end/members/datepicker/jquery.datetimepicker.css" />
-<script src="<%=request.getContextPath()%>/front-end/members/datepicker/jquery.js"></script>
-<script src="<%=request.getContextPath()%>/front-end/members/datepicker/jquery.datetimepicker.full.js"></script>
+<link rel="stylesheet" type="text/css"
+	href="<%=request.getContextPath()%>/front-end/members/datepicker/jquery.datetimepicker.css" />
+<script
+	src="<%=request.getContextPath()%>/front-end/members/datepicker/jquery.js"></script>
+<script
+	src="<%=request.getContextPath()%>/front-end/members/datepicker/jquery.datetimepicker.full.js"></script>
 
 <style>
-  .xdsoft_datetimepicker .xdsoft_datepicker {
-           width:  300px;   /* width:  300px; */
-  }
-  .xdsoft_datetimepicker .xdsoft_timepicker .xdsoft_time_box {
-           height: 151px;   /* height:  151px; */
-  }
- 
+.xdsoft_datetimepicker .xdsoft_datepicker {
+	width: 300px; /* width:  300px; */
+}
+
+.xdsoft_datetimepicker .xdsoft_timepicker .xdsoft_time_box {
+	height: 151px; /* height:  151px; */
+}
 </style>
 
 <script type="text/javascript">
@@ -485,21 +547,21 @@ function sendRequest() {
         	 
         }else{
         	var action = 'memailCheck';
-        	request2.open("POST", "<%=request.getContextPath()%>/front-end/members/MemaccCheckServlet", true);
-    	    request2.setRequestHeader("Content-Type",
-    	        "application/x-www-form-urlencoded");
-    	   
-    	    	request2.send("action="+action+"&memail=" + memail);
-        }
-    
-   
-    
-  }
-        
-</script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+        	request2.open("POST", "<%=request.getContextPath()%>/front-end/members/MemaccCheckServlet",
+							true);
+			request2.setRequestHeader("Content-Type",
+					"application/x-www-form-urlencoded");
 
-   
+			request2.send("action=" + action + "&memail=" + memail);
+		}
+
+	}
+</script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script
+	src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+
+
 
 </html>

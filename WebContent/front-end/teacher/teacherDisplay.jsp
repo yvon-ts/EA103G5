@@ -2,6 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.members.model.*"%>
 
+
 <%@ include file="/index/front-index/header.jsp" %>
 
 <!DOCTYPE html>
@@ -269,7 +270,7 @@ img.fti{
   </div>
 
   <div id="tab01" class="tab-contents">
-   <h2  class="form-title">${membersVO.memname}<img class="pic" src="<%=request.getContextPath()%>/front-end/teacher/teacherRegister_css/images/teacher.svg"></h2>
+   <h2  class="form-title">${loginMembersVO.memname}<img class="pic" src="<%=request.getContextPath()%>/front-end/teacher/teacherRegister_css/images/teacher.svg"></h2>
                         
     <div class="signup-content">
                 
@@ -279,18 +280,18 @@ img.fti{
                             <div class="form-group">
                                 <h5 class="h5">銀行帳號<img class="pic" src="<%=request.getContextPath()%>/front-end/teacher/teacherRegister_css/images/bank-account.svg"></h5>
                                 <table>
-                                <th><p>${teacherSvc.getOneTeacher(teacherSvc.getStatus(membersVO.memno).tchrno).bankacc}</p></th>
+                                <th><p>${loginTeacherVO.bankacc}</p></th>
                                 <th> <div id="bankdisplay"></div></th>
                                 </table>
                                 
-                                <input type="hidden" id="bankvalue"  value="${teacherSvc.getOneTeacher(teacherSvc.getStatus(membersVO.memno).tchrno).bankacc}">
+                                <input type="hidden" id="bankvalue"  value="${loginTeacherVO.bankacc}">
                             </div>
                             <div class="form-group">
                                 <h5 class="h5">你的專業證照<img class="pic" src="<%=request.getContextPath()%>/front-end/teacher/teacherRegister_css/images/certification.svg"></h5>
                                 <p>點選可放大檢視</p>
                                 <table id="license">
-                                <th><img  class="pimg" src="<%=request.getContextPath()%>/front-end/teacher/TchrcertDisplayServlet1?TCHRNO=${teacherSvc.getStatus(membersVO.memno).tchrno}" ></th>
-                                <th><img  class="pimg" src="<%=request.getContextPath()%>/front-end/teacher/TchrcertDisplayServlet2?TCHRNO=${teacherSvc.getStatus(membersVO.memno).tchrno}" ></th>
+                                <th><img  class="pimg" src="<%=request.getContextPath()%>/front-end/teacher/TchrcertDisplayServlet1?TCHRNO=${loginTeacherVO.tchrno}" ></th>
+                                <th><img  class="pimg" src="<%=request.getContextPath()%>/front-end/teacher/TchrcertDisplayServlet2?TCHRNO=${loginTeacherVO.tchrno}" ></th>
                                 <div id="outerdiv" style="position:fixed;top:0;left:0;background:rgba(0,0,0,0.7);z-index:2;width:100%;height:100%;display:none;">
     <div id="innerdiv" style="position:absolute;">
         <img id="bigimg" style="border:5px solid #fff;" src="" />
@@ -319,7 +320,7 @@ img.fti{
                    
                     
                     <div class="signup-image">
-                    <div id="mpic"><img id='mprofile' src="<%=request.getContextPath()%>/front-end/members/MprofileDisplayServlet?MEMNO=${membersVO.memno}" alt="sing up image">
+                    <div id="mpic"><img id='mprofile' src="<%=request.getContextPath()%>/front-end/members/MprofileDisplayServlet?MEMNO=${loginMembersVO.memno}" alt="sing up image">
                    </div>
                    <div id="fti"><img class="fti" src="<%=request.getContextPath()%>/front-end/teacher/teacherRegister_css/images/facebook.svg"><img class="fti" src="<%=request.getContextPath()%>/front-end/teacher/teacherRegister_css/images/twitter.svg"><img class="fti" src="<%=request.getContextPath()%>/front-end/teacher/teacherRegister_css/images/instagram.svg">
              </div>
@@ -335,7 +336,7 @@ img.fti{
   </div>
   <div id="tab02" class="tab-contents">
     <h2 >關於我<img class="pic" src="<%=request.getContextPath()%>/front-end/teacher/teacherRegister_css/images/reunion.svg"></h2>
-       <p>${teacherSvc.getOneTeacher(teacherSvc.getStatus(membersVO.memno).tchrno).tchrintro}</p>                      
+       <p>${loginTeacherVO.tchrintro}</p>                      
     
   </div>
   <div id="tab03" class="tab-contents">
@@ -349,14 +350,7 @@ img.fti{
     	</a>
 	<%-- <jsp:include page="/front-end/course/listTeacherCourseInclude.jsp" /> --%>
   </div>
-  <div id="tab04" class="tab-contents">
-    <h2>Tab 4</h2>
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eius quos aliquam consequuntur, esse provident impedit minima porro! Laudantium laboriosam culpa quis fugiat ea, architecto velit ab, deserunt rem quibusdam voluptatum.</p>
-  </div>
-  <div id="tab05" class="tab-contents">
-    <h2>Tab 5</h2>
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eius quos aliquam consequuntur, esse provident impedit minima porro! Laudantium laboriosam culpa quis fugiat ea, architecto velit ab, deserunt rem quibusdam voluptatum.</p>
-  </div>
+  
 </div>
             </div>
            

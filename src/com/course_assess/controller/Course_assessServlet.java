@@ -65,31 +65,31 @@ public class Course_assessServlet extends HttpServlet {
 			TeacherService teacherSvc = new TeacherService();
 			
 			String courseno = req.getParameter("courseno");
+			System.out.println(courseno);
 			List<Course_assessVO>list = course_assessSvc.getAll(courseno);
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd HH:mm:ss");
 			
-			 for(Course_assessVO vo: list) {
+			 for(Course_assessVO vo : list) {
+				 
 				vo.setNkname(membersSvc.getOneMembers(vo.getMemno()).getNkname());
 				vo.setTchrstatus(teacherSvc.getStatus(vo.getMemno()).getTchrstatus());
 				Date date = vo.getCommenttime();
 				vo.setString_commenttime(new SimpleDateFormat("yyyy年MM月dd日 HH時:mm分").format(date));
 			 }
-			
-			
-			
-			
-			
-			
-			
+			System.out.println(list);
 			String str = new JSONArray(list).toString();
+			System.out.println(str);
 			
 			res.setContentType("text/plain");
+			System.out.println("跑到這邊1");
 			res.setCharacterEncoding("UTF-8");
+			System.out.println("跑到這邊2");
 			PrintWriter out = res.getWriter();
+			System.out.println("跑到這邊3");
 			out.write(str);
+			System.out.println("跑到這邊4");
 			out.flush();
+			System.out.println("跑到這邊5");
 			out.close();
-			
 			
 			
 		} catch (Exception e) {

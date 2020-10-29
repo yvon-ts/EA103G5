@@ -178,7 +178,7 @@ div.main {
 
 	<div class="main">
 		<input type="hidden" id="starter"
-			value="${teacherSvc.getOneTeacher(teacherSvc.getStatus(membersVO.memno).tchrno).rejreason}">
+			value="${loginTeacherVO.rejreason}">
 
 
 		<!-- Sign up form -->
@@ -193,9 +193,7 @@ div.main {
 							再次遞交申請<img id="pic"
 								src="<%=request.getContextPath()%>/front-end/teacher/teacherRegister_css/images/teacher.svg">
 						</h2>
-						<form method="POST"
-							action="<%=request.getContextPath()%>/teacher/teacher.do"
-							enctype='multipart/form-data'>
+						<form method="POST" action="<%=request.getContextPath()%>/teacher/teacher.do" enctype='multipart/form-data'>
 							<div class="form-group">
 								<h5 class="h5">
 									你的銀行帳號<img class="pic"
@@ -204,7 +202,7 @@ div.main {
 
 								<input type="text" name="bankacc" id="name"
 									placeholder="只能輸入數字，限制20字"
-									value="${teacherSvc.getOneTeacher(teacherSvc.getStatus(membersVO.memno).tchrno).bankacc}" />
+									value="${loginTeacherVO.bankacc}" />
 
 
 							</div>
@@ -238,7 +236,7 @@ div.main {
 
 								<div id="text">
 									<textarea id="editor" name="tchrintro"
-										placeholder="資料的詳細度將會影響審核成功的機率，祝好運">${sessionScope.teacherVO.tchrintro}</textarea>
+										placeholder="資料的詳細度將會影響審核成功的機率，祝好運"sessionScope.>${loginTeacherVO.tchrintro}</textarea>
 								</div>
 							</div>
 
@@ -258,15 +256,15 @@ div.main {
 
 						<figure class='license'>
 							<img id="license1" class="certification"
-								src="<%=request.getContextPath()%>/front-end/teacher/TchrcertDisplayServlet1?TCHRNO=${teacherSvc.getStatus(membersVO.memno).tchrno}">
+								src="<%=request.getContextPath()%>/front-end/teacher/TchrcertDisplayServlet1?TCHRNO=${loginTeacherVO.tchrno}">
 						</figure>
 						<figure class='license'>
 							<img id="license2" class="certification"
-								src="<%=request.getContextPath()%>/front-end/teacher/TchrcertDisplayServlet2?TCHRNO=${teacherSvc.getStatus(membersVO.memno).tchrno}">
+								src="<%=request.getContextPath()%>/front-end/teacher/TchrcertDisplayServlet2?TCHRNO=${loginTeacherVO.tchrno}">
 						</figure>
 						<input type="hidden" name="action" value="updateTeacher">
 						<input type='hidden' name='tchrno'
-							value='${teacherSvc.getOneTeacher(teacherSvc.getStatus(membersVO.memno).tchrno).tchrno}'>
+							value='${loginTeacherVO.tchrno}'>
 						<input type="submit" name="signup" id="signup" class="form-submit"
 							value="提交" />
 						</form>
