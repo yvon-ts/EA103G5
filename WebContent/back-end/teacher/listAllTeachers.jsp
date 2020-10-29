@@ -148,7 +148,7 @@ button#bt3 {
 									varStatus="s">
 									<tr>
 										<td class="number"><img id="pic"
-											src="<%=request.getContextPath()%>/back-end/members/MprofileDisplayServlet?MEMNO=${teacherVO.memno}"
+											src="<%=request.getContextPath()%>/front-end/members/MprofileDisplayServlet?MEMNO=${teacherVO.memno}"
 											alt="No Image Uploaded"></td>
 										<td class="number">${teacherVO.tchrno}</td>
 										<td class="number">${teacherVO.memno}</td>

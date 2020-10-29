@@ -132,7 +132,7 @@ margin:0 0 0 260px;
 	<%@ include file="/back-end/teacher/page1_ByCompositeQuery.file" %>
 	<c:forEach var="teacherVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>" varStatus="s">
 		<tr>
-			<td class="number"><img id="pic" src="<%=request.getContextPath()%>/back-end/members/MprofileDisplayServlet?MEMNO=${teacherVO.memno}" alt="No Image Uploaded"></td>
+			<td class="number"><img id="pic" src="<%=request.getContextPath()%>/front-end/members/MprofileDisplayServlet?MEMNO=${teacherVO.memno}" alt="No Image Uploaded"></td>
 			<td class="number">${teacherVO.tchrno}</td>
 			<td class="number">${teacherVO.memno}</td>
 			<td class="number"><c:forEach var="membersVO" items="${membersSvc.all}">
