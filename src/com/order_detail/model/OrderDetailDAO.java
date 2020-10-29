@@ -23,11 +23,10 @@ public class OrderDetailDAO implements OrderDetailDAO_interface {
 	}
 
 	private static final String INSERT_STMT = "INSERT INTO order_detail(orderno, courseno, sellprice, promono) VALUES (?, ?, ?, ?)";
-	private static final String GET_ALL_STMT = "SELECT orderno, courseno, sellprice, odstatus, promono FROM order_detail order by orderno";
 	private static final String UPDATE = "UPDATE order_detail set odstatus=? where orderno = ? and courseno = ?";
 	private static final String UPDATE_REFUND = "UPDATE order_detail set odstatus = '申請退款' where orderno = ? and courseno = ?";
 	private static final String GET_SPE_STMT = "SELECT * FROM order_detail where orderno = ?";
-	private static final String GET_SPEM_STMT = "SELECT * FROM order_detail where memno = ?";
+	private static final String GET_SPEM_STMT = "SELECT * FROM order_detail od JOIN order_master om ON od.orderno = om.orderno WHERE memno = ? AND odstatus IN ('鑑賞期', '申請退款', '交易完成')";
 	private static final String GET_ONE_STMT = "SELECT * FROM order_detail where orderno = ? and courseno = ?";
 
 	@Override
@@ -281,7 +280,7 @@ public class OrderDetailDAO implements OrderDetailDAO_interface {
 
 		try {
 			con = ds.getConnection();
-			pstmt = con.prepareStatement(GET_SPE_STMT);
+			pstmt = con.prepareStatement(GET_SPEM_STMT);
 			pstmt.setString(1, memno);
 			rs = pstmt.executeQuery();
 

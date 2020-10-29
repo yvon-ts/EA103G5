@@ -34,10 +34,8 @@
 </head>
 <body>
 
-	<jsp:useBean id="courSvc" scope="page"
-		class="com.course.model.CourseService" />
-		<jsp:useBean id="courVO" scope="page"
-		class="com.course.model.CourseVO" />
+	<jsp:useBean id="courSvc" scope="page" class="com.course.model.CourseService" />
+	<jsp:useBean id="courVO" scope="page" class="com.course.model.CourseVO" />
 
 	<div id="padd">padd</div>
 	<div id="table-area" class="container-xl">
