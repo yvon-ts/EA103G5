@@ -158,14 +158,14 @@ public class MembersServlet extends HttpServlet {
 			if (memname == null || memname.trim().length() == 0) {
 				errorMsgs.add("會員姓名: 請勿空白");
 			} else if (!memname.trim().matches(memnameReg)) { // 以下練習正則(規)表示式(regular-expression)
-				errorMsgs.add("會員姓名: 只能是中、英文字母、數字 , 且長度必需在2到10之間");
+				errorMsgs.add("會員姓名: 只能是中、英文字母、數字 ,不能有任何符號, 且長度必需在2到10之間");
 			}
 			String nkname = req.getParameter("nkname");
-			String nknameReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{2,10}$";
+			String nknameReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)()]{2,10}$";
 			if (nkname == null || nkname.trim().length() == 0) {
-				nkname = "X-learner";
+				nkname = "Xlearner";
 			} else if (!nkname.trim().matches(nknameReg)) { // 以下練習正則(規)表示式(regular-expression)
-				errorMsgs.add("會員暱稱: 只能是中、英文字母和數字 , 且長度必需在2到10之間");
+				errorMsgs.add("會員暱稱: 只能是中、英文字母和數字,不能有任何符號 , 且長度必需在2到10之間");
 			}
 			String memail = req.getParameter("memail");
 			String memailReg = "^[_a-z0-9-]+([.][_a-z0-9-]+)*@[a-z0-9-]+([.][a-z0-9-]+)*$";
@@ -228,7 +228,7 @@ public class MembersServlet extends HttpServlet {
 			sb.append("歡迎註冊Xducation線上學習平台,");
 			sb.append("這是您的驗證碼:");
 			sb.append(vercode);
-//			sms.Process(sb, mphone);
+			sms.Process(sb, mphone);
 			session.setAttribute("memVO", memVO);
 			session.setAttribute("vercode", vercode);
 			session.setAttribute("count", count);
@@ -385,7 +385,7 @@ public class MembersServlet extends HttpServlet {
 		
 		try {
 			HttpSession session = req.getSession();
-			MembersVO membersVO = (MembersVO) session.getAttribute("membersVO");
+			MembersVO membersVO = (MembersVO) session.getAttribute("loginMembersVO");
 			 memno = membersVO.getMemno();
 
 			String mempwd = req.getParameter("mempwd");

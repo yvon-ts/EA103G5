@@ -238,6 +238,7 @@ padding:0px 0 0 0;
 
 
 <body>
+<jsp:include page="/index/front-index/header.jsp" />
 
 
       <div class="main">
@@ -263,7 +264,7 @@ padding:0px 0 0 0;
                 
                 <div>
                 <input type="hidden" id="inform5" value="${requestScope.inform5}">
-                <input type="hidden" id="courseno" value="${courseno}" />
+                <input type="hidden" id="courseno" value="COUR0001" />
                 <button class="register" id="js-load-more" >More</button>
                 </div>
                 
@@ -308,7 +309,7 @@ $(document).ready(function(){
 	
 	var counter = 0; /*計數器*/
 	var pageStart = 0; /*offset*/
-	var pageSize = 6; /*size*/
+	var pageSize = 10; /*size*/
 	/*首次載入*/
 	getData(pageStart, pageSize);
 	/*監聽載入更多*/
@@ -332,9 +333,10 @@ function getData(offset,size){
 			action:'getAll'
 		},
 		success: function(data){
+			console.log('ajax good!')
 			var JSONarray = JSON.parse(data);
 			
-//				console.log(JSONarray);
+ console.log(JSONarray); 
 //				/****業務邏輯塊：實現拼接html內容並prepend到頁面*********/
 			var sum = JSONarray.length;
 			console.log(offset,size,sum);

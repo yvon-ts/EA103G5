@@ -4,10 +4,6 @@
 <%@ page import="com.members.model.*"%>
 <%@ page import="com.teacher.model.*"%>
 
-<%
-MembersVO membersVO = (MembersVO) session.getAttribute("membersVO");
-String inform4 = (String)request.getAttribute("inform4"); 
-%>
 
 <jsp:useBean id="teacherSvc" scope="page" class="com.teacher.model.TeacherService" />
 
@@ -30,6 +26,7 @@ String inform4 = (String)request.getAttribute("inform4");
 	type="text/javascript"></script>
 
     <!-- Main css -->
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/index/front-index/assets/fonts/line-icons.css">
   <link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/members/signIn&updateMembers_css/style.css">
     <link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/members/nav_css_ForUpdateMembers/css/bootstrap.min.css">
     <link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/members/nav_css_ForUpdateMembers/css/nivo-lightbox.css">
@@ -125,6 +122,7 @@ height:36px;
  }
  
 div.main{
+font-size:15px;
 padding:150px 0 0 0 ;
 background: url("<%=request.getContextPath()%>/front-end/members/assets/img/bgPic.png");
 }
@@ -145,98 +143,100 @@ background: url("<%=request.getContextPath()%>/front-end/members/assets/img/bgPi
 				</button>
 				<div class="collapse navbar-collapse" id="navbarCollapse">
 					<ul class="navbar-nav mr-auto w-100 justify-content-end clearfix">
-						<li class="nav-item"><a class="nav-link" href="#">
-								進入搜尋&nbsp;<i class="lni-search"></i>
+						<li class="nav-item"><a class="nav-link"
+						href="<%=request.getContextPath()%>/front-end/tracking_list/listTrackingListForUser.jsp">
+							購物車&nbsp;<i class="lni lni-cart"></i>
+					</a></li>
+					<li class="nav-item"><a class="nav-link"
+						href="<%=request.getContextPath()%>/front-end/course/listAllCourseForUser.jsp">
+							搜尋課程&nbsp;<i class="lni-leaf"></i>
+					</a></li>
+					<li class="nav-item"><a class="nav-link"
+						href="<%=request.getContextPath()%>/front-end/lecture/listAllLec.jsp">
+							名人講座&nbsp;<i class="lni-bulb"></i>
+					</a></li>
+					<c:if test="${teacherSvc.getStatus(sessionScope.loginMembersVO.memno).tchrstatus eq '已通過'}">
+						<li class="nav-item"><a class="nav-link"
+							href="<%=request.getContextPath()%>/front-end/course/addCourse.jsp">
+								我要開課&nbsp;<i class="lni lni-display"></i>
 						</a></li>
-						<li class="nav-item"><a class="nav-link" href="#">
-								精選課程&nbsp;<i class="lni-leaf"></i>
-						</a></li>
-						<li class="nav-item"><a class="nav-link" href="#">
-								名人講座&nbsp;<i class="lni-bulb"></i>
-						</a></li>
-						<c:if test="${teacherSvc.getStatus(sessionScope.membersVO.memno).tchrstatus eq '已通過'}">
-						<li class="nav-item"><a class="nav-link" href="#">
-								我要開課&nbsp;<i class="lni-bulb"></i>
-						</a></li>
-						</c:if>
-						
-						<c:if test="${not empty sessionScope.membersVO}">
-							
-							
-							<li class="nav-item">
-								<div class="dropdown" id="dropdown">
-									<button class="btn btn-secondary dropdown-toggle" type="button"
-										id="dropdownMenuButton" data-toggle="dropdown"
-										aria-haspopup="true" aria-expanded="false">
-										${sessionScope.membersVO.memname}</button>
-									<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+					</c:if>
+
+
+
+
+
+					<c:if test="${not empty sessionScope.loginMembersVO}">
+						<li class="nav-item">
+							<div class="dropdown" id="dropdown">
+								<button class="btn btn-secondary dropdown-toggle" type="button"
+									id="dropdownMenuButton" data-toggle="dropdown"
+									aria-haspopup="true" aria-expanded="false">
+									${sessionScope.loginMembersVO.memname}</button>
+								<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+									<a class="dropdown-item"
+										href="<%=request.getContextPath()%>/front-end/members/updateMembersV2.jsp">個人檔案</a>
+
+									<a class="dropdown-item"
+										href='<%=request.getContextPath()%>/front-end/Order_Master/listAllByMemno.jsp'>課程訂單紀錄</a>
+
+									<a class="dropdown-item"
+										href='<%=request.getContextPath()%>/front-end/coup_code/listAllByMemno.jsp'>持有折扣券</a>
+
+
+									<c:if test="${teacherSvc.getStatus(sessionScope.loginMembersVO.memno).tchrstatus eq '待審核'}">
+										<a class="dropdown-item" onclick="status()">老師檔案</a>
+
+									</c:if>
+									<c:if test="${teacherSvc.getStatus(sessionScope.loginMembersVO.memno).tchrstatus eq '已通過'}">
 										<a class="dropdown-item"
-											href="<%=request.getContextPath()%>/front-end/members/updateMembersV2.jsp">個人檔案</a>
-											<a class="dropdown-item"
-											href='<%=request.getContextPath()%>/front-end/Order_Master/listAllByMemno.jsp'>課程訂單紀錄</a>
-											
-											<a class="dropdown-item"
-											href='<%=request.getContextPath()%>/front-end/coup_code/listAllByMemno.jsp'>持有折扣券</a> 
-													
-											
-											
-										
-										<c:if test="${teacherSvc.getStatus(sessionScope.membersVO.memno).tchrstatus eq '待審核'}">
-										<a class="dropdown-item" onclick="status()" >老師檔案</a> 
-											
-										</c:if>
-										<c:if test="${teacherSvc.getStatus(sessionScope.membersVO.memno).tchrstatus eq '已通過'}">
-										<a class="dropdown-item"
-											href="<%=request.getContextPath()%>/front-end/teacher/teacherDisplay.jsp">老師檔案</a> 
-											
-										</c:if>
-											<c:if test="${teacherSvc.getStatus(membersVO.memno).tchrstatus eq '未通過'}">
+											href="<%=request.getContextPath()%>/front-end/teacher/teacherDisplay.jsp">老師檔案</a>
+
+									</c:if>
+									<c:if test="${teacherSvc.getStatus(sessionScope.loginMembersVO.memno).tchrstatus eq '未通過'}">
 										<a class="dropdown-item"
 											href="<%=request.getContextPath()%>/front-end/teacher/teacherUpdate.jsp">老師檔案</a>
-											
-										</c:if>
-										<c:if test="${not empty sessionScope.membersVO}">
-										<a class="dropdown-item"
-											href='<%=request.getContextPath()%>/members/members.do?action=signout'>會員登出</a> 
-											
-										</c:if>
-											
-											
-										
-											
-											
-											
-									</div>
-								</div>
-								
-							</li>
-							
-							</c:if>
-							<c:if test="${not empty sessionScope.membersVO.memno}">
-							<c:if test="${empty teacherSvc.getStatus(sessionScope.membersVO.memno)}">
-							<img id="nav_icon" src='<%=request.getContextPath()%>/front-end/members/assets/img/students.svg'>
-							</c:if>
-							<c:if test="${teacherSvc.getStatus(sessionScope.membersVO.memno).tchrstatus eq '待審核'}">
-							<img id="nav_icon" src='<%=request.getContextPath()%>/front-end/members/assets/img/students.svg'>
-							</c:if>
-							
-							<c:if test="${teacherSvc.getStatus(sessionScope.membersVO.memno).tchrstatus eq '已通過'}">
-							<img id="nav_icon" src='<%=request.getContextPath()%>/front-end/members/assets/img/teacher.svg'>
-							</c:if>
-							<c:if test="${teacherSvc.getStatus(sessionScope.membersVO.memno).tchrstatus eq '未通過'}">
-							<img id="nav_icon" src='<%=request.getContextPath()%>/front-end/members/assets/img/students.svg'>
-							
-							</c:if>
-							</c:if>
-							
 
-						<c:if test="${empty sessionScope.membersVO}">
-							<li class="nav-item"><a class='nav-link'
-								href='<%=request.getContextPath()%>/front-end/members/signIn.jsp'>我要登入&nbsp;<i
-									class='lni-bulb'></i></a></li>
+									</c:if>
+									<c:if test="${not empty sessionScope.loginMembersVO}">
+										<a class="dropdown-item"
+											href='<%=request.getContextPath()%>/members/members.do?action=signout'>會員登出</a>
+									</c:if>
+
+
+
+
+
+
+								</div>
+							</div>
+
+						</li>
+
+					</c:if>
+					<c:if test="${not empty sessionScope.loginMembersVO.memno}">
+						
+						<c:if test="${teacherSvc.getStatus(sessionScope.loginMembersVO.memno).tchrstatus eq '待審核'}">
+							<img id="nav_icon"
+								src='<%=request.getContextPath()%>/front-end/members/assets/img/students.svg'>
 						</c:if>
 
+						<c:if test="${teacherSvc.getStatus(sessionScope.loginMembersVO.memno).tchrstatus eq '已通過'}">
+							<img id="nav_icon"
+								src='<%=request.getContextPath()%>/front-end/members/assets/img/teacher.svg'>
+						</c:if>
+						<c:if test="${teacherSvc.getStatus(sessionScope.loginMembersVO.memno).tchrstatus eq '未通過'}">
+							<img id="nav_icon"
+								src='<%=request.getContextPath()%>/front-end/members/assets/img/students.svg'>
 
+						</c:if>
+					</c:if>
+
+
+					<c:if test="${empty sessionScope.loginMembersVO}">
+						<li class="nav-item"><a class='nav-link'
+							href='<%=request.getContextPath()%>/front-end/members/signIn.jsp'>我要登入&nbsp;<i class="lni lni-rocket"></i></a></li>
+					</c:if>
 
 
 					</ul>
@@ -260,7 +260,7 @@ background: url("<%=request.getContextPath()%>/front-end/members/assets/img/bgPi
                 <div class="signup-content">
                     <div class="signup-form">
 
-                        <h2  class="form-title"><img id="pic" src="<%=request.getContextPath()%>/front-end/members/signIn&updateMembers_css/images/membership.svg">${membersVO.nkname}-個人檔案</h2>
+                        <h2  class="form-title"><img id="pic" src="<%=request.getContextPath()%>/front-end/members/signIn&updateMembers_css/images/membership.svg">${loginMembersVO.nkname}-個人檔案</h2>
                         
                      
                         	 <table>
@@ -277,9 +277,9 @@ background: url("<%=request.getContextPath()%>/front-end/members/assets/img/bgPi
                             </div></th>
                         	 	</tr>
                         	 	<tr>
-                        	 		<td> <p>${membersVO.memname}</p></td>
+                        	 		<td> <p>${loginMembersVO.memname}</p></td>
                         	 		<th></th>
-                        	 		<td> <p>${membersVO.mphone}</p></td>
+                        	 		<td> <p>${loginMembersVO.mphone}</p></td>
 
                         	 	</tr>
                         	 	<tr><td style="color:#FFF">"    "</td></tr>
@@ -296,9 +296,9 @@ background: url("<%=request.getContextPath()%>/front-end/members/assets/img/bgPi
                             </div></th>
                         	 	</tr>
                         	 	<tr>
-                        	 		<td> <p>${membersVO.membday}</p></td>
+                        	 		<td> <p>${loginMembersVO.membday}</p></td>
                         	 		<th></th>
-                        	 		<td> <p>${membersVO.memail}</p></td>
+                        	 		<td> <p>${loginMembersVO.memail}</p></td>
 
                         	 	</tr>
                         	 	 <tr><td style="color:#FFF">" "</td></tr>
@@ -317,7 +317,7 @@ background: url("<%=request.getContextPath()%>/front-end/members/assets/img/bgPi
                                 <h5 class="h5">會員暱稱<img class="pic" src="<%=request.getContextPath()%>/front-end/members/signIn&updateMembers_css/images/nickname.svg"></h5> 
                             </div>
                             
-                        <input class="input" name='nkname' type="text" value="${membersVO.nkname}" placeholder="Your nickname"/></th>
+                        <input class="input" name='nkname' type="text" value="${loginMembersVO.nkname}" placeholder="Your nickname"/></th>
                            
                           <tr><td>點選上傳.....⤴</td></tr>
                            <tr><td style="color:#FFF">" "</td></tr>
@@ -344,7 +344,7 @@ background: url("<%=request.getContextPath()%>/front-end/members/assets/img/bgPi
                     </div>
                     <div class="signup-image">
                         <figure id='a_mprofile'>
-                        <img id='mprofile' class="pimg" src="<%=request.getContextPath()%>/front-end/members/MprofileDisplayServlet?MEMNO=${membersVO.memno}" alt="sing up image">
+                        <img id='mprofile' class="pimg" src="<%=request.getContextPath()%>/front-end/members/MprofileDisplayServlet?MEMNO=${loginMembersVO.memno}" alt="sing up image">
                         <input type='hidden' name='action' value='updatemembers'>
                          <input type="submit" style="font-family:'Gochi Hand'" id="register" name="signup" id="signup" class="form-submit" value="Update"/>
                        
@@ -352,7 +352,7 @@ background: url("<%=request.getContextPath()%>/front-end/members/assets/img/bgPi
                         
                       
                        
-  <h5 id='regdate' style="text-align: center;color:black"><img class="pic" src="<%=request.getContextPath()%>/front-end/members/signIn&updateMembers_css/images/join.svg">註冊會員日期:<fmt:formatDate value="${membersVO.regdate}" type="date" dateStyle="full"/></h5>
+  <h5 id='regdate' style="text-align: center;color:black"><img class="pic" src="<%=request.getContextPath()%>/front-end/members/signIn&updateMembers_css/images/join.svg">註冊會員日期:<fmt:formatDate value="${loginMembersVO.regdate}" type="date" dateStyle="full"/></h5>
   
                     </div>
             

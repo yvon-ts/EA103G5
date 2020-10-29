@@ -309,6 +309,7 @@ public class Course_assessDAO implements Course_assessDAO_interface {
 				course_assessVO.setComments(rs.getString("comments"));
 				course_assessVO.setCommenttime(rs.getTimestamp("commenttime"));
 				list.add(course_assessVO); // Store the row in the list
+				
 			}
 
 			// Handle any driver errors

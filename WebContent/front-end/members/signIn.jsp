@@ -59,10 +59,13 @@ margin:-240px 0 0 -30px;
 }
 input#signin{
 margin:10px 0 0 70px ;
+font-size:20px;
 
 }
 
-
+.signup-image-link{
+font-size:20px;
+}
 
  img.icon{
  width:33px;
@@ -90,6 +93,7 @@ margin-bottom: 50px;;
 }
  input.input{
 font-family:'Gochi Hand';
+font-size:30px;
 }
 div.signin-form{
 padding-top:200px;
@@ -168,7 +172,7 @@ background: url("<%=request.getContextPath()%>/front-end/members/assets/img/bgPi
                 <div class="signin-content">
                     <div class="signin-image">
                         <a href="<%=request.getContextPath()%>/index/front-index/index.jsp"><img class="pic" src="<%=request.getContextPath()%>/front-end/members/assets/img/head/02.png" alt="sing up image"></a>
-                        <a href="<%=request.getContextPath()%>/front-end/members/addMembersV2.jsp" class="signup-image-link" style="font-family:'Gochi Hand';">Create an account</a>
+                        <a href="<%=request.getContextPath()%>/front-end/members/addMembersV2.jsp" class="signup-image-link" style="font-family:'Gochi Hand'">Create an account</a>
                     </div>
 
                     <div class="signin-form">

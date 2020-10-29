@@ -35,7 +35,8 @@ public class Course_assessService {
 		
 	}
 	public List<Course_assessVO> getAll(String courseno){
-		return dao.getAll(courseno);
+		List<Course_assessVO> list = dao.getAll(courseno);
+		return list;
 	}
     
 	public void deleteCourse_assess(String asesno) {
