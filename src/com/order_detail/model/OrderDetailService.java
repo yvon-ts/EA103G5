@@ -1,5 +1,6 @@
 package com.order_detail.model;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -20,7 +21,6 @@ public class OrderDetailService {
 		vo.setCourseno(courseno);
 		vo.setSellprice(sellprice);
 		vo.setPromono(promono);
-		;
 		dao.insert(vo, null);
 
 		return vo;
@@ -58,5 +58,19 @@ public class OrderDetailService {
 		dao.update(vo);
 		
 		return dao.findByPrimaryKey(orderno, courseno);
+	}
+	
+	public boolean boughtNot(List<OrderDetailVO> list, String couseno, String memno) {
+		
+		boolean own = false;
+		
+		List<String> coursenos = new ArrayList<String>();
+		list =  dao.findByMemberNo(memno);
+		for(OrderDetailVO a : list) {
+			coursenos.add(a.getCourseno()) ;
+		}
+		own = coursenos.contains(couseno);
+		
+		return own;
 	}
 }

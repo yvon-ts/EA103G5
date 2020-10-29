@@ -71,14 +71,11 @@
 								<td>${orderDetailVO.sellprice}</td>
 								<td>${orderDetailVO.odstatus}</td>
 								<td>
-									<FORM METHOD="post" onsubmit="return confirm('確定要申請退款嗎?');"
-										ACTION="<%=request.getContextPath()%>/Order_Detail/Order_Detail.do"
-										style="margin-bottom: 0px;">
-										<input type="submit" value="退款"><input type="hidden"
-											name="orderno" value="${orderDetailVO.orderno}"><input
-											type="hidden" name="courseno"
-											value="${orderDetailVO.courseno}"> <input
-											type="hidden" name="action" value="refund">
+									<FORM METHOD="post" onsubmit="return confirm('確定要申請退款嗎?');" ACTION="<%=request.getContextPath()%>/Order_Detail/Order_Detail.do" style="margin-bottom: 0px;">
+										<button type="submit" class="btn btn-primary">退款</button>
+										<input type="hidden" name="orderno" value="${orderDetailVO.orderno}">
+										<input type="hidden" name="courseno" value="${orderDetailVO.courseno}"> 
+										<input type="hidden" name="action" value="refund">
 									</FORM>
 								</td>
 							</tr>

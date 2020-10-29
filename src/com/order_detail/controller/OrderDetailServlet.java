@@ -29,7 +29,7 @@ public class OrderDetailServlet extends HttpServlet {
 
 		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
-		
+		System.out.println(action);
 		if ("getOne_For_Display".equals(action)) { 
 			List<String> errorMsgs = new LinkedList<String>();
 			// Store this set in the request scope, in case we need to
@@ -118,7 +118,7 @@ public class OrderDetailServlet extends HttpServlet {
 		}
 
 		if ("update".equals(action)) {
-
+			
 			List<String> errorMsgs = new LinkedList<String>();
 			// Store this set in the request scope, in case we need to
 			// send the ErrorPage view.
@@ -129,6 +129,10 @@ public class OrderDetailServlet extends HttpServlet {
 				String orderno = req.getParameter("orderno");
 				String courseno = req.getParameter("courseno");
 				String odstatus = req.getParameter("odstatus");
+				
+				System.out.println(orderno);
+				System.out.println(courseno);
+				System.out.println(odstatus);
 				
 				OrderDetailService orderDetailSvc = new OrderDetailService();
 

@@ -11,6 +11,7 @@ public interface OrderDetailDAO_interface {
 	public void refund(OrderDetailVO orderDetailVO);
 	public List<OrderDetailVO> getAll(Map<String, String[]> map);
 	public List<OrderDetailVO> findByOrderNo(String orderno);
+	public List<OrderDetailVO> findByMemberNo(String memno);
 	public OrderDetailVO findByPrimaryKey(String orderno, String courseno);
 	
 }

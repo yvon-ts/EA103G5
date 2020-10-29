@@ -439,6 +439,7 @@
 		// 上傳單一單元的影片
 		$(".updateButton").click(function (e) {
 			e.preventDefault();
+			console.log($(this).parents("tr").find("form")[0]);
 			var formData = new FormData($(this).parents("tr").find("form")[0]);
 
 			for (let key of formData.keys()) {
