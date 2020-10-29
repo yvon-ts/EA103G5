@@ -20,12 +20,10 @@
 			<thead>
 				<tr>
 					<th scope="col"></th>
-					<!-- <th scope="col" style="width: 150px;">#</th> -->
 					<th scope="col">#</th>
 					<th scope="col">Chapter Title</th>
 					<th scope="col" colspan="2">Video File</th>
 					<th scope="col" colspan="2">Action</th>
-					<!-- <th>編輯</th> -->
 				</tr>
 			</thead>
 			<tbody id="videolist">
@@ -48,8 +46,8 @@
 							</td>
 							<td class="align-middle text-center">
 								<h5><input type="number" name="chapterno" value=${videoVO.chapterno} readonly form="chapterInfoForm${status.count}"></h5>
-								<%-- <p>範圍：<input type="number" name="testscope" value=${videoVO.testscope} min=1 max=10 step=1 form="chapterInfoForm${status.count}"></p> --%>
 								<input type="hidden" name="testscope" value=${videoVO.testscope} form="chapterInfoForm${status.count}">
+<%--#備用#--%>					<%-- <p>範圍：<input type="number" name="testscope" value=${videoVO.testscope} min=1 max=10 step=1 form="chapterInfoForm${status.count}"></p> --%>
 							</td>
 							<td>
 								<!-- <p>單元名稱</p> -->
@@ -102,7 +100,6 @@
 			</tbody>
 		</table>
 	</section>
-
 
 	<!-- ========== JavaScript Area ========== -->
 
@@ -302,7 +299,10 @@
 						success: function (data) { // 以上成功才執行
 							swal('提醒', data,  'warning');
 							if (data.indexOf('成功') > -1) {
-								swal('新增單元成功', data, 'success');
+								swal('新增單元成功', data, 'success')
+								.then(function(){
+									updateAllChaptersInfo();
+								});
 							}
 						},
 						error: function (data) {

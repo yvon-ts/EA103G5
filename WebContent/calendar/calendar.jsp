@@ -77,6 +77,7 @@
 <link href='<%=request.getContextPath()%>/calendar/lib/main.css' rel='stylesheet' />
 <script src='<%=request.getContextPath()%>/calendar/lib/main.js'></script>
 <script src="http://code.jquery.com/jquery-1.12.4.min.js"></script>
+
 <style>
 
   body {
@@ -117,6 +118,7 @@
 <div style="margin: 50px 0">
 <div id='calendar'></div>
 </div>
+<script src="<%=request.getContextPath()%>/library/bootstrap/4.5.3/js/bootstrap.bundle.min.js"></script>
 <script>
 //========================get JSON data========================//
 var val = $("#textarea").val();
@@ -138,10 +140,12 @@ var calendar = new FullCalendar.Calendar(calendarEl, {
     hour: '2-digit',
     minute: '2-digit',
     hour12:false
-}
+},
+
 });
 
 calendar.render();
+
 </script>
 </body>
 </html>

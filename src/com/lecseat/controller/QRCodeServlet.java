@@ -10,12 +10,13 @@ import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.sql.DataSource;
 
-import com.lecseat.model.LecseatVO;
+import com.lecorder.model.*;
+import com.lecture.model.*;
 
 public class QRCodeServlet extends HttpServlet {
 	private static final String UPDATE_SEAT = "UPDATE LEC_SEAT SET SEATSTATUS = '已報到' WHERE (LODRNO = ? AND SEATNO = ?)";
 	private static final String UPDATE_LAYOUT = "UPDATE LEC_ORDER SET LODRSEAT = ?, LODRLMOD = ? WHERE LODRNO = ?";
-	//private static final String UPDATE_LEC = "UPDATE LECTURE SET CURRSEAT = ?, LECLMOD = ? WHERE LECNO = ?";
+	private static final String UPDATE_LEC = "UPDATE LECTURE SET CURRSEAT = ?, LECLMOD = ? WHERE LECNO = ?";
 	Connection con;
 
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
@@ -56,6 +57,24 @@ public class QRCodeServlet extends HttpServlet {
 			pstmt.setString(3, lodrno);
 			pstmt.executeUpdate();
 			System.out.println("更新" + lodrno + "訂單座位圖");
+			
+			LodrService lodrSvc = new LodrService();
+			LodrVO lodrVO = lodrSvc.getOne(lodrno);
+			String lecno = lodrVO.getLecno();
+			LecService lecSvc = new LecService();
+			LecVO lecVO = lecSvc.getOne(lecno);
+			String oldseat = lecVO.getCurrseat();
+			
+			pstmt = con.prepareStatement(UPDATE_LEC);
+			pstmt.setString(1, newseat);
+			//get lmod
+			Timestamp leclmod = new Timestamp(System.currentTimeMillis());
+			pstmt.setTimestamp(2, leclmod);
+			pstmt.setString(3, lecno);
+			pstmt.executeUpdate();
+			System.out.println("更新" + lecno + "講座座位圖");
+			System.out.println("原座位圖=" + oldseat);
+			System.out.println("新座位圖=" + newseat);
 			
 			con.commit();
 			out.println(seatno + "報到成功");
