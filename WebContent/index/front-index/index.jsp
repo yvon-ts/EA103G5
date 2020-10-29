@@ -9,12 +9,7 @@
 <%@ page import="com.speaker.model.*"%>
 <%@ page import="com.members.model.*"%>
 <%@ page import="com.teacher.model.*"%>
-<%
-TeacherVO teacherVO = (TeacherVO) session.getAttribute("teacherVO");
-MembersVO membersVO = (MembersVO) session.getAttribute("membersVO");
-String inform2 = (String)request.getAttribute("inform2"); 
 
-%>
 
 <jsp:useBean id="teacherSvc" scope="page" class="com.teacher.model.TeacherService" />
 
@@ -106,7 +101,7 @@ height:36px;
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="<%=request.getContextPath()%>/front-end/tracking_list/listTrackingListForUser.jsp">
-                   	購物車&nbsp;<i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                   	購物車車&nbsp;<i class="fa fa-shopping-cart" aria-hidden="true"></i>
                             </a>
                         </li>
                         <li class="nav-item">
@@ -119,75 +114,88 @@ height:36px;
                                 名人講座&nbsp;<i class="lni-bulb"></i>
                             </a>
                         </li>
-                        <c:if test="${not empty sessionScope.membersVO}">
-							
-							
+                        <c:if test="${sessionScope.loginTeacherVO.tchrstatus eq '已通過'}">
+						<li class="nav-item">
+                            <a class="nav-link" href="<%=request.getContextPath()%>/front-end/course/addCourse.jsp">
+                                我要開課&nbsp;<i class="lni-code-alt"></i>
+                            </a>
+                        </li>
+						
+						
+						
+						</c:if>
+                        
+                        
+                        
+                        
+                        
+						<c:if test="${not empty sessionScope.loginMembersVO}">
 							<li class="nav-item">
 								<div class="dropdown" id="dropdown">
 									<button class="btn btn-secondary dropdown-toggle" type="button"
 										id="dropdownMenuButton" data-toggle="dropdown"
 										aria-haspopup="true" aria-expanded="false">
-										${sessionScope.membersVO.memname}</button>
+										${sessionScope.loginMembersVO.memname}</button>
 									<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
 										<a class="dropdown-item"
 											href="<%=request.getContextPath()%>/front-end/members/updateMembersV2.jsp">個人檔案</a>
-											
-											<a class="dropdown-item"
+
+										<a class="dropdown-item"
 											href='<%=request.getContextPath()%>/front-end/Order_Master/listAllByMemno.jsp'>課程訂單紀錄</a>
-											
+
+										<a class="dropdown-item"
+											href='<%=request.getContextPath()%>/front-end/coup_code/listAllByMemno.jsp'>持有折扣券</a>
+
+
+										<c:if test="${sessionScope.loginTeacherVO.tchrstatus eq '待審核'}">
+											<a class="dropdown-item" onclick="status()">老師檔案</a>
+
+										</c:if>
+										<c:if test="${sessionScope.loginTeacherVO.tchrstatus eq '已通過'}">
 											<a class="dropdown-item"
-											href='<%=request.getContextPath()%>/front-end/coup_code/listAllByMemno.jsp'>持有折扣券</a> 
-																
-										
-										<c:if test="${sessionScope.teacherVO.tchrstatus eq '待審核'}">
-										<a class="dropdown-item" onclick="status()" >老師檔案</a> 
-											
+												href="<%=request.getContextPath()%>/front-end/teacher/teacherDisplay.jsp">老師檔案</a>
+
 										</c:if>
-										<c:if test="${sessionScope.teacherVO.tchrstatus eq '已通過'}">
-										<a class="dropdown-item"
-											href="<%=request.getContextPath()%>/front-end/teacher/teacherDisplay.jsp">老師檔案</a> 
-											
+										<c:if test="${sessionScope.loginTeacherVO.tchrstatus eq '未通過'}">
+											<a class="dropdown-item"
+												href="<%=request.getContextPath()%>/front-end/teacher/teacherUpdate.jsp">老師檔案</a>
+
 										</c:if>
-											<c:if test="${sessionScope.teacherVO.tchrstatus eq '未通過'}">
-										<a class="dropdown-item"
-											href="<%=request.getContextPath()%>/front-end/teacher/teacherUpdate.jsp">老師檔案</a>
-											
+										<c:if test="${not empty sessionScope.loginMembersVO}">
+											<a class="dropdown-item"
+												href='<%=request.getContextPath()%>/members/members.do?action=signout'>會員登出</a>
 										</c:if>
-										<c:if test="${not empty sessionScope.membersVO}">
-										<a class="dropdown-item"
-											href='<%=request.getContextPath()%>/members/members.do?action=signout'>會員登出</a> 
-										</c:if>
-											
-											
-										
-											
-											
-											
+
+
+
+
+
+
 									</div>
 								</div>
-								
+
 							</li>
-							
-							</c:if>
-							<c:if test="${not empty sessionScope.membersVO.memno}">
-							<c:if test="${empty sessionScope.teacherVO}">
+
+						</c:if>
+						<c:if test="${not empty sessionScope.loginMembersVO.memno}">
+							<c:if test="${empty sessionScope.loginTeacherVO}">
 							<img id="nav_icon" src='<%=request.getContextPath()%>/front-end/members/assets/img/students.svg'>
 							</c:if>
-							<c:if test="${sessionScope.teacherVO.tchrstatus eq '待審核'}">
+							<c:if test="${sessionScope.loginTeacherVO.tchrstatus eq '待審核'}">
 							<img id="nav_icon" src='<%=request.getContextPath()%>/front-end/members/assets/img/students.svg'>
 							</c:if>
 							
-							<c:if test="${sessionScope.teacherVO.tchrstatus eq '已通過'}">
+							<c:if test="${sessionScope.loginTeacherVO.tchrstatus eq '已通過'}">
 							<img id="nav_icon" src='<%=request.getContextPath()%>/front-end/members/assets/img/teacher.svg'>
 							</c:if>
-							<c:if test="${sessionScope.teacherVO.tchrstatus eq '未通過'}">
+							<c:if test="${sessionScope.loginTeacherVO.tchrstatus eq '未通過'}">
 							<img id="nav_icon" src='<%=request.getContextPath()%>/front-end/members/assets/img/students.svg'>
 							
 							</c:if>
 							</c:if>
 					
 
-						<c:if test="${empty sessionScope.membersVO}">
+						<c:if test="${empty sessionScope.loginMembersVO}">
 							<li class="nav-item"><a class='nav-link'
 								href='<%=request.getContextPath()%>/front-end/members/signIn.jsp'>我要登入&nbsp;<i
 									class='lni-bulb'></i></a></li>
