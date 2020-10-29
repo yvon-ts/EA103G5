@@ -95,9 +95,9 @@
 }
 
 #chapterEditRow td:first-child {
-    background-color: rgba(0, 255, 106, 0.3);
+    background-color: rgba(0, 255, 120, 0.3);
 }
 
 #chapterEditRow td:last-child {
-    background-color: rgba(255, 91, 116, 0.3);
+    background-color: #007bff66;
 }

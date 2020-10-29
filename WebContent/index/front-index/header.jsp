@@ -3,9 +3,9 @@
 <%@ page import="com.members.model.*"%>
 <%@ page import="com.teacher.model.*"%>
 
-<%//宇臣需要
-MembersVO membersVO = (MembersVO)session.getAttribute("loginMembersVO");
-TeacherVO teacherVO = (TeacherVO)session.getAttribute("loginTeacherVO");
+<% //宇臣需要
+MembersVO membersVO = (MembersVO) session.getAttribute("loginMembersVO");
+TeacherVO teacherVO = (TeacherVO) session.getAttribute("loginTeacherVO");
 
 %>
 

@@ -7,6 +7,9 @@
 <%@ page import="com.members.model.*"%>
 <%@ page import="com.teacher.model.*"%>
 
+<jsp:useBean id="courseTypeSvc" scope="page" class="com.course_type.model.CourseTypeService" />
+<jsp:useBean id="videoSvc" scope="page" class="com.video.model.VideoService" />
+
 <%
 	CourseVO courseVO = (CourseVO) request.getAttribute("courseVO");
 	
@@ -45,7 +48,6 @@
 
 	// 統整上面 2 個條件，看此登入者是否可以使用課程
 	Boolean canViewThisCourse = isMyCourse || alreadyBuyIt; 
-
 
 	// 處理課程評分精度以及分母為零的問題
 	Integer csscore = courseVO.getCsscore();
@@ -90,7 +92,6 @@
 					<div class="row">
 						<div class="col">
 							<!-- 麵包屑 -->
-							<jsp:useBean id="courseTypeSvc" scope="page" class="com.course_type.model.CourseTypeService" />
 							<nav aria-label="breadcrumb">
 								<ol class="breadcrumb">
 									<li class="breadcrumb-item">
@@ -153,9 +154,9 @@
 								%>
 								
 								<!-- 讀出課程現有的單元清單 -->
-								<jsp:useBean id="videoSvc" scope="page" class="com.video.model.VideoService" />
+								
+								
 								<c:forEach var="videoVO" items="${videoSvc.getAll(map)}">
-									
 								<%
 									VideoVO videoVO = (VideoVO)(pageContext.getAttribute("videoVO"));
 									Integer chapterno = videoVO.getChapterno();
@@ -213,7 +214,6 @@
 							</i>
 						</div>
 						
-						
 						<!-- 須要查詢該使用者是否已加入收藏 -->
 						<div class="col-md col-3 courseInfo">
 						<c:forEach var="TrackingListVO" items="${TrackingListSvc.getOneByMemno(membersVO.memno)}">
@@ -247,9 +247,8 @@
 										<%-- <input type ="hidden" name="courseinfo"  id="courseinfo"  value ="${courseVO.courseinfo}"/> --%>
 									</i>
 								</label>
-								<!-- <i id="addShopCart" class="fas fa-cart-plus"></i> -->
 							<% } else { %>
-								<!-- 要不能買 -->
+								<!-- 已購買，無法點選 -->
 								<i class="fas fa-user-check"></i>
 							<% } %>	
 
@@ -267,9 +266,6 @@
 						<li class="nav-item">
 							<a class="nav-link active" data-toggle="pill" href="#courseinfo">課程簡介</a>
 						</li>
-<!-- 						<li class="nav-item"> -->
-<!-- 							<a class="nav-link" data-toggle="pill" href="#downloadfile">教材下載</a> -->
-<!-- 						</li> -->
 						<li class="nav-item">
 							<a class="nav-link" data-toggle="pill" href="#coursescope">課程評價</a>
 						</li>
@@ -283,10 +279,6 @@
 					<div id="courseinfo" class="tab-pane fade show active">
 						<div>${courseVO.courseinfo}</div>
 					</div>
-<!-- 					<div id="downloadfile" class="tab-pane fade"> -->
-<!-- 						<h3>教材下載</h3> -->
-<%-- 						<jsp:include page="/front-end/course/subpage_downloadfile.html" /> --%>
-<!-- 					</div> -->
 					<div id="coursescope" class="tab-pane fade">
 						<jsp:include page="/front-end/course_assess/listAllAjax.jsp" flush="true">
 							<jsp:param name="courseno" value="${courseVO.courseno}"/>
