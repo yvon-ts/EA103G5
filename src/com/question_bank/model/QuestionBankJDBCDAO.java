@@ -37,48 +37,8 @@ public class QuestionBankJDBCDAO implements QuestionBankDAO_interface{
 	private static final String FINDBYNO_STMT = "SELECT * FROM QUESTION_BANK WHERE QBANKNO=?";
 	private static final String FINDALL_STMT = "SELECT * FROM QUESTION_BANK";
 	private static final String FINDAREA_STMT = "SELECT * FROM QUESTION_BANK WHERE TESTTYPENO = ? ";
-//	@Override
-//	public int insertFill(QuestionBankVO questionVO) {
-//		// TODO Auto-generated method stub
-//				Connection con = null;
-//				PreparedStatement pstmt = null;
-//				int count = 0;
-//				try {
-////					con = ds.getConnection();
-//					Class.forName(driver);
-//					con = DriverManager.getConnection(url, userid, passwd);
-//					pstmt = con.prepareStatement(INSERTFULL_STMT);
-//					pstmt.setString(1, questionVO.getCourseno());
-//					pstmt.setInt(2, questionVO.getTypeno());
-//					pstmt.setString(3,questionVO.getQustmt());
-//					pstmt.setString(4,questionVO.getQuans());
-//					
-//					
-//					count = pstmt.executeUpdate();
-//				} catch (SQLException e) {
-//					// TODO Auto-generated catch block
-//					e.printStackTrace();
-//				} catch (ClassNotFoundException e) {
-//					// TODO Auto-generated catch block
-//					e.printStackTrace();
-//				}finally {
-//					try {
-//						if(pstmt!=null)
-//							pstmt.close();
-//					} catch (SQLException e) {
-//						// TODO Auto-generated catch block
-//						e.printStackTrace();
-//					}
-//					try {
-//						if(con!=null)
-//							con.close();
-//					} catch (Exception e) {
-//						// TODO Auto-generated catch block
-//						e.printStackTrace();
-//					}
-//				}
-//					return count ; 
-//	}
+	private static final String FINDALLBYCOURSENO_STMT = "SELECT * FROM QUESTION_BANK  WHERE COURSENO=? ORDER BY QBANKNO";
+
 	@Override
 	public QuestionBankVO insertQuestion(QuestionBankVO questionVO) {
 		// TODO Auto-generated method stub
@@ -310,58 +270,66 @@ public class QuestionBankJDBCDAO implements QuestionBankDAO_interface{
 	}
 
 	@Override
-	public List<QuestionBankVO> findAll() {
+	public List<QuestionBankVO> findAll(String courseno) {
 		
 		List<QuestionBankVO> list = new ArrayList<>();
-		Connection con =  null;
+		Connection con = null;
 		PreparedStatement pstmt = null;
-		ResultSet rs =null;
-		QuestionBankVO vo= null;
-		
+		ResultSet rs = null;
+		QuestionBankVO vo = null;
+
 		try {
 			Class.forName(driver);
 			con = DriverManager.getConnection(url,userid,passwd);
-			pstmt = con.prepareStatement(FINDALL_STMT);
-			
+			if(courseno == null) {
+				pstmt = con.prepareStatement(FINDALL_STMT);
+			}
+			else {
+				pstmt = con.prepareStatement(FINDALLBYCOURSENO_STMT);
+				pstmt.setString(1, courseno);
+			}
 			rs = pstmt.executeQuery();
-			while(rs.next()) {
-				
+			while (rs.next()) {
+
 				vo = new QuestionBankVO();
 				vo.setQbankno(rs.getString(1));
 				vo.setCourseno(rs.getString(2));
 				vo.setTypeno(rs.getInt(3));
-				vo.setQustmt(rs.getString(4));
-				vo.setOp1(rs.getString(5));
-				vo.setOp2(rs.getString(6));
-				vo.setOp3(rs.getString(7));
-				vo.setOp4(rs.getString(8));
-				vo.setQuans(rs.getString(9));
+				vo.setTestscope(rs.getString(4));
+				vo.setQustmt(rs.getString(5));
+				vo.setOp1(rs.getString(6));
+				vo.setOp2(rs.getString(7));
+				vo.setOp3(rs.getString(8));
+				vo.setOp4(rs.getString(9));
+				vo.setQuans(rs.getString(10));
+				vo.setQustatus(rs.getInt(11));
 				list.add(vo);
 			}
-			
+
+		} catch (SQLException se) {
+			// TODO Auto-generated catch block
+
+			throw new RuntimeException("A database error occured. " + se.getMessage());
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}finally {
+		} finally {
 			try {
-				if(rs!=null)
+				if (rs != null)
 					rs.close();
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			try {
-				if(pstmt!=null)
+				if (pstmt != null)
 					pstmt.close();
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			try {
-				if(con!=null)
+				if (con != null)
 					con.close();
 			} catch (Exception e) {
 				// TODO Auto-generated catch block

@@ -89,7 +89,7 @@
 
 						<div>
 							<input class="form-control" type="text"
-								placeholder="&nbsp;&nbsp;今天想學什麼呢？" id="searchText">
+								placeholder="&nbsp;&nbsp;今天想學什麼呢？" id="searchText" >
 						</div>
 
 					</div>
@@ -258,7 +258,18 @@
 			
 		});
 		
+		$('#searchText').keydown(function(){
+			if(event.keyCode == 13){
+				searchCourse();
+			}
+		});
+		
+		
 		$('#turnin').click(function(){
+			searchCourse();
+		});
+			
+		function searchCourse(){
 			$.ajax({
 				type:"post",
 				url	:"<%=request.getContextPath()%>/course/coursesearch.do", 
@@ -323,7 +334,7 @@
 					
 				}
 			});
-		});
+		};
 		
 	});
 </script>

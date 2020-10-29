@@ -9,7 +9,7 @@ public interface QuestionBankDAO_interface {
 	void delete(String qbankno);
 	QuestionBankVO update(QuestionBankVO questionVO);
 	QuestionBankVO findByNO(String qbankno);
-	List<QuestionBankVO> findAll();
+	List<QuestionBankVO> findAll(String courseno);
 	List<QuestionBankVO> findArea(int testtypeno);
 	
 	List<QuestionBankVO> findAll(Map<String, String[]> map); //複合查詢

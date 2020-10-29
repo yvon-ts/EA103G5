@@ -5,31 +5,19 @@
 <%@ page import="com.question_bank.model.*,com.course.model.*"%>
 <% 
 		QuestionBankService questionbankSvc = new QuestionBankService();
-		List<QuestionBankVO> questionBankVoList = questionbankSvc.getAll();
-		
-		
-
-		TestTypeService testTypeSvc = new TestTypeService();
-		List<TestTypeVO> typeList = testTypeSvc.getAll();
-		
-		pageContext.setAttribute("typeList", typeList);
+		List<QuestionBankVO> questionBankVoList = questionbankSvc.getAll(request.getParameter("courseno"));
 
 		pageContext.setAttribute("questionBankVoList", questionBankVoList);
-		
-		
-		
-		
+		request.setCharacterEncoding("UTF-8");
 %>
 <jsp:useBean id="ttSvc" scope="page" class="com.test_type.model.TestTypeService" />
 
-<jsp:useBean id="CourseSvc" scope="page" class="com.course.model.CourseService" />
-
+<jsp:useBean id="courseSvc" scope="page" class="com.course.model.CourseService" />
 
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="BIG5">
-<title>題庫管理 - ${CourseSvc.getOneCourse(courseno).coursename}</title>
+<title>題庫管理 - <%=request.getParameter("coursename") %></title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <!--     <title>Bootstrap CRUD Data Table for Database with Modal Form</title> -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
@@ -59,7 +47,7 @@
 
 		<div class="row">
 			<div class="col" style="text-align:center;color:white;">
-				<h1 id="pageTitle" >題庫管理 - ${CourseSvc.getOneCourse(courseno).coursename}</h1>
+				<h1 id="pageTitle" >題庫管理 - <%=request.getParameter("coursename") %></h1>
 			</div>
 		</div>
 	 <div class="container-xl">
@@ -72,7 +60,7 @@
                         </div>
                         <div class="col-sm-6">
                             <a
-								href='<%=request.getContextPath()%>/front-end/course/editCourse.jsp?courseno=${CourseSvc.getOneCourse(courseno).courseno}'
+								href='<%=request.getContextPath()%>/front-end/course/editCourse.jsp?courseno=<%=request.getParameter("courseno")%>'
 								class="btn btn-info"><i class="fa fa-undo" aria-hidden="true"></i>
 								<span>回到課程編輯</span></a>
 							<a
@@ -89,21 +77,21 @@
 				<div class="container">
 
 				<div class="row">
-					<div class="col-2">
-					<div class="form-group">
-    					<select class="form-control" name="courseno">
-    								<option value="" selected>請選擇課程</option>
-                				<c:forEach var="CourseVo" items="${CourseSvc.allForEmployee}">
-                					<option value="${CourseVo.courseno }">${CourseVo.coursename }</option>
-                				</c:forEach>
-    					</select>
-  					</div>
-  					</div>
+<!-- 					<div class="col-2"> -->
+<!-- 					<div class="form-group"> -->
+<!--     					<select class="form-control" name="courseno"> -->
+<!--     								<option value="" selected>請選擇課程</option> -->
+<%--                 				<c:forEach var="CourseVo" items="${courseSvc.allForEmployee}"> --%>
+<%--                 					<option value="${CourseVo.courseno }">${CourseVo.coursename }</option> --%>
+<%--                 				</c:forEach> --%>
+<!--     					</select> -->
+<!--   					</div> -->
+<!--   					</div> -->
   					<div class="col-2">
   					<div class="form-group">
     					<select class="form-control" name="testtypeno">
     							<option value="" selected>請選擇題型</option>
-    						<c:forEach var="testTypevo" items="${typeList}">
+    						<c:forEach var="testTypevo" items="${ttSvc.all}">
                 				<option value="${testTypevo.testtypeno}">${testTypevo.testdgee}-${(testTypevo.testtype eq 'checkbox' )? '多選題':(testTypevo.testtype eq 'radio' )? '單選題':'填空題' }</option>	
                 			</c:forEach>
     					</select>
@@ -126,7 +114,10 @@
                 	</div>
                 	<div class="col-2">
                 	<input type="hidden" name="action" value="listEmps_ByCompositeQuery">
+                	<input type="hidden" name="courseno" value="<%=request.getParameter("courseno") %>">
+                	<input type="hidden" name="coursename" value="<%=request.getParameter("coursename") %>">
                 	<input type="submit" value="送出查詢">
+                	
                 	</div>
                 	</div>
                 </div>
@@ -201,7 +192,7 @@
 				
 				
 				
-				for(let i = 1 ; i <= `${list.size()}`;i++){
+				for(let i = 1 ; i <= `${questionBankVoList.size()}`;i++){
 					
 					$('#customSwitches' +i).click(function(){
 						$.ajax({

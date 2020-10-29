@@ -12,7 +12,6 @@
 <%
 	CourseVO courseVO = (CourseVO) request.getAttribute("courseVO");
 
-	// 	開玄修改
 	if(courseVO == null){
 		courseVO = new CourseService().getOneCourse(request.getParameter("courseno"));
 		request.setAttribute("courseVO",courseVO);
@@ -27,8 +26,7 @@
 		courseScore = formatter.format(Double.valueOf(csscore) / Double.valueOf(csscoretimes));
 	}
 	
-	//開玄修改
-	request.getSession().setAttribute("courseno", courseVO.getCourseno());
+	
 %>
 
 <!DOCTYPE html>
@@ -100,7 +98,7 @@
 				<h2>題庫管理</h2>
 					<ul class="nav flex-column nav-pills">
 						<li class="nav-item">
-							<a class="nav-link " href="<%= request.getContextPath()%>/front-end/question/ListAllQuestion.jsp?coursename=${courseVO.coursename}" target="_blank">
+							<a class="nav-link " href="<%= request.getContextPath()%>/front-end/question/ListAllQuestion.jsp?coursename=${courseVO.coursename}&courseno=${courseVO.courseno}" target="_blank">
 								<h5>課程題目編輯</h5>
 							</a>
 						</li>

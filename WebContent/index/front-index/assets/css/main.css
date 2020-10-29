@@ -16,7 +16,7 @@
             backface-visibility: hidden;
             overflow-x: hidden;
         }
-
+	
         h1, h2 {
             font-size: 38px;
             color: #222222;
@@ -51,7 +51,10 @@
             margin: 0;
             padding: 0;
         }
-
+		
+		label{
+			cursor: pointer;
+		}
 /*         ul li, ol li { */
 /*             list-style: none; */
 /*         } */

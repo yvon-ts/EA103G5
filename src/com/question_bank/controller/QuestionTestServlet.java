@@ -124,7 +124,11 @@ public class QuestionTestServlet extends HttpServlet {
 		List<AnwserListVO> AnwserListVoList = new ArrayList<>();
 		AnwserListVO AnwserListVo = null;
 		Collections.shuffle(list);
-		list.set(0, qse.getOneByNO("QNBK0066"));
+		
+		if(qse.getOneByNO("QNBK0066") != null) {
+			list.set(0, qse.getOneByNO("QNBK0066"));
+		}
+		
 		
 		/*
 		 * Collections.shuffle(List<?> list) Randomly permutes the specified list using

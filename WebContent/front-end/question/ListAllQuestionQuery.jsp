@@ -4,15 +4,12 @@
 <%@ page import="java.util.*"%>
 <%@ page import="com.question_bank.model.*,com.test_type.model.*"%>
 <%
-	List<QuestionBankVO> listEmps_ByCompositeQuery = (List<QuestionBankVO>) request
-			.getAttribute("listEmps_ByCompositeQuery");
-
-	TestTypeService testTypeSvc = new TestTypeService();
-	List<TestTypeVO> typeList = testTypeSvc.getAll();
-
-	pageContext.setAttribute("typeList", typeList);
-	pageContext.setAttribute("listEmps_ByCompositeQuery", listEmps_ByCompositeQuery);
+List<QuestionBankVO> listEmps_ByCompositeQuery = (List<QuestionBankVO>) request
+.getAttribute("listEmps_ByCompositeQuery");
+pageContext.setAttribute("listEmps_ByCompositeQuery", listEmps_ByCompositeQuery);
+	
 %>
+
 <jsp:useBean id="ttSvc" scope="page" class="com.test_type.model.TestTypeService" />
 
 
@@ -22,7 +19,7 @@
 <html>
 <head>
 <meta charset="BIG5">
-<title>考題管理 - ${CourseSvc.getOneCourse(editCourseno).coursename}</title>
+<title>考題管理 - <%=request.getParameter("coursename") %></title>
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <!--     <title>Bootstrap CRUD Data Table for Database with Modal Form</title> -->
@@ -42,14 +39,13 @@
 </style>
 </head>
 <body>
-	${param.whichPage}
 	<jsp:include page="/index/front-index/header.jsp" />
 	
 	<div class="container-fluid" style="margin-top: 90px;">
 
 		<div class="row">
 			<div class="col" style="text-align:center;color:white;">
-				<h1 id="pageTitle" >考題管理 - ${CourseSvc.getOneCourse(courseno).coursename}</h1>
+				<h1 id="pageTitle" >考題管理 - <%=request.getParameter("coursename") %></h1>
 			</div>
 		</div>
 	
@@ -72,7 +68,7 @@
 						</div>
 						<div class="col-sm-6">
 							<a
-								href='<%=request.getContextPath()%>/front-end/course/editCourse.jsp?courseno=${CourseSvc.getOneCourse(courseno).courseno}'
+								href='<%=request.getContextPath()%>/front-end/course/editCourse.jsp?courseno=<%=request.getParameter("courseno") %>'
 								class="btn btn-info"><i class="fa fa-undo" aria-hidden="true"></i>
 								<span>回到課程編輯</span></a>
 							<a
@@ -91,21 +87,21 @@
 					<div class="container">
 
 				<div class="row">
-					<div class="col-2">
-					<div class="form-group">
-    					<select class="form-control" name="courseno">
-    								<option value="" selected>請選擇課程</option>
-                				<c:forEach var="CourseVo" items="${CourseSvc.allForEmployee}">
-                					<option value="${CourseVo.courseno }">${CourseVo.coursename }</option>
-                				</c:forEach>
-    					</select>
-  					</div>
-  					</div>
+<!-- 					<div class="col-2"> -->
+<!-- 					<div class="form-group"> -->
+<!--     					<select class="form-control" name="courseno"> -->
+<!--     								<option value="" selected>請選擇課程</option> -->
+<%--                 				<c:forEach var="CourseVo" items="${CourseSvc.allForEmployee}"> --%>
+<%--                 					<option value="${CourseVo.courseno }">${CourseVo.coursename }</option> --%>
+<%--                 				</c:forEach> --%>
+<!--     					</select> -->
+<!--   					</div> -->
+<!--   					</div> -->
   					<div class="col-2">
   					<div class="form-group">
     					<select class="form-control" name="testtypeno">
     							<option value="" selected>請選擇題型</option>
-    						<c:forEach var="testTypevo" items="${typeList}">
+    						<c:forEach var="testTypevo" items="${ttSvc.all}">
                 				<option value="${testTypevo.testtypeno}">${testTypevo.testdgee}-${(testTypevo.testtype eq 'checkbox' )? '多選題':(testTypevo.testtype eq 'radio' )? '單選題':'填空題' }</option>	
                 			</c:forEach>
     					</select>
@@ -128,6 +124,8 @@
                 	</div>
                 	<div class="col-2">
                 	<input type="hidden" name="action" value="listEmps_ByCompositeQuery">
+                	<input type="hidden" name="courseno" value="<%=request.getParameter("courseno") %>">
+                	<input type="hidden" name="coursename" value="<%=request.getParameter("coursename") %>">
                 	<input type="submit" value="送出查詢">
                 	</div>
                 	</div>
@@ -196,12 +194,12 @@
 </div>
 	<script type="text/javascript">
 		$(document).ready(function() {
-			for (let i = 1; i <= `${list.size()}`; i++) {
+			for (let i = 1; i <= `${listEmps_ByCompositeQuery.size()}`; i++) {
 
 				$('#customSwitches' + i).click(function() {
 					$.ajax({
 						type : "post",
-						url : "editStatus.jsp",
+						url : "<%=request.getContextPath()%>/front-end/question/editStatus.jsp",
 						data : {
 							qbankno : $(this).val(),
 							status : $(this).prop("checked") ? 1 : 0

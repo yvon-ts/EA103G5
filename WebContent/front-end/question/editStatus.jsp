@@ -4,6 +4,7 @@
     <%
     	String  qbankno = request.getParameter("qbankno");
     	String  status = request.getParameter("status");
+    	
     	Connection con = null;
     	DataSource ds = null;
     	PreparedStatement pstmt = null;

@@ -295,13 +295,14 @@ public class QuestionBankServlet extends HttpServlet {
 		request.setAttribute("errorMsgs", errorMsgs);
 
 		try {
-
+			
+			
+			
 			HttpSession session = request.getSession();
 
 			Map<String, String[]> map = (Map<String, String[]>) session.getAttribute("map");
 			if (request.getParameter("whichPage") == null) {
 				HashMap<String, String[]> map1 = new HashMap<String, String[]>(request.getParameterMap());
-				;
 				session.setAttribute("map", map1);
 				map = map1;
 			}

@@ -6,7 +6,6 @@
 
 	List<CourseVO> shoppingList = (List<CourseVO>)request.getSession().getAttribute("shoppingList");
 	
-	MembersVO membersVO = (MembersVO) session.getAttribute("membersVO");
 	
 	
 	int productNumber = 0;
@@ -60,7 +59,6 @@
 
 	<jsp:include page="/index/front-index/header.jsp" />
 	
-<%-- 	<input type="hidden" id="memno" value="${Membersvo.memno}" /> --%>
 	
 	<jsp:useBean id="courseTypeSvc" scope="page" class="com.course_type.model.CourseTypeService" />
 	<jsp:useBean id="TrackingListSvc" scope="page" class="com.tracking_list.model.TrackingListService" />
@@ -114,13 +112,14 @@
                 
                 <c:forEach var="courseVO" items="${shoppingList}" varStatus="counter">
                     <tr>
+                    	
                         <td data-th="Product">
                             <div class="row">
                                 <div class="col-md-3 text-left">
                                     <img src="<%=request.getContextPath()%>/course/CoursePictureReaderFromDB?courseno=${courseVO.courseno}" alt="" class="img-fluid d-none d-md-block rounded mb-2 shadow ">
                                 </div>
                                 <div class="col-md-9 text-left mt-sm-2">
-                                    <h5>${courseVO.coursename}</h5>
+                                    <h5><a href="<%=request.getContextPath()%>/course/course.do?action=showCourseMainPage&courseno=${courseVO.courseno}">${courseVO.coursename}</a></h5>
                                 </div>
                             </div>
                         </td>
@@ -134,6 +133,7 @@
                                     <input type="hidden"  name="courseno${counter.count}" id='courseno${counter.count}' value ="${courseVO.courseno}">
                             </div>
                         </td>
+                        
                     </tr>
                    </c:forEach>
                	 </tbody>
@@ -240,7 +240,6 @@
 						
 						
 						$('.shoppingCartArea').empty();
-						
 						var str = `<img class="fit-picture"
 							 src="<%=request.getContextPath()%>/index/front-index/assets/img/empty-box.svg"
 								alt="shoppingCart Empty"/>
@@ -315,7 +314,7 @@
                                     					<img src="<%=request.getContextPath()%>/course/CoursePictureReaderFromDB?courseno=`+ JSONObj.courseno +`" alt="" class="img-fluid d-none d-md-block rounded mb-2 shadow ">
                                 					</div>
                                 					<div class="col-md-9 text-left mt-sm-2">
-                                    						<h5>` + JSONObj.coursename + `</h5>
+                                    						<h5><a href="<%=request.getContextPath()%>/course/course.do?action=showCourseMainPage&courseno=` + JSONObj.courseno + `">` + JSONObj.coursename + `</a></h5>
                                 					</div>
                             					</div>
                         					</td>

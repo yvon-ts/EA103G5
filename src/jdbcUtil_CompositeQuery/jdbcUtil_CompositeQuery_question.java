@@ -32,7 +32,8 @@ public class jdbcUtil_CompositeQuery_question {
 		int count = 0;
 		for (String key : map.keySet()) {
 			String value = map.get(key)[0];
-			if (value != null && value.trim().length() != 0	&& !"action".equals(key)) {
+			
+			if (value != null && value.trim().length() != 0	&& !"action".equals(key) && !"coursename".equals(key)) {
 				count++;
 				String aCondition = get_aCondition_For_Oracle(key, value.trim());
 				if (count == 1)
