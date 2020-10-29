@@ -18,7 +18,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Checkout.jsp</title>
+<title>Xducation - 陪你成長的學習好夥伴</title>
 <link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet"
@@ -164,10 +164,10 @@ center
 											
 										</div>
 										<br> <input type="hidden" name="action" value="insert">
-										<input type="hidden" name="memno" value="<%=membersVO.getMemno()%>"> 
+										<input type="hidden" name="memno" value="${loginMembersVO.memno}"> 
 										<input type="hidden" name="orderamt" value="<%=orderamt%>">
 										<div class="col-sm-6 order-md-2 text-right">
-											<button type="button" class="btn btn-primary" id="add">+</button>
+											<button type="button" class="btn btn-primary" id="add">聯絡人資料</button>
 											<button type="submit" class="btn btn-primary" id="checkout">結帳</button>
 										</div>
 									</div>

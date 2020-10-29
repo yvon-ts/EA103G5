@@ -5,74 +5,89 @@
 
 
 <%
-	MembersVO membersVO = (MembersVO) session.getAttribute("membersVO");
-	String memno = membersVO.getMemno().toString();
+	MembersVO memberVO = (MembersVO) session.getAttribute("loginMembersVO");
+	System.out.println(memberVO);
+	String memno = memberVO.getMemno();
 
 	CoupCodeService coupSvc = new CoupCodeService();
 	List<CoupCodeVO> list = coupSvc.getMemberCoup(memno);
 	pageContext.setAttribute("list", list);
 %>
 
+<%=list %>
+
 <html>
 <head>
-<title>listAllByMemno.jsp</title>
-
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Xducation - 陪你成長的學習好夥伴</title>
+<link rel="stylesheet"
+	href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
+<link rel="stylesheet"
+	href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<link rel="stylesheet"
+	href="<%=request.getContextPath()%>/library/bootstrap/4.5.3/css/bootstrap.min.css">
+<%@ include file="/index/front-index/header.jsp"%>
+<link rel="stylesheet"
+	href="<%=request.getContextPath()%>/back-end/css/bootTable.css">
+<style>
+</style>
+<script>
+	
+</script>
 </head>
 <body>
 
-	<jsp:include page="/index/front-index/header.jsp" />
-
-	<table id="table-1">
-		<tr>
-			<td>
-				<h3>listAllByMemno.jsp</h3>
-				<h4>
-					<a
-						href="<%=request.getContextPath()%>/front-end/members/indexV1.jsp">回上頁</a>
-				</h4>
-			</td>
-		</tr>
-	</table>
-
-	<%-- 錯誤表列 --%>
-	<c:if test="${not empty errorMsgs}">
-		<font style="color: red">請修正以下錯誤:</font>
-		<ul>
-			<c:forEach var="message" items="${errorMsgs}">
-				<li style="color: red">${message}</li>
-			</c:forEach>
-		</ul>
-	</c:if>
-
-	<c:if test="${empty list}">
-		<div>未持有折扣券</div>
-	</c:if>
-
-	<c:if test="${not empty list}">
-		<table>
-			<tr>
-				<th>折扣券號碼</th>
-				<th>折扣券金額</th>
-				<th>領取時間</th>
-				<th>使用期限</th>
-			</tr>
-			<%@ include file="page1.file"%>
-
-			<c:forEach var="coupVO" items="${list}" begin="<%=pageIndex%>"
-				end="<%=pageIndex+rowsPerPage-1%>">
-
-				<tr>
-					<td>${coupVO.coupcode}</td>
-					<td>${coupVO.discamt}</td>
-					<td>${coupVO.couptime}</td>
-					<td>${coupVO.coupexp}</td>
-				</tr>
-			</c:forEach>
-		</table>
-		<%@ include file="page2.file"%>
-	</c:if>
-
+	<div id="padd">padd</div>
+	<div id="table-area" class="container-xl">
+		<div class="table-responsive">
+			<div class="table-wrapper">
+				<div class="table-title">
+					<div class="row">
+						<div class="col-sm-3"></div>
+						<div class="col-sm-4">
+							<h2 class="text-center">持有折扣券</h2>
+						</div>
+					</div>
+				</div>
+				<table class="table table-bordered">
+					<thead>
+						<tr>
+							<th>折扣券號碼</th>
+							<th>折扣券金額</th>
+							<th>領取時間</th>
+							<th>使用期限</th>
+						</tr>
+					</thead>
+					<tbody>
+						<%@ include file="/back-end/pool/page1.file"%>
+						<c:forEach var="coupVO" items="${list}"
+							begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
+							<tr>
+								<td>${coupVO.coupcode}</td>
+								<td>${coupVO.discamt}</td>
+								<td>${coupVO.couptime}</td>
+								<td>${coupVO.coupexp}</td>
+							</tr>
+						</c:forEach>
+					</tbody>
+				</table>
+				<%@ include file="/back-end/pool/page2.file"%>
+				<div class="clearfix">
+					<ul class="pagination">
+						<li class="page-item disabled"><a href="#">Previous</a></li>
+						<li class="page-item"><a href="#" class="page-link">1</a></li>
+						<li class="page-item"><a href="#" class="page-link">2</a></li>
+						<li class="page-item active"><a href="#" class="page-link">3</a></li>
+						<li class="page-item"><a href="#" class="page-link">4</a></li>
+						<li class="page-item"><a href="#" class="page-link">5</a></li>
+						<li class="page-item"><a href="#" class="page-link">Next</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+	<%@ include file="/index/front-index/footer.jsp"%>
 </body>
-<jsp:include page="/index/front-index/footer.jsp" />
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.rateit/1.1.3/jquery.rateit.min.js"></script>
 </html>

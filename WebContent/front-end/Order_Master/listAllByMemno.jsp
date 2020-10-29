@@ -5,13 +5,13 @@
 
 
 <%
-	MembersVO membersVO = (MembersVO) session.getAttribute("membersVO");
-	String memno = membersVO.getMemno().toString();
-
+	MembersVO memberVO = (MembersVO) session.getAttribute("membersVO");
+	String memno = memberVO.getMemno().toString();
 	OrderMasterService orderSvc = new OrderMasterService();
 	List<OrderMasterVO> list = orderSvc.getOnesOrder(memno);
 	pageContext.setAttribute("list", list);
 %>
+
 <html>
 <head>
 <meta charset="utf-8">
@@ -47,41 +47,31 @@
 					<div class="row">
 						<div class="col-sm-3"></div>
 						<div class="col-sm-4">
-							<h2 class="text-center">我的訂單明細</h2>
+							<h2 class="text-center">訂單紀錄</h2>
 						</div>
 					</div>
 				</div>
 				<table class="table table-bordered">
 					<thead>
 						<tr>
-							<th>訂單編號</th>
-							<th>課程名稱</th>
-							<th>課程金額</th>
-							<th>訂單狀態</th>
-							<th>退款</th>
+							<th>課程訂單編號</th>
+							<th>訂單成立時間</th>
+							<th>課程訂單狀態</th>
+							<th>總金額</th>
+							<th>折扣碼編號</th>
 						</tr>
 					</thead>
 					<tbody>
 						<%@ include file="/back-end/pool/page1.file"%>
-						<c:forEach var="orderDetailVO" items="${list}"
-							begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
+						<c:forEach var="orderVO" items="${list}" begin="<%=pageIndex%>"
+							end="<%=pageIndex+rowsPerPage-1%>">
 							<tr>
-								<td>${orderDetailVO.orderno}</td>
-								<td>${courSvc.getOneCourse(orderDetailVO.courseno).coursename}</td>
-								<td>${orderDetailVO.sellprice}</td>
-								<td>${orderDetailVO.odstatus}</td>
-								<td>
-									<FORM METHOD="post" onsubmit="return confirm('確定要申請退款嗎?');"
-										ACTION="<%=request.getContextPath()%>/Order_Detail/Order_Detail.do"
-										style="margin-bottom: 0px;">
-										<button type="submit" class="btn btn-primary">退款</button>
-										<input type="hidden" name="orderno"
-											value="${orderDetailVO.orderno}"> <input
-											type="hidden" name="courseno"
-											value="${orderDetailVO.courseno}"> <input
-											type="hidden" name="action" value="refund">
-									</FORM>
-								</td>
+								<td><a
+									href="<%=request.getContextPath()%>/Order_Detail/Order_Detail.do?action=getOne_For_Display_ByMember&orderno=${ordermasterVO.orderno}">${ordermasterVO.orderno}</a></td>
+								<td>${ordermasterVO.orderdate}</td>
+								<td>${ordermasterVO.orderstatus}</td>
+								<td>${ordermasterVO.orderamt}</td>
+								<td>${ordermasterVO.coupno}</td>
 							</tr>
 						</c:forEach>
 					</tbody>
