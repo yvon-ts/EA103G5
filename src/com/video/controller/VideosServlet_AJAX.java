@@ -60,31 +60,37 @@ public class VideosServlet_AJAX extends HttpServlet {
 				try {
 					testscope = Integer.valueOf(req.getParameter("testscope"));
 					if (testscope <= 0) {
-						errorMsgs.add("範圍編號請輸入大於零的整數");
+						out.print("範圍編號請輸入大於零的整數");
+						return;
 					}
 				} catch (NumberFormatException e) {
 					testscope = 0;
-					errorMsgs.add("範圍編號請輸入數字");
+					out.print("範圍編號請輸入數字");
+					return;
 				}
 
 				Integer chapterno = null;
 				try {
 					chapterno = Integer.valueOf(req.getParameter("chapterno"));
 					if (chapterno <= 0) {
-						errorMsgs.add("單元編號請輸入大於零的整數");
+						out.print("單元編號請輸入大於零的整數");
+						return;
 					}
 				} catch (NumberFormatException e) {
 					chapterno = 0;
-					errorMsgs.add("單元編號請輸入數字");
+					out.print("單元編號請輸入數字");
+					return;
 				}
 
 				String chaptername = req.getParameter("chaptername");
 				String chapternameRegex = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_. )]{2,50}$";
 				if (chaptername == null || chaptername.trim().length() == 0) {
 					chaptername = "";
-					errorMsgs.add("單元名稱請勿空白");
+					out.print("單元名稱請勿空白");
+					return;
 				} else if (!chaptername.trim().matches(chapternameRegex)) { // 以下練習正則(規)表示式(regular-expression)
-					errorMsgs.add("單元名稱: 只能是中、英文字母、數字和_ , 且長度必需在2到50之間");
+					out.print("單元名稱只能使用數字、中、英文字母；且長度必需在 2 到 50 之間");
+					return;
 				}
 
 				Integer chapterlen = null;
@@ -92,11 +98,14 @@ public class VideosServlet_AJAX extends HttpServlet {
 				try {
 					chapterlen = Integer.valueOf(req.getParameter("chapterlen"));
 					if (chapterlen <= 0) {
-						errorMsgs.add("單元長度請輸入大於零的整數");
+						out.print("請上傳課程影片");
+//						out.print("單元長度請輸入大於零的整數");
+						return;
 					}
 				} catch (NumberFormatException e) {
 					chapterlen = 0;
-					errorMsgs.add("單元長度請輸入數字");
+					out.print("單元長度請輸入數字");
+					return;
 				}
 
 				byte[] video = null;
@@ -104,9 +113,11 @@ public class VideosServlet_AJAX extends HttpServlet {
 				System.out.println(part);
 
 				if (part.getSize() == 0) {
-					errorMsgs.add("請上傳課程影片");
+					out.print("請上傳課程影片");
+					return;
 				} else if (part.getContentType().indexOf("video/mp4") < 0) {
-					errorMsgs.add("僅可以上傳 mp4 影片檔案");
+					out.print("僅可以上傳 mp4 影片檔案");
+					return;
 				} else {
 					InputStream in = part.getInputStream();
 					video = getUpdateFileByteArray(in);
@@ -114,21 +125,21 @@ public class VideosServlet_AJAX extends HttpServlet {
 					// 其他錯誤處理
 				}
 
-				if (!errorMsgs.isEmpty()) {
-					String jsonStr = gson.toJson(errorMsgs);
-					out.println(jsonStr);
-					return; // 中斷程式
-				}
+//				if (!errorMsgs.isEmpty()) {
+//					String jsonStr = gson.toJson(errorMsgs);
+//					out.println(jsonStr);
+//					return; // 中斷程式
+//				}
 				/*************************** 2.開始新增資料 *****************************************/
 				VideoService videoSvc = new VideoService();
 				VideoVO videoVO = videoSvc.addVideo(courseno, testscope, chapterno, chaptername, chapterlen, video);
 				/*************************** 3.查詢完成,準備轉交(Send the Success view) *************/
-				out.print("成功新增課程單元： " + videoVO.getChaptername());
+				out.print("成功新增： " + videoVO.getChaptername());
 				/*************************** 其他可能的錯誤處理 *************************************/
 			} catch (Exception e) {
-				errorMsgs.add("無法新增資料: " + e.getMessage());
-				String jsonStr = gson.toJson(errorMsgs);
-				out.println(jsonStr);
+				out.print("無法新增資料: " + e.getMessage());
+//				String jsonStr = gson.toJson(errorMsgs);
+//				out.println(jsonStr);
 				return; // 中斷程式
 			}
 		}

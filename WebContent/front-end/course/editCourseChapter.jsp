@@ -300,13 +300,13 @@
 						// 告訴jQuery不要去設定Content-Type請求頭
 						contentType: false,
 						success: function (data) { // 以上成功才執行
-							alert(data);
+							swal('提醒', data,  'warning');
 							if (data.indexOf('成功') > -1) {
-								updateAllChaptersInfo();
+								swal('新增單元成功', data, 'success');
 							}
 						},
 						error: function (data) {
-							alert(data);
+							swal('伺服器忙碌中', "請稍後再試", 'warning');
 						},
 						complete: function () {
 							addNewIsWorking = false;
@@ -330,11 +330,19 @@
 				// 告訴jQuery不要去設定Content-Type請求頭
 				contentType: false,
 				success: function (data) { // 以上成功才執行
-					alert(data);
-					updateAllChaptersInfo();
+					swal('提醒', data,  'warning');
+					if (data.indexOf('成功') > -1) {
+						swal({
+							title:'更新成功',
+							text: data,
+							type: 'success'
+						}).then(function(){
+							updateAllChaptersInfo();
+						})
+					}
 				},
 				error: function (data) {
-					alert(data);
+					swal('伺服器忙碌中', "請稍後再試", 'warning');
 				}
 			})
 		});
@@ -344,12 +352,28 @@
 			$(".deleteButton").unbind().click(function (e) {
 				// 加上 unbind()，可以清除先前的事件，避免重複註冊
 				e.preventDefault();
-				if (confirm("\n確認刪除後，將無法回復資料\n且不建議刪除以開使販售之課程\n避免影響學生權益\n\n請問是否要刪除本單元？")) {
-					if ($(this).attr("new") === "true") {
+				var $thisDeleteButton = $(this);
+				
+				
+				// ---------------這邊要改 SWEEEEET ALERT -----------------
+				swal({
+				  title: '確定要刪除本單元？', 
+				  text: '確認刪除後，將無法回復資料\n不建議刪除已開使販售之課程\n避免影響學生權益', 
+				  type: 'warning',
+				  showCancelButton: true, 
+				  confirmButtonColor: '#3085d6',
+				  cancelButtonColor: '#d33',
+				  confirmButtonText: '確定刪除', 
+				  cancelButtonText: '取消',
+				  confirmButtonClass: 'btn btn-success',
+				  cancelButtonClass: 'btn btn-danger',
+				  buttonsStyling: false
+				}).then(function() {
+					if ($thisDeleteButton.attr("new") === "true") {
 						alreadyAddOneClass = false;
 					}
 
-					var formData = new FormData($(this).parent()[0]);
+					var formData = new FormData($thisDeleteButton.parent()[0]);
 
 					$.ajax({
 						url: "<%=request.getContextPath()%>/video/videoAjax.do",
@@ -360,20 +384,19 @@
 						// 告訴jQuery不要去設定Content-Type請求頭
 						contentType: false,
 						success: function (data) { // 以上成功才執行
-							alert(data);
-							console.log("* Video 刪除成功");
+							swal(data, "", 'success').then(function(){
+								$thisDeleteButton.parents("tr").remove(); // 感謝靜神
+								replaceTheChapterNumber();
+								// updateAllChaptersInfo();
+								// console.log("* Video 刪除成功");
+							});
 						},
 						error: function (data) {
-							alert(data)
-							console.log("* Video 刪除失敗");
+							console.log("* Video 刪除失敗" + data);
+							swal('伺服器忙碌中', "請稍後再試", 'warning');
 						}
 					})
-
-					$(this).parents("tr").remove(); // 感謝靜神
-					replaceTheChapterNumber();
-				} else {
-					e.preventDefault();
-				}
+				})
 			});
 		}
 	</script>

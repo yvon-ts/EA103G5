@@ -2,16 +2,15 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.course.model.*"%>
+<%@ page import="com.teacher.model.*"%>
+<%@ page import="com.members.model.*"%>
 
-<%-- <%@ page import="com.members.model.*"%> --%>
-
-<%
-// 	MembersVO membersVO = (MembersVO) session.getAttribute("membersVO");
-%>
+<jsp:useBean id="membersSvc" scope="page" class="com.members.model.MembersService" />
 
 <%
 	CourseVO courseVO = (CourseVO) request.getAttribute("courseVO");
 %>
+
 
 <!DOCTYPE html>
 <html lang="zh-Hant">
@@ -21,13 +20,10 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 	<!-- ========== CSS Area ========== -->
-
 	<!-- Bootstrap 的 CSS -->
 	<link rel="stylesheet" href="<%=request.getContextPath()%>/library/bootstrap/4.5.3/css/bootstrap.min.css">
-
 	<!-- Ckeditor 的 CSS (for CourseInfo)-->
 	<link rel="stylesheet" href="<%=request.getContextPath()%>/front-end\course\css\ckeditorForCourseInfo.css">
-
 	<!-- This page's CSS -->
 	<style>
 		main {
@@ -99,15 +95,16 @@
 								value="<%=(courseVO == null) ? 0 : courseVO.getCourseprice()%>">
 						</div>
 
-						<!-- 教師編號應該要自己抓到 -->
+						<!-- 教師編號自動抓取 -->
 						<div class="input-group mb-3">
 							<div class="input-group-prepend">
-								<span class="input-group-text">該從 session 抓老師</span>
+								<span class="input-group-text">開課老師</span>
 							</div>
-							<input type="text" class="form-control" name="tchrno"
-								value="<%=(courseVO == null) ? "TCHR0001" : courseVO.getTchrno()%>">
+							<input type="text" class="form-control" readonly
+								value="${loginMembersVO.memname}">
+							<input type="hidden" class="form-control" name="tchrno"
+								value="${loginTeacherVO.tchrno}">
 						</div>
-
 
 						<div class="input-group mb-3">
 							<div class="input-group-prepend">
@@ -203,7 +200,7 @@
 	<script>
 		ClassicEditor
 			.create(document.querySelector('#ckeditor5'), {
-				toolbar: ['heading', '|', 'bold', 'italic', 'bulletedList', 'numberedList']
+				toolbar: ['heading' , '|', 'bold', 'italic', 'bulletedList', 'numberedList']
 			})
 			.then(editor => {
 				console.log(editor);
@@ -213,8 +210,6 @@
 			});
 	</script>
 	<!-- =============== Ckeditor 5 =============== -->
-
-
 
 	<!-- include 前台頁面的 footer -->
 	<jsp:include page="/index/front-index/footer.jsp" />
