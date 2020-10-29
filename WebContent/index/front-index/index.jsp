@@ -9,12 +9,7 @@
 <%@ page import="com.speaker.model.*"%>
 <%@ page import="com.members.model.*"%>
 <%@ page import="com.teacher.model.*"%>
-<%
-TeacherVO teacherVO = (TeacherVO) session.getAttribute("teacherVO");
-MembersVO membersVO = (MembersVO) session.getAttribute("membersVO");
-String inform2 = (String)request.getAttribute("inform2"); 
 
-%>
 
 <jsp:useBean id="teacherSvc" scope="page" class="com.teacher.model.TeacherService" />
 
@@ -89,7 +84,7 @@ height:36px;
             <div class="container">
                 <!-- Brand and toggle get grouped for better mobile display -->
                 <a href="<%=request.getContextPath()%>/index/front-index/index.jsp" class="navbar-brand"><img src="<%=request.getContextPath()%>/index/front-index/assets/img/logo.svg" alt="">
-                    <div id="logo">Xducation</div>
+                    <div id="logo">Xducation${loginMembersVO.memno}</div>
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
                     aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
