@@ -5,13 +5,13 @@
 
 
 <%
-	MembersVO memberVO = (MembersVO) session.getAttribute("membersVO");
+	MembersVO memberVO = (MembersVO) session.getAttribute("loginMembersVO");
 	String memno = memberVO.getMemno().toString();
+	
 	OrderMasterService orderSvc = new OrderMasterService();
 	List<OrderMasterVO> list = orderSvc.getOnesOrder(memno);
 	pageContext.setAttribute("list", list);
 %>
-
 <html>
 <head>
 <meta charset="utf-8">
@@ -34,10 +34,6 @@
 </script>
 </head>
 <body>
-
-	<jsp:useBean id="courSvc" scope="page"
-		class="com.course.model.CourseService" />
-	<jsp:useBean id="courVO" scope="page" class="com.course.model.CourseVO" />
 
 	<div id="padd">padd</div>
 	<div id="table-area" class="container-xl">
@@ -63,15 +59,22 @@
 					</thead>
 					<tbody>
 						<%@ include file="/back-end/pool/page1.file"%>
-						<c:forEach var="orderVO" items="${list}" begin="<%=pageIndex%>"
-							end="<%=pageIndex+rowsPerPage-1%>">
+						<c:forEach var="orderVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
+						<c:set var="coup" scope="page" value="${orderVO.coupno}"></c:set>
 							<tr>
 								<td><a
-									href="<%=request.getContextPath()%>/Order_Detail/Order_Detail.do?action=getOne_For_Display_ByMember&orderno=${ordermasterVO.orderno}">${ordermasterVO.orderno}</a></td>
-								<td>${ordermasterVO.orderdate}</td>
-								<td>${ordermasterVO.orderstatus}</td>
-								<td>${ordermasterVO.orderamt}</td>
-								<td>${ordermasterVO.coupno}</td>
+									href="<%=request.getContextPath()%>/Order_Detail/Order_Detail.do?action=getOne_For_Display_ByMember&orderno=${orderVO.orderno}">${orderVO.orderno}</a></td>
+								<td>${orderVO.orderdate}</td>
+								<td>${orderVO.orderstatus}</td>
+								<td>${orderVO.orderamt}</td>
+								<td>
+									<c:if test='${empty coup}'>
+									 未使用
+									</c:if>
+									<c:if test='${not empty coup}'>
+									 ${orderVO.coupno}
+									</c:if>
+								</td>
 							</tr>
 						</c:forEach>
 					</tbody>
@@ -80,9 +83,9 @@
 				<div class="clearfix">
 					<ul class="pagination">
 						<li class="page-item disabled"><a href="#">Previous</a></li>
-						<li class="page-item"><a href="#" class="page-link">1</a></li>
+						<li class="page-item active"><a href="#" class="page-link">1</a></li>
 						<li class="page-item"><a href="#" class="page-link">2</a></li>
-						<li class="page-item active"><a href="#" class="page-link">3</a></li>
+						<li class="page-item"><a href="#" class="page-link">3</a></li>
 						<li class="page-item"><a href="#" class="page-link">4</a></li>
 						<li class="page-item"><a href="#" class="page-link">5</a></li>
 						<li class="page-item"><a href="#" class="page-link">Next</a></li>
