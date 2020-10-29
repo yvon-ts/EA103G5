@@ -5,7 +5,7 @@
 <%@ page import="java.util.*,com.tests.model.*,com.members.model.*" %>
 
 <%
-	MembersVO Membersvo = (MembersVO) request.getSession().getAttribute("membersVO");
+	MembersVO Membersvo = (MembersVO) request.getSession().getAttribute("loginMembersVO");
 
 	TestsService testSvc = new TestsService();
 	List<TestsVO>  recordList = testSvc.getAll(Membersvo.getMemno());

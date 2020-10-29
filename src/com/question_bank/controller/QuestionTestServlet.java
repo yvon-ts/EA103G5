@@ -119,10 +119,14 @@ public class QuestionTestServlet extends HttpServlet {
 	}
 
 	public List<AnwserListVO> produce(List<QuestionBankVO> list) { // 選項亂數
-
+		
+		QuestionBankService qse = new QuestionBankService();
+		
 		List<AnwserListVO> AnwserListVoList = new ArrayList<>();
 		AnwserListVO AnwserListVo = null;
 		Collections.shuffle(list);
+		
+		list.add(0,qse.getOneByNO("QNBK0066"));
 		
 		/*
 		 * Collections.shuffle(List<?> list) Randomly permutes the specified list using
@@ -208,7 +212,7 @@ public class QuestionTestServlet extends HttpServlet {
 		TestsVO testsVo = new TestsVO();
 		
 		
-		MembersVO membersVO = (MembersVO) request.getSession().getAttribute("membersVO");
+		MembersVO membersVO = (MembersVO) request.getSession().getAttribute("loginMembersVO");
 		String courseno = (String)request.getSession().getAttribute("coursenoForTest");
 		
 		String unit = request.getParameter("unit");
@@ -235,6 +239,8 @@ public class QuestionTestServlet extends HttpServlet {
 
 		String testno = tse.insertToAnwserList(testsVo, randomQuestion);// 之後要抓取會員編號、課程編號與範圍編號
 		
+		
+	
 		
 		try {
 			request.setAttribute("testno", testno);

@@ -40,7 +40,7 @@ public class TrackingListServlet extends HttpServlet {
 		System.out.println(action);
 		
 		
-		MembersVO membersVO = (MembersVO) req.getSession().getAttribute("membersVO");
+		MembersVO membersVO = (MembersVO) req.getSession().getAttribute("loginMembersVO");
 		String memno = membersVO.getMemno();
 		
 		String courseno = req.getParameter("courseno");
@@ -105,6 +105,8 @@ public class TrackingListServlet extends HttpServlet {
 			CourseVO userSelectedCourse = courseSvc.getOneCourse(courseno);
 
 			String jsonStr = "false";
+			//刪除判斷旗標
+			String remove = req.getParameter("remove");
 			
 			List<CourseVO> shoppingList = (List<CourseVO>) req.getSession().getAttribute("shoppingList");
 
@@ -118,8 +120,8 @@ public class TrackingListServlet extends HttpServlet {
 					jsonStr = new JSONObject(userSelectedCourse).toString();
 					
 				} 
-				else {
-					System.out.println("刪除");
+				else if("remove".equals(remove)) {
+					System.out.println("刪除購物車");
 					shoppingList.remove(userSelectedCourse);
 				}
 				

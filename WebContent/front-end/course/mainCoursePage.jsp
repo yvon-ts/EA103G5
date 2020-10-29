@@ -358,7 +358,7 @@
 					url	:"<%=request.getContextPath()%>/tracking_list/tracking_list.do", 
 					data:{
 						courseno : $(this).find('#courseno').val(),
-						memno    : $("#memno").val(),
+// 						memno    : $("#memno").val(),
 						action   : updateTrackingList ,
 					},
 					success: function(data){
@@ -375,7 +375,7 @@
 					url	:"<%=request.getContextPath()%>/tracking_list/tracking_list.do",
 					data:{
 						courseno:$(this).find('#courseno').val(),
-						memno    : $("#memno").val(),
+// 						memno    : $("#memno").val(),
 						action: "shoppingCart"
 					},
 					success: function(data){
@@ -384,9 +384,7 @@
 							  console.log('加入購物車');	
 							  swal('你已將課程加入購物車！！', '', 'success');
 						}
-						else{
-							console.log('刪除購物車');
-						}
+						
 					}
 				});
 			});

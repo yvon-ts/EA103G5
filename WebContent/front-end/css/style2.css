@@ -86,10 +86,10 @@
             to remove the square border on focus
         }
 
-/*         INPUT[TYPE="RADIO"]:HOVER, INPUT[TYPE="RADIO"]:CHECKED, INPUT[TYPE="CHECKBOX"]:CHECKED, INPUT[TYPE="CHECKBOX"]:HOVER { */
-/*             NO NEED, IF YOU DON'T DISABLE DEFAULT APPEARANCE */
-/*             BACKGROUND-COLOR: #1FBED6; */
-/*         } */
+        INPUT[TYPE="RADIO"]:HOVER, INPUT[TYPE="RADIO"]:CHECKED, INPUT[TYPE="CHECKBOX"]:CHECKED, INPUT[TYPE="CHECKBOX"]:HOVER {
+            NO NEED, IF YOU DON'T DISABLE DEFAULT APPEARANCE
+            BACKGROUND-COLOR: #1FBED6;
+        }
 
         input[type="radio"]:checked~span:first-of-type, input[type="checkbox"]:checked~span:first-of-type {
             color: white;

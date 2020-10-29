@@ -267,7 +267,8 @@
 						data:{
 							courseno:$(this).next().val(),
 // 							memno    : $("#memno").val(),
-							action: "shoppingCart"
+							action: "shoppingCart",
+							remove : "remove"
 						},
 						success: function(data){
 							console.log('移除成功--->ShoppingCartPage');
@@ -432,7 +433,8 @@
 									data:{
 										courseno: $(this).next().val(),
 // 										memno    : $("#memno").val(),
-										action: "shoppingCart"
+										action: "shoppingCart",
+										remove :"remove"
 									},
 									success: function(data){
 										console.log('移除成功--->ShoppingCartPage');
