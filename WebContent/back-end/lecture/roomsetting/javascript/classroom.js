@@ -82,10 +82,12 @@ function showSeatMapping() {
 			} else if (statusStr[seatIndex] === "*") {
 				spaceBlock.addClass("chosen");
 				spaceBlock.attr("status", "chosen");
-			}  
-			else if (statusStr[seatIndex] === "2") {
+			} else if (statusStr[seatIndex] === "2") {
 				spaceBlock.addClass("booked");
 				spaceBlock.attr("status", "booked");
+			} else if (statusStr[seatIndex] === "3") {
+				spaceBlock.addClass("signed");
+				spaceBlock.attr("status", "signed");
 			}
 			spaceBlock.attr("countNum", (i - 1) * roomColumn + j);
 			spaceBlock.attr("seatName", seatName);

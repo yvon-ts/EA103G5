@@ -22,41 +22,41 @@
   
   
   
-  <filter>
-    <filter-name>LoginFilter</filter-name>
-    <filter-class>com.employee.login.controller.LoginFilter</filter-class>
-  </filter>
-  <filter-mapping>
-   	<filter-name>LoginFilter</filter-name>  	
-   	<url-pattern>/back-end/index/homepage.jsp</url-pattern>
-   	<url-pattern>/back-end/employee/*</url-pattern>
-   	<url-pattern>/back-end/members/*</url-pattern>
-   	<url-pattern>/back-end/teacher/*</url-pattern>
-   	<url-pattern>/back-end/lecture/*</url-pattern>
-   	<dispatcher>REQUEST</dispatcher>
-   	<dispatcher>FORWARD</dispatcher>
-   	<dispatcher>INCLUDE</dispatcher>
-   	<dispatcher>ERROR</dispatcher>
-   	<dispatcher>ASYNC</dispatcher>
-  </filter-mapping>
+<!--   <filter> -->
+<!--     <filter-name>LoginFilter</filter-name> -->
+<!--     <filter-class>com.employee.login.controller.LoginFilter</filter-class> -->
+<!--   </filter> -->
+<!--   <filter-mapping> -->
+<!--    	<filter-name>LoginFilter</filter-name>  	 -->
+<!--    	<url-pattern>/back-end/index/homepage.jsp</url-pattern> -->
+<!--    	<url-pattern>/back-end/employee/*</url-pattern> -->
+<!--    	<url-pattern>/back-end/members/*</url-pattern> -->
+<!--    	<url-pattern>/back-end/teacher/*</url-pattern> -->
+<!--    	<url-pattern>/back-end/lecture/*</url-pattern> -->
+<!--    	<dispatcher>REQUEST</dispatcher> -->
+<!--    	<dispatcher>FORWARD</dispatcher> -->
+<!--    	<dispatcher>INCLUDE</dispatcher> -->
+<!--    	<dispatcher>ERROR</dispatcher> -->
+<!--    	<dispatcher>ASYNC</dispatcher> -->
+<!--   </filter-mapping> -->
   
-    <filter>
-    <filter-name>Emp_authFilter</filter-name>
-    <filter-class>com.employee.login.controller.Emp_authFilter</filter-class>
-  </filter>
-  <filter-mapping>
-   	<filter-name>Emp_authFilter</filter-name>
-   	<url-pattern>/back-end/employee/empall/*</url-pattern>
-   	<url-pattern>/back-end/members/*</url-pattern>
-   	<url-pattern>/back-end/teacher/*</url-pattern>
-   	<url-pattern>/back-end/lecorder/*</url-pattern>
-   	<url-pattern>/back-end/lecture/*</url-pattern>
-   	<dispatcher>REQUEST</dispatcher>
-   	<dispatcher>FORWARD</dispatcher>
-   	<dispatcher>INCLUDE</dispatcher>
-   	<dispatcher>ERROR</dispatcher>
-   	<dispatcher>ASYNC</dispatcher>
-  </filter-mapping>
+<!--     <filter> -->
+<!--     <filter-name>Emp_authFilter</filter-name> -->
+<!--     <filter-class>com.employee.login.controller.Emp_authFilter</filter-class> -->
+<!--   </filter> -->
+<!--   <filter-mapping> -->
+<!--    	<filter-name>Emp_authFilter</filter-name> -->
+<!--    	<url-pattern>/back-end/employee/empall/*</url-pattern> -->
+<!--    	<url-pattern>/back-end/members/*</url-pattern> -->
+<!--    	<url-pattern>/back-end/teacher/*</url-pattern> -->
+<!--    	<url-pattern>/back-end/lecorder/*</url-pattern> -->
+<!--    	<url-pattern>/back-end/lecture/*</url-pattern> -->
+<!--    	<dispatcher>REQUEST</dispatcher> -->
+<!--    	<dispatcher>FORWARD</dispatcher> -->
+<!--    	<dispatcher>INCLUDE</dispatcher> -->
+<!--    	<dispatcher>ERROR</dispatcher> -->
+<!--    	<dispatcher>ASYNC</dispatcher> -->
+<!--   </filter-mapping> -->
   
   
   
