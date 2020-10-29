@@ -91,7 +91,7 @@ tr, td {
 								<tr>
 
 									<td><img id="pic"
-										src="<%=request.getContextPath()%>/back-end/members/MprofileDisplayServlet?MEMNO=${membersVO.memno}"
+										src="<%=request.getContextPath()%>/front-end/members/MprofileDisplayServlet?MEMNO=${membersVO.memno}"
 										alt="No Image Uploaded"></td>
 										
 									<td>${membersVO.memno}</td>

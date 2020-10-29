@@ -135,6 +135,7 @@ margin:-240px 0 0 -30px;
 	box-shadow: 0 0 15px #5B5B5B;
 	padding-top:100px;
 	padding-bottom:50px;
+	overflow: scroll;
  }
  
 
@@ -164,12 +165,13 @@ padding-bottom:30px;
 background:#F0F0F0;    
 }
 p.text{
-width:100%;
-height:100%;
-font-size:18px;
-text-align:center;
-padding-top:10px;
-font-family:'Gochi Hand';
+width: 600px;
+    height: 100%;
+    font-size: 18px;
+    text-align: left;
+    padding-top: 10px;
+    font-family: 'Gochi Hand';
+    margin-left: 200px;
 }
 p.date{
 width:100%;
@@ -182,7 +184,7 @@ font-family:'Gochi Hand';
 h4.nkname{
 width:200px;
 height:50px;
-margin:12px 0 0 40px;
+margin:12px 0 0 30px;
 
 
 }
@@ -246,11 +248,14 @@ padding:0px 0 0 0;
             
              <%@ include file="page1.file"%>
             <div id="avg">${avg}</div>
-            <c:if test="${not empty sessionScope.membersVO}">
-           <c:if test="${empty course_assessSvc.checkMembers(sessionScope.membersVO.memno,courseno)}">
+            <c:if test="${not empty sessionScope.loginMembersVO}">
+            
+           <c:if test="${empty course_assessSvc.checkMembers(sessionScope.loginMembersVO.memno,courseno)}">
 				 <a id='add' href="<%=request.getContextPath()%>/front-end/course_assess/addCourse_assess.jsp?courseno=${courseno}">發表評價</a>							
 		   </c:if>
-            <c:if test="${not empty course_assessSvc.checkMembers(sessionScope.membersVO.memno,courseno)}">
+		   
+		   
+            <c:if test="${not empty course_assessSvc.checkMembers(sessionScope.loginMembersVO.memno,courseno)}">
 				 <a id='add' href="<%=request.getContextPath()%>/front-end/course_assess/updateCourse_assess.jsp?courseno=${courseno}">修改評價</a>
 		   </c:if>
 		   </c:if>
@@ -264,7 +269,7 @@ padding:0px 0 0 0;
                 
                 <div>
                 <input type="hidden" id="inform5" value="${requestScope.inform5}">
-                <input type="hidden" id="courseno" value="COUR0001" />
+                <input type="hidden" id="courseno" value="${courseno}" />
                 <button class="register" id="js-load-more" >More</button>
                 </div>
                 
@@ -309,7 +314,7 @@ $(document).ready(function(){
 	
 	var counter = 0; /*計數器*/
 	var pageStart = 0; /*offset*/
-	var pageSize = 10; /*size*/
+	var pageSize = 5; /*size*/
 	/*首次載入*/
 	getData(pageStart, pageSize);
 	/*監聽載入更多*/
@@ -352,16 +357,16 @@ function getData(offset,size){
 				
 				result +=   `<div class="signin-content">`;
 				result += 	`<div class="signin-image">`;
-				result += `<img class="pic" src='<%=request.getContextPath()%>/back-end/members/MprofileDisplayServlet?MEMNO=` + JSONarray[i].memno  +`' alt='sing up image'>`;
+				result += `<img class="pic" src='<%=request.getContextPath()%>/front-end/members/MprofileDisplayServlet?MEMNO=` + JSONarray[i].memno  +`' alt='sing up image'>`;
 				result +=	`<h4 style="font-family:Gochi Hand" class="nkname">`+JSONarray[i].nkname
 				
-				if(JSONarray[i].tchrstatus===null){
+				if(JSONarray[i].tchrstatus==='未申請'){
 				result += `<img class="nav_icon" src='<%=request.getContextPath()%>/front-end/members/assets/img/students.svg'></h4></div>`;
 				}else if(JSONarray[i].tchrstatus==='待審核'){
 				result += `<img class="nav_icon" src='<%=request.getContextPath()%>/front-end/members/assets/img/students.svg'></h4></div>`;
 				}else if(JSONarray[i].tchrstatus==='已通過'){
 			    result += `<img class="nav_icon" src='<%=request.getContextPath()%>/front-end/members/assets/img/teacher.svg'></h4></div>`;
-		        }else if(JSONarray[i].tchrstatus==='待審核'){
+		        }else if(JSONarray[i].tchrstatus==='未通過'){
 		        result += `<img class="nav_icon" src='<%=request.getContextPath()%>/front-end/members/assets/img/students.svg'></h4></div>`;
 		        }
 					

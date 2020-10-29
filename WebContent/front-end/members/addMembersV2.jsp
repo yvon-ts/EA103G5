@@ -126,6 +126,13 @@ div#bg {
 	-moz-box-shadow: 0 0 15px #8E8E8E;
 	box-shadow: 0 0 15px #5B5B5B;
 }
+#magic{
+position: absolute;
+	z-index: 5;
+	margin-left: 550px;
+	margin-top: 200px;
+
+}
 
 div.main {
 	padding-bottom: 0px;
@@ -182,10 +189,16 @@ div.main {
 		<!-- Sign up form -->
 		<section class="signup">
 			<div class="container" id="bg">
+			
+								
+								
+                            
+							
 				<a href="<%=request.getContextPath()%>/index/front-index/index.jsp"><img
 					id='preview_progressbarTW_img'
 					src="<%=request.getContextPath()%>/front-end/members/assets/img/head/01.png"
 					alt="sing up image"></a>
+					
 				<div class="signup-image">
 					<a
 						href="<%=request.getContextPath()%>/front-end/members/signIn.jsp"
