@@ -60,12 +60,16 @@ public class OrderDetailService {
 		return dao.findByPrimaryKey(orderno, courseno);
 	}
 	
-	public boolean boughtNot(List<OrderDetailVO> list, String couseno, String memno) {
+	public List<OrderDetailVO> getMyCourse(String memno){
+		return dao.findByMemberNo(memno);
+	}
+	
+	public boolean boughtNot(String couseno, String memno) {
 		
 		boolean own = false;
 		
 		List<String> coursenos = new ArrayList<String>();
-		list =  dao.findByMemberNo(memno);
+		List<OrderDetailVO> list =  dao.findByMemberNo(memno);
 		for(OrderDetailVO a : list) {
 			coursenos.add(a.getCourseno()) ;
 		}

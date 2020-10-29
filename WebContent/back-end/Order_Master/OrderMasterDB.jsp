@@ -50,6 +50,17 @@
         <input type="submit" value="送出">
     </FORM>
   </li>
+  
+  <li>訂單查詢
+    <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/Order_Detail/Order_Detail.do" >
+        <b>輸入會員編號 (如MEM0001):</b>
+        <input type="text" name="memno">
+        <b>輸入課程編號 (如COUR0001):</b>
+        <input type="text" name="courseno">
+        <input type="hidden" name="action" value="bought_Not">
+        <input type="submit" value="送出">
+    </FORM>
+  </li>
 
   <jsp:useBean id="orcSvc" scope="page" class="com.order_master.model.OrderMasterService" />
    
