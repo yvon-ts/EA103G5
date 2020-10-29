@@ -51,7 +51,7 @@
                             <h2>考題資料</h2>
                         </div>
                         <div class="col-sm-6">
-                            <a href='<%= request.getContextPath()%>/front-end/question/ListAllQuestion.jsp' class="btn btn-info" ><span>
+                            <a href='<%= request.getContextPath()%>/front-end/question/ListAllQuestion.jsp?whichPage=<%=request.getParameter("whichPage") %>' class="btn btn-info" ><span>
 回到考題管理</span></a>
                         </div>
                     </div>
