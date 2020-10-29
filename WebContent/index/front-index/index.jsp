@@ -38,6 +38,7 @@ String inform2 = (String)request.getAttribute("inform2");
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="<%=request.getContextPath()%>/index/front-index/assets/css/bootstrap.min.css">
     <!-- Icon -->
+   	<link rel="icon" type="image/png" href="<%=request.getContextPath()%>/back-end/login/logincss/images/icons/logo.svg"/>
     <link rel="stylesheet" href="<%=request.getContextPath()%>/index/front-index/assets/fonts/line-icons.css">
     <!-- Owl carousel -->
     <link rel="stylesheet" href="<%=request.getContextPath()%>/index/front-index/assets/css/owl.carousel.min.css">

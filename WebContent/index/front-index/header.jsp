@@ -26,6 +26,7 @@ MembersVO membersVO = (MembersVO) session.getAttribute("membersVO");
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="<%=request.getContextPath()%>/index/front-index/assets/css/bootstrap.min.css">
     <!-- Icon -->
+    <link rel="icon" type="image/png" href="<%=request.getContextPath()%>/back-end/login/logincss/images/icons/logo.svg"/>    
     <link rel="stylesheet" href="<%=request.getContextPath()%>/index/front-index/assets/fonts/line-icons.css">
     <!-- Animate -->
     <link rel="stylesheet" href="<%=request.getContextPath()%>/index/front-index/assets/css/animate.css">
