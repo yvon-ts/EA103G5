@@ -166,7 +166,7 @@
 
 </div>
 <%-- <%@ include file="/back-end/lecture/roomsetting/singleLayout.jsp"%><br> --%>
-<jsp:include page="/back-end/lecture/roomsetting/singleLayout.jsp"></jsp:include>
+<jsp:include page="/roomsetting/singleLayout.jsp"></jsp:include>
 </div>
 </div>
 </div>

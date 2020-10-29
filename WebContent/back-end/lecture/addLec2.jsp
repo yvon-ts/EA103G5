@@ -108,7 +108,7 @@
 				</div>
 			</div>
 			<div class="col-sm-6">
-				<%@ include file="/back-end/lecture/roomsetting/layout.jsp"%>
+				<%@ include file="/roomsetting/layout.jsp"%>
 			</div>
 			<div class="col-sm-7 btm-line">
 			</div>

@@ -136,7 +136,7 @@ html{
   座位號碼
   <input type="text" name="seatno" style="background-color: #fff; border-bottom: 1px #333 solid; border-radius: 0" value="<%=seatno%>">
   <input type="hidden" name="action" value="insert">
-  <input type="text" name="memno" value="<%=memno%>">
+  <input type="hidden" name="memno" value="<%=memno%>">
   <input type="submit" value="確認付款">
 </form>
 </div>

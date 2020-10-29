@@ -20,7 +20,7 @@
 <title>addClassroom</title>
 
 <!-- Bootstrap 的 CSS -->
-<link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/lecture/roomsetting/css/classroom.css">
+<link rel="stylesheet" href="<%=request.getContextPath()%>/roomsetting/css/classroom.css">
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <style>
 	.hide{
@@ -47,7 +47,7 @@
 		<input type="text" id="defaultseat" name="currseat" value="${lvo.currseat}" readonly>
 		<input type="text" id="signupseat" name="signupseat" readonly>
 	</div>
-	<script src="<%=request.getContextPath()%>/front-end/lecture/roomsetting/javascript/classroom.js"></script>
+	<script src="<%=request.getContextPath()%>/roomsetting/javascript/classroom.js"></script>
   	<script>
 	$.ajax({
   		url: "<%=request.getContextPath()%>/lecture/currLayout.show",
