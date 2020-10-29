@@ -1,6 +1,7 @@
 package com.posts.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.Timestamp;
 import java.util.LinkedList;
 import java.util.List;
@@ -13,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.google.gson.Gson;
 import com.members.model.MembersService;
 import com.members.model.MembersVO;
 import com.posts.model.PostsService;
@@ -270,10 +272,16 @@ public class PostsServlet extends HttpServlet {
 				PostsVO postsVO = postsSvc.addPosts(superpostno, courseno, memno, postcontent);
 
 				/*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
-				req.setAttribute("postsVO", postsVO);
-				String url = "/front-end/course/mainCoursePage.jsp";
-				RequestDispatcher successView = req.getRequestDispatcher(url); 
-				successView.forward(req, res);
+				PrintWriter out =res.getWriter();
+				Gson gson =new Gson();
+				
+				out.print(gson.toJson(postsVO));
+				out.flush();
+				out.close();
+//				req.setAttribute("postsVO", postsVO);
+//				String url = "/front-end/course/mainCoursePage.jsp";
+//				RequestDispatcher successView = req.getRequestDispatcher(url); 
+//				successView.forward(req, res);
 
 				/*************************** 其他可能的錯誤處理 **********************************/
 			} catch (Exception e) {
