@@ -9,6 +9,10 @@
 <%@ page import="com.lecture.model.*"%>
 
 <%
+// 	MembersVO memVO = (MembersVO) request.getAttribute("loginMembersVO");
+// 	String memno = memVO.getMemno();
+// 	System.out.println(memno);
+
 	LecVO lecVO = (LecVO) request.getAttribute("lecVO");
 	String lecno = lecVO.getLecno();
 	String roomno = lecVO.getRoomno();

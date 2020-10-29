@@ -13,7 +13,7 @@
 
 <!-- Bootstrap 的 CSS -->
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-<link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/lecture/roomsetting/css/classroom.css">
+<link rel="stylesheet" href="<%=request.getContextPath()%>/back-end/lecture/roomsetting/css/classroom.css">
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <style>
 	.hide{
@@ -48,7 +48,7 @@
 	
 		
 	<div id="div"></div>
-	<script src="<%=request.getContextPath()%>/front-end/lecture/roomsetting/javascript/classroom.js"></script>
+	<script src="<%=request.getContextPath()%>/back-end/lecture/roomsetting/javascript/classroom.js"></script>
   	<script>
   	
   		$.ajax({

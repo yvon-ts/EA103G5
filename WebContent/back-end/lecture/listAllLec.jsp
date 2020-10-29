@@ -286,7 +286,7 @@ function sendAjaxQuery(){
 	 			$("#tr"+i+" .startlec").text(lecs[i].startlec);
 	 			$("#tr"+i+" .starttime").text(lecs[i].starttime);
 	 			$("#tr"+i+" .endtime").text(lecs[i].endtime);
-	 			$("#tr"+i+" .sendLecno").text(lecs[i].lecno);
+	 			$("#tr"+i+" .sendLecno").val(lecs[i].lecno);
 	 			
 	 			if (lecs[i].lecstatus === 1)
 	 				$("#tr"+i+" .lecstatus").text("正常");

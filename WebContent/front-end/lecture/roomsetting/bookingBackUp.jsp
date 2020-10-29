@@ -3,7 +3,16 @@
 <%@ page import="com.classroom.model.*"%>
 <%@ page import="com.lecture.model.*"%>
 
-
+<%
+	//LecVO lvo = (LecVO) request.getAttribute("lecVO");
+	//String roomnoStr = lvo.getRoomno();
+	String lecno = "LEC0006";
+	//String lecno = lvo.getLecno();
+	//String initseat = lvo.getInitseat();
+	//String currseat = lvo.getCurrseat();
+	//ClassroomService roomSvc = new ClassroomService();
+	//ClassroomVO roomVO = roomSvc.getOneClassroom(roomnoStr);
+%>
 
 <html>
 <head>
@@ -12,8 +21,7 @@
 <title>addClassroom</title>
 
 <!-- Bootstrap 的 CSS -->
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-<link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/lecture/roomsetting/css/classroom.css">
+<link rel="stylesheet" href="<%=request.getContextPath()%>/back-end/lecture/roomsetting/css/classroom.css">
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <style>
 	.hide{
@@ -24,9 +32,6 @@
 
 <body>
 	<div class="container">
-		
-
-			
 				<div id="classroom">
 					<div id="stage">
 						Stage
@@ -34,28 +39,23 @@
 					<br>
 					<div id="seatmapping"></div>
 					<%-- hidden layout settings --%>
-					<input type="hidden" id="roomno" value="${lecVO.roomno}">
-					<input type="hidden" id="roomrow" class="roomSpace" name="roomrow">
-					<input type="hidden" id="roomcolumn" class="roomSpace" name="roomcolumn">
-					<input type="hidden" id="fixedseat" name="initseat" readonly>
-					<input type="hidden" id="defaultseat" name="currseat" value="${lecVO.currseat}" readonly>
-					<br>
-					<span>剩餘座位數量：</span><span id="seatCount"></span> / <span id="blockCount"></span>
+					<input type="hidden" id="roomrow" class="roomSpace" name="roomrow" value="${roomVO.roomrow}">
+					<input type="hidden" id="roomcolumn" class="roomSpace" name="roomcolumn" value="${roomVO.roomcolumn}">
+					<input type="text" id="fixedseat" name="initseat" value="${lvo.initseat}" readonly>
+					<input type="text" id="defaultseat" name="currseat" value="${lvo.currseat}" readonly>
 				</div>
-				
-		
+				<div>剩餘座位數量：<span id="seatCount"></span> / <span id="blockCount"></span></div>
 	</div>
 	
 		
 	<div id="div"></div>
-	<script src="<%=request.getContextPath()%>/front-end/lecture/roomsetting/javascript/classroom.js"></script>
+	<script src="<%=request.getContextPath()%>/back-end/lecture/roomsetting/javascript/classroom.js"></script>
   	<script>
-  	
   		$.ajax({
   	  		url: "<%=request.getContextPath()%>/lecture/currLayout.show",
   	  		type: "POST",
   	  		data:{
-  	  			lecno: "${lecVO.lecno}"
+  	  			lecno: "<%=lecno%>"
   	  		},
   	  		success: function(data){
   	  			console.log(data);
@@ -71,11 +71,11 @@
   	  	         let statusStr = $("#defaultseat").val();
 
   	  	        // print layout
-  	  	        setDefaultseatValue(statusStr);
+  	  	        setCurrseatValue(statusStr);
   	  	        showSeatMapping();
+	  	  	    addClickForBooking();
   	  		}
   	  	});
-  		
   	
     </script>
 </body>
