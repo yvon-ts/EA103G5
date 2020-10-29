@@ -16,6 +16,7 @@
 
 <%
 MembersVO membersVO = (MembersVO) session.getAttribute("loginMembersVO");
+// CourseVO courseVO = (CourseVO) request.getAttribute("courseVO");
 
 
 boolean flag = true;
@@ -34,11 +35,12 @@ else{
 
 
 <%
-String courseno = (String)request.getParameter("courseno");
+// String courseno = (String)request.getParameter("courseno");
 
 //須由前端給值
-// String courseno = "COUR0001";
+String courseno = "COUR0001";
 pageContext.setAttribute("courseno", courseno);
+pageContext.setAttribute("membersVO", membersVO);
 
 // CourseService courseSrv = new CourseService();
 // CourseVO courseVO = courseSrv.getOneCourse(courseno);
@@ -61,20 +63,22 @@ pageContext.setAttribute("courseno", courseno);
 <title>Insert title here</title>
 
 </head>
+	<link rel="stylesheet" href="<%=request.getContextPath()%>/library/bootstrap/4.5.3/css/bootstrap.min.css">
+
 <style>
 .button1{
 	display:inline-block;
 	color: -internal-light-dark(white);
 }
-#btn{
-width:60px;
-height: 44px;
-background-color:#0099CC;
-color:white;
-font-weight: bolder;
-border-radius:10px;
+/* #btn{ */
+/* width:60px; */
+/* height: 44px; */
+/* background-color:#0099CC; */
+/* color:white; */
+/* font-weight: bolder; */
+/* border-radius:10px; */
 
-}
+/* } */
 
 </style>
 <style>
@@ -209,16 +213,32 @@ body {
 	display: block;
 	clear: both;
 }
+#postcontent{
+width: 100%;
+resize:none;
+border: 0px;
+outline: none;
+}
+
+.postcontent1{
+width: 100%;
+resize:none;
+border: 0px;
+outline: none;
+}
 /**
  * Caja del Comentario
  ---------------------------*/
 .comments-list .comment-box {
+    border-width: 1px;
+    border-style: groove;
+    border-radius: 5px;
 	width: 680px;
 	float: right;
 	position: relative;
-  	-webkit-box-shadow: 0px 0px 0px 0px rgba(0, 1, 0, 1);  
-  	-moz-box-shadow: 1px 1px 1px 1px rgba(0, 1, 0, 1);  
-   	box-shadow: 1px 1px 1px 1px rgba(1, 1, 1, 1);   
+/*   	-webkit-box-shadow: 0px 0px 0px 0px rgba(0, 1, 0, 1);   */
+/*   	-moz-box-shadow: 1px 1px 1px 1px rgba(0, 1, 0, 1);   */
+/*    	box-shadow: 1px 1px 1px 1px rgba(1, 1, 1, 1);    */
 }
 .comments-list .comment-box:before, .comments-list .comment-box:after {
 	
@@ -324,14 +344,33 @@ body {
 	}
 }
 
+.comments-list .comment-avatar {
+margin-top: 0px;
+    margin-left: 105px;
+    width: 90px;
+    height: 90px;
+    position: relative;
+    z-index: 99;
+    float: left;
+    border: 3px solid #FFF;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, 1);
+    -moz-box-shadow: 0 1px 2px rgba(0, 0, 0, 1);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 1);
+    overflow: hidden;
+}
+.com-ava{
+margin-left: 87px !important;
 
+}
 </style>
 <body>
 
 	<!--上方留言區塊 -->
 
-	<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/posts/posts.do" name="form1"  accept-charset="utf-8">
-		<div class="comments-container">
+		<div class="container-fluid">
 			<ul id="comments-list" class="comments-list">
 				<li>
 					<div class="comment-main-level">
@@ -346,17 +385,16 @@ body {
 						<input type="hidden" name="superpostno" value=""/>
 						<!-- textarea -->
 						<div class="comment-box">
-							<textarea rows="4" cols="50" style="width: 680px;" name="postcontent" placeholder="please leave a message...">${memVO.memno}</textarea>
+							<textarea rows="4" cols="50"  id="postcontent" name="postcontent" placeholder="please leave a message...">${memVO.memno}</textarea>
 						
 							<div align="right">
-								<button id = btn>送出</button>
+								<button id = "btn" class="btn btn-primary btn-sm">送出</button>
 							</div>
 						</div>
 						</c:if>
 					</div>
 				</li>
 			</ul>
-	</FORM>
 
 
 	<!-- 課程留言 -->
@@ -375,7 +413,7 @@ body {
 			
 			<!-- 第一層留言內容 -->
 			<div class="comment-main-level">
-				<ul id="comments-list" class="comments-list">
+				<ul  class="comments-list">
 					<li>
 						<!-- 父文章 -->
 						<div class="comment-avatar">
@@ -451,7 +489,7 @@ body {
 						<ul class="comments-list reply-list">
 							<li>
 								<!-- Avatar -->
-								<div class="comment-avatar">
+								<div class="comment-avatar com-ava">
 									<img id='mprofile' src="<%=request.getContextPath()%>/front-end/members/MprofileDisplayServlet?MEMNO=${postsVOSub.memno}" alt="sing up image">
 								</div> <!-- Contenedor del Comentario -->
 								<div class="comment-box">
@@ -490,6 +528,7 @@ body {
 											<input type="hidden" name="memno" value="${postsVOSub.memno}"/>
 											<input type="hidden" name="courseno" value="${postsVOSub.courseno}"/>
 											<input id = btn type="submit" value="送出"/> 
+<!-- 										<input id ="${postsVOSub.postno}" btn type="submit" value="送出"/>  -->
 										
 										</form>
 									</div>
@@ -502,7 +541,7 @@ body {
 		
 				<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/posts/posts.do" name="form1"  accept-charset="utf-8" id="${postsVO.postno }" style="display:none">
 				
-					<ul id="comments-list" class="comments-list"  id="${postsVO.postno }">
+					<ul  class="comments-list"  id="${postsVO.postno }">
 						<li>
 							<div class="comment-main-level">
 								<!-- 新增留言  -->
@@ -516,7 +555,7 @@ body {
 								
 								<!-- textarea -->
 								<div class="comment-box">
-									<textarea rows="4" cols="50" style="width: 680px;" name="postcontent"></textarea>
+									<textarea rows="4" cols="50" class="postcontent1" name="postcontent"></textarea>
 									<div align="right">
 										<button id = btn>新增回覆</button>
 									</div>
@@ -532,18 +571,19 @@ body {
 	</div>
 	
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-		<script src="/library/jquery/jquery-3.5.1.js"></script>
+	<script src="<%=request.getContextPath()%>/library/jquery/jquery-3.5.1.js"></script>
+			<script src="<%=request.getContextPath()%>/library/bootstrap/4.5.3/js/bootstrap.bundle.min.js"></script>
 		
 <script>
 	
 // 	function init(){
 	
-	var reportBtn = document.getElementById("reportBtn");
-	reportBtn.addEventListener('click',function (){
+// 	var reportBtn = document.getElementById("reportBtn");
+// 	reportBtn.addEventListener('click',function (){
 // 		confirm('test');
-		swal("檢舉成功!", "1", "success");
+// 		swal("檢舉成功!", "1", "success");
 // 		alert('111');
-	});
+// 	});
 	
 	
 	function toggleA(name){
@@ -555,12 +595,79 @@ body {
 	}
 	
 	
+	$("#btn").click(function(){
+		console.log("BTN點擊")
+		$.ajax({
+			url:"<%=request.getContextPath()%>/posts/posts.do",
+			type:"POST",
+			data:{
+				action:"insert",
+				memno:"MEM0002",
+				courseno:"COUR0001",
+				superpostno:"",
+				postcontent:$("#postcontent").val()
+			},
+		success:function(data){
+// 			$("element").remove();
+			var day= new Date();
+			 value=JSON.parse(data);
 
+	$("#comments-list").after(
+	"<div class='comment-main-level'>"+
+	"<ul  class='comments-list'>"+
+		"<li>"+
+			"<div class='comment-avatar'>"+
+				"<img id='mprofile' src='<%=request.getContextPath()%>/front-end/members/MprofileDisplayServlet?MEMNO="+value.memno+"' alt='sing up image'>"+
+			"</div>"+
+			"<div class='comment-box'>"+
+				"<div class='comment-head'>"+	
+					"<h6 class='comment-name'>"+					
+						"${memVO.memname}&nbsp;&nbsp;|&nbsp;&nbsp;"+day.getFullYear()+"-"+(day.getMonth()+1)+"-"+day.getDate()+" "+day.getHours()+":"+day.getMinutes()+
+					"</h6>"+
+					"<span></span>"+
+					"<div align='right'>"+										
+								"<img onclick='toggleA('"+value.postno+"_reply')' src='<%=request.getContextPath()%>/front-end/posts/images/edit.png' style='width:15px;height:15px;'/>"+
+								"<a href='<%=request.getContextPath()%>/posts/posts.do?postno="+value.postno+"&action=update_Status_Remove'><img src='<%=request.getContextPath()%>/front-end/posts/images/delete.png' style='width:15px;height:15px'></a>"+							
+						"<a href='<%=request.getContextPath()%>/report_detail/report_detail.do?memno="+value.memno+"&postno="+value.postno+"&action=getOne_For_Update_AddReport'><img src='<%=request.getContextPath()%>/front-end/posts/images/flag.png' style='width:15px;height:15px'></a>"+
+							"<img onclick='toggleA('"+value.postno+"')' src='<%=request.getContextPath()%>/front-end/posts/images/message.png' style='width:15px;height:15px;'/>"+
+						"</div>"+				
+					"</div>"+	
+				"<div class='comment-content'>"+value.postcontent+"</div>"+
+				"<div class='comment-content'>"+
+					"<form METHOD='post' id='"+value.postno+"_reply' ACTION='<%=request.getContextPath()%>/posts/posts.do' style='display:none' accept-charset='utf-8'>"+
+						"<input type='hidden' name='action' value='update' />"+
+						"<textarea name='postcontent' style='width:100%'>"+value.postcontent+"</textarea>"+
+						"<input type='hidden' name='postno' value='"+value.postno+"'/>"+
+						"<input type='hidden' name='superpostno' value='"+value.superpostno+"'/>"+
+						"<input type='hidden' name='memno' value='"+value.memno+"'/>"+
+						"<input type='hidden' name='courseno' value='"+value.courseno+"'/>"+
+						"<input id = btn type='submit' value='送出'/> "+
+					"</form>"+
+					"</div>"+
+			"</div>"+
+		"</li>"+
+	"</ul>"+
+"</div>"
+);
+			console.log("成功"+value);
+		},
+		error:function(data){
+			console.log("失敗");
+		}
+	
+		});
+	})
 	
 	
 	
 // 	};
-	 
+// 	 btn.click{
+// 		 var pst=this.findid
+// 		 pst="'"+pst+"'";
+// 		 $(pst).append{
+// 			 div
+// 		 }
+// 	 }
 //   	window.onload = init;
 
 </script>
