@@ -12,7 +12,7 @@
 <%
 // 	TeacherService teacherSvc = new TeacherService();
 //	TeacherVO teacherVO = teacherSvc.getStatus(membersVO.getMemno());
-//	TeacherVO teacherVO =(TeacherVO) session.getAttribute("teacherVO");
+//	teacherVO =(TeacherVO) session.getAttribute("loginTeacherVO");
 	String tchrno = teacherVO.getTchrno();
 	Map<String, String[]> map = new TreeMap<String, String[]>();
 	map.put("tchrno", new String[]{tchrno});

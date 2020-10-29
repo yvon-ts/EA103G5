@@ -21,8 +21,6 @@
 	<link rel="stylesheet" href="<%=request.getContextPath()%>/library/bootstrap/4.5.3/css/bootstrap.min.css">
 	<script src="<%=request.getContextPath()%>/library/bootstrap/4.5.3/js/bootstrap.min.js"></script>
 	
-	
-	
 	<script	src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.3/sweetalert2.js" type="text/javascript"></script>
 	<script src="http://code.jquery.com/jquery-1.12.4.min.js"></script>
 	
