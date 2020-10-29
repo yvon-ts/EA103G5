@@ -607,6 +607,7 @@ margin-left: 87px !important;
 				superpostno:"",
 				postcontent:$("#postcontent").val()
 			},
+		
 		success:function(data){
 // 			$("element").remove();
 			var day= new Date();
