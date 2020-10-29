@@ -238,5 +238,40 @@ public class OrderDetailServlet extends HttpServlet {
 				failureView.forward(req, res);
 			}
 		}
+		
+		if ("bought_Not".equals(action)) { // 前台訂單管理
+			List<String> errorMsgs = new LinkedList<String>();
+			// Store this set in the request scope, in case we need to
+			// send the ErrorPage view.
+			req.setAttribute("errorMsgs", errorMsgs);
+
+			try {
+				/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
+				String courseno = req.getParameter("courseno");
+				String memno = req.getParameter("memno");
+				/*************************** 2.開始查詢資料 *****************************************/
+				OrderDetailService ordSvc = new OrderDetailService();
+				boolean owned = ordSvc.boughtNot(courseno, memno);
+				
+				if (!errorMsgs.isEmpty()) {
+					RequestDispatcher failureView = req
+							.getRequestDispatcher("/back-end/Order_Master/ListAllOrder.jsp");
+					failureView.forward(req, res);
+					return;// 程式中斷
+				}
+
+				/*************************** 3.查詢完成,準備轉交(Send the Success view) *************/
+				req.setAttribute("owned", owned); // 資料庫取出的ordVO物件,存入req
+				String url = "/back-end/Order_Master/OrderMasterDB.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 listOneOrder.jsp
+				successView.forward(req, res);
+
+				/*************************** 其他可能的錯誤處理 *************************************/
+			} catch (Exception e) {
+				errorMsgs.add("無法取得資料:" + e.getMessage());
+				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/Order_Master/ListAllOrder.jsp");
+				failureView.forward(req, res);
+			}
+		}
 	}
 }
