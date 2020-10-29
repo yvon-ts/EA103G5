@@ -352,8 +352,8 @@ public class MembersServlet extends HttpServlet {
 			failView.forward(req, res);
 		} else {
 			teacherVO = teacherSvc.getOneTeacherByMemno(membersVO.getMemno());
-			session.setAttribute("teacherVO", teacherVO);
-			session.setAttribute("membersVO", membersVO);
+			session.setAttribute("loginTeacherVO", teacherVO);
+			session.setAttribute("loginMembersVO", membersVO);
 			String inform2 = "100";
 			req.setAttribute("inform2", inform2);
 			String url = "/index/front-index/index.jsp";
@@ -367,8 +367,8 @@ public class MembersServlet extends HttpServlet {
 
 	private void signout(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		HttpSession session = req.getSession();
-		session.removeAttribute("membersVO");
-		session.removeAttribute("teacherVO");
+		session.removeAttribute("loginMembersVO");
+		session.removeAttribute("loginTeacherVO");
 		String inform2 = "300";
 		req.setAttribute("inform2", inform2);
 		String url = "/index/front-index/index.jsp";
