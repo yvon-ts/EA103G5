@@ -205,14 +205,7 @@ table.table td a.view {
 	border-radius: 30px;
 	text-align: center;
 }
- input[type="submit"].view{
-	width: 60px;
-	height: 30px;
-	color: #2196F3;
-	border: 2px solid;
-	border-radius: 30px;
-	text-align: center;
-}
+
  input[type="submit"].test{
 	width: 80px;
 	height: 30px;

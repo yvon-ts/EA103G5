@@ -220,14 +220,7 @@ table tr th input[type="submit"].view {
 	text-align: center;
 }
 
-input[type="submit"].test{
-	width: 80px;
-	height: 30px;
-	color: black;
-	border: 0px solid;
-	border-radius: 30px;
-	text-align: center;
-}
+
 
 table tr th input[type="submit"].view:hover  {
 	color: #2196F3;

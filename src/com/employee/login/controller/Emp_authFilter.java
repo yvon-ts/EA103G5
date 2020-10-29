@@ -59,10 +59,9 @@ public class Emp_authFilter implements Filter {
 
 		List<String> FUN0003 = new ArrayList<>();
 		FUN0003.add(req.getContextPath() + "/back-end/teacher/select_teacher.jsp");
-		FUN0003.add(req.getContextPath() + "/back-end/teacher/listAllTeachers.jsp");
-		FUN0003.add(req.getContextPath() + "/back-end/teacher/listAllPendingTeachers.jsp");
 		FUN0003.add(req.getContextPath() + "/back-end/teacher/showOneTeacher.jsp");
-		FUN0003.add(req.getContextPath() + "/back-end/teacher/listOneTeacher.jsp");
+		FUN0003.add(req.getContextPath() + "/back-end/teacher/listAllTeachersCompositeQuery.jsp");
+		FUN0003.add(req.getContextPath() + "/back-end/teacher/listAllTeachers.jsp");
 		
 		List<String> FUN0004 = new ArrayList<>();
 		FUN0004.add(req.getContextPath() + "/back-end/lecture/addLec2.jsp");
@@ -73,6 +72,7 @@ public class Emp_authFilter implements Filter {
 		FUN0004.add(req.getContextPath() + "/back-end/lecture/select_page.jsp");
 		FUN0004.add(req.getContextPath() + "/back-end/lecture/updateLec.jsp");
 		FUN0004.add(req.getContextPath() + "/back-end/lecorder/listAllLodr.jsp");
+		FUN0004.add(req.getContextPath() + "/back-end/lecseat/listOneSeat.jsp");
 		
 		if (list.contains("FUN0001") && FUN0001.contains(urls)) {
 			chain.doFilter(request, response);
