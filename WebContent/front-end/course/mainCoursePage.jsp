@@ -6,49 +6,39 @@
 <%@ page import="com.video.model.*"%>
 <%@ page import="com.members.model.*"%>
 <%@ page import="com.teacher.model.*"%>
+<%@ page import="com.order_master.model.*"%>
+<%@ page import="com.order_detail.model.*"%>
 
 <jsp:useBean id="courseTypeSvc" scope="page" class="com.course_type.model.CourseTypeService" />
 <jsp:useBean id="videoSvc" scope="page" class="com.video.model.VideoService" />
+<jsp:useBean id="orderDetailSvc" scope="page" class="com.order_detail.model.OrderDetailService" />
 
 <%
+	// 取得課程物件
 	CourseVO courseVO = (CourseVO) request.getAttribute("courseVO");
-	
-	// 如果只傳入courseno，沒有傳入courseVO時，使用courseno取一個courseVO
 	if(courseVO == null){
 		courseVO = new CourseService().getOneCourse(request.getParameter("courseno"));
 		request.setAttribute("courseVO",courseVO);
 	}
-
+	// ==========================================================================================
 	// 由此 2 個 Boolean 判斷登入者是否可以使用課程
 	Boolean isMyCourse = false;
 	Boolean alreadyBuyIt = false;
-	
 	// 判斷登入者是否已買過此課程
-	//  TO DO TO DO TO DO TO DO TO DO TO DO TO DO TO DO TO DO 這個使用者買過沒
-
+	MembersVO loginMembersVO = (MembersVO) session.getAttribute("loginMembersVO");
+	if (loginMembersVO != null) {
+		alreadyBuyIt = orderDetailSvc.boughtNot(courseVO.getCourseno(), loginMembersVO.getMemno());
+		System.out.println("=== 我買了這堂課? === " + alreadyBuyIt);
+	}
 	// 判斷是不是登入者自己開設的的課程
 	TeacherVO loginTeacherVO = (TeacherVO) session.getAttribute("loginTeacherVO");
-	if (loginTeacherVO != null && (courseVO.getTchrno().equals(loginTeacherVO.getTchrno()))) {
-			System.out.println("這是林北開的課啦");
-			isMyCourse = true;
+	if (loginTeacherVO != null) {
+		isMyCourse = courseVO.getTchrno().equals(loginTeacherVO.getTchrno());
+		System.out.println("=== 這是我開的課? === " + isMyCourse);
 	}
-	// 濃縮成上面那一行
-	// 	if (loginTeacherVO != null) {
-	// 		System.out.println("我是 " + loginTeacherVO.getTchrno());
-	// 		if (courseVO.getTchrno().equals(loginTeacherVO.getTchrno())){
-	// 			System.out.println("這是林北開的課啦");
-	// 			isMyCourse = true;
-	// 		} else {
-	// 			System.out.println("我也只是個學生");					
-	// 		}
-	// 	}
-	// 	else { // ELSE 其實可以不要
-	// 		System.out.println("我是不是老師啦");		
-	// 	} 
-
-	// 統整上面 2 個條件，看此登入者是否可以使用課程
+	// 結合上述 2 條件，檢查登入者使用課程之權限
 	Boolean canViewThisCourse = isMyCourse || alreadyBuyIt; 
-
+	// ==========================================================================================
 	// 處理課程評分精度以及分母為零的問題
 	Integer csscore = courseVO.getCsscore();
 	Integer csscoretimes = courseVO.getCsscoretimes();
@@ -57,8 +47,8 @@
 	if (csscoretimes > 0) {
 		courseScore = formatter.format(Double.valueOf(csscore) / Double.valueOf(csscoretimes));
 	}
-	
-	// 開玄
+	// ==========================================================================================
+	// 開玄考試用
 	request.getSession().setAttribute("coursenoForTest",courseVO.getCourseno());
 %>
 
@@ -114,7 +104,7 @@
 							<h1 style="color:#0099CC;">${courseVO.coursename}<span id="nowPlaying"></span></h1>
 						</div>
 					</div>
-					
+
 					<div class="row">
 						<div class="col-lg-8 align-self-center">
 							<!-- 影片播放 -->
@@ -132,19 +122,19 @@
 							</div>
 							<div class="list-group" id="videolist">
 
-							<!-- 測驗連結 -->
-							<% if (!canViewThisCourse){ %>
+								<!-- 測驗連結 -->
+								<% if (!canViewThisCourse){ %>
 								<a class="list-group-item list-group-item-action list-group-item-primary locked"
 									href="#">
 									<h3 style="color:black;"><i class="fas fa-lock"></i> 自我評量 <i class="far fa-arrow-alt-circle-right"></i></h3>
 								</a>
-							<% } else { %>
+								<% } else { %>
 								<a class="list-group-item list-group-item-action list-group-item-primary"
-									target="_blank"	href="<%=request.getContextPath()%>/front-end/test/SelectedTest.jsp">
+									target="_blank" href="<%=request.getContextPath()%>/front-end/test/SelectedTest.jsp">
 									<h3 style="color:#b07e2d;"><i class="fas fa-pen"></i> 自我評量 <i class="far fa-arrow-alt-circle-right"></i></h3>
 								</a>
-							<% } %>						
-								
+								<% } %>
+
 								<!-- 宣告複合查詢使用的 map -->
 								<%
 									String courseno = courseVO.getCourseno();
@@ -152,34 +142,31 @@
 									map.put("courseno", new String[]{courseno});
 									request.setAttribute("map", map);
 								%>
-								
+
 								<!-- 讀出課程現有的單元清單 -->
-								
-								
 								<c:forEach var="videoVO" items="${videoSvc.getAll(map)}">
-								<%
-									VideoVO videoVO = (VideoVO)(pageContext.getAttribute("videoVO"));
-									Integer chapterno = videoVO.getChapterno();
-									if (!canViewThisCourse && chapterno > 2) {
-								%>
+									<%
+										VideoVO videoVO = (VideoVO)(pageContext.getAttribute("videoVO"));
+										Integer chapterno = videoVO.getChapterno();
+										if (!canViewThisCourse && chapterno > 2) {
+									%>
 									<a class="list-group-item list-group-item-action list-group-item-primary locked">
 										<div class="d-flex">
-										<div class="w-75">
-											<h3 style="color:black;"><i class="fas fa-lock"></i> 單元 ${videoVO.chapterno}</h3>
-										</div>
-								<% } else { %>
+											<div class="w-75">
+												<h3 style="color:black;"><i class="fas fa-lock"></i> 單元 ${videoVO.chapterno}</h3>
+											</div>
+									<% } else { %>
 									<a class="list-group-item list-group-item-action list-group-item-primary allowToWatch"
-										href="<%=request.getContextPath()%>/video/VideoReaderFromDB?videono=${videoVO.videono}"  chaptername="${videoVO.chaptername}">
+										href="<%=request.getContextPath()%>/video/VideoReaderFromDB?videono=${videoVO.videono}" chaptername="${videoVO.chaptername}">
 										<div class="d-flex">
-										<div class="w-75">
-											<h3 style="color:#0099CC;"><i class="fas fa-play"></i> 單元 ${videoVO.chapterno}</h3>
-										</div>
-								<%	} %>
-
-										<div class="w-25">
-											<p class="showVideoLen text-right"></p>
-											<input type="hidden" name="chapterlen" value=${videoVO.chapterlen } min=0 step=1 readonly>
-										</div>
+											<div class="w-75">
+												<h3 style="color:#0099CC;"><i class="fas fa-play"></i> 單元 ${videoVO.chapterno}</h3>
+											</div>
+									<%	} %>
+											<div class="w-25">
+												<p class="showVideoLen text-right"></p>
+												<input type="hidden" name="chapterlen" value=${videoVO.chapterlen } min=0 step=1 readonly>
+											</div>
 										</div>
 										<div>
 											<h5>${videoVO.chaptername}</h5>
@@ -194,7 +181,7 @@
 						<div class="col-md-2 col-4 courseInfo">
 							<!-- 須要查詢訂單中的購買人次 -->
 							<i class="fas fa-users"></i>
-<!-- NG  NG  NG  NG  NG  NG  NG  NG  NG  NG  NG  NG  NG  NG  NG  NG  NG  NG  NG  NG  NG  NG  NG  NG  NG  NG  NG  NG -->
+							<!-- NG  NG  NG  NG  NG  NG  NG  NG  NG  NG  NG  NG  NG  NG  NG  NG  NG  NG  NG  NG  NG  NG  NG  NG  NG  NG  NG  NG -->
 							<p><span>ToBeChange</span> 位同學</p>
 						</div>
 						<div class="col-md-2 col-4 courseInfo">
@@ -213,44 +200,44 @@
 								<sapn id="courseprice">${courseVO.courseprice}</sapn>
 							</i>
 						</div>
-						
+
 						<!-- 須要查詢該使用者是否已加入收藏 -->
 						<div class="col-md col-3 courseInfo">
-						<c:forEach var="TrackingListVO" items="${TrackingListSvc.getOneByMemno(membersVO.memno)}">
+							<c:forEach var="TrackingListVO" items="${TrackingListSvc.getOneByMemno(membersVO.memno)}">
 								<c:choose>
 									<c:when test="${ courseVO.courseno eq TrackingListVO.courseno}">
-										<label class="bookmark"><i class="fa fa-heart" aria-hidden="true" >
-											<input type ="hidden"  id="courseno" value ="${courseVO.courseno}"/>
-										</i></label>
-										<c:set var="flag" value="true"/>
+										<label class="bookmark"><i class="fa fa-heart" aria-hidden="true">
+												<input type="hidden" id="courseno" value="${courseVO.courseno}" />
+											</i></label>
+										<c:set var="flag" value="true" />
 									</c:when>
 								</c:choose>
-						</c:forEach>
-							
+							</c:forEach>
+
 							<c:if test="${empty flag}">
-								<label class="bookmark"><i class="fa fa-heart-o" aria-hidden="true" >
-									<input type ="hidden"  id="courseno" value ="${courseVO.courseno}"/>
-								</i></label>
+								<label class="bookmark"><i class="fa fa-heart-o" aria-hidden="true">
+										<input type="hidden" id="courseno" value="${courseVO.courseno}" />
+									</i></label>
 							</c:if>
-							<c:remove var="flag"/>
+							<c:remove var="flag" />
 						</div>
-						
+
 						<!-- 須要查詢該使用者是否已購買 -->
 						<div class="col-md col-3 courseInfo">
 							<!-- 是否購買 -->
 							<% if (!canViewThisCourse){ %>
-								<!-- 未購買，所以要可以買 -->
-								<label class="shoppingcart">
-									<i class="fa fa-shopping-cart" aria-hidden="true">
-										<input type ="hidden" name="courseno" 	 id="courseno"   value ="${courseVO.courseno}"/>
-										<%-- <input type ="hidden" name="courseprice" id="courseprice" value ="${courseVO.courseprice}"/> --%>
-										<%-- <input type ="hidden" name="courseinfo"  id="courseinfo"  value ="${courseVO.courseinfo}"/> --%>
-									</i>
-								</label>
+							<!-- 未購買，所以要可以買 -->
+							<label class="shoppingcart">
+								<i class="fa fa-shopping-cart" aria-hidden="true">
+									<input type="hidden" name="courseno" id="courseno" value="${courseVO.courseno}" />
+									<%-- <input type ="hidden" name="courseprice" id="courseprice" value ="${courseVO.courseprice}"/> --%>
+									<%-- <input type ="hidden" name="courseinfo"  id="courseinfo"  value ="${courseVO.courseinfo}"/> --%>
+								</i>
+							</label>
 							<% } else { %>
-								<!-- 已購買，無法點選 -->
-								<i class="fas fa-user-check"></i>
-							<% } %>	
+							<!-- 已購買，無法點選 -->
+							<i class="fas fa-user-check"></i>
+							<% } %>
 
 						</div>
 					</div>
@@ -281,19 +268,17 @@
 					</div>
 					<div id="coursescope" class="tab-pane fade">
 						<jsp:include page="/front-end/course_assess/listAllAjax.jsp" flush="true">
-							<jsp:param name="courseno" value="${courseVO.courseno}"/>
+							<jsp:param name="courseno" value="${courseVO.courseno}" />
 						</jsp:include>
 					</div>
 					<div id="post" class="tab-pane fade">
 						<h3>問題討論</h3>
-<%-- 						<jsp:include page="/front-end/posts/posts.jsp"> --%>
-<%-- 							<jsp:param name="courseno" value="${courseVO.courseno}"/> --%>
-<%-- 						</jsp:include> --%>
+						<%-- <jsp:include page="/front-end/posts/posts.jsp"> --%>
+						<%-- 	<jsp:param name="courseno" value="${courseVO.courseno}"/> --%>
+						<%-- </jsp:include> --%>
 					</div>
 				</div>
-
 			</div>
-
 		</section>
 	</main>
 
@@ -301,112 +286,99 @@
 	<!-- Bootstrap 的 JS (jquery 改為完整版)-->
 	<script src="<%=request.getContextPath()%>/library/jquery/jquery-3.5.1.js"></script>
 	<script src="<%=request.getContextPath()%>/library/bootstrap/4.5.3/js/bootstrap.bundle.min.js"></script>
-<!-- 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script> -->
 	<!-- 計算 video durarion 相關的 JS -->
 	<script src="<%=request.getContextPath()%>/front-end/video/js/videoDurationCaculation.js"></script>
 
 	<script>
 		$(function () {
 			// 顯示各單元影片時間
-			$("#courseTtlTime").text(convertSecToHrFormatter(${courseVO.ttltime}));
+			$("#courseTtlTime").text(convertSecToHrFormatter($ {courseVO.ttltime}));
 			showInitOriginalVideoLen();
 
-			
-			//-- --------------- 改這邊 --------------- --><!-- --------------- 改這邊 --------------- -->
-						// 註冊影片清單點擊事件
-						$("#videolist .allowToWatch").click(function (e) {
-							e.preventDefault();
-							$("#videoContainer video").attr("autoplay", true);
-							$("#videoContainer video source").attr("src", $(this).attr("href"));
-							let videoPlayer = document.getElementById("coursePlayer");
-							videoPlayer.load();
-							$("#nowPlaying").text(" → " + $(this).attr('chaptername'));
-						});
-						
-						// 註冊影片清單點擊事件
-						$("#videolist .locked").click(function (e) {
-							e.preventDefault();
-							swal('付費課程','請先登入或購買課程',  'warning')
-						});
-			//-- --------------- 改這邊 --------------- --><!-- --------------- 改這邊 --------------- -->
+			// 註冊影片清單點擊事件
+			$("#videolist .allowToWatch").click(function (e) {
+				e.preventDefault();
+				$("#videoContainer video").attr("autoplay", true);
+				$("#videoContainer video source").attr("src", $(this).attr("href"));
+				let videoPlayer = document.getElementById("coursePlayer");
+				videoPlayer.load();
+				$("#nowPlaying").text(" → " + $(this).attr('chaptername'));
+			});
 
-			
-// 			trackingOrNot(false);
+			// 註冊影片清單點擊事件
+			$("#videolist .locked").click(function (e) {
+				e.preventDefault();
+				swal('付費課程', '請先登入或購買課程', 'warning')
+			});
 
 			// 追蹤清單
-			$('body').on('click' ,'.bookmark',function(){
-				
+			$('body').on('click', '.bookmark', function () {
 				var updateTrackingList;
-				
-				if ($(this).children().attr("class") === "fa fa-heart-o"){
+
+				if ($(this).children().attr("class") === "fa fa-heart-o") {
 					updateTrackingList = "insert";
-					$(this).children().attr("class","fa fa-heart");
-				}
-				else{
+					$(this).children().attr("class", "fa fa-heart");
+				} else {
 					updateTrackingList = "delete";
-					$(this).children().attr("class","fa fa-heart-o");
+					$(this).children().attr("class", "fa fa-heart-o");
 				}
-				
-				console.log(updateTrackingList + "," + $(this).find('#courseno').val() );
-				
+
+				console.log(updateTrackingList + "," + $(this).find('#courseno').val());
+
 				$.ajax({
-					url	:"<%=request.getContextPath()%>/tracking_list/tracking_list.do", 
-					data:{
-						courseno : $(this).find('#courseno').val(),
-// 						memno    : $("#memno").val(),
-						action   : updateTrackingList ,
+					url: "<%=request.getContextPath()%>/tracking_list/tracking_list.do",
+					data: {
+						courseno: $(this).find('#courseno').val(),
+						// 						memno    : $("#memno").val(),
+						action: updateTrackingList,
 					},
-					success: function(data){
+					success: function (data) {
 						console.log('操作成功--->mainCoursePage');
 					}
 				});
-				
-				
 			});
-			
+
 			// 購物車
-			$('body').on('click' , '.shoppingcart',function(){
+			$('body').on('click', '.shoppingcart', function () {
 				$.ajax({
-					url	:"<%=request.getContextPath()%>/tracking_list/tracking_list.do",
-					data:{
-						courseno:$(this).find('#courseno').val(),
-// 						memno    : $("#memno").val(),
+					url: "<%=request.getContextPath()%>/tracking_list/tracking_list.do",
+					data: {
+						courseno: $(this).find('#courseno').val(),
+						// 						memno    : $("#memno").val(),
 						action: "shoppingCart"
 					},
-					success: function(data){
-						
-						if(data !== 'false'){
-							  console.log('加入購物車');	
-							  swal('你已將課程加入購物車！！', '', 'success');
+					success: function (data) {
+						if (data !== 'false') {
+							console.log('加入購物車');
+							swal('你已將課程加入購物車！！', '', 'success');
 						}
-						
 					}
 				});
 			});
 		});
 
-// 		function trackingOrNot(isTracking) {
-// 			// 追蹤清單初始化
-// 			if (isTracking) {
-// 				// 實心愛心
-// 				$("#track").addClass("fas fa-heart");
-// 			} else {
-// 				// 空心愛心
-// 				$("#track").addClass("far fa-heart");
-// 			}
+		// 		function trackingOrNot(isTracking) {
+		// 			// 追蹤清單初始化
+		// 			if (isTracking) {
+		// 				// 實心愛心
+		// 				$("#track").addClass("fas fa-heart");
+		// 			} else {
+		// 				// 空心愛心
+		// 				$("#track").addClass("far fa-heart");
+		// 			}
 
-// 			// 註冊切換追蹤清單事件
-// 			$("#track").click(function () {
-// 				$(this).toggleClass("fas fa-heart");
-// 				$(this).toggleClass("far fa-heart");
+		// 			// 註冊切換追蹤清單事件
+		// 			$("#track").click(function () {
+		// 				$(this).toggleClass("fas fa-heart");
+		// 				$(this).toggleClass("far fa-heart");
 
-// 				if ($(this).hasClass("fas fa-heart")) {
-// 					console.log("**增加追蹤清單");
-// 				} else if ($(this).hasClass("far fa-heart")) {
-// 					console.log("**刪除追蹤清單");
-// 				}
-// 			});
-// 		}
+		// 				if ($(this).hasClass("fas fa-heart")) {
+		// 					console.log("**增加追蹤清單");
+		// 				} else if ($(this).hasClass("far fa-heart")) {
+		// 					console.log("**刪除追蹤清單");
+		// 				}
+		// 			});
+		// 		}
 	</script>
 
 	<!-- include 前台頁面的 footer -->
