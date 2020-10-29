@@ -23,9 +23,10 @@ public class CoursePictureReaderFromDB extends HttpServlet {
 		req.setCharacterEncoding("UTF-8");
 		res.setContentType("image/gif");
 		ServletOutputStream out = res.getOutputStream();
+		
+		String courseno = req.getParameter("courseno");
 
 		try {
-			String courseno = req.getParameter("courseno");
 			PreparedStatement pstmt = con.prepareStatement(LOAD_COURSE_IMAGE);
 			pstmt.setString(1, courseno);
 
@@ -43,6 +44,7 @@ public class CoursePictureReaderFromDB extends HttpServlet {
 			} 
 			else {
 				// 展示預設錯誤圖片
+				System.out.println("課程圖片無內容，以預設圖片替代： " + courseno);
 				InputStream in = getServletContext().getResourceAsStream("/front-end/course/image/CourseNoPicture.PNG");
 				byte[] b = new byte[in.available()];
 				in.read(b);
@@ -54,8 +56,7 @@ public class CoursePictureReaderFromDB extends HttpServlet {
 			pstmt.close();
 
 		} catch (Exception e) {
-//			e.printStackTrace();
-//			System.out.println("課程圖片錯誤");
+			System.out.println("課程圖片無內容，以預設圖片替代： " + courseno + " / Excetion： " + e.getMessage());
 			// 展示預設錯誤圖片
 			InputStream in = getServletContext().getResourceAsStream("/front-end/course/image/CourseNoPicture.PNG");
 			byte[] b = new byte[in.available()];
