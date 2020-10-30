@@ -5,7 +5,7 @@
 <%@ page import="java.util.*"%>
 <%@ page import="com.course.model.*, com.order_detail.model.*"%>
 <%@ page import="com.functionx.model.*"%>
-
+<jsp:include page="/back-end/index/homepage.jsp" />
 <jsp:useBean id="ordSvc" scope="page" class="com.order_detail.model.OrderDetailService" />
 
 <%
@@ -353,8 +353,7 @@ table.table .avatar {
 <title>調整訂單明細</title>
 </head>
 
-<body>
-	<jsp:include page="/front-end/back-endHomePage.jsp" />
+<body>	
 	<jsp:useBean id="courSvc" scope="page" class="com.course.model.CourseService" />
 	<jsp:useBean id="courVO" scope="page" class="com.course.model.CourseVO" />
 

@@ -11,7 +11,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>Login V3</title>
+	<title>Xducation管理後臺</title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 <!--===============================================================================================-->	
@@ -54,12 +54,12 @@
 					<font color="yellow"><b>${errlogin}</b></font><br>
 					</div>
 					<div class="wrap-input100 validate-input" data-validate = "Enter username">
-						<input class="input100" type="text" name="empacc" placeholder="輸入帳號" >
+						<input class="input100" type="text" name="empacc" placeholder="輸入帳號"   required="required">
 						<span class="focus-input100" data-placeholder="&#xf207;"></span>
 					</div>
 
 					<div class="wrap-input100 validate-input" data-validate="Enter password">
-						<input class="input100" type="password" name="emppwd" placeholder="輸入密碼">
+						<input class="input100" type="password" name="emppwd" placeholder="輸入密碼"  required="required">
 						<span class="focus-input100" data-placeholder="&#xf191;"></span>
 					</div>
 					<div class="container-login100-form-btn">
@@ -71,9 +71,7 @@
 			</div>
 		</div>
 	</div>
-	
 
-	<div id="dropDownSelect1"></div>
 	
 <!--===============================================================================================-->
 	<script src="<%=request.getContextPath()%>/back-end/login/logincss/vendor/jquery/jquery-3.2.1.min.js"></script>

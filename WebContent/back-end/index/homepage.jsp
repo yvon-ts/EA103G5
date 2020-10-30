@@ -6,12 +6,14 @@
 <html lang="en">
 
 <head>
+    <title>Xducation管理後臺</title>
     <meta charset="utf-8">
     <!-- <meta http-equiv="X-UA-Compatible" content="IE=edge"> -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Main CSS-->
     <link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/back-end/index/css/main.css">
     <!-- Font-icon css-->
+    <link rel="icon" type="image/png" href="<%=request.getContextPath()%>/back-end/login/logincss/images/icons/logo.svg"/>
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">	
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.3/sweetalert2.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.3/sweetalert2.js" type="text/javascript"></script>
@@ -29,17 +31,13 @@
 
 <body class="app sidebar-mini">
     <!-- Navbar-->
-    <header class="app-header"><a class="app-header__logo" href="index.html">
+    <header class="app-header"><a class="app-header__logo" href="<%=request.getContextPath() %>/back-end/index/homepage.jsp">
             <img src="<%=request.getContextPath() %>/back-end/index/images/logo.svg" alt="" width="50px" height="50px">
             Xducation
         </a>
         <!-- Sidebar toggle button--><a class="app-sidebar__toggle" href="#" data-toggle="sidebar" aria-label="Hide Sidebar"></a>
         <!-- Navbar Right Menu-->
         <ul class="app-nav">
-            <li class="app-search">
-                <input class="app-search__input" type="search" placeholder="Search">
-                <button class="app-search__button"><i class="fa fa-search"></i></button>
-            </li>
             <!--Notification Menu-->
             <li class="dropdown"><a class="app-nav__item" href="#" data-toggle="dropdown" aria-label="Show notifications"><i class="fa fa-bell-o fa-lg"></i></a>
                 <ul class="app-notification dropdown-menu dropdown-menu-right">
@@ -146,7 +144,7 @@
             <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="fa fa-cart-plus" aria-hidden="true"></i>
                     <span class="app-menu__label"> 課程商城 </span><i class="treeview-indicator fa fa-angle-right"></i></a>
                 <ul class="treeview-menu">
-                    <li><a class="treeview-item" href="bootstrap-components.html"><i class="icon fa fa-circle-o"></i> 訂單管理</a></li>
+                    <li><a class="treeview-item" href="<%=request.getContextPath()%>/back-end/Order_Detail/listAllOrderDetail.jsp"><i class="icon fa fa-circle-o"></i> 訂單管理</a></li>
                     <li><a class="treeview-item" href="https://fontawesome.com/v4.7.0/icons/" target="_blank" rel="noopener"><i class="icon fa fa-circle-o"></i>課程管理 </a></li>
                     <li><a class="treeview-item" href="bootstrap-components.html"><i class="icon fa fa-circle-o"></i> 課程管理</a></li>
                 </ul>

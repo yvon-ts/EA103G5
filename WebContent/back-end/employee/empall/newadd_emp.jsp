@@ -3,6 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.employee.model.*"%>
+<jsp:include page="/back-end/index/homepage.jsp"/>
 <%
 	EmployeeVO employeeVO = (EmployeeVO) request.getAttribute("EmployeeVO");
 %>
@@ -19,10 +20,8 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport"
-	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>新增員工</title>
-<link rel="icon" type="image/png" href="<%=request.getContextPath()%>/back-end/login/logincss/images/icons/logo.svg"/>
 <link rel="stylesheet"
 	href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
 <link rel="stylesheet"
@@ -32,9 +31,6 @@
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-
-<script
-	src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
 <style>
 body {
 	color: #566787;
@@ -332,7 +328,7 @@ table.table .avatar {
 </script>
 </head>
 <body>
-	<jsp:include page="/back-end/index/homepage.jsp"/>
+
 	<main class="app-content">
 	<div class="container-xl">
 		<div class="table-responsive">
