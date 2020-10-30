@@ -55,22 +55,12 @@ public class CourseSearch extends HttpServlet {
 				map.put("searchText",new String[]{searchText.trim()});
 				List<CourseVO> list = courseSvc.getAll(map);
 
-				for (CourseVO vo : list) {
-					System.out.println(vo);
-				}
 
 				req.setAttribute("list", list);
 				RequestDispatcher courseList = req.getRequestDispatcher("/front-end/course/listAllCourseForUser.jsp");
 				courseList.forward(req, res);
 			}
 		}else if("mutlipleSearch".equals(action)){
-//			
-//			System.out.println(searchText);
-//			
-//			System.out.println(cstypename);
-//			System.out.println(max);
-//			System.out.println(min);
-//			System.out.println(order);
 			TrackingListService  TrackingListSvc = new TrackingListService();
 			
 			if( searchText!= null && !searchText.trim().isEmpty()) {

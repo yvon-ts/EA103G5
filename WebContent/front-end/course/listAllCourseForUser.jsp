@@ -162,7 +162,7 @@
 								</i>加入購物車
 							</label>
 							
-							<c:forEach var="TrackingListVO" items="${TrackingListSvc.getOneByMemno(membersVO.memno)}">
+							<c:forEach var="TrackingListVO" items="${TrackingListSvc.getOneByMemno(loginMembersVO.memno)}">
 								<c:choose>
 									<c:when test="${ courseVO.courseno eq TrackingListVO.courseno}">
 										<label class="bookmark"><i class="fa fa-heart" aria-hidden="true" style="color:red">
@@ -206,7 +206,7 @@
 		
 		$('body').on('click' , '.shoppingcart',function(){
 			$.ajax({
-				url	:"<%=request.getContextPath()%>/tracking_list/tracking_list.do",
+				url	:"<%=request.getContextPath()%>/Shop/Shopping_Cart.do",
 				data:{
 					courseno:$(this).find('#courseno').val(),
 					action: "shoppingCart"
@@ -227,7 +227,7 @@
 			if(`${loginMembersVO.memno}` == ''){
 				swal({ 
 					  title: '您尚未登入', 
-					  text: '你将無法追蹤此課程！', 
+					  text: '你將無法追蹤此課程！', 
 					  type: 'warning',
 					  showCancelButton: true, 
 					  confirmButtonColor: '#3085d6',
@@ -238,9 +238,6 @@
 					}).catch(swal.noop);
 			}
 			else{
-				
-				
-				
 			
 			var updateTrackingList;
 			
@@ -331,8 +328,7 @@
 		                str +=  `&nbsp;&nbsp;&nbsp;` + JSONarray[i].csscoretimes + `則評價`;
 		                str +=  `<h3 style="line-height:40px;">` + JSONarray[i].coursename + `</h3></a>`;
 		                
-		                str +=  `<p>課程總長 `+ ~~(JSONarray[i].ttltime/60) +` 分鐘</p>`;
-		<!--                             <p>同學累計9487人</p> -->
+		                str +=  `<p>課程總長 `+ ~(JSONarray[i].ttltime/60) +` 分鐘</p>`;
 						str +=	`<label class="shoppingcart"><i class="fa fa-shopping-cart" aria-hidden="true"><input type ="hidden" name="courseno" 	 id="courseno"   value ="`+ JSONarray[i].courseno +`"/></i>加入購物車</label>`;
 									
 									

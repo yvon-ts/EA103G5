@@ -222,8 +222,6 @@
 			for(let i = 1 ; i <= $('#shoppingCartSize').val() ; i++){
 				$('body').on('click' , '#remove' + i,function(){
 					
-					
-					
 					$(this).parents('tr').remove();
 					var totalPriceString = $('#totalPrice').text();
 					var totalPrice = $('#totalPrice').text().replace('Total:$','');
@@ -256,7 +254,7 @@
 					}
 					
 					$.ajax({
-						url	:"<%=request.getContextPath()%>/tracking_list/tracking_list.do",
+						url	:"<%=request.getContextPath()%>/Shop/Shopping_Cart.do",
 						data:{
 							courseno:$(this).next().val(),
 // 							memno    : $("#memno").val(),
@@ -277,7 +275,7 @@
 			$('body').on('click' , '.shoppingcart' , function(){
 				
 				$.ajax({
-					url	:"<%=request.getContextPath()%>/tracking_list/tracking_list.do",
+					url	:"<%=request.getContextPath()%>/Shop/Shopping_Cart.do",
 					data:{
 						courseno:$(this).find('#courseno').val(),
 						action: "shoppingCart"
@@ -421,7 +419,7 @@
 								
 								
 								$.ajax({
-									url	:"<%=request.getContextPath()%>/tracking_list/tracking_list.do",
+									url	:"<%=request.getContextPath()%>/Shop/Shopping_Cart.do",
 									data:{
 										courseno: $(this).next().val(),
 										action: "shoppingCart",
@@ -444,7 +442,23 @@
 			var pageStart = 0; /*offset*/
 			var pageSize = 4; /*size*/
 			/*首次載入*/
-			getData(pageStart, pageSize);
+			
+			if('${loginMembersVO.memno}' ==''){
+				swal({ 
+					  title: '您尚未登入', 
+					  text: '你將無法追蹤此課程！', 
+					  type: 'warning',
+					  showCancelButton: true, 
+					  confirmButtonColor: '#3085d6',
+					  cancelButtonColor: '#d33',
+					  confirmButtonText: '會員登入', 
+					}).then(function(){
+						this.location.href = '<%=request.getContextPath()%>/front-end/members/signIn.jsp';
+					}).catch(swal.noop);
+			}else{
+				getData(pageStart, pageSize);
+			}
+			
 			/*監聽載入更多*/
 			
 		
@@ -453,7 +467,10 @@
 			counter++ ;
 			pageStart = counter * pageSize;
 			pageEnd = 	( counter + 1 ) * pageSize;
+			
 			getData(pageStart, pageEnd);
+			
+			
 			
 			
 			});
@@ -468,6 +485,7 @@
 					action:'getAllTrackingListByMemno'
 				},
 				success: function(data){
+					
 					var JSONarray = JSON.parse(data);
 					
 // 					console.log(JSONarray);
@@ -523,6 +541,8 @@
 					}else{
 						$("#js-load-more").show();
 					}
+					
+				
 				}	
 				});
 			}

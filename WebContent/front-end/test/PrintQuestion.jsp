@@ -9,7 +9,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<link rel="stylesheet" type="text/css" href="<%= request.getContextPath()%>/front-end/css/style2.css">
+<link rel="stylesheet" type="text/css" href="<%= request.getContextPath()%>/front-end/test/css/style2.css">
 
 </head>
 <body>	
