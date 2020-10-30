@@ -410,6 +410,7 @@
     </div>
     <!-- About Section End -->
     <!-- Features Section Start -->
+    <%@ include file="/index/front-index/assets/lecpage1.file" %>
     <section id="features" class="section-padding">
         <div class="container">
             <div class="section-header text-center">
@@ -421,10 +422,11 @@
                     <div>
                         
                        
-<c:forEach var="lecVO" items="${list}" begin="0" end="2">
+                        <% int listindex = 0; %>
+	<c:forEach var="lecVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
 	<%
 			//時間設定
-			for (LecVO lecVO : list){
+			LecVO lecVO = list.get(listindex + pageIndex);
 			Timestamp lecstart = lecVO.getLecstart();
 			SimpleDateFormat fmtdate = new SimpleDateFormat("dd");
 			SimpleDateFormat fmtmonth = new SimpleDateFormat("MMM");
@@ -451,7 +453,7 @@
 					lecinfo = "講座資訊更新中";
 					e.printStackTrace();
 				}
-			}
+			
 		%>
 		<div class="div col-lg-1 col-md-12 col-sm-12 col-xs-12"></div>
 <div class="div col-lg-10 col-md-12 col-sm-12 col-xs-12 box-item wow fadeInLeft" data-wow-delay="0.3s">
@@ -477,14 +479,18 @@
         	</form>
         </div>
     </div>
+    <% listindex++;%>
     </c:forEach>
                 <!-- 講座區圖片 -->
-                <div class="col-lg-5 col-md-12 col-sm-12 col-xs-12">
+                <div class="row">
+                <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
+                </div>
+                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
                     <div class="show-box wow fadeInUp" data-wow-delay="0.3s">
-                        <img src="<%=request.getContextPath()%>/index/front-index/assets/img/head/calendar.gif" alt="">
+                        <img class="img-fluid" src="<%=request.getContextPath()%>/index/front-index/assets/img/head/lecture.png" alt="">
                     </div>
                 </div>
-<!--                 圖片 -->
+                </div>
             </div>
         </div>
         </div>
@@ -604,7 +610,7 @@
                 </div>
                 <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6 col-mb-12">
                     <div class="widget" style="text-align: center">
-                        <img src="<%=request.getContextPath()%>/index/front-index/assets/img/logo.svg" style="width: 100px; height: auto" alt="">
+                        <img id="backIndex" src="<%=request.getContextPath()%>/index/front-index/assets/img/logo.svg" style="width: 100px; height: auto" alt="">
                     </div>
                 </div>
                 <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
@@ -657,7 +663,7 @@
     
     
     <script>
-    //宇臣的===============
+    /*-------Kyle-------*/
     var inform2 = document.getElementById('inform2').value;
 	if(inform2 ==='200'){
 		swal('註冊失敗', '可以再考慮一下嗎?', 'error');
@@ -669,30 +675,10 @@
 	function status(){
 		 swal('老師資格審核中', '請耐心等候1~3個工作天，一但審核完畢，即會立刻通知', 'info');
 	}
-	
-	//===================
-    
-    
-    
-    
-    
-//     $(document).ready(function(e){
-// 	      $('.search-panel .dropdown-menu').find('a').click(function(e) {
-// 				e.preventDefault();
-// 				var param = $(this).attr("href").replace("#","");
-// 				var concept = $(this).text();
-// 				$('.search-panel span#search_concept').text(concept);
-// 				$('.input-group #search_param').val(param);
-// 		   	});
-// 	      });
-// var a = document.getElementByTagName('a').item(0);
-// $(a).on('keyup', function(evt){
-// console.log(evt);
-// if(evt.keycode === 13){
-  
-//   alert('search?');
-// } 
-// }); 
+	/*-------Link to Back Index-------*/
+	$("#backIndex").click(function(){
+		window.location.href = "<%=request.getContextPath()%>/back-end/index/homepage.jsp";
+	});
     </script>
 </body>
 

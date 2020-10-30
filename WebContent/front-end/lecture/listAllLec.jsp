@@ -107,8 +107,7 @@
             	</div>
             </div>
             <div id="row" class="row">
-
-                        <% int listindex = 0; %>
+<% int listindex = 0; %>
 	<c:forEach var="lecVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
 	<%
 			//時間設定

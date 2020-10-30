@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.speaker.model.*"%>
 
-<%@ include file="/back-end/pool/bstage1.jsp"%>
+<%@ include file="/back-end/index/homepage.jsp" %>
 
 <!DOCTYPE html>
 
@@ -37,6 +37,7 @@
 </style>
 </head>
 <body>
+<main class="app-content" style="background-color: #f3f3f3">
 <h1>新增講師</h1>
 	<div id="include">
 		<c:if test="${not empty errorMsgs}">
@@ -88,6 +89,7 @@
 			}
 		});
 	</script>
+	</main>
 </body>
 </html>
 
