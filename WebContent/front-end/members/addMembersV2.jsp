@@ -43,7 +43,7 @@ img#preview_progressbarTW_img {
 	-webkit-box-shadow: 3px 3px 5px 5px #BEBEBE;
 	-moz-box-shadow: 3px 3px 5px 5px #BEBEBE;
 	box-shadow: 3px 3px 5px 5px #BEBEBE;
-	margin-left: 440px;
+	margin-left: 600px;
 	margin-top: 300px;
 	boder-radius: 10px;
 	border-radius: 20px;
@@ -56,14 +56,14 @@ h2.form-title {
 	z-index: 1;
 	font-size: 150px;
 	font-family: 'Gochi Hand';
-	margin: -230px 0 0 130px;
+	margin: -230px 0 0 250px;
 }
 
 div.signup-form {
 	padding-top: 130px;
 }
 
-img.icon {
+img.icon1 {
 	width: 36px;
 	height: 36px;
 	position: absolute;
@@ -117,7 +117,7 @@ a.signup-image-link {
 	margin-top: 100px;
     font-size: 20px;
     width: 600px;
-    margin-left:-210px;
+    margin-left:-60px;
 	
 }
 
@@ -125,6 +125,7 @@ div#bg {
 	-webkit-box-shadow: 0 0 15px #8E8E8E;
 	-moz-box-shadow: 0 0 15px #8E8E8E;
 	box-shadow: 0 0 15px #5B5B5B;
+   width: -webkit-fill-available;
 }
 #magic{
 position: absolute;
@@ -220,7 +221,7 @@ div.main {
 							ACTION="<%=request.getContextPath()%>/members/members.do"
 							id="register-form" enctype="multipart/form-data">
 							<div class="form-group">
-								<img class="icon"
+								<img class="icon1"
 									src="<%=request.getContextPath()%>/front-end/members/signIn&updateMembers_css/images/memacc.svg">
 								<label for="memacc"></label> <input
 									value="${requestScope.membersVO.memacc}" id="memacc"
@@ -228,7 +229,7 @@ div.main {
 									placeholder="Account" />
 							</div>
 							<div class="form-group">
-								<img class="icon"
+								<img class="icon1"
 									src="<%=request.getContextPath()%>/front-end/members/signIn&updateMembers_css/images/password.svg">
 								<label for="mempwd"></label>
 								<div id="msg2"></div>
@@ -238,7 +239,7 @@ div.main {
 							</div>
 
 							<div class="form-group">
-								<img class="icon"
+								<img class="icon1"
 									src="<%=request.getContextPath()%>/front-end/members/signIn&updateMembers_css/images/Rmempwd.svg"><label
 									for="Rmempwd"></label>
 								<div id="msg3"></div>
@@ -246,7 +247,7 @@ div.main {
 									placeholder="Password again" />
 							</div>
 							<div class="form-group">
-								<img class="icon"
+								<img class="icon1"
 									src="<%=request.getContextPath()%>/front-end/members/signIn&updateMembers_css/images/id-card.svg"
 									alt=""> <label for="memname"></label>
 								<div id="msg4"></div>
@@ -255,7 +256,7 @@ div.main {
 									name="memname" placeholder="Your Name" />
 							</div>
 							<div class="form-group">
-								<img class="icon"
+								<img class="icon1"
 									src="<%=request.getContextPath()%>/front-end/members/signIn&updateMembers_css/images/nickname.svg"
 									alt=""> <label for="nkname"></label>
 								<div id="msg5"></div>
@@ -264,7 +265,7 @@ div.main {
 									name="nkname" placeholder="Your Nickname" />
 							</div>
 							<div class="form-group">
-								<img class="icon"
+								<img class="icon1"
 									src="<%=request.getContextPath()%>/front-end/members/signIn&updateMembers_css/images/iphone.svg"
 									alt=""> <label for="mphone"></label>
 								<div id="msg6"></div>
@@ -273,7 +274,7 @@ div.main {
 									name="mphone" placeholder="Phone Number" />
 							</div>
 							<div class="form-group">
-								<img class="icon"
+								<img class="icon1"
 									src="<%=request.getContextPath()%>/front-end/members/signIn&updateMembers_css/images/new-email.svg"
 									alt=""> <label for="memail"></label>
 								<div id="msg7"></div>
@@ -283,7 +284,7 @@ div.main {
 									placeholder="Your Email" />
 							</div>
 							<div class="form-group">
-								<img class="icon"
+								<img class="icon1"
 									src="<%=request.getContextPath()%>/front-end/members/signIn&updateMembers_css/images/birthday-present.svg"
 									alt=""> <label for="name"></label> <input type="text"
 									name="membday" value="${requestScope.membersVO.membday}"
@@ -296,7 +297,7 @@ div.main {
 
 							<div class="form-group">
 								<div style="height: 50px;">
-									<img class="icon"
+									<img class="icon1"
 										src="<%=request.getContextPath()%>/front-end/teacher/teacherRegister_css/images/pictures.svg">
 								</div>
 								<label id="cert"

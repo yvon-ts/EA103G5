@@ -40,8 +40,8 @@ height:350px;
 
 position: absolute;
  z-index:1;
-	  margin-left: -60px;
-    margin-top: 85px;
+	  margin-left: 30px;
+    margin-top: 60px;
     boder-radius: 10px;
     border-radius: 20px;
 
@@ -67,7 +67,7 @@ font-size:20px;
 font-size:20px;
 }
 
- img.icon{
+ img.icon1{
  width:33px;
  height:33px;
  
@@ -82,7 +82,7 @@ font-size:20px;
 
  }
  div#bg{
- width:850px;
+ width:-webkit-fill-available;
  height:630px; 
  -webkit-box-shadow: 0 0 15px #8E8E8E;
 	-moz-box-shadow: 0 0 15px #8E8E8E;
@@ -107,8 +107,8 @@ padding-bottom:0px;
 a.signup-image-link{
 width:300px;
 height:100px;
-margin-top:470px;
-margin-left:-40px;
+margin-top:440px;
+margin-left:45px;
 } 
 div.main{
 padding:150px 0 0 0 ;
@@ -180,13 +180,13 @@ background: url("<%=request.getContextPath()%>/front-end/members/assets/img/bgPi
                         <form action="<%=request.getContextPath()%>/members/members.do" method="POST" class="register-form" id="login-form">
                             
                             <div class="form-group">
-                                <label for="your_name"><img class="icon" src="<%=request.getContextPath()%>/front-end/members/signIn&updateMembers_css/images/memacc.svg"></label>
+                                <label for="your_name"><img class="icon1" src="<%=request.getContextPath()%>/front-end/members/signIn&updateMembers_css/images/memacc.svg"></label>
                                 <input type="text" class="input" name="memacc" id="your_name" value="${membersVO.memacc}" placeholder="Account"/>
                             </div>
                             
                             
                             <div class="form-group">
-                                <label for="your_pass"><img class="icon" src="<%=request.getContextPath()%>/front-end/members/signIn&updateMembers_css/images/password.svg"></label>
+                                <label for="your_pass"><img class="icon1" src="<%=request.getContextPath()%>/front-end/members/signIn&updateMembers_css/images/password.svg"></label>
                                 <input type="password" class="input" name="mempwd" id="your_pass" placeholder="Password"/>
                             </div>
                             

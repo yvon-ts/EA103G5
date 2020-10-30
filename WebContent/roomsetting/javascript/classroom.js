@@ -146,7 +146,7 @@ function addClickForBooking() {
 			let chosenCount = chosenSeatCount(statusStr);
 			console.log("**chosenCount = "+ chosenCount);
 			console.log("**hasClass seat? = "+ $(this).hasClass("seat"));
-			if (chosenCount < 4 && $(this).hasClass("seat")) {
+			if (chosenCount < availableSeats && $(this).hasClass("seat")) {
 					$(this).removeClass("seat");
 					$(this).addClass("chosen");
 					$(this).attr("status", "chosen");
@@ -159,7 +159,7 @@ function addClickForBooking() {
 				statusStr = replaceCharAtStringIndex(statusStr, index, "1");
 				setCurrseatValue(statusStr);
 			} else {
-				alert("每人限購4個座位，請重新選擇");
+				alert("每場講座限購4個座位，請重新選擇");
 				$(".spaceblock").removeClass("chosen");
 				$(".spaceblock").addClass("seat");
 				$(".spaceblock").attr("status", "seat");

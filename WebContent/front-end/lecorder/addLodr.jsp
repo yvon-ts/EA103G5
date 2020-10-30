@@ -17,6 +17,8 @@
 	} else {
 		System.out.println("addLodr memno == null");
 	}
+	
+	String availableSeats = request.getParameter("availableSeats");
 
 	LecVO lecVO = (LecVO) request.getAttribute("lecVO");
 	String lecno = lecVO.getLecno();
@@ -92,6 +94,8 @@ body{
 	<script src="vendor/jquery/jquery.min.js"></script>
 	<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 	<script>
+	var availableSeats = parseInt(<%=availableSeats%>);
+	console.log(typeof(availableSeats));
 	$("#submit").mousedown(function() {
 	    var arr = document.getElementsByClassName("chosen");
 	    let txt = "";
