@@ -149,7 +149,7 @@
     <div class="title wow "></div>
     <div class="row mt-4 d-flex align-items-center">
         <div class="col-sm-6 order-md-2 text-right">
-            <a href="<%=request.getContextPath()%>/front-end/Shop/Checkout.jsp"><button type="button" class="btn btn-primary" id= "checkout">填寫訂購人資料</button></a>
+            <button type="button" class="btn btn-primary" id= "checkout">填寫訂購人資料</button>
         </div>
         <div class="col-sm-6 mb-3 mb-m-1 order-md-1 text-md-left">
             <a href="<%=request.getContextPath()%>/front-end/course/listAllCourseForUser.jsp">
@@ -186,6 +186,23 @@
 	<script>
 		$(document).ready(function(){
 			
+			$('#checkout').click(function(){
+				if('${loginMembersVO.memno}' ==''){
+					swal({ 
+						  title: '您尚未登入', 
+						  text: '您將無法結帳，請先登入會員', 
+						  type: 'warning',
+						  showCancelButton: true, 
+						  confirmButtonColor: '#3085d6',
+						  cancelButtonColor: '#d33',
+						  confirmButtonText: '會員登入', 
+						}).then(function(){
+							this.location.href = '<%=request.getContextPath()%>/front-end/members/signIn.jsp';
+						}).catch(swal.noop);
+				}else{
+					this.location.href ="<%=request.getContextPath()%>/front-end/Shop/Checkout.jsp";
+				}
+			});
 			
 			$('#goToSearch').click(function(e){
 				e.preventDefault();
@@ -349,7 +366,7 @@
 				            <div class="title wow "></div>
 				            <div class="row mt-4 d-flex align-items-center">
 				                <div class="col-sm-6 order-md-2 text-right">
-				                <a href="<%=request.getContextPath()%>/front-end/Shop/Checkout.jsp"><button type="button" class="btn btn-primary" id= "checkout">Checkout</button></a>
+				                <button type="button" class="btn btn-primary" id= "checkout">Checkout</button>
 				                    <input type="hidden" name="action" value="insert">
 				                </div>
 				                <div class="col-sm-6 mb-3 mb-m-1 order-md-1 text-md-left">
@@ -443,19 +460,8 @@
 			var pageSize = 4; /*size*/
 			/*首次載入*/
 			
-			if('${loginMembersVO.memno}' ==''){
-				swal({ 
-					  title: '您尚未登入', 
-					  text: '你將無法追蹤此課程！', 
-					  type: 'warning',
-					  showCancelButton: true, 
-					  confirmButtonColor: '#3085d6',
-					  cancelButtonColor: '#d33',
-					  confirmButtonText: '會員登入', 
-					}).then(function(){
-						this.location.href = '<%=request.getContextPath()%>/front-end/members/signIn.jsp';
-					}).catch(swal.noop);
-			}else{
+			if('${loginMembersVO.memno}' !==''){
+			
 				getData(pageStart, pageSize);
 			}
 			

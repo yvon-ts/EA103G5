@@ -15,7 +15,6 @@
 			
 			if(request.getParameter("update") == null){
 			String str=request.getParameter("coursename");
-			System.out.println(str);
 			byte[] bytes=str.getBytes("ISO-8859-1");
 				 coursename=new String(bytes,"utf-8");
 			}else{
@@ -172,9 +171,9 @@
                             	<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/question/questionBank.do" style="margin-bottom: 0px;">
 			     					<input style="font-family: FontAwesome" value="&#xf044;" type="submit">
 	
-			     					<input type="hidden" name="qbankno"  value="${QuestionBankvo.qbankno}">
-			     					<input type="hidden" name="courseno" value="<%=request.getParameter("courseno") %>">
-			     					<input type="hidden" name="coursename" value="<%=coursename %>">
+			     					<input type="hidden" name="qbankno"     value="${QuestionBankvo.qbankno}">
+			     					<input type="hidden" name="courseno"    value="<%=request.getParameter("courseno") %>">
+			     					<input type="hidden" name="coursename"  value="<%=coursename %>">
 			     					<input type="hidden" name="requestURL"	value="<%=request.getServletPath()%>"><!--送出本網頁的路徑給Controller-->
 			     					<input type="hidden" name="whichPage"	value="<%=whichPage%>">               <!--送出當前是第幾頁給Controller-->
 			     					<input type="hidden" name="action"	value="getOne_For_Update">
