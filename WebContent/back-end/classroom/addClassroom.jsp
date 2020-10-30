@@ -31,7 +31,7 @@
 				<button class="bttn" type="submit">放棄新增</button>
 			</form><p>
 			<div class="table-wrapper">
-               		<div class="row">
+            	<div class="row">
 <!-- 	<div class="container"> -->
 <!-- 		<div class="row"> -->
 <!-- 			<h1>教室資料新增 - addClassroom</h1> -->
@@ -53,44 +53,42 @@
 <!-- 					</ul> -->
 <%-- 				</c:if> --%>
 
-				<h3>資料新增：</h3>
-				<form METHOD="post" ACTION="<%=request.getContextPath()%>/classroom/classroom.do" name="form1">
-				<div class="table-title">
-					<div class="row">
-					<div id="form-area" class="col-sm-7 btm-line">
-					<p>教室名稱：<input type="text" name="roomname" placeholder="請輸入教室名稱"
-						value="<%=(classroomVO == null) ? "Z001" : classroomVO.getRoomname()%>"></p>
-					<p>教室深度：<input type="number" id="roomrow" class="roomSpace" name="roomrow" min="1" max="10"
-						value="<%=(classroomVO == null) ? 3 : classroomVO.getRoomrow()%>"></p>
-					<p>教室寬度：<input type="number" id="roomcolumn" class="roomSpace" name="roomcolumn" min="1" max="10"
-						value="<%=(classroomVO == null) ? 5 : classroomVO.getRoomcolumn()%>"></p>
-					<p>座位數：<span id="seatCount"></span> / <span id="blockCount"></span> </p>
-					<p>狀態：<input type="RADIO" name="roomdelete" size="45" value=false checked>可用
-							<input type="RADIO" name="roomdelete" size="45" value=true>註銷</p>
-					<input type="hidden" name="action" value="insert">
-					<input type="submit" value="送出新增">
-					<button><a href="<%=request.getContextPath()%>/back-end/classroom/listAllClassroom.jsp">取消</a></button>
-					<br>
-					<p>預設座位狀態：(hidden)<input type="text" id="defaultseat" name="defaultseat" value="<%=(classroomVO == null) ? "111110000011111" : classroomVO.getDefaultseat()%>" readonly></p>
-					
-				
-			</div>
-			</div>
-			</div>
-</form>
-			<div class="col-md-8">
-				<h3>教室 Layout 預覽圖：</h3>
-				<div id="classroom">
-					<div id="stage">
-						Stage
+					<h3>資料新增：</h3>
+					<form METHOD="post" ACTION="<%=request.getContextPath()%>/classroom/classroom.do" name="form1">
+						<div class="table-title">
+							<div class="row">
+								<div id="form-area" class="col-sm-7 btm-line">
+									<p>教室名稱：<input type="text" name="roomname" placeholder="請輸入教室名稱"
+										value="<%=(classroomVO == null) ? "Z001" : classroomVO.getRoomname()%>"></p>
+									<p>教室深度：<input type="number" id="roomrow" class="roomSpace" name="roomrow" min="1" max="10"
+										value="<%=(classroomVO == null) ? 3 : classroomVO.getRoomrow()%>"></p>
+									<p>教室寬度：<input type="number" id="roomcolumn" class="roomSpace" name="roomcolumn" min="1" max="10"
+										value="<%=(classroomVO == null) ? 5 : classroomVO.getRoomcolumn()%>"></p>
+									<p>座位數：<span id="seatCount"></span> / <span id="blockCount"></span> </p>
+									<p>狀態：<input type="RADIO" name="roomdelete" size="45" value=false checked>可用
+											<input type="RADIO" name="roomdelete" size="45" value=true>註銷</p>
+									<input type="hidden" name="action" value="insert">
+									<input type="submit" value="送出新增">
+									<button><a href="<%=request.getContextPath()%>/back-end/classroom/listAllClassroom.jsp">取消</a></button>
+									<br>
+									<p>預設座位狀態：(hidden)<input type="text" id="defaultseat" name="defaultseat" value="<%=(classroomVO == null) ? "111110000011111" : classroomVO.getDefaultseat()%>" readonly></p>
+								</div>
+							</div>
+						</div>
+				</form>
+				<div class="col-md-8">
+					<h3>教室 Layout 預覽圖：</h3>
+					<div id="classroom">
+						<div id="stage">
+							Stage
+						</div>
+						<br>
+						<div id="seatmapping"></div>
 					</div>
-					<br>
-					<div id="seatmapping"></div>
 				</div>
 			</div>
-</div>
-</div>
-</div>
+		</div>
+	</div>
 </div>
 			
 	

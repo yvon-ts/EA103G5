@@ -9,8 +9,7 @@
 
 <!DOCTYPE html>
 
-<%
-	LecService lecSvc = new LecService();
+<%	LecService lecSvc = new LecService();
 	List<LecVO> list = lecSvc.getList();
 	pageContext.setAttribute("list", list);
 	

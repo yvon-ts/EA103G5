@@ -67,58 +67,58 @@ table, th, td {
                     <!-- search box end -->
                 </div>
             </div>
-            <table id="table" class="table table-bordered">
-                <thead>
+	        <table id="table" class="table table-bordered">
+	            <thead>
 					<tr>
-			<th>教室編號</th>
-			<th>教室名稱</th>
-			<th>教室深度</th>
-			<th>教室寬度</th>
-			<th>教室空間數</th>
-<!-- 			<th>預設座位狀態</th> -->
-			<th>教室是否註銷</th>
-			<th>最後修改時間</th>
-			<th>檢視</th>
-			<th>修改</th>
-			<th>註銷</th>
-		</tr>
-		<tbody>
-		<c:forEach var="classroomVO" items="${list}">
-			<tr>
-				<td>${classroomVO.roomno}</td>
-				<td>${classroomVO.roomname}</td>
-				<td>${classroomVO.roomrow}</td>
-				<td>${classroomVO.roomcolumn}</td>
-				<td>${classroomVO.roomrow * classroomVO.roomcolumn}</td>
-<%-- 				<td>${classroomVO.defaultseat}</td> --%>
-				<td>${classroomVO.roomdelete}</td>
-				<td><fmt:formatDate value="${classroomVO.roomlastmod}"
-						pattern="yyyy-MM-dd HH:mm:ss" /></td>
-				<td>
-					<FORM METHOD="post" ACTION="#" style="margin-bottom: 0px;">
-			     	<button class="btn view" style="color: #03A9F4"><i class="material-icons">&#xE417;</i></button>
-			     	<input type="hidden" name="roomno"  value="${classroomVO.roomno}">
-			     	<input type="hidden" name="action"	value="getOne_For_Update"></FORM>
-				</td>
-				<td>
-					<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/classroom/classroom.do" style="margin-bottom: 0px;">
-			     	<button class="btn edit" style="color: orange"><i class="material-icons">&#xE254;</i></button>
-			     	<input type="hidden" name="roomno"  value="${classroomVO.roomno}">
-			     	<input type="hidden" name="action"	value="getOne_For_Update"></FORM>
-				</td>
-				<td>
-					<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/classroom/classroom.do" style="margin-bottom: 0px;">
-			     	<button class="btn delete" style="color: red"><i class="material-icons">&#xE872;</i></button>
-			     	<input type="hidden" name="roomno"  value="${classroomVO.roomno}">
-			     	<input type="hidden" name="action"	value="delete"></FORM>
-				</td>
-			</tr>
-		</c:forEach>
-		</tbody>
-	</table>
+						<th>教室編號</th>
+						<th>教室名稱</th>
+						<th>教室深度</th>
+						<th>教室寬度</th>
+						<th>教室空間數</th>
+			<!-- 			<th>預設座位狀態</th> -->
+						<th>教室是否註銷</th>
+						<th>最後修改時間</th>
+						<th>檢視</th>
+						<th>修改</th>
+						<th>註銷</th>
+					</tr>
+				<tbody>
+				<c:forEach var="classroomVO" items="${list}">
+					<tr>
+						<td>${classroomVO.roomno}</td>
+						<td>${classroomVO.roomname}</td>
+						<td>${classroomVO.roomrow}</td>
+						<td>${classroomVO.roomcolumn}</td>
+						<td>${classroomVO.roomrow * classroomVO.roomcolumn}</td>
+		<%-- 				<td>${classroomVO.defaultseat}</td> --%>
+						<td>${classroomVO.roomdelete}</td>
+						<td><fmt:formatDate value="${classroomVO.roomlastmod}"
+								pattern="yyyy-MM-dd HH:mm:ss" /></td>
+						<td>
+							<FORM METHOD="post" ACTION="#" style="margin-bottom: 0px;">
+					     	<button class="btn view" style="color: #03A9F4"><i class="material-icons">&#xE417;</i></button>
+					     	<input type="hidden" name="roomno"  value="${classroomVO.roomno}">
+					     	<input type="hidden" name="action"	value="getOne_For_Update"></FORM>
+						</td>
+						<td>
+							<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/classroom/classroom.do" style="margin-bottom: 0px;">
+					     	<button class="btn edit" style="color: orange"><i class="material-icons">&#xE254;</i></button>
+					     	<input type="hidden" name="roomno"  value="${classroomVO.roomno}">
+					     	<input type="hidden" name="action"	value="getOne_For_Update"></FORM>
+						</td>
+						<td>
+							<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/classroom/classroom.do" style="margin-bottom: 0px;">
+					     	<button class="btn delete" style="color: red"><i class="material-icons">&#xE872;</i></button>
+					     	<input type="hidden" name="roomno"  value="${classroomVO.roomno}">
+					     	<input type="hidden" name="action"	value="delete"></FORM>
+						</td>
+					</tr>
+				</c:forEach>
+				</tbody>
+			</table>
+		</div>
 	</div>
-	</div>
-	</div>
+</div>
 </main>
 </body>
 
