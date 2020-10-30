@@ -227,7 +227,7 @@
 			if(`${loginMembersVO.memno}` == ''){
 				swal({ 
 					  title: '您尚未登入', 
-					  text: '你將無法追蹤此課程！', 
+					  text: '您將無法追蹤此課程！', 
 					  type: 'warning',
 					  showCancelButton: true, 
 					  confirmButtonColor: '#3085d6',
