@@ -275,7 +275,7 @@ a .test {
 					<div class="row">
 						<div class="col-sm-4">
 							<h2>
-								Order <b>Masters</b>
+								<b>訂單明細管理</b>
 							</h2>
 						</div>
 						<div class="col-sm-8"></div>
@@ -291,16 +291,6 @@ a .test {
 							<div class="filter-group">
 								<label>訂單編號</label> <input type="text" class="form-control">
 							</div>
-							<!--                             <div class="filter-group"> -->
-							<!--                                 <label>訂單狀態</label> -->
-							<!--                                 <select class="form-control"> -->
-							<!--                                     <option>全部</option> -->
-							<!--                                     <option>未付款</option> -->
-							<!--                                     <option>已付款</option> -->
-							<!--                                     <option>失效訂單</option> -->
-							<!--                                     <option>已結單</option> -->
-							<!--                                 </select> -->
-							<!--                             </div> -->
 							<span class="filter-icon"><i class="fa fa-filter"></i></span>
 						</div>
 					</div>
@@ -314,7 +304,6 @@ a .test {
 							<th>課程編號</th>
 							<th>課程售價</th>
 							<th>課程明細狀態</th>
-							<th>優惠活動編號</th>
 							<th>修改</th>
 						</tr>
 					</thead>
@@ -327,8 +316,6 @@ a .test {
 							<td>${orderDetailVO.courseno}</td>
 							<td>${orderDetailVO.sellprice}</td>
 							<td>${orderDetailVO.odstatus}</td>
-							<td>${orderDetailVO.promono}</td>
-
 							<td>
 								<FORM METHOD="post"
 									ACTION="<%=request.getContextPath()%>/Order_Detail/Order_Detail.do"
