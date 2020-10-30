@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page import="java.util.*"%>
@@ -95,14 +94,14 @@ pageContext.setAttribute("membersVO", membersVO);
 	-moz-box-sizing: border-box;
 	box-sizing: border-box;
 }
-a {
+#postbody a {
 	color: #03658c;
 	text-decoration: none;
 }
-ul {
+#postbody ul {
 	list-style-type: none;
 }
-body {
+#postbody {
 	font-family: 'Roboto', Arial, Helvetica, Sans-serif, Verdana;
 	background: #ffffff;
 }
@@ -367,6 +366,7 @@ margin-left: 87px !important;
 }
 </style>
 <body>
+<div id="postbody">
 
 	<!--上方留言區塊 -->
 
@@ -569,8 +569,9 @@ margin-left: 87px !important;
 	</c:forEach>
 	
 	</div>
+	</div>
 	
-<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<!-- <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script> -->
 	<script src="<%=request.getContextPath()%>/library/jquery/jquery-3.5.1.js"></script>
 			<script src="<%=request.getContextPath()%>/library/bootstrap/4.5.3/js/bootstrap.bundle.min.js"></script>
 		

@@ -272,7 +272,6 @@
 						</jsp:include>
 					</div>
 					<div id="post" class="tab-pane fade">
-						<h3>問題討論</h3>
 						<jsp:include page="/front-end/posts/postsAjax.jsp">
 							<jsp:param name="courseno" value="${courseVO.courseno}"/>
 						</jsp:include>
@@ -292,7 +291,8 @@
 	<script>
 		$(function () {
 			// 顯示各單元影片時間
-			$("#courseTtlTime").text(convertSecToHrFormatter($ {courseVO.ttltime}));
+			var ttltime = ${courseVO.ttltime};
+			$("#courseTtlTime").text(convertSecToHrFormatter(ttltime));
 			showInitOriginalVideoLen();
 
 			// 註冊影片清單點擊事件
