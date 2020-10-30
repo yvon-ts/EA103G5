@@ -77,14 +77,13 @@
 			<td>${lodrVO.lodrstatus}</td>
 			<td>${lodrVO.lodrtime}</td>
             <td>
-<%--  這裡有改           	<form method="post" action="<%=request.getContextPath()%>/front-end/lecseat/listWithQRcode.jsp"> --%>
-<form method="post" action="<%=request.getContextPath()%>/front-end/lecseat/testQRcode.jsp">
+			<form method="post" action="<%=request.getContextPath()%>/front-end/lecseat/listWithQRcode.jsp">
             	<input type="hidden" name="lodrno" value="${lodrVO.lodrno}">
 				<button type="submit" class="btn view"><i class="material-icons">&#xE417;</i></button>
             </form>
             </td>
             <td>
-            	<form method="post" action="<%=request.getContextPath()%>/front-end/lecseat/listOneForMem.jsp">
+            	<form method="post" action="<%=request.getContextPath()%>/front-end/lecseat/cancelSeatMem.jsp">
             	<input type="hidden" name="lodrno" value="${lodrVO.lodrno}">
 				<button type="submit" class="btn view" style="color: orange"><i class="material-icons">&#xE254;</i></button>
             </form>

@@ -6,22 +6,48 @@
 <%@ page import="java.text.SimpleDateFormat"%>
 <%@ page import="com.lecture.model.*"%>
 <%@ page import="com.speaker.model.*"%>
+<%@ page import="com.lecseat.model.*"%>
 <!DOCTYPE html>
 
 <%
+	// 取得講座資訊
+	LecVO lecVO = (LecVO) request.getAttribute("lecVO");
+	String lecno = lecVO.getLecno();
+	String roomno = lecVO.getRoomno();
+	String spkrno = lecVO.getSpkrno();
+	
+	// 登入檢查
 	String memno = "";
 	MembersVO memVO = (MembersVO)session.getAttribute("loginMembersVO");
 	if (memVO != null){
 		memno = memVO.getMemno();
 		System.out.println("frontOneLec的memno="+ memno);
 	} else {
+		memno = "";
 		System.out.println("frontOneLec memno= == null");
 	}
 	
-	LecVO lecVO = (LecVO) request.getAttribute("lecVO");
-	String lecno = lecVO.getLecno();
-	String roomno = lecVO.getRoomno();
-	String spkrno = lecVO.getSpkrno();
+	// 已購數量檢查
+	boolean canBuy = false;
+	int availableSeats = 0;
+	
+	LecseatService seatSvc = new LecseatService();
+	int seatCount = seatSvc.hasBooked(memno, lecno);
+	System.out.println("seatCount=" + seatCount);
+	
+	if (seatCount == 0){
+		canBuy = true;
+		availableSeats = 4;
+	}
+	else if (seatCount > 0 && seatCount < 4){
+		canBuy = true;
+		availableSeats = 4 - seatCount;
+	}
+	else{
+		canBuy = false;
+		availableSeats = 0;
+	}
+	System.out.println(memno + "尚可購買數量=" + availableSeats);
 	
 	ClassroomService roomSvc = new ClassroomService();
 	ClassroomVO roomVO = roomSvc.getOneClassroom(roomno);
@@ -208,7 +234,8 @@
               <span class="input-group-append">
               <input type="hidden" name="action" value="bookOne">
               <input type="hidden" name="lecno" value="${lecVO.lecno}">
-                <button class="btn btn-secondary" type="submit">我要訂票</button>
+              <input type="hidden" name="availableSeats" value="<%=availableSeats%>">
+                <button id="bookASeat" class="btn btn-secondary" type="submit">我要訂票</button>
                 </span>
                 </form>
             </div>
@@ -223,7 +250,7 @@
               <form method="post"	action="<%=request.getContextPath()%>/front-end/lecorder/listByMemno.jsp">
               <span class="input-group-append">
               <input type="hidden" name="memno" value="<%=memno%>"><br>
-                <button class="btn btn-secondary" type="submit">查看我的講座清單</button>
+                <button id="viewOrders" class="btn btn-secondary" type="submit">查看我的講座清單</button>
                 </span>
                 </form>
             </div>
@@ -250,6 +277,28 @@
   <script src="vendor/jquery/jquery.min.js"></script>
   <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 <%@ include file="/index/front-index/footer.jsp" %>
+
+<script>
+var memno = "<%=memno%>";
+$("#bookASeat").mousedown(function(e){
+	if (memno.length == 0){
+		e.preventDefault();
+		alert("請先登入");
+	} else if (<%=canBuy%> === false){
+		e.preventDefault();
+		alert("您已達到購買數量上限");
+	}
+});
+$("#viewOrders").mousedown(function(e){
+	if (memno.length == 0){
+		e.preventDefault();
+		alert("請先登入");
+	}
+});
+
+
+</script>
+
 </body>
 
 </html>
