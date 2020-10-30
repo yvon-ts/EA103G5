@@ -24,9 +24,9 @@
 	href="https://fonts.googleapis.com/icon?family=Material+Icons">
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/library/bootstrap/4.5.3/css/bootstrap.min.css">
-<%@ include file="/index/front-index/header.jsp"%>
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/back-end/css/bootTable.css">
+<%@ include file="/index/front-index/header.jsp"%>
 <style>
 </style>
 <script>
