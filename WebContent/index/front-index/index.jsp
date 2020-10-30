@@ -9,6 +9,10 @@
 <%@ page import="com.speaker.model.*"%>
 <%@ page import="com.members.model.*"%>
 <%@ page import="com.teacher.model.*"%>
+<%@ page import="com.course_assess.model.*"%>
+
+
+
 
 
 <jsp:useBean id="teacherSvc" scope="page" class="com.teacher.model.TeacherService" />
@@ -77,6 +81,15 @@ height:36px;
 img.icon{
 width:30px;
 height:30px;
+}
+
+.star{
+width:20px;
+height:20px;
+}
+.owl-carousel .owl-item img {
+    display: block;
+    width:auto;
 }
 	</style>
 </head>
@@ -489,6 +502,16 @@ height:30px;
     </section>
     <!-- Features Section End -->
     <!-- Testimonial Section Start -->
+    <%
+    Course_assessService course_assessSvc = new Course_assessService();
+    String avg = course_assessSvc.avgScore("COUR0001");
+    List<Course_assessVO> list = course_assessSvc.getAll("COUR0001");
+    pageContext.setAttribute("list", list);
+    pageContext.setAttribute("avg",avg);
+    pageContext.setAttribute("course_assessSvc",course_assessSvc);
+    %>
+    <jsp:useBean id="membersSvc" scope="page" class="com.members.model.MembersService" />
+    
     <section id="testimonial" class="testimonial section-padding">
         <div class="container">
             <div class="section-header text-center">
@@ -499,51 +522,40 @@ height:30px;
             <div class="row justify-content-center">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div id="testimonials" class="owl-carousel wow fadeInUp" data-wow-delay="1.2s">
+                        
+                        <c:forEach var="course_assessVO" items="${list}" varStatus="s">
                         <div class="item">
-                            <div class="testimonial-item">
+                            <div class="testimonial-item" style="height:350px;">
                                 <div class="img-thumb">
-                                    <img src="<%=request.getContextPath()%>/index/front-index/assets/img/testimonial/img1.jpg" alt="">
+                                <img style="border-radius:50%;width:100px;height:100px;" src="<%=request.getContextPath()%>/front-end/members/MprofileDisplayServlet?MEMNO=${course_assessVO.memno}" alt="sing up image">
                                 </div>
                                 <div class="info">
-                                    <h2><a href="#">David Smith</a></h2>
-                                    <h3><a href="#">Creative Head</a></h3>
+                                    <h2><a href="#">${membersSvc.getOneMembers(course_assessVO.memno).memname}</a></h2>
+                                    <h3><a href="#">${membersSvc.getOneMembers(course_assessVO.memno).nkname}</a></h3>
                                 </div>
                                 <div class="content">
-                                    <p class="description">Praesent cursus nulla non arcu tempor, ut egestas elit
-                                        tempus. In ac ex fermentum, gravida felis nec, tincidunt ligula.</p>
-                                    <div class="star-icon mt-3">
-                                        <span><i class="lni-star-filled"></i></span>
-                                        <span><i class="lni-star-filled"></i></span>
-                                        <span><i class="lni-star-filled"></i></span>
-                                        <span><i class="lni-star-filled"></i></span>
-                                        <span><i class="lni-star-half"></i></span>
+                                    <p class="description">${course_assessVO.comments}</p>
+                                    <div>
+                                    <table>
+                                    <tr>
+                                    <c:forEach var="num" begin="1" end="${course_assessVO.coursescore}" step="1">
+                                    <td><img class="star" src="<%=request.getContextPath()%>/front-end/members/signIn&updateMembers_css/images/star.svg"></td>
+                                     </c:forEach> 
+                                    
+                                    
+                                    </tr>
+                                    
+                                    </table>
+                                         
+                                         
                                     </div>
+                                    
                                 </div>
                             </div>
                         </div>
-                        <div class="item">
-                            <div class="testimonial-item">
-                                <div class="img-thumb">
-                                    <img src="<%=request.getContextPath()%>/index/front-index/assets/img/testimonial/img2.jpg" alt="">
-                                </div>
-                                <div class="info">
-                                    <h2><a href="#">Domeni GEsson</a></h2>
-                                    <h3><a href="#">Awesome Technology co.</a></h3>
-                                </div>
-                                <div class="content">
-                                    <p class="description">Praesent cursus nulla non arcu tempor, ut egestas elit
-                                        tempus. In ac ex fermentum, gravida felis nec, tincidunt ligula.</p>
-                                    <div class="star-icon mt-3">
-                                        <span><i class="lni-star-filled"></i></span>
-                                        <span><i class="lni-star-filled"></i></span>
-                                        <span><i class="lni-star-filled"></i></span>
-                                        <span><i class="lni-star-half"></i></span>
-                                        <span><i class="lni-star-half"></i></span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="item">
+                          </c:forEach>
+                        
+                        <%-- <div class="item">
                             <div class="testimonial-item">
                                 <div class="img-thumb">
                                     <img src="<%=request.getContextPath()%>/index/front-index/assets/img/testimonial/img3.jpg" alt="">
@@ -564,8 +576,10 @@ height:30px;
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="item">
+                        </div> --%>
+                        
+                        
+                        <%-- <div class="item">
                             <div class="testimonial-item">
                                 <div class="img-thumb">
                                     <img src="<%=request.getContextPath()%>/index/front-index/assets/img/testimonial/img4.jpg" alt="">
@@ -586,7 +600,8 @@ height:30px;
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> --%>
+                        
                     </div>
                 </div>
             </div>

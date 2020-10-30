@@ -4,6 +4,17 @@
 <%@ page import="com.members.model.*"%>
 <%
 	String inform = (String) request.getAttribute("inform");
+
+Object account = session.getAttribute("loginMembersVO");
+if(account!=null){
+	session.setAttribute("location",request.getRequestURI());
+	response.sendRedirect(request.getContextPath()+"/index/front-index/index.jsp");
+}
+
+
+
+
+
 %>
 
 <%@ include file="/index/front-index/header.jsp"%>
