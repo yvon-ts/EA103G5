@@ -272,9 +272,9 @@
 						</jsp:include>
 					</div>
 					<div id="post" class="tab-pane fade">
-						<jsp:include page="/front-end/posts/postsAjax.jsp">
-							<jsp:param name="courseno" value="${courseVO.courseno}"/>
-						</jsp:include>
+<%-- 						<jsp:include page="/front-end/posts/postsAjax.jsp"> --%>
+<%-- 							<jsp:param name="courseno" value="${courseVO.courseno}"/> --%>
+<%-- 						</jsp:include> --%>
 					</div>
 				</div>
 			</div>

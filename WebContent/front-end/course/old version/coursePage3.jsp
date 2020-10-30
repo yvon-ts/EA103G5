@@ -162,15 +162,15 @@
 					</div>
 					<div id="downloadfile" class="tab-pane fade">
 						<h3>教材下載</h3>
-						<jsp:include page="/front-end/course/subpage_downloadfile.html" />
+<%-- 						<jsp:include page="/front-end/course/subpage_downloadfile.html" /> --%>
 					</div>
 					<div id="coursescope" class="tab-pane fade">
 						<h3>課程評價</h3>
-						<jsp:include page="/front-end/course/subpage_coursescope.html" />
+<%-- 						<jsp:include page="/front-end/course/subpage_coursescope.html" /> --%>
 					</div>
 					<div id="post" class="tab-pane fade">
 						<h3>問題討論</h3>
-						<jsp:include page="/front-end/course/subpage_post.html" />
+<%-- 						<jsp:include page="/front-end/course/subpage_post.html" /> --%>
 					</div>
 				</div>
 
