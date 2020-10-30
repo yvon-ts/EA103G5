@@ -65,6 +65,7 @@
 		
 	</c:forEach>
 	<input type='hidden' name='testno' value='<%= (String)request.getAttribute("testno")%>'>
+	<input type='hidden' name='courseno' value="<%= request.getParameter("courseno") %>">
 	<input type='hidden' name='action' value='correct'>
 	<div style="text-align: center;"><button type="button" class="btn btn-primary" id="turnin" >┤гец┤·┼ч</button> </div>
 	

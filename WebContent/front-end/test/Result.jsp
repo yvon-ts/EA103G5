@@ -4,12 +4,12 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <%
-	String courseno = 	(String)request.getSession().getAttribute("coursenoForTest");
+// 	String courseno = 	(String)request.getSession().getAttribute("coursenoForTest");
 
-	CourseService cSvc = new CourseService();
-	CourseVO  coursevoForNow = cSvc.getOneCourse(courseno);
+// 	CourseService cSvc = new CourseService();
+// 	CourseVO  coursevoForNow = cSvc.getOneCourse(courseno);
 	
-	pageContext.setAttribute("coursevoForNow", coursevoForNow);
+// 	pageContext.setAttribute("coursevoForNow", coursevoForNow);
 	
 	TestsVO testsVo = (TestsVO) request.getAttribute("testsVo");
 %>
@@ -124,7 +124,7 @@
 		</c:if>
 	</c:forEach>
 	</div>
-			<div style="text-align: center; margin:20px;"><a href="<%=request.getContextPath()%>/course/course.do?action=showCourseMainPage&courseno=${coursevoForNow.courseno}" class="btn btn-border">回到課程總覽</a><a href="<%=request.getContextPath()%>/front-end/test/ListAllTestRecord.jsp" class="btn btn-border">考試紀錄</a></div>
+			<div style="text-align: center; margin:20px;"><a href="<%=request.getContextPath()%>/course/course.do?action=showCourseMainPage&courseno=<%= request.getParameter("courseno") %>" class="btn btn-border">回到課程總覽</a><a href="<%=request.getContextPath()%>/front-end/test/ListAllTestRecord.jsp" class="btn btn-border">考試紀錄</a></div>
 	<script src="https://code.jquery.com/jquery-3.5.1.js"
 	integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
 	crossorigin="anonymous"></script>

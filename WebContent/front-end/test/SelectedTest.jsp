@@ -59,6 +59,7 @@
         			
         			<div class="col-2">
 						<button type="button" class="btn btn-info" id="enterTest">進入測驗</button>
+						<input type='hidden' name='courseno' value="<%= request.getParameter("courseno") %>">
 					</div>
 				
 				</div>

@@ -6,9 +6,10 @@
 <% 
 		QuestionBankService questionbankSvc = new QuestionBankService();
 		List<QuestionBankVO> questionBankVoList = questionbankSvc.getAll(request.getParameter("courseno"));
-
+	
 		pageContext.setAttribute("questionBankVoList", questionBankVoList);
 		request.setCharacterEncoding("UTF-8");
+		System.out.println(request.getParameter("coursename"));
 %>
 <jsp:useBean id="ttSvc" scope="page" class="com.test_type.model.TestTypeService" />
 

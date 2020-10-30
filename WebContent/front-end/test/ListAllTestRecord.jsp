@@ -78,7 +78,7 @@
 			  <FORM METHOD="post" ACTION="<%= request.getContextPath()%>/question/questionTest.do" style="margin-bottom: 0px;">
 			     <input type="submit" value="ÀËµø">
 			     <input type="hidden" name="selectedTestno"  value="${TestsVO.testno}">
-			     <input type="hidden" name="coursenoForTest"  value="${TestsVO.courseno}">
+			     <input type="hidden" name="courseno"  value="${TestsVO.courseno}">
 			     <input type="hidden" name="action"	value="reviewByTestNo">
 			     
 			  </FORM>

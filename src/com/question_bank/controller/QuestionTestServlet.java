@@ -74,8 +74,8 @@ public class QuestionTestServlet extends HttpServlet {
 			
 			
 				
-			if (value != null && !(value[0].equals("correct")) && !("testno".equals(name))) {
-				
+			if (value != null && !value[0].equals("correct") && !"testno".equals(name) && !"courseno".equals(name)) {
+				System.out.println(name);
 				if (qse.getOneByNO(name).getOp1() == null) {
 					studentAns.put(name, value[0]);
 				} else {

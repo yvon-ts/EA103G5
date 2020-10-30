@@ -49,7 +49,7 @@
 	}
 	// ==========================================================================================
 	// 開玄考試用
-	request.getSession().setAttribute("coursenoForTest",courseVO.getCourseno());
+// 	request.getSession().setAttribute("coursenoForTest",courseVO.getCourseno());
 %>
 
 <!DOCTYPE html>
@@ -130,7 +130,7 @@
 								</a>
 								<% } else { %>
 								<a class="list-group-item list-group-item-action list-group-item-primary"
-									target="_blank" href="<%=request.getContextPath()%>/front-end/test/SelectedTest.jsp">
+									target="_blank" href="<%=request.getContextPath()%>/front-end/test/SelectedTest.jsp?courseno=<%=courseVO.getCourseno() %>">
 									<h3 style="color:#b07e2d;"><i class="fas fa-pen"></i> 自我評量 <i class="far fa-arrow-alt-circle-right"></i></h3>
 								</a>
 								<% } %>
