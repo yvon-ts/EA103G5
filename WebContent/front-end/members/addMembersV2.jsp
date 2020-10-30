@@ -123,6 +123,19 @@ div.signup-image {
 	margin-left: 550px;
 	margin-top: 650px;
 }
+#add{
+width: 130px;
+    height: 40px;
+    position: absolute;
+    margin: 500px 0 0 450px;
+    z-index: 3;
+    background:#0099CC;
+    border:1px;
+    color:white;
+    border-radius:20px;
+    cursor:pointer;
+    font-family: 'Gochi Hand';
+}
 
 a.signup-image-link {
 	margin-top: 100px;
@@ -204,7 +217,7 @@ div.main {
 			
 								
 								
-                            
+                            <button type="button"  id="add">Magic BTN</button>
 							
 				<a href="<%=request.getContextPath()%>/index/front-index/index.jsp"><img
 					id='preview_progressbarTW_img'
@@ -394,7 +407,17 @@ var message = document.getElementById('message').value;
 if(message.length !== 0){
 	 swal('注意', message, 'warning');
 }
-
+$("#add").click(function(e){
+	e.preventDefault();
+	$("#memacc").val("emilyinparis");
+	$("#mempwd").val("123456");
+	$("#Rmempwd").val("123456");
+	$("#memname").val("愛美麗");
+	$("#nkname").val("Emily");
+	$("#mphone").val("0987323020");
+	$("#memail").val("scobboy0121@gmail.com");
+	$("#f_date1").val("1991-11-12");
+})
 
 function readURL(input){
 
