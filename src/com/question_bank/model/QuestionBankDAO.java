@@ -41,7 +41,7 @@ public class QuestionBankDAO implements QuestionBankDAO_interface {
 	private static final String FINDBYNO_STMT = "SELECT * FROM QUESTION_BANK WHERE QBANKNO=? and QUSTATUS = 1";
 	private static final String FINDALL_STMT = "SELECT * FROM QUESTION_BANK ORDER BY QBANKNO";
 	private static final String FINDALLBYCOURSENO_STMT = "SELECT * FROM QUESTION_BANK  WHERE COURSENO=? ORDER BY QBANKNO";
-	private static final String FINDAREA_STMT = "SELECT * FROM QUESTION_BANK WHERE TESTTYPENO = ? and QUSTATUS = 1 ";
+	private static final String FINDAREA_STMT = "SELECT * FROM QUESTION_BANK WHERE TESTTYPENO = ? and COURSENO = ? and QUSTATUS = 1 ";
 
 	@Override
 	public QuestionBankVO insertQuestion(QuestionBankVO questionVO) {// 新增題目
@@ -342,7 +342,7 @@ public class QuestionBankDAO implements QuestionBankDAO_interface {
 		return list;
 	}
 
-	public List<QuestionBankVO> findArea(int testtypeno) { // 找某範圍題目
+	public List<QuestionBankVO> findArea(int testtypeno,String courseno) { // 找某範圍題目
 
 		List<QuestionBankVO> list = new ArrayList<>();
 		Connection con = null;
@@ -354,6 +354,7 @@ public class QuestionBankDAO implements QuestionBankDAO_interface {
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(FINDAREA_STMT);
 			pstmt.setInt(1, testtypeno);
+			pstmt.setString(2, courseno);
 
 			rs = pstmt.executeQuery();
 			while (rs.next()) {

@@ -98,7 +98,7 @@ public class QuestionTestServlet extends HttpServlet {
 		ResultView.forward(request, response);
 	}
 
-	private Set<QuestionBankVO> pickFromDB(int setting, int number) { // 亂數撈題目
+	private Set<QuestionBankVO> pickFromDB(int setting, int number,String courseno) { // 亂數撈題目
 		double[] typeNumber = new double[] { number * 0.2, number * 0.4, number * 0.4 };
 		QuestionBankService qse = new QuestionBankService();
 
@@ -107,7 +107,11 @@ public class QuestionTestServlet extends HttpServlet {
 		int total = 0;
 
 		for (int i = 0; i < 3; i++) {
-			list = qse.findArea(setting + 3 * i);
+			list = qse.findArea(setting + 3 * i, courseno);
+			
+			if(list.size()==0) {
+				return null;
+			}
 			total += typeNumber[i];
 			while (set.size() < total) {
 				set.add(list.get((int) (Math.random() * (list.size()))));
@@ -198,8 +202,8 @@ public class QuestionTestServlet extends HttpServlet {
 
 		String level = request.getParameter("level");
 
-//		List<String> errorMsgs = new LinkedList<String>();
-//		request.setAttribute("errorMsgs", errorMsgs);
+		List<String> errorMsgs = new LinkedList<String>();
+		request.setAttribute("errorMsgs", errorMsgs);
 //
 //		if ("-1".equals(level)) {
 //			errorMsgs.add("請點選難易度");
@@ -215,7 +219,7 @@ public class QuestionTestServlet extends HttpServlet {
 		
 		
 		MembersVO membersVO = (MembersVO) request.getSession().getAttribute("loginMembersVO");
-		String courseno = (String)request.getSession().getAttribute("coursenoForTest");
+		String courseno = (String)request.getParameter("courseno");
 		
 		String unit = request.getParameter("unit");
 		
@@ -224,22 +228,44 @@ public class QuestionTestServlet extends HttpServlet {
 		testsVo.setTestscope(unit);//單元
 
 		List<QuestionBankVO> QuestionList = new ArrayList<>();
+		Set<QuestionBankVO> set = new HashSet();
 		int number = 10;
+		
+		
 		if ("simple".equals(level)) {
-			QuestionList.addAll(pickFromDB(1, number));
-			randomQuestion = produce(QuestionList);
+			
+			set = pickFromDB(1, number,courseno);
+			if(set != null) {
+				QuestionList.addAll(set);
+				randomQuestion = produce(QuestionList);
+			}
 		} else if ("medium".equals(level)) {
-			QuestionList.addAll(pickFromDB(1, number / 2));
-			QuestionList.addAll(pickFromDB(2, number / 2));
-			randomQuestion = produce(QuestionList);
+			set = pickFromDB(1, number / 2,courseno);
+			if(set != null) {
+				QuestionList.addAll(set);
+				QuestionList.addAll(pickFromDB(2, number / 2,courseno));
+				randomQuestion = produce(QuestionList);
+			}
 		} else if ("hard".equals(level)) {
-			QuestionList.addAll(pickFromDB(1, number / 4));
-			QuestionList.addAll(pickFromDB(2, number / 4));
-			QuestionList.addAll(pickFromDB(3, number / 2));
-			randomQuestion = produce(QuestionList);
+			set = pickFromDB(1, number / 4 ,courseno);
+			if(set != null) {
+				QuestionList.addAll(set);
+				QuestionList.addAll(pickFromDB(2, number / 4 ,courseno));
+				QuestionList.addAll(pickFromDB(3, number / 2 ,courseno));
+				randomQuestion = produce(QuestionList);
+			}
 		}
+		
+			if(set == null) {
+				errorMsgs.add("尚無測驗題目");
+				RequestDispatcher dispatcher = request.getRequestDispatcher("/front-end/test/SelectedTest.jsp");
+				dispatcher.forward(request, response);
+				return ;
+			}
+		
 
 		String testno = tse.insertToAnwserList(testsVo, randomQuestion);// 之後要抓取會員編號、課程編號與範圍編號
+		
 		
 		
 	

@@ -28,15 +28,9 @@
 
 	int i = 0;
 	
-	MembersVO membersVO = (MembersVO) session.getAttribute("membersVO");
+// 	MembersVO membersVO = (MembersVO) session.getAttribute("loginMembersVO");
 	
 
-	// 	TrackingListService test = new TrackingListService();
-	// 	List<TrackingListVO>  listall = test.getOneByMemno(Membersvo.getMemno());
-
-	// 	for(TrackingListVO vo : listall){
-	// 		System.out.println(vo);
-	// 	}
 	
 	
 	
@@ -215,7 +209,6 @@
 				url	:"<%=request.getContextPath()%>/tracking_list/tracking_list.do",
 				data:{
 					courseno:$(this).find('#courseno').val(),
-					memno    : $("#memno").val(),
 					action: "shoppingCart"
 				},
 				success: function(data){
@@ -230,6 +223,25 @@
 		
 		$('body').on('click' , '.bookmark',function(){
 			
+			
+			if(`${loginMembersVO.memno}` == ''){
+				swal({ 
+					  title: '您尚未登入', 
+					  text: '你将無法追蹤此課程！', 
+					  type: 'warning',
+					  showCancelButton: true, 
+					  confirmButtonColor: '#3085d6',
+					  cancelButtonColor: '#d33',
+					  confirmButtonText: '會員登入', 
+					}).then(function(){
+						this.location.href = '<%=request.getContextPath()%>/front-end/members/signIn.jsp';
+					}).catch(swal.noop);
+			}
+			else{
+				
+				
+				
+			
 			var updateTrackingList;
 			
 			if ($(this).children().attr("class") === "fa fa-heart-o"){
@@ -241,13 +253,13 @@
 				$(this).children().attr("class","fa fa-heart-o");
 			}
 			
-			console.log(updateTrackingList + "," + $(this).find('#courseno').val() );
+// 			console.log(updateTrackingList + "," + $(this).find('#courseno').val() );
 			
 			$.ajax({
 				url	:"<%=request.getContextPath()%>/tracking_list/tracking_list.do", 
 				data:{
 					courseno : $(this).find('#courseno').val(),
-					memno    : $("#memno").val(),
+// 					memno    : $("#memno").val(),
 					action   : updateTrackingList ,
 				},
 				success: function(data){
@@ -255,7 +267,7 @@
 				}
 			});
 			
-			
+			}
 		});
 		
 		$('#searchText').keydown(function(){

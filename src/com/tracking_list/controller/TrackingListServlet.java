@@ -99,7 +99,6 @@ public class TrackingListServlet extends HttpServlet {
 			List<String> errorMsgs = new LinkedList<String>();
 
 			req.setAttribute("errorMsgs", errorMsgs);
-
 			CourseService courseSvc = new CourseService();
 
 			CourseVO userSelectedCourse = courseSvc.getOneCourse(courseno);

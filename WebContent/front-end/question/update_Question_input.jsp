@@ -19,6 +19,9 @@
     pageContext.setAttribute("testAns",testAns.toString());
     pageContext.setAttribute("opAns",QuestionBankvo.getQuans().split(""));
   }
+  System.out.println(request.getParameter("123"));
+  System.out.println(request.getParameter("courseno"));
+  System.out.println(request.getParameter("coursename"));
 %>
 <jsp:useBean id="testTypeSvc" scope="page" class="com.test_type.model.TestTypeService" />
 
@@ -28,7 +31,7 @@
 <html>
 
 <head>
-    <title>題庫管理 - ${CourseSvc.getOneCourse(courseno).coursename}</title>
+    <title>題庫管理 - <%=request.getParameter("coursename") %></title>
     <!-- include libraries(jQuery, bootstrap) -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
@@ -207,9 +210,10 @@ option[value=""] {
                 </select>
                 <div id="parentDiv"></div>
                 <input type="hidden" name="action" value="updateQuestion">
-                <input type="hidden" name="requestURL" value="<%=request.getParameter("requestURL")%>"> <!--接收原送出修改的來源網頁路徑後,再送給Controller準備轉交之用-->
 				<input type="hidden" name="whichPage"  value="<%=request.getParameter("whichPage")%>">  <!--只用於:istAllEmp.jsp-->
                 <input type="hidden" name="qbankno"  value="${QuestionBankvo.qbankno}">
+                <input type="hidden" name="coursename"	value="<%=request.getParameter("coursename") %>">
+                <input type="hidden" name="update"	value="update">
                 <input type='submit' id="turnin" value='放置題庫' style="display:block ">
         		</div>
         </form>

@@ -7,7 +7,9 @@
 List<QuestionBankVO> listEmps_ByCompositeQuery = (List<QuestionBankVO>) request
 .getAttribute("listEmps_ByCompositeQuery");
 pageContext.setAttribute("listEmps_ByCompositeQuery", listEmps_ByCompositeQuery);
-	
+
+System.out.println(request.getParameter("courseno") );
+System.out.println(request.getParameter("coursename") );
 %>
 
 <jsp:useBean id="ttSvc" scope="page" class="com.test_type.model.TestTypeService" />
@@ -72,7 +74,7 @@ pageContext.setAttribute("listEmps_ByCompositeQuery", listEmps_ByCompositeQuery)
 								class="btn btn-info"><i class="fa fa-undo" aria-hidden="true"></i>
 								<span>回到課程編輯</span></a>
 							<a
-								href='<%=request.getContextPath()%>/front-end/question/inputQuestion.jsp'
+								href='<%=request.getContextPath()%>/front-end/question/inputQuestion.jsp?coursename=<%=request.getParameter("coursename") %>&courseno=<%=request.getParameter("courseno") %>'
 								class="btn btn-info"><i class="material-icons">&#xE147;</i>
 								<span>新增考題</span></a>
 						</div>
@@ -126,6 +128,7 @@ pageContext.setAttribute("listEmps_ByCompositeQuery", listEmps_ByCompositeQuery)
                 	<input type="hidden" name="action" value="listEmps_ByCompositeQuery">
                 	<input type="hidden" name="courseno" value="<%=request.getParameter("courseno") %>">
                 	<input type="hidden" name="coursename" value="<%=request.getParameter("coursename") %>">
+                	
                 	<input type="submit" value="送出查詢">
                 	</div>
                 	</div>
@@ -175,6 +178,10 @@ pageContext.setAttribute("listEmps_ByCompositeQuery", listEmps_ByCompositeQuery)
 											type="submit"> <input type="hidden" name="qbankno"
 											value="${QuestionBankvo.qbankno}"> <input
 											type="hidden" name="action" value="getOne_For_Update">
+											<input type="hidden" name="courseno" value="<%=request.getParameter("courseno") %>">
+											<input type="hidden" name="coursename" value="<%=request.getParameter("coursename") %>">
+											<input type="hidden" name="whichPage"	value="<%=whichPage%>">
+											<input type="hidden" name="requestURL"	value="<%=request.getServletPath()%>">
 									</FORM>
 								</td>
 								<td><input type="checkbox"

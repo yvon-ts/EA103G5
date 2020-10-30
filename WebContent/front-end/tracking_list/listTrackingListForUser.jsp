@@ -217,11 +217,6 @@
 			});
 			
 			
-			//註冊繳交表單
-// 			$('body').on('click' , '#checkout',function(){ 
-// 				$('#myForm').submit(); 
-// 			 });
-	
 			//刪除的按鈕不知道why 一定要註冊兩次@@@
 			//註冊移除按鈕
 			for(let i = 1 ; i <= $('#shoppingCartSize').val() ; i++){
@@ -252,7 +247,6 @@
         				
         				$('#goToSearch').click(function(e){
         					e.preventDefault();
-        					
 
         					var a = document.createElement('a');
         					a.href = '<%=request.getContextPath()%>/front-end/course/listAllCourseForUser.jsp';
@@ -286,7 +280,6 @@
 					url	:"<%=request.getContextPath()%>/tracking_list/tracking_list.do",
 					data:{
 						courseno:$(this).find('#courseno').val(),
-// 						memno    : $("#memno").val(),
 						action: "shoppingCart"
 					},
 					success: function(data){
@@ -431,7 +424,6 @@
 									url	:"<%=request.getContextPath()%>/tracking_list/tracking_list.do",
 									data:{
 										courseno: $(this).next().val(),
-// 										memno    : $("#memno").val(),
 										action: "shoppingCart",
 										remove :"remove"
 									},

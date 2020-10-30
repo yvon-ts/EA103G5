@@ -19,13 +19,15 @@
     }
     pageContext.setAttribute("testAns",testAns.toString());
   }
+	
+	
 %>
 <jsp:useBean id="CourseSvc" scope="page" class="com.course.model.CourseService" />
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="BIG5">
-<title>題庫管理 - ${CourseSvc.getOneCourse(courseno).coursename}</title>
+<title>題庫管理 - <%=request.getParameter("coursename") %></title>
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Bootstrap CRUD Data Table for Database with Modal Form</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
@@ -51,8 +53,8 @@
                             <h2>考題資料</h2>
                         </div>
                         <div class="col-sm-6">
-                            <a href='<%= request.getContextPath()%>/front-end/question/ListAllQuestion.jsp?whichPage=<%=request.getParameter("whichPage") %>' class="btn btn-info" ><span>
-回到考題管理</span></a>
+                            <a href='<%= request.getContextPath()%>/front-end/question/ListAllQuestion.jsp?whichPage=<%=request.getParameter("whichPage") %>&coursename=<%=request.getParameter("coursename") %>&courseno=<%=request.getParameter("courseno") %>' class="btn btn-info" ><span>
+							回到考題管理</span></a>
                         </div>
                     </div>
                 </div>

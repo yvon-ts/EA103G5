@@ -1,7 +1,6 @@
   <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>    
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,13 +9,13 @@
 
 <jsp:include page="/index/front-index/header.jsp" />
 
-<%-- <c:if test="${not empty errorMsgs}"> --%>
-<!-- 	<ul> -->
-<%-- 	    <c:forEach var="message" items="${errorMsgs}"> --%>
-<%-- 			<li style="color:red">${message}</li> --%>
-<%-- 		</c:forEach> --%>
-<!-- 	</ul> -->
-<%-- </c:if> --%>
+<c:if test="${not empty errorMsgs}">
+	<ul class = "error" style="display:none">
+	    <c:forEach var="message" items="${errorMsgs}">
+			<li style="color:red">${message}</li>
+		</c:forEach>
+	</ul>
+</c:if>
 <div class="container-fluid" style="margin-top: 90px;">
 
 		
@@ -83,6 +82,11 @@
 				$('#myForm').submit();
 			}
 		});
+		
+		if($('ul.error').length > 0){
+			swal('目前尚無測驗題目', '', 'warning');
+		}
+		
 	});
 </script>
     <jsp:include page="/index/front-index/footer.jsp" />

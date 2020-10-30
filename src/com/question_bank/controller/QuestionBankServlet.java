@@ -149,6 +149,8 @@ public class QuestionBankServlet extends HttpServlet {
 
 		}
 		QuestionBankvo = qse.insertQuestion(QuestionBankvo);
+		request.setAttribute("courseno",request.getParameter("courseno"));
+		request.setAttribute("coursename",request.getParameter("coursename"));
 		request.setAttribute("QuestionBankvo", QuestionBankvo);
 		String url = "/front-end/question/ListOneQuestion.jsp";
 		RequestDispatcher successView = request.getRequestDispatcher(url);
@@ -281,8 +283,10 @@ public class QuestionBankServlet extends HttpServlet {
 		
 		request.setAttribute("QuestionBankvo", QuestionBankvo);
 		
+		request.setAttribute("courseno",request.getParameter("courseno"));
+		request.setAttribute("coursename",request.getParameter("coursename"));
 		
-		RequestDispatcher successView = request.getRequestDispatcher("/front-end/question/ListOneQuestion.jsp");
+		RequestDispatcher successView = request.getRequestDispatcher("/front-end/question/ListAllQuestion.jsp");
 		successView.forward(request, response);
 
 	}

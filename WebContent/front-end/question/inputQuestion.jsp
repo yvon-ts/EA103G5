@@ -17,6 +17,11 @@ if(QuestionBankvo !=null && QuestionBankvo.getQuans()!= null && QuestionBankvo.g
     pageContext.setAttribute("testAns",testAns.toString());
     pageContext.setAttribute("opAns",QuestionBankvo.getQuans().split(""));
   }
+
+	String str=request.getParameter("coursename");
+	byte[] bytes=str.getBytes("ISO-8859-1");
+	String coursename=new String(bytes,"utf-8");
+
 %>
 <jsp:useBean id="testTypeSvc" scope="page" class="com.test_type.model.TestTypeService" />
 <jsp:useBean id="CourseSvc" scope="page" class="com.course.model.CourseService" />
@@ -215,6 +220,8 @@ option[value=""] {
                 </select>
                 <div id="parentDiv"></div>
                 <input type="hidden" name="action" value="inputQuestion">
+                <input type="hidden" name="coursename" value="<%=coursename%>">
+                <input type="hidden" name="courseno" value="<%= request.getParameter("courseno")%>">
                 <input type='submit' id="turnin" value='放置題庫' style="display:block ">
         		</div>
         </form>

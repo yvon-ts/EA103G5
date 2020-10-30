@@ -36,8 +36,8 @@ public class QuestionBankService {
 		return dao.findAll(courseno);
 	}
 
-	public List<QuestionBankVO> findArea(int testtypeno) {
-		return dao.findArea(testtypeno);
+	public List<QuestionBankVO> findArea(int testtypeno,String courseno) {
+		return dao.findArea(testtypeno, courseno);
 	}
 
 	public List<QuestionBankVO> getAll(Map<String, String[]> map) {

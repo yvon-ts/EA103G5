@@ -34,9 +34,9 @@ public class QuestionBankJDBCDAO implements QuestionBankDAO_interface{
 //	private static final String INSERTFULL_STMT = "INSERT INTO QUESTION_BANK(QBANKNO,COURSENO,TESTTYPENO,QUSTMT,QUANS)VALUES('QNBK' || LPAD(SEQ_QBANK.NEXTVAL, 4, 0),?,?,?,?) ";
 	private static final String DELETE_STMT = "DELETE FROM QUESTION_BANK WHERE QBANKNO = ? ";
 	private static final String UPDATE_STMT = "UPDATE QUESTION_BANK SET COURSENO=?,TESTTYPENO=?,QUSTMT=?,OP1=?,OP2=?,OP3=?,OP4=?,QUANS=? WHERE QBANKNO = ?";
-	private static final String FINDBYNO_STMT = "SELECT * FROM QUESTION_BANK WHERE QBANKNO=?";
+	private static final String FINDBYNO_STMT = "SELECT * FROM QUESTION_BANK WHERE QBANKNO=? and QUSTATUS = 1 ";
 	private static final String FINDALL_STMT = "SELECT * FROM QUESTION_BANK";
-	private static final String FINDAREA_STMT = "SELECT * FROM QUESTION_BANK WHERE TESTTYPENO = ? ";
+	private static final String FINDAREA_STMT = "SELECT * FROM QUESTION_BANK WHERE TESTTYPENO = ? and COURSENO = ? and QUSTATUS = 1  ";
 	private static final String FINDALLBYCOURSENO_STMT = "SELECT * FROM QUESTION_BANK  WHERE COURSENO=? ORDER BY QBANKNO";
 
 	@Override
@@ -339,7 +339,7 @@ public class QuestionBankJDBCDAO implements QuestionBankDAO_interface{
 		return list;
 	}
 	
-public List<QuestionBankVO> findArea(int testtypeno) {
+public List<QuestionBankVO> findArea(int testtypeno,String courseno) {
 		
 		List<QuestionBankVO> list = new ArrayList<>();
 		Connection con =  null;
@@ -352,6 +352,7 @@ public List<QuestionBankVO> findArea(int testtypeno) {
 			con = DriverManager.getConnection(url,userid,passwd);
 			pstmt = con.prepareStatement(FINDAREA_STMT);
 			pstmt.setInt(1, testtypeno);
+			pstmt.setString(2, courseno);
 			
 			rs = pstmt.executeQuery();
 			while(rs.next()) {
