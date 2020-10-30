@@ -30,7 +30,7 @@
 		list.add(courseSvc.getOneCourse(myOrderDetailList.get(i).getCourseno()));		
 	}
 	
-	pageContext.setAttribute("Courselist", list);
+	pageContext.setAttribute("courseList", list);
 	
 	List<Integer> averageScore = new ArrayList<>();
 	for (CourseVO vo : list) {
@@ -80,7 +80,7 @@
 
 					<!-- Services item1 -->
 					<div class="row seacharea">
-						<c:forEach var="courseVO" items="${Courselist}">
+						<c:forEach var="courseVO" items="${courseList}">
 							<div class="col-md-6 col-lg-3 col-xs-12">
 								<div class="services-item wow fadeInRight" data-wow-delay="0.3s">
 									<a href="<%=request.getContextPath()%>/course/course.do?action=showCourseMainPage&courseno=${courseVO.courseno}">
