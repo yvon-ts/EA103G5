@@ -16,9 +16,9 @@ public class LecseatService {
 			return dao.getOrderDetails(lodrno);
 		}
 		
-//		public void updateOne(LecseatVO lecseatVO, LodrVO lodrVO) {
-//			dao.updateStatus(lecseatVO, lodrVO);
-//		}
+		public int hasBooked(String memno, String lecno) {
+			return dao.countMemSeats(memno, lecno);
+		}
 
-	}
+}
 
