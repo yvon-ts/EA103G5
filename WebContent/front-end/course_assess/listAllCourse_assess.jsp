@@ -321,7 +321,7 @@ background: url("<%=request.getContextPath()%>/front-end/members/assets/img/bgPi
 								end="<%=pageIndex+rowsPerPage-1%>" varStatus="s">
                 <div class="signin-content">
                     <div class="signin-image">
-                        <a href=""><img class="pic" src="<%=request.getContextPath()%>/back-end/members/MprofileDisplayServlet?MEMNO=${course_assessVO.memno}" alt="sing up image"></a>
+                        <a href=""><img class="pic" src="<%=request.getContextPath()%>/front-end/members/MprofileDisplayServlet?MEMNO=${course_assessVO.memno}" alt="sing up image"></a>
                         
                         <h4 style="font-family:Gochi Hand" class="nkname">${membersSvc.getOneMembers(course_assessVO.memno).nkname}
                         
@@ -416,100 +416,100 @@ background: url("<%=request.getContextPath()%>/front-end/members/assets/img/bgPi
 
 
 <script>
-var inform5 = ${inform5};
+// var inform5 = ${inform5};
 
-if(inform5 == 200){
-	swal('新增成功', '感謝您撥空留下您寶貴的意見', 'success');
-}else if(inform5 == 100){
-	swal('修改成功', '感謝您撥空修改您寶貴的意見', 'success');
-}
+// if(inform5 == 200){
+// 	swal('新增成功', '感謝您撥空留下您寶貴的意見', 'success');
+// }else if(inform5 == 100){
+// 	swal('修改成功', '感謝您撥空修改您寶貴的意見', 'success');
+// }
 
 
 
-$(document).ready(function(){
+// $(document).ready(function(){
 	
 	
-	var counter = 0; /*計數器*/
-	var pageStart = 0; /*offset*/
-	var pageSize = 3; /*size*/
-	/*首次載入*/
-	getData(pageStart, pageSize);
-	/*監聽載入更多*/
+// 	var counter = 0; /*計數器*/
+// 	var pageStart = 0; /*offset*/
+// 	var pageSize = 3; /*size*/
+// 	/*首次載入*/
+// 	getData(pageStart, pageSize);
+// 	/*監聽載入更多*/
 	
 
 	
-	$(document).on('click', '#js-load-more', function(){
-	counter++ ;
-	pageStart = counter * pageSize;
-	pageEnd = 	( counter + 1 ) * pageSize;
-	getData(pageStart, pageEnd);
-	});
+// 	$(document).on('click', '#js-load-more', function(){
+// 	counter++ ;
+// 	pageStart = counter * pageSize;
+// 	pageEnd = 	( counter + 1 ) * pageSize;
+// 	getData(pageStart, pageEnd);
+// 	});
 	
-});
-function getData(offset,size){
-	$.ajax({
-		type: 'POST',
-		url: "<%=request.getContextPath()%>/course_assess/course_assess.do", 
-		data:{
-			memno:$('#memno').val(),
-			action:'getAll'
-		},
-		success: function(data){
-			var JSONarray = JSON.parse(data);
+// });
+// function getData(offset,size){
+// 	$.ajax({
+// 		type: 'POST',
+<%-- 		url: "<%=request.getContextPath()%>/course_assess/course_assess.do",  --%>
+// 		data:{
+// 			memno:$('#memno').val(),
+// 			action:'getAll'
+// 		},
+// 		success: function(data){
+// 			var JSONarray = JSON.parse(data);
 			
-//				console.log(JSONarray);
-//				/****業務邏輯塊：實現拼接html內容並prepend到頁面*********/
-			var sum = JSONarray.length;
-			console.log(offset,size,sum);
-//				/*如果剩下的記錄數不夠分頁，就讓分頁數取剩下的記錄數
-//				* 例如分頁數是5，只剩2條，則只取2條
-			var result = '';
+// //				console.log(JSONarray);
+// //				/****業務邏輯塊：實現拼接html內容並prepend到頁面*********/
+// 			var sum = JSONarray.length;
+// 			console.log(offset,size,sum);
+// //				/*如果剩下的記錄數不夠分頁，就讓分頁數取剩下的記錄數
+// //				* 例如分頁數是5，只剩2條，則只取2條
+// 			var result = '';
 			
-			if(sum - offset < size ){
-				size = sum - offset;
-				}
+// 			if(sum - offset < size ){
+// 				size = sum - offset;
+// 				}
 			
-			for(let i=offset; i< (offset+size); i ++){
+// 			for(let i=offset; i< (offset+size); i ++){
 				
 				
-				result += 	`<div class="col-md-6 col-lg-4 col-xs-12">`;
-				result +=	`<div class="services-item wow fadeInRight" data-wow-delay="0.3s">`;
-				result +=	`<div class="icon">`
-				result +=	`<img src="<%=request.getContextPath()%>/course/CoursePictureReaderFromDB?courseno=` + JSONarray[i].courseno  +`" style="width: 200px; height: 150px;" class="pic"></div>`;
+// 				result += 	`<div class="col-md-6 col-lg-4 col-xs-12">`;
+// 				result +=	`<div class="services-item wow fadeInRight" data-wow-delay="0.3s">`;
+// 				result +=	`<div class="icon">`
+<%-- 				result +=	`<img src="<%=request.getContextPath()%>/course/CoursePictureReaderFromDB?courseno=` + JSONarray[i].courseno  +`" style="width: 200px; height: 150px;" class="pic"></div>`; --%>
         			
-				result +=   `<div class="services-content">`;
-        		result += 	`&nbsp;&nbsp;&nbsp;<div class="rateit" data-rateit-value="`+ JSONarray[i].csscore / JSONarray[i].csscoretimes + `" data-rateit-ispreset="true" data-rateit-readonly="true"></div> `; 
+// 				result +=   `<div class="services-content">`;
+//         		result += 	`&nbsp;&nbsp;&nbsp;<div class="rateit" data-rateit-value="`+ JSONarray[i].csscore / JSONarray[i].csscoretimes + `" data-rateit-ispreset="true" data-rateit-readonly="true"></div> `; 
   	
-        		result +=	`<br>&nbsp;&nbsp;&nbsp;`+ JSONarray[i].csscoretimes  + `則評價`;
-        		result +=   `<h3><a href="#">`+ JSONarray[i].coursename + `</a></h3>`;
-        		result +=   `<p>課程共` + JSONarray[i].ttltime + `分鐘</p>`;
+//         		result +=	`<br>&nbsp;&nbsp;&nbsp;`+ JSONarray[i].csscoretimes  + `則評價`;
+//         		result +=   `<h3><a href="#">`+ JSONarray[i].coursename + `</a></h3>`;
+//         		result +=   `<p>課程共` + JSONarray[i].ttltime + `分鐘</p>`;
             
-        		result += 	`<label class="shoppingcart">
-								<i class="fa fa-shopping-cart" aria-hidden="true">
-									<input type ="hidden" name="courseno" 	 id="courseno"   value ="${courseVO.courseno}"/>
-									<input type ="hidden" name="courseprice" id="courseprice" value ="${courseVO.courseprice}"/>
-									<input type ="hidden" name="courseinfo"  id="courseinfo"  value ="${courseVO.courseinfo}"/>
-								</i>&nbsp;加入購物車
-							</label>`;
-				result += `<h5>NT$` + JSONarray[i].courseprice + `</h5></div></div></div></div>`;
+//         		result += 	`<label class="shoppingcart">
+// 								<i class="fa fa-shopping-cart" aria-hidden="true">
+// 									<input type ="hidden" name="courseno" 	 id="courseno"   value ="${courseVO.courseno}"/>
+// 									<input type ="hidden" name="courseprice" id="courseprice" value ="${courseVO.courseprice}"/>
+// 									<input type ="hidden" name="courseinfo"  id="courseinfo"  value ="${courseVO.courseinfo}"/>
+// 								</i>&nbsp;加入購物車
+// 							</label>`;
+// 				result += `<h5>NT$` + JSONarray[i].courseprice + `</h5></div></div></div></div>`;
         
-			}
+// 			}
 			
 			
-			$('.trackingArea').append(result);
+// 			$('.trackingArea').append(result);
 			
-			$("div.rateit, span.rateit").rateit();
+// 			$("div.rateit, span.rateit").rateit();
 
 
-//			/*隱藏more按鈕*/
-		if ( (offset + size) >= sum){
-			$("#js-load-more").hide();
-		}else{
-			$("#js-load-more").show();
-		}
-		}	
-		});
-	}
+// //			/*隱藏more按鈕*/
+// 		if ( (offset + size) >= sum){
+// 			$("#js-load-more").hide();
+// 		}else{
+// 			$("#js-load-more").show();
+// 		}
+// 		}	
+// 		});
+// 	}
 
 
 

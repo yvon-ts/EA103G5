@@ -60,6 +60,50 @@
   
   
   
+  <filter>
+    <filter-name>loginMembersCheck</filter-name>
+    <filter-class>com.members.controller.loginMembersCheck</filter-class>
+  </filter>
+  <filter-mapping>
+   	<filter-name>loginMembersCheck</filter-name>  	
+   	<url-pattern>/front-end/members/updateMembersV2.jsp</url-pattern>
+   	<url-pattern>/front-end/teacher/teacherRegister.jsp</url-pattern>
+   	<url-pattern>/front-end/teacher/teacherDisplay.jsp</url-pattern>
+   	<url-pattern>/front-end/teacher/teacherUpdate.jsp</url-pattern>
+   	<url-pattern>/front-end/lecorder/*</url-pattern>
+   	<url-pattern>/front-end/lecseat/*</url-pattern>
+   	<url-pattern>/front-end/course/addCourse.jsp</url-pattern>
+   	<url-pattern>/front-end/course/addCourseToEdit.jsp</url-pattern>
+   	<url-pattern>/front-end/course/editCourse.jsp</url-pattern>
+   	<url-pattern>/front-end/course/editCourseBasicInfo.jsp</url-pattern>
+   	<url-pattern>/front-end/course/editCourseChapter.jsp</url-pattern>
+   	<url-pattern>/front-end/course/listMyCourse.jsp</url-pattern>
+   	<url-pattern>/front-end/tracking_list/listTrackingListForUser.jsp</url-pattern>
+   	<url-pattern>/front-end/test/*</url-pattern>
+   	<url-pattern>/front-end/question/*</url-pattern>
+   	<dispatcher>REQUEST</dispatcher>
+   	<dispatcher>FORWARD</dispatcher>
+   	<dispatcher>INCLUDE</dispatcher>
+   	<dispatcher>ERROR</dispatcher>
+   	<dispatcher>ASYNC</dispatcher>
+  </filter-mapping>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
   <servlet>
     <servlet-name>Test_DataSource</servlet-name>
     <servlet-class>Test_DataSource</servlet-class>
