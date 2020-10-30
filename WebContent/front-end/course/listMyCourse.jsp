@@ -2,29 +2,23 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page import="java.util.*"%>
-
-<%@ page import="com.course_type.model.*"%>
-
-<%@ page import="com.course.model.*"%>
-<%@ page import="com.video.model.*"%>
 <%@ page import="com.members.model.*"%>
-<%@ page import="com.teacher.model.*"%>
-<%@ page import="com.order_master.model.*"%>
+<%@ page import="com.course.model.*"%>
 <%@ page import="com.order_detail.model.*"%>
 
-<jsp:useBean id="TrackingListSvc" scope="page" class="com.tracking_list.model.TrackingListService" />
-<jsp:useBean id="courseTypeSvc" scope="page" class="com.course_type.model.CourseTypeService" />
 <jsp:useBean id="courseSvc" scope="page" class="com.course.model.CourseService" />
-<jsp:useBean id="videoSvc" scope="page" class="com.video.model.VideoService" />
 <jsp:useBean id="orderDetailSvc" scope="page" class="com.order_detail.model.OrderDetailService" />
 
 <%	
 	// 施工中，尚未完成 2020/10/30 01:30 顯鈞
-
+	
+	// 檢查登入者身分
 	MembersVO loginMembersVO = (MembersVO) session.getAttribute("loginMembersVO");
 	if (loginMembersVO == null) {
-		// EEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
-		// 這邊要怎麼辦呢
+		// 若未登入，則導回所有課程的頁面
+		RequestDispatcher failureView = request.getRequestDispatcher("/front-end/course/listAllCourseForUser.jsp");
+		failureView.forward(request, response);
+		return;
 	}
 	
 	List<OrderDetailVO> myOrderDetailList = new ArrayList<OrderDetailVO>();
@@ -74,8 +68,6 @@
 	<!-- member -->
 	<input type="hidden" id="memno" value="${membersVO.memno}" />
 	
-
-
 	<!-- include 前台頁面的 header -->
 	<jsp:include page="/index/front-index/header.jsp" />
 
@@ -91,7 +83,7 @@
 						<c:forEach var="courseVO" items="${Courselist}">
 							<div class="col-md-6 col-lg-3 col-xs-12">
 								<div class="services-item wow fadeInRight" data-wow-delay="0.3s">
-									<a href="<%=request.getContextPath()%>/course/course.do?action=getOneCourseForUpdate&courseno=${courseVO.courseno}">
+									<a href="<%=request.getContextPath()%>/course/course.do?action=showCourseMainPage&courseno=${courseVO.courseno}">
 										<div class="icon">
 											<img src="<%=request.getContextPath()%>/course/CoursePictureReaderFromDB?courseno=${courseVO.courseno}" style="max-width: 100%; height: 150px;" class="pic">
 										</div>
