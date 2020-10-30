@@ -227,7 +227,7 @@
                 <div class="table-title">
                     <div class="row">
                         <div class="col-sm-4">
-                            <h2>Order <b>Masters</b></h2>
+                            <h2>訂單管理</b></h2>
                         </div>
                         <div class="col-sm-8">
                         </div>
