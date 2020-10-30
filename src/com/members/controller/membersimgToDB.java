@@ -5,35 +5,54 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-public class blobToDB {
+import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+public class membersimgToDB extends HttpServlet {
+	/**
+	 * 什麼都不用做 直接執行就好
+	 */
+	private static final long serialVersionUID = 1L;
 	private static final String URL = "jdbc:oracle:thin:@localhost:1521:xe";
 	private static final String USER = "XDU";
 	private static final String PASSWORD = "123456";
 	private static final String SQL = "UPDATE MEMBERS SET MPROFILE = ? WHERE MEMNO = ?";
 
-	public static void main(String[] args) {
+	public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		Connection con = null;
 		PreparedStatement pstmt = null;
-
+		PrintWriter out = res.getWriter();
+		req.setCharacterEncoding("UTF-8");
+		res.setContentType("text/plain; charset=UTF-8");
 		try {
+		ServletContext ct = req.getServletContext();
+	
+		
+		
+
+	
 			Class.forName("oracle.jdbc.driver.OracleDriver");
 			con = DriverManager.getConnection(URL, USER, PASSWORD);
 			pstmt = con.prepareStatement(SQL);
 
 			for (int i = 1; i <= 30; i++) {
 				if(i >= 10) {
-					byte[] pic = getPictureByteArray("/Users/yang/Desktop/profile/t00" + i + ".jpg");
+					byte[] pic = getPictureByteArray(ct.getRealPath("/front-end/members/addMembers_css/images/t00" + i + ".jpg"));
 					pstmt.setBytes(1, pic);
 					pstmt.setString(2, "MEM00"+ i);
 					pstmt.executeUpdate();
 					System.out.println("已上傳" + i);
 				}else {
-					 byte[] pic = getPictureByteArray("/Users/yang/Desktop/profile/t000" + i + ".jpg");
+					 byte[] pic = getPictureByteArray(ct.getRealPath("/front-end/members/addMembers_css/images/t000" + i + ".jpg"));
 						//windows: "C:/Users/Big data/Desktop/lecimg/img" + i + ".jpg"
 						//mac: "/Users/yvon/Desktop/lecimg/img" + i + ".jpg"
 						pstmt.setBytes(1, pic);
@@ -43,8 +62,10 @@ public class blobToDB {
 				}
 				
 				
-			}
-		
+				}
+			out.println("success!!");
+			
+			
 		} catch (ClassNotFoundException ce) {
 			System.out.println(ce);
 		} catch (SQLException se) {

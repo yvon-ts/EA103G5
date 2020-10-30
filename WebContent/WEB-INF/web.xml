@@ -296,6 +296,20 @@
   </servlet-mapping>
   
   <servlet>
+    <servlet-name>membersimgToDB</servlet-name>
+    <servlet-class>com.members.controller.membersimgToDB</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>membersimgToDB</servlet-name>
+    <url-pattern>/front-end/members/membersimgToDB</url-pattern>
+     <url-pattern>/back-end/members/membersimgToDB</url-pattern>
+  </servlet-mapping>
+  
+  
+  
+  
+  
+  <servlet>
     <servlet-name>MprofileDisplayServlet</servlet-name>
     <servlet-class>com.members.controller.MprofileDisplayServlet</servlet-class>
   </servlet>
