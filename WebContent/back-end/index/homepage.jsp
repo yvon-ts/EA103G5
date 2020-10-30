@@ -138,7 +138,7 @@
             <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="fa fa-user-plus" aria-hidden="true"></i>
                     <span class="app-menu__label"> 實體講座 </span><i class="treeview-indicator fa fa-angle-right"></i></a>
                 <ul class="treeview-menu">
-                    <li><a class="treeview-item" href="bootstrap-components.html"><i class="icon fa fa-circle-o"></i> 教室管理</a></li>
+                    <li><a class="treeview-item" href="<%=request.getContextPath()%>/back-end/classroom/listAllClassroom.jsp"><i class="icon fa fa-circle-o"></i> 教室管理</a></li>
                     <li><a class="treeview-item" href="<%=request.getContextPath()%>/back-end/lecorder/listAllLodr.jsp" rel="noopener"><i class="icon fa fa-circle-o"></i>報名管理 </a></li>
                     <li><a class="treeview-item" href="<%=request.getContextPath()%>/back-end/lecture/lectureIndex.jsp"><i class="icon fa fa-circle-o"></i> 講座管理</a></li>
                 </ul>
