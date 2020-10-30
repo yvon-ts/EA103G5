@@ -64,6 +64,7 @@ transform-origin: 70% 88%;
 	border-radius:10px;
   
 }
+
 @keyframes hand {
 	0% { transform: rotate(0deg); }
 	50% { transform: rotate(5deg) }
@@ -72,6 +73,10 @@ transform-origin: 70% 88%;
 img#nav_icon{
 width:36px;
 height:36px;
+}
+img.icon{
+width:30px;
+height:30px;
 }
 	</style>
 </head>
@@ -84,7 +89,7 @@ height:36px;
             <div class="container">
                 <!-- Brand and toggle get grouped for better mobile display -->
                 <a href="<%=request.getContextPath()%>/index/front-index/index.jsp" class="navbar-brand"><img src="<%=request.getContextPath()%>/index/front-index/assets/img/logo.svg" alt="">
-                    <div id="logo">Xducation${loginMembersVO.memno}</div>
+                    <div id="logo">Xducation</div>
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
                     aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
@@ -101,20 +106,37 @@ height:36px;
                         </li>
                         <li class="nav-item"><a class="nav-link"
 						href="<%=request.getContextPath()%>/front-end/tracking_list/listTrackingListForUser.jsp">
-							購物車&nbsp;<i class="lni lni-cart"></i>
+							購物車&nbsp;<img class="icon"
+								src='<%=request.getContextPath()%>/index/front-index/assets/img/shopping-cart.svg'>
+							
 					</a></li>
 					<li class="nav-item"><a class="nav-link"
 						href="<%=request.getContextPath()%>/front-end/course/listAllCourseForUser.jsp">
-							搜尋課程&nbsp;<i class="lni-leaf"></i>
+							搜尋課程&nbsp;<img class="icon"
+								src='<%=request.getContextPath()%>/index/front-index/assets/img/search.svg'>
+							
 					</a></li>
+					<c:if test="${not empty sessionScope.loginMembersVO}">
+					<li class="nav-item"><a class="nav-link"
+						href="<%=request.getContextPath()%>/front-end/course/listMyCourse.jsp">
+							我的課程&nbsp;<img class="icon"
+								src='<%=request.getContextPath()%>/index/front-index/assets/img/mycourse.svg'>
+							
+					</a></li>
+					</c:if>
+					
 					<li class="nav-item"><a class="nav-link"
 						href="<%=request.getContextPath()%>/front-end/lecture/listAllLec.jsp">
-							名人講座&nbsp;<i class="lni-bulb"></i>
+							名人講座&nbsp;<img class="icon"
+								src='<%=request.getContextPath()%>/index/front-index/assets/img/influencer.svg'>
+							
 					</a></li>
 					<c:if test="${teacherSvc.getStatus(sessionScope.loginMembersVO.memno).tchrstatus eq '已通過'}">
 						<li class="nav-item"><a class="nav-link"
 							href="<%=request.getContextPath()%>/front-end/course/addCourse.jsp">
-								我要開課&nbsp;<i class="lni lni-display"></i>
+								我要開課&nbsp;<img class="icon"
+								src='<%=request.getContextPath()%>/index/front-index/assets/img/opencourse.svg'>
+							
 						</a></li>
 					</c:if>
 
@@ -171,6 +193,11 @@ height:36px;
 
 					</c:if>
 					<c:if test="${not empty sessionScope.loginMembersVO.memno}">
+					
+					  <c:if test="${empty teacherSvc.getStatus(sessionScope.loginMembersVO.memno)}">
+							<img id="nav_icon"
+								src='<%=request.getContextPath()%>/front-end/members/assets/img/students.svg'>
+						</c:if>
 						
 						<c:if test="${teacherSvc.getStatus(sessionScope.loginMembersVO.memno).tchrstatus eq '待審核'}">
 							<img id="nav_icon"
@@ -191,8 +218,9 @@ height:36px;
 
 					<c:if test="${empty sessionScope.loginMembersVO}">
 						<li class="nav-item"><a class='nav-link'
-							href='<%=request.getContextPath()%>/front-end/members/signIn.jsp'>我要登入&nbsp;
-							<i class="lni lni-rocket"></i></a></li>
+							href='<%=request.getContextPath()%>/front-end/members/signIn.jsp'>我要登入&nbsp;<img class="icon" src='<%=request.getContextPath()%>/index/front-index/assets/img/login.svg'>
+							</a>
+							</li>
 					</c:if>
                         
                     </ul>
@@ -208,7 +236,7 @@ height:36px;
                         <div class="contents">
                             <div class="about-wrapper wow fadeInLeft" data-wow-delay="0.3s">
                                 <h2 class="head-title">陪你成長的學習好夥伴</h2>
-                                <i class="lni-rocket"></i>&nbsp;
+                                <img class="icon" src="<%=request.getContextPath()%>/front-end/members/assets/img/rocket.png" alt="">&nbsp;
                                 Xducation - 最有趣的線上學習平台
                             </div>
                             <br>

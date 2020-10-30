@@ -53,6 +53,10 @@ textarea {
 	width: 53px;
 	height: 53px;
 }
+img.icon{
+width:30px;
+height:30px;
+}
 
 img.pic {
 	width: 36px;
@@ -273,23 +277,39 @@ div.main {
 			</button>
 			<div class="collapse navbar-collapse" id="navbarCollapse">
 				<ul class="navbar-nav mr-auto w-100 justify-content-end clearfix">
-					<li class="nav-item"><a class="nav-link"
+					 <li class="nav-item"><a class="nav-link"
 						href="<%=request.getContextPath()%>/front-end/tracking_list/listTrackingListForUser.jsp">
-							購物車&nbsp;<i class="lni lni-cart"></i>
+							購物車&nbsp;<img class="icon"
+								src='<%=request.getContextPath()%>/index/front-index/assets/img/shopping-cart.svg'>
+							
 					</a></li>
 					<li class="nav-item"><a class="nav-link"
 						href="<%=request.getContextPath()%>/front-end/course/listAllCourseForUser.jsp">
-							搜尋課程&nbsp;<i class="lni-leaf"></i>
+							搜尋課程&nbsp;<img class="icon"
+								src='<%=request.getContextPath()%>/index/front-index/assets/img/search.svg'>
+							
 					</a></li>
+					<c:if test="${not empty sessionScope.loginMembersVO}">
+					<li class="nav-item"><a class="nav-link"
+						href="<%=request.getContextPath()%>/front-end/course/listMyCourse.jsp">
+							我的課程&nbsp;<img class="icon"
+								src='<%=request.getContextPath()%>/index/front-index/assets/img/mycourse.svg'>
+							
+					</a></li>
+					</c:if>
+					
 					<li class="nav-item"><a class="nav-link"
 						href="<%=request.getContextPath()%>/front-end/lecture/listAllLec.jsp">
-							名人講座&nbsp;<i class="lni-bulb"></i>
+							名人講座&nbsp;<img class="icon"
+								src='<%=request.getContextPath()%>/index/front-index/assets/img/influencer.svg'>
+							
 					</a></li>
-					<c:if
-						test="${teacherSvc.getStatus(sessionScope.loginMembersVO.memno).tchrstatus eq '已通過'}">
+					<c:if test="${teacherSvc.getStatus(sessionScope.loginMembersVO.memno).tchrstatus eq '已通過'}">
 						<li class="nav-item"><a class="nav-link"
 							href="<%=request.getContextPath()%>/front-end/course/addCourse.jsp">
-								我要開課&nbsp;<i class="lni lni-display"></i>
+								我要開課&nbsp;<img class="icon"
+								src='<%=request.getContextPath()%>/index/front-index/assets/img/opencourse.svg'>
+							
 						</a></li>
 					</c:if>
 
@@ -315,19 +335,16 @@ div.main {
 										href='<%=request.getContextPath()%>/front-end/coup_code/listAllByMemno.jsp'>持有折扣券</a>
 
 
-									<c:if
-										test="${teacherSvc.getStatus(sessionScope.loginMembersVO.memno).tchrstatus eq '待審核'}">
+									<c:if test="${teacherSvc.getStatus(sessionScope.loginMembersVO.memno).tchrstatus eq '待審核'}">
 										<a class="dropdown-item" onclick="status()">老師檔案</a>
 
 									</c:if>
-									<c:if
-										test="${teacherSvc.getStatus(sessionScope.loginMembersVO.memno).tchrstatus eq '已通過'}">
+									<c:if test="${teacherSvc.getStatus(sessionScope.loginMembersVO.memno).tchrstatus eq '已通過'}">
 										<a class="dropdown-item"
 											href="<%=request.getContextPath()%>/front-end/teacher/teacherDisplay.jsp">老師檔案</a>
 
 									</c:if>
-									<c:if
-										test="${teacherSvc.getStatus(sessionScope.loginMembersVO.memno).tchrstatus eq '未通過'}">
+									<c:if test="${teacherSvc.getStatus(sessionScope.loginMembersVO.memno).tchrstatus eq '未通過'}">
 										<a class="dropdown-item"
 											href="<%=request.getContextPath()%>/front-end/teacher/teacherUpdate.jsp">老師檔案</a>
 
@@ -349,20 +366,22 @@ div.main {
 
 					</c:if>
 					<c:if test="${not empty sessionScope.loginMembersVO.memno}">
-
-						<c:if
-							test="${teacherSvc.getStatus(sessionScope.loginMembersVO.memno).tchrstatus eq '待審核'}">
+					
+					  <c:if test="${empty teacherSvc.getStatus(sessionScope.loginMembersVO.memno)}">
+							<img id="nav_icon"
+								src='<%=request.getContextPath()%>/front-end/members/assets/img/students.svg'>
+						</c:if>
+						
+						<c:if test="${teacherSvc.getStatus(sessionScope.loginMembersVO.memno).tchrstatus eq '待審核'}">
 							<img id="nav_icon"
 								src='<%=request.getContextPath()%>/front-end/members/assets/img/students.svg'>
 						</c:if>
 
-						<c:if
-							test="${teacherSvc.getStatus(sessionScope.loginMembersVO.memno).tchrstatus eq '已通過'}">
+						<c:if test="${teacherSvc.getStatus(sessionScope.loginMembersVO.memno).tchrstatus eq '已通過'}">
 							<img id="nav_icon"
 								src='<%=request.getContextPath()%>/front-end/members/assets/img/teacher.svg'>
 						</c:if>
-						<c:if
-							test="${teacherSvc.getStatus(sessionScope.loginMembersVO.memno).tchrstatus eq '未通過'}">
+						<c:if test="${teacherSvc.getStatus(sessionScope.loginMembersVO.memno).tchrstatus eq '未通過'}">
 							<img id="nav_icon"
 								src='<%=request.getContextPath()%>/front-end/members/assets/img/students.svg'>
 
@@ -372,8 +391,9 @@ div.main {
 
 					<c:if test="${empty sessionScope.loginMembersVO}">
 						<li class="nav-item"><a class='nav-link'
-							href='<%=request.getContextPath()%>/front-end/members/signIn.jsp'>我要登入&nbsp;<i
-								class="lni lni-rocket"></i></a></li>
+							href='<%=request.getContextPath()%>/front-end/members/signIn.jsp'>我要登入&nbsp;<img class="icon" src='<%=request.getContextPath()%>/index/front-index/assets/img/login.svg'>
+							</a>
+							</li>
 					</c:if>
 
 
