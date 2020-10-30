@@ -65,6 +65,7 @@ public class jdbcUtil_CompositeQuery_course {
 			
 		}
 		
+		whereCondition.append(" and csstatus='上架' ");
 		if(priceRange.size()==2) {
 			if(map.size()==3) {
 				whereCondition.append(" where courseprice between " + priceRange.get("min") + " and " +  priceRange.get("max") + " ");

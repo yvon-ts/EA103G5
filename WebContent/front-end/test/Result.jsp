@@ -23,7 +23,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<link rel="stylesheet" type="text/css" href="<%= request.getContextPath()%>/front-end/css/style2.css">
+<link rel="stylesheet" type="text/css" href="<%= request.getContextPath()%>/front-end/test/css/style2.css">
 <script defer src="https://use.fontawesome.com/releases/v5.0.0/js/all.js"></script>
 <style>
 	a{

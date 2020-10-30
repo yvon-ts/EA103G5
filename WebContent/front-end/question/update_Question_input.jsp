@@ -213,6 +213,7 @@ option[value=""] {
 				<input type="hidden" name="whichPage"  value="<%=request.getParameter("whichPage")%>">  <!--只用於:istAllEmp.jsp-->
                 <input type="hidden" name="qbankno"  value="${QuestionBankvo.qbankno}">
                 <input type="hidden" name="coursename"	value="<%=request.getParameter("coursename") %>">
+                <input type="hidden" name="requestURL"	value="<%=request.getServletPath()%>">
                 <input type="hidden" name="update"	value="update">
                 <input type='submit' id="turnin" value='放置題庫' style="display:block ">
         		</div>

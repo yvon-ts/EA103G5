@@ -24,7 +24,7 @@ public class CourseDAO implements CourseDAO_interface {
 
 	private static final String INSERT_STMT = "INSERT INTO course(courseno, cstypeno, tchrno, coursename, courseinfo, courseprice, ttltime, csscore, csscoretimes,courseimg,courlmod) VALUES ('COUR' || LPAD(SEQ_CS.NEXTVAL, 4, 0), ?, ?, ?, ?, ?, ?, ?, ?, ? , CURRENT_TIMESTAMP)";
 	private static final String GET_ALL_FOR_EMPLOYEE_STMT = "SELECT courseno, cstypeno, tchrno, coursename, courseinfo, courseprice, ttltime, csstatus, csscore, csscoretimes ,courseimg ,courlmod FROM course order by courseno";
-	private static final String GET_ALL_FOR_USER_STMT = "SELECT courseno, cstypeno, tchrno, coursename, courseinfo, courseprice, ttltime, csstatus, csscore, csscoretimes ,courseimg ,courlmod FROM course order by courlmod desc";
+	private static final String GET_ALL_FOR_USER_STMT = "SELECT courseno, cstypeno, tchrno, coursename, courseinfo, courseprice, ttltime, csstatus, csscore, csscoretimes ,courseimg ,courlmod FROM course  where csstatus = '上架' order by courlmod desc";
 
 	private static final String GET_ONE_STMT = "SELECT courseno, cstypeno, tchrno, coursename, courseinfo, courseprice, ttltime, csstatus, csscore, csscoretimes ,courseimg ,courlmod FROM course where courseno = ?";
 	private static final String UPDATE = "UPDATE course set cstypeno=?, tchrno=?, coursename=?, courseinfo=?, courseprice=?, ttltime=?, csstatus=?, csscore=?, csscoretimes=? , courseimg=? , courlmod=CURRENT_TIMESTAMP where courseno = ?";
