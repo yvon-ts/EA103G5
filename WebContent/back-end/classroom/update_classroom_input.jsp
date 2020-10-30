@@ -29,12 +29,12 @@
 <body>
 <main class="app-content" style="background-color: #f3f3f3">
 <div id="table-area" class="container-xl">
-		<div class="table-responsive">
+	<div class="table-responsive">
 		<form method="post"	action="<%=request.getContextPath()%>/back-end/classroom/listAllClassroom.jsp">
-				<button class="bttn" type="submit">放棄修改</button>
-			</form><p>
+			<button class="bttn" type="submit">放棄修改</button>
+		</form><p>
 		<div class="table-wrapper">
-               		<div class="row">
+        	<div class="row">
 <!--     <div class="container"> -->
 <!--         <div class="row"> -->
 <!-- 			<h1>教室資料修改 - update_classroom_input</h1> -->
@@ -79,21 +79,19 @@
                 </form>
                 </div>
                 <div class="col-md-8">
-                <h3>教室 Layout 預覽圖：</h3>
-                <div id="classroom">
-                    <div id="stage">
-                        Stage
-                    </div>
-                    <br>
-                    <div id="seatmapping">
-                    </div>
-                </div>
+                	<h3>教室 Layout 預覽圖：</h3>
+	                <div id="classroom">
+	                    <div id="stage">
+	                        Stage
+	                    </div>
+	                    <br>
+	                    <div id="seatmapping">
+	                    </div>
+	                </div>
+            	</div>
             </div>
-                </div>
-                </div>
-                
-
-            </div>
+        </div>
+    </div>
 </main>
 
 	<script src="<%=request.getContextPath()%>/back-end/classroom/javascript/classroom.js"></script>

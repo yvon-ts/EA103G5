@@ -1,8 +1,8 @@
  /*講座日期*/
         
          .div {
-            background-color: pink;
             min-height: 180px;
+            display: inline-block;
         }
         .daydiv {
 	        color: #0099cc;

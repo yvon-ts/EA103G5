@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*"%>
 <%@ page import="java.sql.*"%>
@@ -10,26 +9,31 @@
 <%@ page import="com.members.model.*"%>
 <%@ page import="com.teacher.model.*"%>
 
-
+<!DOCTYPE html>
 <jsp:useBean id="teacherSvc" scope="page" class="com.teacher.model.TeacherService" />
 
-<!DOCTYPE html>
-
+<%	LecService lecSvc = new LecService();
+	List<LecVO> list = lecSvc.getList();
+	pageContext.setAttribute("list", list);
+	
+	String startdate = "";
+	String startmonth = "";
+	String starttime = "";
+	String lecinfo = "";
+	String spkrname = "";
+%>
 
 <html lang="en">
-
 <head>
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js">
-</script>
-<link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.3/sweetalert2.css" />
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.3/sweetalert2.js"
-	type="text/javascript"></script>
+<!-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"> -->
+<!-- </script> -->
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Xducation - 陪你成長的學習好夥伴</title>
+	<!-- Sweet Alert -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.3/sweetalert2.css" />
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.3/sweetalert2.js"></script>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="<%=request.getContextPath()%>/index/front-index/assets/css/bootstrap.min.css">
     <!-- Icon -->
@@ -46,38 +50,41 @@
     <link rel="stylesheet" href="<%=request.getContextPath()%>/index/front-index/assets/css/main.css">
     <!-- Responsive Style -->
     <link rel="stylesheet" href="<%=request.getContextPath()%>/index/front-index/assets/css/responsive.css">
+	<!-- Lecture css -->
+	<link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/css/lecAll.css">
     <!-- Font Awesome
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">-->
 	<script src="https://kit.fontawesome.com/b99e675b6e.js"></script>
 	
 	<style>
-		.scrollable-dropdown{
-    height: auto;
-    max-height:320px;  /* Increase / Decrease value as per your need */
-    overflow-x: hidden;
-}
-img.img-fluid{
-transform-origin: 70% 88%;
-    animation: hand 2s infinite;
-    animation-delay: 1s;
-   
-	border-radius:10px;
-  
-}
+	.scrollable-dropdown{
+	    height: auto;
+	    max-height:320px;  /* Increase / Decrease value as per your need */
+	    overflow-x: hidden;
+	}
+	
+	img.img-fluid{
+		transform-origin: 70% 88%;
+	    animation: hand 2s infinite;
+	    animation-delay: 1s;
+		border-radius:10px;
+	}
 
-@keyframes hand {
-	0% { transform: rotate(0deg); }
-	50% { transform: rotate(5deg) }
-	100% { transform: rotate(0deg); }
-}
-img#nav_icon{
-width:36px;
-height:36px;
-}
-img.icon{
-width:30px;
-height:30px;
-}
+	@keyframes hand {
+		0% { transform: rotate(0deg); }
+		50% { transform: rotate(5deg) }
+		100% { transform: rotate(0deg); }
+	}
+	
+	img#nav_icon{
+		width:36px;
+		height:36px;
+	}
+	
+	img.icon{
+		width:30px;
+		height:30px;
+	}
 	</style>
 </head>
 
@@ -87,7 +94,6 @@ height:30px;
         <!-- Navbar Start -->
         <nav class="navbar navbar-expand-md bg-inverse fixed-top scrolling-navbar">
             <div class="container">
-                <!-- Brand and toggle get grouped for better mobile display -->
                 <a href="<%=request.getContextPath()%>/index/front-index/index.jsp" class="navbar-brand"><img src="<%=request.getContextPath()%>/index/front-index/assets/img/logo.svg" alt="">
                     <div id="logo">Xducation</div>
                 </a>
@@ -97,13 +103,6 @@ height:30px;
                 </button>
                 <div class="collapse navbar-collapse" id="navbarCollapse">
                     <ul class="navbar-nav mr-auto w-100 justify-content-end clearfix">
-                        <li class="nav-item">
-                        
-  
-<%--                             <a class="nav-link" href="<%=request.getContextPath()%>/front-end/course/listAllCourse.jsp"> --%>
-<!--                                進入搜尋&nbsp;<i class="lni-search"></i>  -->
-<!--                             </a> -->
-                        </li>
                         <li class="nav-item"><a class="nav-link"
 						href="<%=request.getContextPath()%>/front-end/tracking_list/listTrackingListForUser.jsp">
 							購物車&nbsp;<img class="icon"
@@ -140,10 +139,6 @@ height:30px;
 						</a></li>
 					</c:if>
 
-
-
-
-
 					<c:if test="${not empty sessionScope.loginMembersVO}">
 						<li class="nav-item">
 							<div class="dropdown" id="dropdown">
@@ -157,6 +152,9 @@ height:30px;
 
 									<a class="dropdown-item"
 										href='<%=request.getContextPath()%>/front-end/Order_Master/listAllByMemno.jsp'>課程訂單紀錄</a>
+										
+									<a class="dropdown-item"
+										href='<%=request.getContextPath()%>/front-end/lecorder/listByMemno.jsp'>講座訂單紀錄</a>
 
 									<a class="dropdown-item"
 										href='<%=request.getContextPath()%>/front-end/coup_code/listAllByMemno.jsp'>持有折扣券</a>
@@ -181,29 +179,20 @@ height:30px;
 											href='<%=request.getContextPath()%>/members/members.do?action=signout'>會員登出</a>
 									</c:if>
 
-
-
-
-
-
 								</div>
 							</div>
-
 						</li>
 
 					</c:if>
 					<c:if test="${not empty sessionScope.loginMembersVO.memno}">
-					
-					  <c:if test="${empty teacherSvc.getStatus(sessionScope.loginMembersVO.memno)}">
+						<c:if test="${empty teacherSvc.getStatus(sessionScope.loginMembersVO.memno)}">
 							<img id="nav_icon"
 								src='<%=request.getContextPath()%>/front-end/members/assets/img/students.svg'>
 						</c:if>
-						
 						<c:if test="${teacherSvc.getStatus(sessionScope.loginMembersVO.memno).tchrstatus eq '待審核'}">
 							<img id="nav_icon"
 								src='<%=request.getContextPath()%>/front-end/members/assets/img/students.svg'>
 						</c:if>
-
 						<c:if test="${teacherSvc.getStatus(sessionScope.loginMembersVO.memno).tchrstatus eq '已通過'}">
 							<img id="nav_icon"
 								src='<%=request.getContextPath()%>/front-end/members/assets/img/teacher.svg'>
@@ -211,18 +200,15 @@ height:30px;
 						<c:if test="${teacherSvc.getStatus(sessionScope.loginMembersVO.memno).tchrstatus eq '未通過'}">
 							<img id="nav_icon"
 								src='<%=request.getContextPath()%>/front-end/members/assets/img/students.svg'>
-
 						</c:if>
 					</c:if>
-
 
 					<c:if test="${empty sessionScope.loginMembersVO}">
 						<li class="nav-item"><a class='nav-link'
 							href='<%=request.getContextPath()%>/front-end/members/signIn.jsp'>我要登入&nbsp;<img class="icon" src='<%=request.getContextPath()%>/index/front-index/assets/img/login.svg'>
 							</a>
-							</li>
+						</li>
 					</c:if>
-                        
                     </ul>
                 </div>
             </div>
@@ -254,13 +240,6 @@ height:30px;
                                     </table>
                                 </div>
                                 <div class="header-button">
-<!--                                 	<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Dropdown<span class="caret"></span></a> -->
-<!--             											<ul class="dropdown-menu"> -->
-<!--                 											<li><a href="#">First</a></li> -->
-<!--                 											<li><a href="#">Second</a></li> -->
-<!--                 											<li><a href="#">Third</a></li> -->
-<!--             											</ul> -->
-<!--         											</li>		 -->
                                     <button class="btn btn-common">探索課程</button>
                                     <input type="hidden" name="action" value="search"/>
                                     <a href="<%=request.getContextPath()%>/front-end/members/addMembersV2.jsp" class="btn btn-border video-popup">我要註冊</a>
@@ -438,50 +417,74 @@ height:30px;
                 <div class="shape wow fadeInDown" data-wow-delay="0.3s"></div>
             </div>
             <div class="row">
-                <div class="col-lg-7 col-md-12 col-sm-12 col-xs-12">
-                    <div class="content-left">
-                        <div class="box-item wow fadeInLeft" data-wow-delay="0.3s">
-                            <!-- 講座日期 -->
-                            <div class="lec_day">
-                                <span>28<br>
-                                    <span style="font-size:16px; font-weight:500;">SEP</span>
-                                </span>
-                            </div>
-                            <div class="text">
-                                <h4>主廚講堂：跳進嘴裡的豐盛義大利</h4>
-                                <p>【ANTICO FORNO主廚吳治君】現場示範3道義式經典料理 X 義大利飲食文化</p>
-                            </div>
-                        </div>
-                        <div class="box-item wow fadeInLeft" data-wow-delay="0.6s">
-                            <div class="lec_day">
-                                <span>28<br>
-                                    <span style="font-size:16px; font-weight:500;">SEP</span>
-                                </span>
-                            </div>
-                            <div class="text">
-                                <h4>主廚講堂：跳進嘴裡的豐盛義大利</h4>
-                                <p>【ANTICO FORNO主廚吳治君】現場示範3道義式經典料理 X 義大利飲食文化</p>
-                            </div>
-                        </div>
-                        <div class="box-item wow fadeInLeft" data-wow-delay="0.9s">
-                            <div class="lec_day">
-                                <span>28<br>
-                                    <span style="font-size:16px; font-weight:500;">SEP</span>
-                                </span>
-                            </div>
-                            <div class="text">
-                                <h4>主廚講堂：跳進嘴裡的豐盛義大利</h4>
-                                <p>【ANTICO FORNO主廚吳治君】現場示範3道義式經典料理 X 義大利飲食文化</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div>
+                        
+                       
+<c:forEach var="lecVO" items="${list}" begin="0" end="2">
+	<%
+			//時間設定
+			for (LecVO lecVO : list){
+			Timestamp lecstart = lecVO.getLecstart();
+			SimpleDateFormat fmtdate = new SimpleDateFormat("dd");
+			SimpleDateFormat fmtmonth = new SimpleDateFormat("MMM");
+			SimpleDateFormat fmttime = new SimpleDateFormat("HH:mm");
+			startdate = fmtdate.format(lecstart);
+			startmonth = fmtmonth.format(lecstart);
+			starttime = fmttime.format(lecstart);
+			//講者姓名
+			SpkrService spkrSvc = new SpkrService();
+			SpkrVO spkrVO = spkrSvc.getOne(lecVO.getSpkrno());
+			spkrname = spkrVO.getSpkrname();
+			//講座資訊
+			lecinfo = "講座資訊更新中";
+				try{
+					//CKeditor - Bytes to String
+					byte[] b = lecVO.getLecinfo();
+					if (b != null) {
+						String bString = new String(b);
+						lecinfo = bString.substring(0, 23);
+					} else {
+						System.out.println("b is null");
+					}
+				} catch (Exception e){
+					lecinfo = "講座資訊更新中";
+					e.printStackTrace();
+				}
+			}
+		%>
+		<div class="div col-lg-1 col-md-12 col-sm-12 col-xs-12"></div>
+<div class="div col-lg-10 col-md-12 col-sm-12 col-xs-12 box-item wow fadeInLeft" data-wow-delay="0.3s">
+        <div class="daydiv">
+            <span class="date"><%=startdate%></span><br>
+            <span class="month"><%=startmonth%></span><br>
+            <span class="time"><%=starttime%></span><br>
+        </div>
+        <div class="pic">
+            <img src="<%=request.getContextPath()%>/lecture/picreader?lecno=${lecVO.lecno}">
+        </div>
+        <div class="lec-txt">
+        	<p class="title">${lecVO.lecname}</p><br>
+        	<p class="spkr">【<%=spkrname%>】</p>
+        	<p class="info"><%=lecinfo%></p>
+        	<p><span class="price"><i class="lni-rocket"></i>&nbsp;${lecVO.lecprice} NTD</span></p>
+        </div>
+        <div class="more">
+        	<form method="post" action="<%=request.getContextPath()%>/lecture/lecture.do">
+        		<input type="submit" class="btn btn-common" value="我有興趣">
+        		<input type="hidden" name="lecno" value="${lecVO.lecno}">
+        		<input type="hidden" name="action" value="frontOne">
+        	</form>
+        </div>
+    </div>
+    </c:forEach>
                 <!-- 講座區圖片 -->
                 <div class="col-lg-5 col-md-12 col-sm-12 col-xs-12">
                     <div class="show-box wow fadeInUp" data-wow-delay="0.3s">
                         <img src="<%=request.getContextPath()%>/index/front-index/assets/img/head/calendar.gif" alt="">
                     </div>
                 </div>
+<!--                 圖片 -->
             </div>
         </div>
         </div>
