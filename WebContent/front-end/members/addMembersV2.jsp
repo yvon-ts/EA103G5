@@ -11,10 +11,6 @@ if(account!=null){
 	response.sendRedirect(request.getContextPath()+"/index/front-index/index.jsp");
 }
 
-
-
-
-
 %>
 
 <%@ include file="/index/front-index/header.jsp"%>
@@ -229,12 +225,7 @@ div.main {
 						href="<%=request.getContextPath()%>/front-end/members/signIn.jsp"
 						class="signup-image-link" style="font-family: 'Gochi Hand';">I
 						am already member</a> <a href="indexV1.jsp"></a>
-					<c:if test="${not empty errorMsgs}">
-						<c:forEach var="message" items="${errorMsgs}">
-							<input type="hidden" id="message" value="${message}">
-						</c:forEach>
-
-					</c:if>
+					
 				</div>
 				<div id="msg"></div>
 				<div id="msg2"></div>
@@ -403,10 +394,16 @@ try {
 </style>
 
 <script type="text/javascript">
-var message = document.getElementById('message').value;
+var message = '${errorMsgs.get(0)}'
 if(message.length !== 0){
 	 swal('注意', message, 'warning');
 }
+
+
+
+
+
+
 $("#add").click(function(e){
 	e.preventDefault();
 	$("#memacc").val("emilyinparis");

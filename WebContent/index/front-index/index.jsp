@@ -648,7 +648,6 @@ height:20px;
         </div>
         <div class="col-md-12" style="padding-bottom: 100px">
         </div>
-        <input type="hidden" id="inform2" value="${requestScope.inform2}">
 	
     </footer>
     <!-- Footer Section End -->
@@ -677,7 +676,7 @@ height:20px;
     
     <script>
     /*-------Kyle-------*/
-    var inform2 = document.getElementById('inform2').value;
+    var inform2 = '${inform2}';
 	if(inform2 ==='200'){
 		swal('註冊失敗', '可以再考慮一下嗎?', 'error');
 	}else if(inform2 ==='100'){

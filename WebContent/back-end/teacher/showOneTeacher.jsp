@@ -63,7 +63,7 @@ cursor:pointer;
 </style>
 </head>
 
-<body>
+<body onload="connect();" onunload="disconnect();">
 <main class="app-content" style="background-color: #f3f3f3">
 <div id="include">
 
@@ -158,7 +158,8 @@ cursor:pointer;
                 <td class="number">
                  <input type="hidden" name="tchrno" value="${teacherVO.tchrno}">
                 <input type="hidden" name="action" value="updateStatus">
-                 <input type="submit" value="送出">
+                <input type="hidden" id="message" value="平台已經審核您的老師申請並寄出一封Email囉~快去查看吧^^d">
+                 <input type="submit" onclick="sendMessage();" value="送出">
               
                 
                 </td>
@@ -229,7 +230,7 @@ cursor:pointer;
 	    
 	    
 	    
-	    var MyPoint = "/NotifyWS/${teacherVO.tchrno}";
+	    var MyPoint = "/NotifyWS/${sessionScope.empno}";
 		var host = window.location.host;
 		var path = window.location.pathname;
 		var webCtx = path.substring(0, path.indexOf('/', 1));
@@ -237,7 +238,7 @@ cursor:pointer;
 
 		var statusOutput = document.getElementById("statusOutput");
 		var messagesArea = document.getElementById("messagesArea");
-		var self = '${userName}';
+		var self = '${sessionScope.empno}';
 		var webSocket;
 
 		function connect() {
@@ -246,12 +247,9 @@ cursor:pointer;
 
 			webSocket.onopen = function(event) {
 				console.log("Connect Success!");
-				document.getElementById('sendMessage').disabled = false;
-				document.getElementById('connect').disabled = true;
-				document.getElementById('disconnect').disabled = false;
 			};
 
-			webSocket.onmessage = function(event) {
+			/* webSocket.onmessage = function(event) {
 				var jsonObj = JSON.parse(event.data);
 				if ("open" === jsonObj.type) {
 					refreshFriendList(jsonObj);
@@ -283,7 +281,7 @@ cursor:pointer;
 					refreshFriendList(jsonObj);
 				}
 				
-			};
+			}; */
 
 			webSocket.onclose = function(event) {
 				console.log("Disconnected!");
@@ -292,15 +290,10 @@ cursor:pointer;
 		
 		function sendMessage() {
 			var inputMessage = document.getElementById("message");
-			var friend = statusOutput.textContent;
+			var friend = '${teacherVO.tchrno}';
 			var message = inputMessage.value.trim();
 
-			if (message === "") {
-				alert("Input a message");
-				inputMessage.focus();
-			} else if (friend === "") {
-				alert("Choose a friend");
-			} else {
+			
 				var jsonObj = {
 					"type" : "chat",
 					"sender" : self,
@@ -308,13 +301,11 @@ cursor:pointer;
 					"message" : message
 				};
 				webSocket.send(JSON.stringify(jsonObj));
-				inputMessage.value = "";
-				inputMessage.focus();
 			}
-		}
+		
 		
 		// 有好友上線或離線就更新列表
-		function refreshFriendList(jsonObj) {
+		/* function refreshFriendList(jsonObj) {
 			var friends = jsonObj.users;
 			var row = document.getElementById("row");
 			row.innerHTML = '';
@@ -323,9 +314,9 @@ cursor:pointer;
 				row.innerHTML +='<div id=' + i + ' class="column" name="friendName" value=' + friends[i] + ' ><h2>' + friends[i] + '</h2></div>';
 			}
 			addListener();
-		}
+		} */
 		// 註冊列表點擊事件並抓取好友名字以取得歷史訊息
-		function addListener() {
+		/* function addListener() {
 			var container = document.getElementById("row");
 			container.addEventListener("click", function(e) {
 				var friend = e.srcElement.textContent;
@@ -338,18 +329,16 @@ cursor:pointer;
 					};
 				webSocket.send(JSON.stringify(jsonObj));
 			});
-		}
+		} */
 		
 		function disconnect() {
 			webSocket.close();
-			document.getElementById('sendMessage').disabled = true;
-			document.getElementById('connect').disabled = false;
-			document.getElementById('disconnect').disabled = true;
+			
 		}
 		
-		function updateFriendName(name) {
+		/* function updateFriendName(name) {
 			statusOutput.innerHTML = name;
-		}
+		} */
 	    
 	    
 	    

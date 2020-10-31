@@ -238,7 +238,6 @@ public class TeacherServlet extends HttpServlet {
 	}
 	
     private void updateTeacher(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException{
-    	System.out.println("有進來Teacher_update");
     	List<String> errorMsgs = new LinkedList<String>();
 		req.setAttribute("errorMsgs", errorMsgs);
 //		String tchrno =null;

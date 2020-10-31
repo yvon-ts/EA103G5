@@ -381,6 +381,7 @@ public class MembersServlet extends HttpServlet {
 		List<String> errorMsgs = new LinkedList<String>();
 		req.setAttribute("errorMsgs", errorMsgs);
 		
+		
 		String memno =null;
 		
 		try {
@@ -438,8 +439,7 @@ public class MembersServlet extends HttpServlet {
 				failureView.forward(req, res);
 				return;
 			}
-			String inform4 = "200";
-			req.setAttribute("inform4", inform4);
+			errorMsgs.add("200");
 			MembersService membersSvc = new MembersService();
 			membersVO = membersSvc.updateMembers(mempwd, nkname, mprofile, memno);
 			String url = "/front-end/members/updateMembersV2.jsp";
