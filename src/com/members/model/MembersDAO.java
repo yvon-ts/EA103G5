@@ -9,7 +9,10 @@ import javax.naming.*;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 
+import com.coup_code.model.CoupCodeService;
 import com.members.model.MembersVO;
+import com.order_detail.model.OrderDetailDAO;
+import com.order_detail.model.OrderDetailVO;
 
 public class MembersDAO implements MembersDAO_interface {
 	private static DataSource ds = null;
@@ -37,13 +40,17 @@ public class MembersDAO implements MembersDAO_interface {
 	public void insert(MembersVO membersVO) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
+		String mem_next_no = null;
 
 		try {
 //			Class.forName(driver);
 //			con = DriverManager.getConnection(url, userid, passwd);
 			con = ds.getConnection();
 			con.setAutoCommit(false);
-			pstmt = con.prepareStatement(INSERT_STMT);
+			
+			String[] col = { "memno" };
+			
+			pstmt = con.prepareStatement(INSERT_STMT, col);
 
 			pstmt.setString(1, membersVO.getMemacc());
 			pstmt.setString(2, membersVO.getMempwd());
@@ -53,8 +60,22 @@ public class MembersDAO implements MembersDAO_interface {
 			pstmt.setString(6, membersVO.getMemail());
 			pstmt.setString(7, membersVO.getMphone());
 			pstmt.setBytes(8, membersVO.getMprofile());
+			
 
 			int a = pstmt.executeUpdate();
+			
+			ResultSet rs = pstmt.getGeneratedKeys();
+			
+			if (rs.next()) {
+				mem_next_no = rs.getString(1);
+				System.out.println("memno = " + mem_next_no);
+				}
+				
+				CoupCodeService coupcode = new CoupCodeService();
+				
+				coupcode.welcome1(mem_next_no, con);
+				coupcode.welcome2(mem_next_no, con);
+			
 			con.commit();
 			System.out.println(a+"新增一筆資料到資料庫");
 

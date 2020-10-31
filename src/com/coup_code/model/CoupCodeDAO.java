@@ -13,6 +13,7 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
+import com.order_detail.model.OrderDetailVO;
 import com.order_master.model.OrderMasterVO;
 import com.promo_detail.model.PromoDetailDAO;
 import com.promo_detail.model.PromoDetailVO;
@@ -81,6 +82,33 @@ public class CoupCodeDAO implements CoupCodeDAO_interface {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+		}
+	}
+	
+	@Override
+	public void autogive(CoupCodeVO coupCodeVO, Connection con) {
+		PreparedStatement pstmt = null;
+
+		try {
+			pstmt = con.prepareStatement(INSERT_STMT);
+			pstmt.setString(1, coupCodeVO.getMemno());
+			pstmt.setString(2, coupCodeVO.getCoupcode());
+			pstmt.setInt(3, coupCodeVO.getDiscamt());
+			pstmt.setDate(4, coupCodeVO.getCoupexp());
+			pstmt.executeUpdate();
+
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			try {
+				if (pstmt != null)
+					pstmt.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
 		}
 	}
 	
