@@ -110,7 +110,7 @@ if(QuestionBankvo !=null && QuestionBankvo.getQuans()!= null && QuestionBankvo.g
         </form>
         </div>
     </div>    
-    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+    
     <script type="text/javascript">
        
         		
@@ -276,7 +276,7 @@ if(QuestionBankvo !=null && QuestionBankvo.getQuans()!= null && QuestionBankvo.g
             <!-- include 前台頁面的 footer -->
 			<jsp:include page="/index/front-index/footer.jsp" />
 			<!-- include 前台頁面的 footer -->
-            
+            <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
         </body>
 
         </html>        	
