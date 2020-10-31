@@ -196,3 +196,13 @@ body {
 h2{
 	font-weight: 600;
 }
+.whichPage{
+	border: 0;
+	outline: none;
+	color: #0099cc;
+	font-weight: 600;
+	font-size: 1.2em;
+	font-family: monospace;
+	border-radius: 50px;
+	padding: 3px 10px;
+}

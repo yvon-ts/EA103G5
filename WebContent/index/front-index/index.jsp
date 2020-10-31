@@ -74,23 +74,23 @@
 		border-radius:10px;
 	}
 
-<<<<<<< HEAD
-	@keyframes hand {
-		0% { transform: rotate(0deg); }
-		50% { transform: rotate(5deg) }
-		100% { transform: rotate(0deg); }
-	}
+/* <<<<<<< HEAD */
+/* 	@keyframes hand { */
+/* 		0% { transform: rotate(0deg); } */
+/* 		50% { transform: rotate(5deg) } */
+/* 		100% { transform: rotate(0deg); } */
+/* 	} */
 	
-	img#nav_icon{
-		width:36px;
-		height:36px;
-	}
+/* 	img#nav_icon{ */
+/* 		width:36px; */
+/* 		height:36px; */
+/* 	} */
 	
-	img.icon{
-		width:30px;
-		height:30px;
-	}
-=======
+/* 	img.icon{ */
+/* 		width:30px; */
+/* 		height:30px; */
+/* 	} */
+/* ======= */
 @keyframes hand {
 	0% { transform: rotate(0deg); }
 	50% { transform: rotate(5deg) }
@@ -113,7 +113,7 @@ height:20px;
     display: block;
     width:auto;
 }
->>>>>>> refs/heads/yang
+/* >>>>>>> refs/heads/yang */
 	</style>
 </head>
 

@@ -123,6 +123,8 @@
 			SpkrService spkrSvc = new SpkrService();
 			SpkrVO spkrVO = spkrSvc.getOne(lecVO.getSpkrno());
 			String spkrname = spkrVO.getSpkrname();
+			//講座狀態
+			int lecstatus = lecVO.getLecstatus();
 			//講座資訊
 			lecinfo = "講座資訊更新中";
 				try{
@@ -157,7 +159,15 @@
         </div>
         <div class="more">
         	<form method="post" action="<%=request.getContextPath()%>/lecture/lecture.do">
+        	<% if (lecstatus == 1){%>
         		<input type="submit" class="btn btn-common" value="我有興趣">
+        	<%} else if (lecstatus == 0) {%>
+        		<input type="submit" class="btn btn-common" style="background-color: orange;" value="活動延期">
+        	<%} else if (lecstatus == 2) {%>
+        		<input type="submit" class="btn btn-common" style="background-color: #e5e5e5; color: #333" value="活動結束">
+        	<%} else if (lecstatus == 3) {%>
+        		<input type="submit" class="btn btn-common" style="background-color: #ff6680" value="名額已滿">
+        	<%}%>
         		<input type="hidden" name="lecno" value="${lecVO.lecno}">
         		<input type="hidden" name="action" value="frontOne">
         	</form>

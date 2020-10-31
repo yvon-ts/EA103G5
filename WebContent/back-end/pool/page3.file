@@ -16,8 +16,11 @@
 
   <%if (pageNumber>1) {%>
     <FORM METHOD="post" ACTION="<%=request.getRequestURI()%>">   
+       <select size="1" name="whichPage">
          <%for (int i=1; i<=pageNumber; i++){%>
-            <button class="whichPage" name="whichPage" style="outline: none" value="<%=i%>"> <%=i%> </button>
+            <option value="<%=i%>">第<%=i%>頁
          <%}%> 
+       </select>
+       <input type="submit" value="前往" >  
     </FORM>
   <%}%>
