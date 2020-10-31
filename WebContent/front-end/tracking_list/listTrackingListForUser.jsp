@@ -200,7 +200,7 @@
 						  confirmButtonText: '會員登入', 
 						}).then(function(){
 							this.location.href = '<%=request.getContextPath()%>/front-end/members/signIn.jsp';
-						}).catch(swal.noop);
+						});
 				}else{
 					var checkout = document.createElement('a');
 					checkout.href = "<%=request.getContextPath()%>/front-end/Shop/Checkout.jsp";
@@ -529,7 +529,7 @@
                 		result += 	`&nbsp;&nbsp;&nbsp;<div class="rateit" data-rateit-value="`+ JSONarray[i].csscore / JSONarray[i].csscoretimes + `" data-rateit-ispreset="true" data-rateit-readonly="true"></div> `; 
           	
                 		result +=	`<br>&nbsp;&nbsp;&nbsp;`+ JSONarray[i].csscoretimes  + `則評價`;
-                		result +=   `<h3><a href="#">`+ JSONarray[i].coursename + `</a></h3>`;
+                		result +=   `<h3><a href="<%=request.getContextPath()%>/course/course.do?action=showCourseMainPage&courseno=`+ JSONarray[i].courseno +`">`+ JSONarray[i].coursename + `</a></h3>`;
                 		result +=   `<p>課程共` + JSONarray[i].ttltime + `分鐘</p>`;
                     
                 		result += 	`<label class="shoppingcart">

@@ -287,7 +287,7 @@ public class QuestionBankServlet extends HttpServlet {
 		request.setAttribute("coursename",request.getParameter("coursename"));
 		
 		
-		RequestDispatcher successView = request.getRequestDispatcher("/front-end/question/ListAllQuestion.jsp");
+		RequestDispatcher successView = request.getRequestDispatcher("/front-end/question/ListOneQuestion.jsp");
 		successView.forward(request, response);
 
 	}

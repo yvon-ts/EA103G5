@@ -18,8 +18,8 @@
 </c:if>
 <div class="container-fluid" style="margin-top: 90px;">
 
-		
-	<form action='<%= request.getContextPath()%>/question/questionTest.do' method='post' id="myForm">
+		<form action='<%= request.getContextPath()%>/question/questionTest.do' method='post' id="myForm">
+	
 <!--         <select name='level'> -->
 <!--             <option value="-1">請選擇考題難易度</option> -->
 <!--             <option value="simple">簡單</option> -->

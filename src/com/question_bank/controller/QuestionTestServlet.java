@@ -133,7 +133,6 @@ public class QuestionTestServlet extends HttpServlet {
 			list.set(0, qse.getOneByNO("QNBK0066"));
 		}
 		
-		
 		/*
 		 * Collections.shuffle(List<?> list) Randomly permutes the specified list using
 		 * a default source of randomness.
@@ -200,7 +199,7 @@ public class QuestionTestServlet extends HttpServlet {
 	private void printPaper(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException { // 印考卷
 
-		String level = request.getParameter("level");
+		
 
 		List<String> errorMsgs = new LinkedList<String>();
 		request.setAttribute("errorMsgs", errorMsgs);
@@ -217,11 +216,11 @@ public class QuestionTestServlet extends HttpServlet {
 		TestsService tse = new TestsService();
 		TestsVO testsVo = new TestsVO();
 		
-		
+		String level = request.getParameter("level");
 		MembersVO membersVO = (MembersVO) request.getSession().getAttribute("loginMembersVO");
-		String courseno = (String)request.getParameter("courseno");
+		String courseno = request.getParameter("courseno");
 		
-		String unit = request.getParameter("unit");
+		String unit = request.getParameter("unit");//單元不做了
 		
 		testsVo.setCourseno(courseno);//課程編號
 		testsVo.setMemno(membersVO.getMemno());
@@ -258,7 +257,7 @@ public class QuestionTestServlet extends HttpServlet {
 		
 			if(set == null) {
 				errorMsgs.add("尚無測驗題目");
-				RequestDispatcher dispatcher = request.getRequestDispatcher("/front-end/test/SelectedTest.jsp");
+				RequestDispatcher dispatcher = request.getRequestDispatcher("/course/course.do?action=showCourseMainPage&courseno="+courseno);
 				dispatcher.forward(request, response);
 				return ;
 			}

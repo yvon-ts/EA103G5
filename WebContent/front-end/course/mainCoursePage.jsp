@@ -12,7 +12,7 @@
 <jsp:useBean id="courseTypeSvc" scope="page" class="com.course_type.model.CourseTypeService" />
 <jsp:useBean id="videoSvc" scope="page" class="com.video.model.VideoService" />
 <jsp:useBean id="orderDetailSvc" scope="page" class="com.order_detail.model.OrderDetailService" />
-
+<jsp:useBean id="QuestionBankSvc" scope="page" class="com.question_bank.model.QuestionBankService" />
 <%
 	// 取得課程物件
 	CourseVO courseVO = (CourseVO) request.getAttribute("courseVO");
@@ -48,8 +48,8 @@
 		courseScore = formatter.format(Double.valueOf(csscore) / Double.valueOf(csscoretimes));
 	}
 	// ==========================================================================================
-	// 開玄考試用
-// 	request.getSession().setAttribute("coursenoForTest",courseVO.getCourseno());
+			
+			
 %>
 
 <!DOCTYPE html>
@@ -121,6 +121,11 @@
 								<h2 style="color:#0099CC;">課程單元清單</h2>
 							</div>
 							<div class="list-group" id="videolist">
+							
+								<!-- Button trigger modal -->
+
+ 
+
 
 								<!-- 測驗連結 -->
 								<% if (!canViewThisCourse){ %>
@@ -129,10 +134,9 @@
 									<h3 style="color:black;"><i class="fas fa-lock"></i> 自我評量 <i class="far fa-arrow-alt-circle-right"></i></h3>
 								</a>
 								<% } else { %>
-								<a class="list-group-item list-group-item-action list-group-item-primary"
-									target="_blank" href="<%=request.getContextPath()%>/front-end/test/SelectedTest.jsp?courseno=<%=courseVO.getCourseno() %>">
-									<h3 style="color:#b07e2d;"><i class="fas fa-pen"></i> 自我評量 <i class="far fa-arrow-alt-circle-right"></i></h3>
-								</a>
+ 								<!--測驗 modal -->
+								<button type="button" class="list-group-item list-group-item-action list-group-item-primary" data-toggle="modal" data-target="#exampleModalCenter"><h3 style="color:#b07e2d;"><i class="fas fa-pen"></i> 自我評量 <i class="far fa-arrow-alt-circle-right"></i></h3></button>
+								
 								<% } %>
 
 								<!-- 宣告複合查詢使用的 map -->
@@ -280,7 +284,51 @@
 			</div>
 		</section>
 	</main>
+	
 
+
+<!-- 測驗單元Modal -->
+<form action='<%= request.getContextPath()%>/question/questionTest.do' method='post' id="myForm">
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">請選擇題型</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      			<div class="modal-body">
+						
+						
+        				<div class="form-group">
+    						<select class="form-control" id="exampleFormControlSelect1" name ="level">
+      				 			<option value="-1">請選擇考題難易度</option>
+            		 			<option value="simple">簡單</option>
+            		 			<option value="medium">中等</option>
+            		 			<option value="hard">困難</option>
+			    			</select>
+  						</div>
+        			
+        				<div class="form-group">
+    						<select class="form-control" id="exampleFormControlSelect2" name ="unit">
+      				 			<option value="-1">請選擇測驗單元</option>
+            		 			<c:forEach var="videoVO" items="${videoSvc.getAll(map)}" varStatus="counter">
+									<option value="${counter.count}">單元 ${videoVO.chapterno}</option>
+								</c:forEach>
+			    			</select>
+  						</div>
+				</div>
+      			
+      		<div class="modal-footer">
+      			<input type='hidden' name='courseno' value="${courseVO.courseno}">
+      			<input type="hidden" name="action" value="printPaper">
+        		<button type="button" class="btn btn-info" id="turnin">進入測驗</button>
+      		</div>
+    </div>
+  </div>
+</div>
+</form>
 	<!-- ========== JavaScript Area ========== -->
 	<!-- Bootstrap 的 JS (jquery 改為完整版)-->
 	<script src="<%=request.getContextPath()%>/library/jquery/jquery-3.5.1.js"></script>
@@ -290,6 +338,20 @@
 
 	<script>
 		$(function () {
+			//送出測驗表單
+			$('#turnin').click(function(){
+				if($('#exampleFormControlSelect1').find('option:selected').val() === '-1'  || $('#exampleFormControlSelect2').find('option:selected').val() === '-1' ){
+					swal('請選擇難易度及單元', '', 'error');
+				}
+				//判斷題庫是否有題目
+				if('${QuestionBankSvc.getAll(courseVO.courseno).size()}' < 20 ){
+					swal('目前尚無測驗題目', '', 'warning');
+				}else{
+					$('#myForm').submit();
+				}
+			});
+			
+			
 			// 顯示各單元影片時間
 			var ttltime = ${courseVO.ttltime};
 			$("#courseTtlTime").text(convertSecToHrFormatter(ttltime));
