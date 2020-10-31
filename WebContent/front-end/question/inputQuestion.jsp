@@ -39,9 +39,9 @@ if(QuestionBankvo !=null && QuestionBankvo.getQuans()!= null && QuestionBankvo.g
 <head>
     <title>題庫管理 - <%=coursename %></title>
     <!-- include libraries(jQuery, bootstrap) -->
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<!--     <link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet"> -->
+<!--     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script> -->
+<!--     <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script> -->
     <!-- include summernote css/js -->
     <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/front-end/question/css/style.css">
@@ -266,10 +266,6 @@ if(QuestionBankvo !=null && QuestionBankvo.getQuans()!= null && QuestionBankvo.g
                         }
                     });
                    
-                    
-                  
-                    
-                    
                     $("#idatype").trigger('change');
                     
                 });
@@ -278,7 +274,7 @@ if(QuestionBankvo !=null && QuestionBankvo.getQuans()!= null && QuestionBankvo.g
             
             
             <!-- include 前台頁面的 footer -->
-<%-- 			<jsp:include page="/index/front-index/footer.jsp" /> --%>
+			<jsp:include page="/index/front-index/footer.jsp" />
 			<!-- include 前台頁面的 footer -->
             
         </body>
