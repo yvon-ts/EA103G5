@@ -65,7 +65,6 @@ public class TeacherDAO implements TeacherDAO_interface {
 
 			pstmt.executeUpdate();
 			con.commit();
-			System.out.println("TeacherDAO成功新增一老師資料");
 
 		} catch (SQLException se) {
 			try {
@@ -114,7 +113,6 @@ public class TeacherDAO implements TeacherDAO_interface {
 			pstmt.setString(6, teacherVO.getTchrno());
 
 			pstmt.executeUpdate();
-			System.out.println("有執行到更新");
 
 		} catch (SQLException se) {
 				// TODO Auto-generated catch block
@@ -166,7 +164,6 @@ public class TeacherDAO implements TeacherDAO_interface {
 			pstmt.executeUpdate();
 			con.commit();
 			con.setAutoCommit(true);
-			System.out.println("TeacherDAO成功修改老師狀態");
 
 		} catch (SQLException se) {
 			try {

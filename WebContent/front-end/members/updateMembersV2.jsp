@@ -3,6 +3,8 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page import="com.members.model.*"%>
 <%@ page import="com.teacher.model.*"%>
+<%@ page import="java.util.*"%>
+
 
 
 <jsp:useBean id="teacherSvc" scope="page"
@@ -53,9 +55,10 @@ textarea {
 	width: 53px;
 	height: 53px;
 }
-img.icon{
-width:30px;
-height:30px;
+
+img.icon {
+	width: 30px;
+	height: 30px;
 }
 
 img.pic {
@@ -260,7 +263,7 @@ div.main {
 		url("<%=request.getContextPath()%>/front-end/members/assets/img/bgPic.png");
 }
 </style>
-<body>
+<body onload="connect();" onunload="disconnect();">
 	<nav
 		class="navbar navbar-expand-md bg-inverse fixed-top scrolling-navbar">
 		<div class="container">
@@ -277,39 +280,40 @@ div.main {
 			</button>
 			<div class="collapse navbar-collapse" id="navbarCollapse">
 				<ul class="navbar-nav mr-auto w-100 justify-content-end clearfix">
-					 <li class="nav-item"><a class="nav-link"
+					<li class="nav-item"><a class="nav-link"
 						href="<%=request.getContextPath()%>/front-end/tracking_list/listTrackingListForUser.jsp">
 							購物車&nbsp;<img class="icon"
-								src='<%=request.getContextPath()%>/index/front-index/assets/img/shopping-cart.svg'>
-							
+							src='<%=request.getContextPath()%>/index/front-index/assets/img/shopping-cart.svg'>
+
 					</a></li>
 					<li class="nav-item"><a class="nav-link"
 						href="<%=request.getContextPath()%>/front-end/course/listAllCourseForUser.jsp">
 							搜尋課程&nbsp;<img class="icon"
-								src='<%=request.getContextPath()%>/index/front-index/assets/img/search.svg'>
-							
+							src='<%=request.getContextPath()%>/index/front-index/assets/img/search.svg'>
+
 					</a></li>
 					<c:if test="${not empty sessionScope.loginMembersVO}">
-					<li class="nav-item"><a class="nav-link"
-						href="<%=request.getContextPath()%>/front-end/course/listMyCourse.jsp">
-							我的課程&nbsp;<img class="icon"
+						<li class="nav-item"><a class="nav-link"
+							href="<%=request.getContextPath()%>/front-end/course/listMyCourse.jsp">
+								我的課程&nbsp;<img class="icon"
 								src='<%=request.getContextPath()%>/index/front-index/assets/img/mycourse.svg'>
-							
-					</a></li>
+
+						</a></li>
 					</c:if>
-					
+
 					<li class="nav-item"><a class="nav-link"
 						href="<%=request.getContextPath()%>/front-end/lecture/listAllLec.jsp">
 							名人講座&nbsp;<img class="icon"
-								src='<%=request.getContextPath()%>/index/front-index/assets/img/influencer.svg'>
-							
+							src='<%=request.getContextPath()%>/index/front-index/assets/img/influencer.svg'>
+
 					</a></li>
-					<c:if test="${teacherSvc.getStatus(sessionScope.loginMembersVO.memno).tchrstatus eq '已通過'}">
+					<c:if
+						test="${teacherSvc.getStatus(sessionScope.loginMembersVO.memno).tchrstatus eq '已通過'}">
 						<li class="nav-item"><a class="nav-link"
 							href="<%=request.getContextPath()%>/front-end/course/addCourse.jsp">
 								我要開課&nbsp;<img class="icon"
 								src='<%=request.getContextPath()%>/index/front-index/assets/img/opencourse.svg'>
-							
+
 						</a></li>
 					</c:if>
 
@@ -335,16 +339,19 @@ div.main {
 										href='<%=request.getContextPath()%>/front-end/coup_code/listAllByMemno.jsp'>持有折扣券</a>
 
 
-									<c:if test="${teacherSvc.getStatus(sessionScope.loginMembersVO.memno).tchrstatus eq '待審核'}">
+									<c:if
+										test="${teacherSvc.getStatus(sessionScope.loginMembersVO.memno).tchrstatus eq '待審核'}">
 										<a class="dropdown-item" onclick="status()">老師檔案</a>
 
 									</c:if>
-									<c:if test="${teacherSvc.getStatus(sessionScope.loginMembersVO.memno).tchrstatus eq '已通過'}">
+									<c:if
+										test="${teacherSvc.getStatus(sessionScope.loginMembersVO.memno).tchrstatus eq '已通過'}">
 										<a class="dropdown-item"
 											href="<%=request.getContextPath()%>/front-end/teacher/teacherDisplay.jsp">老師檔案</a>
 
 									</c:if>
-									<c:if test="${teacherSvc.getStatus(sessionScope.loginMembersVO.memno).tchrstatus eq '未通過'}">
+									<c:if
+										test="${teacherSvc.getStatus(sessionScope.loginMembersVO.memno).tchrstatus eq '未通過'}">
 										<a class="dropdown-item"
 											href="<%=request.getContextPath()%>/front-end/teacher/teacherUpdate.jsp">老師檔案</a>
 
@@ -366,22 +373,26 @@ div.main {
 
 					</c:if>
 					<c:if test="${not empty sessionScope.loginMembersVO.memno}">
-					
-					  <c:if test="${empty teacherSvc.getStatus(sessionScope.loginMembersVO.memno)}">
-							<img id="nav_icon"
-								src='<%=request.getContextPath()%>/front-end/members/assets/img/students.svg'>
-						</c:if>
-						
-						<c:if test="${teacherSvc.getStatus(sessionScope.loginMembersVO.memno).tchrstatus eq '待審核'}">
+
+						<c:if
+							test="${empty teacherSvc.getStatus(sessionScope.loginMembersVO.memno)}">
 							<img id="nav_icon"
 								src='<%=request.getContextPath()%>/front-end/members/assets/img/students.svg'>
 						</c:if>
 
-						<c:if test="${teacherSvc.getStatus(sessionScope.loginMembersVO.memno).tchrstatus eq '已通過'}">
+						<c:if
+							test="${teacherSvc.getStatus(sessionScope.loginMembersVO.memno).tchrstatus eq '待審核'}">
+							<img id="nav_icon"
+								src='<%=request.getContextPath()%>/front-end/members/assets/img/students.svg'>
+						</c:if>
+
+						<c:if
+							test="${teacherSvc.getStatus(sessionScope.loginMembersVO.memno).tchrstatus eq '已通過'}">
 							<img id="nav_icon"
 								src='<%=request.getContextPath()%>/front-end/members/assets/img/teacher.svg'>
 						</c:if>
-						<c:if test="${teacherSvc.getStatus(sessionScope.loginMembersVO.memno).tchrstatus eq '未通過'}">
+						<c:if
+							test="${teacherSvc.getStatus(sessionScope.loginMembersVO.memno).tchrstatus eq '未通過'}">
 							<img id="nav_icon"
 								src='<%=request.getContextPath()%>/front-end/members/assets/img/students.svg'>
 
@@ -391,9 +402,10 @@ div.main {
 
 					<c:if test="${empty sessionScope.loginMembersVO}">
 						<li class="nav-item"><a class='nav-link'
-							href='<%=request.getContextPath()%>/front-end/members/signIn.jsp'>我要登入&nbsp;<img class="icon" src='<%=request.getContextPath()%>/index/front-index/assets/img/login.svg'>
-							</a>
-							</li>
+							href='<%=request.getContextPath()%>/front-end/members/signIn.jsp'>我要登入&nbsp;<img
+								class="icon"
+								src='<%=request.getContextPath()%>/index/front-index/assets/img/login.svg'>
+						</a></li>
 					</c:if>
 
 
@@ -406,12 +418,7 @@ div.main {
 
 		<!-- Sign up form -->
 		<section class="signup">
-			<c:if test="${not empty errorMsgs}">
-				<c:forEach var="message" items="${errorMsgs}">
-					<input type="hidden" id="message" value="${message}">
-				</c:forEach>
 
-			</c:if>
 			<form method='POST' class='register-form'
 				ACTION='<%=request.getContextPath()%>/members/members.do'
 				id='register-form' enctype='multipart/form-data'>
@@ -419,10 +426,10 @@ div.main {
 				<div class="container" id="bg">
 					<div class="signup-content">
 						<div class="signup-form">
+						<div id="messagesArea"></div>
 
 							<h2 class="form-title">
-								<img id="pic"
-									src="<%=request.getContextPath()%>/front-end/members/signIn&updateMembers_css/images/membership.svg">${loginMembersVO.nkname}-個人檔案</h2>
+								<img id="pic" src="<%=request.getContextPath()%>/front-end/members/signIn&updateMembers_css/images/membership.svg">${loginMembersVO.nkname}-個人檔案</h2>
 
 							<!-- <div class="toggle-wrapper">
 								<input id="provide-muffins" name="provide_muffins"
@@ -548,8 +555,7 @@ div.main {
 
 
 
-										</div>
-										<input class="input" name='mempwd' type="password"
+										</div> <input class="input" name='mempwd' type="password"
 										placeholder="Your password" />
 									</th>
 									<th><div style="width: 100px"></div></th>
@@ -559,8 +565,7 @@ div.main {
 												確認密碼<img class="pic"
 													src="<%=request.getContextPath()%>/front-end/members/signIn&updateMembers_css/images/Rmempwd.svg">
 											</h5>
-										</div>
-										<input class="input" name='Rmempwd' type="password"
+										</div> <input class="input" name='Rmempwd' type="password"
 										placeholder="Password again" />
 									</th>
 								</tr>
@@ -601,7 +606,6 @@ div.main {
 				</div>
 			</form>
 
-			<input type="hidden" id="inform4" value="${requestScope.inform4}">
 
 		</section>
 		<footer id="footer">
@@ -628,90 +632,127 @@ div.main {
 
 	<!-- JS -->
 	<script type="text/javascript">
-     function status(){
- 		
-		 swal('老師資格審核中', '請耐心等候1~3個工作天，一但審核完畢，即會立刻通知', 'info');
-	}
-	
-     var inform4 = document.getElementById('inform4').value;
-  	if(inform4 ==='200'){
-  		swal('已成功更新', '您的個人檔案!', 'success');
-  	}
-    
-     var message = document.getElementById('message').value;
-     if(message.length !== 0){
-    	 swal('注意', message, 'warning');
-     }
-     $(function(){  
-         $(".pimg").click(function(){  
-             var _this = $(this);//將當前的pimg元素作為_this傳入函式  
-             imgShow("#outerdiv", "#innerdiv", "#bigimg", _this);  
-         });  
-     });  
+		//=============提示文字=============
+		function status() {
 
-     function imgShow(outerdiv, innerdiv, bigimg, _this){  
-         var src = _this.attr("src");//獲取當前點選的pimg元素中的src屬性  
-         $(bigimg).attr("src", src);//設定#bigimg元素的src屬性  
-       
-             /*獲取當前點選圖片的真實大小，並顯示彈出層及大圖*/  
-         $("<img/>").attr("src", src).load(function(){  
-             var windowW = $(window).width();//獲取當前視窗寬度  
-             var windowH = $(window).height();//獲取當前視窗高度  
-             var realWidth = this.width;//獲取圖片真實寬度  
-             var realHeight = this.height;//獲取圖片真實高度  
-             var imgWidth, imgHeight;  
-             var scale = 0.8;//縮放尺寸，當圖片真實寬度和高度大於視窗寬度和高度時進行縮放  
-               
-             if(realHeight>windowH*scale) {//判斷圖片高度  
-                 imgHeight = windowH*scale;//如大於視窗高度，圖片高度進行縮放  
-                 imgWidth = imgHeight/realHeight*realWidth;//等比例縮放寬度  
-                 if(imgWidth>windowW*scale) {//如寬度扔大於視窗寬度  
-                     imgWidth = windowW*scale;//再對寬度進行縮放  
-                 }  
-             } else if(realWidth>windowW*scale) {//如圖片高度合適，判斷圖片寬度  
-                 imgWidth = windowW*scale;//如大於視窗寬度，圖片寬度進行縮放  
-                             imgHeight = imgWidth/realWidth*realHeight;//等比例縮放高度  
-             } else {//如果圖片真實高度和寬度都符合要求，高寬不變  
-                 imgWidth = realWidth;  
-                 imgHeight = realHeight;  
-             }  
-                     $(bigimg).css("width",imgWidth);//以最終的寬度對圖片縮放  
-               
-             var w = (windowW-imgWidth)/2;//計算圖片與視窗左邊距  
-             var h = (windowH-imgHeight)/2;//計算圖片與視窗上邊距  
-             $(innerdiv).css({"top":h, "left":w});//設定#innerdiv的top和left屬性  
-             $(outerdiv).fadeIn("fast");//淡入顯示#outerdiv及.pimg  
-         });  
-           
-         $(outerdiv).click(function(){//再次點選淡出消失彈出層  
-             $(this).fadeOut("fast");  
-         });  
-     } 
-     
-    
+			swal('老師資格審核中', '請耐心等候1~3個工作天，一但審核完畢，即會立刻通知', 'info');
+		}
+		var message = '${errorMsgs.get(0)}';
+		if (message === '200') {
+			swal('已成功更新', '您的個人檔案!', 'success');
+		} else if (message.length !== 0) {
+			swal('注意', message, 'warning');
+		}
+		//================預覽圖片========================
+		function readURL(input) {
+			if (input.files && input.files[0]) {
+				var imageTagID = input.getAttribute("targetID");
+				var reader = new FileReader();
+				reader.onload = function(e) {
+					var img = document.getElementById(imageTagID);
+					img.setAttribute("src", e.target.result);
+				}
+				reader.readAsDataURL(input.files[0]);
+				}}
+	//=====================webSock=====================================
 
-        function readURL(input){
+		var MyPoint = "/NotifyWS/${sessionScope.loginTeacherVO.tchrno}";
+		var host = window.location.host;
+		var path = window.location.pathname;
+		var webCtx = path.substring(0, path.indexOf('/', 1));
+		var endPointURL = "ws://" + window.location.host + webCtx + MyPoint;
+		var webSocket;
 
-        	  if(input.files && input.files[0]){
+		function connect() {
+			// create a websocket
+			webSocket = new WebSocket(endPointURL);
 
-        	    var imageTagID = input.getAttribute("targetID");
+			webSocket.onopen = function(event) {
+				console.log("Connect Success!");
+				
+			};
 
-        	    var reader = new FileReader();
+			webSocket.onmessage = function(event) {
+				var jsonObj = JSON.parse(event.data);
+				if("chat" === jsonObj.type){
+					swal('老師資格審核中', '請耐心等候1~3個工作天，一但審核完畢，即會立刻通知', 'info');
+					
+					var messagesArea = document.getElementById("messagesArea");
+					
+					var message = jsonObj.message;
+					messagesArea.value = messagesArea.value + message;
+				}
+			}
+				
+				
+				
+			webSocket.onclose = function(event) {
+				console.log("Disconnected!");
+			};
+		}
 
-        	    reader.onload = function (e) {
+		/* function sendMessage() {
+			var inputMessage = document.getElementById("message");
+			var friend = statusOutput.textContent;
+			var message = inputMessage.value.trim();
 
-        	       var img = document.getElementById(imageTagID);
+			if (message === "") {
+				alert("Input a message");
+				inputMessage.focus();
+			} else if (friend === "") {
+				alert("Choose a friend");
+			} else {
+				var jsonObj = {
+					"type" : "chat",
+					"sender" : self,
+					"receiver" : friend,
+					"message" : message
+				};
+				webSocket.send(JSON.stringify(jsonObj));
+				inputMessage.value = "";
+				inputMessage.focus();
+			}
+		} */
 
-        	       img.setAttribute("src", e.target.result)
+		// 有好友上線或離線就更新列表
+		/* function refreshFriendList(jsonObj) {
+			var friends = jsonObj.users;
+			var row = document.getElementById("row");
+			row.innerHTML = '';
+			for (var i = 0; i < friends.length; i++) {
+				if (friends[i] === self) {
+					continue;
+				}
+				row.innerHTML += '<div id=' + i + ' class="column" name="friendName" value=' + friends[i] + ' ><h2>'
+						+ friends[i] + '</h2></div>';
+			}
+			addListener();
+		} */
+		// 註冊列表點擊事件並抓取好友名字以取得歷史訊息
+		/* function addListener() {
+			var container = document.getElementById("row");
+			container.addEventListener("click", function(e) {
+				var friend = e.srcElement.textContent;
+				updateFriendName(friend);
+				var jsonObj = {
+					"type" : "history",
+					"sender" : self,
+					"receiver" : friend,
+					"message" : ""
+				};
+				webSocket.send(JSON.stringify(jsonObj));
+			});
+		} */
 
-        	    }
+		function disconnect() {
+			webSocket.close();
+			
+		}
 
-        	    reader.readAsDataURL(input.files[0]);
-
-        	  }
-
-        	}
-    </script>
+		/* function updateFriendName(name) {
+			statusOutput.innerHTML = name;
+		} */
+	</script>
 
 </body>
 <!-- This templates was made by Colorlib (https://colorlib.com) -->

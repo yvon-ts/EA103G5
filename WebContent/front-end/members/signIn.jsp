@@ -1,8 +1,9 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.members.model.*"%>
+<%@ page import="java.util.*"%>
 
-<%String inform3 = (String)request.getAttribute("inform3"); %>
+
 
 
 <%@ include file="/index/front-index/header.jsp" %>
@@ -121,7 +122,7 @@ background: url("<%=request.getContextPath()%>/front-end/members/assets/img/bgPi
 
 
 
-<body>
+<body >
 <!-- <nav class="navbar navbar-expand-md bg-inverse fixed-top scrolling-navbar"> -->
 <!--             <div class="container"> -->
 <!--                 左上角LOGO Start -->
@@ -226,18 +227,39 @@ background: url("<%=request.getContextPath()%>/front-end/members/assets/img/bgPi
 
 
 <script>
-var inform3 = document.getElementById('inform3').value;
-
-if(inform3 ==='200'){
+var inform3 = '${inform3}';
+if( inform3 ==='200'){
 	swal('恭喜啦', '您已經成為我們的會員囉<br>趕快來登入並且開始瀏覽課程吧', 'success');
 }
 
-
-var message = document.getElementById('message').value;
-
+var message = '${errorMsgs.get(0)}';
 if(message.length !== 0){
 	 swal('注意', message, 'warning');
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
