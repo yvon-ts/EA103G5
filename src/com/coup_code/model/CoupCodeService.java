@@ -1,5 +1,6 @@
 package com.coup_code.model;
 
+import java.sql.Connection;
 import java.sql.Date;
 import java.util.List;
 import java.util.Random;
@@ -49,7 +50,7 @@ public class CoupCodeService {
 		return dao.findByMemno(memno);
 	}
 
-	public CoupCodeVO welcome1(String memno) {
+	public CoupCodeVO welcome1(String memno, Connection con) {
 
 		CoupCodeVO vo = new CoupCodeVO();
 
@@ -70,12 +71,12 @@ public class CoupCodeService {
 		vo.setCoupcode(val);
 		vo.setDiscamt(200);
 		vo.setCoupexp(java.sql.Date.valueOf("2020-11-30"));
-		dao.insert(vo);
+		dao.autogive(vo, con);
 
 		return vo;
 	}
 	
-	public CoupCodeVO welcome2(String memno) {
+	public CoupCodeVO welcome2(String memno,  Connection con) {
 
 		CoupCodeVO vo = new CoupCodeVO();
 
@@ -96,7 +97,7 @@ public class CoupCodeService {
 		vo.setCoupcode(val);
 		vo.setDiscamt(150);
 		vo.setCoupexp(java.sql.Date.valueOf("2020-11-30"));
-		dao.insert(vo);
+		dao.autogive(vo, con);
 
 		return vo;
 	}

@@ -1,5 +1,6 @@
 package com.coup_code.model;
 
+import java.sql.Connection;
 import java.util.List;;
 
 public interface CoupCodeDAO_interface {
@@ -9,5 +10,6 @@ public interface CoupCodeDAO_interface {
 	public CoupCodeVO findByPrimaryKey(String coupno);
 	public List<CoupCodeVO> getAll();
 	public List<CoupCodeVO> findByMemno(String memno);
+	public void autogive(CoupCodeVO coupCodeVO, Connection con);
 
 }
