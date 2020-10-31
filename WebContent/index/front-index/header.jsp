@@ -123,7 +123,7 @@ div#navBar{
 							<div class="dropdown" id="dropdown">
 								<button class="btn btn-secondary dropdown-toggle" type="button"
 									id="dropdownMenuButton" data-toggle="dropdown"
-									aria-haspopup="true" aria-expanded="false">
+									aria-haspopup="true" aria-expanded="false" style="background-color: #6c757d">
 									${sessionScope.loginMembersVO.memname}</button>
 								<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
 									<a class="dropdown-item"
@@ -131,6 +131,9 @@ div#navBar{
 
 									<a class="dropdown-item"
 										href='<%=request.getContextPath()%>/front-end/Order_Master/listAllByMemno.jsp'>課程訂單紀錄</a>
+										
+									<a class="dropdown-item"
+										href='<%=request.getContextPath()%>/front-end/lecorder/listByMemno.jsp'>講座訂單紀錄</a>
 
 									<a class="dropdown-item"
 										href='<%=request.getContextPath()%>/front-end/coup_code/listAllByMemno.jsp'>持有折扣券</a>

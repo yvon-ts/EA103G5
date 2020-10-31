@@ -18,7 +18,7 @@
 	PreparedStatement pstmt = null;
 	ResultSet rs = null;
 	
-	String sql = "SELECT lecname, lecstart FROM LECTURE ORDER BY LECNO";
+	String sql = "SELECT lecname, lecstart, lecstatus FROM LECTURE ORDER BY LECNO";
 	//===============================Connection pool===============================//
 	try {
 		Context ctx = new InitialContext();
@@ -40,8 +40,14 @@
 			obj.put("title", rs.getString("lecname"));
 			obj.put("start", rs.getTimestamp("lecstart"));
 			obj.put("startEditable", false);
-			//if (rs.getInt("lecstatus") == 0 )
-			//	obj.put("color", "pink");
+			if (rs.getInt("lecstatus") == 1 )
+				obj.put("color", "#0099cc");
+			else if (rs.getInt("lecstatus") == 0 )
+				obj.put("color", "orange");
+			else if (rs.getInt("lecstatus") == 2 )
+				obj.put("color", "#333");
+			else if (rs.getInt("lecstatus") == 3 )
+				obj.put("color", "#ff6680");
 			arr.put(obj);
 		}
 		//out.print(arr); //testing
@@ -136,11 +142,11 @@ var calendar = new FullCalendar.Calendar(calendarEl, {
   businessHours: true,
   dayMaxEvents: true, // allow "more" link when too many events
   events: lec,
-   eventTimeFormat: { 
-    hour: '2-digit',
-    minute: '2-digit',
-    hour12:false
-},
+  eventTimeFormat: { 
+   hour: '2-digit',
+   minute: '2-digit',
+   hour12:false
+}
 
 });
 

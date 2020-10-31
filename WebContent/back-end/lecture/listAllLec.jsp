@@ -38,6 +38,34 @@
 		margin-left:5%;
 		margin-right: -5%;
 	}
+	.defaultLec{
+		color: #fff;
+		font-weight: 600;
+		background-color: #0099cc;
+		border-radius: 20px;
+		padding: 8px 20px;
+	}
+	.cancelLec{
+		color: #fff;
+		font-weight: 600;
+		background-color: orange;
+		border-radius: 20px;
+		padding: 8px 20px;
+	}
+	.soldOutLec{
+		color: #fff;
+		font-weight: 600;
+		background-color: #ff6680;
+		border-radius: 20px;
+		padding: 8px 20px;
+	}
+	.endLec{
+		color: #333;
+		font-weight: 600;
+		background-color: #e5e5e5;
+		border-radius: 20px;
+		padding: 8px 20px;
+	}
 </style>
 <body>
 <main class="app-content" style="background-color: #f3f3f3">
@@ -104,31 +132,40 @@
 						closedate = fmtdate.format(signend);
 						//狀態設定
 						String status = "";
+						String statusCss = "";
 						
 						if (lecVO.getLecstatus() == 1){
 							status = "正常";
-						} else {
+							statusCss = "defaultLec";
+						} else if (lecVO.getLecstatus() == 0) {
 							status = "取消";
+							statusCss = "cancelLec";
+						} else if (lecVO.getLecstatus() == 2){
+							status = "結束";
+							statusCss = "endLec";
+						} else if (lecVO.getLecstatus() == 3){
+							status = "額滿";
+							statusCss = "soldOutLec";
 						}
 					%>
 					<tr>
-						<td data-title="講座編號">${lecVO.lecno}</td>
-						<td data-title="講座名稱">${lecVO.lecname}</td>
+						<td>${lecVO.lecno}</td>
+						<td>${lecVO.lecname}</td>
 							<c:forEach var="spkrVO" items="${spkrSvc.list}">
                     			<c:if test="${lecVO.spkrno==spkrVO.spkrno}">
-	                   				<td data-title="講師姓名">${spkrVO.spkrname}</td>
+	                   				<td>${spkrVO.spkrname}</td>
 				                    </c:if>
 				                </c:forEach>
 							<c:forEach var="roomVO" items="${roomSvc.all}">
                    				<c:if test="${lecVO.roomno==roomVO.roomno}">
-	                    			<td data-title="講座地點">${roomVO.roomname}</td>
+	                    			<td>${roomVO.roomname}</td>
                    				</c:if>
                				</c:forEach>
-						<td data-title="講座票價">$${lecVO.lecprice}</td>
-						<td data-title="講座日期"><%=startdate%></td>
-			 			<td data-title="開始時間"><%=starttime%></td>
-						<td data-title="結束時間"><%=endtime%></td>
-						<td data-title="講座狀態"><%=status%></td>
+						<td>$${lecVO.lecprice}</td>
+						<td><%=startdate%></td>
+			 			<td><%=starttime%></td>
+						<td><%=endtime%></td>
+						<td><span class="<%=statusCss%>"><%=status%></span></td>
 						<td>
 							<form method="post" action="<%=request.getContextPath()%>/lecture/lecture.do">
 								<button class="btn view" style="color: #03A9F4"><i class="material-icons">&#xE417;</i></button>
@@ -289,21 +326,17 @@ function sendAjaxQuery(){
 	 			$("#tr"+i+" .sendLecno").val(lecs[i].lecno);
 	 			
 	 			if (lecs[i].lecstatus === 1)
-	 				$("#tr"+i+" .lecstatus").text("正常");
-	 			else if (lecs[i].lecstatus === 0)
-	 				$("#tr"+i+" .lecstatus").text("取消");
-	 			else if (lecs[i].lecstatus === 2)
-	 				$("#tr"+i+" .lecstatus").text("額滿");
-	 			else if (lecs[i].lecstatus === 3)
-	 				$("#tr"+i+" .lecstatus").text("取消");
-	 		}
+	 				$("#tr"+i+" .lecstatus").html(`<span class="defaultLec">正常</span>`);
+	 			 else if (lecs[i].lecstatus === 0)
+	 				$("#tr"+i+" .lecstatus").html(`<span class="cancelLec">取消</span>`);
+ 				 else if (lecs[i].lecstatus === 2)
+ 					$("#tr"+i+" .lecstatus").html(`<span class="soldOutLec">額滿</span>`);
+				 else if (lecs[i].lecstatus === 3)
+					 $("#tr"+i+" .lecstatus").html(`<span class="endLec">結束</span>`);
+	 			
  			
- 		console.log($("#query").val());
- 		console.log("orderBy="+orderBy);
- 		console.log(data);
- 		} else {
- 			alert("查無資料");
- 		}
+ 			}
+		}
 	}
 })
 }
