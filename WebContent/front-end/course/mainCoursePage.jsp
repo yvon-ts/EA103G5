@@ -124,9 +124,6 @@
 							
 								<!-- Button trigger modal -->
 
- 
-
-
 								<!-- 測驗連結 -->
 								<% if (!canViewThisCourse){ %>
 								<a class="list-group-item list-group-item-action list-group-item-primary locked"
