@@ -68,15 +68,12 @@
         		<option value="checkbox" ${testTypeSvc.getOnebyNO(QuestionBankvo.typeno).testtype eq 'checkbox'? 'selected':'disabled'}>多選題</option>
     		</select>
                 
-                
+                <select id="idatype" name="courseno" class="select-text" required>
+                		<option value="<%= request.getParameter("courseno")%>" ><%=request.getParameter("coursename") %></option>
+               </select>
                 
                
                 
-                 <select id="idatype" name="courseno" class="select-text" required>
-                		<c:forEach var="CourseVo" items="${CourseSvc.allForEmployee}">
-                			 <option value="${CourseVo.courseno }" ${QuestionBankvo.courseno eq CourseVo.courseno? 'selected' :''} >${CourseVo.coursename }</option>
-                		</c:forEach>
-                </select>
                 
                
                 <select id="idatype" name="testscope" class="select-text" required>
@@ -86,10 +83,11 @@
                 </select>
                 <div id="parentDiv"></div>
                 <input type="hidden" name="action" value="updateQuestion">
-				<input type="hidden" name="whichPage"  value="<%=request.getParameter("whichPage")%>">  <!--只用於:istAllEmp.jsp-->
                 <input type="hidden" name="qbankno"  value="${QuestionBankvo.qbankno}">
-                <input type="hidden" name="coursename"	value="<%=request.getParameter("coursename") %>">
                 <input type="hidden" name="requestURL"	value="<%=request.getServletPath()%>">
+				<input type="hidden" name="whichPage"  value="<%=request.getParameter("whichPage")%>">  
+                <input type="hidden" name="coursename"	value="<%=request.getParameter("coursename") %>">
+                <input type="hidden" name="courseno" value="<%=request.getParameter("courseno") %>">
                 <input type="hidden" name="update"	value="update">
                 <input type='submit' id="turnin" value='放置題庫' style="display:block ">
         		</div>

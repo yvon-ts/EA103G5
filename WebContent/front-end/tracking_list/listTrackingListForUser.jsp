@@ -186,6 +186,8 @@
 	<script>
 		$(document).ready(function(){
 			
+			
+			//送出按出按鈕
 			$('#checkout').click(function(){
 				if('${loginMembersVO.memno}' ==''){
 					swal({ 
@@ -200,7 +202,9 @@
 							this.location.href = '<%=request.getContextPath()%>/front-end/members/signIn.jsp';
 						}).catch(swal.noop);
 				}else{
-					this.location.href ="<%=request.getContextPath()%>/front-end/Shop/Checkout.jsp";
+					var checkout = document.createElement('a');
+					checkout.href = "<%=request.getContextPath()%>/front-end/Shop/Checkout.jsp";
+					checkout.click();
 				}
 			});
 			
@@ -213,6 +217,7 @@
 				a.click();
 				
 			});
+			
 			//此頁面取消追蹤
 			$('body').on('click','.deleteTrack',function(){
 				
@@ -227,8 +232,6 @@
 					success: function(data){
 						console.log(data);
 						
-// 						if(data ==='true')
-// 							$(this).parents('.col-md-6').remove();
 					}
 				});
 			});
@@ -274,7 +277,6 @@
 						url	:"<%=request.getContextPath()%>/Shop/Shopping_Cart.do",
 						data:{
 							courseno:$(this).next().val(),
-// 							memno    : $("#memno").val(),
 							action: "shoppingCart",
 							remove : "remove"
 						},
@@ -376,16 +378,9 @@
 				            </div>
 				        </div>`; 
 				               
-				               
-				       
-				                    
-				                    	 			
 				               	$('.shoppingCartArea').append(str);
-				                
 							}
-							
 							else{
-// 								console.log($('#shoppingCart tr:last'));
 								
 								$('#shoppingCart tr:last').after(commonStr);
 								
@@ -396,11 +391,28 @@
 							
 							$('#number').text($('#shoppingCart tr').length - 1);
 							
-// 							$('body').on('click' , '#checkout',function(){
-// 									$('#myForm').submit(); 
-// 							});
-							
-							
+							//送出按紐
+							$('#checkout').click(function(){
+								if('${loginMembersVO.memno}' ==''){
+									swal({ 
+										  title: '您尚未登入', 
+										  text: '您將無法結帳，請先登入會員', 
+										  type: 'warning',
+										  showCancelButton: true, 
+										  confirmButtonColor: '#3085d6',
+										  cancelButtonColor: '#d33',
+										  confirmButtonText: '會員登入', 
+										}).then(function(){
+											this.location.href = '<%=request.getContextPath()%>/front-end/members/signIn.jsp';
+										}).catch(swal.noop);
+								}else{
+									var checkoutAjax = document.createElement('a');
+									checkoutAjax.href = "<%=request.getContextPath()%>/front-end/Shop/Checkout.jsp";
+									checkoutAjax.click();
+								}
+							});
+
+							//刪除購物車
 							$('body').on('click' , '#remove' + count,function(){
 								$(this).parents('tr').remove();
 								var totalPriceString = $('#totalPrice').text();
@@ -455,6 +467,7 @@
 				});
 			});
 			
+			//載入更多
 			var counter = 0; /*計數器*/
 			var pageStart = 0; /*offset*/
 			var pageSize = 4; /*size*/
@@ -466,8 +479,6 @@
 			}
 			
 			/*監聽載入更多*/
-			
-		
 			
 			$(document).on('click', '#js-load-more', function(){
 			counter++ ;
@@ -539,10 +550,10 @@
 					$('.trackingArea').append(result);
 					
 					$("div.rateit, span.rateit").rateit();
-
+				
 
 // 				/*隱藏more按鈕*/
-					if ( (offset + size) >= sum){
+					if ( (offset + size) >= sum  || '${loginMembersVO.memno}' ==''){
 						$("#js-load-more").hide();
 					}else{
 						$("#js-load-more").show();

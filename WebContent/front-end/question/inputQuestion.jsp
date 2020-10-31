@@ -37,9 +37,9 @@ if(QuestionBankvo !=null && QuestionBankvo.getQuans()!= null && QuestionBankvo.g
 <html>
 
 <head>
-    <title>題庫管理 - <%=coursename %>}</title>
+    <title>題庫管理 - <%=coursename %></title>
     <!-- include libraries(jQuery, bootstrap) -->
-<!--     <link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet"> -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <!-- include summernote css/js -->
@@ -90,11 +90,10 @@ if(QuestionBankvo !=null && QuestionBankvo.getQuans()!= null && QuestionBankvo.g
         		<option value="checkbox" ${testTypeSvc.getOnebyNO(QuestionBankvo.typeno).testtype eq 'checkbox'? 'selected':'disabled'}>多選題</option>
     		</select>
     	</c:if>
+    	
                <select id="idatype" name="courseno" class="select-text" required>
-                		<c:forEach var="CourseVo" items="${CourseSvc.getAllForEmployee()}">
-                			 <option value="${CourseVo.courseno }" ${QuestionBankvo.courseno eq CourseVo.courseno ? 'selected' :''} >${CourseVo.coursename }</option>
-                		</c:forEach>
-                </select>
+                		<option value="<%= request.getParameter("courseno")%>" ><%=coursename %></option>
+               </select>
                 
                 <select id="idatype" name="testscope" class="select-text" required>
                     <option value="1" ${QuestionBankvo.testscope eq '1' ? 'selected' :''}>單元一</option>
@@ -111,6 +110,7 @@ if(QuestionBankvo !=null && QuestionBankvo.getQuans()!= null && QuestionBankvo.g
         </form>
         </div>
     </div>    
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
     <script type="text/javascript">
        
         		
@@ -278,9 +278,9 @@ if(QuestionBankvo !=null && QuestionBankvo.getQuans()!= null && QuestionBankvo.g
             
             
             <!-- include 前台頁面的 footer -->
-			<jsp:include page="/index/front-index/footer.jsp" />
+<%-- 			<jsp:include page="/index/front-index/footer.jsp" /> --%>
 			<!-- include 前台頁面的 footer -->
-            <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+            
         </body>
 
         </html>        	

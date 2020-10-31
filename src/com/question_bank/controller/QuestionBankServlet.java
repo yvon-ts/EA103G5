@@ -274,7 +274,6 @@ public class QuestionBankServlet extends HttpServlet {
 		
 		if (!errorMsgs.isEmpty()) {
 			request.setAttribute("QuestionBankvo", QuestionBankvo);
-			System.out.println(QuestionBankvo);
 			RequestDispatcher inputView = request.getRequestDispatcher("/front-end/question/update_Question_input.jsp");
 			inputView.forward(request, response);
 			return;
@@ -287,7 +286,6 @@ public class QuestionBankServlet extends HttpServlet {
 		request.setAttribute("courseno",request.getParameter("courseno"));
 		request.setAttribute("coursename",request.getParameter("coursename"));
 		
-		System.out.println(request.getParameter("requestURL"));	
 		
 		RequestDispatcher successView = request.getRequestDispatcher("/front-end/question/ListAllQuestion.jsp");
 		successView.forward(request, response);
