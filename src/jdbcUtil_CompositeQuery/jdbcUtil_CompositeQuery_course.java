@@ -9,10 +9,10 @@ public class jdbcUtil_CompositeQuery_course {
 		
 		StringBuilder aCondition = new StringBuilder();
 		
-		if("cstypeno".equals(columnName) ) {
+		if("cstypeno".equals(columnName) ||"csstatus".equals(columnName) ) {
 			aCondition.append( columnName + "='" +  value + "'");
 		}
-		else if ("tchrno".equals(columnName) || "csstatus".equals(columnName) || "courseno".equals(columnName)) 
+		else if ("tchrno".equals(columnName) ||   "courseno".equals(columnName)) 
 			aCondition.append(columnName + " like '%" + value + "%'");
 		else if( "searchText".equals(columnName) ) {
 			aCondition.append("(upper(coursename)" + " like upper('%" + value + "%')");
@@ -58,14 +58,11 @@ public class jdbcUtil_CompositeQuery_course {
 						whereCondition.append(" where " + aCondition);
 					else
 					whereCondition.append(" and " + aCondition);	
-
 				}
-				
 			}
-			
 		}
 		
-		whereCondition.append(" and csstatus='上架' ");
+		
 		if(priceRange.size()==2) {
 			if(map.size()==3) {
 				whereCondition.append(" where courseprice between " + priceRange.get("min") + " and " +  priceRange.get("max") + " ");

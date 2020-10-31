@@ -76,6 +76,7 @@ public class CourseSearch extends HttpServlet {
 				map.put("min", new String[]{min});
 			}
 				map.put("order", new String[]{order});
+				map.put("csstatus", new String[]{"上架"});
 				
 				List<CourseVO> searchList = courseSvc.getAll(map);
 				
