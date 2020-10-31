@@ -19,9 +19,6 @@
     pageContext.setAttribute("testAns",testAns.toString());
     pageContext.setAttribute("opAns",QuestionBankvo.getQuans().split(""));
   }
-  System.out.println(request.getParameter("123"));
-  System.out.println(request.getParameter("courseno"));
-  System.out.println(request.getParameter("coursename"));
 %>
 <jsp:useBean id="testTypeSvc" scope="page" class="com.test_type.model.TestTypeService" />
 
@@ -141,13 +138,13 @@
                                     ['style', ['bold', 'italic', 'underline']],
                                     ['fontsize', ['fontsize']],
                                     ['color', ['color']],
-                                    ['para', ['ul', 'ol', 'paragraph']],
-                                    ['height', ['height']],
-                                    ['Insert',['picture','table']]
+                                    ['para', ['ul', 'ol', 'paragraph']], 
+                                    ['insert', [ 'picture']],
+                                    ['view', ['fullscreen', 'codeview']]
                                   ]
                             });
                             
-                            
+                            $('.btn').css("border-radius","0px");
                             $('.btn').css("padding","5px");
                             $('.btn').css("color","black");
                             
@@ -178,13 +175,13 @@
                                     ['style', ['bold', 'italic', 'underline']],
                                     ['fontsize', ['fontsize']],
                                     ['color', ['color']],
-                                    ['para', ['ul', 'ol', 'paragraph']],
-                                    ['height', ['height']],
-                                    ['Insert',['picture','table']]
+                                    ['para', ['ul', 'ol', 'paragraph']], 
+                                    ['insert', [ 'picture']],
+                                    ['view', ['fullscreen', 'codeview']]
                                   ]
                             });
                             
-                            
+                            $('.btn').css("border-radius","0px");
                             $('.btn').css("padding","5px");
                             $('.btn').css("color","black");
                             
@@ -220,13 +217,13 @@
                                     ['style', ['bold', 'italic', 'underline']],
                                     ['fontsize', ['fontsize']],
                                     ['color', ['color']],
-                                    ['para', ['ul', 'ol', 'paragraph']],
-                                    ['height', ['height']],
-                                    ['Insert',['picture','table']]
+                                    ['para', ['ul', 'ol', 'paragraph']], 
+                                    ['insert', [ 'picture']],
+                                    ['view', ['fullscreen', 'codeview']]
                                   ]
                             });
                             
-                            
+                            $('.btn').css("border-radius","0px");
                             $('.btn').css("padding","5px");
                             $('.btn').css("color","black");
                             

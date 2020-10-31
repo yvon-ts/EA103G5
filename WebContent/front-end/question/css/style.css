@@ -13,7 +13,7 @@
 	align-items: center;
 	width: 60%;
 	/*background: #efefef;*/
-	background: linear-gradient(to bottom, #e8e8e8 0, #f5f5f5 100%);
+/* 	background: linear-gradient(to bottom, #e8e8e8 0, #f5f5f5 100%); */
 	border: 1px solid #dfdfdf;
 	border-radius: 4px;
 	font: normal 1.4rem Arial, sans-serif;

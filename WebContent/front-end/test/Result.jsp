@@ -24,11 +24,11 @@
 <html>
 <head>
 <link rel="stylesheet" type="text/css" href="<%= request.getContextPath()%>/front-end/test/css/style2.css">
-<script defer src="https://use.fontawesome.com/releases/v5.0.0/js/all.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <style>
-	a{
-		margin:30px;
-	}
+/* 	a{ */
+/* 		margin:30px; */
+/* 	} */
 
 </style>
 </head>
@@ -56,10 +56,12 @@
 				
 				<span>${counter.count}</span>.${ question.qustmt}<span>
 				<c:if test="${anwserSvc.getOneByQBNO(question.qbankno,testsVo.testno).testans eq anwserSvc.getOneByQBNO(question.qbankno,testsVo.testno).studentans}">
-					<i class="fas fa-check" style="color:green"></i>
+					
+					<i class="fa fa-check" aria-hidden="true" style="color:green"></i>
 				</c:if>
 					<c:if test="${anwserSvc.getOneByQBNO(question.qbankno,testsVo.testno).testans ne anwserSvc.getOneByQBNO(question.qbankno,testsVo.testno).studentans}">
-					<i class="fas fa-times" style="color:red"></i> 
+					
+					<i class="fa fa-times" aria-hidden="true" style="color:red"></i>
 				</c:if>
 				<h6>(難度:${TypeSvc.getOnebyNO(question.typeno).testdgee})(題型:${(type.testtype eq 'checkbox' )? '多選題':(type.testtype eq 'radio' )? '單選題':'填空題' })</h6></span>
 				
@@ -73,7 +75,7 @@
 						class="class${counter.count}" name="${question.qbankno}" value="0" ${(studentAnsArray[0] eq '1' )? 'checked':'' } disabled/> <span>A</span><span>${question.op1}</span>
 						
 						<c:if test="${testAnsArray[0] eq '1'}">
-							<i class="fas fa-check" style="color:green"></i> 
+							<i class="fa fa-check" aria-hidden="true" style="color:green"></i> 
 						</c:if>
 						
 					</li>
@@ -82,7 +84,7 @@
 						<li class="option"><input type="${type.testtype}"
 							class="class${counter.count}" name="${question.qbankno}" value="1" ${(studentAnsArray[1] eq '1' )? 'checked':'' } disabled/> <span>B</span><span>${question.op2}</span>
 						<c:if test="${testAnsArray[1] eq '1'}">
-							<i class="fas fa-check" style="color:green"></i> 
+							<i class="fa fa-check" aria-hidden="true" style="color:green"></i> 
 						</c:if>
 					</li>
 					</label>
@@ -90,7 +92,7 @@
 						<li class="option"><input type="${type.testtype}"
 							class="class${counter.count}" name="${question.qbankno}" value="2" ${(studentAnsArray[2] eq '1' )? 'checked':'' } disabled/> <span>C</span><span>${question.op3}</span>
 						<c:if test="${testAnsArray[2] eq '1'}">
-							<i class="fas fa-check" style="color:green"></i> 
+							<i class="fa fa-check" aria-hidden="true" style="color:green"></i> 
 						</c:if>
 					</li>
 					</label>
@@ -98,7 +100,7 @@
 						<li class="option"><input type="${type.testtype}"
 							class="class${counter.count}" name="${question.qbankno}" value="3" ${(studentAnsArray[3] eq '1' )? 'checked':'' } disabled/> <span>D</span><span>${question.op4}</span>
 						<c:if test="${testAnsArray[3] eq '1'}">
-							<i class="fas fa-check" style="color:green"></i> 
+							<i class="fa fa-check" aria-hidden="true" style="color:green"></i> 
 						</c:if>
 					</li>
 					</label>
@@ -124,7 +126,7 @@
 		</c:if>
 	</c:forEach>
 	</div>
-			<div style="text-align: center; margin:20px;"><a href="<%=request.getContextPath()%>/course/course.do?action=showCourseMainPage&courseno=<%= request.getParameter("courseno") %>" class="btn btn-border">回到課程總覽</a><a href="<%=request.getContextPath()%>/front-end/test/ListAllTestRecord.jsp" class="btn btn-border">考試紀錄</a></div>
+			<div style="text-align: center; margin:20px;"><a href="<%=request.getContextPath()%>/course/course.do?action=showCourseMainPage&courseno=<%= request.getParameter("courseno") %>" class="btn btn-border" style="margin:30px;">回到課程總覽</a><a href="<%=request.getContextPath()%>/front-end/test/ListAllTestRecord.jsp" class="btn btn-border" style="margin:30px;">考試紀錄</a></div>
 	<script src="https://code.jquery.com/jquery-3.5.1.js"
 	integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
 	crossorigin="anonymous"></script>
