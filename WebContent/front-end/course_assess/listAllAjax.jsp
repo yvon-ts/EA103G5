@@ -126,7 +126,6 @@ margin:-240px 0 0 -30px;
 
   }
  
-/* Remove IE arrow */
  div#bg{
  width:850px;
  height:auto; 
@@ -135,7 +134,6 @@ margin:-240px 0 0 -30px;
 	box-shadow: 0 0 15px #5B5B5B;
 	padding-top:100px;
 	padding-bottom:50px;
-	overflow: scroll;
  }
  
 
@@ -314,7 +312,7 @@ $(document).ready(function(){
 	
 	var counter = 0; /*計數器*/
 	var pageStart = 0; /*offset*/
-	var pageSize = 5; /*size*/
+	var pageSize = 10; /*size*/
 	/*首次載入*/
 	getData(pageStart, pageSize);
 	/*監聽載入更多*/
