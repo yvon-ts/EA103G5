@@ -151,6 +151,7 @@ public class QuestionBankServlet extends HttpServlet {
 		QuestionBankvo = qse.insertQuestion(QuestionBankvo);
 		request.setAttribute("courseno",request.getParameter("courseno"));
 		request.setAttribute("coursename",request.getParameter("coursename"));
+		request.setAttribute("update","update");
 		request.setAttribute("QuestionBankvo", QuestionBankvo);
 		String url = "/front-end/question/ListOneQuestion.jsp";
 		RequestDispatcher successView = request.getRequestDispatcher(url);

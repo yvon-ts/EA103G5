@@ -23,7 +23,6 @@
 %>
 <jsp:useBean id="ttSvc" scope="page" class="com.test_type.model.TestTypeService" />
 
-<jsp:useBean id="courseSvc" scope="page" class="com.course.model.CourseService" />
 
 <!DOCTYPE html>
 <html>
@@ -31,6 +30,7 @@
 <title>題庫管理 - <%=coursename %></title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <!--     <title>Bootstrap CRUD Data Table for Database with Modal Form</title> -->
+	
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
@@ -39,11 +39,14 @@
     <link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/front-end/question/css/listAll.css">
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <style>
-    	
+    
     </style>
 
 </head>
 <body>
+
+	<jsp:useBean id="testTypeSvc" scope="page" class="com.test_type.model.TestTypeService" />
+	<jsp:useBean id="CourseSvc" scope="page" class="com.course.model.CourseService" />
 	
 	<jsp:include page="/index/front-index/header.jsp" />
 
@@ -78,26 +81,48 @@
 								href='<%=request.getContextPath()%>/front-end/question/inputQuestion.jsp?coursename=<%=coursename %>&courseno=<%=request.getParameter("courseno") %>'
 								class="btn btn-info"><i class="material-icons">&#xE147;</i>
 								<span>新增考題</span></a>
+<!-- 							<button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg">新增考題</button> -->
                         </div>
                     </div>
                 </div>
                 
-                
+
+
+<!-- <div class="modal fade bd-example-modal-lg" style="width:750px; margin:auto" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true"> -->
+<!--   <div class="modal-dialog modal-lg"> -->
+<!--     <div class="modal-content"> -->
+<%--        <form id="myform" class="flexform-column" action="<%= request.getContextPath()%>/question/questionBank.do" method="post"> --%>
+<!--       <div class="modal-body"> -->
+<!--         <div class="form-group"> -->
+<%--        		<input class="form-control" type="text" name="courseno" value="<%=coursename %>" readonly="readonly"> --%>
+<!--     		<select class="form-control" id="exampleFormControlSelect1"  name="testtype" required>	 -->
+<!--         				<option value="-1" >請選擇題型</option> -->
+<!--         				<option value="text"  >填空題</option> -->
+<!--         				<option value="radio" >選擇題</option> -->
+<!--         				<option value="checkbox">多選題</option> -->
+<!--     		</select> -->
+			
+<!--     		<select class="form-control" id="exampleFormControlSelect2"  name="testscope" required>	 -->
+<!--                 	<option value="1">單元一</option> -->
+<!--                     <option value="2">單元二</option> -->
+<!--                     <option value="3">單元三</option> -->
+<!--     		</select> -->
+<!--     		<div id="parentDiv"></div> -->
+<!--     		<input type="hidden" name="action" value="inputQuestion"> -->
+<!--     		<button type="button" class="btn btn-primary">提交考題</button> -->
+<!--   		</div> -->
+<!--       </div> -->
+<!--       </form> -->
+<!--     </div> -->
+<!--   </div> -->
+<!-- </div> -->
+
+
                 <form action="<%= request.getContextPath()%>/question/questionBank.do" method="post" id = "myForm">
                 	
 				<div class="container">
 
 				<div class="row">
-<!-- 					<div class="col-2"> -->
-<!-- 					<div class="form-group"> -->
-<!--     					<select class="form-control" name="courseno"> -->
-<!--     								<option value="" selected>請選擇課程</option> -->
-<%--                 				<c:forEach var="CourseVo" items="${courseSvc.allForEmployee}"> --%>
-<%--                 					<option value="${CourseVo.courseno }">${CourseVo.coursename }</option> --%>
-<%--                 				</c:forEach> --%>
-<!--     					</select> -->
-<!--   					</div> -->
-<!--   					</div> -->
   					<div class="col-2">
   					<div class="form-group">
     					<select class="form-control" name="testtypeno">
@@ -196,6 +221,7 @@
     <!-- include 前台頁面的 footer -->
 	<jsp:include page="/index/front-index/footer.jsp" />
 	<!-- include 前台頁面的 footer -->
+	
  </div>   
     
     
@@ -223,6 +249,7 @@
 				}	
 				$('.set').find('img').css("width","150px");
 				$('.set').find('img').css("height","150px");
+				
 			});
 	</script>
 </body>

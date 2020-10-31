@@ -17,10 +17,16 @@ if(QuestionBankvo !=null && QuestionBankvo.getQuans()!= null && QuestionBankvo.g
     pageContext.setAttribute("testAns",testAns.toString());
     pageContext.setAttribute("opAns",QuestionBankvo.getQuans().split(""));
   }
-
-	String str=request.getParameter("coursename");
-	byte[] bytes=str.getBytes("ISO-8859-1");
-	String coursename=new String(bytes,"utf-8");
+		String coursename = "" ;
+	if(request.getParameter("update")==null){
+		String str   = request.getParameter("coursename");
+		byte[] bytes = str.getBytes("ISO-8859-1");
+		 coursename  = new String(bytes,"utf-8");
+	}else{
+		coursename = request.getParameter("coursename");
+	}
+	
+	
 
 %>
 <jsp:useBean id="testTypeSvc" scope="page" class="com.test_type.model.TestTypeService" />
@@ -35,7 +41,7 @@ if(QuestionBankvo !=null && QuestionBankvo.getQuans()!= null && QuestionBankvo.g
     <!-- include libraries(jQuery, bootstrap) -->
 <!--     <link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet"> -->
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-<!--     <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script> -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <!-- include summernote css/js -->
     <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/front-end/question/css/style.css">
@@ -71,7 +77,7 @@ if(QuestionBankvo !=null && QuestionBankvo.getQuans()!= null && QuestionBankvo.g
     	<c:if test="${empty errorMsgs}"> 
         	<select id="idatype" name="testtype" class="select-text choose" required>
         		<option value="-1" >請選擇題型</option>
-        		<option value="text"  >填空題</option>
+        		<option value="text" selected >填空題</option>
         		<option value="radio" >選擇題</option>
         		<option value="checkbox">多選題</option>
     		</select>
@@ -151,13 +157,13 @@ if(QuestionBankvo !=null && QuestionBankvo.getQuans()!= null && QuestionBankvo.g
                                     ['style', ['bold', 'italic', 'underline']],
                                     ['fontsize', ['fontsize']],
                                     ['color', ['color']],
-                                    ['para', ['ul', 'ol', 'paragraph']],
-                                    ['height', ['height']],
-                                    ['Insert',['picture','table']]
+                                    ['para', ['ul', 'ol', 'paragraph']], 
+                                    ['insert', [ 'picture']],
+                                    ['view', ['fullscreen', 'codeview']]
                                   ]
                             });
                             
-                            
+                            $('.btn').css("border-radius","0px");
                             $('.btn').css("padding","5px");
                             $('.btn').css("color","black");
                             
@@ -184,15 +190,16 @@ if(QuestionBankvo !=null && QuestionBankvo.getQuans()!= null && QuestionBankvo.g
                                     ['style', ['bold', 'italic', 'underline']],
                                     ['fontsize', ['fontsize']],
                                     ['color', ['color']],
-                                    ['para', ['ul', 'ol', 'paragraph']],
-                                    ['height', ['height']],
-                                    ['Insert',['picture','table']]
+                                    ['para', ['ul', 'ol', 'paragraph']], 
+                                    ['insert', [ 'picture']],
+                                    ['view', ['fullscreen', 'codeview']]
                                   ]
                             });
                             
-                            
+                            $('.btn').css("border-radius","0px");
                             $('.btn').css("padding","5px");
                             $('.btn').css("color","black");
+                            
                             
                             $('li').css("listStyle", "none");
                             $('li').click(function() {
@@ -226,13 +233,13 @@ if(QuestionBankvo !=null && QuestionBankvo.getQuans()!= null && QuestionBankvo.g
                                     ['style', ['bold', 'italic', 'underline']],
                                     ['fontsize', ['fontsize']],
                                     ['color', ['color']],
-                                    ['para', ['ul', 'ol', 'paragraph']],
-                                    ['height', ['height']],
-                                    ['Insert',['picture','table']]
+                                    ['para', ['ul', 'ol', 'paragraph']], 
+                                    ['insert', [ 'picture']],
+                                    ['view', ['fullscreen', 'codeview']]
                                   ]
                             });
                             
-                            
+                            $('.btn').css("border-radius","0px");
                             $('.btn').css("padding","5px");
                             $('.btn').css("color","black");
                             
