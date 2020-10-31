@@ -206,11 +206,11 @@ table.table td a.view {
 	text-align: center;
 }
 
- input[type="submit"].test{
-	width: 80px;
+input[type="submit"].view {
+	width: 60px;
 	height: 30px;
-	color: black;
-	border: 0px solid;
+	color: #2196F3;
+	border: 2px solid;
 	border-radius: 30px;
 	text-align: center;
 }
