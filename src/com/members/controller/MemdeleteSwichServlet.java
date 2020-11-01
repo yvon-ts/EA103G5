@@ -18,6 +18,7 @@ public class MemdeleteSwichServlet extends HttpServlet {
 		res.setContentType("text/html; charset=UTF-8");
 		PrintWriter out = res.getWriter();
 		String memno = req.getParameter("memno");
+		System.out.println(memno);
 		MembersService membersSvc = new MembersService();
 		int a = membersSvc.updateStatusMembers(memno);
 		if(a==0) {

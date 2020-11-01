@@ -9,7 +9,8 @@ import javax.servlet.*;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.*;
 
-
+import com.course.model.CourseService;
+import com.course.model.CourseVO;
 import com.members.model.*;
 import com.teacher.model.*;
 
@@ -228,7 +229,7 @@ public class MembersServlet extends HttpServlet {
 			sb.append("歡迎註冊Xducation線上學習平台,");
 			sb.append("這是您的驗證碼:");
 			sb.append(vercode);
-//			sms.Process(sb, mphone);
+		    sms.Process(sb, mphone);
 			session.setAttribute("memVO", memVO);
 			session.setAttribute("vercode", vercode);
 			session.setAttribute("count", count);
@@ -475,39 +476,31 @@ public class MembersServlet extends HttpServlet {
 }
     
     private void getOne_For_Display(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException{
-    	List<String> errorMsgs = new LinkedList<String>();
-		req.setAttribute("errorMsgs", errorMsgs);
 		String memno = req.getParameter("memno");
-		String memnoReg = "MEM[0-9]{4}";
-		if (memno == null || (memno.trim()).length() == 0) {
-			errorMsgs.add("請輸入會員編號");
-			
-		}else if (!memno.trim().matches(memnoReg)) { // 以下練習正則(規)表示式(regular-expression)
-			errorMsgs.add("會員編號格式不正確");
-		}
-			
-		if (!errorMsgs.isEmpty()) {
-			RequestDispatcher failureView = req.getRequestDispatcher("/back-end/members/select_members.jsp");
-			failureView.forward(req, res);
-			return;//程式中斷
-		}
-		
+		String courseno = req.getParameter("courseno");
 		
 		MembersService membersSvc = new MembersService();
 		MembersVO membersVO = membersSvc.getOneMembers(memno);
-		if (membersVO == null) {
-			errorMsgs.add("查無資料");
-		}
-		if (!errorMsgs.isEmpty()) {
-			RequestDispatcher failureView = req
-					.getRequestDispatcher("/back-end/members/select_members.jsp");
+		Integer i = membersVO.getMemdelete();
+		if (i == 1) {
+			String inform5 = membersVO.getMemname();
+			req.setAttribute("inform5", inform5);
+			CourseService courseSvc = new CourseService();
+			CourseVO courseVO = courseSvc.getOneCourse(courseno);
+			req.setAttribute("courseVO", courseVO);
+			RequestDispatcher failureView = req.getRequestDispatcher("/front-end/course/mainCoursePage.jsp");
 			failureView.forward(req, res);
-			return;//程式中斷
+			return;
+			
+		}else {
+			req.setAttribute("membersVO", membersVO); // 資料庫取出的empVO物件,存入req
+			String url = "/front-end/members/disPlayMembers.jsp";
+			RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 listOneEmp.jsp
+			successView.forward(req, res);
+			
 		}
-		req.setAttribute("membersVO", membersVO); // 資料庫取出的empVO物件,存入req
-		String url = "/back-end/members/listOneMembers.jsp";
-		RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 listOneEmp.jsp
-		successView.forward(req, res);
+		
+		
     }
 
     

@@ -70,6 +70,8 @@
    	<url-pattern>/front-end/teacher/teacherRegister.jsp</url-pattern>
    	<url-pattern>/front-end/teacher/teacherDisplay.jsp</url-pattern>
    	<url-pattern>/front-end/teacher/teacherUpdate.jsp</url-pattern>
+   	<url-pattern>/front-end/course_assess/addCourse_assess.jsp</url-pattern>
+   	<url-pattern>/front-end/course_assess/updateCouese_assess.jsp</url-pattern>
    	<url-pattern>/front-end/lecorder/*</url-pattern>
    	<url-pattern>/front-end/lecseat/*</url-pattern>
    	<url-pattern>/front-end/course/addCourse.jsp</url-pattern>
