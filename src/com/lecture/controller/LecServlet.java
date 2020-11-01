@@ -5,10 +5,11 @@ import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 import javax.servlet.*;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.*;
 
 import com.lecture.model.*;
-
+@MultipartConfig
 public class LecServlet extends HttpServlet {
 	
 	public static byte[] getByteArray(String str) throws IOException{
@@ -75,16 +76,22 @@ public class LecServlet extends HttpServlet {
 					errorMsgs.add("講座名稱限中英文2-16字");
 				}
 				String spkrno = req.getParameter("spkrno").trim();
-				String roomno = req.getParameter("roomno").trim();
-				String priceStr = req.getParameter("lecprice").trim();
+				if ("------請選擇講師------".equals(spkrno))
+					errorMsgs.add("請選擇講師");
 				
+				String priceStr = req.getParameter("lecprice").trim();
 				if (priceStr == null || priceStr.length() == 0) {
 					errorMsgs.add("請輸入講座票價");
+					priceStr = "0";
 				} else if (!priceStr.matches("[1-9]{1}[0-9]{1,5}")) {
 					errorMsgs.add("請輸入6位數以內的數字");
+					priceStr = "0";
 				}
 				Integer lecprice = Integer.parseInt(priceStr);
 				
+				String roomno = req.getParameter("roomno").trim();
+				if ("------請選擇教室------".equals(roomno))
+					errorMsgs.add("請選擇地點");
 				
 				/***********************開始時間***********************/
 				java.sql.Timestamp lecstart = null;
@@ -92,7 +99,7 @@ public class LecServlet extends HttpServlet {
 					lecstart = java.sql.Timestamp.valueOf(req.getParameter("lecstart").trim());
 				} catch (IllegalArgumentException e) {
 					lecstart = new java.sql.Timestamp(System.currentTimeMillis());
-					errorMsgs.add("時間錯誤 servlet 47");
+					errorMsgs.add("請重新選擇開始時間");
 				}
 				/***********************結束時間***********************/
 				java.sql.Timestamp lecend = null;
@@ -100,7 +107,7 @@ public class LecServlet extends HttpServlet {
 					lecend = java.sql.Timestamp.valueOf(req.getParameter("lecend").trim());
 				} catch (IllegalArgumentException e) {
 					lecend= new java.sql.Timestamp(System.currentTimeMillis());
-					errorMsgs.add("時間錯誤 servlet 56");
+					errorMsgs.add("請重新選擇結束時間");
 				}
 				/***********************報名開始***********************/
 				java.sql.Timestamp signstart = null;
@@ -108,7 +115,7 @@ public class LecServlet extends HttpServlet {
 					signstart = java.sql.Timestamp.valueOf(req.getParameter("signstart").trim());
 				} catch (IllegalArgumentException e) {
 					signstart = new java.sql.Timestamp(System.currentTimeMillis());
-					errorMsgs.add("時間錯誤 servlet 64");
+					errorMsgs.add("時間錯誤");
 				}
 				/***********************報名結束***********************/
 				java.sql.Timestamp signend = null;
@@ -116,7 +123,7 @@ public class LecServlet extends HttpServlet {
 					signend = java.sql.Timestamp.valueOf(req.getParameter("signend").trim());
 				} catch (IllegalArgumentException e) {
 					signend = new java.sql.Timestamp(System.currentTimeMillis());
-					errorMsgs.add("時間錯誤 servlet 72");
+					errorMsgs.add("時間錯誤");
 				}
 				/***********************座位及講座資訊設定***********************/
 				String initseat = req.getParameter("initseat");
@@ -185,16 +192,22 @@ public class LecServlet extends HttpServlet {
 							errorMsgs.add("講座名稱限中英文2-16字");
 						}
 						String spkrno = req.getParameter("spkrno").trim();
-						String roomno = req.getParameter("roomno").trim();
-						String priceStr = req.getParameter("lecprice").trim();
+						if ("------請選擇講師------".equals(spkrno))
+							errorMsgs.add("請輸入講師姓名");
 						
+						String priceStr = req.getParameter("lecprice").trim();
 						if (priceStr == null || priceStr.length() == 0) {
 							errorMsgs.add("請輸入講座票價");
+							priceStr = "0";
 						} else if (!priceStr.matches("[1-9]{1}[0-9]{1,5}")) {
 							errorMsgs.add("請輸入6位數以內的數字");
+							priceStr = "0";
 						}
 						Integer lecprice = Integer.parseInt(priceStr);
 						
+						String roomno = req.getParameter("roomno").trim();
+						if (roomno.length() == 0)
+							errorMsgs.add("請輸入講座地點");
 						
 						/***********************開始時間***********************/
 						java.sql.Timestamp lecstart = null;
@@ -202,7 +215,7 @@ public class LecServlet extends HttpServlet {
 							lecstart = java.sql.Timestamp.valueOf(req.getParameter("lecstart").trim());
 						} catch (IllegalArgumentException e) {
 							lecstart = new java.sql.Timestamp(System.currentTimeMillis());
-							errorMsgs.add("時間錯誤");
+							errorMsgs.add("請重新選擇開始時間");
 						}
 						/***********************結束時間***********************/
 						java.sql.Timestamp lecend = null;
@@ -210,7 +223,7 @@ public class LecServlet extends HttpServlet {
 							lecend = java.sql.Timestamp.valueOf(req.getParameter("lecend").trim());
 						} catch (IllegalArgumentException e) {
 							lecend= new java.sql.Timestamp(System.currentTimeMillis());
-							errorMsgs.add("時間錯誤");
+							errorMsgs.add("請重新選擇結束時間");
 						}
 						/***********************報名開始***********************/
 						java.sql.Timestamp signstart = null;

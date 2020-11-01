@@ -105,10 +105,10 @@
 					講座時間&emsp;<input name="lecstart" id="f_date1" type="text"><br>
 					結束時間&emsp;<input name="lecend" id="f_date2" type="text"><br>
 					講座狀態&emsp;<select name="lecstatus" style="width:200px">
-						<option value="1">正常</option>
-						<option value="0">取消</option>
-						<option value="2">額滿</option>
-						<option value="3">結束</option>
+						<option value="1" ${lecVO.lecstatus == 1?'selected':''}>正常</option>
+						<option value="0" ${lecVO.lecstatus == 0?'selected':''}>取消</option>
+						<option value="2" ${lecVO.lecstatus == 2?'selected':''}>結束</option>
+						<option value="3" ${lecVO.lecstatus == 3?'selected':''}>額滿</option>
 					</select><br>
 					
 					講座圖片&emsp;<input name="lecpic" id="upimg" type="file"><br>

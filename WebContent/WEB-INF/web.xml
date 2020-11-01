@@ -78,7 +78,7 @@
    	<url-pattern>/front-end/course/editCourseBasicInfo.jsp</url-pattern>
    	<url-pattern>/front-end/course/editCourseChapter.jsp</url-pattern>
    	<url-pattern>/front-end/course/listMyCourse.jsp</url-pattern>
-<!--    	<url-pattern>/front-end/tracking_list/listTrackingListForUser.jsp</url-pattern> -->
+    	<url-pattern>/front-end/tracking_list/listTrackingListForUser.jsp</url-pattern>
    	<url-pattern>/front-end/test/*</url-pattern>
    	<url-pattern>/front-end/question/*</url-pattern>
    	<dispatcher>REQUEST</dispatcher>

@@ -129,7 +129,7 @@
         <div class="table-wrapper">	
 			<textarea id="textarea"><%=arr %></textarea>
 			<div>
-				<form method="post" action="<%=request.getContextPath()%>/back-end/lecture/addLec2.jsp">
+				<form method="post" action="<%=request.getContextPath()%>/back-end/lecture/addLec.jsp">
 					<input id="lecno" type="hidden"><br>
 					<input id="lecinit" name="lecinit" value="<%=newStart%>" type="hidden">
 					<input id="btn" type="submit" style="margin-top: -20px" value="確定送出，繼續新增講座">

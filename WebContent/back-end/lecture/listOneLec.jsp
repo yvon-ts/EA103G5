@@ -36,12 +36,21 @@
 	opendate = fmtdate.format(signstart);
 	closedate = fmtdate.format(signend);
 	
-	String status;
+	String status = "";
+	String statusCss = "";
 	
 	if (lecVO.getLecstatus() == 1){
 		status = "正常";
-	} else {
+		statusCss = "defaultLec";
+	} else if (lecVO.getLecstatus() == 0) {
 		status = "取消";
+		statusCss = "cancelLec";
+	} else if (lecVO.getLecstatus() == 2){
+		status = "結束";
+		statusCss = "endLec";
+	} else if (lecVO.getLecstatus() == 3){
+		status = "額滿";
+		statusCss = "soldOutLec";
 	}
 	
 	pageContext.setAttribute("lecVO", lecVO);
@@ -72,6 +81,34 @@
 	#btn2{
 		margin-top: 150px;
 		display: inline-block;
+	}
+		.defaultLec{
+		color: #fff;
+		font-weight: 600;
+		background-color: #0099cc;
+		border-radius: 20px;
+		padding: 8px 20px;
+	}
+	.cancelLec{
+		color: #fff;
+		font-weight: 600;
+		background-color: orange;
+		border-radius: 20px;
+		padding: 8px 20px;
+	}
+	.soldOutLec{
+		color: #fff;
+		font-weight: 600;
+		background-color: #ff6680;
+		border-radius: 20px;
+		padding: 8px 20px;
+	}
+	.endLec{
+		color: #333;
+		font-weight: 600;
+		background-color: #e5e5e5;
+		border-radius: 20px;
+		padding: 8px 20px;
 	}
 </style>
 </head>
@@ -134,7 +171,7 @@
 <%-- 			<td><%=closedate%></td> --%>
 <%-- 			<td>${lecVO.initseat}</td> --%>
 <%-- 			<td>${lecVO.currseat}</td> --%>
-			<td><%=status%></td>
+			<td><span class="<%=statusCss%>"><%=status%></span></td>
 			<td>${lecVO.leclmod}</td>
 			<td>
 				<form method="post"	action="<%=request.getContextPath()%>/lecture/lecture.do">

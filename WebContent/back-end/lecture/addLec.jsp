@@ -13,12 +13,21 @@
 	LecVO lecVO = (LecVO) request.getAttribute("lecVO");
 	String info = "請輸入講座資訊";
 //========================Init lecstart========================//
+	Timestamp lecinit;
+	java.util.Date paramDate;
+	java.util.Date paramDate2;
 	String param = request.getParameter("lecinit");
-	SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
-	SimpleDateFormat format2 = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
-	java.util.Date paramDate = format.parse(param);
-	java.util.Date paramDate2 = format2.parse(param);
-	Timestamp lecinit = new java.sql.Timestamp(paramDate.getTime());
+	if (param != null){
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+		SimpleDateFormat format2 = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+		paramDate = format.parse(param);
+		paramDate2 = format2.parse(param);
+		lecinit = new java.sql.Timestamp(paramDate.getTime());
+	} else {
+		lecinit = new java.sql.Timestamp(System.currentTimeMillis());
+		paramDate = new java.util.Date();
+		paramDate2 = new java.util.Date();
+	}
 	
 %>
 
@@ -69,19 +78,17 @@
 			</form><p>
 			<div class="table-wrapper">
                		<div class="row">
-						<c:if test="${not empty errorMsgs}">
-							<ul>
-								<c:forEach var="err" items="${errorMsgs}">
-									<li style="color: red">${err}</li>
-								</c:forEach>
-							</ul>
-						</c:if>
-		
 					<form method="post"	action="<%=request.getContextPath()%>/lecture/lecture.do" enctype="multipart/form-data">
 				<div class="table-title">
 					<div class="row">
 						<div id="form-area" class="col-sm-7 btm-line">
-				
+							<c:if test="${not empty errorMsgs}">
+								<ul>
+									<c:forEach var="err" items="${errorMsgs}">
+										<li style="color: #ff6680">${err}</li>
+									</c:forEach>
+								</ul>
+							</c:if>
 							<h2 style="font-weight: 700;">&nbsp;【新增講座資料】</h2>
 							
 							<input type="hidden" name="signstart" id="f_date3">
@@ -114,7 +121,7 @@
 			</div>
 			<div class="col-sm-8" style="margin-left: 4%; margin-top: 20px">
 				講座資訊
-				<input id="action" type="hidden" name="action" value="insertText"><br>
+				<input id="action" type="text" name="action" value="insertText"><br>
 				<%@ include file="/back-end/lecture/ckLec.file"%>
 			</div>
 			</form>
