@@ -69,11 +69,12 @@ public class LecAjaxServlet extends HttpServlet {
 			
 			String query = req.getParameter("query").trim();
 			String orderBy = req.getParameter("condition").trim();
-			System.out.println("ajax servlet query=" + query + " condition=" + orderBy);
+			int status= Integer.parseInt(req.getParameter("status"));
+			System.out.println("ajax servlet query=" + query + " status=" + status + " condition=" + orderBy);
 			out = res.getWriter();
 			
 			LecService lecSvc = new LecService();
-			List<LecVO> list = lecSvc.getQuery(query, orderBy);
+			List<LecVO> list = lecSvc.getQuery(query, status, orderBy);
 			
 			JSONArray arr = new JSONArray();
 			

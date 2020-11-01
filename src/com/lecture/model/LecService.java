@@ -105,8 +105,8 @@ public LecVO updateLec(String lecno, String lecname, Integer lecprice, String sp
 		return dao.getAll();
 	}
 	
-	public List<LecVO> getQuery(String query, String orderBy){
-		return dao.getTextQuery(query, orderBy);
+	public List<LecVO> getQuery(String query, int status, String orderBy){
+		return dao.getTextQuery(query, status, orderBy);
 	}
 	
 //	public List<LecVO> getQueryOrderBy(String query){

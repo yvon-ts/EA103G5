@@ -13,7 +13,7 @@ public interface LecDAO_Interface {
 	public List<LecVO> getAll();
 	
 	public void updateSeats(LecVO lecVO, Connection con);
-	public List<LecVO> getTextQuery(String query, String orderBy);
+	public List<LecVO> getTextQuery(String query, int status, String orderBy);
 //	public List<LecVO> queryOrderBy(String query);
 	
 }

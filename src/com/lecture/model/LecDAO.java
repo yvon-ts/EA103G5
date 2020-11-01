@@ -429,16 +429,37 @@ public class LecDAO implements LecDAO_Interface {
 	}
 
 	@Override
-	public List<LecVO> getTextQuery(String query, String orderBy) {
+	public List<LecVO> getTextQuery(String query, int status, String orderBy) {
 		
-		String sqlHead = "SELECT * FROM (SELECT * FROM LECTURE JOIN SPEAKER ON LECTURE.SPKRNO = SPEAKER.SPKRNO)";
+		String statusSql = "";
+		
+		switch(status) {
+		case 0:
+			statusSql = " WHERE LECSTATUS = 0";
+			break;
+		case 1:
+			statusSql = " WHERE LECSTATUS = 1";
+			break;
+		case 2:
+			statusSql = " WHERE LECSTATUS = 2";
+			break;
+		case 3:
+			statusSql = " WHERE LECSTATUS = 3";
+			break;
+		default:
+			statusSql = " ";
+		}
+		
+		String sqlHead = "SELECT * FROM (SELECT * FROM LECTURE "
+				+ " JOIN SPEAKER ON LECTURE.SPKRNO = SPEAKER.SPKRNO "
+				+ " JOIN CLASSROOM ON LECTURE.ROOMNO = CLASSROOM.ROOMNO"+ statusSql +")";
 		
 		String where = "";
 		
 		if (query.length() == 0)
 			where = " ";
 		else
-			where = " WHERE LECNAME LIKE '%"+ query +"%' OR SPKRNAME LIKE '%"+ query +"%' ";
+			where = " WHERE LECNAME LIKE '%"+ query +"%' OR SPKRNAME LIKE '%"+ query +"%' OR ROOMNAME LIKE '%" + query +"%'";
 		
 		String condition = "";
 		
@@ -458,7 +479,7 @@ public class LecDAO implements LecDAO_Interface {
 			condition = "";
 	
 	String sql = sqlHead + where + condition;
-	System.out.println("where=" + where + ", con=" + condition);
+	System.out.println("status=" + statusSql + ", where=" + where + ", con=" + condition);
 	System.out.println(sql);
 		
 		List<LecVO> list = new ArrayList<LecVO>();
@@ -522,85 +543,5 @@ public class LecDAO implements LecDAO_Interface {
 		
 		return list;
 	}
-
-//	@Override
-//	public List<LecVO> queryOrderBy(String query) {
-//		
-//		String condition = "";
-//		String sqlHead = "SELECT * FROM LECTURE ORDER BY ";
-//		
-//		switch(query) {
-//			case "price_asc":
-//				condition = " PRICE ASC";
-//			case "price_desc":
-//				condition = " PRICE DESC";
-//			case "time_asc":
-//				condition = " LECSTART ASC";
-//			case "time_desc":
-//				condition = " LECSTART DESC";
-//		}
-//		
-//		String sql = sqlHead + condition;
-//		
-//		List<LecVO> list = new ArrayList<LecVO>();
-//		LecVO lecVO = null;
-//		
-//		Connection con = null;
-//		PreparedStatement pstmt = null;
-//		ResultSet rs = null;
-//
-//		try {
-//			con = ds.getConnection();
-//			pstmt = con.prepareStatement(sql);
-//			rs = pstmt.executeQuery();
-//
-//			while (rs.next()) {
-//				lecVO = new LecVO();
-//				lecVO.setLecno(rs.getString("lecno"));
-//				lecVO.setLecname(rs.getString("lecname"));
-//				lecVO.setLecprice(rs.getInt("lecprice"));
-//				lecVO.setSpkrno(rs.getString("spkrno"));
-//				lecVO.setRoomno(rs.getString("roomno"));
-//				lecVO.setLecstart(rs.getTimestamp("lecstart"));
-//				lecVO.setLecend(rs.getTimestamp("lecend"));
-//				lecVO.setSignstart(rs.getTimestamp("signstart"));
-//				lecVO.setSignend(rs.getTimestamp("signend"));
-//				lecVO.setInitseat(rs.getString("initseat"));
-//				lecVO.setCurrseat(rs.getString("currseat"));
-//				lecVO.setLecstatus(rs.getInt("lecstatus"));
-//				lecVO.setLecinfo(rs.getBytes("lecinfo"));
-//				lecVO.setLecpic(rs.getBytes("lecpic"));
-//				lecVO.setLeclmod(rs.getTimestamp("leclmod"));
-//				list.add(lecVO);
-//			}
-//
-//		} catch (SQLException se) {
-//			throw new RuntimeException("Database error." + se.getMessage());
-//		} finally {
-//			if (rs != null) {
-//				try {
-//					rs.close();
-//				} catch (SQLException se) {
-//					se.printStackTrace();
-//				}
-//			}
-//
-//			if (pstmt != null) {
-//				try {
-//					pstmt.close();
-//				} catch (SQLException se) {
-//					se.printStackTrace();
-//				}
-//			}
-//			if (con != null) {
-//				try {
-//					con.close();
-//				} catch (Exception e) {
-//					e.printStackTrace();
-//				}
-//			}
-//		}
-//		return list;
-//	}
 
 }

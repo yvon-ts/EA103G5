@@ -92,7 +92,14 @@
                                 <span class="input-group-addon"><i class="material-icons">&#xE8B6;</i></span>
                                 <input id="query" name="query" type="text" class="form-control" placeholder="Search&hellip;">
                             </div>
-                        </div>
+                        </div><br>
+                        <select id="status" name="status">
+                        	<option value="9" selected>全選</option>
+							<option value="0">取消</option>
+							<option value="1">正常</option>
+							<option value="2">額滿</option>
+							<option value="3">結束</option>
+						</select>
                     </div>
                     <!-- search box end -->
                 </div>
@@ -199,6 +206,13 @@ $(".fc-event-title").click(function(){
 	console.log($(this).text());
 });
 
+$("#status").change(function(){
+	console.log("status="+ $("#status").val());
+ 	$("#table tbody").empty();
+ 	sendAjaxQuery();
+	console.log("ajax sent");
+});
+
 $("#no").click(function(){
 	if ($(this).hasClass("noAsc")){
 		$(this).removeClass("noAsc");
@@ -280,6 +294,7 @@ function sendAjaxQuery(){
 			data:{
 				action: "sendQuery",
 				query: $("#query").val(),
+				status: $("#status").val(),
 				condition: orderBy
 			},
 			dataType: 'json',
