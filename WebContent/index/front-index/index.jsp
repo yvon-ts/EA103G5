@@ -103,7 +103,8 @@ height:20px;
 	</style>
 </head>
 
-<body onload="connect();" onunload="disconnect();">
+<body>
+<!-- onload="connect();" onunload="disconnect();" -->
     <!-- Header Area wrapper Starts -->
     <header id="header-wrap">
         <!-- Navbar Start -->
@@ -533,13 +534,18 @@ height:20px;
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div id="testimonials" class="owl-carousel wow fadeInUp" data-wow-delay="1.2s">
                         
-                        <c:forEach var="course_assessVO" items="${course_assesslist}" varStatus="s">
+                        
+                        
+                       <c:forEach var="course_assessVO" items="${course_assesslist}" varStatus="s">
+                        
                         <div class="item">
                             <div class="testimonial-item" style="height:350px;">
                                 <div class="img-thumb">
                                 <img style="border-radius:50%;width:100px;height:100px;" src="<%=request.getContextPath()%>/front-end/members/MprofileDisplayServlet?MEMNO=${course_assessVO.memno}" alt="sing up image">
                                 </div>
                                 <div class="info">
+                                
+                                
                                     <h2><a href="#">${membersSvc.getOneMembers(course_assessVO.memno).memname}</a></h2>
                                     <h3><a href="#">${membersSvc.getOneMembers(course_assessVO.memno).nkname}</a></h3>
                                 </div>
@@ -563,6 +569,9 @@ height:20px;
                                 </div>
                             </div>
                         </div>
+                        
+                        
+                        
                           </c:forEach>
                         
                         <%-- <div class="item">
@@ -586,7 +595,7 @@ height:20px;
                                     </div>
                                 </div>
                             </div>
-                        </div> --%>
+                        </div>  --%>
                         
                         
                         <%-- <div class="item">
@@ -682,6 +691,7 @@ height:20px;
     
     <script>
     
+    
     /*-------Kyle-------*/
     var inform2 = '${inform2}';
 	if(inform2 ==='200'){
@@ -724,10 +734,32 @@ height:20px;
 		webSocket.close();
 		
 	}
+	
+	
 	/*-------Link to Back Index-------*/
+	
+	
 	$("#backIndex").click(function(){
 		window.location.href = "<%=request.getContextPath()%>/back-end/index/homepage.jsp";
 	});
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
     </script>
     
 </body>
