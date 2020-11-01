@@ -384,7 +384,7 @@ table.table .avatar {
 								<th>員工權限</th>
 								<th>																												
 									<c:forEach var="functionxVO" items="${funSvc.all}">																																
-	                   				<input type="checkbox" name="functionx" value="${functionxVO.funcno}">
+	                   				<input type="checkbox" name="functionx" value="${functionxVO.funcno}" id="${functionxVO.funcno}">
 	                   				<label for="${functionxVO.funcno}">${functionxVO.funcname}</label><br>	                   			
 	                   			    </c:forEach>
 	                   			    

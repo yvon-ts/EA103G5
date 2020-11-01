@@ -2,10 +2,12 @@ package com.employee.controller;
 
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Optional;
 
 import javax.servlet.ServletException;
+import javax.servlet.ServletOutputStream;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -26,11 +28,22 @@ public class ShowEmpPic extends HttpServlet {
 		String empno = req.getParameter("empno");
 		if (empno != null) {
 			EmployeeService empSvc = new EmployeeService();
-			Optional<EmployeeVO> employeeVO = empSvc.getEmpPicByEmpno(empno);
-			
+			Optional<EmployeeVO> employeeVO = empSvc.getEmpPicByEmpno(empno);			
 			if (employeeVO.isPresent()) {
 				OutputStream os = res.getOutputStream();
-				os.write(employeeVO.get().getEmppic());
+				try {
+					os.write(employeeVO.get().getEmppic());
+				} catch (NullPointerException ne) {
+					InputStream in = getServletContext().getResourceAsStream("/back-end/index/images/美短.jpg");
+					System.out.println(in);
+					ServletOutputStream out = res.getOutputStream();
+					byte[] img = new byte[in.available()];
+					
+					in.read(img);
+					out.write(img);
+					in.close();
+				}
+				
 			}
 		}
 	}
