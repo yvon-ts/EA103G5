@@ -146,8 +146,10 @@ tr.bg-color:hover{
 <%-- <%@ include file="page/page2.file" %> --%>
 <script>
 	$(document).ready(function(){
-		for(let i = 0 ; i < '${recordList.size()}' ; i++){
-			$('#review'+i).click(function(){
+		for(let i = 1 ; i <= '${recordList.size()}' ; i++){
+			console.log(i);
+			$('body').on('click' , '#review'+i,function(e){
+				e.preventDefault();
 				$('#myForm' + i ).submit();
 			});
 		}

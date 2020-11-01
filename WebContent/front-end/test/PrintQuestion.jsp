@@ -5,7 +5,9 @@
 
 <jsp:useBean id="testTypeSvc" scope="page" class="com.test_type.model.TestTypeService" />
 	
-	
+<%
+	System.out.println("printjsp"+(String)request.getAttribute("testno"));
+%>
 <!DOCTYPE html>
 <html>
 <head>

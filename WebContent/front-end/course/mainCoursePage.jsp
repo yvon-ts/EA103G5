@@ -400,7 +400,7 @@
 			// 購物車
 			$('body').on('click', '.shoppingcart', function () {
 				$.ajax({
-					url: "<%=request.getContextPath()%>/tracking_list/tracking_list.do",
+					url: "<%=request.getContextPath()%>/Shop/Shopping_Cart.do",
 					data: {
 						courseno: $(this).find('#courseno').val(),
 						// 						memno    : $("#memno").val(),
