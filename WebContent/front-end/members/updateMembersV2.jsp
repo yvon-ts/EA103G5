@@ -28,10 +28,15 @@
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.3/sweetalert2.js"
 	type="text/javascript"></script>
+	
+	
+	<!-- toastr -->
+	<script src="<%=request.getContextPath()%>/library/jquery/jquery-3.5.1.js"></script>
+	
+    <script src="<%=request.getContextPath()%>/library/toastr-master/build/toastr.min.js"></script>
+   <link rel="stylesheet" href="<%=request.getContextPath()%>/library/toastr-master/build/toastr.min.css">
 
 <!-- Main css -->
-<link rel="stylesheet"
-	href="<%=request.getContextPath()%>/index/front-index/assets/fonts/line-icons.css">
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/front-end/members/signIn&updateMembers_css/style.css">
 <link rel="stylesheet"
@@ -629,9 +634,11 @@ div.main {
 	</div>
 
 
-
 	<!-- JS -->
 	<script type="text/javascript">
+	
+	
+	
 		//=============提示文字=============
 		function status() {
 
@@ -675,12 +682,8 @@ div.main {
 			webSocket.onmessage = function(event) {
 				var jsonObj = JSON.parse(event.data);
 				if("chat" === jsonObj.type){
-					swal('老師資格審核中', '請耐心等候1~3個工作天，一但審核完畢，即會立刻通知', 'info');
-					
-					var messagesArea = document.getElementById("messagesArea");
-					
 					var message = jsonObj.message;
-					messagesArea.value = messagesArea.value + message;
+					toastr.info(message);
 				}
 			}
 				
@@ -690,6 +693,7 @@ div.main {
 				console.log("Disconnected!");
 			};
 		}
+		
 
 		/* function sendMessage() {
 			var inputMessage = document.getElementById("message");

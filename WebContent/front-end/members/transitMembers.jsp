@@ -371,7 +371,7 @@ h1 {
   top: 50%;
   left: 50%;
   letter-spacing: 3px;
-  margin: 170px 0 0 -220px;
+  margin: 280px 0 0 -220px;
   -webkit-animation: flash 1.3s linear infinite;
   animation: flash 1.3s linear infinite;
 }
@@ -464,7 +464,7 @@ z-index:2;
 width:100%;
 height:300px;
   letter-spacing: 3px;
-  margin: 50px 0 0 0px;
+  margin: 100px 0 0 0px;
   font-size:50px;
 text-align:center;
 }

@@ -23,6 +23,7 @@
 <link rel="stylesheet" href="<%=request.getContextPath()%>/library/bootstrap/4.5.3/css/bootstrap.min.css">
 <link rel="stylesheet" href="<%=request.getContextPath()%>/back-end/css/bootTable.css">
 <style>
+
 #pic {
 	width:80px;
 	height:80px;

@@ -3,8 +3,7 @@
 <%@ page import="com.members.model.*"%>
 
 
-<%String inform = (String)session.getAttribute("inform"); 
-Integer count = (Integer)session.getAttribute("count");%>
+
     
 <!DOCTYPE html>
 <html>
@@ -247,7 +246,7 @@ z-index: 2;
 transform-origin: 70% 88%;
     animation: hand 2s infinite;
     animation-delay: 1s;
-    margin-top: 450px;
+    margin-top: 550px;
 	margin-left: 840px;
 
 
@@ -258,10 +257,8 @@ transform-origin: 70% 88%;
 height: 400px;
 position: absolute;
 z-index: 0;
- margin-top:465px;
+ margin-top:550px;
  margin-left: 0;
- transform-origin: 70% 88%;
-    animation: head 5s infinite;
  
 
 }
@@ -270,7 +267,7 @@ z-index: 0;
 height: 400px;
 position: absolute;
 z-index: 0;
- margin-top:220px;
+ margin-top:350px;
  margin-left: 0;
  
 
@@ -619,8 +616,8 @@ position: absolute;
   background: rgba(57, 63, 84, 0.8);
   text-align: center;
   height: 200px; 
-  margin-left:900px;
-  margin-top: 140px; 
+  margin-left:950px;
+  margin-top: 300px; 
 
   
 
@@ -640,8 +637,8 @@ position: absolute;
           flex-direction: row;
   width: 200px;
   max-width: 400px;
-  margin-top:230px;
-  margin-left:1028px; 
+  margin-top:385px;
+  margin-left:1080px; 
   border-radius: 5px;
   padding:10px 10px 0px 10px;
   background: rgba(57, 63, 84, 0.8);
@@ -694,9 +691,9 @@ background: rgba(57, 63, 84, 0.8);
 color: #D0D0D0;
 
 border-radius:20px;
-border: 2px solid rgba(57, 63, 84, 0.8);;
-margin-left:1090px ;
-margin-top: 295px;
+border: 2px  rgba(57, 63, 84, 0.8);;
+margin-left:1140px ;
+margin-top: 450px;
  
 
 }
@@ -1186,24 +1183,18 @@ z-index: 10;
 
 </div>
 <script type="text/javascript">
-var inform = document.getElementById('inform').value;
-var count = document.getElementById('count').value;
-console.log(count);
+var inform = '${inform}';
+var count = '${count}';
+var messages = '${errorMsgs}';
 if(inform ==='200'){
 	swal('溫馨提醒','輸入錯誤的驗證碼達三次,得重新進行註冊!', 'info');
-}else{
-	var messages = document.getElementById('messages').value; 
-
-	if(messages==='不可為空白'){
+}else if(messages==='不可為空白'){
 		swal('驗證碼:', messages, 'warning');
-		
-		
-	}else{
+}else{
 		swal('驗證碼輸入錯誤:'+count+'次', messages, 'warning');
 	}
 	
 	
-}
 
 
 
