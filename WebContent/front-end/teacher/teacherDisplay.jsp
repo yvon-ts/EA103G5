@@ -252,8 +252,8 @@ img.fti{
       <li><a href="#tab01">Profile</a></li>
       <li><a href="#tab02">About me</a></li>
       <li><a href="#tab03">Course</a></li>
-      <li><a href="#tab04">Test</a></li>
-      <li><a href="#tab05">?</a></li>
+     <!--  <li><a href="#tab04">Test</a></li>
+      <li><a href="#tab05">?</a></li> -->
     </ul>
   </div>
   <div class="tab-select-outer">

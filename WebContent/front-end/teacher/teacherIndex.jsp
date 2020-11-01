@@ -95,7 +95,7 @@ header.masthead {
 	content: "\e92f";
 }
 </style>
-<body id="page-top">
+<body id="page-top" onload="connect();" onunload="disconnect();">
 	<!-- Navigation-->
 	<!--  <nav class="navbar navbar-expand-lg navbar-light fixed-top py-3" id="mainNav">
             <div class="container">
@@ -561,8 +561,6 @@ header.masthead {
 			</div>
 		</section>
 	</footer>
-	<input type="hidden" id="inform6" value="${requestScope.inform6}">
-
 
 
 
@@ -573,7 +571,7 @@ header.masthead {
 
 
 	<script type="text/javascript">
-		var inform6 = document.getElementById('inform6').value;
+		var inform6 = '${inform6}';
 		if (inform6 === '200') {
 			swal('申請成功', '我們會盡快審核並告知您審核結果,請耐心等候通知', 'success');
 		}
@@ -586,7 +584,55 @@ header.masthead {
 
 			swal('NO NO', '請先登入會員唷', 'warning');
 		}
+		
+		
+		var MyPoint = "/NotifyWS/${sessionScope.loginTeacherVO.tchrno}";
+		var host = window.location.host;
+		var path = window.location.pathname;
+		var webCtx = path.substring(0, path.indexOf('/', 1));
+		var endPointURL = "ws://" + window.location.host + webCtx + MyPoint;
+		var webSocket;
+
+		function connect() {
+			// create a websocket
+			webSocket = new WebSocket(endPointURL);
+
+			webSocket.onopen = function(event) {
+				console.log("Connect Success!");
+				
+			};
+
+			webSocket.onmessage = function(event) {
+				var jsonObj = JSON.parse(event.data);
+				if("chat" === jsonObj.type){
+					var message = jsonObj.message;
+					toastr.info(message);
+				}
+			}
+				
+				
+				
+			webSocket.onclose = function(event) {
+				console.log("Disconnected!");
+			};
+		}
+		
+		
+		function disconnect() {
+			webSocket.close();
+			
+		}
+		
+		
+		
+		
+		
+		
+		
+		
 	</script>
+	
+	
 	<!-- Bootstrap core JS-->
 	<script
 		src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -599,4 +645,9 @@ header.masthead {
 		src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js"></script>
 	<!-- Core theme JS-->
 </body>
+<script src="<%=request.getContextPath()%>/library/jquery/jquery-3.5.1.js"></script>
+	
+    <script src="<%=request.getContextPath()%>/library/toastr-master/build/toastr.min.js"></script>
+   <link rel="stylesheet" href="<%=request.getContextPath()%>/library/toastr-master/build/toastr.min.css">
+
 </html>

@@ -198,13 +198,13 @@ height:100px;
  text-align:center;
  color:#FF5151;
  }
-img.icon{
+/* img.icon{
 width:120px;
 height:120px;
 border-radius:10px;
 margin-left:40px;
 margin-top:40px;
-}
+} */
  
 div.main{
 background: url("<%=request.getContextPath()%>/front-end/members/assets/img/bgPic.png");
@@ -251,10 +251,10 @@ background: url("<%=request.getContextPath()%>/front-end/members/assets/img/bgPi
         <input type="radio" id="rating-1" name="coursescore" value="1">
         <label class="ratingControl-stars ratingControl-stars--1" for="rating-1">1</label>
         <p>課程評分（點一下星星來評等，若未點選，則預設五顆星)</p>
-        <textarea class="text" name="comments" placeholder="有什麼想對這門課程說的話呢" maxlength="30" >${course_assessSvc.getOneCourse_assess(sessionScope.membersVO.memno).comments}</textarea>
+        <textarea class="text" name="comments" placeholder="有什麼想對這門課程說的話呢" maxlength="30" >${course_assessSvc.checkMembers(sessionScope.loginMembersVO.memno,courseno).comments}</textarea>
         
     </div>
-     <input type="hidden" name="asesno" value="${course_assessSvc.getOneCourse_assess(sessionScope.membersVO.memno).asesno}">
+     <input type="hidden" name="asesno" value="${course_assessSvc.getOneCourse_assess(sessionScope.loginMembersVO.memno).asesno}">
     <input type="hidden" name="courseno" value="${courseno}">
     <input type="hidden" name="action" value="update">
     <input type="submit" style="font-family:'Gochi Hand'" id="register" name="signup" id="signup" class="form-submit" value="Submit"/>
@@ -287,7 +287,7 @@ background: url("<%=request.getContextPath()%>/front-end/members/assets/img/bgPi
 </body>
 <script>
 $(document).ready(function(){
-	var type = ${course_assessSvc.getOneCourse_assess(sessionScope.membersVO.memno).coursescore}
+	var type = ${course_assessSvc.getOneCourse_assess(sessionScope.loginMembersVO.memno).coursescore}
 	if(type==1){
 		$("input[name='coursescore'][value=1]").attr("checked", true);
 	}else if(type ==2){

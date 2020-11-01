@@ -199,13 +199,13 @@ height:100px;
  text-align:center;
  color:#FF5151;
  }
-img.icon{
+/* img.icon{
 width:120px;
 height:120px;
 border-radius:10px;
 margin-left:40px;
 margin-top:40px;
-}
+} */
  
 div.main{
 background: url("<%=request.getContextPath()%>/front-end/members/assets/img/bgPic.png");
@@ -255,7 +255,7 @@ background: url("<%=request.getContextPath()%>/front-end/members/assets/img/bgPi
         
     </div>
      <input type="hidden" name="courseno" value="${courseno}">
-    <input type="hidden" name="memno" value="${membersVO.memno}">
+    <input type="hidden" name="memno" value="${loginMembersVO.memno}">
     
     <input type="hidden" name="action" value="insert">
     <input type="submit" style="font-family:'Gochi Hand'" id="register" name="signup" id="signup" class="form-submit" value="Submit"/>

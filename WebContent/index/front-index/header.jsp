@@ -15,11 +15,14 @@ TeacherVO teacherVO = (TeacherVO) session.getAttribute("loginTeacherVO");
 <html lang="en">
 
 <head>
+<!-- Sweetalert2 -->
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.3/sweetalert2.css" />
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.3/sweetalert2.js"
 	type="text/javascript"></script> 
+	
+	
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -44,12 +47,12 @@ img#nav_icon{
 width:36px;
 height:36px;
 }
-img.icon{
+img.iconForNav{
 width:30px;
 height:30px;
 }
 a.nav-link{
-margin-right:25px;
+margin-right:5px;
 }
 div#navBar{
  width: -webkit-fill-available;
@@ -59,7 +62,7 @@ div#navBar{
     </style>
 </head>
 
-<body>
+<body onload="connect();" onunload="disconnect();">
    <header id="header-wrap">
         <!-- Navbar Start -->
        <nav
@@ -79,20 +82,20 @@ div#navBar{
 					<ul class="navbar-nav mr-auto w-100 justify-content-end clearfix">
 						<li class="nav-item"><a class="nav-link"
 						href="<%=request.getContextPath()%>/front-end/tracking_list/listTrackingListForUser.jsp">
-							購物車&nbsp;<img class="icon"
+							購物車&nbsp;<img class="iconForNav"
 								src='<%=request.getContextPath()%>/index/front-index/assets/img/shopping-cart.svg'>
 							
 					</a></li>
 					<li class="nav-item"><a class="nav-link"
 						href="<%=request.getContextPath()%>/front-end/course/listAllCourseForUser.jsp">
-							搜尋課程&nbsp;<img class="icon"
+							搜尋課程&nbsp;<img class="iconForNav"
 								src='<%=request.getContextPath()%>/index/front-index/assets/img/search.svg'>
 							
 					</a></li>
 					<c:if test="${not empty sessionScope.loginMembersVO}">
 					 <li class="nav-item"><a class="nav-link"
 						href="<%=request.getContextPath()%>/front-end/course/listMyCourse.jsp">
-							我的課程&nbsp;<img class="icon"
+							我的課程&nbsp;<img class="iconForNav"
 								src='<%=request.getContextPath()%>/index/front-index/assets/img/mycourse.svg'>
 							
 					</a></li>
@@ -101,14 +104,14 @@ div#navBar{
 					
 					<li class="nav-item"><a class="nav-link"
 						href="<%=request.getContextPath()%>/front-end/lecture/listAllLec.jsp">
-							名人講座&nbsp;<img class="icon"
+							名人講座&nbsp;<img class="iconForNav"
 								src='<%=request.getContextPath()%>/index/front-index/assets/img/influencer.svg'>
 							
 					</a></li>
 					<c:if test="${teacherSvc.getStatus(sessionScope.loginMembersVO.memno).tchrstatus eq '已通過'}">
 						<li class="nav-item"><a class="nav-link"
 							href="<%=request.getContextPath()%>/front-end/course/addCourse.jsp">
-								我要開課&nbsp;<img class="icon"
+								我要開課&nbsp;<img class="iconForNav"
 								src='<%=request.getContextPath()%>/index/front-index/assets/img/opencourse.svg'>
 							
 						</a></li>
@@ -195,7 +198,7 @@ div#navBar{
 
 					<c:if test="${empty sessionScope.loginMembersVO}">
 						<li class="nav-item"><a class='nav-link'
-							href='<%=request.getContextPath()%>/front-end/members/signIn.jsp'>我要登入&nbsp;<img class="icon" src='<%=request.getContextPath()%>/index/front-index/assets/img/login.svg'>
+							href='<%=request.getContextPath()%>/front-end/members/signIn.jsp'>我要登入&nbsp;<img class="iconForNav" src='<%=request.getContextPath()%>/index/front-index/assets/img/login.svg'>
 							</a>
 							</li>
 					</c:if>
@@ -223,11 +226,60 @@ div#navBar{
     <script src="<%=request.getContextPath()%>/index/front-index/assets/js/waypoints.min.js"></script>
     <script src="<%=request.getContextPath()%>/index/front-index/assets/js/main.js"></script>
 </body>
+<!-- toastr -->
+	<script src="<%=request.getContextPath()%>/library/toastr-master/build/toastr.min.js"></script>
+   <link rel="stylesheet" href="<%=request.getContextPath()%>/library/toastr-master/build/toastr.min.css">
+   <script src="<%=request.getContextPath()%>/library/jquery/jquery-3.5.1.js"></script>
+	
 <script>
+
 function status(){
 	
 	 swal('老師資格審核中', '請耐心等候1~3個工作天，一但審核完畢，即會立刻通知', 'info');
 }
+//==================webSocket=======================
+	
+		var MyPoint = "/NotifyWS/${sessionScope.loginTeacherVO.tchrno}";
+		var host = window.location.host;
+		var path = window.location.pathname;
+		var webCtx = path.substring(0, path.indexOf('/', 1));
+		var endPointURL = "ws://" + window.location.host + webCtx + MyPoint;
+		var webSocket;
+		
+	function connect() {
+			// create a websocket
+			webSocket = new WebSocket(endPointURL);
+
+			webSocket.onopen = function(event) {
+				console.log("Connect Success!");
+				
+			};
+	
+	webSocket.onmessage = function(event) {
+				var jsonObj = JSON.parse(event.data);
+				if("chat" === jsonObj.type){
+					var message = jsonObj.message;
+					toastr.info(message);
+				}
+			}
+	
+		webSocket.onclose = function(event) {
+				console.log("Disconnected!");
+			};
+		}
+	function disconnect() {
+			webSocket.close();
+			
+		}
+
+
+
+
+
+
+
+
+
 
 </script>
 

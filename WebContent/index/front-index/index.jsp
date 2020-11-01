@@ -38,6 +38,9 @@
 	<!-- Sweet Alert -->
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.3/sweetalert2.css" />
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.3/sweetalert2.js"></script>
+	<!-- toastr -->
+	 <link rel="stylesheet" href="<%=request.getContextPath()%>/library/toastr-master/build/toastr.min.css">
+	
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="<%=request.getContextPath()%>/index/front-index/assets/css/bootstrap.min.css">
     <!-- Icon -->
@@ -100,7 +103,7 @@ height:20px;
 	</style>
 </head>
 
-<body>
+<body onload="connect();" onunload="disconnect();">
     <!-- Header Area wrapper Starts -->
     <header id="header-wrap">
         <!-- Navbar Start -->
@@ -661,6 +664,9 @@ height:20px;
     </div>
     <!-- End Preloader -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+     <!-- toastr -->
+	<script src="<%=request.getContextPath()%>/library/jquery/jquery-3.5.1.js"></script>
+    <script src="<%=request.getContextPath()%>/library/toastr-master/build/toastr.min.js"></script>
     <script src="<%=request.getContextPath()%>/index/front-index/assets/js/jquery-min.js"></script>
     <script src="<%=request.getContextPath()%>/index/front-index/assets/js/popper.min.js"></script>
     <script src="<%=request.getContextPath()%>/index/front-index/assets/js/bootstrap.min.js"></script>
@@ -672,9 +678,10 @@ height:20px;
     <script src="<%=request.getContextPath()%>/index/front-index/assets/js/jquery.counterup.min.js"></script>
     <script src="<%=request.getContextPath()%>/index/front-index/assets/js/waypoints.min.js"></script>
     <script src="<%=request.getContextPath()%>/index/front-index/assets/js/main.js"></script>
-    
+   
     
     <script>
+    
     /*-------Kyle-------*/
     var inform2 = '${inform2}';
 	if(inform2 ==='200'){
@@ -687,11 +694,42 @@ height:20px;
 	function status(){
 		 swal('老師資格審核中', '請耐心等候1~3個工作天，一但審核完畢，即會立刻通知', 'info');
 	}
+	var MyPoint = "/NotifyWS/${sessionScope.loginTeacherVO.tchrno}";
+	var host = window.location.host;
+	var path = window.location.pathname;
+	var webCtx = path.substring(0, path.indexOf('/', 1));
+	var endPointURL = "ws://" + window.location.host + webCtx + MyPoint;
+	var webSocket;
+
+	function connect() {
+		// create a websocket
+		webSocket = new WebSocket(endPointURL);
+
+		webSocket.onopen = function(event) {
+			console.log("Connect Success!");
+			
+		};
+		webSocket.onmessage = function(event) {
+			var jsonObj = JSON.parse(event.data);
+			if("chat" === jsonObj.type){
+				var message = jsonObj.message;
+				toastr.info(message);
+			}
+		}
+		webSocket.onclose = function(event) {
+			console.log("Disconnected!");
+		};
+	}
+	function disconnect() {
+		webSocket.close();
+		
+	}
 	/*-------Link to Back Index-------*/
 	$("#backIndex").click(function(){
 		window.location.href = "<%=request.getContextPath()%>/back-end/index/homepage.jsp";
 	});
     </script>
+    
 </body>
-
+	
 </html>

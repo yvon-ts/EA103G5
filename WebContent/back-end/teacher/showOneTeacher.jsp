@@ -158,7 +158,7 @@ cursor:pointer;
                 <td class="number">
                  <input type="hidden" name="tchrno" value="${teacherVO.tchrno}">
                 <input type="hidden" name="action" value="updateStatus">
-                <input type="hidden" id="message" value="平台已經審核您的老師申請並寄出一封Email囉~快去查看吧^^d">
+                <input type="hidden" id="message" value="平台已經審核您的老師申請<br>並寄出一封Email囉~快去查看吧^^d">
                  <input type="submit" onclick="sendMessage();" value="送出">
               
                 

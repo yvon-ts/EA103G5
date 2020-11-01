@@ -129,9 +129,9 @@ margin:-240px 0 0 -30px;
  div#bg{
  width:850px;
  height:auto; 
- -webkit-box-shadow: 0 0 15px #8E8E8E;
+ /* -webkit-box-shadow: 0 0 15px #8E8E8E;
 	-moz-box-shadow: 0 0 15px #8E8E8E;
-	box-shadow: 0 0 15px #5B5B5B;
+	box-shadow: 0 0 15px #5B5B5B; */
 	padding-top:100px;
 	padding-bottom:50px;
  }
@@ -297,7 +297,7 @@ function status(){
 	 swal('老師資格審核中', '請耐心等候1~3個工作天，一但審核完畢，即會立刻通知', 'info');
 }
 
-var inform5 = document.getElementById('inform5').value;
+var inform5 = '${inform5}'
 
 if(inform5 == 200){
 	swal('新增成功', '感謝您撥空留下您寶貴的意見', 'success');
