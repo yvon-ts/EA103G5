@@ -37,7 +37,7 @@ public class QuestionTestServlet extends HttpServlet {
 		response.setContentType("text/html;charset=utf-8");
 
 		String action = request.getParameter("action");
-
+		
 		if ("correct".equals(action)) { // 對答案
 			correct(request, response);
 		}
@@ -116,7 +116,6 @@ public class QuestionTestServlet extends HttpServlet {
 				set.add(list.get((int) (Math.random() * (list.size()))));
 			}
 		}
-
 		return set;
 	}
 
@@ -202,12 +201,6 @@ public class QuestionTestServlet extends HttpServlet {
 
 		List<String> errorMsgs = new LinkedList<String>();
 		request.setAttribute("errorMsgs", errorMsgs);
-//
-//		if ("-1".equals(level)) {
-//			errorMsgs.add("請點選難易度");
-//			RequestDispatcher failureView = request.getRequestDispatcher("/front-end/test/SelectedTest.jsp");
-//			failureView.forward(request, response);
-//		}
 
 		AnwserListService ase = new AnwserListService();
 		List<AnwserListVO> randomQuestion = new ArrayList<>();
@@ -262,11 +255,8 @@ public class QuestionTestServlet extends HttpServlet {
 			}
 		
 
-		String testno = tse.insertToAnwserList(testsVo, randomQuestion);// 之後要抓取會員編號、課程編號與範圍編號
+		String testno = tse.insertToAnwserList(testsVo, randomQuestion);
 		
-		
-		
-	
 		
 		try {
 			request.setAttribute("testno", testno);

@@ -44,8 +44,8 @@ public class TestsService {
 	}
 	
 	public String insertToAnwserList(TestsVO test,List<AnwserListVO> list) {
-		
-		this.setTestno(dao.insertToAnwserList(test, list));
-		return dao.insertToAnwserList(test, list);
+		String testno = dao.insertToAnwserList(test, list);
+		this.setTestno(testno);
+		return testno;
 	}
 }
