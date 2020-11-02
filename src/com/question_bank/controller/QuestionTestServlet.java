@@ -224,7 +224,7 @@ public class QuestionTestServlet extends HttpServlet {
 
 		List<QuestionBankVO> QuestionList = new ArrayList<>();
 		Set<QuestionBankVO> set = new HashSet();
-		int number = 10;
+		int number = 20;
 		
 		
 		if ("simple".equals(level)) {
