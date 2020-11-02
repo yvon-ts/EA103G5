@@ -201,9 +201,6 @@
 <script>
 	$(document).ready(function(){
 		
-		
-		
-		
 		$('body').on('click' , '.shoppingcart',function(){
 			$.ajax({
 				url	:"<%=request.getContextPath()%>/Shop/Shopping_Cart.do",

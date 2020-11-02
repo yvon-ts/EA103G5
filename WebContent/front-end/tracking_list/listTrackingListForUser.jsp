@@ -59,7 +59,6 @@
 
 	<jsp:include page="/index/front-index/header.jsp" />
 	
-	
 	<jsp:useBean id="courseTypeSvc" scope="page" class="com.course_type.model.CourseTypeService" />
 	<jsp:useBean id="TrackingListSvc" scope="page" class="com.tracking_list.model.TrackingListService" />
 	
@@ -468,12 +467,13 @@
 			});
 			
 			//載入更多
+			$("#js-load-more").hide();
 			var counter = 0; /*計數器*/
 			var pageStart = 0; /*offset*/
 			var pageSize = 4; /*size*/
 			/*首次載入*/
 			
-			if('${loginMembersVO.memno}' !==''){
+			if('${loginMembersVO.memno}' !=='' && '${TrackingListSvc.getAll(loginMembersVO.memno).size()} ! = 0'){
 			
 				getData(pageStart, pageSize);
 			}
@@ -553,7 +553,7 @@
 				
 
 // 				/*隱藏more按鈕*/
-					if ( (offset + size) >= sum  || '${loginMembersVO.memno}' ==''){
+					if ( (offset + size) >= sum  ){
 						$("#js-load-more").hide();
 					}else{
 						$("#js-load-more").show();
