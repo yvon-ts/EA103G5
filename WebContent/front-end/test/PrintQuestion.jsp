@@ -31,10 +31,10 @@
 		<c:set var="type"
 			value="${testTypeSvc.getOnebyNO(question.typeno)}" />
 			
-		<div class="box1">
+		<div class="box1" >
 			<!-- 	印出題目 -->
 			<div class="question">
-				<span>${counter.count}</span>.${question.qustmt}<span><h6>(難度:${testTypeSvc.getOnebyNO(question.typeno).testdgee})(題型:${(type.testtype eq 'checkbox' )? '多選題':(type.testtype eq 'radio' )? '單選題':'填空題' })</h6></span>
+				<span>${counter.count}.</span><h5>${question.qustmt}</h5><span><h6>(難度:${testTypeSvc.getOnebyNO(question.typeno).testdgee})(題型:${(type.testtype eq 'checkbox' )? '多選題':(type.testtype eq 'radio' )? '單選題':'填空題' })</h6></span>
 			</div>
 			
 			<!-- 	印出單選/多選題 -->
@@ -58,9 +58,11 @@
 		</c:if>
 		<!-- 	印出填空題 -->
 		<c:if test="${empty question.op1}">
-			<ul>	
+			<ul class="multiple">	
+				<li>
 				<input class="form-control form-control-lg" type="${type.testtype}" name="${question.qbankno}" placeholder="請填寫答案"
-				id="class${counter.count}" />
+				class="class${counter.count}" />
+				</li>
 			</ul>
 			</div>
 		</c:if>
@@ -69,8 +71,10 @@
 	<input type='hidden' name='testno' value='<%= (String)request.getAttribute("testno")%>'>
 	<input type='hidden' name='courseno' value="<%= request.getParameter("courseno") %>">
 	<input type='hidden' name='action' value='correct'>
-	<div style="text-align: center;"><button type="button" class="btn btn-primary" id="turnin" >提交測驗</button> </div>
-	
+	<div style="text-align: center; margin:20px;">
+		<button type="button" class="btn btn-primary" id="turnin" >提交測驗</button> 
+		<button type="button" class="btn btn-primary" id="test" >模擬測驗</button> 
+	</div>
 </form>
 </div>
 
@@ -101,6 +105,19 @@
 // 	var mm = window.setInterval("Check_Time()", 1000);
 	
 	$(document).ready(function() {
+		
+		$('#test').click(function(){
+			
+			
+			for(let i = 1 ; i <= $('ul').length ; i++){
+				console.log($('.class' + i ).attr('type'));
+			}
+		});
+		
+		
+		
+		
+		
 		
 		
 		//不動min.css 此頁修改

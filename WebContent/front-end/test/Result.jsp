@@ -26,9 +26,10 @@
 <link rel="stylesheet" type="text/css" href="<%= request.getContextPath()%>/front-end/test/css/style2.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <style>
-/* 	a{ */
-/* 		margin:30px; */
-/* 	} */
+	.score{
+		    font-weight: 700;
+   			color: #09adbf;
+	}
 
 </style>
 </head>
@@ -40,7 +41,7 @@
 	
 	<div class="container-fluid" style="margin-top: 90px;">
 	
-	<div style="text-align: center; color:#0099cc;" ><h2>得分:<%=TestSvc.getOneByNO(testsVo.getTestno()).getScore()%>分</h2></div>
+	<div style="text-align: center; color:#0099cc;" ><h2 class="score">得分:<%=TestSvc.getOneByNO(testsVo.getTestno()).getScore()%>分</h2></div>
 	
 	<c:forEach var="question" items="${QuestionList}" varStatus="counter">
 		<!--         找出是哪一種類別 -->
@@ -116,9 +117,8 @@
 				id="class${counter.count}" class="class${counter.count}" style="width:200%" value="${anwserSvc.getOneByQBNO(question.qbankno,testsVo.testno).studentans}" disabled > 
 				</li>
 				<li class="fill">
-				
-					<c:if test="${anwserSvc.getOneByQBNO(question.qbankno,tse.testno).testans ne anwserSvc.getOneByQBNO(question.qbankno,testsVo.testno).studentans}">
-					<div style="color:red;margin-left:165px">${anwserSvc.getOneByQBNO(question.qbankno,testsVo.testno).testans}</div>
+				<c:if test="${anwserSvc.getOneByQBNO(question.qbankno,testsVo.testno).testans ne anwserSvc.getOneByQBNO(question.qbankno,testsVo.testno).studentans}">
+					<div style="color:red;margin-left:165px;font-weight: 700;">${anwserSvc.getOneByQBNO(question.qbankno,testsVo.testno).testans}</div>
 				</c:if>
 				</li>
 				</ul>

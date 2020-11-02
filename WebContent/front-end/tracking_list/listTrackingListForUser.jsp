@@ -67,7 +67,7 @@
 	
 	<section id="services" class="section-padding" style="padding:90px 0">
         <div class="container">
-            <div class="section-header">
+            <div class="section">
                 <h2 class="section-title wow fadeInDown" data-wow-delay="0.3s"><i class="fa fa-shopping-cart" aria-hidden="true" style="font-size:25px"></i>&nbsp;Shopping Cart</h2>
                 &nbsp;&nbsp;<i class="text-info font-weight-bold"><span id = "number"><%= productNumber%></span></i> items in your cart
                 
@@ -170,7 +170,7 @@
 <!-- 	</form> -->
 	<section id="services" class="section-padding" style="padding:90px 0">
         <div class="container">
-            <div class="section-header">
+            
                 <h2 class="section-title wow fadeInDown" data-wow-delay="0.3s"><i class="fa fa-heart" aria-hidden="true"  style="font-size:25px"></i>&nbsp;追蹤清單</h2>
                 <div class="title wow fadeInDown" data-wow-delay="0.3s"></div>
             
@@ -179,7 +179,6 @@
             </div>
             <div align="center"><button class="btn btn-common" id="js-load-more" >載入更多</button></div>
         </div>
-       </div>
     </section>
 	
 	<script>
@@ -505,7 +504,6 @@
 					
 					var JSONarray = JSON.parse(data);
 					
-// 					console.log(JSONarray);
 //	 				/****業務邏輯塊：實現拼接html內容並prepend到頁面*********/
 					var sum = JSONarray.length;
 					console.log(offset,size,sum);
