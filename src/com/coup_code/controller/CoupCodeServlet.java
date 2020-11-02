@@ -1,19 +1,17 @@
 package com.coup_code.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.LinkedList;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.coup_code.model.*;
-import com.order_master.model.OrderMasterService;
-import com.order_master.model.OrderMasterVO;
 
 /**
  * Servlet implementation class CoupCodeServlet
@@ -82,8 +80,8 @@ public class CoupCodeServlet extends HttpServlet {
 
 				/*************************** 3.查詢完成,準備轉交(Send the Success view) *************/
 				req.setAttribute("coupVO", coupVO);
-				String url = "/back-end/Coup_Code/listOneCoupCode.jsp";
-				RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 listOneEmp.jsp
+				String url = "/front-end/Shop/Checkout.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url); 
 				successView.forward(req, res);
 
 				/*************************** 其他可能的錯誤處理 *************************************/
@@ -244,18 +242,8 @@ public class CoupCodeServlet extends HttpServlet {
 				}
 
 				/*************************** 2.開始查詢資料 *****************************************/
-				System.out.println(memno);
 				CoupCodeService coupSvc = new CoupCodeService();
 				List<CoupCodeVO> coupVO = coupSvc.getMemberCoup(memno);
-//				if (coupVO == null) {
-//					errorMsgs.add("查無資料");
-//				}
-//				// Send the use back to the form, if there were errors
-//				if (!errorMsgs.isEmpty()) {
-//					RequestDispatcher failureView = req.getRequestDispatcher("/back-end/Order_Master/OrderMasterDB.jsp");
-//					failureView.forward(req, res);
-//					return;// 程式中斷
-//				}
 
 				/*************************** 3.查詢完成,準備轉交(Send the Success view) *************/
 				req.setAttribute("coupVO", coupVO); // 資料庫取出的ordVO物件,存入req
@@ -267,6 +255,31 @@ public class CoupCodeServlet extends HttpServlet {
 			} catch (Exception e) {
 				errorMsgs.add("無法取得資料:" + e.getMessage());
 				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/members/indexV1.jsp");
+				failureView.forward(req, res);
+			}
+		}
+		
+		if ("getOne_For_Checkout".equals(action)) { // 來自select_page.jsp的請求
+			req.setCharacterEncoding("UTF-8");
+			System.out.println(123);
+			try {
+				/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
+				String coupno = req.getParameter("coupno");
+				System.out.println(coupno);
+
+				/*************************** 2.開始查詢資料 *****************************************/
+				CoupCodeService coupSvc = new CoupCodeService();
+				int discount = coupSvc.GetForCheckout(coupno);
+				String discount1 = String.valueOf(discount);
+
+				/*************************** 3.查詢完成,準備轉交(Send the Success view) *************/
+				PrintWriter out= res.getWriter();
+				out.write(discount1);
+				out.flush();
+				out.close();
+				/*************************** 其他可能的錯誤處理 *************************************/
+			} catch (Exception e) {
+				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/Coup_Code/select_page.jsp");
 				failureView.forward(req, res);
 			}
 		}

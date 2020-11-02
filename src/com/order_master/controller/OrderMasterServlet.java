@@ -182,9 +182,7 @@ public class OrderMasterServlet extends HttpServlet {
 					
 					CoupCodeService coupSvc = new CoupCodeService();
 					CoupCodeVO coupCodeVO = coupSvc.getOneCoupCode(coupno);
-					Integer discamt = coupCodeVO.getDiscamt();
 
-					orderamt = orderamt - discamt;
 					coupSvc.updateCoupCode(coupno, 1);
 				} else {
 					coupno = null;
