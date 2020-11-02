@@ -7,14 +7,11 @@ import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.coup_code.model.*;
-import com.order_master.model.OrderMasterService;
-import com.order_master.model.OrderMasterVO;
 
 /**
  * Servlet implementation class CoupCodeServlet
