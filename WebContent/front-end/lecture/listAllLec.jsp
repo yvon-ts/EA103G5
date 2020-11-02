@@ -39,12 +39,27 @@
     	border-radius: 10px;
     	margin-left: 60px;
 	}
-	/*不知為何只有dev tool開著才能看*/
  	.chosen {
  	    color: #0099CC; 
  	    border-color: #0099CC; 
 	    background-color: #fff; 
  	} 
+ 	.whichPage{
+		border: 0;
+		outline: none;
+		color: #0099cc;
+		font-weight: 600;
+		font-size: 1.2em;
+		font-family: monospace;
+		border-radius: 50px;
+		padding: 3px 10px;
+	}
+	.onPage{
+		border: 0;
+		outline: none;
+		color: #fff;
+		background-color: #0099cc;
+	}
 </style>
 </head>
 
@@ -100,142 +115,163 @@
             		<input id="query" name="query" type="text" placeholder="&nbsp;&rArr;&nbsp;想找什麼呢？">
             	</div>
             	<div id="orderBy" style="display: inline-block">
-            		<div id="priceAsc" class="btn" style="padding: 0;"><button id="btnPriceAsc" class="filter btn btn-common " style="margin: 0 10px;">價格低至高</button></div>
-            		<div id="priceDesc" class="btn" style="padding: 0"><button id="btnPriceDesc" class="filter btn btn-common" style="margin: 0 10px;">價格高至低</button></div>
-            		<div id="timeAsc" class="btn" style="padding: 0"><button id="btnTimeAsc" class="filter btn btn-common" style="margin: 0 10px;">時間新到舊</button></div>
-            		<div id="timeDesc" class="btn" style="padding: 0"><button id="btnTimeDesc" class="filter btn btn-common" style="margin: 0 10px;">時間舊到新</button></div>
+            		<div class="btn" style="padding: 0;"><button id="btnPrice" class="filter btn btn-common priceAsc" style="margin: 0 10px;">依價格&nbsp;<i class="fa fa-sort"></i></button></div>
+            		<div class="btn" style="padding: 0"><button id="btnTime" class="filter btn btn-common timeAsc" style="margin: 0 10px;">依時間&nbsp;<i class="fa fa-sort"></i></button></div>
+            		<div class="btn" style="padding: 0"><button id="canBuy" class="filter btn btn-common" style="margin: 0 10px;">只顯示可購買項目</button></div>
+            		<div class="btn" style="padding: 0"><button id="buyAll" class="filter btn btn-common" style="margin: 0 10px;">顯示全部</button></div>
             	</div>
             </div>
             <div id="row" class="row">
-<% int listindex = 0; %>
-	<c:forEach var="lecVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
-	<%
-			//時間設定
-			LecVO lecVO = list.get(listindex + pageIndex);
-			Timestamp lecstart = lecVO.getLecstart();
-			SimpleDateFormat fmtdate = new SimpleDateFormat("dd");
-			SimpleDateFormat fmtmonth = new SimpleDateFormat("MMM");
-			SimpleDateFormat fmttime = new SimpleDateFormat("HH:mm");
-			startdate = fmtdate.format(lecstart);
-			startmonth = fmtmonth.format(lecstart);
-			starttime = fmttime.format(lecstart);
-			//講者姓名
-			SpkrService spkrSvc = new SpkrService();
-			SpkrVO spkrVO = spkrSvc.getOne(lecVO.getSpkrno());
-			String spkrname = spkrVO.getSpkrname();
-			//講座狀態
-			int lecstatus = lecVO.getLecstatus();
-			//講座資訊
-			lecinfo = "講座資訊更新中";
-				try{
-					//CKeditor - Bytes to String
-					byte[] b = lecVO.getLecinfo();
-					if (b != null) {
-						String bString = new String(b);
-						lecinfo = bString.substring(0, 23);
-					} else {
-						System.out.println("b is null");
-					}
-				} catch (Exception e){
-					lecinfo = "講座資訊更新中";
-					e.printStackTrace();
-				}
-		%>
-   <div class="col-lg-1 col-md-12 col-sm-12 col-xs-12 for-align"></div>
-   <div class="div col-lg-10 col-md-12 col-sm-12 col-xs-12 box-item wow fadeInLeft" data-wow-delay="0.3s">
-        <div class="daydiv">
-            <span class="date"><%=startdate%></span><br>
-            <span class="month"><%=startmonth%></span><br>
-            <span class="time"><%=starttime%></span><br>
-        </div>
-        <div class="pic">
-            <img src="<%=request.getContextPath()%>/lecture/picreader?lecno=${lecVO.lecno}">
-        </div>
-        <div class="lec-txt">
-        	<p class="title">${lecVO.lecname}</p><br>
-        	<p class="spkr">【<%=spkrname%>】</p>
-        	<p class="info"><%=lecinfo%></p>
-        	<p><span class="price"><i class="lni-rocket"></i>&nbsp;${lecVO.lecprice} NTD</span></p>
-        </div>
-        <div class="more">
-        	<form method="post" action="<%=request.getContextPath()%>/lecture/lecture.do">
-        	<% if (lecstatus == 1){%>
-        		<input type="submit" class="btn btn-common" value="我有興趣">
-        	<%} else if (lecstatus == 0) {%>
-        		<input type="submit" class="btn btn-common" style="background-color: orange;" value="活動延期">
-        	<%} else if (lecstatus == 2) {%>
-        		<input type="submit" class="btn btn-common" style="background-color: #e5e5e5; color: #333" value="活動結束">
-        	<%} else if (lecstatus == 3) {%>
-        		<input type="submit" class="btn btn-common" style="background-color: #ff6680" value="名額已滿">
-        	<%}%>
-        		<input type="hidden" name="lecno" value="${lecVO.lecno}">
-        		<input type="hidden" name="action" value="frontOne">
-        	</form>
-        </div>
-    </div>
-    <% listindex++;%>
-    <div class="col-lg-1 col-md-12 col-sm-12 col-xs-12 for-align"></div>
-    </c:forEach>
-                    </div>
-                </div>
-
-    </section>
+				<% int listindex = 0; %>
+					<c:forEach var="lecVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
+						<%		//時間設定
+								LecVO lecVO = list.get(listindex + pageIndex);
+								Timestamp lecstart = lecVO.getLecstart();
+								SimpleDateFormat fmtdate = new SimpleDateFormat("dd");
+								SimpleDateFormat fmtmonth = new SimpleDateFormat("MMM");
+								SimpleDateFormat fmttime = new SimpleDateFormat("HH:mm");
+								startdate = fmtdate.format(lecstart);
+								startmonth = fmtmonth.format(lecstart);
+								starttime = fmttime.format(lecstart);
+								//講者姓名
+								SpkrService spkrSvc = new SpkrService();
+								SpkrVO spkrVO = spkrSvc.getOne(lecVO.getSpkrno());
+								String spkrname = spkrVO.getSpkrname();
+								//講座狀態
+								int lecstatus = lecVO.getLecstatus();
+								//講座資訊
+								lecinfo = "講座資訊更新中";
+									try{
+										//CKeditor - Bytes to String
+										byte[] b = lecVO.getLecinfo();
+										if (b != null) {
+											String bString = new String(b);
+											lecinfo = bString.substring(0, 23);
+										} else {
+											System.out.println("b is null");
+										}
+									} catch (Exception e){
+										lecinfo = "講座資訊更新中";
+										e.printStackTrace();
+									}
+						%>
+					   <div class="col-lg-1 col-md-12 col-sm-12 col-xs-12 for-align"></div>
+					   <div class="div col-lg-10 col-md-12 col-sm-12 col-xs-12 box-item wow fadeInLeft" data-wow-delay="0.3s">
+					        <div class="daydiv">
+					            <span class="date"><%=startdate%></span><br>
+					            <span class="month"><%=startmonth%></span><br>
+					            <span class="time"><%=starttime%></span><br>
+					        </div>
+					        <div class="pic">
+					            <img src="<%=request.getContextPath()%>/lecture/picreader?lecno=${lecVO.lecno}">
+					        </div>
+					        <div class="lec-txt">
+					        	<p class="title">${lecVO.lecname}</p><br>
+					        	<p class="spkr">【<%=spkrname%>】</p>
+					        	<p class="info"><%=lecinfo%></p>
+					        	<p><span class="price">NT$${lecVO.lecprice}</span></p>
+					        </div>
+					        <div class="more">
+					        	<form method="post" action="<%=request.getContextPath()%>/lecture/lecture.do">
+					        	<% if (lecstatus == 1){%>
+					        		<input type="submit" class="btn btn-common" value="我有興趣">
+					        	<%} else if (lecstatus == 0) {%>
+					        		<input type="submit" class="btn btn-common" style="background-color: orange;" value="活動延期">
+					        	<%} else if (lecstatus == 2) {%>
+					        		<input type="submit" class="btn btn-common" style="background-color: #e5e5e5; color: #333" value="活動結束">
+					        	<%} else if (lecstatus == 3) {%>
+					        		<input type="submit" class="btn btn-common" style="background-color: #ff6680" value="名額已滿">
+					        	<%}%>
+					        		<input type="hidden" name="lecno" value="${lecVO.lecno}">
+					        		<input type="hidden" name="action" value="frontOne">
+					        	</form>
+					        </div>
+					    </div>
+					    <% listindex++;%>
+					<div class="col-lg-1 col-md-12 col-sm-12 col-xs-12 for-align"></div>
+				</c:forEach>
+	         </div>
+	     </div>
+  </section>
     <!-- Features Section End -->
-	
-	<%@ include file="/back-end/pool/page2.file" %>
-	<form method="post"	action="<%=request.getContextPath()%>/back-end/speaker/select_page.jsp">
-	<input type="submit" value="回首頁"></form>
+	<div style="text-align: center">
+		<%@ include file="/back-end/pool/page2.file" %>
+	</div>
 	<%@ include file="/index/front-index/footer.jsp" %>
 	<script>
 	var orderBy = "";
-	$("#orderBy div").click(function(){
-		if ($(this).attr("id") === "priceAsc"){
-			//$("#btnPriceAsc").html("<i class='lni-rocket'>價格低至高");
-			orderBy = "priceAsc";
-			$("#priceAsc button").addClass("chosen");
-			$("#priceDesc button").removeClass("chosen");
-			$("#timeAsc button").removeClass("chosen");
-			$("#timeDesc button").removeClass("chosen");
-		}
-			
-		else if ($(this).attr("id") === "priceDesc"){
+	var status = "9";
+	
+	// toggle 價格排序
+	$("#btnPrice").click(function(){
+		if ($(this).hasClass("priceAsc")){
+			$(this).removeClass("priceAsc");
+			$(this).addClass("priceDesc");
 			orderBy = "priceDesc";
-			$("#priceDesc button").addClass("chosen");
-			$("#priceAsc button").removeClass("chosen");
-			$("#timeAsc button").removeClass("chosen");
-			$("#timeDesc button").removeClass("chosen");
+		} else if ($(this).hasClass("priceDesc")){
+			$(this).removeClass("priceDesc");
+			$(this).addClass("priceAsc");
+			orderBy = "priceAsc";
+		} else{
+			orderBy = "";
 		}
-		else if ($(this).attr("id") === "timeAsc"){
+		//console.log("orderBy="+orderBy);
+		$("#row").empty();
+		sendAjaxQuery();
+	});
+	
+	// toggle 時間排序
+	$("#btnTime").click(function(){
+		if ($(this).hasClass("timeAsc")){
+			$(this).removeClass("timeAsc");
+			$(this).addClass("timeDesc");
 			orderBy = "timeDesc";
-			$("#timeAsc button").addClass("chosen");
-			$("#priceDesc button").removeClass("chosen");
-			$("#priceAsc button").removeClass("chosen");
-			$("#timeDesc button").removeClass("chosen");
-		}
-		else if ($(this).attr("id") === "timeDesc"){
+		} else if ($(this).hasClass("timeDesc")){
+			$(this).removeClass("timeDesc");
+			$(this).addClass("timeAsc");
 			orderBy = "timeAsc";
-			$("#timeDesc button").addClass("chosen");
-			$("#priceAsc button").removeClass("chosen");
-			$("#priceDesc button").removeClass("chosen");
-			$("#timeAsc button").removeClass("chosen");
-		}
-		else{
+		} else{
 			orderBy = "";
 		}
 		
 		//console.log("orderBy="+orderBy);
 		$("#row").empty();
 		sendAjaxQuery();
-		//console.log("ajax sent");
 	});
 	
+	// 僅顯示可購買項目
+	$("#canBuy").click(function(){
+		if (!$(this).hasClass("canBuy")){
+			$(this).addClass("canBuy");
+			$("#buyAll").removeClass("buyAll");
+			status = 1;
+			$("#row").empty();
+			sendAjaxQuery();
+		} else {
+			status = 1;
+		}
+	});
+	
+	// 顯示全部
+	$("#buyAll").click(function(){
+		if (!$(this).hasClass("buyAll")){
+			$(this).addClass("buyAll");
+			$("#canBuy").removeClass("canBuy");
+			status = 9;
+			$("#row").empty();
+			sendAjaxQuery();
+		} else {
+			status = 9;
+		}
+	});
+	
+	// 關鍵字搜尋
 	$("#query").keyup(function(e){
 		 if (e.keyCode === 13){
-		 	//console.log("press");
 		 	$("#row").empty();
 		 	sendAjaxQuery();
 		 }
-		});
+	});
 	
 	function sendAjaxQuery(){
 		$.ajax({
@@ -245,11 +281,11 @@
  		data:{
  			action: "sendQuery",
  			query: $("#query").val(),
- 			condition: orderBy
+ 			condition: orderBy,
+ 			status: status
  		},
  		dataType: 'json',
  		success: function(data){
-//   	  			var lecs = JSON.parse(data);
 			var lecs = data;
  			if (lecs.length != 0){
  				
@@ -275,7 +311,7 @@
 	          </div>
 	          <div class="more">
 	  	          	<form method="post" action="<%=request.getContextPath()%>/lecture/lecture.do">
-	          		<input type="submit" class="btn btn-common" value="我有興趣">
+	          		<input type="submit" class="btn btn-common status" value="我有興趣">
 	          		<input type="hidden" name="lecno">
 	          		<input type="hidden" name="action" value="frontOne">
 	          	</form>
@@ -285,7 +321,7 @@
 	  			var lecno = lecs[i].lecno;
 	  	  			var srcHead = "<%=request.getContextPath()%>/lecture/picreader?lecno=";
 	  			var src = srcHead + lecno;
-	  			var price = `<i class="lni-rocket"></i>&nbsp;`+lecs[i].lecprice+` NTD`;
+	  			var price = `NT$`+lecs[i].lecprice;
 	  			
 				//日期  	  			
 	  			$("#lec"+i+" div .date").text(lecs[i].startdate);
@@ -301,6 +337,17 @@
 	  			//圖片
 	  			$("#lec"+i+" img").attr("src", src)
 	  			//按鈕
+	  			if(lecs[i].lecstatus == 0){
+	  				$("#lec"+i+" .status").val("活動延期");
+	  				$("#lec"+i+" .status").attr("style", "background-color: orange");
+	  			} else if(lecs[i].lecstatus == 2){
+	  				$("#lec"+i+" .status").val("活動結束");
+	  				$("#lec"+i+" .status").attr("style", "background-color: #e5e5e5; color: #333;");
+	  			} else if(lecs[i].lecstatus == 3){
+	  				$("#lec"+i+" .status").val("名額已滿");
+	  				$("#lec"+i+" .status").attr("style", "background-color: #ff6680");
+	  			}
+	  				
 	  			$("#lec"+i+" div input[name='lecno']").attr("value", lecs[i].lecno);
 	  			$("#row").append(align);
 	  			}

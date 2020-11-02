@@ -12,7 +12,7 @@
 		memno = memVO.getMemno();
 		System.out.println("listByMemno的memno="+ memno);
 	} else {
-		System.out.println("listByMemno memno= == null");
+		memno = (String) request.getAttribute("memno");
 	}
 	
 	LodrService lodrSvc = new LodrService();
@@ -41,7 +41,7 @@
 <div id="padd">padd</div>
 <div id="table-area" class="container-xl">
     <div class="table-responsive">
-<%--     <img id="head" src="<%=request.getContextPath()%>/index/front-index/assets/img/head/lodr.png"> --%>
+    <img id="head" src="<%=request.getContextPath()%>/index/front-index/assets/img/head/lodr.png">
         <div class="table-wrapper">			
             <div class="table-title">
                 <div class="row">
@@ -78,12 +78,14 @@
 			<td>${lodrVO.lodrtime}</td>
             <td>
 			<form method="post" action="<%=request.getContextPath()%>/front-end/lecseat/listWithQRcode.jsp">
+				<input type="hidden" name="memno" value="<%=memno%>">
             	<input type="hidden" name="lodrno" value="${lodrVO.lodrno}">
 				<button type="submit" class="btn view"><i class="material-icons">&#xE417;</i></button>
             </form>
             </td>
             <td>
             	<form method="post" action="<%=request.getContextPath()%>/front-end/lecseat/cancelSeatMem.jsp">
+            	<input type="hidden" name="memno" value="<%=memno%>">
             	<input type="hidden" name="lodrno" value="${lodrVO.lodrno}">
 				<button type="submit" class="btn view" style="color: orange"><i class="material-icons">&#xE254;</i></button>
             </form>
@@ -94,17 +96,9 @@
                           
                 </tbody>
             </table>
-            <%@ include file="/back-end/pool/page2.file" %>
-            <div class="clearfix">
-                <ul class="pagination">
-                    <li class="page-item disabled"><a href="#">Previous</a></li>
-                    <li class="page-item"><a href="#" class="page-link">1</a></li>
-                    <li class="page-item"><a href="#" class="page-link">2</a></li>
-                    <li class="page-item active"><a href="#" class="page-link">3</a></li>
-                    <li class="page-item"><a href="#" class="page-link">4</a></li>
-                    <li class="page-item"><a href="#" class="page-link">5</a></li>
-                    <li class="page-item"><a href="#" class="page-link">Next</a></li>
-                </ul>
+            
+            <div style="text-align: right">
+				<%@ include file="/back-end/pool/page2.file" %>
             </div>
         </div>
     </div>        

@@ -77,29 +77,28 @@
 		border-radius:10px;
 	}
 
-
-@keyframes hand {
-	0% { transform: rotate(0deg); }
-	50% { transform: rotate(5deg) }
-	100% { transform: rotate(0deg); }
-}
-img#nav_icon{
-width:36px;
-height:36px;
-}
-img.icon{
-width:30px;
-height:30px;
-}
-
-.star{
-width:20px;
-height:20px;
-}
-.owl-carousel .owl-item img {
-    display: block;
-    width:auto;
-}
+	@keyframes hand {
+		0% { transform: rotate(0deg); }
+		50% { transform: rotate(5deg) }
+		100% { transform: rotate(0deg); }
+	}
+	img#nav_icon{
+	width:36px;
+	height:36px;
+	}
+	img.icon{
+	width:30px;
+	height:30px;
+	}
+	
+	.star{
+	width:20px;
+	height:20px;
+	}
+	.owl-carousel .owl-item img {
+	    display: block;
+	    width:auto;
+	}
 	</style>
 </head>
 
@@ -485,7 +484,7 @@ height:20px;
         	<p class="title">${lecVO.lecname}</p><br>
         	<p class="spkr">【<%=spkrname%>】</p>
         	<p class="info"><%=lecinfo%></p>
-        	<p><span class="price"><i class="lni-rocket"></i>&nbsp;${lecVO.lecprice} NTD</span></p>
+        	<p><span class="price">NT$${lecVO.lecprice}</span></p>
         </div>
         <div class="more">
         	<form method="post" action="<%=request.getContextPath()%>/lecture/lecture.do">

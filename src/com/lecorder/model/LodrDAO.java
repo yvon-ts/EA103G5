@@ -20,7 +20,7 @@ public class LodrDAO implements LodrDAO_Interface{
 	
 	private static final String GETALL_BY_MEMNO = "SELECT * FROM LEC_ORDER WHERE MEMNO = ? ORDER BY LODRNO";
 	
-	private static final String CANCEL_SEAT = "UPDATE LEC_ORDER SET LECAMT = ?, LODRSEAT = ?, LODRSTATUS = '已變更', LODRLMOD = ? WHERE LODRNO = ?";
+	private static final String CANCEL_SEAT = "UPDATE LEC_ORDER SET LECAMT = ?, LODRSEAT = ?, LODRSTATUS = ?, LODRLMOD = ? WHERE LODRNO = ?";
 	/////////////////////////////////////////////////////////////////////////////
 	private static final String UPDATE_STMT =
 			"UPDATE LEC_ORDER SET LECAMT = ?, LODRSTATUS = ?, LODRLMOD = ? WHERE LODRNO = ?";
@@ -373,45 +373,6 @@ public class LodrDAO implements LodrDAO_Interface{
 		return list;
 	}
 	
-	public void cancelSeat(LodrVO lodrVO, Connection con) {
-		
-		//與lecseat共用連線
-		PreparedStatement pstmt = null;
-		
-		try {
-			con = ds.getConnection();
-			pstmt = con.prepareStatement(CANCEL_SEAT);
-			
-			pstmt.setInt(1, lodrVO.getLecamt());
-			pstmt.setString(2, lodrVO.getLodrseat());
-			pstmt.setTimestamp(3, lodrVO.getLodrlmod());
-			pstmt.setString(4, lodrVO.getLodrno());
-			
-			pstmt.executeUpdate();
-			
-		} catch (SQLException se) {
-			if (con != null) {
-				try {
-					System.err.println("Transaction is being");
-					System.err.println("rolled back from lodr");
-					con.rollback();
-				} catch (SQLException excep) {
-					throw new RuntimeException("rollback error occured. "
-							+ excep.getMessage());
-				}
-			}
-			throw new RuntimeException("A database error occured. "
-					+ se.getMessage());
-		} finally {
-			if (pstmt != null) {
-				try {
-					pstmt.close();
-				} catch (SQLException se) {
-					se.printStackTrace(System.err);
-				}
-			}
-		}
-	}
 	@Override
 	public void updateOne(LodrVO lodrVO, List<LecseatVO> list, LecVO lecVO) {
 
@@ -426,8 +387,12 @@ public class LodrDAO implements LodrDAO_Interface{
 			
 			pstmt.setInt(1, lodrVO.getLecamt());
 			pstmt.setString(2, lodrVO.getLodrseat());
-			pstmt.setTimestamp(3, lodrVO.getLodrlmod());
-			pstmt.setString(4, lodrVO.getLodrno());
+			if (lodrVO.getLecamt() != 0)
+				pstmt.setString(3, "已變更");
+			else
+				pstmt.setString(3, "已取消");
+			pstmt.setTimestamp(4, lodrVO.getLodrlmod());
+			pstmt.setString(5, lodrVO.getLodrno());
 			
 			pstmt.executeUpdate();
 						

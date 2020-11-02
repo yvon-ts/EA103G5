@@ -8,7 +8,7 @@
 <%@ page import="com.lecorder.model.*" %>
 <%@ page import="com.lecseat.model.*" %>
 
-<%
+<%	String memno = request.getParameter("memno");
 	//lecseat
 	String lodrno = request.getParameter("lodrno").trim();
 	if(lodrno.length() == 0){
@@ -114,9 +114,10 @@
             </table>
             <div class="clearfix" style="padding-bottom: 50px">
                <div class="pagination">
-               <form id="modifyForm"method="post" action="<%=request.getContextPath()%>/lecorder/lecorder.do">
+               <form id="modifyForm" method="post" action="<%=request.getContextPath()%>/lecorder/lecorder.do">
 			       <input type="hidden" name="lodrno" value="<%=lodrno%>">
 			       <input type="hidden" name="lecno" value="<%=lecno%>">
+			       <input type="hidden" name="memno" value="<%=memno%>">
 			       <input id="count" type="hidden" name="count" readonly>
 			 	   <input id="lecamt" type="hidden" name="lecamt" readonly>
 				   <input id="lecprice" type="hidden" value=<%=lecprice%> readonly>
@@ -151,7 +152,7 @@
 						<li>講座地點：<%=roomname%>教室</li>
 						</ul>
 						<form method="post" action="<%=request.getContextPath()%>/front-end/lecorder/listByMemno.jsp">
-						<input type="text" name="memno"><br>
+						<input type="hidden" name="memno" value="<%=memno%>"><br>
 						<button id="return" class="btn btn-border" style="border: 1px solid #0099cc;">回上頁</button>
 						</form>
 						<button id="confirm" class="hide btn btn-border" style="border: 1px solid #0099cc;">確定變更</button>
@@ -185,6 +186,11 @@
 		 var currseat = $("#defaultseat").val();
 		 $("#currseat").val(currseat);
 		 
+		 if (currseat.indexOf("*") === -1){
+			 $("#modifyForm").attr("action", "<%=request.getContextPath()%>/front-end/lecseat/cancelSeatMem.jsp");
+		 		console.log($("#modifyForm").attr("action"));
+		 }
+			 
 	});
 	
 	$("#confirm").click(function(){
