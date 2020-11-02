@@ -232,11 +232,11 @@ if( inform3 ==='200'){
 	swal('恭喜啦', '您已經成為我們的會員囉<br>趕快來登入並且開始瀏覽課程吧', 'success');
 }
 
-var message = '${errorMsgs.get(0)}';
+/* var message = '${errorMsgs.get(0)}';
 if(message.length !== 0){
 	 swal('注意', message, 'warning');
 }
-
+ */
 
 
 

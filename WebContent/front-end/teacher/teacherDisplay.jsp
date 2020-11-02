@@ -285,7 +285,7 @@ img.fti{
                                 <input type="hidden" id="bankvalue"  value="${loginTeacherVO.bankacc}">
                             </div>
                             <div class="form-group">
-                                <h5 class="h5">你的專業證照<img class="pic" src="<%=request.getContextPath()%>/front-end/teacher/teacherRegister_css/images/certification.svg"></h5>
+                                <h5 class="h5">專業證照<img class="pic" src="<%=request.getContextPath()%>/front-end/teacher/teacherRegister_css/images/certification.svg"></h5>
                                 <p>點選可放大檢視</p>
                                 <table id="license">
                                 <th><img  class="pimg" src="<%=request.getContextPath()%>/front-end/teacher/TchrcertDisplayServlet1?TCHRNO=${loginTeacherVO.tchrno}" ></th>

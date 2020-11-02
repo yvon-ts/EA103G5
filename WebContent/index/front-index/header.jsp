@@ -213,6 +213,8 @@ div#navBar{
     </header>
 
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="<%=request.getContextPath()%>/library/jquery/jquery-3.5.1.js"></script>
+	
     <script src="<%=request.getContextPath()%>/index/front-index/assets/js/jquery-min.js"></script>
     <script src="<%=request.getContextPath()%>/index/front-index/assets/js/popper.min.js"></script>
     <script src="<%=request.getContextPath()%>/index/front-index/assets/js/bootstrap.min.js"></script>
@@ -229,8 +231,7 @@ div#navBar{
 <!-- toastr -->
 	<script src="<%=request.getContextPath()%>/library/toastr-master/build/toastr.min.js"></script>
    <link rel="stylesheet" href="<%=request.getContextPath()%>/library/toastr-master/build/toastr.min.css">
-   <script src="<%=request.getContextPath()%>/library/jquery/jquery-3.5.1.js"></script>
-	
+   
 <script>
 
 function status(){

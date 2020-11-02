@@ -26,10 +26,12 @@ public class membersimgToDB extends HttpServlet {
 	private static final String USER = "XDU";
 	private static final String PASSWORD = "123456";
 	private static final String SQL = "UPDATE MEMBERS SET MPROFILE = ? WHERE MEMNO = ?";
-
+	private static final String SQL2 = "UPDATE TEACHER SET TCHRCERT1 = ?,TCHRCERT2 = ? WHERE MEMNO = ?";
 	public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		Connection con = null;
+		Connection con2 = null;
 		PreparedStatement pstmt = null;
+		PreparedStatement pstmt2 =null;
 		PrintWriter out = res.getWriter();
 		req.setCharacterEncoding("UTF-8");
 		res.setContentType("text/plain; charset=UTF-8");
@@ -42,17 +44,18 @@ public class membersimgToDB extends HttpServlet {
 	
 			Class.forName("oracle.jdbc.driver.OracleDriver");
 			con = DriverManager.getConnection(URL, USER, PASSWORD);
+			
 			pstmt = con.prepareStatement(SQL);
-
+			
 			for (int i = 1; i <= 30; i++) {
 				if(i >= 10) {
-					byte[] pic = getPictureByteArray(ct.getRealPath("/front-end/members/addMembers_css/images/t00" + i + ".jpg"));
+					byte[] pic = getPictureByteArray(ct.getRealPath("/front-end/members/addMembers_css/images/m00" + i + ".jpg"));
 					pstmt.setBytes(1, pic);
 					pstmt.setString(2, "MEM00"+ i);
 					pstmt.executeUpdate();
 					System.out.println("已上傳" + i);
 				}else {
-					 byte[] pic = getPictureByteArray(ct.getRealPath("/front-end/members/addMembers_css/images/t000" + i + ".jpg"));
+					 byte[] pic = getPictureByteArray(ct.getRealPath("/front-end/members/addMembers_css/images/m000" + i + ".jpg"));
 						//windows: "C:/Users/Big data/Desktop/lecimg/img" + i + ".jpg"
 						//mac: "/Users/yvon/Desktop/lecimg/img" + i + ".jpg"
 						pstmt.setBytes(1, pic);
@@ -61,8 +64,22 @@ public class membersimgToDB extends HttpServlet {
 						System.out.println("已上傳" + i);
 				}
 				
-				
 				}
+			pstmt.close();
+			con.close();
+			con = DriverManager.getConnection(URL, USER, PASSWORD);
+			pstmt = con.prepareStatement(SQL2);
+				byte[] pic1 = getPictureByteArray(ct.getRealPath("/front-end/members/addMembers_css/images/lisense" + 2 + ".jpg"));
+				byte[] pic2 = getPictureByteArray(ct.getRealPath("/front-end/members/addMembers_css/images/lisense" + 3 + ".jpg"));
+				pstmt.setBytes(1, pic1);
+				pstmt.setBytes(2, pic2);
+				pstmt.setString(3, "MEM0001");
+				pstmt.executeUpdate();
+				
+			
+			
+			
+			
 			out.println("success!!");
 			
 			

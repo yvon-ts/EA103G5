@@ -303,7 +303,7 @@ if(inform5 === '200'){
 	swal('新增成功', '感謝您撥空留下您寶貴的意見', 'success');
 }else if(inform5 === '100'){
 	swal('修改成功', '感謝您撥空修改您寶貴的意見', 'success');
-}else{
+}else if(inform5.length!=0){
 	swal(inform5+'的個人檔案', '是未公開的', 'warning');
 }
 

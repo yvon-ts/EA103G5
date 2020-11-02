@@ -107,7 +107,7 @@ div#msg2 {
 	width: 100%;
 	height: 100px;
 	position: absolute;
-	padding-top: 550px;
+	padding-top: 630px;
 	color: red;
 }
 
@@ -406,7 +406,7 @@ if(message.length !== 0){
 
 $("#add").click(function(e){
 	e.preventDefault();
-	$("#memacc").val("emilyinparis");
+	$("#memacc").val("m00031");
 	$("#mempwd").val("123456");
 	$("#Rmempwd").val("123456");
 	$("#memname").val("愛美麗");
