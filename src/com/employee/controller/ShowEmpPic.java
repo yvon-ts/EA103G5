@@ -35,10 +35,8 @@ public class ShowEmpPic extends HttpServlet {
 					os.write(employeeVO.get().getEmppic());
 				} catch (NullPointerException ne) {
 					InputStream in = getServletContext().getResourceAsStream("/back-end/index/images/美短.jpg");
-					System.out.println(in);
 					ServletOutputStream out = res.getOutputStream();
-					byte[] img = new byte[in.available()];
-					
+					byte[] img = new byte[in.available()];					
 					in.read(img);
 					out.write(img);
 					in.close();

@@ -72,7 +72,9 @@ public class Emp_authFilter implements Filter {
 		FUN0004.add(req.getContextPath() + "/back-end/lecture/select_page.jsp");
 		FUN0004.add(req.getContextPath() + "/back-end/lecture/updateLec.jsp");
 		FUN0004.add(req.getContextPath() + "/back-end/lecorder/listAllLodr.jsp");
-		FUN0004.add(req.getContextPath() + "/back-end/lecseat/listOneSeat.jsp");
+		FUN0004.add(req.getContextPath() + "/back-end/classroom/listAllClassroom.jsp");
+
+		
 		
 		if (list.contains("FUN0001") && FUN0001.contains(urls)) {
 			chain.doFilter(request, response);
@@ -85,7 +87,7 @@ public class Emp_authFilter implements Filter {
 		}else {
 			session.setAttribute("error", "你沒有權限!");
 			System.out.println("跑到這");
-			res.sendRedirect(req.getContextPath() + "/back-end/index/homepage.jsp");
+			res.sendRedirect(req.getContextPath() + "/back-end/employee/loginsuccess.jsp");
 		}
 
 	}
