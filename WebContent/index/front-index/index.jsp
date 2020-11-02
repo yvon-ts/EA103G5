@@ -54,7 +54,7 @@
     <!-- Animate -->
     <link rel="stylesheet" href="<%=request.getContextPath()%>/index/front-index/assets/css/animate.css">
     <!-- Main Style -->
-<%--     <link rel="stylesheet" href="<%=request.getContextPath()%>/index/front-index/assets/css/main.css"> --%>
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/index/front-index/assets/css/main.css">
     <!-- Responsive Style -->
     <link rel="stylesheet" href="<%=request.getContextPath()%>/index/front-index/assets/css/responsive.css">
 	<!-- Lecture css -->
