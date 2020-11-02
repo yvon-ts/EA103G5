@@ -5,9 +5,6 @@
 
 <jsp:useBean id="testTypeSvc" scope="page" class="com.test_type.model.TestTypeService" />
 	
-<%
-	System.out.println("printjsp"+(String)request.getAttribute("testno"));
-%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -60,8 +57,8 @@
 		<c:if test="${empty question.op1}">
 			<ul class="multiple">	
 				<li>
-				<input class="form-control form-control-lg" type="${type.testtype}" name="${question.qbankno}" placeholder="請填寫答案"
-				class="class${counter.count}" />
+				<input class="form-control form-control-lg class${counter.count}" type="${type.testtype}" name="${question.qbankno}" placeholder="請填寫答案"
+				/>
 				</li>
 			</ul>
 			</div>
@@ -106,11 +103,34 @@
 	
 	$(document).ready(function() {
 		
+		
+		var textArray = ['index','記憶體位置','參考變數','forEach'];
+		var count = 0 ; 
+		
 		$('#test').click(function(){
 			
 			
 			for(let i = 1 ; i <= $('ul').length ; i++){
-				console.log($('.class' + i ).attr('type'));
+				
+				if($('.class' + i ).attr('type') === 'text'){
+					$('.class' + i ).val(textArray[count]);
+					count++;
+				}else if($('.class' + i ).attr('type') === 'radio'){
+					var random1 = Math.floor(Math.random() * 4);
+					$('.class' + i )[random1].checked = true;
+				}else if($('.class' + i ).attr('type') === 'checkbox'){
+					
+					var mySet = new Set();
+					
+					while(mySet.size < (Math.floor(Math.random() * 4) + 1 ) ){
+						var random2 = Math.floor(Math.random() * 4);
+						$('.class' + i )[random2].checked = true;
+						mySet.add(random2);
+					}
+					
+				}
+				
+				
 			}
 		});
 		
@@ -194,7 +214,7 @@
 						}
 					}
 				}
-				else if($('#class'+j).val().trim().length!=0 && $('#class'+j).val().trim().search(str)){//填空題
+				else if($('.class'+j).val().trim().length!=0 && $('.class'+j).val().trim().search(str)){//填空題
 						count++;
 				}
 				if(count == 0){//沒有勾選或填寫的選項的ul加上標註
