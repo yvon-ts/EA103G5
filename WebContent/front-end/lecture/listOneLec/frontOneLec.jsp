@@ -116,6 +116,18 @@
 		width: 100px;
 		height: 100px;
 	}
+	.common{
+		background-color: #0099cc;
+		color: #fff;
+		border-radius: 30px;
+		padding: 5px 30px
+	}
+	.border{
+		background-color: #0099cc;
+		color: #0099cc;
+		border-radius: 30px;
+		padding: 5px 30px
+	}
 </style>
 </head>
 
@@ -147,8 +159,8 @@
                                     </table>
                                 </div>
                                  <div class="header-button">
-                                    <a href="<%=request.getContextPath()%>/front-end/lecture/listAllLec.jsp" class="btn btn-common">搜尋講座</a>
-                                    <a href="<%=request.getContextPath()%>/front-end/lecture/listAllLec.jsp" class="btn btn-border">查看全部</a>
+                                    <a id="common" href="<%=request.getContextPath()%>/front-end/lecture/listAllLec.jsp" class="btn btn-common" style="background-color: #0099cc;color: #fff;border-radius: 30px;padding: 5px 30px">搜尋講座</a>
+                                    <a id="border" href="<%=request.getContextPath()%>/front-end/lecture/listAllLec.jsp" class="btn btn-border" style="background-color: #fff;border: 1px solid #0099cc;color: #0099cc;border-radius: 30px;padding: 5px 30px">查看全部</a>
                                 </div>
                             </div>
                         </div>

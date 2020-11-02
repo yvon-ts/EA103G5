@@ -63,7 +63,9 @@
         }
         
         .div .lec-txt .price{
-        	background-color: #CCFFFF;
+        	font-size: 1.2em;
+        	color: #0099cc;
+        	font-weight: 600;
         }
         .div .more{
         	display: inline-block;

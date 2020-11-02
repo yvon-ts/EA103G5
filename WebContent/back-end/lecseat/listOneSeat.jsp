@@ -88,20 +88,13 @@ body {
 				</c:forEach>
                 </tbody>
             </table>
-            <%@ include file="/back-end/pool/page2.file" %>
-            <div class="clearfix">
-                <div><b>本訂單共預定<font color=#19B3D3><%=rowNumber%></font>個座位</b></div>
-                <ul class="pagination">
-                    <li class="page-item disabled"><a href="#">Previous</a></li>
-                    <li class="page-item"><a href="#" class="page-link">1</a></li>
-                    <li class="page-item"><a href="#" class="page-link">2</a></li>
-                    <li class="page-item active"><a href="#" class="page-link">3</a></li>
-                    <li class="page-item"><a href="#" class="page-link">4</a></li>
-                    <li class="page-item"><a href="#" class="page-link">5</a></li>
-                    <li class="page-item"><a href="#" class="page-link">Next</a></li>
-                </ul>
+            <div class="row">
+            	<div class="col-sm-4"></div>
+            	<div class="col-sm-8">
+		            <div style="margin-left: 14%"><b>本訂單共預定<font color=#19B3D3><%=rowNumber%></font>個座位</b></div>
+		            <%@ include file="/front-end/lecseat/bookedSeats.jsp" %>
+            	</div>
             </div>
-            <%@ include file="/front-end/lecseat/bookedSeats.jsp" %>
         </div>
     </div>
 </div> 

@@ -30,14 +30,16 @@ body {
 </head>
 <body>
 <main class="app-content" style="background-color: #f3f3f3">
+<%@ include file="/back-end/pool/page1.file" %>
 <div class="container-xl">
     <div class="table-responsive">
         <div class="table-wrapper">			
             <div class="table-title">
                 <div class="row">
-                    <div class="col-sm-4">
+                    <div class="col-sm-3">
+                    <div><b style="font-size: 1.2em;">查詢結果共有<font color=#19B3D3><%=rowNumber%></font>筆資料</b></div>
                     </div>
-                    <div class="col-sm-4">
+                    <div class="col-sm-5">
                         <h2 class="text-center">講座報名清單</h2>
                     </div>
                     <div class="col-sm-4">
@@ -63,7 +65,6 @@ body {
                     </tr>
                 </thead>
                 <tbody>
-                    <%@ include file="/back-end/pool/page1.file" %>
                     <c:forEach var="lodrVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
 						<tr><td>${lodrVO.lodrno}</td>
 						<c:forEach var="memVO" items="${memSvc.all}">
@@ -88,18 +89,6 @@ body {
                 </tbody>
             </table>
             <%@ include file="/back-end/pool/page2.file" %>
-            <div class="clearfix">
-                <div><b>查詢結果共有<font color=#19B3D3><%=rowNumber%></font>筆資料</b></div>
-                <ul class="pagination">
-                    <li class="page-item disabled"><a href="#">Previous</a></li>
-                    <li class="page-item"><a href="#" class="page-link">1</a></li>
-                    <li class="page-item"><a href="#" class="page-link">2</a></li>
-                    <li class="page-item active"><a href="#" class="page-link">3</a></li>
-                    <li class="page-item"><a href="#" class="page-link">4</a></li>
-                    <li class="page-item"><a href="#" class="page-link">5</a></li>
-                    <li class="page-item"><a href="#" class="page-link">Next</a></li>
-                </ul>
-            </div>
         </div>
     </div>        
 </div> 
