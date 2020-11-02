@@ -8,7 +8,7 @@
 <%@ page import="com.lecorder.model.*" %>
 <%@ page import="com.lecseat.model.*" %>
 
-<%
+<%	String memno = request.getParameter("memno");
 	//lecseat
 	String lodrno = request.getParameter("lodrno").trim();
 	if(lodrno.length() == 0){
@@ -116,7 +116,7 @@
 				            <div id="${seatVO.seatno}">
 					            <input type="hidden" class="lodrno" name="lodrno" value="${lodrVO.lodrno}">
 					            <input type="hidden" class="seatno" name="seatno" value="${seatVO.seatno}">
-								<button class="btn view"><i class="material-icons">&#xE417;</i></button>
+								<button class="btn view" style="color: #03A9F4;"><i class="material-icons">&#xE417;</i></button>
 							</div>
 			            </td>
 		            </tr>
@@ -163,7 +163,7 @@
 						<li>講座地點：<%=roomname%>教室</li>
 						</ul>
 						<form method="post" action="<%=request.getContextPath()%>/front-end/lecorder/listByMemno.jsp">
-						<input type="text" name="memno"><br>
+						<input type="hidden" name="memno" value="<%=memno%>"><br>
 						<button id="return" class="btn btn-border" style="border: 1px solid #0099cc;">回上頁</button>
 						</form>
 						<button id="confirm" class="hide btn btn-border" style="border: 1px solid #0099cc;">確定變更</button>

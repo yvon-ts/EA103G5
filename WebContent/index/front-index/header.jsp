@@ -126,7 +126,7 @@ div#navBar{
 							<div class="dropdown" id="dropdown">
 								<button class="btn btn-secondary dropdown-toggle" type="button"
 									id="dropdownMenuButton" data-toggle="dropdown"
-									aria-haspopup="true" aria-expanded="false" style="background-color: #6c757d">
+									aria-haspopup="true" aria-expanded="false" style="background-color: #6c757d;border-radius: 30px;padding: 5px 30px">
 									${sessionScope.loginMembersVO.memname}</button>
 								<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
 									<a class="dropdown-item"

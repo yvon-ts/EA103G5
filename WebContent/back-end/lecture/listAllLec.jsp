@@ -78,11 +78,6 @@
 	outline: none;
 	color: #fff;
 	background-color: #0099cc;
-	font-weight: 600;
-	font-size: 1.2em;
-	font-family: monospace;
-	border-radius: 50px;
-	padding: 3px 10px;
 	}
 </style>
 <body>
@@ -210,21 +205,7 @@
 					</tbody>
 			</table>
 			<div id="page-area">
-			<span><a style="color:#0099cc; text-decoration: none;" href="<%=request.getRequestURI()%>?whichPage=<%=whichPage-1%>">&#9664;</a></span>
-			<%if (pageNumber>1) {%>
-         			<%for (int i=1; i<=pageNumber; i++){
-         				if (whichPage == i){%>
-         			<form method="post" action="<%=request.getRequestURI()%>?whichPage=<%=i%>" style="display: inline">
-         				<button class="whichPage onPage" name="whichPage" style="outline: none;" value="<%=i%>"> <%=i%> </button>
-         			</form>	
-         				<%} else {%>
-         			<form method="post" action="<%=request.getRequestURI()%>?whichPage=<%=i%>" style="display: inline">
-            			<button class="whichPage" name="whichPage" style="outline: none;" value="<%=i%>"> <%=i%> </button>
-            		</form>
-        			 <%}%> 
-  				<%}%>
-  			<%}%>
-  			<a style="color:#0099cc; text-decoration: none;" href="<%=request.getRequestURI()%>?whichPage=<%=whichPage+1%>">&#9654;</a>&nbsp;
+			<%@ include file="/back-end/pool/page2.file" %>
  			</div>
 			<div id="calendar" style="margin-top: 2%">
 			<%@ include file="/calendar/calendar.jsp" %>
