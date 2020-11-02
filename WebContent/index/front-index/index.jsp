@@ -703,7 +703,7 @@ height:20px;
 	function status(){
 		 swal('老師資格審核中', '請耐心等候1~3個工作天，一但審核完畢，即會立刻通知', 'info');
 	}
-	var MyPoint = "/NotifyWS/${sessionScope.loginTeacherVO.tchrno}";
+	var MyPoint = "/NotifyWS/${sessionScope.loginMembersVO.memno}";
 	var host = window.location.host;
 	var path = window.location.pathname;
 	var webCtx = path.substring(0, path.indexOf('/', 1));

@@ -32,8 +32,6 @@
     } 
 %>
 
-<%if (pageNumber>0){%>
-  <div id="title">第<%=whichPage%>/<%=pageNumber%>頁</div>
-<%}%>
+
 
 <div id="count">共<%=rowNumber%>則評價</div>

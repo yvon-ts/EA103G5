@@ -218,8 +218,8 @@ margin:12px 0 0 30px;
     height:50px;
     position:absolute;
     z-index:2;
-    margin:-75px 0 0 10px;
-    font-size:80px;
+    margin:-45px 0 0 10px;
+    font-size:100px;
     color:#0099CC;
     font-family:'Gochi Hand';
     }

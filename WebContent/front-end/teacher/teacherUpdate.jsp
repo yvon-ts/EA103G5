@@ -77,6 +77,9 @@ div.ck-rounded-corners .ck.ck-editor__main>.ck-editor__editable, .ck.ck-editor__
 	border-bottom-right-radius: 0;
 	width: 300px;
 }
+.ck.ck-editor__editable_inline>:first-child {
+   margin-top:0px;
+}
 
 div#form-group {
 	height: 35px;

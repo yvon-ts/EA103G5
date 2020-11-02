@@ -1,6 +1,7 @@
 package com.teacher.controller;
 
 import java.io.*;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 import javax.servlet.*;
@@ -176,11 +177,34 @@ public class TeacherServlet extends HttpServlet {
 	private void updateStatus(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException{
 		List<String> errorMsgs = new LinkedList<String>();
 		req.setAttribute("errorMsgs", errorMsgs);
+		
 
 		try {
+			MailService mail  = new MailService();
+			SimpleDateFormat sdFormat = new SimpleDateFormat("yyyy年MM月dd日 hh時mm分");
+			Date date = new Date();
+			String strDate = sdFormat.format(date);
 		String tchrstatus = req.getParameter("tchrstatus");
 		String tchrno = req.getParameter("tchrno");
 		String rejreason = req.getParameter("rejreason");
+		String nkname = req.getParameter("nkname");
+		String memail = req.getParameter("memail");
+		String subject = "Xducation申請審核結果通知";
+		String text1 = "恭喜你"+nkname+",經過我們團隊嚴格的審核之後\n已經通過了您的老師資格申請\n將會為您開通老師資格權限\n\n\n\n\n\n\n\n\n您可以開始準備下一步開課事宜囉:)"
+				+ "\n如有任何疑問歡迎隨時與我們聯絡\nXducation營運團隊\n"+strDate;
+		String text2 = "很可惜"+nkname+",經過我們團隊謹慎的審核之後\n我們認為您目前還不是我們想要合作的對象\n以下是審核結果失敗的原因:\n\n\n\n"+rejreason+"\n\n\n"+
+				"請您不要放棄成為我們的老師,試著修正這些錯誤並重新提出申請\n我相信您一定能做得到\nXducation營運團隊\n"+strDate;
+		
+		
+		
+		
+		if("已通過".equals(tchrstatus)) {
+			
+			mail.sendMail(memail, subject, text1);
+			
+		}else if("未通過".equals(tchrstatus)) {
+			mail.sendMail(memail, subject, text2);
+		}
 		
 		TeacherService teacherSvc = new TeacherService();
 		teacherSvc.updateStatusTeacher(tchrno, tchrstatus,rejreason);

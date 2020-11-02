@@ -69,8 +69,8 @@ public class membersimgToDB extends HttpServlet {
 			con.close();
 			con = DriverManager.getConnection(URL, USER, PASSWORD);
 			pstmt = con.prepareStatement(SQL2);
-				byte[] pic1 = getPictureByteArray(ct.getRealPath("/front-end/members/addMembers_css/images/lisense" + 2 + ".jpg"));
-				byte[] pic2 = getPictureByteArray(ct.getRealPath("/front-end/members/addMembers_css/images/lisense" + 3 + ".jpg"));
+				byte[] pic1 = getPictureByteArray(ct.getRealPath("/front-end/members/addMembers_css/images/java" + 1 + ".jpg"));
+				byte[] pic2 = getPictureByteArray(ct.getRealPath("/front-end/members/addMembers_css/images/java" + 2 + ".jpg"));
 				pstmt.setBytes(1, pic1);
 				pstmt.setBytes(2, pic2);
 				pstmt.setString(3, "MEM0001");

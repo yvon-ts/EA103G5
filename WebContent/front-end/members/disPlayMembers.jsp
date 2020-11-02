@@ -1,11 +1,16 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ page import="com.course.model.*"%>
 <%@ page import="com.members.model.*"%>
 <%@ page import="com.teacher.model.*"%>
 <%@ page import="java.util.*"%>
+<%@ page import="com.course.model.*"%>
+<%@ page import="com.order_detail.model.*"%>
 
 
+<jsp:useBean id="courseSvc" scope="page" class="com.course.model.CourseService" />
+<jsp:useBean id="orderDetailSvc" scope="page" class="com.order_detail.model.OrderDetailService" />
 
 <jsp:useBean id="teacherSvc" scope="page" class="com.teacher.model.TeacherService" />
 <jsp:useBean id="membersSvc" scope="page" class="com.members.model.MembersService" />
@@ -74,7 +79,7 @@ img.pic {
 h2.form-title {
 	width: 400px;
     margin-top: 10px;
-    text-align: center;
+    margin-left:5px;
 }
 
 div.signup-form {
@@ -352,6 +357,9 @@ div.main {
 
 									<a class="dropdown-item"
 										href='<%=request.getContextPath()%>/front-end/Order_Master/listAllByMemno.jsp'>課程訂單紀錄</a>
+										<a class="dropdown-item"
+										href='<%=request.getContextPath()%>/front-end/lecorder/listByMemno.jsp'>講座訂單紀錄</a>
+										
 
 									<a class="dropdown-item"
 										href='<%=request.getContextPath()%>/front-end/coup_code/listAllByMemno.jsp'>持有折扣券</a>
@@ -447,10 +455,20 @@ div.main {
 							<div id="messagesArea"></div>
 
 							<h2 class="form-title">
-								<img id="pic"
-									src="<%=request.getContextPath()%>/front-end/members/signIn&updateMembers_css/images/membership.svg">${membersVO.nkname}-個人檔案</h2>
-
-
+								<img id="pic" src="<%=request.getContextPath()%>/front-end/members/signIn&updateMembers_css/images/membership.svg">${membersVO.nkname}
+									<c:if test="${teacherSvc.getStatus(membersVO.memno).tchrstatus ne '已通過'}">
+								-個人檔案
+							
+						        </c:if>
+								
+								
+								<c:if test="${teacherSvc.getStatus(membersVO.memno).tchrstatus eq '已通過'}">
+								-平台教師
+							
+						        </c:if>
+								
+								
+								</h2>
 
 							<table>
 								<tr>
@@ -520,15 +538,133 @@ div.main {
 									</td>
 
 								</tr>
-								
+								<tr>
+									<td style="color: #FFF">" "</td>
+								</tr>
 
 
 										
 								<tr>
+								<th>
+										<div class="form-group">
+											<h5 class="h5">
+												已購課程<img class="pic"
+								src="<%=request.getContextPath()%>/front-end/teacher/teacherRegister_css/images/student.svg"
+								alt=""></h5>
+
+
+
+										</div>
+									</th>
+									<th><div style="width: 100px"></div></th>
+									<th>
+									<%
+									MembersVO membersVO = (MembersVO) request.getAttribute("membersVO");
+									List<OrderDetailVO> myOrderDetailList = new ArrayList<OrderDetailVO>();
+	                                myOrderDetailList = orderDetailSvc.getMyCourse(membersVO.getMemno());
+	                                Integer courses = myOrderDetailList.size();
+	                                pageContext.setAttribute("courses", courses);
+	                                List<CourseVO> list = new ArrayList<CourseVO>();	
+	                            	for (int i = 0; i < myOrderDetailList.size(); i++) {
+	                            		list.add(courseSvc.getOneCourse(myOrderDetailList.get(i).getCourseno()));		
+	                            	}
+	                            	
+	                            	pageContext.setAttribute("courseList", list);
+	                                
+	                                
+	                                %>
+										<div class="dropdown" id="dropdown">
+								<button class="btn btn-secondary dropdown-toggle" type="button"
+									id="dropdownMenuButton" data-toggle="dropdown"
+									aria-haspopup="true" aria-expanded="false">已參加${courses}堂課</button>
+								<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+								<c:forEach var="courseVO" items="${courseList}">
+								<a class="dropdown-item" href="<%=request.getContextPath()%>/course/course.do?action=showCourseMainPage&courseno=${courseVO.courseno}">
+									<h6 style="color:#0099cc">
+									${courseVO.coursename}
+									</h6>
 									
-
-
+									</a>
+								
+								</c:forEach>
+								</div>
+								</div>
+									</th>
 								</tr>
+								<tr>
+									<td style="color: #FFF">" "</td>
+								</tr>
+
+
+									<c:if test="${teacherSvc.getStatus(membersVO.memno).tchrstatus eq '已通過'}">	
+								<tr>
+								<th>
+										<div class="form-group">
+											<h5 class="h5">
+												開設課程<img class="pic"
+								src="<%=request.getContextPath()%>/front-end/teacher/teacherRegister_css/images/teacher.svg"
+								alt=""></h5>
+
+
+
+										</div>
+									</th>
+									<th><div style="width: 100px"></div></th>
+									<th>
+									<%
+									TeacherService tVc = new TeacherService();
+									TeacherVO teacherVO = tVc.getOneTeacherByMemno(membersVO.getMemno());
+								
+									if(teacherVO!=null){
+										String tchrno = teacherVO.getTchrno();
+										Map<String, String[]> map = new TreeMap<String, String[]>();
+										map.put("tchrno", new String[]{tchrno});
+										request.setAttribute("map", map);
+											
+										List<CourseVO> list1 = null;	
+										if (list1 == null) {
+											CourseService cSvc = new CourseService();
+											list1 = cSvc.getAll(map);
+										}
+										Integer openCourses = list1.size();
+										pageContext.setAttribute("openCourses", openCourses);
+										
+										pageContext.setAttribute("Courselist1", list1);
+										
+									}
+									
+									
+									
+									%>
+									
+										<div class="dropdown" id="dropdown">
+								<button class="btn btn-secondary dropdown-toggle" type="button"
+									id="dropdownMenuButton" data-toggle="dropdown"
+									aria-haspopup="true" aria-expanded="false">已開設${openCourses}堂課</button>
+								<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+								<c:forEach var="courseVO1" items="${Courselist1}">
+								
+								<a class="dropdown-item" href="<%=request.getContextPath()%>/course/course.do?action=showCourseMainPage&courseno=${courseVO1.courseno}">
+									<h6 style="color:#0099cc">
+									${courseVO1.coursename}
+									</h6>
+									
+								</a>
+								
+								</c:forEach>
+								</div>
+								</div>
+									</th>
+								</tr>
+								</c:if>
+								
+								
+								
+								
+								
+								
+								
+								
 
 							</table>
 
@@ -620,7 +756,7 @@ div.main {
 		}
 		//=====================webSock=====================================
 
-		var MyPoint = "/NotifyWS/${sessionScope.loginTeacherVO.tchrno}";
+		var MyPoint = "/NotifyWS/${sessionScope.loginMembersVO.memno}";
 		var host = window.location.host;
 		var path = window.location.pathname;
 		var webCtx = path.substring(0, path.indexOf('/', 1));

@@ -377,6 +377,9 @@ div.ck-rounded-corners .ck.ck-editor__top .ck-sticky-panel .ck-toolbar, .ck.ck-e
     margin: 0px 0px 0 -105px;
     
 }
+.ck.ck-editor__editable_inline>:first-child {
+   margin-top:0px;
+}
 
 div#text {
 	width: 500px;
