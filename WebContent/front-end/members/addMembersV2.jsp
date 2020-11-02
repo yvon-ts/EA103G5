@@ -406,11 +406,11 @@ if(message.length !== 0){
 
 $("#add").click(function(e){
 	e.preventDefault();
-	$("#memacc").val("m00031");
+	$("#memacc").val("M00031");
 	$("#mempwd").val("123456");
 	$("#Rmempwd").val("123456");
-	$("#memname").val("愛美麗");
-	$("#nkname").val("Emily");
+	$("#memname").val("吳彼得");
+	$("#nkname").val("Peter");
 	$("#mphone").val("0987323020");
 	$("#memail").val("scobboy0121@gmail.com");
 	$("#f_date1").val("1991-11-12");

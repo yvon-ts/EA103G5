@@ -125,13 +125,14 @@ h1, h2, h3 {
 }
 
 h1 {
-  font-size: 2.4em;
-  background-color: #0099CC;
-  text-align: center;
-  padding: 20px;
-  margin: 0;
-  color: #fff;
-  border-radius:10px;
+ font-size: 2.4em;
+    background-color: #0099CC;
+    text-align: center;
+   padding: 20px 0 10px 0;
+    margin: 0;
+    color: #fff;
+    border-radius: 10px;
+    line-height: 30px;
 }
 h1 a {
   display: block;
@@ -188,10 +189,12 @@ height:100px;
  letter-spacing:1px;
  }
  input#register{
- margin:320px 0 0 360px;
- position:absolute;
- z-index:2;
- 
+    margin: 300px 0 0 275px;
+    position: absolute;
+    z-index: 2;
+    width: 300px;
+    height: 100px;
+    font-size: 50px;
  }
  p{
  width:100%;
