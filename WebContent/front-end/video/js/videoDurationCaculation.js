@@ -18,6 +18,8 @@ function setVideoDuration() {
 				$(changedFileInput).prevAll("input[name=chapterlen]").val(duration);
 				$(changedFileInput).prevAll(".showVideoLen").text(convertSecToHrFormatter(duration));
 				//video = null;
+				$(changedFileInput).parents("tr").children("td").children("input[name='chaptername']").val(file.name);
+//				console.log(file.name);
 			}
 		} else {
 			swal('提醒', '課程影片僅支援 MP4 格式之影片檔案',  'warning');

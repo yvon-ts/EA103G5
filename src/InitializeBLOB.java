@@ -76,7 +76,7 @@ public class InitializeBLOB {
 		try {
 			Class.forName("oracle.jdbc.driver.OracleDriver");
 			con = DriverManager.getConnection(URL, USER, PASSWORD);
-			pstmt = con.prepareStatement(SQL);
+			pstmt = con.prepareStatement("UPDATE course SET courseimg = ? WHERE courseno = ?");
 
 			for (int i = 2; i <= 16; i++) {
 				String imgName = "COUR" + ( i < 10 ? "000" + i: "00" + i );
