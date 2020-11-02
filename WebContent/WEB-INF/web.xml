@@ -33,6 +33,7 @@
    	<url-pattern>/back-end/members/*</url-pattern>
    	<url-pattern>/back-end/teacher/*</url-pattern>
    	<url-pattern>/back-end/lecture/*</url-pattern>
+   	<url-pattern>/back-end/classroom/*</url-pattern>
    	<dispatcher>REQUEST</dispatcher>
    	<dispatcher>FORWARD</dispatcher>
    	<dispatcher>INCLUDE</dispatcher>
@@ -50,7 +51,8 @@
    	<url-pattern>/back-end/members/*</url-pattern>
    	<url-pattern>/back-end/teacher/*</url-pattern>
    	<url-pattern>/back-end/lecorder/*</url-pattern>
-    	<url-pattern>/back-end/lecture/*</url-pattern>
+    <url-pattern>/back-end/lecture/*</url-pattern>
+    <url-pattern>/back-end/classroom/*</url-pattern>
    	<dispatcher>REQUEST</dispatcher>
    	<dispatcher>FORWARD</dispatcher>
    	<dispatcher>INCLUDE</dispatcher>
@@ -80,7 +82,7 @@
    	<url-pattern>/front-end/course/editCourseBasicInfo.jsp</url-pattern>
    	<url-pattern>/front-end/course/editCourseChapter.jsp</url-pattern>
    	<url-pattern>/front-end/course/listMyCourse.jsp</url-pattern>
-    	<url-pattern>/front-end/tracking_list/listTrackingListForUser.jsp</url-pattern>
+    <url-pattern>/front-end/tracking_list/listTrackingListForUser.jsp</url-pattern>
    	<url-pattern>/front-end/test/*</url-pattern>
    	<url-pattern>/front-end/question/*</url-pattern>
    	<dispatcher>REQUEST</dispatcher>

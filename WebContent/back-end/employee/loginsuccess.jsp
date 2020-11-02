@@ -29,12 +29,12 @@
 		<div class="container">
     		<div id="link-area" class="row">
     			<div class="col-md-6">
-    				<div class="words2"><b>Xducation</b>
+<!--     				<div class="words2"><b>Xducation</b> -->
     				</div>
         			<div class="imgw">
 					<img src='<%=request.getContextPath()%>/index/front-index/assets/img/head/07.png'> 
 					</div>
-				<div class="words"><b>${empname}</b></div>
+<%-- 				<div class="words"><b>${empname}</b></div> --%>
 				</div>
         	</div>
     	</div>

@@ -64,7 +64,7 @@ public class Emp_authFilter implements Filter {
 		FUN0003.add(req.getContextPath() + "/back-end/teacher/listAllTeachers.jsp");
 		
 		List<String> FUN0004 = new ArrayList<>();
-		FUN0004.add(req.getContextPath() + "/back-end/lecture/addLec2.jsp");
+		FUN0004.add(req.getContextPath() + "/back-end/lecture/addLec.jsp");
 		FUN0004.add(req.getContextPath() + "/back-end/lecture/addLecIndex.jsp");
 		FUN0004.add(req.getContextPath() + "/back-end/lecture/lectureIndex.jsp");
 		FUN0004.add(req.getContextPath() + "/back-end/lecture/listAllLec.jsp");

@@ -27,7 +27,7 @@ public class EmployeeLoginServlet extends HttpServlet {
 		
 		req.setCharacterEncoding("UTF-8");
 
-		String empacc = req.getParameter("empacc");
+		String empacc = req.getParameter("empacc").toUpperCase();
 		String emppwd = req.getParameter("emppwd");
 
 		EmployeeService empSvc = new EmployeeService();
