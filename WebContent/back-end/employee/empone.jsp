@@ -4,7 +4,6 @@
 <%@ page import="java.util.*"%>
 <%@ page import="com.employee.model.*"%>
 <jsp:include page="/back-end/index/homepage.jsp"/>
-
 <%
 	EmployeeVO employeeVO = (EmployeeVO) request.getAttribute("employeeVO");
 			
@@ -16,7 +15,7 @@
 <meta charset="UTF-8">
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>員工資料修改</title>
+<title>資料修改</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
@@ -361,6 +360,20 @@ table.table .avatar {
 								<th><input type=text name="empemail" placeholder="請輸入email" value="<%=employeeVO.getEmpemail()%>" ></th>
 							</tr>
 							<tr>
+								<th>權限</th>
+								<th>																											
+									<c:forEach var="functionxVO" items="${funSvc.all}">																																
+	                   				<ul>
+	                   				<li class="functionx" value="${functionxVO.funcno}" style="display:none;">${functionxVO.funcname}</li>
+	                   				</ul>	                   			
+	                   			    </c:forEach>
+	                   			    
+	                   			    <c:forEach var="empAuthorityVO" items="${empAuthorityVO}">
+	                   			    <input type="hidden" name="emp" value="${empAuthorityVO.funcno}">                 																								                											 								     							 		    		       		    						     								
+     								</c:forEach>															  
+      							</th>
+							</tr>
+							<tr>
 								<th>員工照片</th>																																							
      							<th><img id="myimg" class="rounded-circle" width="350px" height="350px" src="${pageContext.request.contextPath}/ShowEmpPic?empno=${employeeVO.empno}" /></th>							          							
                                 <th><input type="file" name="emppic" placeholder="請上傳圖片" id="emp_pic"></th>							          							                             							
@@ -396,20 +409,6 @@ table.table .avatar {
 }
 </style>
 <script>
-	var x = document.getElementsByName("functionx");
-	var y = document.getElementsByName("emp");
-	for(var i=0; i<x.length;i++){
-		for(var j=0;j<y.length;j++){			
-			if((x[i].value) === (y[j].value)){
-				x[i].checked = true;
-			}
-			
-		}
-	}
-
-	
-</script>
-<script>
         $.datetimepicker.setLocale('zh');
         $('#f_date1').datetimepicker({
            theme: '',              //theme: 'dark',
@@ -423,8 +422,23 @@ table.table .avatar {
            maxDate:               '+1970-01-01'  // 去除今日(不含)之後
         });
 </script>
+<script type="text/javascript">
+	var x = document.getElementsByClassName("functionx");
+	var y = document.getElementsByName("emp");
+	for(var i=0; i<x.length;i++){
+		for(var j=0;j<y.length;j++){
+			if((x[i].getAttribute("value")) === (y[j].value)){
+				console.log(x[i]);
+				x[i].style.display = "";
+			}
+			
+		}
+	}
+
+	
+ </script> 
  <!-- 圖片 -->
-    <script type="text/javascript">
+<script type="text/javascript">
     function init() {
 
         var admin_pic = document.getElementById("emp_pic");
@@ -447,7 +461,7 @@ table.table .avatar {
 
                             var img = document.getElementById('myimg').src= e.target.result;
                         });
-                        reader.readAsDataURL(file); // ***** trigger
+                        reader.readAsDataURL(file); 
                     } else {
                         alert('請上傳圖片！');
                     }

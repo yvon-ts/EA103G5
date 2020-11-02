@@ -147,11 +147,11 @@
     <script src="<%=request.getContextPath() %>/front-end/js/main.js"></script>
     <script>		
 
-// <c:forEach var="empAuthorityVO" items="${empauth}"> 
-// 	var x = document.getElementById("${empAuthorityVO.funcno}");
-// 	console.log(x);
-// 	x.style.display= "";	
-// </c:forEach> 
+<c:forEach var="empAuthorityVO" items="${empauth}"> 
+	var x = document.getElementById("${empAuthorityVO.funcno}");
+	console.log(x);
+	x.style.display= "";	
+</c:forEach> 
 
 
 // <c:if test="${not empty error}">

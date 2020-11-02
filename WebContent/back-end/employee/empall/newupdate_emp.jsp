@@ -429,7 +429,8 @@ table.table .avatar {
 	var x = document.getElementsByName("functionx");
 	var y = document.getElementsByName("emp");
 	for(var i=0; i<x.length;i++){
-		for(var j=0;j<y.length;j++){			
+		for(var j=0;j<y.length;j++){
+			console.log((x[i].value) === (y[j].value));
 			if((x[i].value) === (y[j].value)){
 				x[i].checked = true;
 			}

@@ -22,124 +22,6 @@ public class EmployeeServlet extends HttpServlet {
 		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
 
-//--------------------------新增員工------------------------------------//
-		if ("insert".equals(action)) {
-			List<String> errMsgs = new LinkedList<String>();
-			req.setAttribute("errMsgs", errMsgs);
-
-			try {
-				String empacc = req.getParameter("empacc");
-				String empaccReg = "^[a-zA-Z0-9]{4,10}$";
-				if (empacc == null || empacc.trim().length() == 0) {
-					errMsgs.add("*員工帳號:請勿為空白*");
-				} else if (!empacc.trim().matches(empaccReg)) {
-					errMsgs.add("*員工帳號:請輸入英文數字，且長度必須在4以上*");
-				}
-
-				String emppwd = genAuthCode(8);
-
-				String empname = req.getParameter("empname");
-				String enameReg = "^[(\u4e00-\u9fa5)]{2,10}$";
-				if (empname == null || empname.trim().length() == 0) {
-					errMsgs.add("*員工姓名:請勿為空白*");
-				} else if (!empname.trim().matches(enameReg)) {
-					errMsgs.add("*員工姓名:請輸入中文，且長度必須在2到10之間*");
-				}
-
-				Integer empsalary;
-				try {
-					empsalary = new Integer(req.getParameter("empsalary").trim());
-					if (empsalary < 0) {
-						errMsgs.add("*員工薪水:請勿為負數*");
-					}
-				} catch (NumberFormatException ne) {
-					empsalary = 0;
-					req.setAttribute("empsalary", 0);
-					errMsgs.add("*員工薪水:請填數字*");
-				}
-				java.sql.Date hiredate = null;
-
-				try {
-					hiredate = java.sql.Date.valueOf(req.getParameter("hiredate").trim());
-				} catch (IllegalArgumentException ie) {
-					hiredate = new java.sql.Date(System.currentTimeMillis());
-					errMsgs.add("*員工到職日:請輸入日期*");
-				}
-				String empemail = req.getParameter("empemail");
-				if (empemail == null || empemail.trim().length() == 0) {
-					errMsgs.add("*員工email:請勿為空白*");
-				}
-
-				byte[] emppic = null;
-				Part part = req.getPart("emppic");
-				if (part == null || part.getSize() == 0) {
-					errMsgs.add("*請上傳一張圖片*");
-				}
-				InputStream in = part.getInputStream();
-				emppic = new byte[in.available()];
-				in.read(emppic);
-				in.close();
-
-				String[] functionx = req.getParameterValues("functionx");
-
-				EmployeeVO employeeVO = new EmployeeVO();
-				employeeVO.setEmpacc(empacc);
-				employeeVO.setEmppwd(emppwd);
-				employeeVO.setEmpname(empname);
-				employeeVO.setEmpsalary(empsalary);
-				employeeVO.setHiredate(hiredate);
-				employeeVO.setEmpemail(empemail);
-
-				if (!errMsgs.isEmpty()) {
-					req.setAttribute("EmployeeVO", employeeVO);
-					RequestDispatcher failureView = req.getRequestDispatcher("/back-end/employee/empall/newadd_emp.jsp");
-					failureView.forward(req, res);
-					return;
-				}
-
-				EmployeeService newEmp = new EmployeeService();
-				EmployeeVO VO = newEmp.addEmp(empacc, emppwd, empname, empsalary, hiredate, empemail, emppic);
-
-				// 拿到員工編號新增權限
-				EmpAuthorityService newEmpAuthority = new EmpAuthorityService();
-				EmpAuthorityVO empAuthorityVO = new EmpAuthorityVO();
-				String empno = VO.getEmpno();
-				if (functionx == null) {
-					newEmpAuthority.deleteEmpAuth(empno);
-				} else {
-					for (int i = 0; i < functionx.length; i++) {
-						newEmpAuthority.addEmpAuth(empno, functionx[i]);
-						empAuthorityVO.setEmpno(empno);
-						empAuthorityVO.setFuncno(functionx[i]);
-					}
-				}
-
-				MailService mailService = new MailService();
-
-				String to = "furongkuang9@gmail.com";
-				String subject = "密碼通知";
-				String ch_name = "peter1";
-				String passRandom = "111";
-
-				to = empemail;
-				ch_name = empname;
-				passRandom = emppwd;
-
-				String messageText = "Hello! " + empname + "(" + empacc + ")" + "請謹記此密碼: " + emppwd + "\n" + " (已經啟用)";
-				mailService.sendMail(empemail, subject, messageText);
-
-				req.setAttribute("empAuthorityVO", empAuthorityVO);
-				RequestDispatcher succesView = req.getRequestDispatcher("/back-end/employee/newallemp.jsp");
-				succesView.forward(req, res);
-			} catch (Exception e) {
-				e.printStackTrace();
-				errMsgs.add(e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/employee/newadd_emp.jsp");
-				failureView.forward(req, res);
-			}
-
-		}
-
 		if ("forupdate".equals(action)) {
 			List<String> errMsgs = new LinkedList<String>();
 			req.setAttribute("errMsgs", errMsgs);
@@ -164,43 +46,8 @@ public class EmployeeServlet extends HttpServlet {
 				failureView.forward(req, res);
 			}
 		}
-//-------------------------------------------權限-----------------------------------------------		
 
-//		if ("authority_update".equals(action)) {
-//			List<String> errMsgs = new LinkedList<String>();
-//			req.setAttribute("errMsgs", errMsgs);
-//			try {
-//				String empno = req.getParameter("empno");
-//				String[] functionx = req.getParameterValues("functionx");
-//				
-//				EmpAuthorityService newEmpAuthority = new EmpAuthorityService();
-//				EmpAuthorityVO empAuthorityVO = new EmpAuthorityVO();
-//				
-//
-//				if (functionx == null) {
-//					newEmpAuthority.deleteEmpAuth(empno);
-//				} else {
-//					newEmpAuthority.deleteEmpAuth(empno);
-//					for (int i = 0; i < functionx.length; i++) {
-//						newEmpAuthority.addEmpAuth(empno, functionx[i]);
-//						empAuthorityVO.setEmpno(empno);
-//						empAuthorityVO.setFuncno(functionx[i]);
-//					}
-//				}
-//				req.setAttribute("empAuthorityVO", empAuthorityVO);
-//				RequestDispatcher successView = req
-//						.getRequestDispatcher("/back-end/emp_authority/empauthorityshow.jsp");
-//				successView.forward(req, res);
-//			} catch (Exception e) {
-//				errMsgs.add("資料修改失敗: " + e.getMessage());
-//				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/employee/select_emp.jsp");
-//				failureView.forward(req, res);
-//			}
-//
-//		}
-
-//-------------------------------------------------------------------------------------------	
-
+//--------------------------員工修改------------------------------------//
 		if ("empupdate".equals(action)) {
 
 			List<String> errMsgs = new LinkedList<String>();
@@ -299,7 +146,8 @@ public class EmployeeServlet extends HttpServlet {
 
 				if (!errMsgs.isEmpty()) {
 					req.setAttribute("employeeVO", employeeVO);
-					RequestDispatcher failureView = req.getRequestDispatcher("/back-end/employee/empall/newupdate_emp.jsp");
+					RequestDispatcher failureView = req
+							.getRequestDispatcher("/back-end/employee/empall/newupdate_emp.jsp");
 					failureView.forward(req, res);
 					return;
 				}
@@ -318,6 +166,161 @@ public class EmployeeServlet extends HttpServlet {
 
 		}
 
+		if ("insert".equals(action)) {
+			List<String> errMsgs = new LinkedList<String>();
+			req.setAttribute("errMsgs", errMsgs);
+
+			try {
+				String empacc = req.getParameter("empacc");
+				String empaccReg = "^[a-zA-Z0-9]{4,10}$";
+				if (empacc == null || empacc.trim().length() == 0) {
+					errMsgs.add("*員工帳號:請勿為空白*");
+				} else if (!empacc.trim().matches(empaccReg)) {
+					errMsgs.add("*員工帳號:請輸入英文數字，且長度必須在4以上*");
+				}
+
+				String emppwd = genAuthCode(8);
+
+				String empname = req.getParameter("empname");
+				String enameReg = "^[(\u4e00-\u9fa5)]{2,10}$";
+				if (empname == null || empname.trim().length() == 0) {
+					errMsgs.add("*員工姓名:請勿為空白*");
+				} else if (!empname.trim().matches(enameReg)) {
+					errMsgs.add("*員工姓名:請輸入中文，且長度必須在2到10之間*");
+				}
+
+				Integer empsalary;
+				try {
+					empsalary = new Integer(req.getParameter("empsalary").trim());
+					if (empsalary < 0) {
+						errMsgs.add("*員工薪水:請勿為負數*");
+					}
+				} catch (NumberFormatException ne) {
+					empsalary = 0;
+					req.setAttribute("empsalary", 0);
+					errMsgs.add("*員工薪水:請填數字*");
+				}
+				java.sql.Date hiredate = null;
+
+				try {
+					hiredate = java.sql.Date.valueOf(req.getParameter("hiredate").trim());
+				} catch (IllegalArgumentException ie) {
+					hiredate = new java.sql.Date(System.currentTimeMillis());
+					errMsgs.add("*員工到職日:請輸入日期*");
+				}
+				String empemail = req.getParameter("empemail");
+				if (empemail == null || empemail.trim().length() == 0) {
+					errMsgs.add("*員工email:請勿為空白*");
+				}
+
+				byte[] emppic = null;
+				Part part = req.getPart("emppic");
+				if (part == null || part.getSize() == 0) {
+					errMsgs.add("*請上傳一張圖片*");
+				}
+				InputStream in = part.getInputStream();
+				emppic = new byte[in.available()];
+				in.read(emppic);
+				in.close();
+
+				String[] functionx = req.getParameterValues("functionx");
+
+				EmployeeVO employeeVO = new EmployeeVO();
+				employeeVO.setEmpacc(empacc);
+				employeeVO.setEmppwd(emppwd);
+				employeeVO.setEmpname(empname);
+				employeeVO.setEmpsalary(empsalary);
+				employeeVO.setHiredate(hiredate);
+				employeeVO.setEmpemail(empemail);
+
+				if (!errMsgs.isEmpty()) {
+					req.setAttribute("EmployeeVO", employeeVO);
+					RequestDispatcher failureView = req
+							.getRequestDispatcher("/back-end/employee/empall/newadd_emp.jsp");
+					failureView.forward(req, res);
+					return;
+				}
+
+				EmployeeService newEmp = new EmployeeService();
+				EmployeeVO VO = newEmp.addEmp(empacc, emppwd, empname, empsalary, hiredate, empemail, emppic);
+
+				// 拿到員工編號新增權限
+				EmpAuthorityService newEmpAuthority = new EmpAuthorityService();
+				EmpAuthorityVO empAuthorityVO = new EmpAuthorityVO();
+				String empno = VO.getEmpno();
+				if (functionx == null) {
+					newEmpAuthority.deleteEmpAuth(empno);
+				} else {
+					for (int i = 0; i < functionx.length; i++) {
+						newEmpAuthority.addEmpAuth(empno, functionx[i]);
+						empAuthorityVO.setEmpno(empno);
+						empAuthorityVO.setFuncno(functionx[i]);
+					}
+				}
+
+				MailService mailService = new MailService();
+
+				String to = "furongkuang9@gmail.com";
+				String subject = "密碼通知";
+				String ch_name = "peter1";
+				String passRandom = "111";
+
+				to = empemail;
+				ch_name = empname;
+				passRandom = emppwd;
+
+				String messageText = "Hello! " + empname + "(" + empacc + ")" + "請謹記此密碼: " + emppwd + "\n" + " (已經啟用)";
+				mailService.sendMail(empemail, subject, messageText);
+
+				req.setAttribute("empAuthorityVO", empAuthorityVO);
+				RequestDispatcher succesView = req.getRequestDispatcher("/back-end/employee/newallemp.jsp");
+				succesView.forward(req, res);
+			} catch (Exception e) {
+				e.printStackTrace();
+				errMsgs.add(e.getMessage());
+				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/employee/newadd_emp.jsp");
+				failureView.forward(req, res);
+			}
+
+		}
+
+//-------------------------------------------權限-----------------------------------------------		
+
+//		if ("authority_update".equals(action)) {
+//			List<String> errMsgs = new LinkedList<String>();
+//			req.setAttribute("errMsgs", errMsgs);
+//			try {
+//				String empno = req.getParameter("empno");
+//				String[] functionx = req.getParameterValues("functionx");
+//				
+//				EmpAuthorityService newEmpAuthority = new EmpAuthorityService();
+//				EmpAuthorityVO empAuthorityVO = new EmpAuthorityVO();
+//				
+//
+//				if (functionx == null) {
+//					newEmpAuthority.deleteEmpAuth(empno);
+//				} else {
+//					newEmpAuthority.deleteEmpAuth(empno);
+//					for (int i = 0; i < functionx.length; i++) {
+//						newEmpAuthority.addEmpAuth(empno, functionx[i]);
+//						empAuthorityVO.setEmpno(empno);
+//						empAuthorityVO.setFuncno(functionx[i]);
+//					}
+//				}
+//				req.setAttribute("empAuthorityVO", empAuthorityVO);
+//				RequestDispatcher successView = req
+//						.getRequestDispatcher("/back-end/emp_authority/empauthorityshow.jsp");
+//				successView.forward(req, res);
+//			} catch (Exception e) {
+//				errMsgs.add("資料修改失敗: " + e.getMessage());
+//				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/employee/select_emp.jsp");
+//				failureView.forward(req, res);
+//			}
+//
+//		}
+
+//-------------------------------------------------------------------------------------------	
+
 		if ("getone_show".equals(action)) {
 			List<String> errMsgs = new LinkedList<String>();
 			req.setAttribute("errMsgs", errMsgs);
@@ -335,8 +338,14 @@ public class EmployeeServlet extends HttpServlet {
 
 				EmployeeService empSvc = new EmployeeService();
 				EmployeeVO employeeVO = empSvc.getEmp(empno);
+				
+
+				EmpAuthorityService empAuthSvc = new EmpAuthorityService();
+				List<EmpAuthorityVO> empAuthorityVO = empAuthSvc.findByEmp(empno);
 
 				req.setAttribute("employeeVO", employeeVO);
+				req.setAttribute("empAuthorityVO", empAuthorityVO);
+
 				RequestDispatcher successView = req.getRequestDispatcher("/back-end/employee/empone.jsp");
 				successView.forward(req, res);
 
@@ -375,11 +384,11 @@ public class EmployeeServlet extends HttpServlet {
 					in.read(emppic);
 					in.close();
 				}
-				
+
 				String empacc = req.getParameter("empacc");
 				String empname = req.getParameter("empname");
 				java.sql.Date hiredate = java.sql.Date.valueOf(req.getParameter("hiredate"));
-				
+
 				EmployeeVO employeeVO = new EmployeeVO();
 				employeeVO.setEmpno(empno);
 				employeeVO.setEmppwd(emppwd);
@@ -388,7 +397,7 @@ public class EmployeeServlet extends HttpServlet {
 				employeeVO.setEmpacc(empacc);
 				employeeVO.setEmpname(empname);
 				employeeVO.setHiredate(hiredate);
-				
+
 				if (!errMsgs.isEmpty()) {
 					req.setAttribute("employeeVO", employeeVO);
 					RequestDispatcher failureView = req.getRequestDispatcher("/back-end/employee/empone.jsp");

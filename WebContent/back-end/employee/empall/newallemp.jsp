@@ -10,6 +10,7 @@
 	List<EmployeeVO> list = empSvc.getAll();
 	pageContext.setAttribute("list", list);
 %>
+<jsp:include page="/back-end/index/homepage.jsp"/>
 <jsp:useBean id="funSvc" scope="page" class="com.functionx.model.FunctionxService" />
 <!DOCTYPE html>
 <html lang="en">
@@ -17,7 +18,7 @@
 <meta charset="UTF-8">
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Bootstrap Order Details Table with Search Filter</title>
+<title>員工列表</title>
 <link rel="stylesheet"
 	href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
 <link rel="stylesheet"
@@ -27,8 +28,6 @@
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-<script
-	src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
 <style>
 body {
 	color: #566787;
@@ -321,7 +320,6 @@ table.table .avatar {
 </script>
 </head>
 <body>
-<jsp:include page="/back-end/index/homepage.jsp"/>
 <main class="app-content">
 	<div class="container-xl">
 		<div class="table-responsive">
