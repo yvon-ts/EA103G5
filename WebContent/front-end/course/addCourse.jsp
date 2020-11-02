@@ -147,8 +147,8 @@
 					</form>
 					<!-- 注意! 雖有警告，但 form tag 不可移動到外面，版型會有問題 -->
 					
-					<br><br>
-					<button id="magicButton" class="btn btn-lg btn-primary btn-block">神奇小按鈕</button>
+					<br>
+					<button id="magicButton" class="btn btn-lg btn-block btn-outline-light">magic touch</button>
 				</div>
 			</div>
 
