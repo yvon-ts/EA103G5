@@ -34,7 +34,8 @@
 </head>
 <body>
 
-	<jsp:useBean id="courSvc" scope="page" class="com.course.model.CourseService" />
+	<jsp:useBean id="courSvc" scope="page"
+		class="com.course.model.CourseService" />
 	<jsp:useBean id="courVO" scope="page" class="com.course.model.CourseVO" />
 
 	<div id="padd">padd</div>
@@ -61,20 +62,20 @@
 					</thead>
 					<tbody>
 						<%@ include file="/back-end/pool/page1.file"%>
-						<c:forEach var="orderDetailVO" items="${list}"
-							begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
+						<c:forEach var="orderDetailVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
 							<tr>
 								<td>${orderDetailVO.orderno}</td>
 								<td>${courSvc.getOneCourse(orderDetailVO.courseno).coursename}</td>
 								<td>${orderDetailVO.sellprice}</td>
 								<td>${orderDetailVO.odstatus}</td>
 								<td>
-									<FORM METHOD="post" onsubmit="return confirm('確定要申請退款嗎?');" ACTION="<%=request.getContextPath()%>/Order_Detail/Order_Detail.do" style="margin-bottom: 0px;">
-										<button type="submit" class="btn btn-primary">退款</button>
-										<input type="hidden" name="orderno" value="${orderDetailVO.orderno}">
-										<input type="hidden" name="courseno" value="${orderDetailVO.courseno}"> 
+									<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/Order_Detail/Order_Detail.do"
+										style="margin-bottom: 0px;" id="refund-form">
+										<input type="hidden" name="orderno" value="${orderDetailVO.orderno}"> 
+										<input type="hidden" name="courseno" value="${orderDetailVO.courseno}">
 										<input type="hidden" name="action" value="refund">
 									</FORM>
+									<button type="submit" class="btn btn-primary" id="refund">退款</button>
 								</td>
 							</tr>
 						</c:forEach>
@@ -96,5 +97,27 @@
 		</div>
 	</div>
 	<%@ include file="/index/front-index/footer.jsp"%>
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+	
+		<script>
+		$("#refund").click(function(){
+			Swal.fire({
+				  title: '確定要退款嗎?',
+				  icon: 'warning',
+				  showCancelButton: true,
+				  confirmButtonColor: '#3085d6',
+				  cancelButtonColor: '#d33',
+				  confirmButtonText: '確定退款!'
+				}).then((result) => {
+				  if (result.isConfirmed) {
+				    Swal.fire(
+				      '已提交申請',
+				    )
+				    $("#refund-form").submit();
+				  }
+				})
+		})
+				
+	</script>
 </body>
 </html>
