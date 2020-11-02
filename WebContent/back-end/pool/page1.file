@@ -33,7 +33,7 @@
 %>
 
 <%if (pageNumber>0){%>
-  <b><font color=#19B3D3>第<%=whichPage%>/<%=pageNumber%>頁</font></b>
+<%--<b><font color=#19B3D3>第<%=whichPage%>/<%=pageNumber%>頁</font></b>--%>
 <%}%>
 
 <%--<b>查詢結果共有@<font color=#19B3D3><%=rowNumber%></font>筆</b>--%>
