@@ -59,10 +59,8 @@
 						ACTION="<%=request.getContextPath()%>/course/course.do"
 						name="form1" enctype="multipart/form-data">
 
-						<jsp:useBean id="courseSvc" scope="page"
-							class="com.course.model.CourseService" />
-						<jsp:useBean id="courseTypeSvc" scope="page"
-							class="com.course_type.model.CourseTypeService" />
+						<jsp:useBean id="courseSvc" scope="page" class="com.course.model.CourseService" />
+						<jsp:useBean id="courseTypeSvc" scope="page" class="com.course_type.model.CourseTypeService" />
 
 						<div class="input-group mb-3">
 							<div class="input-group-prepend">
@@ -148,7 +146,9 @@
 
 					</form>
 					<!-- 注意! 雖有警告，但 form tag 不可移動到外面，版型會有問題 -->
-
+					
+					<br><br>
+					<button id="magicButton" class="btn btn-lg btn-primary btn-block">神奇小按鈕</button>
 				</div>
 			</div>
 
@@ -210,6 +210,31 @@
 			});
 	</script>
 	<!-- =============== Ckeditor 5 =============== -->
+	
+	
+	<!-- =============== 神奇小按鈕 =============== -->
+	<script>
+		$("#magicButton").click(function(){
+			$("input[name='coursename']").val("HTML前端網頁設計入門");
+			$("select[name='cstypeno'] option[value='TYPE0001']").prop('selected',true);
+			$("input[name='courseprice']").val(1688);
+			
+			// 清除 CKEditor生成出來的區塊後，再重新生成一個
+			$("div[role='application']").empty();
+			$("textarea[name='courseinfo']").val("<h2><strong>甚麼是HTML5</strong></h2><p>HTML5廣義是包含HTML、CSS和JavaScript在內的一套技術組合，HTML5擺脫影音外掛程式的束縛，讓網頁設計更加豐富，同時支援使用多媒體Audio、Video的標籤，你不需要安裝外掛程式，一樣可以在網頁上瀏覽豐富的影音內容，HTML5將Web帶入了多媒體的世界，一個更成熟且完整的應用平台。</p><br><h2><strong>他們也都使用HTML5</strong></h2><p>知名網站如Google、Facebook、Youtube、Wikipedia、Twitter、淘寶、百度、Apple、台灣Yahoo皆使用HTML5建置網站。2015年，YouTube以HTML5取代Flash為預設值，而Google Adwords也宣稱他們自動將Flash廣告格式轉換成HTML5，更宣布將於2017年1月停止播放Flash格式的廣告，全面啟用HTML5。除此之外，目前的主流瀏覽器(chrome、firefox、IE、Safari、Edge、Opera)都支援HTML5，HTML5成為網站開發必備技術之一。</p><br><h2><strong>HTML5語法標籤讓結構變簡單</strong></h2><p>利用HTML5的標籤可以很輕易的辨認網頁架構，而不是滿滿的 div 標籤，這些容易閱讀的標籤及結構讓電腦更容易理解網頁內容，可以提高搜尋引擎排名，這也是越來越多企業網站使用HTML5最大的原因之一！</p>");
+			
+			ClassicEditor
+				.create(document.querySelector('#ckeditor5'), {
+					toolbar: ['heading' , '|', 'bold', 'italic', 'bulletedList', 'numberedList']
+				})
+				.then(editor => {
+					console.log(editor);
+				})
+				.catch(error => {
+					console.error(error);
+			});
+		});
+	</script>
 
 	<!-- include 前台頁面的 footer -->
 	<jsp:include page="/index/front-index/footer.jsp" />

@@ -25,7 +25,7 @@ public class writeCourseImageToDB {
 			con = DriverManager.getConnection(URL, USER, PASSWORD);
 			pstmt = con.prepareStatement(SQL);
 
-			for (int i = 5; i <= 19; i++) {
+			for (int i = 2; i <= 16; i++) {
 				String imgName = "COUR" + ( i < 10 ? "000" + i: "00" + i );
 				// 超過 0099 需再另外寫
 				System.out.println(imgName);

@@ -25,14 +25,15 @@ public class writeVideoToDB {
 			con = DriverManager.getConnection(URL, USER, PASSWORD);
 			pstmt = con.prepareStatement(SQL);
 
-			for (int i = 1; i <= 10; i++) {
+			for (int i = 1; i <= 9; i++) {
 				String videoName = "VID" + ( i < 10 ? "000" + i: "00" + i );
 				System.out.println(videoName);
-				byte[] pic = getUpdateFileByteArray("C:\\GD_NCKU\\EA103_javaclass\\專題用假資料\\HTML課程影片\\720P\\" + videoName + ".mp4");
+//				byte[] pic = getUpdateFileByteArray("C:\\GD_NCKU\\EA103_javaclass\\專題用假資料\\HTML課程影片\\720P\\" + videoName + ".mp4");
 //				byte[] pic = getPictureByteArray("C:\\GD_NCKU\\EA103_javaclass\\專題用假資料\\HTML課程影片\\" + videoName + ".mp4");
+				byte[] video = getUpdateFileByteArray("blobpool/VideoFile/" + videoName + ".mp4");
 				//windows: "C:/Users/Big data/Desktop/lecimg/img" + i + ".jpg"
 				//mac: "/Users/yvon/Desktop/lecimg/img" + i + ".jpg"
-				pstmt.setBytes(1, pic);
+				pstmt.setBytes(1, video);
 				pstmt.setString(2, videoName);
 				pstmt.executeUpdate();
 				System.out.println("已上傳" + videoName);
