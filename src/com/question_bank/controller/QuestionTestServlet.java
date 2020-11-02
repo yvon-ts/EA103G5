@@ -119,7 +119,7 @@ public class QuestionTestServlet extends HttpServlet {
 		return set;
 	}
 
-	public List<AnwserListVO> produce(List<QuestionBankVO> list) { // 選項亂數
+	public List<AnwserListVO> produce(List<QuestionBankVO> list,String questionNO) { // 選項亂數
 		
 		QuestionBankService qse = new QuestionBankService();
 		
@@ -127,8 +127,10 @@ public class QuestionTestServlet extends HttpServlet {
 		AnwserListVO AnwserListVo = null;
 		Collections.shuffle(list);
 		
-		if(qse.getOneByNO("QNBK0066") != null) {
-			list.set(0, qse.getOneByNO("QNBK0066"));
+		
+		
+		if(qse.getOneByNO(questionNO) != null) {
+			list.set(0, qse.getOneByNO(questionNO));
 		}
 		
 		/*
@@ -198,6 +200,8 @@ public class QuestionTestServlet extends HttpServlet {
 			throws ServletException, IOException { // 印考卷
 
 		
+		String questionNO = (String)request.getSession().getAttribute("insertQuestionNO");
+		
 
 		List<String> errorMsgs = new LinkedList<String>();
 		request.setAttribute("errorMsgs", errorMsgs);
@@ -226,25 +230,32 @@ public class QuestionTestServlet extends HttpServlet {
 		if ("simple".equals(level)) {
 			
 			set = pickFromDB(1, number,courseno);
+			
 			if(set != null) {
 				QuestionList.addAll(set);
-				randomQuestion = produce(QuestionList);
+				randomQuestion = produce(QuestionList,questionNO);
 			}
+			
 		} else if ("medium".equals(level)) {
+			
 			set = pickFromDB(1, number / 2,courseno);
+			
 			if(set != null) {
 				QuestionList.addAll(set);
 				QuestionList.addAll(pickFromDB(2, number / 2,courseno));
-				randomQuestion = produce(QuestionList);
+				randomQuestion = produce(QuestionList,questionNO);
 			}
+			
 		} else if ("hard".equals(level)) {
 			set = pickFromDB(1, number / 4 ,courseno);
+			
 			if(set != null) {
 				QuestionList.addAll(set);
 				QuestionList.addAll(pickFromDB(2, number / 4 ,courseno));
 				QuestionList.addAll(pickFromDB(3, number / 2 ,courseno));
-				randomQuestion = produce(QuestionList);
+				randomQuestion = produce(QuestionList,questionNO);
 			}
+			
 		}
 		
 			if(set == null) {

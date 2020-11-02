@@ -153,6 +153,10 @@ public class QuestionBankServlet extends HttpServlet {
 		request.setAttribute("coursename",request.getParameter("coursename"));
 		request.setAttribute("update","update");
 		request.setAttribute("QuestionBankvo", QuestionBankvo);
+		
+		//test
+		request.getSession().setAttribute("insertQuestionNO", QuestionBankvo.getQbankno());
+		
 		String url = "/front-end/question/ListOneQuestion.jsp";
 		RequestDispatcher successView = request.getRequestDispatcher(url);
 		successView.forward(request, response);
