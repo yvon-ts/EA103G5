@@ -66,6 +66,24 @@
 		border-radius: 20px;
 		padding: 8px 20px;
 	}
+	#statusText{
+		margin-left: 30%;
+	}
+	#status{
+		margin-top: 25px;
+		outline: none;
+	}
+	.onPage{
+	border: 0;
+	outline: none;
+	color: #fff;
+	background-color: #0099cc;
+	font-weight: 600;
+	font-size: 1.2em;
+	font-family: monospace;
+	border-radius: 50px;
+	padding: 3px 10px;
+	}
 </style>
 <body>
 <main class="app-content" style="background-color: #f3f3f3">
@@ -93,7 +111,7 @@
                                 <input id="query" name="query" type="text" class="form-control" placeholder="Search&hellip;">
                             </div>
                         </div><br>
-                        <select id="status" name="status">
+                        <span id="statusText">狀態篩選：</span><select id="status" name="status">
                         	<option value="9" selected>全選</option>
 							<option value="0">取消</option>
 							<option value="1">正常</option>
@@ -191,8 +209,24 @@
 					</c:forEach>
 					</tbody>
 			</table>
-			<%@ include file="/back-end/pool/page2.file" %>
-			<div id="calendar">
+			<div id="page-area">
+			<span><a style="color:#0099cc; text-decoration: none;" href="<%=request.getRequestURI()%>?whichPage=<%=whichPage-1%>">&#9664;</a></span>
+			<%if (pageNumber>1) {%>
+         			<%for (int i=1; i<=pageNumber; i++){
+         				if (whichPage == i){%>
+         			<form method="post" action="<%=request.getRequestURI()%>?whichPage=<%=i%>" style="display: inline">
+         				<button class="whichPage onPage" name="whichPage" style="outline: none;" value="<%=i%>"> <%=i%> </button>
+         			</form>	
+         				<%} else {%>
+         			<form method="post" action="<%=request.getRequestURI()%>?whichPage=<%=i%>" style="display: inline">
+            			<button class="whichPage" name="whichPage" style="outline: none;" value="<%=i%>"> <%=i%> </button>
+            		</form>
+        			 <%}%> 
+  				<%}%>
+  			<%}%>
+  			<a style="color:#0099cc; text-decoration: none;" href="<%=request.getRequestURI()%>?whichPage=<%=whichPage+1%>">&#9654;</a>&nbsp;
+ 			</div>
+			<div id="calendar" style="margin-top: 2%">
 			<%@ include file="/calendar/calendar.jsp" %>
 			</div>
 		</div>
@@ -202,13 +236,10 @@
 <script>
 var orderBy = "";
 
-$(".fc-event-title").click(function(){
-	console.log($(this).text());
-});
-
 $("#status").change(function(){
 	console.log("status="+ $("#status").val());
  	$("#table tbody").empty();
+ 	$("#page-area").empty();
  	sendAjaxQuery();
 	console.log("ajax sent");
 });
@@ -225,6 +256,7 @@ $("#no").click(function(){
 	}
 	console.log("orderBy="+orderBy);
  	$("#table tbody").empty();
+ 	$("#page-area").empty();
  	sendAjaxQuery();
 	console.log("ajax sent");
 });
@@ -258,6 +290,7 @@ $("#price").click(function(){
 // 	}
 	console.log("orderBy="+orderBy);
  	$("#table tbody").empty();
+ 	$("#page-area").empty();
  	sendAjaxQuery();
 	console.log("ajax sent");
 });
@@ -274,6 +307,7 @@ $("#time").click(function(){
 	}
 	console.log("orderBy="+orderBy);
  	$("#table tbody").empty();
+ 	$("#page-area").empty();
  	sendAjaxQuery();
 	console.log("ajax sent");
 });
@@ -283,6 +317,7 @@ $("#query").keyup(function(e){
 	 if (e.keyCode === 13){
 	 	console.log("press");
 	 	$("#table tbody").html("");
+	 	$("#page-area").empty();
 	 	sendAjaxQuery();
 	 }
 	});
