@@ -16,7 +16,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
-<title>Xducation-會員修改</title>
+<title>Xducation-會員檔案</title>
 
 <!-- Font Icon -->
 
@@ -136,6 +136,7 @@ input#register.form-submit {
 
 h5#regdate {
 	margin-left: -140px;
+	margin-top:50px;
 }
 
 figure#a_mprofile {
@@ -447,7 +448,7 @@ div.main {
 
 							<h2 class="form-title">
 								<img id="pic"
-									src="<%=request.getContextPath()%>/front-end/members/signIn&updateMembers_css/images/membership.svg">${loginMembersVO.nkname}-個人檔案</h2>
+									src="<%=request.getContextPath()%>/front-end/members/signIn&updateMembers_css/images/membership.svg">${membersVO.nkname}-個人檔案</h2>
 
 
 
@@ -476,11 +477,11 @@ div.main {
 								</tr>
 								<tr>
 									<td>
-										<p>${loginMembersVO.memname}</p>
+										<p>${membersVO.memname}</p>
 									</td>
 									<th></th>
 									<td>
-										<p>${loginMembersVO.mphone}</p>
+										<p>才不告訴你勒:'P</p>
 									</td>
 
 								</tr>
@@ -511,92 +512,20 @@ div.main {
 								</tr>
 								<tr>
 									<td>
-										<p>${loginMembersVO.membday}</p>
+										<p>${membersVO.membday}</p>
 									</td>
 									<th></th>
 									<td>
-										<p>${loginMembersVO.memail}</p>
+										<p>${membersVO.memail}</p>
 									</td>
 
 								</tr>
-								<tr>
-									<td style="color: #FFF">" "</td>
-								</tr>
-								<tr>
-									<th id="mpic">
-									<div class="form-group">
-											<h5 class="h5">
-												<div style="color: #FFF">"</div>
-												<label> <input onchange="readURL(this)"
-													targetID="mprofile" style="display: none;" type="file"
-													id="picture" name="picture" placeholder="Your Profile" />
-													會員頭像<img class="pic"
-													src="<%=request.getContextPath()%>/front-end/members/signIn&updateMembers_css/images/pictures.svg">
-												</label>
-											</h5>
+								
 
-										</div>
+
 										
-										</th>
-									<th><div style="width: 100px"></div></th>
-
-									<th><div class="form-group">
-
-											<h5 class="h5">
-												會員暱稱<img class="pic"
-													src="<%=request.getContextPath()%>/front-end/members/signIn&updateMembers_css/images/nickname.svg">
-											</h5>
-										</div> <input class="input" name='nkname' type="text"
-										value="${loginMembersVO.nkname}" placeholder="Your nickname" /></th>
 								<tr>
-									<td>點選上傳.....⤴</td>
-								</tr>
-								<tr>
-									<td style="color: #FFF">" "</td>
-								</tr>
-								<tr>
-									<td style="color: #FFF">" "</td>
-								</tr>
-
-
-
-								<tr>
-									<th>
-										<div class="form-group">
-											<h5 class="h5">
-												會員密碼<img class="pic"
-													src="<%=request.getContextPath()%>/front-end/members/signIn&updateMembers_css/images/password.svg">
-											</h5>
-
-
-
-										</div> <input class="input" name='mempwd' type="password"
-										placeholder="Your password" />
-									</th>
-									<th><div style="width: 100px"></div></th>
-									<th>
-										<div class="form-group">
-											<h5 class="h5">
-												確認密碼<img class="pic"
-													src="<%=request.getContextPath()%>/front-end/members/signIn&updateMembers_css/images/Rmempwd.svg">
-											</h5>
-										</div> <input class="input" name='Rmempwd' type="password"
-										placeholder="Password again" />
-									</th>
-								</tr>
-								<tr>
-									<td>
-									<div class="form-group">
-											<input id="provide-muffins" name="provide_muffins" 
-											class="toggle" type="checkbox" value="${loginMembersVO.memno}" ${membersSvc.getOneMembers(loginMembersVO.memno).memdelete eq 0 ? "checked":"" } /> 
-												<label for="provide-muffins" class="toggle--label">
-												</label>
-											<div class="foux-toggle"></div>
-
-										</div>
-										＊可用此來切換是否將個人檔案公開
-								</td>
-
+									
 
 
 								</tr>
@@ -607,15 +536,16 @@ div.main {
 						</div>
 						<div class="signup-image">
 						
+						<div class="form-group" style="position:absolute;z-index:3;margin:0 0 0 115px;">
+											<h5 class="h5">
+												會員頭像<img class="pic"
+													src="<%=request.getContextPath()%>/front-end/members/signIn&updateMembers_css/images/pictures.svg">
+											</h5>
+										</div>
 							<figure id='a_mprofile'>
 								<img id='mprofile' class="pimg"
-									src="<%=request.getContextPath()%>/front-end/members/MprofileDisplayServlet?MEMNO=${loginMembersVO.memno}"
+									src="<%=request.getContextPath()%>/front-end/members/MprofileDisplayServlet?MEMNO=${membersVO.memno}"
 									alt="sing up image">
-								<input type='hidden' name='action' value='updatemembers'>
-								<input type="submit" style="font-family: 'Gochi Hand'"
-									id="register" name="signup" id="signup" class="form-submit"
-									value="Update" />
-
 							</figure>
 							
 
@@ -625,7 +555,7 @@ div.main {
 							
 								<img class="pic"
 									src="<%=request.getContextPath()%>/front-end/members/signIn&updateMembers_css/images/join.svg">註冊會員日期:
-								<fmt:formatDate value="${loginMembersVO.regdate}" type="date"
+								<fmt:formatDate value="${membersVO.regdate}" type="date"
 									dateStyle="full" />
 							</h5>
 

@@ -299,11 +299,13 @@ function status(){
 
 var inform5 = '${inform5}'
 
-if(inform5 == 200){
+if(inform5 === '200'){
 	swal('新增成功', '感謝您撥空留下您寶貴的意見', 'success');
-}else if(inform5 == 100){
+}else if(inform5 === '100'){
 	swal('修改成功', '感謝您撥空修改您寶貴的意見', 'success');
-} 
+}else{
+	swal(inform5+'的個人檔案', '是未公開的', 'warning');
+}
 
 
 
@@ -355,9 +357,11 @@ function getData(offset,size){
 				
 				result +=   `<div class="signin-content">`;
 				result += 	`<div class="signin-image">`;
-				result += `<img class="pic" src='<%=request.getContextPath()%>/front-end/members/MprofileDisplayServlet?MEMNO=` + JSONarray[i].memno  +`' alt='sing up image'>`;
-				result +=	`<h4 style="font-family:Gochi Hand" class="nkname">`+JSONarray[i].nkname
 				
+				result += `<a target="_blank" href="<%=request.getContextPath()%>/members/members.do?action=getOne_For_Display&courseno=`+$('#courseno').val()+`&memno=` + JSONarray[i].memno  +`"><img class="pic" src='<%=request.getContextPath()%>/front-end/members/MprofileDisplayServlet?MEMNO=` + JSONarray[i].memno  +`' alt='sing up image'></a>`;
+				
+				
+				result +=	`<h4 style="font-family:Gochi Hand" class="nkname">`+JSONarray[i].nkname
 				if(JSONarray[i].tchrstatus==='未申請'){
 				result += `<img class="nav_icon" src='<%=request.getContextPath()%>/front-end/members/assets/img/students.svg'></h4></div>`;
 				}else if(JSONarray[i].tchrstatus==='待審核'){

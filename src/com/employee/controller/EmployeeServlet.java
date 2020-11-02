@@ -92,7 +92,7 @@ public class EmployeeServlet extends HttpServlet {
 
 				if (!errMsgs.isEmpty()) {
 					req.setAttribute("EmployeeVO", employeeVO);
-					RequestDispatcher failureView = req.getRequestDispatcher("/back-end/employee/newadd_emp.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/back-end/employee/empall/newadd_emp.jsp");
 					failureView.forward(req, res);
 					return;
 				}
