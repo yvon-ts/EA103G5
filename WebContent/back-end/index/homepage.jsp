@@ -31,7 +31,7 @@
 
 <body class="app sidebar-mini">
     <!-- Navbar-->
-    <header class="app-header"><a class="app-header__logo" href="<%=request.getContextPath() %>/back-end/index/homepage.jsp">
+    <header class="app-header"><a class="app-header__logo" href="<%=request.getContextPath() %>/back-end/employee/loginsuccess.jsp">
             <img src="<%=request.getContextPath() %>/back-end/index/images/logo.svg" alt="" width="50px" height="50px">
             Xducation
         </a>
@@ -112,7 +112,7 @@
             </div>
         </div>
         <ul class="app-menu">
-            <li><a class="app-menu__item active" href="<%=request.getContextPath() %>/back-end/index/homepage.jsp"><i class="fa fa-home" aria-hidden="true"> </i><span class="app-menu__label"> 首頁 </span></a></li>
+            <li><a class="app-menu__item active" href="<%=request.getContextPath() %>/back-end/employee/loginsuccess.jsp"><i class="fa fa-home" aria-hidden="true"> </i><span class="app-menu__label"> 首頁 </span></a></li>
             <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="fa fa-user" aria-hidden="true"></i>
                     <span class="app-menu__label"> 員工管理 </span><i class="treeview-indicator fa fa-angle-right"></i></a>
                 <ul class="treeview-menu">
@@ -168,7 +168,7 @@
 		</c:if>
 		<%request.getSession().removeAttribute("error");%>
    </script>
-    
+      
 </body>
 
 </html>
