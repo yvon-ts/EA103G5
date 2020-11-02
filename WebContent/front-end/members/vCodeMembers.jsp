@@ -785,13 +785,7 @@ z-index: 10;
 
 <div class="main">
   <p style="color:#8E8E8E;font-family:'Gochi Hand'; ">完成驗證後我們將會為您開啟帳號<br>就可以開始您的線上學習之旅!
-      <c:if test="${not empty errorMsgs}">
-    
-        <c:forEach var="message" items="${errorMsgs}">
-            <input id="messages" type="hidden"  value="${message}">
-        </c:forEach>
-   
-</c:if></p>
+      </p>
 
      
   </div>
@@ -799,8 +793,6 @@ z-index: 10;
  <div class="webflow-style-input">
 
     <input class="code" maxlength="6" name="clientVerCode"  type="text" placeholder="輸入驗證碼">
-    <input id="count" type="hidden"  value="${count}">
-    <input id="inform" type="hidden"  value="${inform}">
   
   </div>
   <div class="submitouter">
@@ -1188,11 +1180,13 @@ var count = '${count}';
 var messages = '${errorMsgs}';
 if(inform ==='200'){
 	swal('溫馨提醒','輸入錯誤的驗證碼達三次,得重新進行註冊!', 'info');
-}else if(messages==='不可為空白'){
-		swal('驗證碼:', messages, 'warning');
 }else{
-		swal('驗證碼輸入錯誤:'+count+'次', messages, 'warning');
-	}
+    swal('驗證碼輸入錯誤:'+count+'次', messages, 'warning');
+}
+
+if(messages==='[不可為空白]'){
+	swal('驗證碼:', messages, 'warning');
+}
 	
 	
 

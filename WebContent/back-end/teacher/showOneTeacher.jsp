@@ -121,9 +121,9 @@ cursor:pointer;
             </td>
             
             
-			<td class="number"><img class="pimg" id="pic" src="<%=request.getContextPath()%>/back-end/teacher/TchrcertDisplayServlet1?TCHRNO=${teacherVO.tchrno}" 
+			<td class="number"><img class="pimg" id="pic" src="<%=request.getContextPath()%>/front-end/teacher/TchrcertDisplayServlet1?TCHRNO=${teacherVO.tchrno}" 
                 alt="No Image Uploaded"></td>
-             <td class="number"><img class="pimg" id="pic" src="<%=request.getContextPath()%>/back-end/teacher/TchrcertDisplayServlet2?TCHRNO=${teacherVO.tchrno}" 
+             <td class="number"><img class="pimg" id="pic" src="<%=request.getContextPath()%>/front-end/teacher/TchrcertDisplayServlet2?TCHRNO=${teacherVO.tchrno}" 
                 alt="No Image Uploaded"></td>
                 <div id="outerdiv" style="position:fixed;top:0;left:0;background:rgba(0,0,0,0.7);z-index:2;width:100%;height:100%;display:none;">
     <div id="innerdiv" style="position:absolute;">

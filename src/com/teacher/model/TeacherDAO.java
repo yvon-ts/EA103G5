@@ -425,7 +425,7 @@ public class TeacherDAO implements TeacherDAO_interface {
 			con = ds.getConnection();
 			String finalSQL = "SELECT * from TEACHER"
 					+ jdbcUtil_CompositeQuery_Teacher.get_WhereCondition(map)
-					+ "ORDER BY TCHRNO";
+					+ "ORDER BY TCHRNO DESC";
 			pstmt = con.prepareStatement(finalSQL);
 			System.out.println("finalSQL(by DAO)="+finalSQL);
 			rs = pstmt.executeQuery();

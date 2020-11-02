@@ -252,7 +252,7 @@ public class MembersServlet extends HttpServlet {
 		
 		session.removeAttribute("inform");
 		List<String> errorMsgs = new LinkedList<String>();
-		req.setAttribute("errorMsgs", errorMsgs);
+		
 		
 		Integer count =(Integer) session.getAttribute("count");
 		System.out.println("錯誤次數"+count);
@@ -270,6 +270,12 @@ public class MembersServlet extends HttpServlet {
 		if(clientVerCode == null || clientVerCode.trim().length() == 0) {
 			errorMsgs.add("不可為空白");
 			System.out.println("輸入空白");
+			req.setAttribute("errorMsgs", errorMsgs);
+			RequestDispatcher failureView = req.getRequestDispatcher("/front-end/members/vCodeMembers.jsp");
+			failureView.forward(req, res);
+			return;
+			
+			
 		
 		}else if(count == 2) {
 			session.removeAttribute("memVO");
@@ -287,7 +293,7 @@ public class MembersServlet extends HttpServlet {
 				count +=1;
 				session.setAttribute("count", count);
 			}else {
-				errorMsgs.add("您不想成為我們的會員了嗎:(");
+				errorMsgs.add("您不想成為我們的會員了嗎?:");
 				count +=1;
 				session.setAttribute("count", count);
 			}
@@ -297,7 +303,7 @@ public class MembersServlet extends HttpServlet {
 		
 		
 		if (!errorMsgs.isEmpty()) {
-			
+			req.setAttribute("errorMsgs", errorMsgs);
 			RequestDispatcher failureView = req.getRequestDispatcher("/front-end/members/vCodeMembers.jsp");
 			failureView.forward(req, res);
 			return;
@@ -318,6 +324,7 @@ public class MembersServlet extends HttpServlet {
 		membersSvc.addMembers(memacc, mempwd, memname, nkname, membday, memail, mphone, mprofile);
 		session.removeAttribute("memVO");
 		session.removeAttribute("vercode");
+		req.removeAttribute("errorMsgs");
 		
 		
 		RequestDispatcher successView = req.getRequestDispatcher("/front-end/members/signIn.jsp");

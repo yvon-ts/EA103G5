@@ -103,8 +103,7 @@ height:20px;
 	</style>
 </head>
 
-<body>
-<!-- onload="connect();" onunload="disconnect();" -->
+<body onload="connect();" onunload="disconnect();">
     <!-- Header Area wrapper Starts -->
     <header id="header-wrap">
         <!-- Navbar Start -->
@@ -713,7 +712,7 @@ height:20px;
 
 	function connect() {
 		// create a websocket
-		webSocket = new WebSocket(endPointURL);
+		webSocket = new WebSocket(endPointURL);	
 
 		webSocket.onopen = function(event) {
 			console.log("Connect Success!");

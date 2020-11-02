@@ -365,7 +365,17 @@ p {
 
 div.ck-rounded-corners .ck.ck-editor__main>.ck-editor__editable, .ck.ck-editor__main>.ck-editor__editable.ck-rounded-corners
 	{
-	height: 300px;
+	    height: 340px;
+	    width: 631px;
+    margin: 0 0 0 -105px;
+}
+div.ck-rounded-corners .ck.ck-editor__top .ck-sticky-panel .ck-toolbar, .ck.ck-editor__top .ck-sticky-panel .ck-toolbar.ck-rounded-corners {
+    border-radius: var(--ck-border-radius);
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    width: fit-content;
+    margin: 0px 0px 0 -105px;
+    
 }
 
 div#text {
@@ -523,7 +533,7 @@ body {
 
 							<table>
 								<tr>
-									<th><ul style="color: #0099CC; font-family: 'Gochi Hand';">
+									<th><ul style="color: white; font-family: 'Gochi Hand';">
 											<li>1.擅長領域</li>
 											<li>2.教學經驗</li>
 											<li>3.最高學歷</li>
@@ -532,8 +542,23 @@ body {
 
 									<th>
 										<div id="text">
-											<textarea id="editor" name="tchrintro"
-												placeholder="資料的詳細度將會影響審核成功的機率，祝好運">${requestScope.teacherVO.tchrintro}</textarea>
+											<textarea id="editor" name="tchrintro" placeholder="資料的詳細度將會影響審核成功的機率，祝好運">
+											<h2>1.擅長領域</h2>
+											<ul>
+											<li>1.</li>
+											<li>2.</li>
+											</ul>
+											<h2>2.教學經驗</h2>
+											<ul>
+											<li>1.</li>
+											<li>2.</li>
+											</ul>
+											<h2>3.最高學歷</h2>
+											<ul>
+											<li>1.</li>
+											<li>2.</li>
+											</ul>
+											</textarea>
 										</div> <%--  <textarea style="margin:0px 50px;width: 480px;height: 150px;  position:absolute;z-index: 10;" name="tchrintro" placeholder="資料的詳細度將會影響審核成功的機率，祝好運">${requestScope.teacherVO.tchrintro}</textarea> 
  --%>
 
