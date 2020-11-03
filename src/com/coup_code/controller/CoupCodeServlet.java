@@ -261,12 +261,11 @@ public class CoupCodeServlet extends HttpServlet {
 		
 		if ("getOne_For_Checkout".equals(action)) { // 來自select_page.jsp的請求
 			req.setCharacterEncoding("UTF-8");
-			System.out.println(123);
 			try {
 				/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
 				String coupno = req.getParameter("coupno");
 				System.out.println(coupno);
-
+				
 				/*************************** 2.開始查詢資料 *****************************************/
 				CoupCodeService coupSvc = new CoupCodeService();
 				int discount = coupSvc.GetForCheckout(coupno);
