@@ -85,7 +85,7 @@
 <%if (list == null || list.size() == 0){%>
 	<b style="color: red">查無資料</b>		
 <%}%>
-<div id="table-area" class="container-xl">
+<div id="table-area" class="container-fluid">
     <div class="table-responsive">
         <div class="table-wrapper">			
             <div class="table-title">

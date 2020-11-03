@@ -114,7 +114,7 @@
 </head>
 <body>
 <main class="app-content" style="background-color: #f3f3f3">
-<div id="table-area" class="container-xl">
+<div id="table-area" class="container-fluid">
     <div class="table-responsive">
         <div class="table-wrapper">			
             <div class="table-title">

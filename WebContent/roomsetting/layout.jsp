@@ -28,7 +28,7 @@
 		<span id="room">&nbsp;講座地點&emsp;</span><select id="roomSelect" style="outline: none; border: 0;border-bottom: 1px solid #999"required>
 			<option>------請選擇教室------</option>
 			<c:forEach var="roomVO" items="${roomSvc.all}">
-				<option value="${roomVO.roomno}" ${(lecVO.roomno==roomVO.roomno)? 'selected':'' } >${roomVO.roomno}&nbsp;${roomVO.roomname}</option>
+				<option class="room" value="${roomVO.roomno}" ${(lecVO.roomno==roomVO.roomno)? 'selected':'' } >${roomVO.roomno}&nbsp;${roomVO.roomname}</option>
 			</c:forEach>
 		</select><br>
 			</div>
