@@ -377,6 +377,8 @@ public class MembersServlet extends HttpServlet {
 		HttpSession session = req.getSession();
 		session.removeAttribute("loginMembersVO");
 		session.removeAttribute("loginTeacherVO");
+		session.removeAttribute("shoppingList");
+		
 		String inform2 = "300";
 		req.setAttribute("inform2", inform2);
 		String url = "/index/front-index/index.jsp";

@@ -24,20 +24,29 @@ public class PostsDAO implements PostsDAO_interface {
 			e.printStackTrace();
 		}
 	}
-	private static final String INSERT_STMT = "INSERT INTO POSTS (POSTNO, SUPERPOSTNO, COURSENO, MEMNO, POSTCONTENT, POSTTIME)"
-			+ "VALUES ('POST'||LPAD(SEQ_POSTNO.NEXTVAL, 4, 0), ?, ?, ?, ?, CURRENT_TIMESTAMP)";
+	
 
-	private static final String UPDATE_STATUS1 = "UPDATE POSTS SET ISHIDDEN = 1 WHERE POSTNO = ?"; // 更改poststatus
-	private static final String UPDATE_STATUS2 = "UPDATE POSTS SET ISHIDDEN = 0 WHERE POSTNO = ?"; // 更改poststatus
-	private static final String UPDATE_STMT = "UPDATE POSTS SET POSTCONTENT = ?, POSTTIME = CURRENT_TIMESTAMP WHERE POSTNO=?";// 會員修改內容
-	private static final String GET_ALL_STMT = "SELECT * FROM POSTS WHERE ISHIDDEN != 1 ORDER BY POSTNO DESC";
+	private static final String UPDATE_POST_STATUS = "UPDATE POSTS SET ISHIDDEN = ? WHERE POSTNO=? and SUPERPOSTNO=? ";
+	
+	private static final String UPDATE_STMT = "UPDATE POSTS SET POSTCONTENT = ?, POSTTIME = CURRENT_TIMESTAMP WHERE POSTNO=? and SUPERPOSTNO=? and MEMNO = ? and COURSENO =?";// 會員修改內容
+
+	private static final String GET_ALL_FATHER_STMT   = "SELECT * FROM POSTS WHERE  ISHIDDEN != 1  and SUPERPOSTNO is null ORDER BY POSTTIME DESC"; //查父文章
+	private static final String GET_ALL_CHILDREN_STMT = "SELECT * FROM POSTS WHERE  ISHIDDEN != 1  and SUPERPOSTNO is not null ORDER BY POSTTIME"; //查子文章
+	private static final String GET_ALL_STMT = "SELECT * FROM POSTS  ORDER BY POSTNO"; //查全部文章For員工
+	
+	private static final String INSERT_FATHER_STMT = "INSERT INTO POSTS (POSTNO, SUPERPOSTNO, COURSENO, MEMNO, POSTCONTENT, POSTTIME)"
+			+ "VALUES ('POST'||LPAD(SEQ_POSTNO.NEXTVAL, 4, 0), null, ?, ?, ?, CURRENT_TIMESTAMP)"; //父文章留言
+	private static final String INSERT_CHILDREN_STMT = "INSERT INTO POSTS (POSTNO, SUPERPOSTNO, COURSENO, MEMNO, POSTCONTENT, POSTTIME)"
+			+ "VALUES ('POST'||LPAD(SEQ_POSTNO.NEXTVAL, 4, 0), ?, ?, ?, ?, CURRENT_TIMESTAMP)"; //子文章留言
+	
+	
 	private static final String GET_ONE_STMT = "SELECT * FROM POSTS WHERE  ISHIDDEN != 1  AND POSTNO = ?";
-	private static final String GET_MEMNO = "SELECT * FROM POSTS WHERE ISHIDDEN != 1  AND MEMNO = ?";
+	private static final String GET_MEMNO = "SELECT * FROM POSTS WHERE ISHIDDEN != 1  AND MEMNO = ?"; //會員所有留言
 
 //	private static final String DELETE_STNT = "DELETE FROM POSTS WHERE POSTNO =?";  //給會員刪除
 
 	@Override
-	public PostsVO insert(PostsVO postsVO) {
+	public PostsVO insert(PostsVO postsVO,boolean FatherOrChildren) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		String postno = null;
@@ -46,12 +55,23 @@ public class PostsDAO implements PostsDAO_interface {
 			con = ds.getConnection();
 			con.setAutoCommit(false);
 			String col[] = { "postno" };
-			pstmt = con.prepareStatement(INSERT_STMT, col);
+			
+			if(FatherOrChildren) {
+				pstmt = con.prepareStatement(INSERT_FATHER_STMT, col);
+				
+				pstmt.setString(1, postsVO.getCourseno());
+				pstmt.setString(2, postsVO.getMemno());
+				pstmt.setString(3, postsVO.getPostcontent());
+			}else {
+				pstmt = con.prepareStatement(INSERT_CHILDREN_STMT, col);
+				
+				pstmt.setString(1, postsVO.getSuperpostno());
+				pstmt.setString(2, postsVO.getCourseno());
+				pstmt.setString(3, postsVO.getMemno());
+				pstmt.setString(4, postsVO.getPostcontent());
+			}
+			
 
-			pstmt.setString(1, postsVO.getSuperpostno());
-			pstmt.setString(2, postsVO.getCourseno());
-			pstmt.setString(3, postsVO.getMemno());
-			pstmt.setString(4, postsVO.getPostcontent());
 
 			pstmt.executeUpdate();
 			ResultSet rs = pstmt.getGeneratedKeys();
@@ -92,52 +112,6 @@ public class PostsDAO implements PostsDAO_interface {
 
 	}
 
-	@Override
-
-	public void updateStatusRemove(String postno) {
-
-		Connection con = null;
-		PreparedStatement pstmt = null;
-
-		try {
-
-			con = ds.getConnection();
-			con.setAutoCommit(false);
-			pstmt = con.prepareStatement(UPDATE_STATUS1);
-
-			pstmt.setString(1, postno);
-
-			pstmt.executeUpdate();
-			con.commit();
-
-			// Handle any driver errors
-		} catch (SQLException se) {
-			try {
-				con.rollback();
-			} catch (SQLException e) {
-				throw new RuntimeException("A database error occured. " + se.getMessage());
-			}
-			throw new RuntimeException("A database error occured. " + se.getMessage());
-			// Clean up JDBC resources
-		} finally {
-			if (pstmt != null) {
-				try {
-					pstmt.close();
-				} catch (SQLException se) {
-					se.printStackTrace(System.err);
-				}
-			}
-			if (con != null) {
-				try {
-					con.setAutoCommit(true);
-					con.close();
-				} catch (Exception e) {
-					e.printStackTrace(System.err);
-				}
-			}
-		}
-
-	}
 
 	@Override
 	public void update(PostsVO postsVO) {
@@ -152,6 +126,9 @@ public class PostsDAO implements PostsDAO_interface {
 
 			pstmt.setString(1, postsVO.getPostcontent());
 			pstmt.setString(2, postsVO.getPostno());
+			pstmt.setString(3, postsVO.getSuperpostno());
+			pstmt.setString(2, postsVO.getMemno());
+			pstmt.setString(2, postsVO.getCourseno());
 
 			pstmt.executeUpdate();
 
@@ -254,7 +231,7 @@ public class PostsDAO implements PostsDAO_interface {
 	}
 
 	@Override
-	public List<PostsVO> getAll() {
+	public List<PostsVO> getAll(String FatherOrChildren) {
 		List<PostsVO> list = new ArrayList<PostsVO>();
 		PostsVO postsVO = null;
 
@@ -263,10 +240,26 @@ public class PostsDAO implements PostsDAO_interface {
 		ResultSet rs = null;
 
 		try {
-
+			
 			con = ds.getConnection();
 			con.setAutoCommit(false);
-			pstmt = con.prepareStatement(GET_ALL_STMT);
+			
+			if("father".equals(FatherOrChildren)) {
+				
+				pstmt = con.prepareStatement(GET_ALL_FATHER_STMT);
+				
+			}
+			else if(FatherOrChildren == null){
+				
+				pstmt = con.prepareStatement(GET_ALL_STMT);
+				
+			}
+			else if("children".equals(FatherOrChildren)){
+				
+				pstmt = con.prepareStatement(GET_ALL_CHILDREN_STMT);
+				
+			}
+			
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
@@ -319,51 +312,7 @@ public class PostsDAO implements PostsDAO_interface {
 
 	}
 
-	@Override
-	public void updateStatusAdd(String postno) {
-
-		Connection con = null;
-		PreparedStatement pstmt = null;
-
-		try {
-
-			con = ds.getConnection();
-			con.setAutoCommit(false);
-			pstmt = con.prepareStatement(UPDATE_STATUS2);
-
-			pstmt.setString(1, postno);
-
-			pstmt.executeUpdate();
-			con.commit();
-
-			// Handle any driver errors
-		} catch (SQLException se) {
-			try {
-				con.rollback();
-			} catch (SQLException e) {
-				throw new RuntimeException("A database error occured. " + se.getMessage());
-			}
-			throw new RuntimeException("A database error occured. " + se.getMessage());
-			// Clean up JDBC resources
-		} finally {
-			if (pstmt != null) {
-				try {
-					pstmt.close();
-				} catch (SQLException se) {
-					se.printStackTrace(System.err);
-				}
-			}
-			if (con != null) {
-				try {
-					con.setAutoCommit(true);
-					con.close();
-				} catch (Exception e) {
-					e.printStackTrace(System.err);
-				}
-			}
-		}
-
-	}
+	
 
 	@Override
 	public PostsVO findByMemno(String memno) {
@@ -429,6 +378,63 @@ public class PostsDAO implements PostsDAO_interface {
 		}
 		return postsVO;
 
+	}
+
+
+	@Override
+	public void updateStatusRemove(PostsVO postsVO) {
+		// TODO Auto-generated method stub
+		Connection con = null;
+		PreparedStatement pstmt = null;
+
+		try {
+			
+			
+			con = ds.getConnection();
+			con.setAutoCommit(false);
+			pstmt = con.prepareStatement(UPDATE_POST_STATUS);
+
+			pstmt.setInt(1,postsVO.getIshidden());
+			pstmt.setString(2,postsVO.getPostno());
+			pstmt.setString(3,postsVO.getSuperpostno());
+			
+			pstmt.executeUpdate();
+
+			con.commit();
+
+			// Handle any driver errors
+		} catch (SQLException se) {
+			try {
+				con.rollback();
+			} catch (SQLException e) {
+				throw new RuntimeException("A database error occured. " + se.getMessage());
+			}
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.setAutoCommit(true);
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+	}
+
+
+	@Override
+	public void updateStatusAdd(String postno) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

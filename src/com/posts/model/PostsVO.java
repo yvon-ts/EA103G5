@@ -68,6 +68,12 @@ public class PostsVO implements Serializable{
 	public void setIshidden(List<PostsVO> list) {
 		this.list = list;
 	}
+	@Override
+	public String toString() {
+		return "PostsVO [postno=" + postno + ", superpostno=" + superpostno + ", courseno=" + courseno + ", memno="
+				+ memno + ", postcontent=" + postcontent + ", posttime=" + posttime + ", ishidden=" + ishidden
+				+ ", list=" + list + "]";
+	}
 	
 	
 	
