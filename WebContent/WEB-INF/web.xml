@@ -32,8 +32,14 @@
    	<url-pattern>/back-end/employee/*</url-pattern>
    	<url-pattern>/back-end/members/*</url-pattern>
    	<url-pattern>/back-end/teacher/*</url-pattern>
+   	<url-pattern>/back-end/lecorder/*</url-pattern>
    	<url-pattern>/back-end/lecture/*</url-pattern>
+   	<url-pattern>/back-end/lecseat/*</url-pattern>
+   	<url-pattern>/back-end/speaker/*</url-pattern>
    	<url-pattern>/back-end/classroom/*</url-pattern>
+   	<url-pattern>/back-end/Order_Detail/*</url-pattern>
+   	<url-pattern>/back-end/Order_Master/*</url-pattern>
+   	<url-pattern>/back-end/course/*</url-pattern>
    	<dispatcher>REQUEST</dispatcher>
    	<dispatcher>FORWARD</dispatcher>
    	<dispatcher>INCLUDE</dispatcher>
@@ -52,7 +58,16 @@
    	<url-pattern>/back-end/teacher/*</url-pattern>
    	<url-pattern>/back-end/lecorder/*</url-pattern>
     <url-pattern>/back-end/lecture/*</url-pattern>
-    <url-pattern>/back-end/classroom/*</url-pattern>
+    <url-pattern>/back-end/lecseat/*</url-pattern>
+    <url-pattern>/back-end/speaker/*</url-pattern>
+    <url-pattern>/back-end/classroom/addClassroom.jsp</url-pattern>
+    <url-pattern>/back-end/classroom/listAllClassroom.jsp</url-pattern>
+    <url-pattern>/back-end/classroom/listOneClassroom.jsp</url-pattern>
+    <url-pattern>/back-end/classroom/select_page.jsp</url-pattern>
+    <url-pattern>/back-end/classroom/update_classroom_input.jsp</url-pattern>
+    <url-pattern>/back-end/Order_Detail/*</url-pattern>
+   	<url-pattern>/back-end/Order_Master/*</url-pattern>
+   	<url-pattern>/back-end/course/*</url-pattern>
    	<dispatcher>REQUEST</dispatcher>
    	<dispatcher>FORWARD</dispatcher>
    	<dispatcher>INCLUDE</dispatcher>

@@ -355,8 +355,7 @@
 </head>
 
 <body>
-	<jsp:include page="/front-end/back-endHomePage.jsp" />
-	<%-- <jsp:include page="/back-end/index/homepage.jsp" /> --%>
+	<jsp:include page="/back-end/index/homepage.jsp" />
 
 	<main class="app-content">
 		<div class="container-xl">
