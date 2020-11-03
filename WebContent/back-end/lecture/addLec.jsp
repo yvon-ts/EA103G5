@@ -121,7 +121,7 @@
 			</div>
 			<div class="col-sm-8" style="margin-left: 4%; margin-top: 20px">
 				講座資訊
-				<input id="action" type="text" name="action" value="insertText"><br>
+				<input id="action" type="hidden" name="action" value="insertText"><br>
 				<%@ include file="/back-end/lecture/ckLec.file"%>
 			</div>
 			</form>

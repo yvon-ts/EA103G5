@@ -45,9 +45,9 @@
 			else if (rs.getInt("lecstatus") == 0 )
 				obj.put("color", "orange");
 			else if (rs.getInt("lecstatus") == 2 )
-				obj.put("color", "#333");
-			else if (rs.getInt("lecstatus") == 3 )
 				obj.put("color", "#ff6680");
+			else if (rs.getInt("lecstatus") == 3 )
+				obj.put("color", "#333");
 			arr.put(obj);
 		}
 		//out.print(arr); //testing

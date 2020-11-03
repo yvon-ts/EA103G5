@@ -201,7 +201,9 @@
         <hr>
 
         <!-- Date/Time -->
-        <p>Xducation 帶給您最優質的講座內容</p>
+       	 講座日期：<%=startdate%><br>
+		講座時間：<%=starttime%> - <%=endtime%><br>
+		講座地點：<%=roomname%>教室<br>
 
         <hr>
 
@@ -211,7 +213,9 @@
         <hr>
 
         <!-- Post Content -->
-		<div style="font-size: 1em;"><%=lecinfo%></div>
+		<div style="font-size: 1em;">
+			<%=lecinfo%>
+		</div>
         <hr>
 
         <!-- Comment with nested comments -->

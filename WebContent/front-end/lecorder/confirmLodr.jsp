@@ -131,10 +131,9 @@ html{
 <input style="background-color: #fff; border-bottom: 1px #333 solid; border-radius: 0" type="text" name="lecamt" value="<%=lecamt%>" readonly>
   講座編號
   <input type="text" name="lecno" style="background-color: #fff; border-bottom: 1px #333 solid; border-radius: 0" value="<%=lecno%>">
-  座位
-  <input type="text" name="currseat" style="background-color: #fff; border-bottom: 1px #333 solid; border-radius: 0" value="<%=currseat%>">
   座位號碼
   <input type="text" name="seatno" style="background-color: #fff; border-bottom: 1px #333 solid; border-radius: 0" value="<%=seatno%>">
+  <input type="hidden" name="currseat" style="background-color: #fff; border-bottom: 1px #333 solid; border-radius: 0" value="<%=currseat%>">
   <input type="hidden" name="action" value="insert">
   <input type="hidden" name="memno" value="<%=memno%>">
   <input type="submit" value="確認付款">
