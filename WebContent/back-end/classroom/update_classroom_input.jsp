@@ -81,7 +81,7 @@
                                         <span class="input-group-text" id="inputGroup-sizing-default">寬度</span>
                                     </div>
                                     <input type="number" class="form-control roomSpace" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default"
-                                        min="1" max="10" id="roomcolumn" name="roomcolumn" value="${classroomVO.roomrow}">
+                                        min="1" max="10" id="roomcolumn" name="roomcolumn" value="${classroomVO.roomcolumn}">
                                 </div>
 
                                 <div class="input-group mb-3">
