@@ -39,7 +39,7 @@ public class OrderMasterServlet extends HttpServlet {
 
 		PrintWriter out = res.getWriter();
 		
-		if ("getOne_For_Display".equals(action)) { // 來自OrderMasterDB.jsp的請求
+		if ("getOne_For_Display".equals(action)) { 
 
 			List<String> errorMsgs = new LinkedList<String>();
 			// Store this set in the request scope, in case we need to
@@ -174,25 +174,25 @@ public class OrderMasterServlet extends HttpServlet {
 				/*********************** 1.接收請求參數 - 輸入格式的錯誤處理 *************************/
 
 				String memno = req.getParameter("memno");
-				Integer orderamt = new Integer(req.getParameter("orderamt"));
+				
+				Integer orderamt = null;
+				try {
+				orderamt = new Integer(req.getParameter("orderamt"));
+				} catch(NumberFormatException e) {
+					e.printStackTrace();
+				}
+				
 				String coupno = req.getParameter("coupno");
-				System.out.println(coupno);
 				
 				if (!(coupno.equals("empty"))) {
 					
 					CoupCodeService coupSvc = new CoupCodeService();
-					CoupCodeVO coupCodeVO = coupSvc.getOneCoupCode(coupno);
-
 					coupSvc.updateCoupCode(coupno, 1);
 				} else {
 					coupno = null;
 				}
-
+				
 				String payby = req.getParameter("payby");
-//						.trim();
-//				if (payby == null || payby.trim().length() == 0) {
-//					errorMsgs.add("付款方式請勿空白");
-//				}
 
 				OrderMasterVO orderMasterVO = new OrderMasterVO();
 
@@ -234,8 +234,8 @@ public class OrderMasterServlet extends HttpServlet {
 				java.sql.Timestamp time = new java.sql.Timestamp(System.currentTimeMillis());
 				DateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 				checkoutonetime.setMerchantTradeDate(sdf.format(time));
-				checkoutonetime.setReturnURL("http://localhost:8081/EA103G5/Order_Master/Order_Master.do");
-				checkoutonetime.setClientBackURL("http://localhost:8081/EA103G5/index/front-index/index.jsp");
+				checkoutonetime.setReturnURL(req.getScheme() + "://" + req.getServerName() + ":" + req.getServerPort() + ":" + req.getContextPath() + "/Order_Master/Order_Master.do");
+				checkoutonetime.setClientBackURL(req.getScheme() + "://" + req.getServerName() + ":" + req.getServerPort() + "/" + req.getContextPath() + "/index/front-index/index.jsp");
 				checkoutonetime.setTradeDesc("123");
 				
 				

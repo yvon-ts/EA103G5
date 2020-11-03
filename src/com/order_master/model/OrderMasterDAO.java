@@ -88,7 +88,7 @@ public class OrderMasterDAO implements OrderMasterDAO_interface {
 			}
 			try {
 				if (con != null) {
-					con.setAutoCommit(false);
+					con.setAutoCommit(true);
 					con.close();
 				}
 					

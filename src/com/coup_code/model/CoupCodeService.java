@@ -39,7 +39,9 @@ public class CoupCodeService {
 	}
 	
 	public Integer GetForCheckout(String coupno) {
-		return dao.findForCheckout(coupno);
+		if (coupno.equals("empty")) {
+			return 0;} 
+		else {return dao.findForCheckout(coupno);}
 	}
 
 	public CoupCodeVO getOneCoupno(String coupname) {

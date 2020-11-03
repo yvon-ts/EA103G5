@@ -90,8 +90,9 @@ center
 					<div class="row">
 						<div class="col-4">
 							<h6>要使用折扣券嗎?&nbsp;</h6>
-							<select name="coupno"   id="coupno">
-								<option value="empty">不使用折扣券
+							<select name="coupno"  id="coupno">
+								<option value="empty" selected >不使用折扣券
+								
 									<c:forEach var="coupVO"	items="${coupSvc.getMemberCoup(loginMembersVO.memno)}">
 										<option value="${coupVO.coupno}" id="myC">${coupVO.coupcode}
 									</c:forEach>
@@ -106,7 +107,7 @@ center
 								<div class="col-lg-12 col-md-12 col-12">
 									<div class="checkoutArea">
 										<table id="checkoutArea"
-											class="table table-condensed table-responsive  wow fadeInDown"
+											class="table table-condensed table-responsive wow fadeInDown"
 											data-wow-delay="0.3s">
 											<thead>
 												<tr>
@@ -186,7 +187,7 @@ center
 										</div>
 										<br> <input type="hidden" name="action" value="insert">
 										<input type="hidden" name="memno" value="${loginMembersVO.memno}"> 
-										<input id="orderamt" type="hidden" name="orderamt" >
+										<input id="orderamt" type="hidden" name="orderamt">
 										<div class="col-sm-6 order-md-2 text-right">
 											<button type="button" class="btn btn-primary" id="add">聯絡人資料</button>
 											<button type="submit" class="btn btn-primary" id="checkout">結帳</button>
@@ -214,6 +215,7 @@ center
 		})
 		
 		$("#coupno").change(function(){
+			console.log($("#coupno").val());
 			$.ajax({
 				url: "<%=request.getContextPath()%>/Coup_Code/Coup_CodeServlet.do?action=getOne_For_Checkout",
 				type: "POST",
@@ -222,12 +224,12 @@ center
 				}
 				,
 				success:function(dis) {
-					var x = "<%=total%>" - dis;
-					$("#discount").empty();
-					$("#discount").append("折扣：-" + dis);
-					$("#amount").empty();
-					$("#amount").append("折扣後：" + x);
-					$("#orderamt").val("<%=total%>" - dis);
+						var x = "<%=total%>" - dis;
+						$("#discount").empty();
+						$("#discount").append("折扣：-" + dis);
+						$("#amount").empty();
+						$("#amount").append("折扣後：" + x);
+						$("#orderamt").val("<%=total%>" - dis);
 				}
 			})
 		})
