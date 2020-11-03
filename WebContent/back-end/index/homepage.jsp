@@ -37,54 +37,7 @@
         </a>
         <!-- Sidebar toggle button--><a class="app-sidebar__toggle" href="#" data-toggle="sidebar" aria-label="Hide Sidebar"></a>
         <!-- Navbar Right Menu-->
-        <ul class="app-nav">
-            <!--Notification Menu-->
-            <li class="dropdown"><a class="app-nav__item" href="#" data-toggle="dropdown" aria-label="Show notifications"><i class="fa fa-bell-o fa-lg"></i></a>
-                <ul class="app-notification dropdown-menu dropdown-menu-right">
-                    <li class="app-notification__title">You have 4 new notifications.</li>
-                    <div class="app-notification__content">
-                        <li><a class="app-notification__item" href="javascript:;"><span class="app-notification__icon"><span class="fa-stack fa-lg"><i class="fa fa-circle fa-stack-2x text-primary"></i><i class="fa fa-envelope fa-stack-1x fa-inverse"></i></span></span>
-                                <div>
-                                    <p class="app-notification__message">Lisa sent you a mail</p>
-                                    <p class="app-notification__meta">2 min ago</p>
-                                </div>
-                            </a></li>
-                        <li><a class="app-notification__item" href="javascript:;"><span class="app-notification__icon"><span class="fa-stack fa-lg"><i class="fa fa-circle fa-stack-2x text-danger"></i><i class="fa fa-hdd-o fa-stack-1x fa-inverse"></i></span></span>
-                                <div>
-                                    <p class="app-notification__message">Mail server not working</p>
-                                    <p class="app-notification__meta">5 min ago</p>
-                                </div>
-                            </a></li>
-                        <li><a class="app-notification__item" href="javascript:;"><span class="app-notification__icon"><span class="fa-stack fa-lg"><i class="fa fa-circle fa-stack-2x text-success"></i><i class="fa fa-money fa-stack-1x fa-inverse"></i></span></span>
-                                <div>
-                                    <p class="app-notification__message">Transaction complete</p>
-                                    <p class="app-notification__meta">2 days ago</p>
-                                </div>
-                            </a></li>
-                        <div class="app-notification__content">
-                            <li><a class="app-notification__item" href="javascript:;"><span class="app-notification__icon"><span class="fa-stack fa-lg"><i class="fa fa-circle fa-stack-2x text-primary"></i><i class="fa fa-envelope fa-stack-1x fa-inverse"></i></span></span>
-                                    <div>
-                                        <p class="app-notification__message">Lisa sent you a mail</p>
-                                        <p class="app-notification__meta">2 min ago</p>
-                                    </div>
-                                </a></li>
-                            <li><a class="app-notification__item" href="javascript:;"><span class="app-notification__icon"><span class="fa-stack fa-lg"><i class="fa fa-circle fa-stack-2x text-danger"></i><i class="fa fa-hdd-o fa-stack-1x fa-inverse"></i></span></span>
-                                    <div>
-                                        <p class="app-notification__message">Mail server not working</p>
-                                        <p class="app-notification__meta">5 min ago</p>
-                                    </div>
-                                </a></li>
-                            <li><a class="app-notification__item" href="javascript:;"><span class="app-notification__icon"><span class="fa-stack fa-lg"><i class="fa fa-circle fa-stack-2x text-success"></i><i class="fa fa-money fa-stack-1x fa-inverse"></i></span></span>
-                                    <div>
-                                        <p class="app-notification__message">Transaction complete</p>
-                                        <p class="app-notification__meta">2 days ago</p>
-                                    </div>
-                                </a></li>
-                        </div>
-                    </div>
-                    <li class="app-notification__footer"><a href="#">See all notifications.</a></li>
-                </ul>
-            </li>
+        <ul class="app-nav">     
             <!-- User Menu-->
             <li class="dropdown"><a class="app-nav__item" href="#" data-toggle="dropdown" aria-label="Open Profile Menu"><i class="fa fa-user fa-lg"></i></a>
                 <ul class="dropdown-menu settings-menu dropdown-menu-right">
@@ -119,17 +72,9 @@
                 </ul>
             </li>
             <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="fa fa-users" aria-hidden="true"></i>
-                    <span class="app-menu__label"> 會員管理 </span><i class="treeview-indicator fa fa-angle-right"></i></a>
-                <ul class="treeview-menu">
-                    <li><a class="treeview-item" href="<%=request.getContextPath() %>/back-end/members/select_members.jsp"><i class="icon fa fa-circle-o"></i> 會員資料</a></li>
-                    <li><a class="treeview-item" href="https://fontawesome.com/v4.7.0/icons/" target="_blank" rel="noopener"><i class="icon fa fa-circle-o"></i>會員課程 </a></li>
-                </ul>
-            </li>
-            <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="fa fa-users" aria-hidden="true"></i>
                     <span class="app-menu__label"> 老師管理 </span><i class="treeview-indicator fa fa-angle-right"></i></a>
                 <ul class="treeview-menu">
                     <li><a class="treeview-item" href="<%=request.getContextPath() %>/back-end/teacher/listAllTeachers.jsp"><i class="icon fa fa-circle-o"></i> 老師資料</a></li>
-                    <li><a class="treeview-item" href="https://fontawesome.com/v4.7.0/icons/" target="_blank" rel="noopener"><i class="icon fa fa-circle-o"></i>老師課程 </a></li>
                 </ul>
             </li>
             <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="fa fa-user-plus" aria-hidden="true"></i>
@@ -148,7 +93,6 @@
                     <li><a class="treeview-item" href="<%=request.getContextPath()%>/back-end/course/editCourseStatus.jsp" rel="noopener"><i class="icon fa fa-circle-o"></i>課程管理 </a></li>
                 </ul>
             </li>
-            <li><a class="app-menu__item" href="docs.html"><i class="fa fa-exclamation-circle" aria-hidden="true"></i><span class="app-menu__label">檢舉管理</span></a></li>
         </ul>
     </aside>
     <!-- 內容放在下面 -->

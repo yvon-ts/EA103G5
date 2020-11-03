@@ -171,7 +171,7 @@ public class EmployeeServlet extends HttpServlet {
 			req.setAttribute("errMsgs", errMsgs);
 
 			try {
-				String empacc = req.getParameter("empacc");
+				String empacc = req.getParameter("empacc").toUpperCase();
 				String empaccReg = "^[a-zA-Z0-9]{4,10}$";
 				if (empacc == null || empacc.trim().length() == 0) {
 					errMsgs.add("*員工帳號:請勿為空白*");
@@ -273,12 +273,12 @@ public class EmployeeServlet extends HttpServlet {
 				mailService.sendMail(empemail, subject, messageText);
 
 				req.setAttribute("empAuthorityVO", empAuthorityVO);
-				RequestDispatcher succesView = req.getRequestDispatcher("/back-end/employee/newallemp.jsp");
+				RequestDispatcher succesView = req.getRequestDispatcher("/back-end/employee/empall/newallemp.jsp");
 				succesView.forward(req, res);
 			} catch (Exception e) {
 				e.printStackTrace();
 				errMsgs.add(e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/employee/newadd_emp.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/employee/empall/newadd_emp.jsp");
 				failureView.forward(req, res);
 			}
 
