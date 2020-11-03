@@ -15,6 +15,7 @@
 	String lecno = lecVO.getLecno();
 	String roomno = lecVO.getRoomno();
 	String spkrno = lecVO.getSpkrno();
+	Integer lecstatus = lecVO.getLecstatus();
 	
 	// 登入檢查
 	String memno = "";
@@ -227,7 +228,7 @@
 
         <!-- Search Widget -->
         <div class="card my-4">
-          <h5 class="card-header">Search</h5>
+          <h5 class="card-header">購買票券</h5>
           <div class="card-body">
             <div class="input-group">
               <form method="post"	action="<%=request.getContextPath()%>/lecture/lecture.do">
@@ -235,7 +236,15 @@
               <input type="hidden" name="action" value="bookOne">
               <input type="hidden" name="lecno" value="${lecVO.lecno}">
               <input type="hidden" name="availableSeats" value="<%=availableSeats%>">
+              	<%if (lecstatus == 1) {%>
                 <button id="bookASeat" class="btn btn-secondary" type="submit">我要訂票</button>
+                <%} else if (lecstatus == 0) {%>
+                <button id="bookASeat" class="btn btn-secondary" type="submit">活動延期</button>
+                <%} else if (lecstatus == 2) {%>
+                <button id="bookASeat" class="btn btn-secondary" type="submit">暫已額滿</button>
+                <%} else if (lecstatus == 3) {%>
+                <button id="bookASeat" class="btn btn-secondary" type="submit">活動結束</button>
+                <%}%>
                 </span>
                 </form>
             </div>
@@ -244,7 +253,7 @@
 
         <!-- Categories Widget -->
         <div class="card my-4">
-          <h5 class="card-header">Search</h5>
+          <h5 class="card-header">查看訂單</h5>
           <div class="card-body">
             <div class="input-group">
               <form method="post"	action="<%=request.getContextPath()%>/front-end/lecorder/listByMemno.jsp">
@@ -259,7 +268,7 @@
 
         <!-- Side Widget -->
         <div class="card my-4">
-          <h5 class="card-header">Side Widget</h5>
+          <h5 class="card-header">目前座位狀態</h5>
           <div class="card-body">
             <%@ include file="/roomsetting/singleLayout.jsp"%>
           </div>
@@ -287,6 +296,15 @@ $("#bookASeat").mousedown(function(e){
 	} else if (<%=canBuy%> === false){
 		e.preventDefault();
 		alert("您已達到購買數量上限");
+	} else if (<%=lecstatus%> === 0){
+		e.preventDefault();
+		alert("很抱歉，該講座已延期，目前無法購買");
+	} else if (<%=lecstatus%> === 2){
+		e.preventDefault();
+		alert("很抱歉，該講座現已額滿，目前無法購滿");
+	} else if (<%=lecstatus%> === 3){
+		e.preventDefault();
+		alert("該活動已結束");
 	}
 });
 $("#viewOrders").mousedown(function(e){

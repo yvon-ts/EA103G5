@@ -178,9 +178,10 @@
 					        	<%} else if (lecstatus == 0) {%>
 					        		<input type="submit" class="btn btn-common" style="background-color: orange;" value="活動延期">
 					        	<%} else if (lecstatus == 2) {%>
-					        		<input type="submit" class="btn btn-common" style="background-color: #e5e5e5; color: #333" value="活動結束">
-					        	<%} else if (lecstatus == 3) {%>
 					        		<input type="submit" class="btn btn-common" style="background-color: #ff6680" value="名額已滿">
+					        	<%} else if (lecstatus == 3) {%>
+					        		<input type="submit" class="btn btn-common" style="background-color: #e5e5e5; color: #333" value="活動結束">
+					        		
 					        	<%}%>
 					        		<input type="hidden" name="lecno" value="${lecVO.lecno}">
 					        		<input type="hidden" name="action" value="frontOne">
