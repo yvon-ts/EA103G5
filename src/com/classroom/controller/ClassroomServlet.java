@@ -20,7 +20,6 @@ public class ClassroomServlet extends HttpServlet {
 		String action = req.getParameter("action");
 
 		if ("getOne_For_Display".equals(action)) {
-
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);
 
@@ -33,7 +32,7 @@ public class ClassroomServlet extends HttpServlet {
 					errorMsgs.add("請輸入教室編號");
 				}
 				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req.getRequestDispatcher("/back-end/classroom/select_page.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/back-end/classroom/listAllClassroom.jsp");
 					failureView.forward(req, res);
 					return; // 中斷程式
 				}
@@ -44,7 +43,7 @@ public class ClassroomServlet extends HttpServlet {
 					errorMsgs.add("教室編號格式不正確");
 				}
 				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req.getRequestDispatcher("/back-end/classroom/select_page.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/back-end/classroom/listAllClassroom.jsp");
 					failureView.forward(req, res);
 					return; // 中斷程式
 				}
@@ -57,7 +56,7 @@ public class ClassroomServlet extends HttpServlet {
 					errorMsgs.add("查無資料");
 				}
 				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req.getRequestDispatcher("/back-end/classroom/select_page.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/back-end/classroom/listAllClassroom.jsp");
 					failureView.forward(req, res);
 					return; // 中斷程式
 				}
@@ -72,7 +71,7 @@ public class ClassroomServlet extends HttpServlet {
 				/*************************** 其他可能的錯誤處理 *************************************/
 			} catch (Exception e) {
 				errorMsgs.add("無法取得資料: " + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/classroom/select_page.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/classroom/listAllClassroom.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -169,8 +168,7 @@ public class ClassroomServlet extends HttpServlet {
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					req.setAttribute("classroomVO", classroomVO); // 含有輸入格式錯誤的empVO物件,也存入req
-					RequestDispatcher failureView = req
-							.getRequestDispatcher("/back-end/classroom/update_classroom_input.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/back-end/classroom/update_classroom_input.jsp");
 					failureView.forward(req, res);
 					return;
 				}

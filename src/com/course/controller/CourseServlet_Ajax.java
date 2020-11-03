@@ -52,7 +52,7 @@ public class CourseServlet_Ajax extends HttpServlet {
 				/*************************** 2.開始新增資料 *****************************************/
 				courseSvc.updateCourseStatus(courseno, csstatus);
 				/*************************** 3.查詢完成,準備轉交(Send the Success view) *************/
-				out.print("成功更新課程  " + courseno + " 為 " + csstatus + " 狀態");
+				out.print("調整 " + courseno + " 課程狀態為 「" + csstatus + "」");
 				/*************************** 其他可能的錯誤處理 *************************************/
 			} catch (Exception e) {
 				out.println("無法新增資料: " + e.getMessage());
