@@ -452,12 +452,14 @@
 				processData: false,
 				contentType: false,
 				success: function (data) {
-					console.log("成功");
-					alert(data);
+					swal({
+						title:'課程狀態調整',
+						text: data,
+						type: 'info'
+					})
 				},
 				error: function (data) {
-					console.log("失敗");
-					alert(data);
+					swal('伺服器忙碌中', "請稍後再試", 'warning');
 				}
 			});
 		});
