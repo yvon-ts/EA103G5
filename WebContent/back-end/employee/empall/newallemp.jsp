@@ -345,26 +345,28 @@ table.table .avatar {
 						<%@ include file="page1.file"%>
 						<c:forEach var="employeeVO" items="${list}"  begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
 							<tr>
+								
 								<td>${employeeVO.empno}</td>
 								<td>${employeeVO.empname}</td>
 								<td>${employeeVO.hiredate}</td>
 								<td>
-								<c:if test="${(employeeVO.empdelete==1)}">
+								<c:if test="${(employeeVO.empdelete == 1)}">
 									<span class="status text-danger">&bull;</span>
 									${(employeeVO.empdelete==0)?'啟用':'停用'}
 								</c:if>
-								<c:if test="${(employeeVO.empdelete==0)}">
+								<c:if test="${(employeeVO.empdelete == 0)}">
 								<span class="status text-success">&bull;</span>
-									${(employeeVO.empdelete==0)?'啟用':'停用'}
+									${(employeeVO.empdelete == 0)?'啟用':'停用'}
 								</c:if>
 								<td>${employeeVO.empemail}</td>
-								
+								<c:if test="${(employeeVO.empno != 'EMP0001')}">
 								<td><FORM METHOD="post" ACTION="<%=request.getContextPath()%>/employee/employee.do" >
 										<input type="submit" value="修改" class="view">
 			     						<input type="hidden" name="empno"  value="${employeeVO.empno}">
 			     						<input type="hidden" name="action"	value="forupdate">
-			     					</FORM>
+			     					</FORM>			     				
 								</td>
+								</c:if>
 							</tr>
 						</c:forEach>
 					</tbody>
