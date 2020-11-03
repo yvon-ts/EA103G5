@@ -44,12 +44,6 @@
     font-size: 20px;
     color: rgba(0,0,0,.6);
 }
-tr:nth-of-type(even){
-	background-color:#f3f3f3;
-}
-tr:nth-of-type(old){
-	background-color:#ddd;
-}
 
 tr.bg-color:hover{
 	BACKGROUND-COLOR: rgba(20, 189, 204, 0.1);

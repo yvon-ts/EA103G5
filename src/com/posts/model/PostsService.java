@@ -13,15 +13,9 @@ public class PostsService {
 	}
 
 	// insert
-	public PostsVO addPosts(String superpostsno, String courseno, String memno, String postcontent) {
+	public PostsVO addPosts(PostsVO postsVO,boolean FatherOrChildren) {
 
-		PostsVO postsVO = new PostsVO();
-		
-		postsVO.setSuperpostno(superpostsno);
-		postsVO.setCourseno(courseno);
-		postsVO.setMemno(memno);
-		postsVO.setPostcontent(postcontent);
-        dao.insert(postsVO);
+        dao.insert(postsVO, FatherOrChildren);
 		return postsVO;
 
 	}
@@ -29,29 +23,17 @@ public class PostsService {
 	
 
 	// update
-	public PostsVO updatePosts(String postno, String postcontent, String superpostno, String memno, String courseno, Timestamp posttime) {
-
-		PostsVO postsVO = new PostsVO();
-		
-		postsVO.setPostno(postno);
-		postsVO.setPostcontent(postcontent);
-		postsVO.setSuperpostno(superpostno);
-		postsVO.setMemno(memno);
-		postsVO.setCourseno(courseno);
-		postsVO.setPosttime(posttime);
+	public PostsVO updatePosts(PostsVO postsVO) {
 
 		dao.update(postsVO);
-		
-
-
 		return postsVO;
 
 	}
 	
 	//updateStatusRemove
-	public void updateStatusRemove(String postno) {
+	public void updateStatusRemove(PostsVO postsVO) {
 		
-		dao.updateStatusRemove(postno);
+		dao.updateStatusRemove(postsVO);
 	}
 	
 	//updateStatudAdd
@@ -67,13 +49,12 @@ public class PostsService {
 	}
 	
 	//getAll
-	public List<PostsVO> getAll() {
+	public List<PostsVO> getAll(String FatherOrChildren) {
 		
-		List<PostsVO> list = dao.getAll();
+		List<PostsVO> list = dao.getAll(FatherOrChildren);
 		
-		return dao.getAll();
+		return list;
 	}
-	
 	//getByMemNo
 	public PostsVO findByMemno(String memno) {
 		return dao.findByMemno(memno);
