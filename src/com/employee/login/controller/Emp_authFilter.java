@@ -73,7 +73,11 @@ public class Emp_authFilter implements Filter {
 		FUN0004.add(req.getContextPath() + "/back-end/lecture/updateLec.jsp");
 		FUN0004.add(req.getContextPath() + "/back-end/lecorder/listAllLodr.jsp");
 		FUN0004.add(req.getContextPath() + "/back-end/classroom/listAllClassroom.jsp");
-
+		FUN0004.add(req.getContextPath() + "/back-end/classroom/addClassroom.jsp");
+		FUN0004.add(req.getContextPath() + "/back-end/classroom/listOneClassroom.jsp");
+		FUN0004.add(req.getContextPath() + "/back-end/classroom/select_page.jsp");
+		FUN0004.add(req.getContextPath() + "/back-end/classroom/update_classroom_input.jsp");
+		
 		
 		
 		if (list.contains("FUN0001") && FUN0001.contains(urls)) {
