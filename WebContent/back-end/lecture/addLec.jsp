@@ -100,7 +100,7 @@
 							<select id="spkrno" name="spkrno">
 								<option>------請選擇講師------</option>
 								<c:forEach var="spkrVO" items="${spkrSvc.list}">
-									<option value="${spkrVO.spkrno}" ${(lecVO.spkrno==spkrVO.spkrno)? 'selected':'' } >${spkrVO.spkrno}${spkrVO.spkrname}</option>
+									<option class="spkr" value="${spkrVO.spkrno}" ${(lecVO.spkrno==spkrVO.spkrno)? 'selected':'' } >${spkrVO.spkrno}${spkrVO.spkrname}</option>
 								</c:forEach>
 							</select><br>
 							<%-- 要擋註銷的教室 --%>
@@ -125,9 +125,11 @@
 				<%@ include file="/back-end/lecture/ckLec.file"%>
 			</div>
 			</form>
+			
           </div>
 		</div>
 	</div>
+	<button id="magic" style="background-color: #f3f3f3;border: 0">+</button>
 </div>
 </main>
 	<script type="text/javascript">
@@ -295,6 +297,14 @@
  	    $("#alert").html("");
  	}
 });
+
+	//小按鈕
+	$("#magic").click(function(){
+		$("#lecname").val("料理非難事：五星主廚上菜囉");
+		$(".spkr[value='SPKR0007']").attr("selected", "selected");
+		$("#lecprice").val(100);
+		$(".room[value='ROOM0005']").attr("selected", "selected");
+	});
 </script>
 
 </html>
