@@ -36,7 +36,7 @@
 					<%-- hidden layout settings --%>
 					<input type="hidden" id="roomrow" class="roomSpace" name="roomrow" value="${roomVO.roomrow}">
 					<input type="hidden" id="roomcolumn" class="roomSpace" name="roomcolumn" value="${roomVO.roomcolumn}">
-					<input type="text" id="defaultseat" name="currseat" value="<%=defseat%>" readonly>
+					<input type="hidden" id="defaultseat" name="currseat" value="<%=defseat%>" readonly>
 				</div>
 				<div style="display:inline-block">
 				<div id="seatAppend" style="display:inline-block">

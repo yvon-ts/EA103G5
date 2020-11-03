@@ -81,7 +81,7 @@ body{
 				訂購數量：<br>&nbsp;<input class="txt" id="count" type="text" name="count" readonly><br>
 				單一票價：<br>$<input class="txt" id="lecprice" type="text" name="lecprice" value="${lecVO.lecprice}" readonly><br>
 				金額小計：<br>$<input class="txt" id="lecamt" type="text" name="lecamt" readonly><br>
-				付款方式：&nbsp;<input type="radio" style="width: 20px"checked>&nbsp;信用卡
+				付款方式：&nbsp;<input type="radio" style="width: 20px"checked>&nbsp;信用卡<br>
 				<input type="hidden" name="memno" value="<%=memno%>">
 				<input id="submit" type="submit" value="確認付款">
   				<input type="hidden" name="lecno" value="<%=lecno%>">

@@ -41,7 +41,7 @@
 <div id="padd">padd</div>
 <div id="table-area" class="container-xl">
     <div class="table-responsive">
-    <img id="head" src="<%=request.getContextPath()%>/index/front-index/assets/img/head/lodr.png">
+    <img id="head" style="max-height: 50%; width: auto;" src="<%=request.getContextPath()%>/index/front-index/assets/img/head/lodr.gif">
         <div class="table-wrapper">			
             <div class="table-title">
                 <div class="row">

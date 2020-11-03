@@ -46,12 +46,12 @@
 		status = "取消";
 		statusCss = "cancelLec";
 	} else if (lecVO.getLecstatus() == 2){
-		status = "結束";
-		statusCss = "endLec";
-	} else if (lecVO.getLecstatus() == 3){
 		status = "額滿";
 		statusCss = "soldOutLec";
-	}
+	} else if (lecVO.getLecstatus() == 3){
+		status = "結束";
+		statusCss = "endLec";
+	} 
 	
 	pageContext.setAttribute("lecVO", lecVO);
 	

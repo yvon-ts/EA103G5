@@ -342,12 +342,12 @@
 	  				$("#lec"+i+" .status").val("活動延期");
 	  				$("#lec"+i+" .status").attr("style", "background-color: orange");
 	  			} else if(lecs[i].lecstatus == 2){
-	  				$("#lec"+i+" .status").val("活動結束");
-	  				$("#lec"+i+" .status").attr("style", "background-color: #e5e5e5; color: #333;");
-	  			} else if(lecs[i].lecstatus == 3){
 	  				$("#lec"+i+" .status").val("名額已滿");
 	  				$("#lec"+i+" .status").attr("style", "background-color: #ff6680");
-	  			}
+	  			} else if(lecs[i].lecstatus == 3){
+	  				$("#lec"+i+" .status").val("活動結束");
+	  				$("#lec"+i+" .status").attr("style", "background-color: #e5e5e5; color: #333;");
+	  			} 
 	  				
 	  			$("#lec"+i+" div input[name='lecno']").attr("value", lecs[i].lecno);
 	  			$("#row").append(align);
