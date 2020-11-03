@@ -9,7 +9,7 @@
 <%@ page import="com.members.model.*"%>
 <%@ page import="com.teacher.model.*"%>
 <%@ page import="com.course_assess.model.*"%>
-
+<%@ page import="com.course.model.*"%>
 
 
 
@@ -25,7 +25,13 @@
 	String starttime = "";
 	String lecinfo = "";
 	String spkrname = "";
+	
+	
+	
+	
 %>
+
+<jsp:useBean id="CourseSvc" scope="page" class="com.course.model.CourseService" />
 
 <html lang="en">
 <head>
@@ -61,6 +67,8 @@
 	<link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/css/lecAll.css">
     <!-- Font Awesome
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">-->
+     <!-- rateit css -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery.rateit/1.1.3/rateit.css" />
 	<script src="https://kit.fontawesome.com/b99e675b6e.js"></script>
 	
 	<style>
@@ -99,6 +107,15 @@
 	    display: block;
 	    width:auto;
 	}
+	
+/* 	星星用css */
+	.rateit .rateit-preset {
+	color: #FFCC36;
+	background:
+		url(https://cdnjs.cloudflare.com/ajax/libs/jquery.rateit/1.1.3/star.gif)
+		left -32px !important;
+	}
+	
 	</style>
 </head>
 
@@ -283,114 +300,38 @@
                 <div class="shape wow fadeInDown" data-wow-delay="0.3s"></div>
             </div>
             <div class="row">
-                <!-- Services item1 -->
-                <div class="col-md-6 col-lg-4 col-xs-12">
-                    <div class="services-item wow fadeInRight" data-wow-delay="0.3s">
-                        <div class="icon">
-                            <img src="<%=request.getContextPath()%>/index/front-index/assets/img/course/img1.jpg">
-                        </div>
-                        <div class="services-content">
-                            <i class="lni-star-filled"></i><i class="lni-star-filled"></i><i
-                                class="lni-star-filled"></i><i class="lni-star-filled"></i><i
-                                class="lni-star-filled"></i>
-                            &nbsp;101則評價
-                            <h3><a href="#">職人紅酒地圖：Mimmo帶你探索世界十大酒莊</a></h3>
-                            <p>課程共300分鐘</p>
-                            <p>同學累計9487人</p>
-                            <h5>NT$1680</h5>
-                        </div>
-                    </div>
-                </div>
-                <!-- Services item2 -->
-                <div class="col-md-6 col-lg-4 col-xs-12">
-                    <div class="services-item wow fadeInRight" data-wow-delay="0.3s">
-                        <div class="icon">
-                            <img src="<%=request.getContextPath()%>/index/front-index/assets/img/course/img2.jpg">
-                        </div>
-                        <div class="services-content">
-                            <i class="lni-star-filled"></i><i class="lni-star-filled"></i><i
-                                class="lni-star-filled"></i><i class="lni-star-filled"></i><i
-                                class="lni-star-filled"></i>
-                            &nbsp;101則評價
-                            <h3><a href="#">和Diane一起拈花惹草，打造個人生活風格</a></h3>
-                            <p>課程共300分鐘</p>
-                            <p>同學累計9487人</p>
-                            <h5>NT$1680</h5>
+            	
+              <c:forEach var="courseVO" items="${CourseSvc.max}">
+							<div class="col-md-6 col-lg-3 col-xs-12">
+								<div class="services-item wow fadeInRight" data-wow-delay="0.3s">
+									<a href="<%=request.getContextPath()%>/course/course.do?action=showCourseMainPage&courseno=${courseVO.courseno}">
+									<div class="icon">
+										<!-- 顯鈞：替換成新版本讀圖測試2020/10/22 -->
+										<%-- <img src="<%=request.getContextPath()%>/course/coursephoto.do?action=searchPhoto&courseno=${courseVO.courseno}" style="width:200px;height:150px" class="pic"> --%>
+										<%-- <img src="<%=request.getContextPath()%>/course/CoursePictureReaderFromDB?courseno=${courseVO.courseno}" style="width: 200px; height: 150px;" class="pic"> --%>
+										<img src="<%=request.getContextPath()%>/course/CoursePictureReaderFromDB?courseno=${courseVO.courseno}" style="max-width: 100%; height: 150px;" class="pic">
+                        			</div>
+                        			<div class="services-content">
+<!--                         	 -->
+                        	&nbsp;&nbsp;&nbsp;<div class="rateit" data-rateit-value="${courseVO.csscore / courseVO.csscoretimes }" data-rateit-ispreset="true" data-rateit-readonly="true"></div> 
+                        	<br>&nbsp;&nbsp;&nbsp;${courseVO.csscoretimes}則評價
+                        	<h3 style="line-height:40px;">${courseVO.coursename}</h3></a>
+<%--                             <h3><a href="<%=request.getContextPath()%>/course/course.do?action=getOne_For_Display&courseno=${courseVO.courseno}">${courseVO.coursename}</a></h3> --%>
+                            
+							<!-- 將課程總時數換算為分鐘 -->
+							<% Integer ttltimeInMin = ((CourseVO)pageContext.getAttribute("courseVO")).getTtltime()/60; %>                            
+                            <p>課程總長 <%= ttltimeInMin %> 分鐘</p>
+							
+
+								
+                           <h5>NT$${courseVO.courseprice}</h5>
+                        	
                         </div>
                     </div>
                 </div>
-                <!-- Services item3 -->
-                <div class="col-md-6 col-lg-4 col-xs-12">
-                    <div class="services-item wow fadeInRight" data-wow-delay="0.3s">
-                        <div class="icon">
-                            <img src="<%=request.getContextPath()%>/index/front-index/assets/img/course/img3.jpg">
-                        </div>
-                        <div class="services-content">
-                            <i class="lni-star-filled"></i><i class="lni-star-filled"></i><i
-                                class="lni-star-filled"></i><i class="lni-star-filled"></i><i
-                                class="lni-star-filled"></i>
-                            &nbsp;101則評價
-                            <h3><a href="#">職人紅酒地圖：Mimmo帶你探索世界十大酒莊</a></h3>
-                            <p>課程共300分鐘</p>
-                            <p>同學累計9487人</p>
-                            <h5>NT$1680</h5>
-                        </div>
-                    </div>
-                </div>
-                <!-- Services item4 -->
-                <div class="col-md-6 col-lg-4 col-xs-12">
-                    <div class="services-item wow fadeInRight" data-wow-delay="0.3s">
-                        <div class="icon">
-                            <img src="<%=request.getContextPath()%>/index/front-index/assets/img/course/img3.jpg">
-                        </div>
-                        <div class="services-content">
-                            <i class="lni-star-filled"></i><i class="lni-star-filled"></i><i
-                                class="lni-star-filled"></i><i class="lni-star-filled"></i><i
-                                class="lni-star-filled"></i>
-                            &nbsp;101則評價
-                            <h3><a href="#">職人紅酒地圖：Mimmo帶你探索世界十大酒莊</a></h3>
-                            <p>課程共300分鐘</p>
-                            <p>同學累計9487人</p>
-                            <h5>NT$1680</h5>
-                        </div>
-                    </div>
-                </div>
-                <!-- Services item5 -->
-                <div class="col-md-6 col-lg-4 col-xs-12">
-                    <div class="services-item wow fadeInRight" data-wow-delay="0.3s">
-                        <div class="icon">
-                            <img src="<%=request.getContextPath()%>/index/front-index/assets/img/course/img1.jpg">
-                        </div>
-                        <div class="services-content">
-                            <i class="lni-star-filled"></i><i class="lni-star-filled"></i><i
-                                class="lni-star-filled"></i><i class="lni-star-filled"></i><i
-                                class="lni-star-filled"></i>
-                            &nbsp;101則評價
-                            <h3><a href="#">職人紅酒地圖：Mimmo帶你探索世界十大酒莊</a></h3>
-                            <p>課程共300分鐘</p>
-                            <p>同學累計9487人</p>
-                            <h5>NT$1680</h5>
-                        </div>
-                    </div>
-                </div>
-                <!-- Services item6 -->
-                <div class="col-md-6 col-lg-4 col-xs-12">
-                    <div class="services-item wow fadeInRight" data-wow-delay="0.3s">
-                        <div class="icon">
-                            <img src="<%=request.getContextPath()%>/index/front-index/assets/img/course/img2.jpg">
-                        </div>
-                        <div class="services-content">
-                            <i class="lni-star-filled"></i><i class="lni-star-filled"></i><i
-                                class="lni-star-filled"></i><i class="lni-star-filled"></i><i
-                                class="lni-star-filled"></i>
-                            &nbsp;101則評價
-                            <h3><a href="#">職人紅酒地圖：Mimmo帶你探索世界十大酒莊</a></h3>
-                            <p>課程共300分鐘</p>
-                            <p>同學累計9487人</p>
-                            <h5>NT$1680</h5>
-                        </div>
-                    </div>
-                </div>
+                
+                </c:forEach>
+              
             </div>
         </div>
     </section>
@@ -685,7 +626,7 @@
     <script src="<%=request.getContextPath()%>/index/front-index/assets/js/jquery.counterup.min.js"></script>
     <script src="<%=request.getContextPath()%>/index/front-index/assets/js/waypoints.min.js"></script>
     <script src="<%=request.getContextPath()%>/index/front-index/assets/js/main.js"></script>
-   
+   	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.rateit/1.1.3/jquery.rateit.min.js"></script>
     
     <script>
     
@@ -744,8 +685,8 @@
 	
 	
 	
-	
-	
+	/*-------星星-------*/
+	$("div.rateit, span.rateit").rateit()
 	
 	
 	

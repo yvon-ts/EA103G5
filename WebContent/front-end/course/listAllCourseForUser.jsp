@@ -63,10 +63,8 @@
 
 	<!-- member -->
 	<input type="hidden" id="memno" value="${membersVO.memno}" />
-	<jsp:useBean id="courseTypeSvc" scope="page"
-		class="com.course_type.model.CourseTypeService" />
-	<jsp:useBean id="TrackingListSvc" scope="page"
-		class="com.tracking_list.model.TrackingListService" />
+	<jsp:useBean id="courseTypeSvc" scope="page" class="com.course_type.model.CourseTypeService" />
+	<jsp:useBean id="TrackingListSvc" scope="page" class="com.tracking_list.model.TrackingListService" />
 
 
 

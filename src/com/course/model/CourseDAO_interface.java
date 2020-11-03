@@ -17,4 +17,6 @@ public interface CourseDAO_interface {
 	public List<CourseVO> getAllForEmployee();
 	
 	public List<CourseVO> getAll(Map<String, String[]> map);
+	
+	public List<CourseVO> getMax();
 }

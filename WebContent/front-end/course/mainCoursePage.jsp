@@ -371,31 +371,51 @@
 			});
 
 			// 追蹤清單
-			$('body').on('click', '.bookmark', function () {
-				var updateTrackingList;
-
-				if ($(this).children().attr("class") === "fa fa-heart-o") {
-					updateTrackingList = "insert";
-					$(this).children().attr("class", "fa fa-heart");
-				} else {
-					updateTrackingList = "delete";
-					$(this).children().attr("class", "fa fa-heart-o");
+				$('body').on('click' , '.bookmark',function(){
+			
+			
+			if(`${loginMembersVO.memno}` == ''){
+				swal({ 
+					  title: '您尚未登入', 
+					  text: '您將無法追蹤此課程！', 
+					  type: 'warning',
+					  showCancelButton: true, 
+					  confirmButtonColor: '#3085d6',
+					  cancelButtonColor: '#d33',
+					  confirmButtonText: '會員登入', 
+					}).then(function(){
+						this.location.href = '<%=request.getContextPath()%>/front-end/members/signIn.jsp';
+					}).catch(swal.noop);
+			}
+			else{
+			
+			var updateTrackingList;
+			
+			if ($(this).children().attr("class") === "fa fa-heart-o"){
+				updateTrackingList = "insert";
+				$(this).children().attr("class","fa fa-heart");
+			}
+			else{
+				updateTrackingList = "delete";
+				$(this).children().attr("class","fa fa-heart-o");
+			}
+			
+// 			console.log(updateTrackingList + "," + $(this).find('#courseno').val() );
+			
+			$.ajax({
+				url	:"<%=request.getContextPath()%>/tracking_list/tracking_list.do", 
+				data:{
+					courseno : $(this).find('#courseno').val(),
+// 					memno    : $("#memno").val(),
+					action   : updateTrackingList ,
+				},
+				success: function(data){
+					console.log('操作成功--->searchPage');
 				}
-
-				console.log(updateTrackingList + "," + $(this).find('#courseno').val());
-
-				$.ajax({
-					url: "<%=request.getContextPath()%>/tracking_list/tracking_list.do",
-					data: {
-						courseno: $(this).find('#courseno').val(),
-						// 						memno    : $("#memno").val(),
-						action: updateTrackingList,
-					},
-					success: function (data) {
-						console.log('操作成功--->mainCoursePage');
-					}
-				});
 			});
+			
+			}
+		});
 
 			// 購物車
 			$('body').on('click', '.shoppingcart', function () {

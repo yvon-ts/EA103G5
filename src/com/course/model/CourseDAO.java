@@ -22,15 +22,19 @@ public class CourseDAO implements CourseDAO_interface {
 		}
 	}
 
+	
 	private static final String INSERT_STMT = "INSERT INTO course(courseno, cstypeno, tchrno, coursename, courseinfo, courseprice, ttltime, csscore, csscoretimes,courseimg,courlmod) VALUES ('COUR' || LPAD(SEQ_CS.NEXTVAL, 4, 0), ?, ?, ?, ?, ?, ?, ?, ?, ? , CURRENT_TIMESTAMP)";
+	
 	private static final String GET_ALL_FOR_EMPLOYEE_STMT = "SELECT courseno, cstypeno, tchrno, coursename, courseinfo, courseprice, ttltime, csstatus, csscore, csscoretimes ,courseimg ,courlmod FROM course order by courseno";
 	private static final String GET_ALL_FOR_USER_STMT = "SELECT courseno, cstypeno, tchrno, coursename, courseinfo, courseprice, ttltime, csstatus, csscore, csscoretimes ,courseimg ,courlmod FROM course  where csstatus = '上架' order by courlmod desc";
-
 	private static final String GET_ONE_STMT = "SELECT courseno, cstypeno, tchrno, coursename, courseinfo, courseprice, ttltime, csstatus, csscore, csscoretimes ,courseimg ,courlmod FROM course where courseno = ?";
+	
 	private static final String UPDATE = "UPDATE course set cstypeno=?, tchrno=?, coursename=?, courseinfo=?, courseprice=?, ttltime=?, csstatus=?, csscore=?, csscoretimes=? , courseimg=? , courlmod=CURRENT_TIMESTAMP where courseno = ?";
 	private static final String UPDATE_NO_PICTURE = "UPDATE course set cstypeno=?, tchrno=?, coursename=?, courseinfo=?, courseprice=?, ttltime=?, csstatus=?, csscore=?, csscoretimes=? , courlmod=CURRENT_TIMESTAMP where courseno = ?";
 	private static final String UPDATE_STATUS = "UPDATE course set csstatus=?, courlmod=CURRENT_TIMESTAMP where courseno = ?";
 
+	private static final String MAX_SCORE = "select * from COURSE WHERE ROWNUM < 9 order by ROUND((CSSCORE/CSSCORETIMES),2) desc";
+	
 	@Override
 	public String insert(CourseVO courseVO) {
 
@@ -436,6 +440,68 @@ public class CourseDAO implements CourseDAO_interface {
 
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(GET_ALL_FOR_EMPLOYEE_STMT);
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				courseVO = new CourseVO();
+				courseVO.setCourseno(rs.getString("courseno"));
+				courseVO.setCstypeno(rs.getString("cstypeno"));
+				courseVO.setTchrno(rs.getString("tchrno"));
+				courseVO.setCoursename(rs.getString("coursename"));
+				courseVO.setCourseinfo(rs.getString("courseinfo"));
+				courseVO.setCourseprice(rs.getInt("courseprice"));
+				courseVO.setTtltime(rs.getInt("ttltime"));
+				courseVO.setCsstatus(rs.getString("csstatus"));
+				courseVO.setCsscore(rs.getInt("csscore"));
+				courseVO.setCsscoretimes(rs.getInt("csscoretimes"));
+				courseVO.setCourseimg(rs.getBytes("courseimg"));
+				courseVO.setCourlmod(rs.getTimestamp("courlmod"));
+				list.add(courseVO);
+			}
+			// Handle any driver errors
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return list;
+	}
+
+	@Override
+	public List<CourseVO> getMax() {
+		List<CourseVO> list = new ArrayList<CourseVO>();
+		CourseVO courseVO = null;
+
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(MAX_SCORE);
+			
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {

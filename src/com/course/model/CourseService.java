@@ -98,6 +98,10 @@ public class CourseService {
 	public List<CourseVO> getAllForEmployee() {
 		return dao.getAllForEmployee();
 	}
+	
+	public List<CourseVO> getMax() {
+		return dao.getMax();
+	}
 
 	// 複合查詢，須要再升級
 	public List<CourseVO> getAll(Map<String, String[]> map) {

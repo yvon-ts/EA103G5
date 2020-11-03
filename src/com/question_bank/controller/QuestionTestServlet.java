@@ -200,8 +200,8 @@ public class QuestionTestServlet extends HttpServlet {
 			throws ServletException, IOException { // 印考卷
 
 		
-		String questionNO = (String)request.getSession().getAttribute("insertQuestionNO");
-		
+//		String questionNO = (String)request.getSession().getAttribute("insertQuestionNO");
+		String questionNO = (String)getServletContext().getAttribute("insertQuestionNO");
 
 		List<String> errorMsgs = new LinkedList<String>();
 		request.setAttribute("errorMsgs", errorMsgs);
