@@ -4,10 +4,13 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+
+import javax.servlet.ServletContext;
 
 public class InitializeBLOB {
 	private static final String URL = "jdbc:oracle:thin:@localhost:1521:xe";
@@ -23,7 +26,73 @@ public class InitializeBLOB {
 		updateLecinfo();
 		updateLecpic();
 		updateSpkrinfo();
+		//會員&老師證照
+		uploadMembersAndTeacherCert();
 		
+	}
+
+	private static void uploadMembersAndTeacherCert() {
+		 String SQLmembers = "UPDATE MEMBERS SET MPROFILE = ? WHERE MEMNO = ?";
+		 String SQLteacher = "UPDATE TEACHER SET TCHRCERT1 = ?,TCHRCERT2 = ? WHERE MEMNO = ?";
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		try {
+			Class.forName("oracle.jdbc.driver.OracleDriver");
+			con = DriverManager.getConnection(URL, USER, PASSWORD);
+			pstmt = con.prepareStatement(SQLmembers);
+			for (int i = 1; i <= 30; i++) {
+				if(i >= 10) {
+					byte[] pic = getUpdateFileByteArray("blobpool/membersPic/m00" + i + ".jpg");
+					pstmt.setBytes(1, pic);
+					pstmt.setString(2, "MEM00"+ i);
+					pstmt.executeUpdate();
+					System.out.println("MEM00"+i+"已上傳");
+				}else {
+					 byte[] pic = getUpdateFileByteArray("blobpool/membersPic/m000" + i + ".jpg");
+						//windows: "C:/Users/Big data/Desktop/lecimg/img" + i + ".jpg"
+						//mac: "/Users/yvon/Desktop/lecimg/img" + i + ".jpg"
+						pstmt.setBytes(1, pic);
+						pstmt.setString(2, "MEM000"+ i);
+						pstmt.executeUpdate();
+						System.out.println("MEM000"+i+"已上傳");
+				}
+				}
+			pstmt.close();
+			con.close();
+			con = DriverManager.getConnection(URL, USER, PASSWORD);
+			pstmt = con.prepareStatement(SQLteacher);
+				byte[] pic1 = getUpdateFileByteArray("blobpool/membersPic/java" + 1 + ".jpg");
+				byte[] pic2 = getUpdateFileByteArray("blobpool/membersPic/java" + 2 + ".jpg");
+				pstmt.setBytes(1, pic1);
+				pstmt.setBytes(2, pic2);
+				pstmt.setString(3, "MEM0001");
+				pstmt.executeUpdate();
+				System.out.println("老師證照1已上傳");
+				System.out.println("老師證照2已上傳");
+		} catch (ClassNotFoundException ce) {
+			System.out.println(ce);
+		} catch (SQLException se) {
+			System.out.println(se);
+		} catch (IOException ie) {
+			System.out.println(ie);
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					System.out.println(se);
+				}
+			}
+
+			if (con != null) {
+				try {
+					con.close();
+				} catch (SQLException se) {
+					System.out.println(se);
+				}
+			}
+		}
+	
 	}
 
 	public static void uploadVideo() {

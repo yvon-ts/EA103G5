@@ -38,6 +38,10 @@ public class Course_assessService {
 		List<Course_assessVO> list = dao.getAll(courseno);
 		return list;
 	}
+	public List<Course_assessVO> getAllForAjax(String courseno,Integer pagesize){
+		List<Course_assessVO> list = dao.getAllForAjax(courseno, pagesize);
+		return list;
+	}
     
 	public void deleteCourse_assess(String asesno) {
 		dao.delete(asesno);
@@ -48,7 +52,6 @@ public class Course_assessService {
 	
 	public Course_assessVO checkMembers(String memno,String courseno) {
 		return dao.checkMembers(memno, courseno);
-		
 		
 	}
 	

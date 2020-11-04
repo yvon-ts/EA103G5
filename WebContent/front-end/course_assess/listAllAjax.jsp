@@ -312,48 +312,44 @@ if(inform5 === '200'){
 $(document).ready(function(){
 	
 	
-	var counter = 0; /*計數器*/
-	var pageStart = 0; /*offset*/
-	var pageSize = 10; /*size*/
+	var pageSize = 5; /*size*/
 	/*首次載入*/
-	getData(pageStart, pageSize);
+	getData(pageSize);
 	/*監聽載入更多*/
 	
 
 	
 	$(document).on('click', '#js-load-more', function(){
-	counter++ ;
-	pageStart = counter * pageSize;
-	pageEnd = 	( counter + 1 ) * pageSize;
-	getData(pageStart, pageEnd);
+	pageSize+=5 ;
+	
+	getData(pageSize);
 	});
 	
 });
-function getData(offset,size){
+function getData(counter){
 	$.ajax({
 		type: 'POST',
 		url: "<%=request.getContextPath()%>/course_assess/course_assess.do", 
 		data:{
 			courseno:$('#courseno').val(),
-			action:'getAll'
+			pagesize:counter,
+			action:'getAllForAjax'
 		},
 		success: function(data){
 			console.log('ajax good!')
 			var JSONarray = JSON.parse(data);
+			if (JSONarray.length==0){
+				$("#js-load-more").hide();
+				swal('已經沒有更多留言囉', '就靠你拉朋友來衝我們的評價啦', 'info');				
+			}
 			
- console.log(JSONarray); 
 //				/****業務邏輯塊：實現拼接html內容並prepend到頁面*********/
 			var sum = JSONarray.length;
-			console.log(offset,size,sum);
 //				/*如果剩下的記錄數不夠分頁，就讓分頁數取剩下的記錄數
 //				* 例如分頁數是5，只剩2條，則只取2條
-			var result = '';
 			
-			if(sum - offset < size ){
-				size = sum - offset;
-				}
-			
-			for(let i=offset; i< (offset+size); i ++){
+			var result ='';
+			for(let i=0; i<5; i ++){
 				
 				result +=   `<div class="signin-content">`;
 				result += 	`<div class="signin-image">`;
@@ -387,18 +383,12 @@ function getData(offset,size){
 			
         		
 			}
+				$('.course_assessArea').append(result);
 			
-			
-			$('.course_assessArea').append(result);
 			
 
 
-//			/*隱藏more按鈕*/
-		if ( (offset + size) >= sum){
-			$("#js-load-more").hide();
-		}else{
-			$("#js-load-more").show();
-		}
+		
 		}	
 		});
 	}

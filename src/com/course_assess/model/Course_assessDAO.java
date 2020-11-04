@@ -29,8 +29,8 @@ public class Course_assessDAO implements Course_assessDAO_interface {
 	private static final String GET_ONE_STMT = "SELECT ASESNO,COURSENO,MEMNO,COURSESCORE,COMMENTS,COMMENTTIME FROM COURSE_ASSESS WHERE MEMNO = ?";
 	private static final String UPDATE = "UPDATE COURSE_ASSESS SET COURSESCORE=?,COMMENTS=? WHERE ASESNO =?";
 	private static final String DELETE = "DELETE FROM COURSE_ASSESS WHERE ASESNO=?";
-	private static final String AVG_SCORE = "SELECT courseno, AVG(COURSESCORE)  FROM COURSE_ASSESS where courseno = ? group by courseno";
-
+	private static final String AVG_SCORE = "SELECT courseno, AVG(COURSESCORE)  FROM COURSE_ASSESS where courseno = ? group by courseno  ";
+    private static final String getAllForAjax ="select * from (select c.*,rownum r from course_assess c where c.courseno = ? ORDER BY c.asesno desc ) where r between ? and ?";
 	
 
 	@Override
@@ -409,8 +409,70 @@ public class Course_assessDAO implements Course_assessDAO_interface {
 		}
 		return course_assessVO;
 	}
-	
 
+
+
+	@Override
+	public List<Course_assessVO> getAllForAjax(String courseno,Integer pagesize) {
+		List<Course_assessVO> list = new ArrayList<Course_assessVO>();
+		Course_assessVO course_assessVO = null;
+
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+//			Class.forName(driver);
+//			con = DriverManager.getConnection(url, userid, passwd);
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(getAllForAjax);
+			pstmt.setString(1, courseno);
+			pstmt.setInt(2, pagesize-4);
+			pstmt.setInt(3, pagesize);	
+			
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				course_assessVO = new Course_assessVO();
+				course_assessVO.setAsesno(rs.getString("asesno"));
+				course_assessVO.setCourseno(rs.getString("courseno"));
+				course_assessVO.setMemno(rs.getString("memno"));
+				course_assessVO.setCoursescore(rs.getInt("coursescore"));
+				course_assessVO.setComments(rs.getString("comments"));
+				course_assessVO.setCommenttime(rs.getTimestamp("commenttime"));
+				list.add(course_assessVO); // Store the row in the list
+				
+			}
+
+			// Handle any driver errors
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return list;
+	}
 
 }
 
