@@ -54,18 +54,20 @@
 					<font color="yellow"><b>${errlogin}</b></font><br>
 					</div>
 					<div class="wrap-input100 validate-input" data-validate = "Enter username">
-						<input class="input100" type="text" name="empacc" placeholder="輸入帳號"   required="required">
+						<input class="input100" type="text" name="empacc" placeholder="輸入帳號" id="empacc"  required="required">
 						<span class="focus-input100" data-placeholder="&#xf207;"></span>
 					</div>
 
 					<div class="wrap-input100 validate-input" data-validate="Enter password">
-						<input class="input100" type="password" name="emppwd" placeholder="輸入密碼"  required="required">
+						<input class="input100" type="password" name="emppwd" placeholder="輸入密碼" id="emppwd" required="required">
 						<span class="focus-input100" data-placeholder="&#xf191;"></span>
 					</div>
 					<div class="container-login100-form-btn">
 						<button class="login100-form-btn" type=submit >
 							Login
 						</button>
+						<span  class="status text-primary" id="insert">&bull;</span>&emsp;
+						<span  class="status text-primary" id="new">&bull;</span>		
 					</div>
 				</form>
 			</div>
@@ -89,6 +91,16 @@
 	<script src="<%=request.getContextPath()%>/back-end/login/logincss/vendor/countdowntime/countdowntime.js"></script>
 <!--===============================================================================================-->
 	<script src="<%=request.getContextPath()%>/back-end/login/logincss/js/main.js"></script>
-
+<script type="text/javascript">
+$("#insert").click(function(e){
+	e.preventDefault();
+	$("#empacc").val("T00001");
+	$("#emppwd").val("123456");
+})
+$("#new").click(function(e){
+	e.preventDefault();
+	$("#empacc").val("T00013");
+})
+</script>
 </body>
 </html>

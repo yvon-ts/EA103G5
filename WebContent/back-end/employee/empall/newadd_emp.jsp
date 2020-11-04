@@ -352,29 +352,25 @@ table.table .avatar {
 							</c:if>						
 							<tr>
 								<th>員工帳號</th>
-								<th><input type="text" name="empacc" placeholder="請輸入員工帳號" value="<%= (employeeVO==null)? "" : employeeVO.getEmpacc()%>"></th>
+								<th><input type="text" name="empacc" id="empacc" placeholder="請輸入員工帳號" value="<%= (employeeVO==null)? "" : employeeVO.getEmpacc()%>"></th>
 							</tr>
-<!-- 							<tr> -->
-<!-- 								<th>員工密碼</th> -->
-<%-- 								<th><input type="password" name="emppwd" placeholder="請輸入員工密碼" autocomplete="off" value="${param.empacc}"></th> --%>
-<!-- 							</tr> -->
 							<tr>
 								<th>員工姓名</th>
-								<th><input type="text" name="empname" placeholder="請輸入員工姓名" autocomplete="off" value="<%= (employeeVO==null)? "" : employeeVO.getEmpname()%>"></th>
+								<th><input type="text" name="empname" id="empname" placeholder="請輸入員工姓名" autocomplete="off" value="<%= (employeeVO==null)? "" : employeeVO.getEmpname()%>"></th>
 							</tr>
 							<tr>
 								<th>員工薪水</th>
-								<th><input type="text" name="empsalary" placeholder="請輸入員工薪水" autocomplete="off" value="<%= (employeeVO==null)? "" : employeeVO.getEmpsalary()%>"></th>
+								<th><input type="text" name="empsalary"  id="empsalary" placeholder="請輸入員工薪水" autocomplete="off" value="<%= (employeeVO==null)? "" : employeeVO.getEmpsalary()%>"></th>
 							</tr>
 							<tr>
 								<th>員工到職日期</th>
-								<th><input type="text" id="f_date1" name="hiredate"  placeholder="請輸入員工到職日" 
+								<th><input type="text" id="f_date1" name="hiredate" placeholder="請輸入員工到職日" 
 								value="<%= (employeeVO==null)? "" : employeeVO.getHiredate()%>">
 								</th>
 							</tr>
 							<tr>
 								<th>員工Email</th>
-								<th><input type="email" name="empemail" placeholder="請輸入email" value="<%= (employeeVO==null)? "" : employeeVO.getEmpemail()%>" ></th>
+								<th><input type="email" name="empemail" id="empemail" placeholder="請輸入email" value="<%= (employeeVO==null)? "" : employeeVO.getEmpemail()%>" ></th>
 							</tr>
 							<tr>
 								<th>員工權限</th>
@@ -382,12 +378,7 @@ table.table .avatar {
 									<c:forEach var="functionxVO" items="${funSvc.all}">																																
 	                   				<input type="checkbox" name="functionx" value="${functionxVO.funcno}" id="${functionxVO.funcno}">
 	                   				<label for="${functionxVO.funcno}">${functionxVO.funcname}</label><br>	                   			
-	                   			    </c:forEach>
-	                   			    
-<%-- 	                   			    <c:forEach var="empAuthorityVO" items="${empAuthorityVO}"> --%>
-<%-- 	                   			    <input type="hidden" name="emp" value="${empAuthorityVO.funcno}">                 																								                											 								     							 		    		       		    						     								 --%>
-<%--      								</c:forEach> --%>
-     															  
+	                   			    </c:forEach>												  
       							</th>     							
 							</tr>
 							<tr>
@@ -398,7 +389,11 @@ table.table .avatar {
 							<tr>
 								<th>								
 									<input type="hidden" name="action" value="insert"> 
-									<input type="submit" class="view" value="新增員工">									
+									<input type="submit" class="view" value="新增員工">
+									<span  class="status text-primary" id="insert">&#x2b;</span>										
+								</th>
+								<th>								
+															
 								</th>
 							</tr>
 						</tbody>
@@ -412,7 +407,7 @@ table.table .avatar {
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/datetimepicker/jquery.datetimepicker.css" />
 <script src="<%=request.getContextPath()%>/datetimepicker/jquery.js"></script>
 <script src="<%=request.getContextPath()%>/datetimepicker/jquery.datetimepicker.full.js"></script>
-<script>
+<script type="text/javascript">
         $.datetimepicker.setLocale('zh');
         $('#f_date1').datetimepicker({
            theme: '',              //theme: 'dark',
@@ -425,8 +420,25 @@ table.table .avatar {
 //            minDate:               '-1970-01-01', // 去除今日(不含)之前
            maxDate:               '+1970-01-01'  // 去除今日(不含)之後
         });
- </script>
-<script>
+</script>
+<script type="text/javascript">
+var now = new Date();
+var day = ("0" + now.getDate()).slice(-2);
+var month = ("0" + (now.getMonth() + 1)).slice(-2);
+var today = now.getFullYear()+"-"+(month)+"-"+(day) ;
+$("#insert").click(function(e){
+	e.preventDefault();
+	$("#empacc").val("T00013");
+	$("#empname").val("野原廣智");
+	$("#empsalary").val("40000");
+	$("#f_date1").val(today);
+	$("#empemail").val("n8742977@gmail.com");
+	$("#FUN0002").prop('checked', true);
+	$("#FUN0003").prop('checked', true);
+	$("#FUN0004").prop('checked', true);
+})
+</script>
+<script type="text/javascript">
 	var x = document.getElementsByName("functionx");
 	var y = document.getElementsByName("emp");
 	for(var i=0; i<x.length;i++){
@@ -471,6 +483,6 @@ table.table .avatar {
             }
         }
     });
-    </script>
+ </script>
 
 </html>
