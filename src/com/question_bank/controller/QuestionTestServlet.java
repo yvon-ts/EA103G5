@@ -1,6 +1,7 @@
 package com.question_bank.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Enumeration;
@@ -17,6 +18,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import org.json.JSONArray;
 
 import com.anwser_list.model.AnwserListService;
 import com.anwser_list.model.AnwserListVO;
@@ -38,6 +41,10 @@ public class QuestionTestServlet extends HttpServlet {
 
 		String action = request.getParameter("action");
 		
+		
+		
+		
+		
 		if ("correct".equals(action)) { // 對答案
 			correct(request, response);
 		}
@@ -48,6 +55,33 @@ public class QuestionTestServlet extends HttpServlet {
 		}
 		if ("reviewByTestNo".equals(action)) {// 查看某次考試編號測驗卷
 			reviewByTestNo(request, response);
+		}
+		
+		if("getTestAns".equals(action)) {
+			response.setContentType("text/plain");
+			response.setCharacterEncoding("UTF-8");
+			PrintWriter out =response.getWriter();
+			
+			String testno = request.getParameter("testno");
+			System.out.println(testno);
+			
+			AnwserListService ase = new AnwserListService();
+			if(testno == null ) {
+				out.print("錯誤");
+			}else {
+				List<String> testList = new ArrayList<>();
+				for(AnwserListVO vo : ase.getTestData(testno) ) {
+					testList.add(vo.getTestans());
+				}
+				
+				JSONArray JSONarray = new JSONArray(testList);
+				
+				out.print(JSONarray.toString());
+			}
+			
+			
+			out.flush();
+			out.close();
 		}
 
 	}
@@ -130,8 +164,15 @@ public class QuestionTestServlet extends HttpServlet {
 		
 		
 		if(qse.getOneByNO(questionNO) != null) {
+			
+//			if(list.indexOf(questionNO) > 0) {
+//				list.set(0, qse.getOneByNO(questionNO)); //把一題設成不被挑選 20201104
+//			}
 			list.set(0, qse.getOneByNO(questionNO));
 		}
+		
+		
+		
 		
 		/*
 		 * Collections.shuffle(List<?> list) Randomly permutes the specified list using
