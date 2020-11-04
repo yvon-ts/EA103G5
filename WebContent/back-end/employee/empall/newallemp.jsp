@@ -306,11 +306,7 @@ table.table .avatar {
 	font-size: 13px;
 }
 </style>
-<script>
-	$(document).ready(function() {
-		$('[data-toggle="tooltip"]').tooltip();
-	});
-</script>
+
 </head>
 <body>
 <main class="app-content">
@@ -361,14 +357,26 @@ table.table .avatar {
 									${(employeeVO.empdelete == 0)?'啟用':'停用'}
 								</c:if>
 								<td>${employeeVO.empemail}</td>
-								<c:if test="${(employeeVO.empno != 'EMP0001')}">
-								<td><FORM METHOD="post" ACTION="<%=request.getContextPath()%>/employee/employee.do" >
-										<input type="submit" value="修改" class="view">
-			     						<input type="hidden" name="empno"  value="${employeeVO.empno}">
-			     						<input type="hidden" name="action"	value="forupdate">
-			     					</FORM>			     				
-								</td>
-								</c:if>
+								<td>
+									<c:choose>
+										<c:when test="${(employeeVO.empdelete == 1)}">
+											<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/employee/employee.do" >
+												<input type="submit" value="修改" class="view" disabled>
+												<input type="hidden" name="empno"  value="${employeeVO.empno}">
+			     								<input type="hidden" name="action"	value="forupdate">
+			     							</FORM>	
+										</c:when>
+										<c:otherwise>
+											<c:if test="${(employeeVO.empno != 'EMP0001')}">
+												<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/employee/employee.do" >
+													<input type="submit" value="修改" class="view">
+			     									<input type="hidden" name="empno"  value="${employeeVO.empno}">
+			     									<input type="hidden" name="action"	value="forupdate">
+												</FORM>	
+											</c:if>
+										</c:otherwise>    									
+									</c:choose>
+								</td> 							
 							</tr>
 						</c:forEach>
 					</tbody>
@@ -377,6 +385,12 @@ table.table .avatar {
 			</div>
 		</div>
 	</div>
-
+</main>
+<script>
+<c:if test="${(employeeVO.empdelete == 1)}">
+console.log("123");
+	document.getElementById("empno").disabled = true;	
+</c:if>
+</script>
 </body>
 </html>
