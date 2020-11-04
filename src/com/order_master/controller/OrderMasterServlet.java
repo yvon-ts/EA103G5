@@ -16,7 +16,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.coup_code.model.CoupCodeService;
-import com.coup_code.model.CoupCodeVO;
 import com.course.model.CourseVO;
 import com.order_detail.model.OrderDetailVO;
 import com.order_master.model.OrderMasterService;
@@ -33,6 +32,7 @@ public class OrderMasterServlet extends HttpServlet {
 	public void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 
 		req.setCharacterEncoding("UTF-8");
+		res.setCharacterEncoding("UTF-8");
 		HttpSession session = req.getSession();
 		List<CourseVO> buylist = (List<CourseVO>) session.getAttribute("shoppingList");
 		String action = req.getParameter("action");
@@ -310,6 +310,76 @@ public class OrderMasterServlet extends HttpServlet {
 			} catch (Exception e) {
 				errorMsgs.add("無法取得資料:" + e.getMessage());
 				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/Order_Master/OrderMasterDB.jsp");
+				failureView.forward(req, res);
+			}
+		}
+		if ("noEPay".equals(action)) {
+			List<String> errorMsgs = new LinkedList<String>();
+			// Store this set in the request scope, in case we need to
+			// send the ErrorPage view.
+			req.setAttribute("errorMsgs", errorMsgs);
+
+			try {
+
+				/*********************** 1.接收請求參數 - 輸入格式的錯誤處理 *************************/
+
+				String memno = req.getParameter("memno");
+				
+				Integer orderamt = null;
+				try {
+				orderamt = new Integer(req.getParameter("orderamt"));
+				} catch(NumberFormatException e) {
+					e.printStackTrace();
+				}
+				
+				String coupno = req.getParameter("coupno");
+				
+				if (!(coupno.equals("empty"))) {
+					
+					CoupCodeService coupSvc = new CoupCodeService();
+					coupSvc.updateCoupCode(coupno, 1);
+				} else {
+					coupno = null;
+				}
+				
+				String payby = req.getParameter("payby");
+
+				OrderMasterVO orderMasterVO = new OrderMasterVO();
+
+				List<OrderDetailVO> list = new Vector<OrderDetailVO>();
+				for (CourseVO abuylist : buylist) {
+
+					OrderDetailVO odVO = new OrderDetailVO();
+					odVO.setCourseno(abuylist.getCourseno());
+					odVO.setSellprice(abuylist.getCourseprice());
+					odVO.setPromono(null);
+
+					list.add(odVO);
+				}
+				// Send the use back to the form, if there were errors
+				if (!errorMsgs.isEmpty()) {
+					req.setAttribute("orderMasterVO", orderMasterVO);
+					RequestDispatcher failureView = req
+							.getRequestDispatcher("/front-end/tracking_list/listTrackingListForUser.jsp");
+					failureView.forward(req, res);
+					return;
+				}
+				/*************************** 2.開始新增資料 ***************************************/
+				OrderMasterService ordermasterSvc = new OrderMasterService();
+				orderMasterVO = ordermasterSvc.addOrder(memno, orderamt, coupno, payby, list);
+				//清空購物車
+				session.setAttribute("shoppingList", null);
+				session.setAttribute("payoff", "購買完成!");
+				/*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
+				String url = "/front-end/tracking_list/listTrackingListForUser.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url);
+				successView.forward(req, res);
+
+				/*************************** 其他可能的錯誤處理 **********************************/
+			} catch (Exception e) {
+				errorMsgs.add(e.getMessage());
+				RequestDispatcher failureView = req
+						.getRequestDispatcher("/front-end/tracking_list/listTrackingListForUser.jsp");
 				failureView.forward(req, res);
 			}
 		}

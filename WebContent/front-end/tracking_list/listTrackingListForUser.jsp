@@ -182,6 +182,15 @@
     </section>
 	
 	<script>
+    	
+		<c:if test="${not empty payoff}">
+    	swal('付款成功！', '', 'success');
+		</c:if>
+		<%request.getSession().removeAttribute("payoff");%>
+  
+	</script>
+	
+	<script>
 		$(document).ready(function(){
 			
 			
