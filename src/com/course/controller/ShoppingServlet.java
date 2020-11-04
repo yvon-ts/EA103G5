@@ -119,9 +119,7 @@ public class ShoppingServlet extends HttpServlet {
 						System.out.println("刪除購物車");
 						shoppingList.remove(userSelectedCourse);
 					}
-					
-					
-					
+										
 					res.setContentType("text/plain");
 					res.setCharacterEncoding("UTF-8");
 					PrintWriter out = res.getWriter();

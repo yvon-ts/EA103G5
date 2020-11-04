@@ -263,7 +263,7 @@ public class CourseDAO implements CourseDAO_interface {
 				courseVO.setCsstatus(rs.getString("csstatus"));
 				courseVO.setCsscore(rs.getInt("csscore"));
 				courseVO.setCsscoretimes(rs.getInt("csscoretimes"));
-				courseVO.setCourseimg(rs.getBytes("courseimg"));
+//				courseVO.setCourseimg(rs.getBytes("courseimg"));
 				courseVO.setCourlmod(rs.getTimestamp("courlmod"));
 
 			}
@@ -326,7 +326,7 @@ public class CourseDAO implements CourseDAO_interface {
 				courseVO.setCsstatus(rs.getString("csstatus"));
 				courseVO.setCsscore(rs.getInt("csscore"));
 				courseVO.setCsscoretimes(rs.getInt("csscoretimes"));
-				courseVO.setCourseimg(rs.getBytes("courseimg"));
+//				courseVO.setCourseimg(rs.getBytes("courseimg"));
 				courseVO.setCourlmod(rs.getTimestamp("courlmod"));
 				list.add(courseVO);
 			}
@@ -392,7 +392,7 @@ public class CourseDAO implements CourseDAO_interface {
 				courseVO.setCsstatus(rs.getString("csstatus"));
 				courseVO.setCsscore(rs.getInt("csscore"));
 				courseVO.setCsscoretimes(rs.getInt("csscoretimes"));
-				courseVO.setCourseimg(rs.getBytes("courseimg"));
+//				courseVO.setCourseimg(rs.getBytes("courseimg"));
 				courseVO.setCourlmod(rs.getTimestamp("courlmod"));
 				list.add(courseVO);
 			}
@@ -454,7 +454,7 @@ public class CourseDAO implements CourseDAO_interface {
 				courseVO.setCsstatus(rs.getString("csstatus"));
 				courseVO.setCsscore(rs.getInt("csscore"));
 				courseVO.setCsscoretimes(rs.getInt("csscoretimes"));
-				courseVO.setCourseimg(rs.getBytes("courseimg"));
+//				courseVO.setCourseimg(rs.getBytes("courseimg"));
 				courseVO.setCourlmod(rs.getTimestamp("courlmod"));
 				list.add(courseVO);
 			}
@@ -516,7 +516,7 @@ public class CourseDAO implements CourseDAO_interface {
 				courseVO.setCsstatus(rs.getString("csstatus"));
 				courseVO.setCsscore(rs.getInt("csscore"));
 				courseVO.setCsscoretimes(rs.getInt("csscoretimes"));
-				courseVO.setCourseimg(rs.getBytes("courseimg"));
+//				courseVO.setCourseimg(rs.getBytes("courseimg"));
 				courseVO.setCourlmod(rs.getTimestamp("courlmod"));
 				list.add(courseVO);
 			}
