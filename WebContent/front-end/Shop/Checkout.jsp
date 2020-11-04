@@ -185,12 +185,13 @@ center
 											</div>
 
 										</div>
-										<br> <input type="hidden" name="action" value="insert">
+										<br> <input type="hidden" name="action" value="insert" id="action">
 										<input type="hidden" name="memno" value="${loginMembersVO.memno}"> 
 										<input id="orderamt" type="hidden" name="orderamt">
-										<div class="col-sm-6 order-md-2 text-right">
+										<div class="col-sm-8 order-md-2 text-right">
 											<button type="button" class="btn btn-primary" id="add">聯絡人資料</button>
-											<button type="submit" class="btn btn-primary" id="checkout">結帳</button>
+											<button type="submit" class="btn btn-primary" id="checkout">綠界結帳</button>
+											<button type="submit" class="btn btn-primary" id="checkout2">結帳</button>
 										</div>
 									</div>
 								</div>
@@ -235,6 +236,11 @@ center
 						$("#orderamt").val("<%=total%>" - dis);
 				}
 			})
+		})
+		
+		$("#checkout2").click(function(e){
+			$("#action").val("noEPay");
+			$("#my-form").submit();
 		})
 	</script>
 </body>
