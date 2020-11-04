@@ -12,8 +12,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
 <script src="<%=request.getContextPath()%>/library/jquery/jquery-3.5.1.js"></script>
 <style>
-.imgw{position: fixed;}
-
+.imgw{position: absolute;}
 </style>
 </head>
 <body>
@@ -21,10 +20,12 @@
 		<div class="container">
     		<div id="link-area" class="row">
     			<div class="col-md-6">
+<!--     				<div class="words2"><b>Xducation</b> -->
     				</div>
         			<div class="imgw">
 					<img src='<%=request.getContextPath()%>/index/front-index/assets/img/head/07.png'> 
 					</div>
+<%-- 				<div class="words"><b>${empname}</b></div> --%>
 				</div>
         	</div>
     	</div>
