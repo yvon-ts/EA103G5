@@ -40,7 +40,7 @@
 			<c:if test="${not empty question.op1}">
 				<ul class="multiple">
 					<label>
-						<li class="option" style="vertical-align: middle;"><input type="${type.testtype}" class="class${counter.count}" name="${question.qbankno}" value="0"  /> <span>A </span><span>${question.op1}</span></li>
+						<li class="option" ><input type="${type.testtype}" class="class${counter.count}" name="${question.qbankno}" value="0"  /> <span>A </span><span>${question.op1}</span></li>
 					</label>
 					<label>
 						<li class="option"><input type="${type.testtype}" class="class${counter.count}" name="${question.qbankno}" value="1"  /> <span>B </span><span>${question.op2}</span></li>
@@ -85,23 +85,7 @@
 	
 <script type="text/javascript">
 
-// 	var SetMinute = 1800; //計時器改用jQuery寫，
 
-// 	function Check_Time() {
-// 		SetMinute -= 1;
-// 		var Check_i = document.getElementById("Check_i");
-
-// 		var Cal_Minute = Math.floor(Math.floor(SetMinute % 3600) / 60);
-// 		var Cal_Second = SetMinute % 60;
-
-// 		Check_i.innerHTML =  + Cal_Minute + "分" + Cal_Second
-// 				+ "秒";
-// 		if (SetMinute === 0) {
-// 			clearInterval(mm);
-// 			document.getElementById("myForm").submit();
-// 		}
-// 	}
-// 	var mm = window.setInterval("Check_Time()", 1000);
 	
 	$(document).ready(function() {
 		
@@ -117,7 +101,14 @@
 			}
 			
 			var randomSelectedQuestion =  Array.from(mySet);
+			var allQuestion = Array(20).fill().map((value, index) => index + 1);
 			console.log(randomSelectedQuestion);
+			console.log(allQuestion);
+			
+						
+			var remainQuestion = allQuestion.filter(function(v){ return randomSelectedQuestion.indexOf(v) == -1 })
+			console.log(remainQuestion);
+			
 			
 			$.ajax({
 				url	:"<%=request.getContextPath()%>/question/questionTest.do",
@@ -130,8 +121,6 @@
 					if(data !== '錯誤'){
 						var testArray = JSON.parse(data);
 						
-						console.log(testArray);
-						
 						for(let i = 0 ; i < randomSelectedQuestion.length ; i++ ){
 							var target =  randomSelectedQuestion[i];
 							
@@ -140,7 +129,6 @@
 								$('.class' + target ).val(testArray[target-1]);
 							}else if($('.class' + target ).attr('type') === 'radio'){
 								var ansForRadio = testArray[target -1];
-								console.log(ansForRadio);
 								
 								var position = ansForRadio.indexOf('1');
 								$('.class' + target )[position].checked = true;
@@ -149,21 +137,14 @@
 								
 							}else if($('.class' + target ).attr('type') === 'checkbox'){
 								
-								console.log($('.class' + target ));
 								
 								var ansForCheckBox = testArray[target -1];
-								console.log(ansForCheckBox);
 								var p = 0 ; 
-// 								console.log(ansForCheckBox.indexOf('1' , p ));
-// 								p = ansForCheckBox.indexOf('1' , p ) + 1 ; 
-// 								console.log(ansForCheckBox.indexOf('1' , p ));
 								while(ansForCheckBox.indexOf('1' , p ) > -1){
 									p = ansForCheckBox.indexOf('1',p);
-									console.log(p);
 									$('.class' + target )[p].checked = true;
 									$('.class' + target )[p].parentElement.style.border = '1px solid #14bdcc';
 									$('.class' + target )[p].parentElement.style.backgroundColor = 'rgba(20, 189, 204, .1)';
-									
 									p++;
 								}
 									
@@ -182,33 +163,33 @@
 				}
 			});
 			
-// 	 		var textArray = ['index','記憶體位置','參考變數','forEach'];
-// 			var count = 0 ; 
-// 			for(let i = 1 ; i <= $('ul').length ; i++){
+	 		var textWrongArray = ['index','記憶體位置','參考變數','forEach'];
+			var count = 0 ; 
+			for(let i = 0 ; i < remainQuestion.length ; i++){
 				
-// 				if($('.class' + i ).attr('type') === 'text'){
-// 					$('.class' + i ).val(textArray[count]);
-// 					count++;
-// 				}else if($('.class' + i ).attr('type') === 'radio'){
-// 					var random1 = Math.floor(Math.random() * 4);
-// 					$('.class' + i )[random1].checked = true;
-// 					$('.class' + i )[random1].parentElement.style.border = '1px solid #14bdcc';
-// 					$('.class' + i )[random1].parentElement.style.backgroundColor = 'rgba(20, 189, 204, .1)';
-// 				}else if($('.class' + i ).attr('type') === 'checkbox'){
+				if($('.class' + remainQuestion[i] ).attr('type') === 'text'){
+					$('.class' + remainQuestion[i] ).val(textWrongArray[count]);
+					count++;
+				}else if($('.class' + remainQuestion[i] ).attr('type') === 'radio'){
+					var random1 = Math.floor(Math.random() * 4);
+					$('.class' + remainQuestion[i] )[random1].checked = true;
+					$('.class' + remainQuestion[i] )[random1].parentElement.style.border = '1px solid #14bdcc';
+					$('.class' + remainQuestion[i] )[random1].parentElement.style.backgroundColor = 'rgba(20, 189, 204, .1)';
+				}else if($('.class' + remainQuestion[i] ).attr('type') === 'checkbox'){
 					
-// 					var mySet = new Set();
+					var mySet = new Set();
 					
-// 					while(mySet.size < (Math.floor(Math.random() * 4) + 1 ) ){
-// 						var random2 = Math.floor(Math.random() * 4);
-// 						$('.class' + i )[random2].checked = true;
-// 						$('.class' + i )[random2].parentElement.style.border = '1px solid #14bdcc';
-// 						$('.class' + i )[random2].parentElement.style.backgroundColor = 'rgba(20, 189, 204, .1)';
-// 						mySet.add(random2);
-// 					}
+					while(mySet.size < (Math.floor(Math.random() * 4) + 1 ) ){
+						var random2 = Math.floor(Math.random() * 4);
+						$('.class' + remainQuestion[i] )[random2].checked = true;
+						$('.class' + remainQuestion[i] )[random2].parentElement.style.border = '1px solid #14bdcc';
+						$('.class' + remainQuestion[i] )[random2].parentElement.style.backgroundColor = 'rgba(20, 189, 204, .1)';
+						mySet.add(random2);
+					}
 					
-// 				}
+				}
 				
-// 			}
+			}
 		});
 		
 		
