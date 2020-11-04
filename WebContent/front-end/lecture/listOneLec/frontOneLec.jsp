@@ -22,10 +22,10 @@
 	MembersVO memVO = (MembersVO)session.getAttribute("loginMembersVO");
 	if (memVO != null){
 		memno = memVO.getMemno();
-		System.out.println("frontOneLec的memno="+ memno);
+		//System.out.println("frontOneLec的memno="+ memno);
 	} else {
 		memno = "";
-		System.out.println("frontOneLec memno= == null");
+		//System.out.println("frontOneLec memno= == null");
 	}
 	
 	// 已購數量檢查
@@ -34,7 +34,7 @@
 	
 	LecseatService seatSvc = new LecseatService();
 	int seatCount = seatSvc.hasBooked(memno, lecno);
-	System.out.println("seatCount=" + seatCount);
+	//System.out.println("seatCount=" + seatCount);
 	
 	if (seatCount == 0){
 		canBuy = true;
@@ -48,7 +48,7 @@
 		canBuy = false;
 		availableSeats = 0;
 	}
-	System.out.println(memno + "尚可購買數量=" + availableSeats);
+	//System.out.println(memno + "尚可購買數量=" + availableSeats);
 	
 	ClassroomService roomSvc = new ClassroomService();
 	ClassroomVO roomVO = roomSvc.getOneClassroom(roomno);
@@ -296,25 +296,25 @@ var memno = "<%=memno%>";
 $("#bookASeat").mousedown(function(e){
 	if (memno.length == 0){
 		e.preventDefault();
-		alert("請先登入");
+		swal("請先登入","", 'warning');
 	} else if (<%=canBuy%> === false){
 		e.preventDefault();
-		alert("您已達到購買數量上限");
+		swal("","您已達到購買數量上限", 'error');
 	} else if (<%=lecstatus%> === 0){
 		e.preventDefault();
-		alert("很抱歉，該講座已延期，目前無法購買");
+		swal("","該講座已延期，目前無法購買", 'warning');
 	} else if (<%=lecstatus%> === 2){
 		e.preventDefault();
-		alert("很抱歉，該講座現已額滿，目前無法購滿");
+		swal("","該講座現已額滿，目前無法購買", 'warning');
 	} else if (<%=lecstatus%> === 3){
 		e.preventDefault();
-		alert("該活動已結束");
+		swal("","該活動已結束", 'warning');
 	}
 });
 $("#viewOrders").mousedown(function(e){
 	if (memno.length == 0){
 		e.preventDefault();
-		alert("請先登入");
+		swal("請先登入", 'warning');
 	}
 });
 
