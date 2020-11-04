@@ -25,12 +25,15 @@
 <head>
 <link rel="stylesheet" type="text/css" href="<%= request.getContextPath()%>/front-end/test/css/style2.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;300;400;500&display=swap" rel="stylesheet">
 <style>
 	.score{
 		    font-weight: 700;
    			color: #09adbf;
 	}
-
+	.container-fluid{
+		font-family: 'Noto Sans TC', sans-serif;
+	}
 </style>
 </head>
 <body>
@@ -64,7 +67,11 @@
 					
 					<i class="fa fa-times" aria-hidden="true" style="color:red"></i>
 				</c:if>
-				<h6>(難度:${TypeSvc.getOnebyNO(question.typeno).testdgee})(題型:${(type.testtype eq 'checkbox' )? '多選題':(type.testtype eq 'radio' )? '單選題':'填空題' })</h6></span>
+				<h6>
+					<span id="testDegreeAndType${counter.count}" style="font-weight: 100;">${TypeSvc.getOnebyNO(question.typeno).testdgee}
+					  ${(type.testtype eq 'checkbox' )? '多選題':(type.testtype eq 'radio' )? '單選題':'填空題' }</span>
+				</h6>
+				</span>
 				
 			</div>
 			
@@ -111,14 +118,14 @@
 		<!-- 	印出填空題 -->
 		<c:if test="${empty question.op1}">
 				
-			<ul style="margin-top:10px">
+			<ul style="margin-top:10px" class="multiple">
 				<li class="fill">
 				<input type="${type.testtype}" name="${question.qbankno}" placeholder="請填寫答案"
 				id="class${counter.count}" class="class${counter.count}" style="width:200%" value="${anwserSvc.getOneByQBNO(question.qbankno,testsVo.testno).studentans}" disabled > 
 				</li>
 				<li class="fill">
 				<c:if test="${anwserSvc.getOneByQBNO(question.qbankno,testsVo.testno).testans ne anwserSvc.getOneByQBNO(question.qbankno,testsVo.testno).studentans}">
-					<div style="color:red;margin-left:165px;font-weight: 700;">${anwserSvc.getOneByQBNO(question.qbankno,testsVo.testno).testans}</div>
+					<div style="color:red;margin-left:200px;font-weight: 700;">${anwserSvc.getOneByQBNO(question.qbankno,testsVo.testno).testans}</div>
 				</c:if>
 				</li>
 				</ul>
@@ -134,6 +141,19 @@
 	
 	<script>
 	$(document).ready(function(){
+		
+		for(let i = 1 ; i <= $('ul.multiple').length ; i++){
+			if($('#testDegreeAndType' + i ).text().indexOf('簡單') > -1){
+				$('#testDegreeAndType' + i ).addClass('badge badge-success');
+			}else if($('#testDegreeAndType' + i ).text().indexOf('中等') > -1){
+				$('#testDegreeAndType' + i ).addClass('badge badge-warning');
+			}else if($('#testDegreeAndType' + i ).text().indexOf('困難') > -1){
+				$('#testDegreeAndType' + i ).addClass('badge badge-danger');
+			}
+		}
+		
+		
+		
 		$('label').css('display','block');
 		$('ul').css('margin','20px 40px');
 		$('label span:first-of-type').css('top','-8px');
