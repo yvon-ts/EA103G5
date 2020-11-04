@@ -17,7 +17,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>該會員的考試紀錄</title>
 <style>
 .font{
 	font-weight: 700;

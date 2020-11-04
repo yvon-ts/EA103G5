@@ -2,7 +2,9 @@
 	pageEncoding="BIG5"%>
 <%@ page import="com.anwser_list.model.*,java.util.*"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
+<%
+// 	System.out.println((String)request.getAttribute("testno"));
+%>
 <jsp:useBean id="testTypeSvc" scope="page" class="com.test_type.model.TestTypeService" />
 	
 <!DOCTYPE html>
@@ -104,34 +106,109 @@
 	$(document).ready(function() {
 		
 		
-		var textArray = ['index','記憶體位置','參考變數','forEach'];
-		var count = 0 ; 
+
 		
 		$('#test').click(function(){
 			
+			var mySet = new Set();
 			
-			for(let i = 1 ; i <= $('ul').length ; i++){
-				
-				if($('.class' + i ).attr('type') === 'text'){
-					$('.class' + i ).val(textArray[count]);
-					count++;
-				}else if($('.class' + i ).attr('type') === 'radio'){
-					var random1 = Math.floor(Math.random() * 4);
-					$('.class' + i )[random1].checked = true;
-				}else if($('.class' + i ).attr('type') === 'checkbox'){
-					
-					var mySet = new Set();
-					
-					while(mySet.size < (Math.floor(Math.random() * 4) + 1 ) ){
-						var random2 = Math.floor(Math.random() * 4);
-						$('.class' + i )[random2].checked = true;
-						mySet.add(random2);
-					}
-					
-				}
-				
-				
+			while( mySet.size < 16){
+				mySet.add(Math.floor(Math.random() * 20) + 1);
 			}
+			
+			var randomSelectedQuestion =  Array.from(mySet);
+			console.log(randomSelectedQuestion);
+			
+			$.ajax({
+				url	:"<%=request.getContextPath()%>/question/questionTest.do",
+				data:{
+					testno : "<%= (String)request.getAttribute("testno") %>",
+					action   : 'getTestAns' ,
+				},
+				success: function(data){
+					
+					if(data !== '錯誤'){
+						var testArray = JSON.parse(data);
+						
+						console.log(testArray);
+						
+						for(let i = 0 ; i < randomSelectedQuestion.length ; i++ ){
+							var target =  randomSelectedQuestion[i];
+							
+							if($('.class' + target ).attr('type') === 'text'){
+								
+								$('.class' + target ).val(testArray[target-1]);
+							}else if($('.class' + target ).attr('type') === 'radio'){
+								var ansForRadio = testArray[target -1];
+								console.log(ansForRadio);
+								
+								var position = ansForRadio.indexOf('1');
+								$('.class' + target )[position].checked = true;
+								$('.class' + target )[position].parentElement.style.border = '1px solid #14bdcc';
+								$('.class' + target )[position].parentElement.style.backgroundColor = 'rgba(20, 189, 204, .1)';
+								
+							}else if($('.class' + target ).attr('type') === 'checkbox'){
+								
+								console.log($('.class' + target ));
+								
+								var ansForCheckBox = testArray[target -1];
+								console.log(ansForCheckBox);
+								var p = 0 ; 
+// 								console.log(ansForCheckBox.indexOf('1' , p ));
+// 								p = ansForCheckBox.indexOf('1' , p ) + 1 ; 
+// 								console.log(ansForCheckBox.indexOf('1' , p ));
+								while(ansForCheckBox.indexOf('1' , p ) > -1){
+									p = ansForCheckBox.indexOf('1',p);
+									console.log(p);
+									$('.class' + target )[p].checked = true;
+									$('.class' + target )[p].parentElement.style.border = '1px solid #14bdcc';
+									$('.class' + target )[p].parentElement.style.backgroundColor = 'rgba(20, 189, 204, .1)';
+									
+									p++;
+								}
+									
+									
+								
+								
+							}
+						}	
+						
+						
+					}else{
+						console.log(data);
+					}
+				
+				
+				}
+			});
+			
+// 	 		var textArray = ['index','記憶體位置','參考變數','forEach'];
+// 			var count = 0 ; 
+// 			for(let i = 1 ; i <= $('ul').length ; i++){
+				
+// 				if($('.class' + i ).attr('type') === 'text'){
+// 					$('.class' + i ).val(textArray[count]);
+// 					count++;
+// 				}else if($('.class' + i ).attr('type') === 'radio'){
+// 					var random1 = Math.floor(Math.random() * 4);
+// 					$('.class' + i )[random1].checked = true;
+// 					$('.class' + i )[random1].parentElement.style.border = '1px solid #14bdcc';
+// 					$('.class' + i )[random1].parentElement.style.backgroundColor = 'rgba(20, 189, 204, .1)';
+// 				}else if($('.class' + i ).attr('type') === 'checkbox'){
+					
+// 					var mySet = new Set();
+					
+// 					while(mySet.size < (Math.floor(Math.random() * 4) + 1 ) ){
+// 						var random2 = Math.floor(Math.random() * 4);
+// 						$('.class' + i )[random2].checked = true;
+// 						$('.class' + i )[random2].parentElement.style.border = '1px solid #14bdcc';
+// 						$('.class' + i )[random2].parentElement.style.backgroundColor = 'rgba(20, 189, 204, .1)';
+// 						mySet.add(random2);
+// 					}
+					
+// 				}
+				
+// 			}
 		});
 		
 		

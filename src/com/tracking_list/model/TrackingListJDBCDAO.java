@@ -8,7 +8,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.posts.model.PostsJDBCDAO;
 import com.posts.model.PostsVO;
 /*
  * delete方法測試有問題 console沒跳錯 但資料庫資料沒被刪除
