@@ -375,5 +375,6 @@ table.table .avatar {
 			</div>
 		</div>
 	</div>
+
 </body>
 </html>
