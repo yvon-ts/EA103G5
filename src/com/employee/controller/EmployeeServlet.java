@@ -36,13 +36,13 @@ public class EmployeeServlet extends HttpServlet {
 
 				req.setAttribute("employeeVO", employeeVO);
 				req.setAttribute("empAuthorityVO", empAuthorityVO);
-				System.out.println("TETTTET");
+				
 				RequestDispatcher successView = req.getRequestDispatcher("/back-end/employee/empall/newupdate_emp.jsp");
 				successView.forward(req, res);
 			} catch (Exception e) {
 				System.out.println("無法");
 				errMsgs.add("無法取得要修改的資料: " + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/index/homepage.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/employee/empall/newallemp.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -120,15 +120,12 @@ public class EmployeeServlet extends HttpServlet {
 				// 權限修改
 				String[] functionx = req.getParameterValues("functionx");
 				EmpAuthorityService newEmpAuthority = new EmpAuthorityService();
-				EmpAuthorityVO empAuthorityVO = new EmpAuthorityVO();
 				if (functionx == null) {
 					newEmpAuthority.deleteEmpAuth(empno);
 				} else {
 					newEmpAuthority.deleteEmpAuth(empno);
 					for (int i = 0; i < functionx.length; i++) {
 						newEmpAuthority.addEmpAuth(empno, functionx[i]);
-//						empAuthorityVO.setEmpno(empno);
-//						empAuthorityVO.setFuncno(functionx[i]);
 					}
 				}
 
@@ -161,6 +158,102 @@ public class EmployeeServlet extends HttpServlet {
 			} catch (Exception e) {
 				errMsgs.add("資料修改失敗: " + e.getMessage());
 				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/employee/empall/newupdate_emp.jsp");
+				failureView.forward(req, res);
+			}
+
+		}
+
+		if ("getone_show".equals(action)) {
+			List<String> errMsgs = new LinkedList<String>();
+			req.setAttribute("errMsgs", errMsgs);
+			// 未填寫資料錯誤處理
+			try {
+				String empno = req.getParameter("empno");
+				if (empno == null || (empno.trim()).length() == 0) {
+					errMsgs.add("請輸入員工編號");
+				}
+				if (!errMsgs.isEmpty()) {
+					RequestDispatcher failureView = req.getRequestDispatcher("/back-end/employee/loginsuccess.jsp");
+					failureView.forward(req, res);
+					return;
+				}
+
+				EmployeeService empSvc = new EmployeeService();
+				EmployeeVO employeeVO = empSvc.getEmp(empno);
+
+				EmpAuthorityService empAuthSvc = new EmpAuthorityService();
+				List<EmpAuthorityVO> empAuthorityVO = empAuthSvc.findByEmp(empno);
+
+				req.setAttribute("employeeVO", employeeVO);
+				req.setAttribute("empAuthorityVO", empAuthorityVO);
+
+				RequestDispatcher successView = req.getRequestDispatcher("/back-end/employee/empone.jsp");
+				successView.forward(req, res);
+
+			} catch (Exception e) {
+				errMsgs.add("無法取得資料:" + e.getMessage());
+			}
+		}
+
+		if ("pwdupdate".equals(action)) {
+
+			List<String> errMsgs = new LinkedList<String>();
+			req.setAttribute("errMsgs", errMsgs);
+
+			try {
+				String empno = req.getParameter("empno");
+
+				String emppwd = req.getParameter("emppwd");
+				if (emppwd == null || emppwd.trim().length() == 0) {
+					errMsgs.add("*員工密碼:請勿為空白*");
+				}
+
+				String empemail = req.getParameter("empemail");
+				if (empemail == null || (empemail.trim()).length() == 0) {
+					errMsgs.add("*員工email:請勿為空白*");
+				}
+
+				byte[] emppic = null;
+				Part part = req.getPart("emppic");
+				if (part == null || part.getSize() == 0) {
+					EmployeeService empSvc = new EmployeeService();
+					Optional<EmployeeVO> employeeVO = empSvc.getEmpPicByEmpno(empno);
+					emppic = employeeVO.get().getEmppic();
+				} else {
+					InputStream in = part.getInputStream();
+					emppic = new byte[in.available()];
+					in.read(emppic);
+					in.close();
+				}
+
+				String empacc = req.getParameter("empacc");
+				String empname = req.getParameter("empname");
+				java.sql.Date hiredate = java.sql.Date.valueOf(req.getParameter("hiredate"));
+
+				EmployeeVO employeeVO = new EmployeeVO();
+				employeeVO.setEmpno(empno);
+				employeeVO.setEmppwd(emppwd);
+				employeeVO.setEmpemail(empemail);
+				employeeVO.setEmppic(emppic);
+				employeeVO.setEmpacc(empacc);
+				employeeVO.setEmpname(empname);
+				employeeVO.setHiredate(hiredate);
+
+				if (!errMsgs.isEmpty()) {
+					req.setAttribute("employeeVO", employeeVO);
+					RequestDispatcher failureView = req.getRequestDispatcher("/back-end/employee/empone.jsp");
+					failureView.forward(req, res);
+					return;
+				}
+
+				EmployeeService newEmp = new EmployeeService();
+				employeeVO = newEmp.updatepwd(empno, emppwd, empemail, emppic);
+				req.setAttribute("employeeVO", employeeVO);
+				RequestDispatcher successView = req.getRequestDispatcher("/back-end/employee/loginsuccess.jsp");
+				successView.forward(req, res);
+			} catch (Exception e) {
+				errMsgs.add("資料修改失敗: " + e.getMessage());
+				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/employee/empone.jsp");
 				failureView.forward(req, res);
 			}
 
@@ -258,16 +351,8 @@ public class EmployeeServlet extends HttpServlet {
 					}
 				}
 
-				MailService mailService = new MailService();
-
-				String to = "furongkuang9@gmail.com";
+				MailService mailService = new MailService();				
 				String subject = "密碼通知";
-				String ch_name = "peter1";
-				String passRandom = "111";
-
-				to = empemail;
-				ch_name = empname;
-				passRandom = emppwd;
 
 				String messageText = "Hello! " + empname + "(" + empacc + ")" + "請謹記此密碼: " + emppwd + "\n" + " (已經啟用)";
 				mailService.sendMail(empemail, subject, messageText);
@@ -281,143 +366,7 @@ public class EmployeeServlet extends HttpServlet {
 				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/employee/empall/newadd_emp.jsp");
 				failureView.forward(req, res);
 			}
-
 		}
-
-//-------------------------------------------權限-----------------------------------------------		
-
-//		if ("authority_update".equals(action)) {
-//			List<String> errMsgs = new LinkedList<String>();
-//			req.setAttribute("errMsgs", errMsgs);
-//			try {
-//				String empno = req.getParameter("empno");
-//				String[] functionx = req.getParameterValues("functionx");
-//				
-//				EmpAuthorityService newEmpAuthority = new EmpAuthorityService();
-//				EmpAuthorityVO empAuthorityVO = new EmpAuthorityVO();
-//				
-//
-//				if (functionx == null) {
-//					newEmpAuthority.deleteEmpAuth(empno);
-//				} else {
-//					newEmpAuthority.deleteEmpAuth(empno);
-//					for (int i = 0; i < functionx.length; i++) {
-//						newEmpAuthority.addEmpAuth(empno, functionx[i]);
-//						empAuthorityVO.setEmpno(empno);
-//						empAuthorityVO.setFuncno(functionx[i]);
-//					}
-//				}
-//				req.setAttribute("empAuthorityVO", empAuthorityVO);
-//				RequestDispatcher successView = req
-//						.getRequestDispatcher("/back-end/emp_authority/empauthorityshow.jsp");
-//				successView.forward(req, res);
-//			} catch (Exception e) {
-//				errMsgs.add("資料修改失敗: " + e.getMessage());
-//				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/employee/select_emp.jsp");
-//				failureView.forward(req, res);
-//			}
-//
-//		}
-
-//-------------------------------------------------------------------------------------------	
-
-		if ("getone_show".equals(action)) {
-			List<String> errMsgs = new LinkedList<String>();
-			req.setAttribute("errMsgs", errMsgs);
-			// 未填寫資料錯誤處理
-			try {
-				String empno = req.getParameter("empno");
-				if (empno == null || (empno.trim()).length() == 0) {
-					errMsgs.add("請輸入員工編號");
-				}
-				if (!errMsgs.isEmpty()) {
-					RequestDispatcher failureView = req.getRequestDispatcher("/back-end/index/homepage.jsp");
-					failureView.forward(req, res);
-					return;
-				}
-
-				EmployeeService empSvc = new EmployeeService();
-				EmployeeVO employeeVO = empSvc.getEmp(empno);
-				
-
-				EmpAuthorityService empAuthSvc = new EmpAuthorityService();
-				List<EmpAuthorityVO> empAuthorityVO = empAuthSvc.findByEmp(empno);
-
-				req.setAttribute("employeeVO", employeeVO);
-				req.setAttribute("empAuthorityVO", empAuthorityVO);
-
-				RequestDispatcher successView = req.getRequestDispatcher("/back-end/employee/empone.jsp");
-				successView.forward(req, res);
-
-			} catch (Exception e) {
-				errMsgs.add("無法取得資料:" + e.getMessage());
-			}
-		}
-
-		if ("pwdupdate".equals(action)) {
-
-			List<String> errMsgs = new LinkedList<String>();
-			req.setAttribute("errMsgs", errMsgs);
-
-			try {
-				String empno = req.getParameter("empno");
-
-				String emppwd = req.getParameter("emppwd");
-				if (emppwd == null || emppwd.trim().length() == 0) {
-					errMsgs.add("*員工密碼:請勿為空白*");
-				}
-
-				String empemail = req.getParameter("empemail");
-				if (empemail == null || (empemail.trim()).length() == 0) {
-					errMsgs.add("*員工email:請勿為空白*");
-				}
-
-				byte[] emppic = null;
-				Part part = req.getPart("emppic");
-				if (part == null || part.getSize() == 0) {
-					EmployeeService empSvc = new EmployeeService();
-					Optional<EmployeeVO> employeeVO = empSvc.getEmpPicByEmpno(empno);
-					emppic = employeeVO.get().getEmppic();
-				} else {
-					InputStream in = part.getInputStream();
-					emppic = new byte[in.available()];
-					in.read(emppic);
-					in.close();
-				}
-
-				String empacc = req.getParameter("empacc");
-				String empname = req.getParameter("empname");
-				java.sql.Date hiredate = java.sql.Date.valueOf(req.getParameter("hiredate"));
-
-				EmployeeVO employeeVO = new EmployeeVO();
-				employeeVO.setEmpno(empno);
-				employeeVO.setEmppwd(emppwd);
-				employeeVO.setEmpemail(empemail);
-				employeeVO.setEmppic(emppic);
-				employeeVO.setEmpacc(empacc);
-				employeeVO.setEmpname(empname);
-				employeeVO.setHiredate(hiredate);
-
-				if (!errMsgs.isEmpty()) {
-					req.setAttribute("employeeVO", employeeVO);
-					RequestDispatcher failureView = req.getRequestDispatcher("/back-end/employee/empone.jsp");
-					failureView.forward(req, res);
-					return;
-				}
-
-				EmployeeService newEmp = new EmployeeService();
-				employeeVO = newEmp.updatepwd(empno, emppwd, empemail, emppic);
-				req.setAttribute("employeeVO", employeeVO);
-				RequestDispatcher successView = req.getRequestDispatcher("/back-end/index/homepage.jsp");
-				successView.forward(req, res);
-			} catch (Exception e) {
-				errMsgs.add("資料修改失敗: " + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/employee/empone.jsp");
-				failureView.forward(req, res);
-			}
-
-		}
-
 	}
 
 	protected static String genAuthCode(int n) {

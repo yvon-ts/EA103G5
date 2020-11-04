@@ -378,7 +378,7 @@ table.table .avatar {
 								<th>
 									<input type="hidden" name="action" value="pwdupdate">
 									<input type="hidden" name="empno" value="<%=employeeVO.getEmpno()%>"> 
-									<input type="submit" value="送出修改">
+									<input type="submit" value="送出修改" class="view">
 								</th>
 							</tr>
 						</tbody>
