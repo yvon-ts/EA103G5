@@ -10,7 +10,7 @@ public interface Course_assessDAO_interface {
 	public List<Course_assessVO> getAll(String courseno);
 	public String avgScore(String courseno);
 	public Course_assessVO checkMembers(String memno,String courseno);
-	
+	public List<Course_assessVO> getAllForAjax(String courseno,Integer pagesize);
 	
 
 }

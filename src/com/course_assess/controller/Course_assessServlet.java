@@ -49,11 +49,58 @@ public class Course_assessServlet extends HttpServlet {
 				if("getAll".equals(action)) {
 					getAll(req,res);
 				}
+				if("getAllForAjax".equals(action)) {
+					getAllForAjax(req,res);
+				}
 		
 		
 		
 	}
 	
+	private void getAllForAjax(HttpServletRequest req, HttpServletResponse res)throws ServletException, IOException {
+		List<String> errorMsgs = new LinkedList<String>();
+		req.setAttribute("errorMsgs", errorMsgs);
+		
+		try {
+			Course_assessService course_assessSvc = new Course_assessService();
+			MembersService membersSvc = new MembersService();
+			TeacherService teacherSvc = new TeacherService();
+			Integer pagesize = Integer.valueOf(req.getParameter("pagesize"));
+			String courseno = req.getParameter("courseno");
+			List<Course_assessVO>list = course_assessSvc.getAllForAjax(courseno, pagesize);
+			
+			 for(Course_assessVO vo : list) {
+				 
+				vo.setNkname(membersSvc.getOneMembers(vo.getMemno()).getNkname());
+				TeacherVO tVo = teacherSvc.getStatus(vo.getMemno());
+				if(tVo != null) {
+					vo.setTchrstatus(tVo.getTchrstatus());
+				}else {
+					vo.setTchrstatus("未申請");
+				}
+					
+				Date date = vo.getCommenttime();
+				vo.setString_commenttime(new SimpleDateFormat("yyyy年MM月dd日 HH時:mm分").format(date));
+			 }
+			String str = new JSONArray(list).toString();
+			
+			res.setContentType("text/plain");
+			res.setCharacterEncoding("UTF-8");
+			PrintWriter out = res.getWriter();
+			out.write(str);
+			out.flush();
+			out.close();
+			
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			errorMsgs.add("無法取得資料:" + e.getMessage());
+			RequestDispatcher failureView = req.getRequestDispatcher("新增失敗小視窗.jsp");
+			failureView.forward(req, res);
+		}
+		
+	}
+
 	private void getAll(HttpServletRequest req, HttpServletResponse res)throws ServletException, IOException{
 		List<String> errorMsgs = new LinkedList<String>();
 		req.setAttribute("errorMsgs", errorMsgs);
@@ -97,6 +144,7 @@ public class Course_assessServlet extends HttpServlet {
 		}
 		
 	}
+	
 
 	private void insert(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		String memno = req.getParameter("memno");
