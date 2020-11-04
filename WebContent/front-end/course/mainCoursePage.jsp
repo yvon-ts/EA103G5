@@ -341,7 +341,7 @@
 					swal('請選擇難易度及單元', '', 'error');
 				}
 				//判斷題庫是否有題目
-				if('${QuestionBankSvc.getAll(courseVO.courseno).size()}' < 20 ){
+				else if('${QuestionBankSvc.getAll(courseVO.courseno).size()}' < 20 ){
 					swal('目前尚無測驗題目', '', 'warning');
 				}else{
 					$('#myForm').submit();
@@ -406,7 +406,6 @@
 				url	:"<%=request.getContextPath()%>/tracking_list/tracking_list.do", 
 				data:{
 					courseno : $(this).find('#courseno').val(),
-// 					memno    : $("#memno").val(),
 					action   : updateTrackingList ,
 				},
 				success: function(data){
