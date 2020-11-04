@@ -145,8 +145,8 @@
 										//CKeditor - Bytes to String
 										byte[] b = lecVO.getLecinfo();
 										if (b != null) {
-											String bString = new String(b);
-											lecinfo = bString.substring(0, 23);
+											lecinfo = new String(b);
+											//lecinfo = bString.substring(0, 23);
 										} else {
 											System.out.println("b is null");
 										}
@@ -288,6 +288,7 @@
  		dataType: 'json',
  		success: function(data){
 			var lecs = data;
+			console.log(lecs);
  			if (lecs.length != 0){
  				
 	  			for (let i = 0; i < lecs.length; i++){
@@ -320,7 +321,7 @@
 	  		}).appendTo('#row');
 	  			
 	  			var lecno = lecs[i].lecno;
-	  	  			var srcHead = "<%=request.getContextPath()%>/lecture/picreader?lecno=";
+	  	  		var srcHead = "<%=request.getContextPath()%>/lecture/picreader?lecno=";
 	  			var src = srcHead + lecno;
 	  			var price = `NT$`+lecs[i].lecprice;
 	  			

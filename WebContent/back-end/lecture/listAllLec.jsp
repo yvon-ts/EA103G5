@@ -67,7 +67,7 @@
 		padding: 8px 20px;
 	}
 	#statusText{
-		margin-left: 30%;
+		margin-left: 52%;
 	}
 	#status{
 		margin-top: 25px;
