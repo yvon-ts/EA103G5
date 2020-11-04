@@ -67,6 +67,15 @@
 		color:#ff6680;
 		font-weight: 600;
 	}
+	#magic{
+		background-color: #f3f3f3;
+		border: 0;
+		color: #fff;
+	}
+	#magic :focus{
+		border: 0;
+		outline: none;
+	}
 </style>
 </head>
 <body>
@@ -129,7 +138,7 @@
           </div>
 		</div>
 	</div>
-	<button id="magic" style="background-color: #f3f3f3;border: 0">+</button>
+	<button id="magic">+</button>
 </div>
 </main>
 	<script type="text/javascript">
@@ -298,12 +307,22 @@
  	}
 });
 
+	var info = `<p><strong>最受歡迎的甜點師傅洪金豹，親自帶你做甜點 ！</strong><br /><br />
+	突破百萬訂閱頻道『Zootopia甜點方城市』，</p><p>最仔細的現場解說，超詳盡的步驟示範，</p>
+	<p>讓你從零開始也能做烘培！</p><p>不管是泡芙、蛋糕、塔派還是馬卡龍，</p><p>輕鬆在你家廚房做出職人級甜點。</p>
+	<p>本次示範項目：</p><ul><li>焦糖布丁</li><li>香草鮮奶酪</li><li>葡萄乾燕麥餅乾</li></ul>`;
+
 	//小按鈕
+	$("#magic").focus(function(){
+		$(this).attr("style", "outline:none");
+	});
 	$("#magic").click(function(){
-		$("#lecname").val("料理非難事：五星主廚上菜囉");
-		$(".spkr[value='SPKR0007']").attr("selected", "selected");
+		$(this).attr("style", "outline:none");
+		$("#lecname").val("不藏私、無業配、螞蟻人的甜點清單");
+		$(".spkr[value='SPKR0010']").attr("selected", "selected");
 		$("#lecprice").val(100);
 		$(".room[value='ROOM0005']").attr("selected", "selected");
+		CKEDITOR.instances["edtr"].setData(info);
 	});
 </script>
 

@@ -36,8 +36,8 @@
 		border-radius: 5px;
 	}
 	#displayInfo img{
-		height: 50px;
-		width: 50px;
+		height: 100px;
+		width: 100px;
 		border: 2px solid #999;
 	}
 	}

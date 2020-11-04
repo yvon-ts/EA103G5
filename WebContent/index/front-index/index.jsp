@@ -401,7 +401,7 @@
 					byte[] b = lecVO.getLecinfo();
 					if (b != null) {
 						String bString = new String(b);
-						lecinfo = bString.substring(0, 23);
+						lecinfo = bString.substring(0, 20);
 					} else {
 						System.out.println("b is null");
 					}
@@ -679,7 +679,7 @@
 	
 	
 	$("#backIndex").click(function(){
-		window.location.href = "<%=request.getContextPath()%>/back-end/employee/loginsuccess.jsp";
+		window.location.href = "<%=request.getContextPath()%>/back-end/index/homepage.jsp";
 	});
 	
 	

@@ -190,7 +190,6 @@
 		<%=info%>
 
 </div>
-<%-- <%@ include file="/back-end/lecture/roomsetting/singleLayout.jsp"%><br> --%>
 <jsp:include page="/roomsetting/singleLayout.jsp"></jsp:include>
 </div>
 </div>
