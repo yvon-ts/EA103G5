@@ -679,7 +679,7 @@
 	
 	
 	$("#backIndex").click(function(){
-		window.location.href = "<%=request.getContextPath()%>/back-end/index/homepage.jsp";
+		window.location.href = "<%=request.getContextPath()%>/back-end/employee/loginsuccess.jsp";
 	});
 	
 	
