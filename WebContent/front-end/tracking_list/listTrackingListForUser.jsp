@@ -50,7 +50,13 @@
 	background:
 		url(https://cdnjs.cloudflare.com/ajax/libs/jquery.rateit/1.1.3/star.gif)
 		left -32px !important;
-}
+	}
+	label{
+		height:30px;
+	}
+	a.course{
+		 color: rgba(0, 0, 0, 0.65);
+	}
 	</style>
 
 
@@ -113,14 +119,17 @@
                     <tr>
                     	
                         <td data-th="Product">
+                        	<a href="<%=request.getContextPath()%>/course/course.do?action=showCourseMainPage&courseno=${courseVO.courseno}" class="course">
                             <div class="row">
+                            	
                                 <div class="col-md-3 text-left">
                                     <img src="<%=request.getContextPath()%>/course/CoursePictureReaderFromDB?courseno=${courseVO.courseno}" alt="" class="img-fluid d-none d-md-block rounded mb-2 shadow ">
                                 </div>
                                 <div class="col-md-9 text-left mt-sm-2">
-                                    <h5><a href="<%=request.getContextPath()%>/course/course.do?action=showCourseMainPage&courseno=${courseVO.courseno}">${courseVO.coursename}</a></h5>
+                                    <h5>${courseVO.coursename}</h5>
                                 </div>
                             </div>
+                            </a>
                         </td>
                         <td data-th="Price">${courseVO.courseprice}</td>
                         <c:set var="totalPrice" value="${totalPrice + courseVO.courseprice}" />
@@ -317,14 +326,18 @@
 							var commonStr = '';
 							commonStr +=  	`<tr>
 	                        				<td data-th="Product">
+	                        				<a href="<%=request.getContextPath()%>/course/course.do?action=showCourseMainPage&courseno=` + JSONObj.courseno + `" class="course">
                             					<div class="row">
+                            					
                                 					<div class="col-md-3 text-left">
                                     					<img src="<%=request.getContextPath()%>/course/CoursePictureReaderFromDB?courseno=`+ JSONObj.courseno +`" alt="" class="img-fluid d-none d-md-block rounded mb-2 shadow ">
                                 					</div>
                                 					<div class="col-md-9 text-left mt-sm-2">
-                                    						<h5><a href="<%=request.getContextPath()%>/course/course.do?action=showCourseMainPage&courseno=` + JSONObj.courseno + `">` + JSONObj.coursename + `</a></h5>
+                                    						<h5>` + JSONObj.coursename + `</h5>
                                 					</div>
+                                				
                             					</div>
+                            				</a>
                         					</td>
                         
                         					<td data-th="Price">` + JSONObj.courseprice + `</td>
@@ -520,15 +533,15 @@
 						
 						result += 	`<div class="col-md-6 col-lg-3 col-xs-12">`;
 						result +=	`<div class="services-item wow fadeInRight" data-wow-delay="0.3s">`;
-						result +=	`<div class="icon">`
+						result +=	`<div class="icon"><a href="<%=request.getContextPath()%>/course/course.do?action=showCourseMainPage&courseno=`+ JSONarray[i].courseno +`" class="course">`
 						result +=	`<img src="<%=request.getContextPath()%>/course/CoursePictureReaderFromDB?courseno=` + JSONarray[i].courseno  +`" style="width: 200px; height: 150px;" class="pic"></div>`;
                 			
 						result +=   `<div class="services-content">`;
                 		result += 	`&nbsp;&nbsp;&nbsp;<div class="rateit" data-rateit-value="`+ JSONarray[i].csscore / JSONarray[i].csscoretimes + `" data-rateit-ispreset="true" data-rateit-readonly="true"></div> `; 
           	
                 		result +=	`<br>&nbsp;&nbsp;&nbsp;`+ JSONarray[i].csscoretimes  + `則評價`;
-                		result +=   `<h3><a href="<%=request.getContextPath()%>/course/course.do?action=showCourseMainPage&courseno=`+ JSONarray[i].courseno +`">`+ JSONarray[i].coursename + `</a></h3>`;
-                		result +=   `<p>課程共` + JSONarray[i].ttltime + `分鐘</p>`;
+                		result +=   `<h3 style="line-height:32px; height:64px; overflow:hidden;">`+ JSONarray[i].coursename + `</h3>`;
+                		result +=   `<p>課程共` + JSONarray[i].ttltime + `分鐘</p></a>`;
                     
                 		result += 	`<label class="shoppingcart">
 										<i class="fa fa-shopping-cart" aria-hidden="true">
@@ -540,7 +553,7 @@
 											<input type ="hidden"  id="courseno" value ="`+ JSONarray[i].courseno +`">
 										</i>&nbsp;取消追蹤
 									 </label>`;
-						result += 	`<h5>NT$` + JSONarray[i].courseprice + `</h5></div></div></div></div>`;
+						result += 	`<hr><h5 style="bottom:13px;">NT$` + JSONarray[i].courseprice + `</h5></div></div></div></div>`;
                 
 					}
 					

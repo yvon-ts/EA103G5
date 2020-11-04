@@ -139,7 +139,7 @@ System.out.println(request.getParameter("coursename") );
 				<table class="table table-striped table-hover">
 					<thead>
 						<tr>
-							<th>題目編號</th>
+							<th>#</th>
 							<th>課程名稱</th>
 							<th>課程難易度</th>
 							<th>單元範圍</th>
@@ -154,7 +154,7 @@ System.out.println(request.getParameter("coursename") );
 							items="${listEmps_ByCompositeQuery}" begin="<%=pageIndex%>"
 							end="<%=pageIndex+rowsPerPage-1%>" varStatus="counter">
 							<tr>
-								<td>${QuestionBankvo.qbankno }</td>
+								<td>${counter.count}</td>
 								<td>${CourseSvc.getOneCourse(QuestionBankvo.courseno).coursename }</td>
 								<c:if
 									test="${ttSvc.getOnebyNO(QuestionBankvo.typeno).testdgee eq '簡單'}">

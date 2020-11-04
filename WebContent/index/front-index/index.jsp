@@ -30,7 +30,6 @@
 	
 	
 %>
-
 <jsp:useBean id="CourseSvc" scope="page" class="com.course.model.CourseService" />
 
 <html lang="en">
@@ -114,6 +113,9 @@
 	background:
 		url(https://cdnjs.cloudflare.com/ajax/libs/jquery.rateit/1.1.3/star.gif)
 		left -32px !important;
+	}
+	a.course{
+		 color: rgba(0, 0, 0, 0.65);
 	}
 	
 	</style>
@@ -300,11 +302,11 @@
                 <div class="shape wow fadeInDown" data-wow-delay="0.3s"></div>
             </div>
             <div class="row">
-            	
+            
               <c:forEach var="courseVO" items="${CourseSvc.max}">
 							<div class="col-md-6 col-lg-3 col-xs-12">
 								<div class="services-item wow fadeInRight" data-wow-delay="0.3s">
-									<a href="<%=request.getContextPath()%>/course/course.do?action=showCourseMainPage&courseno=${courseVO.courseno}">
+									<a href="<%=request.getContextPath()%>/course/course.do?action=showCourseMainPage&courseno=${courseVO.courseno}" class="course">
 									<div class="icon">
 										<!-- 顯鈞：替換成新版本讀圖測試2020/10/22 -->
 										<%-- <img src="<%=request.getContextPath()%>/course/coursephoto.do?action=searchPhoto&courseno=${courseVO.courseno}" style="width:200px;height:150px" class="pic"> --%>
@@ -312,22 +314,22 @@
 										<img src="<%=request.getContextPath()%>/course/CoursePictureReaderFromDB?courseno=${courseVO.courseno}" style="max-width: 100%; height: 150px;" class="pic">
                         			</div>
                         			<div class="services-content">
-<!--                         	 -->
+                        			
                         	&nbsp;&nbsp;&nbsp;<div class="rateit" data-rateit-value="${courseVO.csscore / courseVO.csscoretimes }" data-rateit-ispreset="true" data-rateit-readonly="true"></div> 
                         	<br>&nbsp;&nbsp;&nbsp;${courseVO.csscoretimes}則評價
-                        	<h3 style="line-height:40px;">${courseVO.coursename}</h3></a>
+                        	<h3 style="line-height:32px; height:64px; overflow:hidden;">${courseVO.coursename}</h3>
 <%--                             <h3><a href="<%=request.getContextPath()%>/course/course.do?action=getOne_For_Display&courseno=${courseVO.courseno}">${courseVO.coursename}</a></h3> --%>
-                            
 							<!-- 將課程總時數換算為分鐘 -->
 							<% Integer ttltimeInMin = ((CourseVO)pageContext.getAttribute("courseVO")).getTtltime()/60; %>                            
                             <p>課程總長 <%= ttltimeInMin %> 分鐘</p>
 							
-
+							<hr>
 								
-                           <h5>NT$${courseVO.courseprice}</h5>
+                           <h5 style="bottom:5px;">NT$${courseVO.courseprice}</h5>
                         	
                         </div>
                     </div>
+                    </a>
                 </div>
                 
                 </c:forEach>

@@ -10,8 +10,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-<link rel="stylesheet" type="text/css" href="<%= request.getContextPath()%>/front-end/test/css/style2.css">
 
+<link rel="stylesheet" type="text/css" href="<%= request.getContextPath()%>/front-end/test/css/style2.css">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;300;400;500&display=swap" rel="stylesheet">
+<style>
+	.container-fluid{
+		font-family: 'Noto Sans TC', sans-serif;
+	}
+</style>
 </head>
 <body>	
 
@@ -33,7 +39,15 @@
 		<div class="box1" >
 			<!-- 	印出題目 -->
 			<div class="question">
-				<span>${counter.count}.</span><h5>${question.qustmt}</h5><span><h6>(難度:${testTypeSvc.getOnebyNO(question.typeno).testdgee})(題型:${(type.testtype eq 'checkbox' )? '多選題':(type.testtype eq 'radio' )? '單選題':'填空題' })</h6></span>
+				<span>${counter.count}.</span><h5>${question.qustmt}</h5>
+				<span>
+				
+					
+					<h6>
+					<span id="testDegreeAndType${counter.count}" style="font-weight: 100;">${testTypeSvc.getOnebyNO(question.typeno).testdgee}
+					  ${(type.testtype eq 'checkbox' )? '多選題':(type.testtype eq 'radio' )? '單選題':'填空題' }</span>
+					</h6>
+				</span>
 			</div>
 			
 			<!-- 	印出單選/多選題 -->
@@ -89,8 +103,18 @@
 	
 	$(document).ready(function() {
 		
-		
-
+		for(let i = 1 ; i <= $('ul.multiple').length ; i++){
+			if($('#testDegreeAndType' + i ).text().indexOf('簡單') > -1){
+				$('#testDegreeAndType' + i ).addClass('badge badge-success');
+				$('#testDegreeAndType' + i ).css('font-weight','0');
+			}else if($('#testDegreeAndType' + i ).text().indexOf('中等') > -1){
+				$('#testDegreeAndType' + i ).addClass('badge badge-warning');
+				$('#testDegreeAndType' + i ).css('font-weight','0');
+			}else if($('#testDegreeAndType' + i ).text().indexOf('困難') > -1){
+				$('#testDegreeAndType' + i ).addClass('badge badge-danger');
+				$('#testDegreeAndType' + i ).css('font-weight','0');
+			}
+		}
 		
 		$('#test').click(function(){
 			
