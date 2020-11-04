@@ -5,6 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Xducation - 陪你成長的學習好夥伴</title>
+<link rel="stylesheet" href="<%=request.getContextPath()%>/library/bootstrap/4.5.3/css/bootstrap.min.css">
 <style>
 	body{
 		background-color: #fff; !important
