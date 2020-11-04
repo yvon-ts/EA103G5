@@ -206,7 +206,6 @@ public class OrderMasterServlet extends HttpServlet {
 
 					list.add(odVO);
 				}
-
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					req.setAttribute("orderMasterVO", orderMasterVO);
@@ -215,7 +214,6 @@ public class OrderMasterServlet extends HttpServlet {
 					failureView.forward(req, res);
 					return;
 				}
-
 				/*************************** 2.開始新增資料 ***************************************/
 				OrderMasterService ordermasterSvc = new OrderMasterService();
 				orderMasterVO = ordermasterSvc.addOrder(memno, orderamt, coupno, payby, list);
@@ -235,7 +233,8 @@ public class OrderMasterServlet extends HttpServlet {
 				DateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 				checkoutonetime.setMerchantTradeDate(sdf.format(time));
 				checkoutonetime.setReturnURL(req.getScheme() + "://" + req.getServerName() + ":" + req.getServerPort() + ":" + req.getContextPath() + "/Order_Master/Order_Master.do");
-				checkoutonetime.setClientBackURL(req.getScheme() + "://" + req.getServerName() + ":" + req.getServerPort() + "/" + req.getContextPath() + "/index/front-index/index.jsp");
+				checkoutonetime.setClientBackURL(req.getScheme() + "://" + req.getServerName() + ":" + req.getServerPort() + req.getContextPath() + "/index/front-index/index.jsp");
+				checkoutonetime.setClientBackURL("http://localhost:8081/EA103G5/index/front-index/index.jsp");
 				checkoutonetime.setTradeDesc("123");
 				
 				

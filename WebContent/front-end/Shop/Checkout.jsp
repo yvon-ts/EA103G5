@@ -206,6 +206,9 @@ center
 		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.rateit/1.1.3/jquery.rateit.min.js"></script>
 
 	<script>
+		$(document).ready(function(){
+			$("#orderamt").val("<%=total%>");
+		})		
 		$("#add").click(function(e) {
 			e.preventDefault();
 			$("#name").val("Emily");
