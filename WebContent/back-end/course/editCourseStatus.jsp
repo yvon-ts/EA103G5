@@ -4,7 +4,7 @@
 <%@ page import="java.util.*"%>
 <%@ page import="com.course.model.*"%>
 <%@ page import="com.functionx.model.*"%>
-
+<jsp:include page="/back-end/index/homepage.jsp" />
 <jsp:useBean id="courseSvc" scope="page" class="com.course.model.CourseService" />
 <jsp:useBean id="courseTypeSvc" scope="page" class="com.course_type.model.CourseTypeService" />
 <jsp:useBean id="membersSvc" scope="page" class="com.members.model.MembersService" />
@@ -58,7 +58,6 @@
 			color: #566787;
 			background: #f5f5f5;
 			font-family: 'Varela Round', sans-serif;
-			font-size: 13px;
 		}
 
 		.table-responsive {
@@ -355,8 +354,6 @@
 </head>
 
 <body>
-	<jsp:include page="/back-end/index/homepage.jsp" />
-
 	<main class="app-content">
 		<div class="container-xl">
 			<div class="table-responsive">

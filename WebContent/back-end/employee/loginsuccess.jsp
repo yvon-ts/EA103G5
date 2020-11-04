@@ -7,19 +7,11 @@
 <head>
 <meta charset="UTF-8">
 <title>Xducation管理後臺</title>
+<link rel="stylesheet" href="<%=request.getContextPath()%>/library/bootstrap/4.5.3/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
+<script src="<%=request.getContextPath()%>/library/jquery/jquery-3.5.1.js"></script>
 <style>
-.words{font-size: 40px;
-	   letter-spacing: 10px;
-	   position: fixed ;
-	   top:78%;
-	   left: 54%;
-}
-.words2{font-size: 39px;
-		letter-spacing: 10px;
-		position: fixed ;
-		top:50%;
-		left: 51%;}
-}
 .imgw{position: fixed;}
 
 </style>
@@ -29,12 +21,10 @@
 		<div class="container">
     		<div id="link-area" class="row">
     			<div class="col-md-6">
-<!--     				<div class="words2"><b>Xducation</b> -->
     				</div>
         			<div class="imgw">
 					<img src='<%=request.getContextPath()%>/index/front-index/assets/img/head/07.png'> 
 					</div>
-<%-- 				<div class="words"><b>${empname}</b></div> --%>
 				</div>
         	</div>
     	</div>
