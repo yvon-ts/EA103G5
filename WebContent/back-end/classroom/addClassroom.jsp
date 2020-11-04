@@ -79,8 +79,8 @@
 										<label class="input-group-text">狀態</label>
 									</div>
 									<select class="custom-select" name="roomdelete">
-										<option value=false ${(!classroomVO.roomdelete) ? 'selected' : '' }>可用</option>
-										<option value=true ${(classroomVO.roomdelete) ? 'selected' : '' }>註銷</option>
+										<option value=false ${(!classroomVO.roomdelete) ? 'selected' : '' }>開放中</option>
+										<option value=true ${(classroomVO.roomdelete) ? 'selected' : '' }>暫停使用</option>
 									</select>
 								</div>
 

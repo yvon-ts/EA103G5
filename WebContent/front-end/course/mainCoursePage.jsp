@@ -109,8 +109,9 @@
 						<div class="col-lg-8 align-self-center">
 							<!-- 影片播放 -->
 							<div id="videoContainer">
-								<video id="coursePlayer" width="100%" height="auto" controls preload="metadata">
-									<source src="<%=request.getContextPath()%>/front-end/course/Nyan_Cat.mp4" type="video/mp4">
+								<video id="coursePlayer" width="100%" height="auto" controls preload="metadata"
+								poster="<%=request.getContextPath()%>/front-end/course/image/videoPoster.png">
+									<source src="#" type="video/mp4">
 									您的瀏覽器未支援此播放系統，建議使用 Chrome 瀏覽器瀏覽網頁
 								</video>
 							</div>

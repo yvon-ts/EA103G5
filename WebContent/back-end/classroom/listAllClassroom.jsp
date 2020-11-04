@@ -55,14 +55,14 @@
 								<h1 class="text-center">教室管理</h1>
 							</div>
 							<!-- search box start -->
-							<div class="col-sm-3">
-								<div class="search-box">
-									<div class="input-group">
-										<span class="input-group-addon"><i class="material-icons">&#xE8B6;</i></span>
-										<input id="query" name="query" type="text" class="form-control" placeholder="Search&hellip;">
-									</div>
-								</div>
-							</div>
+<!-- 							<div class="col-sm-3"> -->
+<!-- 								<div class="search-box"> -->
+<!-- 									<div class="input-group"> -->
+<!-- 										<span class="input-group-addon"><i class="material-icons">&#xE8B6;</i></span> -->
+<!-- 										<input id="query" name="query" type="text" class="form-control" placeholder="Search&hellip;"> -->
+<!-- 									</div> -->
+<!-- 								</div> -->
+<!-- 							</div> -->
 							<!-- search box end -->
 						</div>
 					</div>
@@ -78,7 +78,7 @@
 								<th>修改時間</th>
 								<th>檢視</th>
 								<th>修改</th>
-								<th>註銷</th>
+<!-- <th>註銷</th> -->
 							</tr>
 							
 						<tbody>
@@ -89,7 +89,7 @@
 									<td>${classroomVO.roomrow}</td>
 									<td>${classroomVO.roomcolumn}</td>
 									<td>${classroomVO.roomrow * classroomVO.roomcolumn}</td>
-									<td>${(!classroomVO.roomdelete) ? '可用' : '註銷'}</td>
+									<td>${(!classroomVO.roomdelete) ? '開放中' : '暫停使用'}</td>
 									<td>
 										<fmt:formatDate value="${classroomVO.roomlastmod}"
 											pattern="yyyy-MM-dd HH:mm:ss" />
@@ -108,13 +108,13 @@
 											<input type="hidden" name="action" value="getOne_For_Update">
 										</FORM>
 									</td>
-									<td>
-										<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/classroom/classroom.do" style="margin-bottom: 0px;">
-											<button class="btn delete" style="color: red"><i class="material-icons">&#xE872;</i></button>
-											<input type="hidden" name="roomno" value="${classroomVO.roomno}">
-											<input type="hidden" name="action" value="delete">
-										</FORM>
-									</td>
+<!-- 									<td> -->
+<%-- 										<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/classroom/classroom.do" style="margin-bottom: 0px;"> --%>
+<!-- 											<button class="btn delete" style="color: red"><i class="material-icons">&#xE872;</i></button> -->
+<%-- 											<input type="hidden" name="roomno" value="${classroomVO.roomno}"> --%>
+<!-- 											<input type="hidden" name="action" value="delete"> -->
+<!-- 										</FORM> -->
+<!-- 									</td> -->
 								</tr>
 							</c:forEach>
 						</tbody>

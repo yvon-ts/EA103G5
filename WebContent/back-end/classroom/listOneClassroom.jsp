@@ -78,7 +78,7 @@
 										<span class="input-group-text" id="inputGroup-sizing-default">狀態</span>
 									</div>
 									<input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default"
-										name="roomdelete" value="${classroomVO.roomdelete ? '註銷' : '可用'}" readonly>
+										name="roomdelete" value="${classroomVO.roomdelete ? '暫停使用' : '開放中'}" readonly>
 								</div>
 
 								<h2>座位數：<span id="seatCount"></span> / <span id="blockCount"></span></h2>
