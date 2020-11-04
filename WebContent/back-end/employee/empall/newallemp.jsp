@@ -334,6 +334,7 @@ table.table .avatar {
 					<thead>
 						<tr>
 							<th>員工編號</th>
+							<th>員工相片</th>
 							<th>員工姓名</th>
 							<th>到職日期</th>
 							<th>狀態</th>
@@ -347,6 +348,7 @@ table.table .avatar {
 							<tr>
 								
 								<td>${employeeVO.empno}</td>
+								<td><img class="app-sidebar__user-avatar" src="${pageContext.request.contextPath}/ShowEmpPic?empno=${employeeVO.empno}" alt="User Image" width="80px" height="80px"></td>
 								<td>${employeeVO.empname}</td>
 								<td>${employeeVO.hiredate}</td>
 								<td>
