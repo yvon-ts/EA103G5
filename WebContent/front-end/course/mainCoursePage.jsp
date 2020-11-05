@@ -180,18 +180,17 @@
 					</div>
 
 					<div class="row align-items-center text-center courseInfoContainer">
-						<div class="col-md-2 col-4 courseInfo">
-							<!-- 須要查詢訂單中的購買人次 -->
-							<i class="fas fa-users"></i>
-							<!-- NG  NG  NG  NG  NG  NG  NG  NG  NG  NG  NG  NG  NG  NG  NG  NG  NG  NG  NG  NG  NG  NG  NG  NG  NG  NG  NG  NG -->
-							<p><span>ToBeChange</span> 位同學</p>
-						</div>
-						<div class="col-md-2 col-4 courseInfo">
+<!-- 						<div class="col-md-2 col-4 courseInfo"> -->
+<!-- 							須要查詢訂單中的購買人次 -->
+<!-- 							<i class="fas fa-users"></i> -->
+<!-- 							<p><span>ToBeChange</span> 位同學</p> -->
+<!-- 						</div> -->
+						<div class="col-md-3 col-6 courseInfo">
 							<!-- 須要video中的課程的時間加總 -->
 							<i class="fas fa-clock"></i>
 							<p>總長 <span id="courseTtlTime"></span></p>
 						</div>
-						<div class="col-md-2 col-4 courseInfo">
+						<div class="col-md-3 col-6 courseInfo">
 							<!-- 須要查詢評分 -->
 							<i class="fas fa-star"><%= courseScore %></i>
 							<p><span>${courseVO.csscoretimes}</span> 則評價</p>
