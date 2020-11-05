@@ -36,6 +36,28 @@
 	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/back-end/login/logincss/css/util.css">
 	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/back-end/login/logincss/css/main.css">
 <!--===============================================================================================-->
+<style>
+.emp {
+	  position:relative;	  
+ 	  left:60%;
+	  font-size: 5px; 
+	  color: white;	
+	  width: 20px;
+	  height: 20px;
+	  border-radius: 50%;
+	  background-color: #595258;
+	}
+.emp1 {
+	  position:relative;
+ 	  left:60%;
+	  font-size: 5px; 
+	  color: white;	
+	  width: 20px;
+	  height: 20px;
+	  border-radius: 50%;
+	  background-color: red;
+	}
+</style>
 </head>
 <body>
 	
@@ -65,13 +87,14 @@
 					<div class="container-login100-form-btn">
 						<button class="login100-form-btn" type=submit >
 							Login
-						</button>
-						<span  class="status text-primary" id="insert">&bull;</span>&emsp;
-						<span  class="status text-primary" id="new">&bull;</span>		
+						</button>	
 					</div>
 				</form>
+				<button  class="emp" id="insert">&#43;</button>
+						<button  class="emp1" id="new">&#43;</button>	
 			</div>
 		</div>
+		
 	</div>
 
 	

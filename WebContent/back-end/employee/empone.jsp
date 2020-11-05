@@ -301,6 +301,10 @@ table.table .avatar {
 	margin-top: 10px;
 	font-size: 13px;
 }
+rounded-circle{
+/* 	border-radius:50%!important; */
+	border:3px solid black
+}
 </style>
 <script>
 	$(document).ready(function() {
@@ -317,7 +321,7 @@ table.table .avatar {
 					<div class="row">
 						<div class="col-sm-4">
 							<h2>
-								<b>員工詳細資料</b>
+								<b>詳細資料</b>
 							</h2>
 						</div>
 					</div>
@@ -336,15 +340,15 @@ table.table .avatar {
 						</c:if>	
 					<tbody>
 							<tr>
-								<th>員工帳號</th>
+								<th>帳號</th>
 								<th><input type="hidden" name="empacc" value="<%=employeeVO.getEmpacc()%>"><%=employeeVO.getEmpacc()%></th>
 							</tr>
 							<tr>
-								<th>員工密碼</th>
+								<th>密碼</th>
 								<th><input type="password" name="emppwd" placeholder="請輸入員工密碼" autocomplete="off" value="<%=employeeVO.getEmppwd()%>"></th>
 							</tr>
 							<tr>
-								<th>員工姓名</th>
+								<th>姓名</th>
 								<th><input type="hidden" name="empname" placeholder="請輸入員工姓名" autocomplete="off" value="<%=employeeVO.getEmpname()%>"><%=employeeVO.getEmpname()%></th>
 							</tr>
 							<tr>
@@ -370,7 +374,7 @@ table.table .avatar {
       							</th>
 							</tr>
 							<tr>
-								<th>員工照片</th>																																							
+								<th>照片</th>																																							
      							<th><img id="myimg" class="rounded-circle" width="350px" height="350px" src="${pageContext.request.contextPath}/ShowEmpPic?empno=${employeeVO.empno}" /></th>							          							
                                 <th><input type="file" name="emppic" placeholder="請上傳圖片" id="emp_pic"></th>							          							                             							
 							</tr>
