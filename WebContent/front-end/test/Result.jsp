@@ -133,7 +133,7 @@
 		</c:if>
 	</c:forEach>
 	</div>
-			<div style="text-align: center; margin:20px;"><a href="<%=request.getContextPath()%>/course/course.do?action=showCourseMainPage&courseno=<%= request.getParameter("courseno") %>" class="btn btn-border" style="margin:30px;">回到課程總覽</a><a href="<%=request.getContextPath()%>/front-end/test/ListAllTestRecord.jsp?courseno=<%= request.getParameter("courseno") %>" class="btn btn-border" style="margin:30px;">考試紀錄</a></div>
+			<div style="text-align: center;"><a href="<%=request.getContextPath()%>/course/course.do?action=showCourseMainPage&courseno=<%= request.getParameter("courseno") %>" class="btn btn-border" style="margin:30px;">回到課程總覽</a><a href="<%=request.getContextPath()%>/front-end/test/ListAllTestRecord.jsp?courseno=<%= request.getParameter("courseno") %>" class="btn btn-border" style="margin:30px;">測驗紀錄</a></div>
 	<script src="https://code.jquery.com/jquery-3.5.1.js"
 	integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
 	crossorigin="anonymous"></script>

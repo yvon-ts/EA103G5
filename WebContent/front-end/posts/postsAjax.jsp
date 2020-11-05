@@ -9,7 +9,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%
 	PostsService postsSvc = new PostsService();
-	List<PostsVO> list = postsSvc.getAll();
+	List<PostsVO> list = postsSvc.getAll("father");
 	request.setAttribute("list", list);
 %>
 
