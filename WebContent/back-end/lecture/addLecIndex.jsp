@@ -51,9 +51,9 @@
 			else if (rs.getInt("lecstatus") == 0 )
 				obj.put("color", "orange");
 			else if (rs.getInt("lecstatus") == 2 )
-				obj.put("color", "#333");
-			else if (rs.getInt("lecstatus") == 3 )
 				obj.put("color", "#ff6680");
+			else if (rs.getInt("lecstatus") == 3 )
+				obj.put("color", "#333");
 			arr.put(obj);
 		}
 		arr.put(newLec);
@@ -173,7 +173,7 @@ var calendar = new FullCalendar.Calendar(calendarEl, {
 	    //alert(info.event.title + " was dropped on " + info.event.start.toISOString());
 		document.getElementById("lecno").value = info.event.title;
 		document.getElementById("lecinit").value = info.event.start.toISOString();
-	    if (!confirm("確定要移動嗎 ?")) {
+	    if (!swal("日期已變更")) {
 	    	info.revert();
     	}
  	  },

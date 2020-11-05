@@ -103,19 +103,19 @@
 							<input type="hidden" name="signstart" id="f_date3">
 							<input type="hidden" name="signend" id="f_date4">
 							<input id="roomnoForm" type="hidden" name="roomno" value="${lecVO.roomno}"><br>
-							<span id="theme">&emsp;講座名稱</span>&emsp;<input id="lecname" type="text" name="lecname" value="${lecVO.lecname}"><br>
+							<span id="theme">&emsp;講座名稱</span>&emsp;<input id="lecname" type="text" name="lecname" value="${lecVO.lecname}" style="width:305px"><br>
 							<span id="name">&emsp;講師姓名</span>
 							<jsp:useBean id="spkrSvc" scope="page" class="com.speaker.model.SpkrService" />
 							<select id="spkrno" name="spkrno">
-								<option>------請選擇講師------</option>
+								<option>-------------請選擇講師-------------</option>
 								<c:forEach var="spkrVO" items="${spkrSvc.list}">
 									<option class="spkr" value="${spkrVO.spkrno}" ${(lecVO.spkrno==spkrVO.spkrno)? 'selected':'' } >${spkrVO.spkrno}${spkrVO.spkrname}</option>
 								</c:forEach>
 							</select><br>
 							<%-- 要擋註銷的教室 --%>
-							<span id="price">&emsp;講座票價</span>&emsp;<input id="lecprice" name="lecprice" type="text" value="${lecVO.lecprice}"><br>
-							<span id="start">&emsp;開始時間</span>&emsp;<input name="lecstart" id="f_date1" type="text"><br>
-							<span id="end">&emsp;結束時間</span>&emsp;<input name="lecend" id="f_date2" type="text"><br>
+							<span id="price">&emsp;講座票價</span>&emsp;<input id="lecprice" name="lecprice" type="text" value="${lecVO.lecprice}" style="width:305px"><br>
+							<span id="start">&emsp;開始時間</span>&emsp;<input name="lecstart" id="f_date1" type="text" style="width:305px"><br>
+							<span id="end">&emsp;結束時間</span>&emsp;<input name="lecend" id="f_date2" type="text" style="width:305px"><br>
 							<span id="pic">&emsp;講座圖片</span>&emsp;<input name="lecpic" id="upimg" type="file" style="border: 0;"><br>
 						</div>
 					</div>
@@ -123,7 +123,7 @@
 					<img id="newimg" src="">
 				</div>
 			</div>
-			<div class="col-sm-6">
+			<div class="col-sm-8">
 				<%@ include file="/roomsetting/layout.jsp"%>
 			</div>
 			<div class="col-sm-7 btm-line">
@@ -318,10 +318,9 @@
 	});
 	$("#magic").click(function(){
 		$(this).attr("style", "outline:none");
-		$("#lecname").val("不藏私、無業配、螞蟻人的甜點清單");
+		$("#lecname").val("螞蟻人的私房甜點清單");
 		$(".spkr[value='SPKR0010']").attr("selected", "selected");
 		$("#lecprice").val(100);
-		$(".room[value='ROOM0005']").attr("selected", "selected");
 		CKEDITOR.instances["edtr"].setData(info);
 	});
 </script>

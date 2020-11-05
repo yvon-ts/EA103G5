@@ -121,7 +121,7 @@
                 <thead>
 					<tr>
 						<th>編號<i id="no" class="fa fa-sort noDesc"></i></th>
-						<th>名稱</th>
+						<th>主題</th>
 						<th>講師</th>
 						<th>地點</th>
 						<th>票價<i id="price" class="fa fa-sort priceAsc"></i></th>

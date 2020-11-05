@@ -124,8 +124,6 @@
 		</tbody>
 	</table>
 	<%@ include file="/back-end/pool/page2.file" %>
-	<form method="post"	action="<%=request.getContextPath()%>/back-end/speaker/select_page.jsp">
-	<input type="submit" value="回首頁"></form>
 	</div>
 	</div>
 	</div>

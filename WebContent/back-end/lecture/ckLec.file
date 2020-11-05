@@ -15,7 +15,7 @@
 <body>
 	
     <textarea id="edtr" name="edtr"><%= info %></textarea>
-    <button id="btn">送出</button>
+    <button id="btn">送出</button><div id="alert"></div>
     <script>
     function init() {
         CKEDITOR.replace("edtr", {
