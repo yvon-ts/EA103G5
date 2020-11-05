@@ -164,17 +164,8 @@ public class QuestionTestServlet extends HttpServlet {
 		
 		
 		if(qse.getOneByNO(questionNO) != null) {
-			
-			if(list.lastIndexOf(questionNO) > 0) {
-				list.set(list.indexOf(questionNO), qse.getOneByNO("QNBK0074")); //把一題設成不被挑選 20201104
-			}else {
 				list.set(0, qse.getOneByNO(questionNO));
-			}
-			
 		}
-		
-		
-		
 		
 		/*
 		 * Collections.shuffle(List<?> list) Randomly permutes the specified list using

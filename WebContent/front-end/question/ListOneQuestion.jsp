@@ -23,6 +23,8 @@
 	
 %>
 <jsp:useBean id="CourseSvc" scope="page" class="com.course.model.CourseService" />
+
+<jsp:useBean id="ttSvc" scope="page" class="com.test_type.model.TestTypeService" />
 <!DOCTYPE html>
 <html>
 <head>
@@ -66,7 +68,7 @@
                             <td>課程名稱</td><td>${CourseSvc.getOneCourse(QuestionBankvo.courseno).coursename }</td>
                         </tr>
                         <tr>    
-                            <td>課程難易度</td><td>${QuestionBankvo.typeno }</td>
+                            <td>課程難易度</td><td>${ttSvc.getOnebyNO(QuestionBankvo.typeno).testdgee}</td>
                         </tr>
                         <tr>                            
                         	<td>單元範圍</td><td>${QuestionBankvo.testscope }</td>

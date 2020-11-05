@@ -105,7 +105,7 @@
             left: 0px;
             background: rgba(61, 96, 244, 0.3);
         }
-        /*嚙踝蕭�嚙踝蕭*/
+        /*���嚙踐���*/
         .btn {
             font-size: 17px;
             padding: 5px 30px;
@@ -113,10 +113,10 @@
             font-weight: 400;
             color: #fff;
             border-radius: 30px;
-            -webkit-transition: all 0.2s linear;
-            -moz-transition: all 0.2s linear;
-            -o-transition: all 0.2s linear;
-            transition: all 0.2s linear;
+/*             -webkit-transition: all 0.2s linear; */
+/*             -moz-transition: all 0.2s linear; */
+/*             -o-transition: all 0.2s linear; */
+/*             transition: all 0.2s linear; */
             display: inline-block;
         }
 		
@@ -231,7 +231,7 @@
             background: #CE332A;
         }
 
-        /* ScrollToTop 嚙踐�蕭嚙踐�蕭��鈭�*/
+        /* ScrollToTop ���蕭謖���蕭��嚙踝蕭�嚙�*/
         a.back-to-top {
             display: none;
             position: fixed;
@@ -452,10 +452,10 @@
             -webkit-transition: all 0.3s ease-in-out 0s;
             -o-transition: all 0.3s ease-in-out 0s;
         }
-        /*��嚙踝�蕭謘橘蕭嚙�*/
+        /*嚙踐狗嚙踝���蕭豲雓���蕭*/
         .services-item .icon img {
             max-width: 200px;
-            /*���撞���蕭��d*/
+            /*嚙踝蕭謘橘蕭���蕭嚙踐�蕭謅��嚙踝蕭��*/
             height: 150px;
             overflow: hidden;
             border-radius: 5%;
@@ -640,10 +640,10 @@
             outline: none;
         }
 
-        /*placeholder嚙踐�蕭�*/
+        /*placeholder���蕭謖嚙踐*/
         ::placeholder {
             color: #afafaf;
-            /* CSS 3 ���蕭嚙� */
+            /* CSS 3 嚙踝蕭�嚙踐���蕭 */
         }
 
         ::-webkit-input-placeholder {
@@ -890,7 +890,7 @@
             background: #34363a;
         }
 
-        /*嚙踝蕭謚迎蕭��蕭嚙�*/
+        /*���雓�嚙踝蕭豯株��蕭*/
 
         #searchbox {
             border-collapse: separate;
