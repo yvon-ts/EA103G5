@@ -25,7 +25,6 @@
 <body>
 	<div class="container">
 		
-
 			
 				<div id="classroom">
 					<div id="stage">
@@ -43,7 +42,6 @@
 					<span>剩餘座位數量：</span><span id="seatCount"></span> / <span id="blockCount"></span>
 				</div>
 				
-		
 	</div>
 	
 		

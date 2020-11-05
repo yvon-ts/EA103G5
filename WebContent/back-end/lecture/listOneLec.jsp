@@ -132,27 +132,25 @@
  <table class="table table-bordered">
  <thead>
 	<tr>
-		<th>講座編號</th>
-		<th>講座名稱</th>
-		<th>講座票價</th>
-		<th>講師姓名</th>
-		<th>講座地點</th>
-		<th>講座票價</th>
-		<th>講座日期</th>
+		<th>編號</th>
+		<th>主題</th>
+		<th>講師</th>
+		<th>地點</th>
+		<th>票價</th>
+		<th>日期</th>
 		<th>開始時間</th>
 		<th>結束時間</th>
 <!-- 		<th>開始報名</th> -->
 <!-- 		<th>結束報名</th> -->
 <!-- 		<th>起始座位狀態</th> -->
 <!-- 		<th>目前座位狀態</th> -->
-		<th>講座狀態</th>
+		<th>狀態</th>
 		<th>更新時間</th>
 		<th>修改</th>
 	</tr>
 	<tr>
 			<td>${lecVO.lecno}</td>
 			<td>${lecVO.lecname}</td>
-			<td>${lecVO.lecprice}</td>
 			<c:forEach var="spkrVO" items="${spkrSvc.list}">
                     <c:if test="${lecVO.spkrno==spkrVO.spkrno}">
 	                    <td data-title="講師姓名">${spkrVO.spkrname}</td>

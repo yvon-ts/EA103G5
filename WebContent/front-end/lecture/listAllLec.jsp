@@ -121,9 +121,9 @@
             		<div class="btn" style="padding: 0"><button id="buyAll" class="filter btn btn-common" style="margin: 0 10px;">顯示全部</button></div>
             	</div>
             </div>
-            <div id="row" class="row">
 				<% int listindex = 0; %>
 					<c:forEach var="lecVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
+					
 						<%		//時間設定
 								LecVO lecVO = list.get(listindex + pageIndex);
 								Timestamp lecstart = lecVO.getLecstart();
@@ -155,7 +155,8 @@
 										e.printStackTrace();
 									}
 						%>
-					   <div class="col-lg-1 col-md-12 col-sm-12 col-xs-12 for-align"></div>
+				<div id="row" class="row">
+					<div class="col-lg-1 col-md-12 col-sm-12 col-xs-12 for-align"></div>
 					   <div class="div col-lg-10 col-md-12 col-sm-12 col-xs-12 box-item wow fadeInLeft" data-wow-delay="0.3s">
 					        <div class="daydiv">
 					            <span class="date"><%=startdate%></span><br>
@@ -189,9 +190,9 @@
 					        </div>
 					    </div>
 					    <% listindex++;%>
-					<div class="col-lg-1 col-md-12 col-sm-12 col-xs-12 for-align"></div>
-				</c:forEach>
-	         </div>
+<!-- 					<div class="col-lg-1 col-md-12 col-sm-12 col-xs-12 for-align"></div> -->
+				</div>
+			</c:forEach>
 	     </div>
   </section>
     <!-- Features Section End -->

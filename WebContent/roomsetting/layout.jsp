@@ -25,8 +25,8 @@
 		<div class="col-md-12">
 				
 				<jsp:useBean id="roomSvc" scope="page" class="com.classroom.model.ClassroomService" />
-		<span id="room">&nbsp;講座地點&emsp;</span><select id="roomSelect" style="outline: none; border: 0;border-bottom: 1px solid #999"required>
-			<option>------請選擇教室------</option>
+		<span id="room">&nbsp;講座地點&emsp;</span><select id="roomSelect" style="outline: none; border: 0;border-bottom: 1px solid #999" style="width:320px" required>
+			<option>---------------請選擇教室---------------</option>
 			<c:forEach var="roomVO" items="${roomSvc.all}">
 				<option class="room" value="${roomVO.roomno}" ${(lecVO.roomno==roomVO.roomno)? 'selected':'' } >${roomVO.roomno}&nbsp;${roomVO.roomname}</option>
 			</c:forEach>
