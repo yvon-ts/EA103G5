@@ -234,7 +234,6 @@ public class OrderMasterServlet extends HttpServlet {
 				checkoutonetime.setMerchantTradeDate(sdf.format(time));
 				checkoutonetime.setReturnURL(req.getScheme() + "://" + req.getServerName() + ":" + req.getServerPort() + ":" + req.getContextPath() + "/Order_Master/Order_Master.do");
 				checkoutonetime.setClientBackURL(req.getScheme() + "://" + req.getServerName() + ":" + req.getServerPort() + req.getContextPath() + "/index/front-index/index.jsp");
-				checkoutonetime.setClientBackURL("http://localhost:8081/EA103G5/index/front-index/index.jsp");
 				checkoutonetime.setTradeDesc("123");
 				
 				
@@ -264,8 +263,7 @@ public class OrderMasterServlet extends HttpServlet {
 				/*************************** 其他可能的錯誤處理 **********************************/
 			} catch (Exception e) {
 				errorMsgs.add(e.getMessage());
-				RequestDispatcher failureView = req
-						.getRequestDispatcher("/front-end/tracking_list/listTrackingListForUser.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/tracking_list/listTrackingListForUser.jsp");
 				failureView.forward(req, res);
 			}
 		}
