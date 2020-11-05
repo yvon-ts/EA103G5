@@ -488,27 +488,31 @@
 			});
 			
 			
-			var pageSize = 4; /*size*/
-			/*首次載入*/
+			var pageSize = 4;
 			
-			if('${loginMembersVO.memno}' !=='' && '${TrackingListSvc.getAll(loginMembersVO.memno,4).size()} ! = 0'){
+			
+			if('${loginMembersVO.memno}' !=='' && '${TrackingListSvc.getAll(loginMembersVO.memno,0).size()} != 0'){
 				
 				getData(pageSize);
+			}else{
+				$('#js-load-more').hide();
 			}
 			
 			/*監聽載入更多*/
 			
 			$(document).on('click', '#js-load-more', function(){
-			pageSize+=4 ;
+			pageSize += 4;
 			
-			getData(pageSize);
-			
+		
+				getData(pageSize );
 			
 			});
 			
 		});
-		function getData(counter){
-			console.log("counter : " + counter);
+		function getData(counter ){
+			
+			
+			
 			$.ajax({
 				type: 'POST',
 				url: "<%=request.getContextPath()%>/tracking_list/tracking_list.do", 
@@ -519,17 +523,14 @@
 				},
 				success: function(data){
 					
+					
 					var JSONarray = JSON.parse(data);
 					
-					console.log("dataLength : " + JSONarray.length);
-					
-					if(JSONarray.length %4 != 0){
+						
+					if(JSONarray.length %4 != 0 || JSONarray.length == 0){
 						$('#js-load-more').hide();
 					}
 					
-//	 				/****業務邏輯塊：實現拼接html內容並prepend到頁面*********/
-//	 				/*如果剩下的記錄數不夠分頁，就讓分頁數取剩下的記錄數
-//	 				* 例如分頁數是5，只剩2條，則只取2條
 					var result = '';
 					
 					for(let i=0; i< JSONarray.length; i ++){
@@ -558,6 +559,7 @@
 										</i>&nbsp;取消追蹤
 									 </label>`;
 						result += 	`<hr><h5 style="bottom:13px;">NT$` + JSONarray[i].courseprice + `</h5></div></div></div></div>`;
+						
                 
 					}
 					

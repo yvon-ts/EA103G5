@@ -85,7 +85,7 @@ public class CourseSearch extends HttpServlet {
 				for(int i = 0 ; i <JSONarray.length();i++ ) {
 					JSONObject json_book = JSONarray.getJSONObject(i);
 					
-					List<TrackingListVO> TrackingList = TrackingListSvc.getAll(memno);
+					List<TrackingListVO> TrackingList = TrackingListSvc.getAll(memno,0);
 					
 					boolean  flag = true;
 					
