@@ -44,8 +44,8 @@ public class TrackingListService {
 	
 
 	// getAll
-	public List<TrackingListVO> getAll(String memno) {
-		return dao.getAll( memno);
+	public List<TrackingListVO> getAll(String memno,int counter) {
+		return dao.getAll( memno,counter);
 	}
 
 }

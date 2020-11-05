@@ -27,7 +27,10 @@ public class TrackingListDAO implements TrackingListDAO_interface {
 	private static final String INSERT_STMT = "INSERT INTO TRACKING_LIST (MEMNO, COURSENO) VALUES (?, ?)";
 	private static final String DELETE_STMT = "DELETE FROM TRACKING_LIST WHERE MEMNO = ? AND COURSENO = ?";
 	private static final String GET_ALL_STMT = "SELECT MEMNO, COURSENO FROM TRACKING_LIST WHERE MEMNO = ? ORDER BY COURSENO";
-
+	
+	
+	private static final String GET_ALL_AJAX_STMT = "select * from (select tl.*,rownum r from TRACKING_LIST tl Where tl.memno = ? order by courseno ) where r between ? and ?";
+	
 	private static final String GETMEMTRACKING = "SELECT * FROM TRACKING_LIST WHERE MEMNO = ?";
 
 	@Override
@@ -186,7 +189,7 @@ public class TrackingListDAO implements TrackingListDAO_interface {
 	}
 
 	@Override
-	public List<TrackingListVO> getAll(String memno) {
+	public List<TrackingListVO> getAll(String memno, int counter) {
 		List<TrackingListVO> list = new ArrayList<TrackingListVO>();
 		TrackingListVO trackinglistVO;
 
@@ -197,8 +200,10 @@ public class TrackingListDAO implements TrackingListDAO_interface {
 		try {
 
 			con = ds.getConnection();
-			pstmt = con.prepareStatement(GET_ALL_STMT);
+			pstmt = con.prepareStatement(GET_ALL_AJAX_STMT);
 			pstmt.setString(1, memno);
+			pstmt.setInt(2, counter-3);
+			pstmt.setInt(3, counter);
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
