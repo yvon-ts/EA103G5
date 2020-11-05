@@ -318,6 +318,20 @@ div.signup-content {
 .signup {
 	margin-bottom: 50px;;
 }
+#add {
+	margin: 15px 0 0 -3px;
+	width: 130px;
+	height: 40px;
+	background: #0099CC;
+	border: 1px;
+	color: white;
+	border-radius: 20px;
+	cursor: pointer;
+	font-family: 'Gochi Hand';
+	position:absolute;
+	z-index:10;
+}
+
 
 section#copyright {
 	margin-top: 890px;
@@ -531,7 +545,7 @@ body {
 						</div>
 
 						<div style="width: 100%; height: 500px;" class='tab tab-1'>
-							<h1>老師簡介</h1>
+							<h1>老師簡介<button type="button" id="add">Peter</button></h1>
 
 
 							<table>
@@ -840,7 +854,18 @@ body {
     .then(editor => {
         console.log(editor);
     })
-    
+    $("#add").click(function(e) {
+    	$("div[role='application']").empty();
+    	
+    	$("textarea[name='tchrintro']").val("<h2>1.擅長領域</h2><ul><li>1.擅長於HTML5、CSS、JavaScript。</li><li>2.jquery,Ajax。</li></ul><h2>2.教學經驗</h2><ul><li>1.從中壢資策會前端網頁設計班講師,到現為Tibame專業講師，具備數十年豐富的教學與實務經驗,最能理解學生調CSS的痛點,並隔空抓蟲。</li></ul><h2>3.最高學歷</h2><ul><li>1.擁有Global W3C Educational Center講師認證。</li><li>2.中壢資策會第一屆第一名畢業。</li></ul>");
+		$("#bankacc").val("0811244253443");
+		ClassicEditor
+	    .create(document.querySelector('#editor'))
+	    .then(editor => {
+	        console.log(editor);
+	    })
+
+	})
     
     
     

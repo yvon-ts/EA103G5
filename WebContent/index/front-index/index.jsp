@@ -275,7 +275,12 @@
                                 <div class="header-button">
                                     <button class="btn btn-common">探索課程</button>
                                     <input type="hidden" name="action" value="search"/>
+                                    <c:if test="${empty sessionScope.loginMembersVO}">
                                     <a href="<%=request.getContextPath()%>/front-end/members/addMembersV2.jsp" class="btn btn-border video-popup">我要註冊</a>
+                                    </c:if>
+                                    <c:if test="${not empty sessionScope.loginMembersVO}">
+                                   <a class="btn btn-border video-popup" href='<%=request.getContextPath()%>/members/members.do?action=signout'>我要登出</a>
+                                    </c:if>
                                 </div>
                              </form>   
                             </div>
@@ -484,8 +489,9 @@
                         <div class="item">
                             <div class="testimonial-item" style="height:350px;">
                                 <div class="img-thumb">
+                                <a target="_self" href="<%=request.getContextPath()%>/members/members.do?action=getOne_For_Display&courseno=COUR0001&memno=${course_assessVO.memno}&requestURL=<%=request.getServletPath()%>&whichPage=<%=whichPage%>">
                                 <img style="border-radius:50%;width:100px;height:100px;" src="<%=request.getContextPath()%>/front-end/members/MprofileDisplayServlet?MEMNO=${course_assessVO.memno}" alt="sing up image">
-                                </div>
+                                </a></div>
                                 <div class="info">
                                 
                                 
@@ -637,13 +643,24 @@
     
     /*-------Kyle-------*/
     var inform2 = '${inform2}';
+    var inform5 = '${inform5}';
+    var inform3 = '${inform3}';
+	
+    
+    
+    
 	if(inform2 ==='200'){
 		swal('註冊失敗', '可以再考慮一下嗎?', 'error');
 	}else if(inform2 ==='100'){
 		swal('登入成功', '準備好要來一場線上學習之旅了嗎?', 'success');
 	}else if(inform2 ==='300'){
 		swal('登出成功', '我們會一直在這裡等您回來<br>一起學習!', 'success');
+	}else if(inform5.length!=0){
+		swal(inform5+'的個人檔案', '是未公開的', 'warning');
+	}else if(inform3 === '200'){
+		swal('恭喜啦', '您已經成為我們的會員囉<br>趕快開始瀏覽課程吧', 'success');
 	}
+	
 	function status(){
 		 swal('老師資格審核中', '請耐心等候1~3個工作天，一但審核完畢，即會立刻通知', 'info');
 	}

@@ -183,7 +183,7 @@ margin:0 0 0 260px;
 	</table>
 	<%@ include file="/back-end/teacher/page2_ByCompositeQuery.file" %>
 	<form method="post"	action="<%=request.getContextPath()%>/back-end/teacher/listAllTeachers.jsp">
-	<input type="submit" value="回首頁"></form>
+	<input type="submit" value="回老師查詢首頁"></form>
 	</div>
 	</div>
 	</div>

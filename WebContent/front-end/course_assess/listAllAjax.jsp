@@ -241,6 +241,53 @@ padding:0px 0 0 0;
 <jsp:include page="/index/front-index/header.jsp" />
 
 
+<!-- 新增留言 -->
+<div class="modal" id="modal-name">
+		<div class="modal-sandbox"></div>
+		<div class="modal-box">
+			<div class="modal-header">
+				<div class="close-modal">&#10006;</div>
+				<h1 style="color: white;">找回密碼</h1>
+			</div>
+			<div class="modal-body">
+				<div class="form-group">
+					<label for="your_name"><img class="icon1"
+						src="<%=request.getContextPath()%>/front-end/members/signIn&updateMembers_css/images/memacc.svg"></label>
+					<input type="text" class="inputpwd" id="memacc1"
+						style="background: #ECEFF1;"
+						placeholder="Your account" />
+				</div>
+
+
+				<div class="form-group">
+					<label for="your_pass"><img class="icon1"
+						src="<%=request.getContextPath()%>/front-end/members/signIn&updateMembers_css/images/new-email.svg"></label>
+					<input class="inputpwd" id="memail1" style="background: #ECEFF1;"
+						placeholder="Your email" />
+				</div>
+				<input type="hidden" name="action" value="getpwd">
+				<button style="border: 1px;" class="form-submit" id="getpwd" type="submit" onclick="sendRequest()">Submit</button>
+
+			</div>
+		</div>
+	</div>
+<!-- 修改留言 -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
       <div class="main">
             <div id="bg" class="container">
             
@@ -310,17 +357,25 @@ if(inform5 === '200'){
 
 
 $(document).ready(function(){
+	var pageSize = 5;
 	
 	
-	var pageSize = 5; /*size*/
-	/*首次載入*/
-	getData(pageSize);
-	/*監聽載入更多*/
+	
+	
+	
+	$(document).on('click','#course_assess',function(){
+		 /*size*/
+		/*首次載入*/
+		getData(pageSize);
+		/*監聽載入更多*/
+	});
+	
 	
 
 	
 	$(document).on('click', '#js-load-more', function(){
 	pageSize+=5 ;
+	
 	
 	getData(pageSize);
 	});
@@ -340,21 +395,21 @@ function getData(counter){
 			var JSONarray = JSON.parse(data);
 			if (JSONarray.length==0){
 				$("#js-load-more").hide();
-				swal('已經沒有更多留言囉', '就靠你拉朋友來衝我們的評價啦', 'info');				
+				swal('沒有評價囉', '就靠你拉朋友來衝我們的評價啦', 'info');				
 			}
 			
 //				/****業務邏輯塊：實現拼接html內容並prepend到頁面*********/
 			var sum = JSONarray.length;
+			
 //				/*如果剩下的記錄數不夠分頁，就讓分頁數取剩下的記錄數
 //				* 例如分頁數是5，只剩2條，則只取2條
 			
 			var result ='';
-			for(let i=0; i<5; i ++){
-				
+			for(let i=0; i<sum; i ++){
 				result +=   `<div class="signin-content">`;
 				result += 	`<div class="signin-image">`;
 				
-				result += `<a target="_blank" href="<%=request.getContextPath()%>/members/members.do?action=getOne_For_Display&courseno=`+$('#courseno').val()+`&memno=` + JSONarray[i].memno  +`"><img class="pic" src='<%=request.getContextPath()%>/front-end/members/MprofileDisplayServlet?MEMNO=` + JSONarray[i].memno  +`' alt='sing up image'></a>`;
+				result += `<a  target="_blank" href="<%=request.getContextPath()%>/members/members.do?action=getOne_For_Display&courseno=`+$('#courseno').val()+`&memno=` + JSONarray[i].memno  +`&requestURL=<%=request.getServletPath()%>&whichPage=<%=whichPage%>"><img class="pic" src='<%=request.getContextPath()%>/front-end/members/MprofileDisplayServlet?MEMNO=` + JSONarray[i].memno  +`' alt='sing up image'></a>`;
 				
 				
 				result +=	`<h4 style="font-family:Gochi Hand" class="nkname">`+JSONarray[i].nkname
@@ -383,6 +438,7 @@ function getData(counter){
 			
         		
 			}
+			
 				$('.course_assessArea').append(result);
 			
 			

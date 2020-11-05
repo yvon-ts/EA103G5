@@ -7,8 +7,10 @@
 
 
 
-<jsp:useBean id="teacherSvc" scope="page" class="com.teacher.model.TeacherService" />
-<jsp:useBean id="membersSvc" scope="page" class="com.members.model.MembersService" />
+<jsp:useBean id="teacherSvc" scope="page"
+	class="com.teacher.model.TeacherService" />
+<jsp:useBean id="membersSvc" scope="page"
+	class="com.members.model.MembersService" />
 
 <!DOCTYPE html>
 <html lang="en">
@@ -73,8 +75,8 @@ img.pic {
 
 h2.form-title {
 	width: 400px;
-    margin-top: 10px;
-    text-align: center;
+	margin-top: 10px;
+	text-align: center;
 }
 
 div.signup-form {
@@ -142,10 +144,11 @@ figure#a_mprofile {
 	margin-left: 50px;
 	margin-top: 30px;
 }
-table{
-    margin-left: -35px;
-    margin-top: -20px;
-    }
+
+table {
+	margin-left: -35px;
+	margin-top: -20px;
+}
 
 img#nav_icon {
 	width: 36px;
@@ -182,7 +185,7 @@ img#nav_icon {
 	-webkit-transition: background-color 0.2s
 		cubic-bezier(0.34, 0.93, 0.85, 0.91);
 	transition: background-color 0.2s cubic-bezier(0.34, 0.93, 0.85, 0.91);
-	margin:15px 0 0 0;
+	margin: 15px 0 0 0;
 }
 
 .foux-toggle:before {
@@ -206,7 +209,6 @@ img#nav_icon {
 
 .toggle:checked ~ .foux-toggle:before {
 	left: 2.75rem;
-	
 }
 
 .toggle--label:before, .toggle--label:after {
@@ -229,13 +231,14 @@ img#nav_icon {
 	z-index: 10;
 	letter-spacing: 0.0625rem;
 }
-input[type=checkbox]:not(old) + label {
-       display: inline-block;
-    line-height: 0.5em;
-    margin-top: 10px;
-    width: 65px;
-    text-align: right;
-    }
+
+input[type=checkbox]:not(old)+label {
+	display: inline-block;
+	line-height: 0.5em;
+	margin-top: 10px;
+	width: 65px;
+	text-align: right;
+}
 
 .toggle--label:before {
 	content: 'On';
@@ -256,7 +259,7 @@ input[type=checkbox]:not(old) + label {
 	right: 0;
 	left: 40%;
 	opacity: 1;
- margin: 40px 0 0 -115px;
+	margin: 40px 0 0 -115px;
 }
 
 .toggle:checked+.toggle--label:after {
@@ -343,7 +346,8 @@ div.main {
 							<div class="dropdown" id="dropdown">
 								<button class="btn btn-secondary dropdown-toggle" type="button"
 									id="dropdownMenuButton" data-toggle="dropdown"
-									aria-haspopup="true" aria-expanded="false" style="background-color: #6c757d">
+									aria-haspopup="true" aria-expanded="false"
+									style="background-color: #6c757d">
 									${sessionScope.loginMembersVO.memname}</button>
 								<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
 									<a class="dropdown-item"
@@ -351,7 +355,7 @@ div.main {
 
 									<a class="dropdown-item"
 										href='<%=request.getContextPath()%>/front-end/Order_Master/listAllByMemno.jsp'>課程訂單紀錄</a>
-										
+
 									<a class="dropdown-item"
 										href='<%=request.getContextPath()%>/front-end/lecorder/listByMemno.jsp'>講座訂單紀錄</a>
 
@@ -359,16 +363,19 @@ div.main {
 										href='<%=request.getContextPath()%>/front-end/coup_code/listAllByMemno.jsp'>持有折扣券</a>
 
 
-									<c:if test="${teacherSvc.getStatus(sessionScope.loginMembersVO.memno).tchrstatus eq '待審核'}">
+									<c:if
+										test="${teacherSvc.getStatus(sessionScope.loginMembersVO.memno).tchrstatus eq '待審核'}">
 										<a class="dropdown-item" onclick="status()">老師檔案</a>
 
 									</c:if>
-									<c:if test="${teacherSvc.getStatus(sessionScope.loginMembersVO.memno).tchrstatus eq '已通過'}">
+									<c:if
+										test="${teacherSvc.getStatus(sessionScope.loginMembersVO.memno).tchrstatus eq '已通過'}">
 										<a class="dropdown-item"
 											href="<%=request.getContextPath()%>/front-end/teacher/teacherDisplay.jsp">老師檔案</a>
 
 									</c:if>
-									<c:if test="${teacherSvc.getStatus(sessionScope.loginMembersVO.memno).tchrstatus eq '未通過'}">
+									<c:if
+										test="${teacherSvc.getStatus(sessionScope.loginMembersVO.memno).tchrstatus eq '未通過'}">
 										<a class="dropdown-item"
 											href="<%=request.getContextPath()%>/front-end/teacher/teacherUpdate.jsp">老師檔案</a>
 
@@ -524,7 +531,7 @@ div.main {
 								</tr>
 								<tr>
 									<th id="mpic">
-									<div class="form-group">
+										<div class="form-group">
 											<h5 class="h5">
 												<div style="color: #FFF">"</div>
 												<label> <input onchange="readURL(this)"
@@ -536,8 +543,8 @@ div.main {
 											</h5>
 
 										</div>
-										
-										</th>
+
+									</th>
 									<th><div style="width: 100px"></div></th>
 
 									<th><div class="form-group">
@@ -585,28 +592,27 @@ div.main {
 									</th>
 								</tr>
 								<tr>
-									<td>
-									<div class="form-group">
-											<input id="provide-muffins" name="provide_muffins" 
-											class="toggle" type="checkbox" value="${loginMembersVO.memno}" ${membersSvc.getOneMembers(loginMembersVO.memno).memdelete eq 0 ? "checked":"" } /> 
-												<label for="provide-muffins" class="toggle--label">
-												</label>
-											<div class="foux-toggle"></div>
-
-										</div>
-										＊可用此來切換是否將個人檔案公開
-								</td>
+									<td></td>
 
 
 
 								</tr>
 
 							</table>
+							<div class="form-group">
+								<input id="provide-muffins" name="provide_muffins"
+									class="toggle" type="checkbox" value="${loginMembersVO.memno}"
+									${membersSvc.getOneMembers(loginMembersVO.memno).memdelete eq 0 ? "checked":"" } />
+								<label for="provide-muffins" class="toggle--label"> </label>
+								<div class="foux-toggle"></div>
+
+							</div>
+							＊可用此來切換是否將個人檔案公開
 
 
 						</div>
 						<div class="signup-image">
-						
+
 							<figure id='a_mprofile'>
 								<img id='mprofile' class="pimg"
 									src="<%=request.getContextPath()%>/front-end/members/MprofileDisplayServlet?MEMNO=${loginMembersVO.memno}"
@@ -617,12 +623,12 @@ div.main {
 									value="Update" />
 
 							</figure>
-							
+
 
 
 
 							<h5 id='regdate' style="text-align: center; color: black">
-							
+
 								<img class="pic"
 									src="<%=request.getContextPath()%>/front-end/members/signIn&updateMembers_css/images/join.svg">註冊會員日期:
 								<fmt:formatDate value="${loginMembersVO.regdate}" type="date"
@@ -790,15 +796,15 @@ div.main {
 							url  : "<%=request.getContextPath()%>/front-end/members/MemdeleteSwichServlet",
 							data : {
 								memno : "${loginMembersVO.memno}",
-							},
-						success : function(data){
-							console.log(123);
-						}
+								},
+							success : function(
+									data) {
+								console.log(123);
+										  }
+							});
+											});
+
 						});
-					});
-				
-			}); 
-			
 	</script>
 
 </body>
