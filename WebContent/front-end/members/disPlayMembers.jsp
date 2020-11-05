@@ -7,8 +7,6 @@
 <%@ page import="java.util.*"%>
 <%@ page import="com.course.model.*"%>
 <%@ page import="com.order_detail.model.*"%>
-<%@ page import="java.util.*,com.tests.model.*" %>
-
 
 
 <jsp:useBean id="courseSvc" scope="page" class="com.course.model.CourseService" />
@@ -596,59 +594,9 @@ div.main {
 								<tr>
 									<td style="color: #FFF">" "</td>
 								</tr>
-								<tr>
-								<th>
-										<div class="form-group">
-<h5 class="h5"> 老試紀錄
-<img class="pic" src="<%=request.getContextPath()%>/front-end/teacher/teacherRegister_css/images/score.svg" alt="">
-</h5>
-
-
-
-										</div>
-									</th>
-								<th><div style="width: 100px"></div></th>
-									<th>
-									<%
-	MembersVO Membersvo = (MembersVO) request.getSession().getAttribute("membersVO");
-
-	TestsService testSvc = new TestsService();
-	List<TestsVO>  recordList = testSvc.getAll(Membersvo.getMemno());
-	Integer testtime = recordList.size();
-	pageContext.setAttribute("recordList",recordList);
-	pageContext.setAttribute("testtime",testtime);
-%>
-									
-										<div class="dropdown" id="dropdown">
-								<button class="btn btn-secondary dropdown-toggle" type="button"
-									id="dropdownMenuButton" data-toggle="dropdown"
-									aria-haspopup="true" aria-expanded="false">已測驗${testtime}堂課</button>
-								<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-								<c:forEach var="TestsVO" items="${recordList}">
-								
-								<a class="dropdown-item" href="<%= request.getContextPath()%>/question/questionTest.do?action=reviewByTestNo&courseno=${TestsVO.courseno}&selectedTestno=${TestsVO.testno}">                                   
-									<h6 style="color:#0099cc">
-									
-									
-									</h6>
-									
-								</a>
-								
-								</c:forEach>
-								</div>
-								</div>
-									</th>
-								</tr>
-								
-								
-								
-								
 
 
 									<c:if test="${teacherSvc.getStatus(membersVO.memno).tchrstatus eq '已通過'}">	
-									<tr>
-									<td style="color: #FFF">" "</td>
-								</tr>
 								<tr>
 								<th>
 										<div class="form-group">
@@ -705,10 +653,7 @@ div.main {
 								</div>
 									</th>
 								</tr>
-								
 								</c:if>
-								
-								
 								
 								
 								
