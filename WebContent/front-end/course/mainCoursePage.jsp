@@ -28,13 +28,13 @@
 	MembersVO loginMembersVO = (MembersVO) session.getAttribute("loginMembersVO");
 	if (loginMembersVO != null) {
 		alreadyBuyIt = orderDetailSvc.boughtNot(courseVO.getCourseno(), loginMembersVO.getMemno());
-		System.out.println("=== 我買了這堂課? === " + alreadyBuyIt);
+// 		System.out.println("*** 我買了這堂課? " + alreadyBuyIt);
 	}
 	// 判斷是不是登入者自己開設的的課程
 	TeacherVO loginTeacherVO = (TeacherVO) session.getAttribute("loginTeacherVO");
 	if (loginTeacherVO != null) {
 		isMyCourse = courseVO.getTchrno().equals(loginTeacherVO.getTchrno());
-		System.out.println("=== 這是我開的課? === " + isMyCourse);
+// 		System.out.println("*** 這是我開的課? " + isMyCourse);
 	}
 	// 結合上述 2 條件，檢查登入者使用課程之權限
 	Boolean canViewThisCourse = isMyCourse || alreadyBuyIt; 
@@ -47,9 +47,6 @@
 	if (csscoretimes > 0) {
 		courseScore = formatter.format(Double.valueOf(csscore) / Double.valueOf(csscoretimes));
 	}
-	// ==========================================================================================
-			
-			
 %>
 
 <!DOCTYPE html>
@@ -185,17 +182,17 @@
 <!-- 							<i class="fas fa-users"></i> -->
 <!-- 							<p><span>ToBeChange</span> 位同學</p> -->
 <!-- 						</div> -->
-						<div class="col-md-3 col-6 courseInfo">
+						<div class="col-md col-6 courseInfo">
 							<!-- 須要video中的課程的時間加總 -->
 							<i class="fas fa-clock"></i>
 							<p>總長 <span id="courseTtlTime"></span></p>
 						</div>
-						<div class="col-md-3 col-6 courseInfo">
+						<div class="col-md col-6 courseInfo">
 							<!-- 須要查詢評分 -->
 							<i class="fas fa-star"><%= courseScore %></i>
 							<p><span>${courseVO.csscoretimes}</span> 則評價</p>
 						</div>
-						<div class="col-md-3 col-6 courseInfo">
+						<div class="col-md col-6 courseInfo">
 							<!-- 須要查詢原本單價、類別、優惠活動 -->
 							<i class="fas fa-dollar-sign">
 								<sapn id="courseprice">${courseVO.courseprice}</sapn>
@@ -326,6 +323,8 @@
   </div>
 </div>
 </form>
+
+
 	<!-- ========== JavaScript Area ========== -->
 	<!-- Bootstrap 的 JS (jquery 改為完整版)-->
 	<script src="<%=request.getContextPath()%>/library/jquery/jquery-3.5.1.js"></script>
@@ -422,7 +421,7 @@
 					url: "<%=request.getContextPath()%>/Shop/Shopping_Cart.do",
 					data: {
 						courseno: $(this).find('#courseno').val(),
-						// 						memno    : $("#memno").val(),
+// 						memno:$("#memno").val(),
 						action: "shoppingCart"
 					},
 					success: function (data) {
@@ -434,29 +433,6 @@
 				});
 			});
 		});
-
-		// 		function trackingOrNot(isTracking) {
-		// 			// 追蹤清單初始化
-		// 			if (isTracking) {
-		// 				// 實心愛心
-		// 				$("#track").addClass("fas fa-heart");
-		// 			} else {
-		// 				// 空心愛心
-		// 				$("#track").addClass("far fa-heart");
-		// 			}
-
-		// 			// 註冊切換追蹤清單事件
-		// 			$("#track").click(function () {
-		// 				$(this).toggleClass("fas fa-heart");
-		// 				$(this).toggleClass("far fa-heart");
-
-		// 				if ($(this).hasClass("fas fa-heart")) {
-		// 					console.log("**增加追蹤清單");
-		// 				} else if ($(this).hasClass("far fa-heart")) {
-		// 					console.log("**刪除追蹤清單");
-		// 				}
-		// 			});
-		// 		}
 	</script>
 
 	<!-- include 前台頁面的 footer -->
