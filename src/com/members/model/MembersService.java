@@ -23,7 +23,8 @@ public class MembersService {
 		membersVO.setMemail(memail);
 		membersVO.setMphone(mphone);
 		membersVO.setMprofile(mprofile);
-		dao.insert(membersVO);
+		
+		membersVO = dao.insert(membersVO);
 
 		return membersVO;
 	}
@@ -69,5 +70,8 @@ public class MembersService {
 		return a;
 	}
 	
-
+    public MembersVO getpwd(String memacc,String memail) {
+		return dao.getpwd(memacc, memail);
+    	
+    }
 }

@@ -212,7 +212,7 @@ button#bt3 {
 						<%@ include file="/back-end/teacher/page2.file"%>
 						<form method="post"
 							action="<%=request.getContextPath()%>/back-end/teacher/listAllTeachers.jsp">
-							<input type="submit" value="回首頁">
+							<input type="submit" value="回老師查詢首頁">
 						</form>
 					</div>
 				</div>

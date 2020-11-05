@@ -601,8 +601,7 @@ div.main {
 								<th>
 										<div class="form-group">
 											<h5 class="h5">
-												開設課程<img class="pic"
-								src="<%=request.getContextPath()%>/front-end/teacher/teacherRegister_css/images/teacher.svg"
+												開設課程<img class="pic" src="<%=request.getContextPath()%>/front-end/teacher/teacherRegister_css/images/teacher.svg"
 								alt=""></h5>
 
 
@@ -632,8 +631,6 @@ div.main {
 										pageContext.setAttribute("Courselist1", list1);
 										
 									}
-									
-									
 									
 									%>
 									
@@ -667,7 +664,17 @@ div.main {
 								
 
 							</table>
+							<c:if test="${loginMembersVO.memno eq membersVO.memno}">
+							<div class="form-group">
+								<input id="provide-muffins" name="provide_muffins"
+									class="toggle" type="checkbox" value="${loginMembersVO.memno}"
+									${membersSvc.getOneMembers(loginMembersVO.memno).memdelete eq 0 ? "checked":"" } />
+								<label for="provide-muffins" class="toggle--label"> </label>
+								<div class="foux-toggle"></div>
 
+							</div>
+							＊可用此來切換是否將個人檔案公開
+                           </c:if>
 
 						</div>
 						<div class="signup-image">

@@ -29,9 +29,7 @@ public class membersimgToDB extends HttpServlet {
 	private static final String SQL2 = "UPDATE TEACHER SET TCHRCERT1 = ?,TCHRCERT2 = ? WHERE MEMNO = ?";
 	public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		Connection con = null;
-		Connection con2 = null;
 		PreparedStatement pstmt = null;
-		PreparedStatement pstmt2 =null;
 		PrintWriter out = res.getWriter();
 		req.setCharacterEncoding("UTF-8");
 		res.setContentType("text/plain; charset=UTF-8");

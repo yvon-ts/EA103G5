@@ -37,10 +37,11 @@ public class MembersDAO implements MembersDAO_interface {
 	private static final String SIGNIN = "SELECT MEMNO,MEMACC,MEMPWD,MEMNAME,NKNAME,TO_CHAR(MEMBDAY,'YYYY-MM-DD')MEMBDAY,MEMAIL,MPHONE,MPROFILE,REGDATE,MEMDELETE FROM MEMBERS WHERE MEMACC = ? AND MEMPWD = ?";
     
 	@Override
-	public void insert(MembersVO membersVO) {
+	public MembersVO insert(MembersVO membersVO) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		String mem_next_no = null;
+	
 
 		try {
 //			Class.forName(driver);
@@ -77,6 +78,9 @@ public class MembersDAO implements MembersDAO_interface {
 				coupcode.welcome2(mem_next_no, con);
 			
 			con.commit();
+			MembersService membersSvc = new MembersService();
+			membersVO = membersSvc.getOneMembers(mem_next_no);
+			
 			System.out.println(a+"新增一筆資料到資料庫");
 
 		} catch (Exception se) {
@@ -105,6 +109,7 @@ public class MembersDAO implements MembersDAO_interface {
 				}
 			}
 		}
+		return membersVO;
 
 	}
 
@@ -512,6 +517,52 @@ public class MembersDAO implements MembersDAO_interface {
 //		System.out.println(b);
 		
 	}
+
+	@Override
+	public MembersVO getpwd(String memacc, String memail) {
+		MembersVO membersVO = null;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+//			Class.forName(driver);
+//			con = DriverManager.getConnection(url, userid, passwd);
+			con = ds.getConnection();
+			pstmt = con.prepareStatement("SELECT MEMPWD,MEMNAME FROM MEMBERS WHERE MEMACC = ? AND MEMAIL = ?");
+
+			pstmt.setString(1, memacc);
+			pstmt.setString(2, memail);
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				membersVO = new MembersVO();
+				membersVO.setMempwd(rs.getString("mempwd"));
+				membersVO.setMemname(rs.getString("memname"));
+			}
+
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return membersVO;
+
+	}
+
 
 	
 

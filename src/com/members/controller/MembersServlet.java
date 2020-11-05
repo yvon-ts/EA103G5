@@ -229,7 +229,7 @@ public class MembersServlet extends HttpServlet {
 			sb.append("歡迎註冊Xducation線上學習平台,");
 			sb.append("這是您的驗證碼:");
 			sb.append(vercode);
-		    sms.Process(sb, mphone);
+//		    sms.Process(sb, mphone);
 			session.setAttribute("memVO", memVO);
 			session.setAttribute("vercode", vercode);
 			session.setAttribute("count", count);
@@ -249,6 +249,7 @@ public class MembersServlet extends HttpServlet {
 	
 	private void verify(HttpServletRequest req, HttpServletResponse res)throws ServletException, IOException {
 		HttpSession session = req.getSession();
+		MembersVO loginMembersVO =null;
 		
 		session.removeAttribute("inform");
 		List<String> errorMsgs = new LinkedList<String>();
@@ -321,13 +322,17 @@ public class MembersServlet extends HttpServlet {
 		
 		String inform3 = "200";
 		req.setAttribute("inform3", inform3);		
-		membersSvc.addMembers(memacc, mempwd, memname, nkname, membday, memail, mphone, mprofile);
+		MembersVO mVO = null;
+		mVO = membersSvc.addMembers(memacc, mempwd, memname, nkname, membday, memail, mphone, mprofile);
+		session.setAttribute("loginMembersVO", mVO);
+		
+		
 		session.removeAttribute("memVO");
 		session.removeAttribute("vercode");
 		req.removeAttribute("errorMsgs");
+		String url = "/index/front-index/index.jsp";
 		
-		
-		RequestDispatcher successView = req.getRequestDispatcher("/front-end/members/signIn.jsp");
+		RequestDispatcher successView = req.getRequestDispatcher(url);
 		successView.forward(req, res);
 		
 		
@@ -485,19 +490,35 @@ public class MembersServlet extends HttpServlet {
 }
     
     private void getOne_For_Display(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException{
+    	HttpSession session = req.getSession();
+    	MembersVO mVO = (MembersVO)session.getAttribute("loginMembersVO");
+    	System.out.println();
 		String memno = req.getParameter("memno");
 		String courseno = req.getParameter("courseno");
+		String requestURL =req.getParameter("requestURL");
+		String whichPage = req.getParameter("whichPage");
+		
+		
 		
 		MembersService membersSvc = new MembersService();
 		MembersVO membersVO = membersSvc.getOneMembers(memno);
 		Integer i = membersVO.getMemdelete();
-		if (i == 1) {
+		if(mVO.getMemno().equals(memno)) {
+			req.setAttribute("membersVO", membersVO); // 資料庫取出的empVO物件,存入req
+			String url = "/front-end/members/disPlayMembers.jsp";
+			RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 listOneEmp.jsp
+			successView.forward(req, res);
+			
+			
+			
+            }else if (i == 1) {
 			String inform5 = membersVO.getMemname();
 			req.setAttribute("inform5", inform5);
 			CourseService courseSvc = new CourseService();
 			CourseVO courseVO = courseSvc.getOneCourse(courseno);
 			req.setAttribute("courseVO", courseVO);
-			RequestDispatcher failureView = req.getRequestDispatcher("/front-end/course/mainCoursePage.jsp");
+			String url =requestURL+"?whichPage="+whichPage;
+			RequestDispatcher failureView = req.getRequestDispatcher(url);
 			failureView.forward(req, res);
 			return;
 			

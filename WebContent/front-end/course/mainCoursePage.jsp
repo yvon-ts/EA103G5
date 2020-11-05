@@ -255,7 +255,7 @@
 							<a class="nav-link active" data-toggle="pill" href="#courseinfo">課程簡介</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" data-toggle="pill" href="#coursescope">課程評價</a>
+							<a class="nav-link" data-toggle="pill" href="#coursescope" id="course_assess">課程評價</a>
 						</li>
 						<li class="nav-item">
 							<a class="nav-link" data-toggle="pill" href="#post">問題討論</a>
