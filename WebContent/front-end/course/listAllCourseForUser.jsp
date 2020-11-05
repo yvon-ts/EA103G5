@@ -311,7 +311,7 @@ label{
 		                str +=  `<div class="col-md-6 col-lg-3 col-xs-12">`;
 			            str +=  `<div class="services-item wow fadeInRight" data-wow-delay="0.3s">`;
 			            str +=  `<div class="icon">`
-			            str +=  `<a href="<%=request.getContextPath()%>/course/course.do?action=showCourseMainPage&courseno=` + JSONarray[i].courseno + `">`
+			            str +=  `<a href="<%=request.getContextPath()%>/course/course.do?action=showCourseMainPage&courseno=` + JSONarray[i].courseno + `" style="color: rgba(0, 0, 0, 0.65);">`
 						// str +=  `<img src=  "` + pictureURL + `"style="width:200px;height:150px"></div>`;
 						str +=  `<img src=  "` + pictureURL + `"style="max-width:100%;height:150px"></div>`;
 			                    
@@ -322,7 +322,7 @@ label{
 		                str +=  `&nbsp;&nbsp;&nbsp;` + JSONarray[i].csscoretimes + `則評價`;
 		                str +=  `<h3 style="line-height:40px;">` + JSONarray[i].coursename + `</h3></a>`;
 		                
-		                str +=  `<p>課程總長 `+ (JSONarray[i].ttltime/60) +` 分鐘</p>`;
+		                str +=  `<p>課程總長 `+ Math.floor(JSONarray[i].ttltime/60) +` 分鐘</p>`;
 						str +=	`<label class="shoppingcart"><i class="fa fa-shopping-cart" aria-hidden="true"><input type ="hidden" name="courseno" 	 id="courseno"   value ="`+ JSONarray[i].courseno +`"/></i>加入購物車</label>`;
 									
 									
@@ -334,6 +334,11 @@ label{
 					$(".seacharea").append(str);
 					$("div.rateit, span.rateit").rateit()
 					
+					$('.services-item .services-content h3 a').css('font-size','22px');
+					$('.services-item .services-content h3 a').css('color','#333');
+        			
+					$('.services-item .services-content h3 a:hover').css('color','#0099CC');
+
 				}
 			});
 		};

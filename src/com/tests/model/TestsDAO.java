@@ -29,7 +29,7 @@ public class TestsDAO implements TestsDAO_interface {
 	}
 	private final static String INSERT_STMT = "INSERT INTO TESTS(TESTNO,COURSENO,MEMNO,TESTSCOPE) VALUES('TEST' || LPAD(SEQ_TESTS.NEXTVAL, 4, 0),?,?,?)";// 新增考試
 	private final static String FINDBYID_STMT = "SELECT * FROM TESTS WHERE TESTNO =?";// 查詢某次考試
-	private final static String FINDALL_STMT = "SELECT * FROM TESTS WHERE MEMNO = ?";// 查某會員的考試紀錄
+	private final static String FINDALL_STMT = "SELECT * FROM TESTS WHERE MEMNO = ? and COURSENO = ?";// 查某會員的考試紀錄
 	private final static String UPDATESCORE_STMT = "UPDATE  TESTS SET SCORE=? WHERE TESTNO=?";// 將計算後的分數放進此次的分數欄位
 
 	@Override
@@ -152,7 +152,7 @@ public class TestsDAO implements TestsDAO_interface {
 	}
 
 	@Override
-	public List<TestsVO> findByAll(String memno) {// 查某會員的考試紀錄
+	public List<TestsVO> findByAll(String memno,String courseno) {// 查某會員的考試紀錄
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -161,6 +161,7 @@ public class TestsDAO implements TestsDAO_interface {
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(FINDALL_STMT);
 			pstmt.setString(1, memno);
+			pstmt.setString(2, courseno);
 
 			pstmt.executeQuery();
 

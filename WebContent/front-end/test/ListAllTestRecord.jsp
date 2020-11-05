@@ -6,9 +6,9 @@
 
 <%
 	MembersVO Membersvo = (MembersVO) request.getSession().getAttribute("loginMembersVO");
-
+	String courseno = request.getParameter("courseno");
 	TestsService testSvc = new TestsService();
-	List<TestsVO>  recordList = testSvc.getAll(Membersvo.getMemno());
+	List<TestsVO>  recordList = testSvc.getAll(Membersvo.getMemno(),courseno);
 	pageContext.setAttribute("recordList",recordList);
 	
 %>
@@ -96,9 +96,8 @@ tr.bg-color:hover{
  						 		</tbody>
  						 	</c:forEach>
 					</table>
-					
-					 <div style="text-align: center; margin:20px;"><a href="<%=request.getContextPath()%>/course/course.do?action=showCourseMainPage&courseno=<%= request.getParameter("courseno") %>"></a></div>
 				</div>
+				<div style="text-align: center;"><a href="<%=request.getContextPath()%>/course/course.do?action=showCourseMainPage&courseno=<%= request.getParameter("courseno") %>" class="btn btn-border" style="margin:30px;">回到課程總覽</a></div>
 			</div>
        </div>
       

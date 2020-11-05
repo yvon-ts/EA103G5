@@ -95,12 +95,7 @@
 											<h3 style="line-height:40px;">${courseVO.coursename}</h3>
 										</div>
 									</a>
-									<% 
-										// 將課程總時數換算為分鐘
-                    					Integer ttltimeInMin = ((CourseVO)pageContext.getAttribute("courseVO")).getTtltime()/60;
-                    				%>                            
-                    				<p>課程總長 <%= ttltimeInMin %> 分鐘</p>
-									<h5>NT$${courseVO.courseprice}</h5>
+									<a href="<%=request.getContextPath()%>/front-end/test/ListAllTestRecord.jsp?courseno=${courseVO.courseno}" class="btn btn-border" style="margin:30px;">測驗紀錄</a>
 								</div>
 							</div>
 						</c:forEach>
