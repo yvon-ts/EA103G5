@@ -121,9 +121,10 @@
             		<div class="btn" style="padding: 0"><button id="buyAll" class="filter btn btn-common" style="margin: 0 10px;">顯示全部</button></div>
             	</div>
             </div>
+            <div id="row">
 				<% int listindex = 0; %>
 					<c:forEach var="lecVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
-					
+					<div class="row">
 						<%		//時間設定
 								LecVO lecVO = list.get(listindex + pageIndex);
 								Timestamp lecstart = lecVO.getLecstart();
@@ -155,7 +156,7 @@
 										e.printStackTrace();
 									}
 						%>
-				<div id="row" class="row">
+				
 					<div class="col-lg-1 col-md-12 col-sm-12 col-xs-12 for-align"></div>
 					   <div class="div col-lg-10 col-md-12 col-sm-12 col-xs-12 box-item wow fadeInLeft" data-wow-delay="0.3s">
 					        <div class="daydiv">
@@ -193,6 +194,7 @@
 <!-- 					<div class="col-lg-1 col-md-12 col-sm-12 col-xs-12 for-align"></div> -->
 				</div>
 			</c:forEach>
+			</div>
 	     </div>
   </section>
     <!-- Features Section End -->
@@ -293,11 +295,11 @@
  			if (lecs.length != 0){
  				
 	  			for (let i = 0; i < lecs.length; i++){
-		  			var align = `<div class="col-lg-1 col-md-12 col-sm-12 col-xs-12 for-align"></div>`;
-		  			$("#row").append(align);
+	  				var divRow = `<div class="row"></div>`;
+		  			$("#row").append(divRow);
 	  			jQuery('<div/>', {
 	  		    id: 'lec'+ i,
-	  		    "class": 'div col-lg-10 col-md-12 col-sm-12 col-xs-12 box-item wow fadeInLeft ',
+	  		    "class": 'div col-lg-12 col-md-12 col-sm-12 col-xs-12 box-item wow fadeInLeft ',
 	  		    "html" : `<div class="daydiv">
 	              <span class="date"></span><br>
 	              <span class="month"></span><br>

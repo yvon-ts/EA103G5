@@ -104,8 +104,11 @@ public class LecAjaxServlet extends HttpServlet {
 				try{
 					//CKeditor - Bytes to String
 					byte[] b = lecVO.getLecinfo();
-					lecinfo = new String(b);
-					//lecinfo = bString.substring(3, 25);
+					String bString = new String(b);
+					if ("<p>".equals(bString.substring(0, 3)))
+						lecinfo = bString.substring(3, 20);
+					else
+						lecinfo = bString;
 				} catch (Exception e){
 					lecinfo = "講座資訊更新中";
 				}
