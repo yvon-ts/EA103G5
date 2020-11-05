@@ -13,7 +13,7 @@
 	try{
 		//CKeditor - Bytes to String
 		byte[] b = spkrVO.getSpkrinfo();
-		info = new String(b);
+		info = new String(b, "UTF-8");
 	} catch (Exception e){
 		info = "資訊更新中";
 	}

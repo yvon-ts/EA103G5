@@ -78,7 +78,7 @@
 	String spkrinfo = "講師資訊更新中";
 	try{
 		byte[] b = spkrVO.getSpkrinfo();
-		spkrinfo = new String(b);
+		spkrinfo = new String(b, "UTF-8");
 	} catch (Exception e){
 		spkrinfo = "講師資訊更新中";
 	}
@@ -86,7 +86,7 @@
 	String lecinfo = "講座資訊更新中";
 	try{
 		byte[] b = lecVO.getLecinfo();
-		lecinfo = new String(b);
+		lecinfo = new String(b, "UTF-8");
 	} catch (Exception e){
 		lecinfo = "講座資訊更新中";
 	}

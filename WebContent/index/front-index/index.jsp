@@ -402,10 +402,10 @@
 					//CKeditor - Bytes to String
 					byte[] b = lecVO.getLecinfo();
 					if (b != null) {
-						String bString = new String(b);
+						String bString = new String(b, "UTF-8");
 						lecinfo = bString.substring(0, 20);
 					} else {
-						System.out.println("b is null");
+						//System.out.println("b is null");
 					}
 				} catch (Exception e){
 					lecinfo = "講座資訊更新中";

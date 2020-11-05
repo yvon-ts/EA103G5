@@ -13,7 +13,7 @@
 	String info = "資訊更新中";
 	try{
 		byte[] b = lecVO.getLecinfo();
-		info = new String(b);
+		info = new String(b, "UTF-8");
 	} catch (Exception e){
 		info = "資訊更新中";
 	}
