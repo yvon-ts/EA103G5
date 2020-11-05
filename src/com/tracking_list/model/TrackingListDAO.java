@@ -200,10 +200,17 @@ public class TrackingListDAO implements TrackingListDAO_interface {
 		try {
 
 			con = ds.getConnection();
-			pstmt = con.prepareStatement(GET_ALL_AJAX_STMT);
-			pstmt.setString(1, memno);
-			pstmt.setInt(2, counter-3);
-			pstmt.setInt(3, counter);
+			if(counter == 0) {
+				pstmt = con.prepareStatement(GET_ALL_STMT);
+				pstmt.setString(1, memno);
+			}else {
+				pstmt = con.prepareStatement(GET_ALL_AJAX_STMT);
+				pstmt.setString(1, memno);
+				pstmt.setInt(2, counter-3);
+				pstmt.setInt(3, counter);
+			}
+			
+			
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
