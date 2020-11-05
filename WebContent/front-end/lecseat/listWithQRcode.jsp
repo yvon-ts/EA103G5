@@ -186,7 +186,7 @@ ul, ol {
 	
 	function generateQRCode(){
 		var qrcode = new QRCode("codeOutput",{
-			text: "http://f92b9aedb3af.ngrok.io/EA103G5/lecseat/updateSeat?lodrno=" + lodrno + "&seatno=" + seatno + "&newseat=" + newseat,
+			text: "http://xducation.gq/EA103G5/lecseat/updateSeat?lodrno=" + lodrno + "&seatno=" + seatno + "&newseat=" + newseat,
 			width: 150,
 			height: 150,
 			correctLevel: QRCode.CorrectLevel.H
