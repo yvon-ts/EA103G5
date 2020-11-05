@@ -113,7 +113,12 @@ public class TrackingListServlet extends HttpServlet {
 				CourseService courseSvc = new CourseService();
 				
 				TrackingListService trackilistSvc = new TrackingListService();
-				List<TrackingListVO> trackinglistVOList = trackilistSvc.getAll(memno);
+				
+				String pagesize = req.getParameter("pagesize");
+				int counter = Integer.parseInt(pagesize);
+				
+				List<TrackingListVO> trackinglistVOList = trackilistSvc.getAll(memno,counter);
+				
 				
 				List<CourseVO> courseProductList = new ArrayList<>();
 				

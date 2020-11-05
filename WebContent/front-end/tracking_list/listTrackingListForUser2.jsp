@@ -487,52 +487,57 @@
 				});
 			});
 			
-			
+			//載入更多
+			$("#js-load-more").hide();
+			var counter = 0; /*計數器*/
+			var pageStart = 0; /*offset*/
 			var pageSize = 4; /*size*/
 			/*首次載入*/
 			
-			if('${loginMembersVO.memno}' !=='' && '${TrackingListSvc.getAll(loginMembersVO.memno,4).size()} ! = 0'){
-				
-				getData(pageSize);
+			if('${loginMembersVO.memno}' !=='' && '${TrackingListSvc.getAll(loginMembersVO.memno).size()} ! = 0'){
+			
+				getData(pageStart, pageSize);
 			}
 			
 			/*監聽載入更多*/
 			
 			$(document).on('click', '#js-load-more', function(){
-			pageSize+=4 ;
+			counter++ ;
+			pageStart = counter * pageSize;
+			pageEnd = 	( counter + 1 ) * pageSize;
 			
-			getData(pageSize);
+			getData(pageStart, pageEnd);
+			
+			
 			
 			
 			});
 			
 		});
-		function getData(counter){
-			console.log("counter : " + counter);
+		function getData(offset,size){
 			$.ajax({
 				type: 'POST',
 				url: "<%=request.getContextPath()%>/tracking_list/tracking_list.do", 
 				data:{
 					memno:$('#memno').val(),
-					pagesize:counter,
 					action:'getAllTrackingListByMemno'
 				},
 				success: function(data){
 					
 					var JSONarray = JSON.parse(data);
 					
-					console.log("dataLength : " + JSONarray.length);
-					
-					if(JSONarray.length %4 != 0){
-						$('#js-load-more').hide();
-					}
-					
 //	 				/****業務邏輯塊：實現拼接html內容並prepend到頁面*********/
+					var sum = JSONarray.length;
+					console.log(offset,size,sum);
 //	 				/*如果剩下的記錄數不夠分頁，就讓分頁數取剩下的記錄數
 //	 				* 例如分頁數是5，只剩2條，則只取2條
 					var result = '';
 					
-					for(let i=0; i< JSONarray.length; i ++){
+					if(sum - offset < size ){
+						size = sum - offset;
+						}
+					
+					for(let i=offset; i< (offset+size); i ++){
 						
 						
 						result += 	`<div class="col-md-6 col-lg-3 col-xs-12">`;
@@ -567,6 +572,12 @@
 					$("div.rateit, span.rateit").rateit();
 				
 
+// 				/*隱藏more按鈕*/
+					if ( (offset + size) >= sum  ){
+						$("#js-load-more").hide();
+					}else{
+						$("#js-load-more").show();
+					}
 					
 				
 				}	
