@@ -35,8 +35,8 @@ public class TestsService {
 		return dao.findById(testno);
 	}
 	
-	public List<TestsVO> getAll(String memno){
-		return dao.findByAll(memno);
+	public List<TestsVO> getAll(String memno,String courseno){
+		return dao.findByAll(memno , courseno);
 	}
 	
 	public void  writeScore(int correctNumber,String testno) {
