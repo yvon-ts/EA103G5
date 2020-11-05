@@ -157,14 +157,16 @@
 									}
 						%>
 				
-					<div class="col-lg-1 col-md-12 col-sm-12 col-xs-12 for-align"></div>
-					   <div class="div col-lg-10 col-md-12 col-sm-12 col-xs-12 box-item wow fadeInLeft" data-wow-delay="0.3s">
+					   <div class="div col-lg-12 col-md-12 col-sm-12 col-xs-12 box-item wow fadeInLeft" data-wow-delay="0.3s">
 					        <div class="daydiv">
 					            <span class="date"><%=startdate%></span><br>
 					            <span class="month"><%=startmonth%></span><br>
 					            <span class="time"><%=starttime%></span><br>
 					        </div>
 					        <div class="pic">
+					            <img src="<%=request.getContextPath()%>/speaker/iconreader?spkrno=${lecVO.spkrno}">
+					        </div>
+					         <div class="pic" style="margin-left: 190px">
 					            <img src="<%=request.getContextPath()%>/lecture/picreader?lecno=${lecVO.lecno}">
 					        </div>
 					        <div class="lec-txt">
@@ -191,7 +193,6 @@
 					        </div>
 					    </div>
 					    <% listindex++;%>
-<!-- 					<div class="col-lg-1 col-md-12 col-sm-12 col-xs-12 for-align"></div> -->
 				</div>
 			</c:forEach>
 			</div>
@@ -306,8 +307,11 @@
 	              <span class="time"></span><br>
 	          </div>
 	          <div class="pic">
-	        <img>
+	        	<img class="spkricon">
 	          </div>
+	          <div class="pic">
+		        <img class="lecpic" style="margin-left: 190px">
+		      </div>
 	          <div class="lec-txt">
 	          	<p class="title"></p><br>
 	          	<p class="spkr"></p>
@@ -324,8 +328,13 @@
 	  		}).appendTo('#row');
 	  			
 	  			var lecno = lecs[i].lecno;
-	  	  		var srcHead = "<%=request.getContextPath()%>/lecture/picreader?lecno=";
-	  			var src = srcHead + lecno;
+	  	  		var lecsrcHead = "<%=request.getContextPath()%>/lecture/picreader?lecno=";
+	  			var lecsrc = lecsrcHead + lecno;
+	  			
+	  			var spkrno = lecs[i].spkrno;
+	  			var spkrsrcHead = "<%=request.getContextPath()%>/speaker/iconreader?spkrno=";
+	  			var spkrsrc = spkrsrcHead + spkrno;
+	  			
 	  			var price = `NT$`+lecs[i].lecprice;
 	  			
 				//日期  	  			
@@ -340,7 +349,8 @@
 	  			$("#lec"+i+" div .price").html(price);
 	  			
 	  			//圖片
-	  			$("#lec"+i+" img").attr("src", src)
+	  			$("#lec"+i+" .spkricon").attr("src", spkrsrc);
+	  			$("#lec"+i+" .lecpic").attr("src", lecsrc);
 	  			//按鈕
 	  			if(lecs[i].lecstatus == 0){
 	  				$("#lec"+i+" .status").val("活動延期");
@@ -354,7 +364,7 @@
 	  			} 
 	  				
 	  			$("#lec"+i+" div input[name='lecno']").attr("value", lecs[i].lecno);
-	  			$("#row").append(align);
+	  			$("#row").append(divRow);
 	  			}
 	  			
 	  		console.log($("#query").val());

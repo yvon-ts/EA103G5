@@ -16,6 +16,7 @@ import com.lecture.model.*;
 public class QRCodeServlet extends HttpServlet {
 	private static final String UPDATE_SEAT = "UPDATE LEC_SEAT SET SEATSTATUS = '已報到' WHERE (LODRNO = ? AND SEATNO = ?)";
 	private static final String UPDATE_LAYOUT = "UPDATE LEC_ORDER SET LODRSEAT = ?, LODRLMOD = ? WHERE LODRNO = ?";
+	private static final String UPDATE_SIGNALL = "UPDATE LEC_ORDER SET LODRSTATUS = '已結單', LODRLMOD = ? WHERE LODRNO = ?";
 	private static final String UPDATE_LEC = "UPDATE LECTURE SET CURRSEAT = ?, LECLMOD = ? WHERE LECNO = ?";
 	Connection con;
 
@@ -39,9 +40,13 @@ public class QRCodeServlet extends HttpServlet {
 			String lodrno = req.getParameter("lodrno");
 			String seatno = req.getParameter("seatno");
 			String newseat = req.getParameter("newseat");
-			System.out.println(lodrno + " " + seatno + "報到成功");
+			boolean signAll = false;
+			if (newseat.indexOf("2") == -1)
+				signAll = true;
+			System.out.println(lodrno + " " + seatno + "開始報到");
 			System.out.println(newseat);
-
+			
+			// 更新座位狀態
 			pstmt = con.prepareStatement(UPDATE_SEAT);
 			pstmt.setString(1, lodrno);
 			pstmt.setString(2, seatno);
@@ -49,6 +54,7 @@ public class QRCodeServlet extends HttpServlet {
 			updateCount_Seats = pstmt.executeUpdate();
 			System.out.println("更新" + updateCount_Seats + "筆座位(" + seatno + "報到)");
 			
+			// 更新訂單座位圖
 			pstmt = con.prepareStatement(UPDATE_LAYOUT);
 			pstmt.setString(1, newseat);
 			//get lmod
@@ -58,6 +64,17 @@ public class QRCodeServlet extends HttpServlet {
 			pstmt.executeUpdate();
 			System.out.println("更新" + lodrno + "訂單座位圖");
 			
+			if (signAll == true) {
+				pstmt = con.prepareStatement(UPDATE_SIGNALL);
+				//get lmod
+				lodrlmod = new Timestamp(System.currentTimeMillis());
+				pstmt.setTimestamp(1, lodrlmod);
+				pstmt.setString(2, lodrno);
+				pstmt.executeUpdate();
+				System.out.println("更新" + lodrno + "狀態已結單");
+			}
+			
+			// 從訂單取得講座編號
 			LodrService lodrSvc = new LodrService();
 			LodrVO lodrVO = lodrSvc.getOne(lodrno);
 			String lecno = lodrVO.getLecno();
@@ -65,6 +82,7 @@ public class QRCodeServlet extends HttpServlet {
 			LecVO lecVO = lecSvc.getOne(lecno);
 			String oldseat = lecVO.getCurrseat();
 			
+			// 更新講座座位圖
 			pstmt = con.prepareStatement(UPDATE_LEC);
 			pstmt.setString(1, newseat);
 			//get lmod

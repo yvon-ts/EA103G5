@@ -61,6 +61,9 @@
 <link rel="stylesheet" href="<%=request.getContextPath()%>/back-end/css/bootTable.css">
 <link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/lecseat/css/listOneForMem.css">
 <style>
+ul, ol {
+       list-style: outside none none;
+       }
 </style>
 <script>
 </script>
@@ -164,9 +167,12 @@
 </div>
 <%@ include file="/index/front-index/footer.jsp" %>
 <script>
+	
+		
+	
 	$(".modify").click(function(e){
 		e.preventDefault();
-		alert("請點選綠色區塊取消指定座位");
+		swal("請點選綠色區塊取消指定座位","請點選綠色區塊","info");
 		addClickForCancel();
 		$("#confirm").removeClass("hide");
 		$(".booked").addClass("cursor");
@@ -193,9 +199,34 @@
 			 
 	});
 	
-	$("#confirm").click(function(){
-		confirm("座位即將被取消，請問是否確認？");
-		$("#modifyForm").submit();
+	$("#confirm").click(function(e){
+// 			e.preventDefault();
+// 		var confirm = swal("座位即將被取消");
+// 		if (confirm === true)
+			$("#modifyForm").submit();
+
+		
+		/*擋不住*/
+// 		e.preventDefault();
+// 		var result = swal("座位即將被取消");
+// 		console.log(result);
+// 		$("#modifyForm").submit();
+
+		/*擋住取消，但確認無法送出*/	
+		// 		swal({
+		// 		    title: "確定要取消座位嗎",
+		// 		    text: "",
+		// 		    type: "warning",
+		// 		    showCancelButton: true,
+		// 		    confirmButtonColor: '#DD6B55',
+		// 		    confirmButtonText: '確定取消',
+		// 		    cancelButtonText: "放棄變更"
+		// 		 }).then((result)=>{
+		// 			 //console.log(result);
+		// 			 if(result === true){
+		// 				 $("#modifyForm").submit();
+		// 			 }
+		// 		 });
 	});
 	
 </script>

@@ -402,7 +402,7 @@
 					//CKeditor - Bytes to String
 					byte[] b = lecVO.getLecinfo();
 					if (b != null) {
-						String bString = new String(b);
+						String bString = new String(b, "UTF-8");
 						lecinfo = bString.substring(0, 20);
 					} else {
 						System.out.println("b is null");
@@ -413,14 +413,16 @@
 				}
 			
 		%>
-		<div class="div col-lg-1 col-md-12 col-sm-12 col-xs-12"></div>
-<div class="div col-lg-10 col-md-12 col-sm-12 col-xs-12 box-item wow fadeInLeft" data-wow-delay="0.3s">
+<div class="div col-lg-12 col-md-12 col-sm-12 col-xs-12 box-item wow fadeInLeft" data-wow-delay="0.3s">
         <div class="daydiv">
             <span class="date"><%=startdate%></span><br>
             <span class="month"><%=startmonth%></span><br>
             <span class="time"><%=starttime%></span><br>
         </div>
         <div class="pic">
+            <img src="<%=request.getContextPath()%>/speaker/iconreader?spkrno=${lecVO.spkrno}">
+        </div>
+        <div class="pic" style="margin-left: 190px">
             <img src="<%=request.getContextPath()%>/lecture/picreader?lecno=${lecVO.lecno}">
         </div>
         <div class="lec-txt">

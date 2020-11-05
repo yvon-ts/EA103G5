@@ -159,7 +159,7 @@ function addClickForBooking() {
 				statusStr = replaceCharAtStringIndex(statusStr, index, "1");
 				setCurrseatValue(statusStr);
 			} else {
-				alert("每場講座限購4個座位，請重新選擇");
+				swal("限購4個座位，請重新選擇","","warning");
 				$(".spaceblock").removeClass("chosen");
 				$(".spaceblock").addClass("seat");
 				$(".spaceblock").attr("status", "seat");
