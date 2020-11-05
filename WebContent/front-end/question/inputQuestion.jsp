@@ -81,8 +81,8 @@ if(QuestionBankvo !=null && QuestionBankvo.getQuans()!= null && QuestionBankvo.g
 <!--         		<option value="radio" >選擇題</option> -->
 <!--         		<option value="checkbox">多選題</option> -->
 <!--     		</select> -->
-						<select class="form-control choose" id="idatype" name="testtype" required>
-  							<option value="-1" selected >請選擇題型</option>
+						<select class="form-control choose" id="idatype1" name="testtype" required>
+  							
         					<option value="text" >填空題</option>
         					<option value="radio" >選擇題</option>
         					<option value="checkbox">多選題</option>
@@ -91,17 +91,17 @@ if(QuestionBankvo !=null && QuestionBankvo.getQuans()!= null && QuestionBankvo.g
 <!--     	錯誤處理填寫 -->
     	<c:if test="${not empty errorMsgs}">
     		
-    		<select class="form-control choose" id="idatype" name="testtype" required>
+    		<select class="form-control choose" id="idatype1" name="testtype" required>
   				<option value="text" ${testTypeSvc.getOnebyNO(QuestionBankvo.typeno).testtype eq 'text'? 'selected':'disabled'} >填空題</option>
         		<option value="radio" ${testTypeSvc.getOnebyNO(QuestionBankvo.typeno).testtype eq 'radio'? 'selected':'disabled'}>選擇題</option>
         		<option value="checkbox" ${testTypeSvc.getOnebyNO(QuestionBankvo.typeno).testtype eq 'checkbox'? 'selected':'disabled'}>多選題</option>
 			</select>
     	</c:if>
-    			<select class="form-control" id="idatype" name="courseno" required>
+    			<select class="form-control" id="idatype2" name="courseno" required>
                 		<option value="<%= request.getParameter("courseno")%>" ><%=coursename %></option>
                </select>
                 
-                <select class="form-control" id="idatype" name="testscope" required>
+                <select class="form-control" id="idatype3" name="testscope" required>
                     <option value="1" ${QuestionBankvo.testscope eq '1' ? 'selected' :''}>單元一</option>
                     <option value="2" ${QuestionBankvo.testscope eq '2' ? 'selected' :''}>單元二</option>
                     <option value="3" ${QuestionBankvo.testscope eq '3' ? 'selected' :''}>單元三</option>
@@ -125,7 +125,7 @@ if(QuestionBankvo !=null && QuestionBankvo.getQuans()!= null && QuestionBankvo.g
         					<option value="checkbox">多選題</option>
 						</select>
 						
-						<div style="text-align:center"><input type="submit"  value="submit"></div> 
+						<div style="text-align:center"><input type="submit"  value="submit" id="turn" ></div> 
 						
 				
 				
@@ -135,12 +135,12 @@ if(QuestionBankvo !=null && QuestionBankvo.getQuans()!= null && QuestionBankvo.g
     
     <script type="text/javascript">
        
-    
-    			
-    
-    	
         		
                 $(document).ready(function() {
+                	
+                	
+                	$('.btn').css('transition','0');
+                	
                 	
                 	if($(".error").find('li').length > 0){
                 		
@@ -158,7 +158,17 @@ if(QuestionBankvo !=null && QuestionBankvo.getQuans()!= null && QuestionBankvo.g
                 	
                 	
                 	
-                	$('#turnin').prop("disabled",true);
+                	$('#turnin').click(function(e){
+                		e.preventDefault();
+                		if($('#idatype1').val()=='-1'){
+                			sweetAlert(
+                  				  '請選擇題型',
+                  				  'error'
+                  				);
+                		}else{
+                			$('#myform').submit();
+                		}
+                	});
                 	
                    
 
@@ -246,10 +256,10 @@ if(QuestionBankvo !=null && QuestionBankvo.getQuans()!= null && QuestionBankvo.g
                         <option value="9" >困難</option>
                     </select><h5>題目:</h5><textarea class="summernote" name="qustmt">${QuestionBankvo.qustmt}</textarea>
                     <ul class="option">
-                    <li style="margin:15px 0;"><label><input type="checkbox" name="multiple" value="A" ${opAns[0] eq '1'? 'checked':''}> A. <input type="text" name="op1" id="fop1" value="${QuestionBankvo.op1}" placeholder="請輸入選項" style="width:209px"></label></li>
-                    <li style="margin:15px 0;"><label><input type="checkbox" name="multiple" value="B" ${opAns[1] eq '1'? 'checked':''}> B. <input type="text" name="op2" id="fop2" value="${QuestionBankvo.op2}" placeholder="請輸入選項" style="width:209px"></label></li>
-                    <li style="margin:15px 0;"><label><input type="checkbox" name="multiple" value="C" ${opAns[2] eq '1'? 'checked':''}> C. <input type="text" name="op3" id="fop3" value="${QuestionBankvo.op3}" placeholder="請輸入選項" style="width:209px"></label></li>
-                    <li style="margin:15px 0;"><label><input type="checkbox" name="multiple" value="D" ${opAns[3] eq '1'? 'checked':''}> D. <input type="text" name="op4" id="fop4" value="${QuestionBankvo.op4}" placeholder="請輸入選項" style="width:209px"></label></li>
+                    <li style="margin:15px 0;"><label><input type="checkbox" name="multiple" value="A" ${opAns[0] eq '1'? 'checked':''}> A. <input type="text" name="op1" id="fop1" value="${QuestionBankvo.op1}" placeholder="請輸入選項" ></label></li>
+                    <li style="margin:15px 0;"><label><input type="checkbox" name="multiple" value="B" ${opAns[1] eq '1'? 'checked':''}> B. <input type="text" name="op2" id="fop2" value="${QuestionBankvo.op2}" placeholder="請輸入選項" ></label></li>
+                    <li style="margin:15px 0;"><label><input type="checkbox" name="multiple" value="C" ${opAns[2] eq '1'? 'checked':''}> C. <input type="text" name="op3" id="fop3" value="${QuestionBankvo.op3}" placeholder="請輸入選項" ></label></li>
+                    <li style="margin:15px 0;"><label><input type="checkbox" name="multiple" value="D" ${opAns[3] eq '1'? 'checked':''}> D. <input type="text" name="op4" id="fop4" value="${QuestionBankvo.op4}" placeholder="請輸入選項" ></label></li>
                 </ul>
             <h5>答案:</h5><input class="form-control" type="text" id="writeanswer" value="${testAns}" name="quans" readonly="readonly"> `);
                             
@@ -294,7 +304,7 @@ if(QuestionBankvo !=null && QuestionBankvo.getQuans()!= null && QuestionBankvo.g
                         }
                     });
                    
-                    $("#idatype").trigger('change');
+                    $("#idatype1").trigger('change');
                     
                 });
                 
@@ -343,7 +353,7 @@ if(QuestionBankvo !=null && QuestionBankvo.getQuans()!= null && QuestionBankvo.g
             <!-- include 前台頁面的 footer -->
 			<jsp:include page="/index/front-index/footer.jsp" />
 			<!-- include 前台頁面的 footer -->
-            <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+           <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
         </body>
 
         </html>        	

@@ -61,7 +61,9 @@ public class QuestionBankServlet extends HttpServlet {
 		QuestionBankVO QuestionBankvo = new QuestionBankVO();
 
 		String testtype = request.getParameter("testtype");// 題型
-
+		
+		
+		
 		QuestionBankvo.setCourseno(request.getParameter("courseno"));// 課程編號
 
 		Integer typeno = null;
@@ -148,11 +150,17 @@ public class QuestionBankServlet extends HttpServlet {
 			}
 
 		}
+		
 		QuestionBankvo = qse.insertQuestion(QuestionBankvo);
+		
+		
+		
 		request.setAttribute("courseno",request.getParameter("courseno"));
 		request.setAttribute("coursename",request.getParameter("coursename"));
 		request.setAttribute("update","update");
 		request.setAttribute("QuestionBankvo", QuestionBankvo);
+		
+		
 		
 		//test
 		getServletContext().setAttribute("insertQuestionNO", QuestionBankvo.getQbankno());

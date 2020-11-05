@@ -65,7 +65,7 @@ tr.bg-color:hover{
 					<div class="statementTitle">作答次數</div>
 					<div class="statementContent">不限次數</div>
 					<div class="statementTitle">測驗題數</div>
-					<div class="statementContent">10題</div>
+					<div class="statementContent">20題</div>
 				</div>
 				
 				<h3 class="font" style="margin:20px 0;">歷史紀錄</h3>
@@ -96,9 +96,12 @@ tr.bg-color:hover{
  						 		</tbody>
  						 	</c:forEach>
 					</table>
+					
+					 <div style="text-align: center; margin:20px;"><a href="<%=request.getContextPath()%>/course/course.do?action=showCourseMainPage&courseno=<%= request.getParameter("courseno") %>"></a></div>
 				</div>
 			</div>
        </div>
+      
 <!-- <table id="table-1"> -->
 <!-- 	<tr><td> -->
 <!-- 		 <h3>該考生考試紀錄</h3> -->

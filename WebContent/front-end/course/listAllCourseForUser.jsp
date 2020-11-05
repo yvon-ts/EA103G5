@@ -322,7 +322,7 @@ label{
 		                str +=  `&nbsp;&nbsp;&nbsp;` + JSONarray[i].csscoretimes + `則評價`;
 		                str +=  `<h3 style="line-height:40px;">` + JSONarray[i].coursename + `</h3></a>`;
 		                
-		                str +=  `<p>課程總長 `+ ~(JSONarray[i].ttltime/60) +` 分鐘</p>`;
+		                str +=  `<p>課程總長 `+ (JSONarray[i].ttltime/60) +` 分鐘</p>`;
 						str +=	`<label class="shoppingcart"><i class="fa fa-shopping-cart" aria-hidden="true"><input type ="hidden" name="courseno" 	 id="courseno"   value ="`+ JSONarray[i].courseno +`"/></i>加入購物車</label>`;
 									
 									

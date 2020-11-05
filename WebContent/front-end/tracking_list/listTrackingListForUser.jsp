@@ -546,7 +546,9 @@
           	
                 		result +=	`<br>&nbsp;&nbsp;&nbsp;`+ JSONarray[i].csscoretimes  + `則評價`;
                 		result +=   `<h3 style="line-height:32px; height:64px; overflow:hidden;">`+ JSONarray[i].coursename + `</h3>`;
-                		result +=   `<p>課程共` + JSONarray[i].ttltime + `分鐘</p></a>`;
+                		
+                		
+                		result +=   `<p>課程共` + Math.floor(JSONarray[i].ttltime/60) + `分鐘</p></a>`;
                     
                 		result += 	`<label class="shoppingcart">
 										<i class="fa fa-shopping-cart" aria-hidden="true">

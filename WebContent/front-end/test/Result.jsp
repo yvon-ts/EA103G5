@@ -120,7 +120,7 @@
 				
 			<ul style="margin-top:10px" class="multiple">
 				<li class="fill">
-				<input type="${type.testtype}" name="${question.qbankno}" placeholder="½Ð¶ñ¼gµª®×"
+				<input type="${type.testtype}" name="${question.qbankno}"
 				id="class${counter.count}" class="class${counter.count}" style="width:200%" value="${anwserSvc.getOneByQBNO(question.qbankno,testsVo.testno).studentans}" disabled > 
 				</li>
 				<li class="fill">
