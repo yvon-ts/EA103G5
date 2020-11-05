@@ -72,6 +72,9 @@
 .signed{
 	background-color: #0099cc;
 }
+ul, ol {
+       list-style: outside none none;
+       }
 </style>
 <script>
 </script>
@@ -183,7 +186,7 @@
 	
 	function generateQRCode(){
 		var qrcode = new QRCode("codeOutput",{
-			text: "<%=request.getContextPath()%>/EA103G5/lecseat/updateSeat?lodrno=" + lodrno + "&seatno=" + seatno + "&newseat=" + newseat,
+			text: "http://f92b9aedb3af.ngrok.io/EA103G5/lecseat/updateSeat?lodrno=" + lodrno + "&seatno=" + seatno + "&newseat=" + newseat,
 			width: 150,
 			height: 150,
 			correctLevel: QRCode.CorrectLevel.H
@@ -231,9 +234,9 @@
 			$("#caption").text("請保存座位" + seatno + "的QRcode");
 			$("#caption").attr("style", "margin-left: 25%");
 		} else if ($("#"+id+"seat").text() === "已報到"){
-			alert("該座位已報到！");
+			swal("該座位已報到！","","info");
 		} else {
-			alert("該座位已取消！");
+			swal("該座位已取消！","","warning");
 		}
 		
 	});

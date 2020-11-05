@@ -55,6 +55,9 @@
 body{
 	margin: 0;
 }
+#room-area{
+	margin-left: 100px;
+}
 </style>
 </head>
 <body>
@@ -68,11 +71,13 @@ body{
     		<br>
     		請依下方黃色區塊選擇您的座位<br>
     		（每位會員僅限購四個座位）
+    		<div id="room-area">
     		<%@ include file="/front-end/lecorder/bookingSeats.jsp"%>
+    		</div>
   		</div> 
 <%--    <%@ include file="/calendar/calendar.jsp" %> --%>
 		<div id="form" class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
-		<h1 style="color: #333">${lecVO.lecname}</h1>
+		<h3 style="color: #333;font-weight: 700">${lecVO.lecname}</h3>
     		
 				講座日期<br>
 				&nbsp;<input class="txt" type="text" value="<%=startdate%>"readonly><br>
