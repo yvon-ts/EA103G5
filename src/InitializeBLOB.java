@@ -153,7 +153,7 @@ public class InitializeBLOB {
 			con = DriverManager.getConnection(URL, USER, PASSWORD);
 			pstmt = con.prepareStatement("UPDATE course SET courseimg = ? WHERE courseno = ?");
 
-			for (int i = 2; i <= 16; i++) {
+			for (int i = 1; i <= 16; i++) {
 				String imgName = "COUR" + (i < 10 ? "000" + i : "00" + i);
 				// 超過 0099 需再另外寫
 				byte[] pic = getUpdateFileByteArray("blobpool/CourseImgs/" + imgName + ".png");
