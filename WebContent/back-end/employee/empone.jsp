@@ -196,7 +196,7 @@ table.table td a.view {
 }
 
 input[type="submit"].view {
-	width: 60px;
+	width: 80px;
 	height: 30px;
 	color: #2196F3;
 	border: 2px solid;

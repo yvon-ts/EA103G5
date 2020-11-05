@@ -434,7 +434,7 @@ public class InitializeBLOB {
 			con = DriverManager.getConnection(URL, USER, PASSWORD);
 			pstmt = con.prepareStatement("UPDATE employee SET emppic = ? WHERE empno = ?");
 
-			for (int i = 1; i <= 7; i++) {
+			for (int i = 1; i <= 12; i++) {
 				String empimg = "EMP" + ( i < 10 ? "000" + i : "00" + i );
 				byte[] pic = getUpdateFileByteArray("blobpool/empimg/" + empimg + ".jpg");
 				pstmt.setBytes(1, pic);
