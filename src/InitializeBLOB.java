@@ -28,6 +28,8 @@ public class InitializeBLOB {
 		updateSpkrinfo();
 		//會員&老師證照
 		uploadMembersAndTeacherCert();
+		//員工
+		uploadempImg();
 		
 	}
 
@@ -398,6 +400,49 @@ public class InitializeBLOB {
 				}
 
 			}
+		} catch (SQLException se) {
+			System.out.println(se);
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					System.out.println(se);
+				}
+			}
+
+			if (con != null) {
+				try {
+					con.close();
+				} catch (SQLException se) {
+					System.out.println(se);
+				}
+			}
+		}
+	}
+	
+	public static void uploadempImg() {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+
+		try {
+			Class.forName("oracle.jdbc.driver.OracleDriver");
+			con = DriverManager.getConnection(URL, USER, PASSWORD);
+			pstmt = con.prepareStatement("UPDATE employee SET emppic = ? WHERE empno = ?");
+
+			for (int i = 1; i <= 7; i++) {
+				String empimg = "EMP" + ( i < 10 ? "000" + i : "00" + i );
+				byte[] pic = getUpdateFileByteArray("blobpool/empimg/" + empimg + ".jpg");
+				pstmt.setBytes(1, pic);
+				pstmt.setString(2, empimg);
+				pstmt.executeUpdate();
+				System.out.println(empimg + " 上傳成功");
+			}
+		
 		} catch (SQLException se) {
 			System.out.println(se);
 		} catch (IOException e) {

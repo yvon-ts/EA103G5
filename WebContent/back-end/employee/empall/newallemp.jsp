@@ -335,7 +335,7 @@ table.table .avatar {
 							<th>到職日期</th>
 							<th>狀態</th>
 							<th>信箱</th>
-							<th>資料權限</th>
+							<th></th>
 						</tr>
 					</thead>
 					<tbody>
