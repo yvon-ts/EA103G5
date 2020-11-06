@@ -65,12 +65,33 @@ public class InitializeBLOB {
 			pstmt = con.prepareStatement(SQLteacher);
 				byte[] pic1 = getUpdateFileByteArray("blobpool/membersPic/java" + 1 + ".jpg");
 				byte[] pic2 = getUpdateFileByteArray("blobpool/membersPic/java" + 2 + ".jpg");
+				
 				pstmt.setBytes(1, pic1);
 				pstmt.setBytes(2, pic2);
 				pstmt.setString(3, "MEM0001");
 				pstmt.executeUpdate();
 				System.out.println("老師證照1已上傳");
 				System.out.println("老師證照2已上傳");
+				pstmt.close();
+				pstmt = con.prepareStatement("UPDATE TEACHER SET TCHRCERT1 = ?,TCHRCERT2 = ? WHERE MEMNO = ?");
+				for(int i =1;i<5;i++) {
+					for(int y =1 ;y<3;y++) {
+						byte[] pic3 = getUpdateFileByteArray("blobpool/membersPic/lisense" + y + ".jpg");
+						byte[] pic4 = getUpdateFileByteArray("blobpool/membersPic/lisense" + (y+2) + ".jpg");
+						
+						   pstmt.setBytes(1, pic3);
+						   pstmt.setBytes(2, pic4);
+						   pstmt.setString(3, "MEM000"+(i+1));
+						   
+						   pstmt.executeUpdate();
+					}
+				
+				}
+				
+				
+				
+				
+				
 		} catch (ClassNotFoundException ce) {
 			System.out.println(ce);
 		} catch (SQLException se) {

@@ -7,6 +7,7 @@
 <%@ page import="java.util.*"%>
 <%@ page import="com.course.model.*"%>
 <%@ page import="com.order_detail.model.*"%>
+<%@ page import="java.util.*,com.tests.model.*"%>
 
 
 <jsp:useBean id="courseSvc" scope="page" class="com.course.model.CourseService" />
@@ -594,6 +595,51 @@ div.main {
 								<tr>
 									<td style="color: #FFF">" "</td>
 								</tr>
+								<tr>
+								<th>
+										<div class="form-group">
+<h5 class="h5"> 老試紀錄
+<img class="pic" src="<%=request.getContextPath()%>/front-end/teacher/teacherRegister_css/images/score.svg" alt="">
+</h5>
+
+
+
+										</div>
+									</th>
+								<th><div style="width: 100px"></div></th>
+									<th>
+									<%
+									TestsService testSvc = new TestsService();
+									String courseno = (String)request.getParameter("courseno");
+									List<TestsVO>  recordList = testSvc.getAll(membersVO.getMemno(),courseno);
+									pageContext.setAttribute("recordList",recordList);
+	                                Integer testtime = recordList.size();
+	                                pageContext.setAttribute("testtime",testtime);
+                                    %>
+									
+										<div class="dropdown" id="dropdown">
+								<button class="btn btn-secondary dropdown-toggle" type="button"
+									id="dropdownMenuButton" data-toggle="dropdown"
+									aria-haspopup="true" aria-expanded="false">已測驗${testtime}堂課</button>
+								<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+								<c:forEach var="TestsVO" items="${recordList}">
+								
+								<a class="dropdown-item" href="<%= request.getContextPath()%>/question/questionTest.do?action=reviewByTestNo&courseno=${TestsVO.courseno}&selectedTestno=${TestsVO.testno}">                                   
+									<h6 style="color:#0099cc">
+									日期:<fmt:formatDate value="${TestsVO.testtime}" pattern="yyyy-MM-dd HH:mm:ss"/>,範圍:${TestsVO.testscope}單元,分數:${TestsVO.score}
+									</h6>
+									
+								</a>
+								
+								</c:forEach>
+								</div>
+								</div>
+									</th>
+								</tr>
+								<tr>
+									<td style="color: #FFF">" "</td>
+								</tr>
+								
 
 
 									<c:if test="${teacherSvc.getStatus(membersVO.memno).tchrstatus eq '已通過'}">	
