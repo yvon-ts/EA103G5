@@ -28,11 +28,11 @@
 <html>
 
 <head>
-    <title>題庫管理 - <%=request.getParameter("coursename") %></title>
+    <title>題庫管理 - ${courseVOForTest.coursename}</title>
     <!-- include libraries(jQuery, bootstrap) -->
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<!--     <link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet"> -->
+<!--     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script> -->
+<!--     <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script> -->
     <!-- include summernote css/js -->
     <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
@@ -69,7 +69,7 @@
     		</select>
                 
                 <select id="idatype" name="courseno" class="select-text" required>
-                		<option value="<%= request.getParameter("courseno")%>" ><%=request.getParameter("coursename") %></option>
+                		<option value="${courseVOForTest.courseno}" >${courseVOForTest.coursename}</option>
                </select>
                 
                
@@ -86,10 +86,10 @@
                 <input type="hidden" name="qbankno"  value="${QuestionBankvo.qbankno}">
                 <input type="hidden" name="requestURL"	value="<%=request.getServletPath()%>">
 				<input type="hidden" name="whichPage"  value="<%=request.getParameter("whichPage")%>">  
-                <input type="hidden" name="coursename"	value="<%=request.getParameter("coursename") %>">
-                <input type="hidden" name="courseno" value="<%=request.getParameter("courseno") %>">
-                <input type="hidden" name="update"	value="update">
-                <input type='submit' id="turnin" value='放置題庫' style="display:block ">
+<%--                 <input type="hidden" name="coursename"	value="<%=request.getParameter("coursename") %>"> --%>
+<%--                 <input type="hidden" name="courseno" value="<%=request.getParameter("courseno") %>"> --%>
+<!--                 <input type="hidden" name="update"	value="update"> -->
+                <input type='submit' id="turnin" value='submit' style="display:block ">
         		</div>
         </form>
         </div>

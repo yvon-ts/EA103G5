@@ -5,6 +5,12 @@
     	String  qbankno = request.getParameter("qbankno");
     	String  status = request.getParameter("status");
     	
+    	if("1".equals(status) ){
+    		getServletContext().setAttribute("insertQuestionNO", qbankno);
+    	}else{
+    		getServletContext().removeAttribute("insertQuestionNO");
+    	}
+    	
     	Connection con = null;
     	DataSource ds = null;
     	PreparedStatement pstmt = null;

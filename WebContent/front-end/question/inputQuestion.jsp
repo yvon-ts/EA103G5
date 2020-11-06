@@ -17,14 +17,14 @@ if(QuestionBankvo !=null && QuestionBankvo.getQuans()!= null && QuestionBankvo.g
     pageContext.setAttribute("testAns",testAns.toString());
     pageContext.setAttribute("opAns",QuestionBankvo.getQuans().split(""));
   }
-		String coursename = "" ;
-	if(request.getParameter("update")==null){
-		String str   = request.getParameter("coursename");
-		byte[] bytes = str.getBytes("ISO-8859-1");
-		 coursename  = new String(bytes,"utf-8");
-	}else{
-		coursename = request.getParameter("coursename");
-	}
+// 		String coursename = "" ;
+// 	if(request.getParameter("update")==null){
+// 		String str   = request.getParameter("coursename");
+// 		byte[] bytes = str.getBytes("ISO-8859-1");
+// 		 coursename  = new String(bytes,"utf-8");
+// 	}else{
+// 		coursename = request.getParameter("coursename");
+// 	}
 	
 	
 
@@ -37,7 +37,7 @@ if(QuestionBankvo !=null && QuestionBankvo.getQuans()!= null && QuestionBankvo.g
 <html>
 
 <head>
-    <title>題庫管理 - <%=coursename %></title>
+    <title>題庫管理 - ${courseVOForTest.coursename}</title>
     <!-- include libraries(jQuery, bootstrap) -->
 <!--     <link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet"> -->
 <!--     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script> -->
@@ -98,7 +98,7 @@ if(QuestionBankvo !=null && QuestionBankvo.getQuans()!= null && QuestionBankvo.g
 			</select>
     	</c:if>
     			<select class="form-control" id="idatype2" name="courseno" required>
-                		<option value="<%= request.getParameter("courseno")%>" ><%=coursename %></option>
+                		<option value="${courseVOForTest.courseno}" >${courseVOForTest.coursename}</option>
                </select>
                 
                 <select class="form-control" id="idatype3" name="testscope" required>
@@ -110,8 +110,8 @@ if(QuestionBankvo !=null && QuestionBankvo.getQuans()!= null && QuestionBankvo.g
                 <div id="parentDiv"></div>
                 <input type="hidden" name="action" value="inputQuestion">
                 <input type="hidden" name="update" value="update">
-                <input type="hidden" name="coursename" value="<%=coursename%>">
-                <input type="hidden" name="courseno" value="<%= request.getParameter("courseno")%>">
+<%--                 <input type="hidden" name="coursename" value="<%=coursename%>"> --%>
+<%--                 <input type="hidden" name="courseno" value="<%= request.getParameter("courseno")%>"> --%>
 <!--                 <input type='submit' id="turnin" value='放置題庫'"> -->
 <!--                 <select id="select"> -->
 <!--                 		<option value="text">填空題</option> -->
@@ -314,7 +314,7 @@ if(QuestionBankvo !=null && QuestionBankvo.getQuans()!= null && QuestionBankvo.g
                 
                 $('#inputdata').change(function(){
     				if($(this).val()==='text'){
-    					$('#textAns').val("25");
+    					$('#textAns').val("31 請說明 MoveDisk 函式總共會被呼叫幾次？");
     				}
     				else if($(this).val()==='radio'){
 //     					$('#fop1').val("CD");
