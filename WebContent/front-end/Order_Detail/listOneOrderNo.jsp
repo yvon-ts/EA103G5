@@ -38,7 +38,6 @@
 		class="com.course.model.CourseService" />
 	<jsp:useBean id="courVO" scope="page" class="com.course.model.CourseVO" />
 
-	<div id="padd">padd</div>
 	<div id="table-area" class="container-xl">
 		<div class="table-responsive">
 			<div class="table-wrapper">
@@ -62,20 +61,20 @@
 					</thead>
 					<tbody>
 						<%@ include file="/back-end/pool/page1.file"%>
-						<c:forEach var="orderDetailVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
+						<c:forEach var="orderDetailVO" items="${list}"
+							begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
 							<tr>
 								<td>${orderDetailVO.orderno}</td>
 								<td>${courSvc.getOneCourse(orderDetailVO.courseno).coursename}</td>
 								<td>${orderDetailVO.sellprice}</td>
 								<td>${orderDetailVO.odstatus}</td>
 								<td>
-									<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/Order_Detail/Order_Detail.do"
-										style="margin-bottom: 0px;" id="refund-form">
+									<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/Order_Detail/Order_Detail.do" style="margin-bottom: 0px;" id="refund-form">
 										<input type="hidden" name="orderno" value="${orderDetailVO.orderno}"> 
 										<input type="hidden" name="courseno" value="${orderDetailVO.courseno}">
 										<input type="hidden" name="action" value="refund">
+										<button type="submit" class="btn btn-primary" id="${orderDetailVO.courseno}">退款</button>
 									</FORM>
-									<button type="submit" class="btn btn-primary" id="refund">退款</button>
 								</td>
 							</tr>
 						</c:forEach>
@@ -87,9 +86,10 @@
 	</div>
 	<%@ include file="/index/front-index/footer.jsp"%>
 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-	
-		<script>
-		$("#refund").click(function(){
+
+	<script>
+		$(".btn").click(function(e){
+			e.preventDefault();
 			Swal.fire({
 				  title: '確定要退款嗎?',
 				  icon: 'warning',
@@ -106,7 +106,6 @@
 				  }
 				})
 		})
-				
 	</script>
 </body>
 </html>
