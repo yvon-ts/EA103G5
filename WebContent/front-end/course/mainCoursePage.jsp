@@ -69,6 +69,9 @@
 </head>
 
 <body>
+
+	<jsp:useBean id="TrackingListSvc" scope="page" class="com.tracking_list.model.TrackingListService" />
+	
 	<!-- include 前台頁面的 header -->
 	<jsp:include page="/index/front-index/header.jsp" />
 
@@ -201,7 +204,7 @@
 
 						<!-- 須要查詢該使用者是否已加入收藏 -->
 						<div class="col-md col-3 courseInfo">
-							<c:forEach var="TrackingListVO" items="${TrackingListSvc.getOneByMemno(membersVO.memno)}">
+							<c:forEach var="TrackingListVO" items="${TrackingListSvc.getOneByMemno(loginMembersVO.memno)}">
 								<c:choose>
 									<c:when test="${ courseVO.courseno eq TrackingListVO.courseno}">
 										<label class="bookmark"><i class="fa fa-heart" aria-hidden="true">
