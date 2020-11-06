@@ -333,13 +333,13 @@
 								<div class="services-item wow fadeInRight" data-wow-delay="0.3s">
 								<div class="teacherInfo">   
 								
-								<a href="<%=request.getContextPath()%>/front-end/teacher/teacherDisplayForOthers.jsp?tchrno=${courseVO.tchrno}">
+<%-- 								<a href="<%=request.getContextPath()%>/front-end/teacher/teacherDisplayForOthers.jsp?tchrno=${courseVO.tchrno}"> --%>
 								
-								<img id='mprofile' class="teacherpic"
-									src="<%=request.getContextPath()%>/front-end/members/MprofileDisplayServlet?MEMNO=${teacherSvc.getOneTeacher(courseVO.tchrno).memno}"
-									alt="sing up image">
+<!-- 								<img id='mprofile' class="teacherpic" -->
+<%-- 									src="<%=request.getContextPath()%>/front-end/members/MprofileDisplayServlet?MEMNO=${teacherSvc.getOneTeacher(courseVO.tchrno).memno}" --%>
+<!-- 									alt="sing up image"> -->
 								      
-								  </a>
+<!-- 								  </a> -->
 								  
 								  
 								  

@@ -104,7 +104,7 @@ public class LecAjaxServlet extends HttpServlet {
 				try{
 					//CKeditor - Bytes to String
 					byte[] b = lecVO.getLecinfo();
-					String bString = new String(b);
+					String bString = new String(b, "UTF-8");
 					if ("<p>".equals(bString.substring(0, 3)))
 						lecinfo = bString.substring(3, 20);
 					else
