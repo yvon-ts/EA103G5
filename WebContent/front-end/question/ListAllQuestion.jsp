@@ -11,15 +11,15 @@
 		
 		
 			
-			String coursename = "";
+// 			String coursename = "";
 			
-			if(request.getParameter("update") == null){
-			String str=request.getParameter("coursename");
-			byte[] bytes=str.getBytes("ISO-8859-1");
-				 coursename=new String(bytes,"utf-8");
-			}else{
-				coursename =request.getParameter("coursename");
-			}
+// 			if(request.getParameter("update") == null){
+// 			String str=request.getParameter("coursename");
+// 			byte[] bytes=str.getBytes("ISO-8859-1");
+// 				 coursename=new String(bytes,"utf-8");
+// 			}else{
+// 				coursename =request.getParameter("coursename");
+// 			}
 %>
 <jsp:useBean id="ttSvc" scope="page" class="com.test_type.model.TestTypeService" />
 
@@ -27,7 +27,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>題庫管理 - <%=coursename %></title>
+<title>題庫管理 - ${courseVOForTest.coursename}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <!--     <title>Bootstrap CRUD Data Table for Database with Modal Form</title> -->
 	
@@ -61,7 +61,7 @@
 
 		<div class="row">
 			<div class="col" style="text-align:center;color:white;">
-				<h1 id="pageTitle" >題庫管理 - <%=coursename %></h1>
+				<h1 id="pageTitle" >題庫管理 -${courseVOForTest.coursename} </h1>
 			</div>
 		</div>
 	 <div class="container-xl">
@@ -74,11 +74,11 @@
                         </div>
                         <div class="col-sm-6">
                             <a
-								href='<%=request.getContextPath()%>/front-end/course/editCourse.jsp?courseno=<%=request.getParameter("courseno")%>'
+								href='<%=request.getContextPath()%>/front-end/course/editCourse.jsp?courseno=${courseVOForTest.courseno}'
 								class="btn btn-info"><i class="fa fa-undo" aria-hidden="true"></i>
 								<span>回到課程編輯</span></a>
 							<a
-								href='<%=request.getContextPath()%>/front-end/question/inputQuestion.jsp?coursename=<%=coursename %>&courseno=<%=request.getParameter("courseno") %>'
+								href='<%=request.getContextPath()%>/front-end/question/inputQuestion.jsp?'
 								class="btn btn-info"><i class="material-icons">&#xE147;</i>
 								<span>新增考題</span></a>
 <!-- 							<button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg">新增考題</button> -->
@@ -150,8 +150,8 @@
                 	</div>
                 	<div class="col-2">
                 	<input type="hidden" name="action" value="listEmps_ByCompositeQuery">
-                	<input type="hidden" name="courseno" value="<%=request.getParameter("courseno") %>">
-                	<input type="hidden" name="coursename" value="<%=coursename %>">
+<%--                 	<input type="hidden" name="courseno" value="<%=request.getParameter("courseno") %>"> --%>
+<%--                 	<input type="hidden" name="coursename" value="<%=coursename %>"> --%>
                 	<input type="submit" value="送出查詢">
                 	
                 	</div>
@@ -181,14 +181,16 @@
                             <td>${QuestionBankvo.qbankno }</td>
                             <td>${CourseSvc.getOneCourse(QuestionBankvo.courseno).coursename }</td>
                             <c:if test="${ttSvc.getOnebyNO(QuestionBankvo.typeno).testdgee eq '簡單'}">
-                            	<td><span class="badge badge-primary">簡單</span></td>
+                            	<td><span class="badge badge-primary">簡單 ${(type.testtype eq 'checkbox' )? '多選題':(type.testtype eq 'radio' )? '單選題':'填空題' }</span></td>
                             </c:if>
                             <c:if test="${ttSvc.getOnebyNO(QuestionBankvo.typeno).testdgee eq '中等'}">
-                            	<td><span class="badge badge-success">中等</span></td>
+                            	<td><span class="badge badge-success">中等 ${(type.testtype eq 'checkbox' )? '多選題':(type.testtype eq 'radio' )? '單選題':'填空題' }</span></td>
                             </c:if>
                             <c:if test="${ttSvc.getOnebyNO(QuestionBankvo.typeno).testdgee eq '困難'}">
-                            	<td><span class="badge badge-warning">困難</span></td>
+                            	<td><span class="badge badge-warning">困難 ${(type.testtype eq 'checkbox' )? '多選題':(type.testtype eq 'radio' )? '單選題':'填空題' }</span></td>
                             </c:if>
+                            
+                            
                             <td>${QuestionBankvo.testscope }</td>
                             <td style="width:30%"  class="set" >${QuestionBankvo.qustmt}</td>
                             <td>
@@ -197,8 +199,8 @@
 			     					<input style="font-family: FontAwesome" value="&#xf044;" type="submit">
 	
 			     					<input type="hidden" name="qbankno"     value="${QuestionBankvo.qbankno}">
-			     					<input type="hidden" name="courseno"    value="<%=request.getParameter("courseno") %>">
-			     					<input type="hidden" name="coursename"  value="<%=coursename %>">
+<%-- 			     					<input type="hidden" name="courseno"    value="<%=request.getParameter("courseno") %>"> --%>
+<%-- 			     					<input type="hidden" name="coursename"  value="<%=coursename %>"> --%>
 			     					<input type="hidden" name="requestURL"	value="<%=request.getServletPath()%>"><!--送出本網頁的路徑給Controller-->
 			     					<input type="hidden" name="whichPage"	value="<%=whichPage%>">               <!--送出當前是第幾頁給Controller-->
 			     					<input type="hidden" name="action"	value="getOne_For_Update">

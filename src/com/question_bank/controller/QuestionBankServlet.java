@@ -65,7 +65,8 @@ public class QuestionBankServlet extends HttpServlet {
 		
 		
 		QuestionBankvo.setCourseno(request.getParameter("courseno"));// 課程編號
-
+		
+		
 		Integer typeno = null;
 		try {
 			typeno = Integer.parseInt(request.getParameter("typeno"));
@@ -75,7 +76,7 @@ public class QuestionBankServlet extends HttpServlet {
 		}
 
 		QuestionBankvo.setTypeno(typeno);// 題型編號
-
+		
 		QuestionBankvo.setTestscope(request.getParameter("testscope"));// 範圍編號
 
 		String qustmt = request.getParameter("qustmt");// 題目
@@ -151,19 +152,19 @@ public class QuestionBankServlet extends HttpServlet {
 
 		}
 		
+		
 		QuestionBankvo = qse.insertQuestion(QuestionBankvo);
 		
 		
-		
-		request.setAttribute("courseno",request.getParameter("courseno"));
-		request.setAttribute("coursename",request.getParameter("coursename"));
-		request.setAttribute("update","update");
+//		request.setAttribute("courseno",request.getParameter("courseno"));
+//		request.setAttribute("coursename",request.getParameter("coursename"));
+//		request.setAttribute("update","update");
 		request.setAttribute("QuestionBankvo", QuestionBankvo);
 		
 		
 		
 		//test
-		getServletContext().setAttribute("insertQuestionNO", QuestionBankvo.getQbankno());
+//		getServletContext().setAttribute("insertQuestionNO", QuestionBankvo.getQbankno());
 //		request.getSession().setAttribute("insertQuestionNO", QuestionBankvo.getQbankno());
 		
 		String url = "/front-end/question/ListOneQuestion.jsp";

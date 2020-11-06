@@ -35,10 +35,10 @@ public class QuestionBankDAO implements QuestionBankDAO_interface {
 		}
 	}
 
-	private static final String INSERTMULTIPLE_STMT = "INSERT INTO QUESTION_BANK(QBANKNO,COURSENO,TESTTYPENO,TESTSCOPE,QUSTMT,OP1,OP2,OP3,OP4,QUANS,QUSTATUS) VALUES('QNBK' || LPAD(SEQ_QBANK.NEXTVAL, 4, 0),?,?,?,?,?,?,?,?,?,?) ";
+	private static final String INSERTMULTIPLE_STMT = "INSERT INTO QUESTION_BANK(QBANKNO,COURSENO,TESTTYPENO,TESTSCOPE,QUSTMT,OP1,OP2,OP3,OP4,QUANS,QUSTATUS) VALUES('QNBK' || LPAD(SEQ_QBANK.NEXTVAL, 4, 0),?,?,?,?,?,?,?,?,?,0) ";
 	private static final String DELETE_STMT = "DELETE FROM QUESTION_BANK WHERE QBANKNO = ? ";
 	private static final String UPDATE_STMT = "UPDATE QUESTION_BANK SET COURSENO=?,TESTTYPENO=?,TESTSCOPE=?,QUSTMT=?,OP1=?,OP2=?,OP3=?,OP4=?,QUANS=? WHERE QBANKNO = ?";
-	private static final String FINDBYNO_STMT = "SELECT * FROM QUESTION_BANK WHERE QBANKNO=?";
+	private static final String FINDBYNO_STMT = "SELECT * FROM QUESTION_BANK WHERE QBANKNO=? ";
 	private static final String FINDALL_STMT = "SELECT * FROM QUESTION_BANK ORDER BY QBANKNO";
 	private static final String FINDALLBYCOURSENO_STMT = "SELECT * FROM QUESTION_BANK  WHERE COURSENO=? ORDER BY QBANKNO";
 	private static final String FINDAREA_STMT = "SELECT * FROM QUESTION_BANK WHERE TESTTYPENO = ? and COURSENO = ? and QUSTATUS = 1 ";
@@ -56,7 +56,6 @@ public class QuestionBankDAO implements QuestionBankDAO_interface {
 		try {
 			con = ds.getConnection();
 			con.setAutoCommit(false);
-
 			String[] col = { "QBANKNO" };
 			pstmt = con.prepareStatement(INSERTMULTIPLE_STMT, col);
 			pstmt.setString(1, questionVO.getCourseno());
@@ -68,18 +67,13 @@ public class QuestionBankDAO implements QuestionBankDAO_interface {
 			pstmt.setString(7, questionVO.getOp3());
 			pstmt.setString(8, questionVO.getOp4());
 			pstmt.setString(9, questionVO.getQuans());
-			
-			pstmt.setInt(10, 0);
-			
 			pstmt.executeUpdate();
 
 			rs = pstmt.getGeneratedKeys();
 			while (rs.next()) {
 				sb.append(rs.getString(1));
 			}
-
 			con.commit();
-				
 			
 			insertedvo = this.findByNO(sb.toString());
 

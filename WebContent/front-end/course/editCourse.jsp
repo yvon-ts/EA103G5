@@ -26,7 +26,8 @@
 		courseScore = formatter.format(Double.valueOf(csscore) / Double.valueOf(csscoretimes));
 	}
 	
-	
+	//開玄
+	request.getSession().setAttribute("courseVOForTest", courseVO);
 %>
 
 <!DOCTYPE html>
@@ -98,7 +99,7 @@
 				<h2>題庫管理</h2>
 					<ul class="nav flex-column nav-pills">
 						<li class="nav-item">
-							<a class="nav-link " href="<%= request.getContextPath()%>/front-end/question/ListAllQuestion.jsp?coursename=${courseVO.coursename}&courseno=${courseVO.courseno}" >
+							<a class="nav-link " href="<%= request.getContextPath()%>/front-end/question/ListAllQuestion.jsp?" >
 								<h5>課程題目編輯</h5>
 							</a>
 						</li>

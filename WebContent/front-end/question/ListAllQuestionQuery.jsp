@@ -8,8 +8,7 @@ List<QuestionBankVO> listEmps_ByCompositeQuery = (List<QuestionBankVO>) request
 .getAttribute("listEmps_ByCompositeQuery");
 pageContext.setAttribute("listEmps_ByCompositeQuery", listEmps_ByCompositeQuery);
 
-System.out.println(request.getParameter("courseno") );
-System.out.println(request.getParameter("coursename") );
+
 %>
 
 <jsp:useBean id="ttSvc" scope="page" class="com.test_type.model.TestTypeService" />
@@ -21,7 +20,7 @@ System.out.println(request.getParameter("coursename") );
 <html>
 <head>
 <meta charset="BIG5">
-<title>考題管理 - <%=request.getParameter("coursename") %></title>
+<title>考題管理 - ${courseVOForTest.coursename}</title>
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <!--     <title>Bootstrap CRUD Data Table for Database with Modal Form</title> -->
@@ -47,7 +46,7 @@ System.out.println(request.getParameter("coursename") );
 
 		<div class="row">
 			<div class="col" style="text-align:center;color:white;">
-				<h1 id="pageTitle" >考題管理 - <%=request.getParameter("coursename") %></h1>
+				<h1 id="pageTitle" >考題管理 -${courseVOForTest.coursename}</h1>
 			</div>
 		</div>
 	
@@ -70,11 +69,11 @@ System.out.println(request.getParameter("coursename") );
 						</div>
 						<div class="col-sm-6">
 							<a
-								href='<%=request.getContextPath()%>/front-end/course/editCourse.jsp?courseno=<%=request.getParameter("courseno") %>'
+								href='<%=request.getContextPath()%>/front-end/course/editCourse.jsp?courseno=${courseVOForTest.courseno}'
 								class="btn btn-info"><i class="fa fa-undo" aria-hidden="true"></i>
 								<span>回到課程編輯</span></a>
 							<a
-								href='<%=request.getContextPath()%>/front-end/question/inputQuestion.jsp?coursename=<%=request.getParameter("coursename") %>&courseno=<%=request.getParameter("courseno") %>'
+								href='<%=request.getContextPath()%>/front-end/question/inputQuestion.jsp?'
 								class="btn btn-info"><i class="material-icons">&#xE147;</i>
 								<span>新增考題</span></a>
 						</div>
@@ -126,8 +125,8 @@ System.out.println(request.getParameter("coursename") );
                 	</div>
                 	<div class="col-2">
                 	<input type="hidden" name="action" value="listEmps_ByCompositeQuery">
-                	<input type="hidden" name="courseno" value="<%=request.getParameter("courseno") %>">
-                	<input type="hidden" name="coursename" value="<%=request.getParameter("coursename") %>">
+<%--                 	<input type="hidden" name="courseno" value="<%=request.getParameter("courseno") %>"> --%>
+<%--                 	<input type="hidden" name="coursename" value="<%=request.getParameter("coursename") %>"> --%>
                 	
                 	<input type="submit" value="送出查詢">
                 	</div>
@@ -154,19 +153,19 @@ System.out.println(request.getParameter("coursename") );
 							items="${listEmps_ByCompositeQuery}" begin="<%=pageIndex%>"
 							end="<%=pageIndex+rowsPerPage-1%>" varStatus="counter">
 							<tr>
-								<td>${counter.count}</td>
+								<td>${QuestionBankvo.qbankno }</td>
 								<td>${CourseSvc.getOneCourse(QuestionBankvo.courseno).coursename }</td>
 								<c:if
 									test="${ttSvc.getOnebyNO(QuestionBankvo.typeno).testdgee eq '簡單'}">
-									<td><span class="badge badge-primary">簡單</span></td>
+									<td><span class="badge badge-primary">簡單 ${(type.testtype eq 'checkbox' )? '多選題':(type.testtype eq 'radio' )? '單選題':'填空題' }</span></td>
 								</c:if>
 								<c:if
 									test="${ttSvc.getOnebyNO(QuestionBankvo.typeno).testdgee eq '中等'}">
-									<td><span class="badge badge-success">中等</span></td>
+									<td><span class="badge badge-success">中等 ${(type.testtype eq 'checkbox' )? '多選題':(type.testtype eq 'radio' )? '單選題':'填空題' }</span></td>
 								</c:if>
 								<c:if
 									test="${ttSvc.getOnebyNO(QuestionBankvo.typeno).testdgee eq '困難'}">
-									<td><span class="badge badge-warning">困難</span></td>
+									<td><span class="badge badge-warning">困難 ${(type.testtype eq 'checkbox' )? '多選題':(type.testtype eq 'radio' )? '單選題':'填空題' }</span></td>
 								</c:if>
 								<td>${QuestionBankvo.testscope }</td>
 								<td style="width: 30%" class="set">${QuestionBankvo.qustmt }</td>
@@ -178,8 +177,8 @@ System.out.println(request.getParameter("coursename") );
 											type="submit"> <input type="hidden" name="qbankno"
 											value="${QuestionBankvo.qbankno}"> <input
 											type="hidden" name="action" value="getOne_For_Update">
-											<input type="hidden" name="courseno" value="<%=request.getParameter("courseno") %>">
-											<input type="hidden" name="coursename" value="<%=request.getParameter("coursename") %>">
+<%-- 											<input type="hidden" name="courseno" value="<%=request.getParameter("courseno") %>"> --%>
+<%-- 											<input type="hidden" name="coursename" value="<%=request.getParameter("coursename") %>"> --%>
 											<input type="hidden" name="whichPage"	value="<%=whichPage%>">
 											<input type="hidden" name="requestURL"	value="<%=request.getServletPath()%>">
 									</FORM>
