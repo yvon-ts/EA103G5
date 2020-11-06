@@ -469,47 +469,50 @@ public class MembersServlet extends HttpServlet {
 		MembersService membersSvc = new MembersService();
 		MembersVO membersVO = membersSvc.getOneMembers(memno);
 		Integer i = membersVO.getMemdelete();
-		if(i==1&&mVO.getMemno().equals(memno)) {
-			req.setAttribute("membersVO", membersVO); // 資料庫取出的empVO物件,存入req
-			String url = "/front-end/members/disPlayMembers.jsp";
-			RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 listOneEmp.jsp
-			successView.forward(req, res);
 		
-		
-		}else if(i==1) {
-			String inform5 = membersVO.getMemname();
-			req.setAttribute("inform5", inform5);
-			CourseService courseSvc = new CourseService();
-			CourseVO courseVO = courseSvc.getOneCourse(courseno);
-			req.setAttribute("courseVO", courseVO);
-			String url = requestURL + "?whichPage=" + whichPage;
-			RequestDispatcher failureView = req.getRequestDispatcher(url);
-			failureView.forward(req, res);
-			return;
-		
-		}else if(mVO == null&&i == 1) {
-			String inform5 = membersVO.getMemname();
-			req.setAttribute("inform5", inform5);
-			CourseService courseSvc = new CourseService();
-			CourseVO courseVO = courseSvc.getOneCourse(courseno);
-			req.setAttribute("courseVO", courseVO);
-			String url = requestURL + "?whichPage=" + whichPage;
-			RequestDispatcher failureView = req.getRequestDispatcher(url);
-			failureView.forward(req, res);
-			return;
-			
-		}else if(mVO == null) {
-			req.setAttribute("membersVO", membersVO); // 資料庫取出的empVO物件,存入req
-			String url = "/front-end/members/disPlayMembers.jsp";
-			RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 listOneEmp.jsp
-			successView.forward(req, res);
-
+		if(i==1) {
+			if(mVO==null) {
+				String inform5 = membersVO.getMemname();
+				req.setAttribute("inform5", inform5);
+				CourseService courseSvc = new CourseService();
+				CourseVO courseVO = courseSvc.getOneCourse(courseno);
+				req.setAttribute("courseVO", courseVO);
+				String url = requestURL + "?whichPage=" + whichPage;
+				RequestDispatcher failureView = req.getRequestDispatcher(url);
+				failureView.forward(req, res);
+				return;
+				
+			}else if(mVO.getMemno().equals(memno)) {
+				req.setAttribute("membersVO", membersVO); // 資料庫取出的empVO物件,存入req
+				String url = "/front-end/members/disPlayMembers.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 listOneEmp.jsp
+				successView.forward(req, res);
+			}else {
+				String inform5 = membersVO.getMemname();
+				req.setAttribute("inform5", inform5);
+				CourseService courseSvc = new CourseService();
+				CourseVO courseVO = courseSvc.getOneCourse(courseno);
+				req.setAttribute("courseVO", courseVO);
+				String url = requestURL + "?whichPage=" + whichPage;
+				RequestDispatcher failureView = req.getRequestDispatcher(url);
+				failureView.forward(req, res);
+				return;
+			}
 		}else{
-			req.setAttribute("membersVO", membersVO); // 資料庫取出的empVO物件,存入req
-			String url = "/front-end/members/disPlayMembers.jsp";
-			RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 listOneEmp.jsp
-			successView.forward(req, res);
+			if(mVO == null) {
+				req.setAttribute("membersVO", membersVO); // 資料庫取出的empVO物件,存入req
+				String url = "/front-end/members/disPlayMembers.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 listOneEmp.jsp
+				successView.forward(req, res);
+			}else {
+				req.setAttribute("membersVO", membersVO); // 資料庫取出的empVO物件,存入req
+				String url = "/front-end/members/disPlayMembers.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 listOneEmp.jsp
+				successView.forward(req, res);
+			
 		}
+		}
+		
 	}
 
 }
