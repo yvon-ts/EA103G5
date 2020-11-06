@@ -15,7 +15,7 @@ public class LecseatDAO implements LecseatDAO_Interface {
 	private static final String INSERT_STMT = "INSERT INTO LEC_SEAT (LODRNO, SEATNO) VALUES (?, ?)";
 	private static final String UPDATE_STATUS = "UPDATE LEC_SEAT SET SEATSTATUS = '取消' WHERE (SEATNO = ? AND LODRNO = ?)";
 	private static final String GET_ORDER_DETAILS = "SELECT * FROM LEC_SEAT WHERE LODRNO = ?";
-	private static final String COUNT_MEM_SEATS = "SELECT * FROM (SELECT * FROM LEC_ORDER JOIN LEC_SEAT ON LEC_ORDER.LODRNO = LEC_SEAT.LODRNO) WHERE MEMNO = ? AND LECNO = ?";
+	private static final String COUNT_MEM_SEATS = "SELECT * FROM (SELECT * FROM LEC_ORDER JOIN LEC_SEAT ON LEC_ORDER.LODRNO = LEC_SEAT.LODRNO) WHERE MEMNO = ? AND LECNO = ? AND SEATSTATUS = '正常'";
 
 	static {
 		try {

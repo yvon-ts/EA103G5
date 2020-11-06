@@ -1,4 +1,3 @@
-/* ------------設置教室------------- */
 // 當教室深度、寬度改變時的 Function
 function seatChange() {
 	statusStr = "";
@@ -52,58 +51,7 @@ function showSeatMapping() {
 	}
 };
 
-//註冊 Block 的點擊事件
-function addBlockClickEvent() {
-	$(".spaceblock").click(function() {
-		let index = $(this).attr("countNum") - 1;
-		if ($(this).hasClass("seat")) {
-			$(this).removeClass("seat");
-			$(this).addClass("aisle");
-			$(this).attr("status", "aisle");
-			statusStr = replaceCharAtStringIndex(statusStr, index, "0");
-			setDefaultseatValue(statusStr);
-		} else if ($(this).hasClass("aisle")) {
-			$(this).removeClass("aisle");
-			$(this).addClass("seat");
-			$(this).attr("status", "seat");
-			statusStr = replaceCharAtStringIndex(statusStr, index, "1");
-			setDefaultseatValue(statusStr);
-		}
-	});
-}
-
-function replaceCharAtStringIndex(str, index, newChar) {
-	let beforeStr = str.substring(0, index);
-	let afterStr = str.substring(index + 1);
-	let newStr = beforeStr + newChar + afterStr;
-	return newStr;
-};
-
-// 將 input 內寫入預設座位字串值
-function setDefaultseatValue(statusStr) {
-	$("#defaultseat").val(statusStr);
-	$("#seatCount").text(seatCount(statusStr));
-	$("#blockCount").text(blockCount(statusStr));
-}
-
-//計算 defaultseat 內有幾個座位
-function seatCount(statusStr) {
-	let seatCount = 0;
-	for (let i = 0; i < statusStr.length; i++) {
-		if (statusStr[i] === "1") {
-			seatCount++;
-		}
-	}
-	return (seatCount);
-}
-
-// 計算教室內有幾個 Block
-function blockCount(statusStr) {
-	return statusStr.length;
-}
-
-/* ------------訂位用------------- */
-// 印出教室 layout，訂位用
+//印出教室 layout，訂位用
 function showSeatMapping() {
 	// 取得 defaultseat 的字串值
 	statusStr = $("#defaultseat").val();
@@ -141,7 +89,6 @@ function showSeatMapping() {
 				spaceBlock.addClass("signed");
 				spaceBlock.attr("status", "signed");
 			}
-			// 顯示元素資料
 			spaceBlock.attr("countNum", (i - 1) * roomColumn + j);
 			spaceBlock.attr("seatName", seatName);
 			spaceBlock.text(seatName);
@@ -151,14 +98,52 @@ function showSeatMapping() {
 	}
 };
 
-// 註冊 Block 的點擊事件，訂位用
+// 註冊 Block 的點擊事件
+function addBlockClickEvent() {
+	$(".spaceblock").click(function() {
+		let index = $(this).attr("countNum") - 1;
+		if ($(this).hasClass("seat")) {
+			$(this).removeClass("seat");
+			$(this).addClass("aisle");
+			$(this).attr("status", "aisle");
+			statusStr = replaceCharAtStringIndex(statusStr, index, "0");
+			setDefaultseatValue(statusStr);
+		} else if ($(this).hasClass("aisle")) {
+			$(this).removeClass("aisle");
+			$(this).addClass("seat");
+			$(this).attr("status", "seat");
+			statusStr = replaceCharAtStringIndex(statusStr, index, "1");
+			setDefaultseatValue(statusStr);
+		}
+	});
+}
+
+// 註冊 Block 的點擊事件(also update fixed seats)
+function addClickToBothSeats() {
+	$(".spaceblock").click(function() {
+		let index = $(this).attr("countNum") - 1;
+		if ($(this).hasClass("seat")) {
+			$(this).removeClass("seat");
+			$(this).addClass("aisle");
+			$(this).attr("status", "aisle");
+			statusStr = replaceCharAtStringIndex(statusStr, index, "0");
+			setBothSeatsValue(statusStr);
+		} else if ($(this).hasClass("aisle")) {
+			$(this).removeClass("aisle");
+			$(this).addClass("seat");
+			$(this).attr("status", "seat");
+			statusStr = replaceCharAtStringIndex(statusStr, index, "1");
+			setBothSeatsValue(statusStr);
+		}
+	});
+}
+
+// 註冊 Block 的點擊事件：訂位用，限購四個走道不能點擊
 function addClickForBooking() {
 		$(".spaceblock").click(function() {
 			let index = $(this).attr("countNum") - 1;
 			statusStr = $("#defaultseat").val();
-			// 紀錄已選座位數量
 			let chosenCount = chosenSeatCount(statusStr);
-			// 限制已被訂購及走道不可被購買
 			let aBookedSeat = $(this).hasClass("booked");
 			let anAisle = $(this).hasClass("aisle");
 			if (chosenCount < availableSeats && $(this).hasClass("seat") && (!aBookedSeat) && (!anAisle)) {
@@ -186,43 +171,7 @@ function addClickForBooking() {
 			}
 		});
 	}
-
-// 將 input內寫入剩餘座位字串值，訂位用
-function setCurrseatValue(statusStr) {
-	$("#defaultseat").val(statusStr);
-	$("#seatCount").text(seatCount(statusStr));
-	$("#blockCount").text(totalSeatCount(statusStr));
-	let chosenCount = chosenSeatCount(statusStr);
-	// 計算已選座位
-	$("#count").val(chosenCount);
-	let lecprice = $("#lecprice").val();
-	// 計算目前金額
-	let currAmount = chosenCount * lecprice;
-	$("#lecamt").val(currAmount);
-}
-
-// 計算剩餘座位，訂位用
-function totalSeatCount(statusStr) {
-	let ttlseatCount = 0;
-	for (let i = 0; i < statusStr.length; i++) {
-		ttlseatCount++;
-	}
-	return (ttlseatCount);
-}
-
-// 計算目前選擇座位數量，訂位用
-function chosenSeatCount(statusStr) {
-	let chosenCount = 0;
-	for (let i = 0; i < statusStr.length; i++) {
-		if (statusStr.charAt(i) === "*") {
-			chosenCount++;
-		}
-	}
-	return (chosenCount);
-}
-
-/* ------------取消座位------------- */
-//註冊 Block 的點擊事件，取消座位
+// 註冊 Block 的點擊事件：取消座位
 function addClickForCancel() {
 	$(".spaceblock").click(function() {
 		let index = $(this).attr("countNum") - 1;
@@ -242,7 +191,41 @@ function addClickForCancel() {
 	});
 }
 
-// 將 input內寫入剩餘座位字串值，取消座位
+function replaceCharAtStringIndex(str, index, newChar) {
+	let beforeStr = str.substring(0, index);
+	let afterStr = str.substring(index + 1);
+	let newStr = beforeStr + newChar + afterStr;
+	return newStr;
+};
+
+//訂位用，toggle座位號碼
+function replaceSeatName(str, index, newChar) {
+	let beforeStr = str.substring(0, index);
+	let afterStr = str.substring(index + 1);
+	let newStr = beforeStr + newChar + afterStr;
+	return newStr;
+};
+
+// 將 input 內寫入預設座位字串值
+function setDefaultseatValue(statusStr) {
+	$("#defaultseat").val(statusStr);
+	$("#seatCount").text(seatCount(statusStr));
+	$("#blockCount").text(blockCount(statusStr));
+}
+
+// 訂位用，將 input 內寫入剩餘座位字串值
+function setCurrseatValue(statusStr) {
+	$("#defaultseat").val(statusStr);
+	$("#seatCount").text(seatCount(statusStr));
+	$("#blockCount").text(totalSeatCount(statusStr));
+	let chosenCount = chosenSeatCount(statusStr);
+	$("#count").val(chosenCount);
+	let lecprice = $("#lecprice").val();
+	let currAmount = chosenCount * lecprice;
+	$("#lecamt").val(currAmount);
+}
+
+// 修改座位用，將 input 內寫入剩餘座位字串值
 function setLodrseatCurrseatValue(statusStr) {
 	$("#defaultseat").val(statusStr);
 	$("#seatCount").text(seatCount(statusStr));
@@ -254,7 +237,51 @@ function setLodrseatCurrseatValue(statusStr) {
 	$("#lecamt").val(currAmount);
 }
 
-//計算目前剩餘訂購座位數量，取消座位
+// 將 input 內寫入預設座位字串值(also update fixed seats)
+function setBothSeatsValue(statusStr) {
+	$("#fixedseat").val(statusStr);
+	$("#defaultseat").val(statusStr);
+	$("#seatCount").text(seatCount(statusStr));
+	$("#blockCount").text(blockCount(statusStr));
+}
+
+// 計算 defaultseat 內有幾個座位
+function seatCount(statusStr) {
+	let seatCount = 0;
+	for (let i = 0; i < statusStr.length; i++) {
+		if (statusStr[i] === "1") {
+			seatCount++;
+		}
+	}
+	return (seatCount);
+}
+
+// 計算教室內有幾個 Block
+function blockCount(statusStr) {
+	return statusStr.length;
+}
+
+// 訂位用，計算剩餘座位
+function totalSeatCount(statusStr) {
+	let ttlseatCount = 0;
+	for (let i = 0; i < statusStr.length; i++) {
+		ttlseatCount++;
+	}
+	return (ttlseatCount);
+}
+
+// 訂位用，計算目前選擇座位數量
+function chosenSeatCount(statusStr) {
+	let chosenCount = 0;
+	for (let i = 0; i < statusStr.length; i++) {
+		if (statusStr.charAt(i) === "*") {
+			chosenCount++;
+		}
+	}
+	return (chosenCount);
+}
+
+//修改座位用，計算目前剩餘訂購座位數量
 function bookedSeatCount(statusStr) {
 	let bookedCount = 0;
 	for (let i = 0; i < statusStr.length; i++) {
@@ -263,42 +290,4 @@ function bookedSeatCount(statusStr) {
 		}
 	}
 	return (bookedCount);
-}
-
-/* ------------待整理------------- */
-
-// 訂位用，toggle座位號碼
-//function replaceSeatName(str, index, newChar) {
-//	let beforeStr = str.substring(0, index);
-//	let afterStr = str.substring(index + 1);
-//	let newStr = beforeStr + newChar + afterStr;
-//	return newStr;
-//};
-
-// 註冊 Block 的點擊事件(also update fixed seats)
-function addClickToBothSeats() {
-	$(".spaceblock").click(function() {
-		let index = $(this).attr("countNum") - 1;
-		if ($(this).hasClass("seat")) {
-			$(this).removeClass("seat");
-			$(this).addClass("aisle");
-			$(this).attr("status", "aisle");
-			statusStr = replaceCharAtStringIndex(statusStr, index, "0");
-			setBothSeatsValue(statusStr);
-		} else if ($(this).hasClass("aisle")) {
-			$(this).removeClass("aisle");
-			$(this).addClass("seat");
-			$(this).attr("status", "seat");
-			statusStr = replaceCharAtStringIndex(statusStr, index, "1");
-			setBothSeatsValue(statusStr);
-		}
-	});
-}
-
-// 將 input 內寫入預設座位字串值(also update fixed seats)
-function setBothSeatsValue(statusStr) {
-	$("#fixedseat").val(statusStr);
-	$("#defaultseat").val(statusStr);
-	$("#seatCount").text(seatCount(statusStr));
-	$("#blockCount").text(blockCount(statusStr));
 }
