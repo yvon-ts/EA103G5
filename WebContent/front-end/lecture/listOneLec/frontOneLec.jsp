@@ -294,22 +294,22 @@
 <script>
 var memno = "<%=memno%>";
 $("#bookASeat").mousedown(function(e){
-// 	if (memno.length == 0){
-// 		e.preventDefault();
-// 		swal("請先登入","", 'warning');
-<%-- 	} else if (<%=canBuy%> === false){ --%>
-// 		e.preventDefault();
-// 		swal("","您已達到購買數量上限", 'error');
-<%-- 	} else if (<%=lecstatus%> === 0){ --%>
-// 		e.preventDefault();
-// 		swal("","該講座已延期，目前無法購買", 'warning');
-<%-- 	} else if (<%=lecstatus%> === 2){ --%>
-// 		e.preventDefault();
-// 		swal("","該講座現已額滿，目前無法購買", 'warning');
-<%-- 	} else if (<%=lecstatus%> === 3){ --%>
-// 		e.preventDefault();
-// 		swal("","該活動已結束", 'warning');
-// 	}
+	if (memno.length == 0){
+		e.preventDefault();
+		swal("請先登入","", 'warning');
+	} else if (<%=canBuy%> === false){
+		e.preventDefault();
+		swal("","您已達到購買數量上限", 'error');
+	} else if (<%=lecstatus%> === 0){
+		e.preventDefault();
+		swal("","該講座已延期，目前無法購買", 'warning');
+	} else if (<%=lecstatus%> === 2){
+		e.preventDefault();
+		swal("","該講座現已額滿，目前無法購買", 'warning');
+	} else if (<%=lecstatus%> === 3){
+		e.preventDefault();
+		swal("","該活動已結束", 'warning');
+	}
 });
 $("#viewOrders").mousedown(function(e){
 	if (memno.length == 0){
