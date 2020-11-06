@@ -119,7 +119,7 @@
 		$('#test').click(function(){
 			
 			var mySet = new Set();
-			mySet.add(1);
+			
 			while( mySet.size < 16){
 				mySet.add(Math.floor(Math.random() * 20) + 1);
 			}

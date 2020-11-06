@@ -164,7 +164,7 @@ public class QuestionBankServlet extends HttpServlet {
 		
 		
 		//test
-//		getServletContext().setAttribute("insertQuestionNO", QuestionBankvo.getQbankno());
+		getServletContext().setAttribute("insertQuestionNO", QuestionBankvo.getQbankno());
 //		request.getSession().setAttribute("insertQuestionNO", QuestionBankvo.getQbankno());
 		
 		String url = "/front-end/question/ListOneQuestion.jsp";

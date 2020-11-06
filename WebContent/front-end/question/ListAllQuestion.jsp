@@ -116,7 +116,7 @@
 <!--     </div> -->
 <!--   </div> -->
 <!-- </div> -->
-
+			
 
                 <form action="<%= request.getContextPath()%>/question/questionBank.do" method="post" id = "myForm">
                 	
@@ -175,7 +175,9 @@
                     	
                     <%@ include file="page/page1.file" %>
                     	<c:forEach var="QuestionBankvo" items="${questionBankVoList}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>" varStatus="counter">
-                        	 
+                        	
+                        	
+                        	<c:set var="type" value="${testTypeSvc.getOnebyNO(QuestionBankvo.typeno)}" /> 
                         <tr>
                             
                             <td>${QuestionBankvo.qbankno }</td>
@@ -241,7 +243,7 @@
 							url  : "editStatus.jsp",
 							data : {
 								qbankno : $(this).val(),
-								status  : $(this).prop("checked")? 1 : 0
+								status  : $(this).prop("checked")? 0 : 1
 							},
 						success : function(data){
 							console.log(123);

@@ -163,9 +163,20 @@ public class QuestionTestServlet extends HttpServlet {
 		
 		
 		
+		
 		if(qse.getOneByNO(questionNO) != null) {
 				list.set(0, qse.getOneByNO(questionNO));
 		}
+		
+//		Set<QuestionBankVO> set = new HashSet<>(list);
+//		
+//		System.out.println(set.size());
+//		while(set.size()<20) {
+//			int r = (int)(Math.random()*100);
+//			set.add(qse.getOneByNO("QBNO00"+ r));
+//		}
+//		
+//		list = new ArrayList<>(set);
 		
 		/*
 		 * Collections.shuffle(List<?> list) Randomly permutes the specified list using
