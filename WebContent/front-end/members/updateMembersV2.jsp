@@ -537,8 +537,7 @@ div.main {
 												<label> <input onchange="readURL(this)"
 													targetID="mprofile" style="display: none;" type="file"
 													id="picture" name="picture" placeholder="Your Profile" />
-													會員頭像<img class="pic"
-													src="<%=request.getContextPath()%>/front-end/members/signIn&updateMembers_css/images/pictures.svg">
+													會員頭像<img class="pic" style="cursor:pointer;"src="<%=request.getContextPath()%>/front-end/members/signIn&updateMembers_css/images/pictures.svg">
 												</label>
 											</h5>
 

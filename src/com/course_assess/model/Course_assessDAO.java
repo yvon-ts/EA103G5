@@ -30,7 +30,7 @@ public class Course_assessDAO implements Course_assessDAO_interface {
 	private static final String UPDATE = "UPDATE COURSE_ASSESS SET COURSESCORE=?,COMMENTS=? WHERE ASESNO =?";
 	private static final String DELETE = "DELETE FROM COURSE_ASSESS WHERE ASESNO=?";
 	private static final String AVG_SCORE = "SELECT courseno, AVG(COURSESCORE)  FROM COURSE_ASSESS where courseno = ? group by courseno  ";
-    private static final String getAllForAjax ="select * from (select c.*,rownum r from course_assess c where c.courseno = ? ORDER BY c.ASESNO desc ) where r between ? and ?";
+    private static final String getAllForAjax ="select * from( select ASESNO,COURSENO,MEMNO,COURSESCORE,COMMENTS,COMMENTTIME,rownum r from (select c.*  from course_assess c where c.courseno = ? ORDER BY c.asesno desc  ) )where r between ? and ?";
 	
 
 	@Override
@@ -426,11 +426,8 @@ public class Course_assessDAO implements Course_assessDAO_interface {
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(getAllForAjax);
 			pstmt.setString(1, courseno);
-			pstmt.setInt(2, pagesize-4);
+			pstmt.setInt(2, pagesize-6);
 			pstmt.setInt(3, pagesize);	
-			System.out.println(pagesize-4);
-			System.out.println(pagesize+"欄位數");
-			System.out.println(getAllForAjax);
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {

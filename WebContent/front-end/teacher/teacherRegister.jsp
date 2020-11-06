@@ -334,7 +334,7 @@ div.signup-content {
 
 
 section#copyright {
-	margin-top: 890px;
+	margin-top: 1000px;
 }
 
 nav.navbar {

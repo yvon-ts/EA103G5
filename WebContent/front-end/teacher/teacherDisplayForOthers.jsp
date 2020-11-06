@@ -375,6 +375,8 @@ img.fti{
 		<c:forEach var="courseVO" items="${Courselist}">
 			<div class="col-md-12 col-lg-6 col-xs-12">
 				<div class="services-item">
+				
+				<c:if test="${loginTeacherVO.tchrno eq tchrno}">
 					<a href="<%=request.getContextPath()%>/course/course.do?action=getOneCourseForUpdate&courseno=${courseVO.courseno}">
 						<div class="icon">
 							<img src="<%=request.getContextPath()%>/course/CoursePictureReaderFromDB?courseno=${courseVO.courseno}" style="max-width: 100%; height: 150px;">
@@ -383,6 +385,16 @@ img.fti{
 							<h3 style="line-height: 40px;">${courseVO.coursename}</h3>
 						</div>
 					</a>
+				</c:if>
+				<c:if test="${loginTeacherVO.tchrno ne tchrno}">
+				<div class="icon">
+							<img src="<%=request.getContextPath()%>/course/CoursePictureReaderFromDB?courseno=${courseVO.courseno}" style="max-width: 100%; height: 150px;">
+						</div>
+						<div class="services-content">
+							<h3 style="line-height: 40px;">${courseVO.coursename}</h3>
+						</div>
+					</c:if>
+					
 					<% 
 						// 將課程總時數換算為分鐘
                     	Integer ttltimeInMin = ((CourseVO)pageContext.getAttribute("courseVO")).getTtltime()/60;

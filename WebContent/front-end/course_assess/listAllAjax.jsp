@@ -357,7 +357,7 @@ if(inform5 === '200'){
 
 
 $(document).ready(function(){
-	var pageSize = 5;
+	var pageSize = 7;
 	
 	
 	
@@ -374,7 +374,7 @@ $(document).ready(function(){
 
 	
 	$(document).on('click', '#js-load-more', function(){
-	pageSize+=5 ;
+	pageSize+=7 ;
 	
 	
 	getData(pageSize);
