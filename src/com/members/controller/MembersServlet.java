@@ -26,7 +26,6 @@ public class MembersServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		req.setCharacterEncoding("UTF-8");// 處理中文檔名
 		res.setContentType("text/html; charset=UTF-8");
-		
 
 		String action = req.getParameter("action");
 
@@ -50,26 +49,22 @@ public class MembersServlet extends HttpServlet {
 			updatemembers(req, res);
 		}
 //===================以下為修改會員狀態區塊===================
-		if("updatestatus".equals(action)) {
-			updatestatus(req,res);
+		if ("updatestatus".equals(action)) {
+			updatestatus(req, res);
 		}
 //===================以下為查詢單一會員資料區塊================
-		if("getOne_For_Display".equals(action)) {
-			getOne_For_Display(req,res);
+		if ("getOne_For_Display".equals(action)) {
+			getOne_For_Display(req, res);
 		}
 //===================以下為會員驗證區塊===================
 		if ("verify".equals(action)) {
-					verify(req, res);
-				}
+			verify(req, res);
+		}
 
-		
-		
 	}// Post大括號尾端
 
-	
 //=======================處理照片專區========================
 	public String getFileNameFromPart(Part part) {
-
 
 		String header = part.getHeader("content-disposition");
 		String filename = new File(header.substring(header.lastIndexOf("=") + 2, header.length() - 1)).getName();
@@ -79,41 +74,37 @@ public class MembersServlet extends HttpServlet {
 		}
 		return filename;
 	}
-	
-	public static byte[] getPictureByteArray(String path) throws IOException{
+
+	public static byte[] getPictureByteArray(String path) throws IOException {
 		File file = new File(path);
 		FileInputStream fis = new FileInputStream(file);
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		byte[] buffer = new byte[8192];
-		int i ;
-		while((i=fis.read(buffer)) !=-1) {
+		int i;
+		while ((i = fis.read(buffer)) != -1) {
 			baos.write(buffer, 0, i);
 		}
 		baos.close();
 		fis.close();
-		
+
 		return baos.toByteArray();
-		
+
 	}
-	
+
 //=========================================================
 
-	
 //=======================驗證碼產生法========================
 	public static String getAutoCode() {
-		String i ="012345QAZWS0123XEDCRF09543216789VTGBY876HNUJMKLIOP456789";
-		String str="";
-		for(int x=1;x<=6;x++) {
-			
-			str+=i.charAt((char)(Math.random()*46));
+		String i = "012345QAZWS0123XEDCRF09543216789VTGBY876HNUJMKLIOP456789";
+		String str = "";
+		for (int x = 1; x <= 6; x++) {
+
+			str += i.charAt((char) (Math.random() * 46));
 		}
 		return str;
-		
-		
-		
+
 	}
 //=========================================================
-	
 
 	private void insert(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		List<String> errorMsgs = new LinkedList<String>();
@@ -122,17 +113,16 @@ public class MembersServlet extends HttpServlet {
 		String vercode = getAutoCode();
 		StringBuilder sb = new StringBuilder();
 		String inform = "200";
-		
+
 		HttpSession session = req.getSession();
 		session.setAttribute("inform", inform);
 		Integer count = new Integer(0);
 		ServletContext ct = req.getServletContext();
 		String path = ct.getRealPath("/front-end/members/addMembers_css/images/defaultMprofile.jpg");
-		
-		
+
 		// Store this set in the request scope, in case we need to
 		// send the ErrorPage view.
-		
+
 		try {
 
 			String memacc = req.getParameter("memacc").toUpperCase();
@@ -201,10 +191,10 @@ public class MembersServlet extends HttpServlet {
 					in.close();
 				}
 			}
-			if(mprofile == null) {
-				
+			if (mprofile == null) {
+
 				mprofile = getPictureByteArray(path);
-				
+
 			}
 			MembersVO memVO = new MembersVO();
 			memVO.setMemacc(memacc);
@@ -215,7 +205,7 @@ public class MembersServlet extends HttpServlet {
 			memVO.setMemail(memail);
 			memVO.setMphone(mphone);
 			memVO.setMprofile(mprofile);
-			
+
 			if (!errorMsgs.isEmpty()) {
 				req.setAttribute("membersVO", memVO);
 //				session.removeAttribute("inform");
@@ -223,9 +213,7 @@ public class MembersServlet extends HttpServlet {
 				failureView.forward(req, res);
 				return;
 			}
-			
-			
-			
+
 			sb.append("歡迎註冊Xducation線上學習平台,");
 			sb.append("這是您的驗證碼:");
 			sb.append(vercode);
@@ -233,12 +221,10 @@ public class MembersServlet extends HttpServlet {
 			session.setAttribute("memVO", memVO);
 			session.setAttribute("vercode", vercode);
 			session.setAttribute("count", count);
-			
+
 			RequestDispatcher sucessView = req.getRequestDispatcher("/front-end/members/transitMembers.jsp");
 			sucessView.forward(req, res);
-			
-			
-			
+
 		} catch (Exception e) {
 			errorMsgs.add(e.getMessage());
 			RequestDispatcher failureView = req.getRequestDispatcher("/front-end/members/addMembersV2.jsp");
@@ -246,71 +232,61 @@ public class MembersServlet extends HttpServlet {
 		}
 
 	}
-	
-	private void verify(HttpServletRequest req, HttpServletResponse res)throws ServletException, IOException {
+
+	private void verify(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		HttpSession session = req.getSession();
-		MembersVO loginMembersVO =null;
-		
+		MembersVO loginMembersVO = null;
+
 		session.removeAttribute("inform");
 		List<String> errorMsgs = new LinkedList<String>();
-		
-		
-		Integer count =(Integer) session.getAttribute("count");
-		System.out.println("錯誤次數"+count);
-		
-		
-		
-		MembersVO memVO =(MembersVO) session.getAttribute("memVO");
+
+		Integer count = (Integer) session.getAttribute("count");
+		System.out.println("錯誤次數" + count);
+
+		MembersVO memVO = (MembersVO) session.getAttribute("memVO");
 		String mphone = memVO.getMphone();
 		System.out.println(mphone);
-		String vercode = (String)session.getAttribute("vercode");
+		String vercode = (String) session.getAttribute("vercode");
 		System.out.println(vercode);
-		
-		
+
 		String clientVerCode = req.getParameter("clientVerCode").toUpperCase();
-		if(clientVerCode == null || clientVerCode.trim().length() == 0) {
+		if (clientVerCode == null || clientVerCode.trim().length() == 0) {
 			errorMsgs.add("不可為空白");
 			System.out.println("輸入空白");
 			req.setAttribute("errorMsgs", errorMsgs);
 			RequestDispatcher failureView = req.getRequestDispatcher("/front-end/members/vCodeMembers.jsp");
 			failureView.forward(req, res);
 			return;
-			
-			
-		
-		}else if(count == 2) {
+
+		} else if (count == 2) {
 			session.removeAttribute("memVO");
 			session.removeAttribute("vercode");
 			session.removeAttribute("count");
 			String inform2 = "200";
 			req.setAttribute("inform2", inform2);
 			String url = "/index/front-index/index.jsp";
-			RequestDispatcher successView = req.getRequestDispatcher(url); 
+			RequestDispatcher successView = req.getRequestDispatcher(url);
 			successView.forward(req, res);
 			return;
-		}else if(!vercode.equals(clientVerCode.trim())) {
-			if(count.equals(1)) {
+		} else if (!vercode.equals(clientVerCode.trim())) {
+			if (count.equals(1)) {
 				errorMsgs.add("請小心輸入啊,再一次就得重新註冊了><");
-				count +=1;
+				count += 1;
 				session.setAttribute("count", count);
-			}else {
+			} else {
 				errorMsgs.add("您不想成為我們的會員了嗎?:");
-				count +=1;
+				count += 1;
 				session.setAttribute("count", count);
 			}
 		}
-	
-	
-		
-		
+
 		if (!errorMsgs.isEmpty()) {
 			req.setAttribute("errorMsgs", errorMsgs);
 			RequestDispatcher failureView = req.getRequestDispatcher("/front-end/members/vCodeMembers.jsp");
 			failureView.forward(req, res);
 			return;
 		}
-		
-		
+
 		MembersService membersSvc = new MembersService();
 		String memacc = memVO.getMemacc();
 		String mempwd = memVO.getMempwd();
@@ -319,26 +295,21 @@ public class MembersServlet extends HttpServlet {
 		Date membday = memVO.getMembday();
 		String memail = memVO.getMemail();
 		byte[] mprofile = memVO.getMprofile();
-		
+
 		String inform3 = "200";
-		req.setAttribute("inform3", inform3);		
+		req.setAttribute("inform3", inform3);
 		MembersVO mVO = null;
 		mVO = membersSvc.addMembers(memacc, mempwd, memname, nkname, membday, memail, mphone, mprofile);
 		session.setAttribute("loginMembersVO", mVO);
-		
-		
+
 		session.removeAttribute("memVO");
 		session.removeAttribute("vercode");
 		req.removeAttribute("errorMsgs");
 		String url = "/index/front-index/index.jsp";
-		
+
 		RequestDispatcher successView = req.getRequestDispatcher(url);
 		successView.forward(req, res);
-		
-		
-		
 
-		
 	}
 
 	private void signin(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
@@ -347,14 +318,13 @@ public class MembersServlet extends HttpServlet {
 		HttpSession session = req.getSession();
 		String memacc = req.getParameter("memacc").toUpperCase();
 		String mempwd = req.getParameter("mempwd");
-		
-		
+
 		TeacherService teacherSvc = new TeacherService();
 		TeacherVO teacherVO = new TeacherVO();
-		
+
 		MembersService membersSvc = new MembersService();
 		MembersVO membersVO = membersSvc.signIn(memacc, mempwd);
-		
+
 		if (membersVO == null) {
 			errorMsgs.add("會員帳號or密碼有誤，請重新輸入");
 			membersVO = new MembersVO();
@@ -373,7 +343,7 @@ public class MembersServlet extends HttpServlet {
 			RequestDispatcher successView = req.getRequestDispatcher(url);
 			successView.forward(req, res);
 //			http://localhost:8081/EA103G5/front-end/members/signIn.jsp
-			
+
 		}
 
 	}
@@ -383,26 +353,25 @@ public class MembersServlet extends HttpServlet {
 		session.removeAttribute("loginMembersVO");
 		session.removeAttribute("loginTeacherVO");
 		session.removeAttribute("shoppingList");
-		
+
 		String inform2 = "300";
 		req.setAttribute("inform2", inform2);
 		String url = "/index/front-index/index.jsp";
 		RequestDispatcher successView = req.getRequestDispatcher(url);
 		successView.forward(req, res);
-		
+
 	}
 
 	private void updatemembers(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		List<String> errorMsgs = new LinkedList<String>();
 		req.setAttribute("errorMsgs", errorMsgs);
-		
-		
-		String memno =null;
-		
+
+		String memno = null;
+
 		try {
 			HttpSession session = req.getSession();
 			MembersVO membersVO = (MembersVO) session.getAttribute("loginMembersVO");
-			 memno = membersVO.getMemno();
+			memno = membersVO.getMemno();
 
 			String mempwd = req.getParameter("mempwd");
 			String mempwdReg = "[\\w]{6,16}$";
@@ -414,10 +383,10 @@ public class MembersServlet extends HttpServlet {
 			String Rmempwd = req.getParameter("Rmempwd");
 			if (Rmempwd == null || Rmempwd.trim().length() == 0) {
 				Rmempwd = membersVO.getMempwd();
-			}else if (!(Rmempwd.equals(mempwd))) {
+			} else if (!(Rmempwd.equals(mempwd))) {
 				errorMsgs.add("重複輸入密碼:必須一致");
 			}
-			
+
 			String nkname = req.getParameter("nkname");
 			String nknameReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{2,10}$";
 			if (nkname == null || nkname.trim().length() == 0) {
@@ -428,7 +397,7 @@ public class MembersServlet extends HttpServlet {
 
 			byte[] mprofile = null;
 			Collection<Part> parts = req.getParts();
-			
+
 			for (Part part : parts) {
 				if (getFileNameFromPart(part) != null && part.getContentType() != null) {
 					InputStream in = part.getInputStream();
@@ -437,7 +406,7 @@ public class MembersServlet extends HttpServlet {
 					in.close();
 				}
 			}
-			if(mprofile == null) {
+			if (mprofile == null) {
 				MembersService membersSvc = new MembersService();
 				MembersVO membersVO1;
 				membersVO1 = membersSvc.getOneMembers(memno);
@@ -446,8 +415,7 @@ public class MembersServlet extends HttpServlet {
 			membersVO.setMempwd(mempwd);
 			membersVO.setNkname(nkname);
 			membersVO.setMprofile(mprofile);
-			
-			
+
 			if (!errorMsgs.isEmpty()) {
 				req.setAttribute("membersVO", membersVO); // 含有輸入格式錯誤的empVO物件,也存入req
 				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/members/updateMembersV2.jsp");
@@ -469,78 +437,81 @@ public class MembersServlet extends HttpServlet {
 
 	}
 
-    private void updatestatus(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException{
-	List<String> errorMsgs = new LinkedList<String>();
-	req.setAttribute("errorMsgs", errorMsgs);
-	try {
-	String memno = req.getParameter("memno");
-	
-	MembersService membersSvc = new MembersService();
-	membersSvc.updateStatusMembers(memno);
-	
-	String url = "/back-end/members/listAllMembers.jsp";
-	RequestDispatcher successView = req.getRequestDispatcher(url);
-	successView.forward(req, res);
-	}catch (Exception e) {
-		errorMsgs.add("修改資料失敗:"+e.getMessage());
-		RequestDispatcher failureView = req
-				.getRequestDispatcher("/back-end/members/listAllMembers.jsp");
-		failureView.forward(req, res);
+	private void updatestatus(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+		List<String> errorMsgs = new LinkedList<String>();
+		req.setAttribute("errorMsgs", errorMsgs);
+		try {
+			String memno = req.getParameter("memno");
+
+			MembersService membersSvc = new MembersService();
+			membersSvc.updateStatusMembers(memno);
+
+			String url = "/back-end/members/listAllMembers.jsp";
+			RequestDispatcher successView = req.getRequestDispatcher(url);
+			successView.forward(req, res);
+		} catch (Exception e) {
+			errorMsgs.add("修改資料失敗:" + e.getMessage());
+			RequestDispatcher failureView = req.getRequestDispatcher("/back-end/members/listAllMembers.jsp");
+			failureView.forward(req, res);
+		}
 	}
-}
-    
-    private void getOne_For_Display(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException{
-    	HttpSession session = req.getSession();
-    	MembersVO mVO = (MembersVO)session.getAttribute("loginMembersVO");
-    	System.out.println();
+
+	private void getOne_For_Display(HttpServletRequest req, HttpServletResponse res)
+			throws ServletException, IOException {
+		HttpSession session = req.getSession();
+		MembersVO mVO = (MembersVO) session.getAttribute("loginMembersVO");
+
 		String memno = req.getParameter("memno");
 		String courseno = req.getParameter("courseno");
-		String requestURL =req.getParameter("requestURL");
+		String requestURL = req.getParameter("requestURL");
 		String whichPage = req.getParameter("whichPage");
-		
-		
-		
+
 		MembersService membersSvc = new MembersService();
 		MembersVO membersVO = membersSvc.getOneMembers(memno);
 		Integer i = membersVO.getMemdelete();
-		if(mVO.getMemno().equals(memno)) {
+		if(i==1&&mVO.getMemno().equals(memno)) {
 			req.setAttribute("membersVO", membersVO); // 資料庫取出的empVO物件,存入req
 			String url = "/front-end/members/disPlayMembers.jsp";
 			RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 listOneEmp.jsp
 			successView.forward(req, res);
-			
-			
-			
-            }else if (i == 1) {
+		
+		
+		}else if(i==1) {
 			String inform5 = membersVO.getMemname();
 			req.setAttribute("inform5", inform5);
 			CourseService courseSvc = new CourseService();
 			CourseVO courseVO = courseSvc.getOneCourse(courseno);
 			req.setAttribute("courseVO", courseVO);
-			String url =requestURL+"?whichPage="+whichPage;
+			String url = requestURL + "?whichPage=" + whichPage;
+			RequestDispatcher failureView = req.getRequestDispatcher(url);
+			failureView.forward(req, res);
+			return;
+		
+		}else if(mVO == null&&i == 1) {
+			String inform5 = membersVO.getMemname();
+			req.setAttribute("inform5", inform5);
+			CourseService courseSvc = new CourseService();
+			CourseVO courseVO = courseSvc.getOneCourse(courseno);
+			req.setAttribute("courseVO", courseVO);
+			String url = requestURL + "?whichPage=" + whichPage;
 			RequestDispatcher failureView = req.getRequestDispatcher(url);
 			failureView.forward(req, res);
 			return;
 			
-		}else {
+		}else if(mVO == null) {
 			req.setAttribute("membersVO", membersVO); // 資料庫取出的empVO物件,存入req
 			String url = "/front-end/members/disPlayMembers.jsp";
 			RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 listOneEmp.jsp
 			successView.forward(req, res);
-			
+
+		}else{
+			req.setAttribute("membersVO", membersVO); // 資料庫取出的empVO物件,存入req
+			String url = "/front-end/members/disPlayMembers.jsp";
+			RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 listOneEmp.jsp
+			successView.forward(req, res);
 		}
-		
-		
-    }
-
-    
-
+	}
 
 }
-
-
-
-
-
 
 // 主Class大括號尾端

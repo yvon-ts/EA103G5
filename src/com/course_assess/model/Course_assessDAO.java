@@ -428,7 +428,9 @@ public class Course_assessDAO implements Course_assessDAO_interface {
 			pstmt.setString(1, courseno);
 			pstmt.setInt(2, pagesize-4);
 			pstmt.setInt(3, pagesize);	
-			
+			System.out.println(pagesize-4);
+			System.out.println(pagesize+"欄位數");
+			System.out.println(getAllForAjax);
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {

@@ -71,6 +71,24 @@
 	<script src="https://kit.fontawesome.com/b99e675b6e.js"></script>
 	
 	<style>
+	
+	/*老師資訊*/	
+	div.teacherInfo{
+	margin: -50px 0 0 -30px;
+	position:absolute;
+	z-index:2;
+	}
+	img.teacherpic{
+	width:80px;
+	height:80px;
+	border-radius:50%;
+	}
+	
+	
+	
+	
+	
+	
 	.scrollable-dropdown{
 	    height: auto;
 	    max-height:320px;  /* Increase / Decrease value as per your need */
@@ -96,6 +114,7 @@
 	img.icon{
 	width:30px;
 	height:30px;
+	
 	}
 	
 	.star{
@@ -310,9 +329,24 @@
             
               <c:forEach var="courseVO" items="${CourseSvc.max}">
 							<div class="col-md-6 col-lg-3 col-xs-12">
+							
 								<div class="services-item wow fadeInRight" data-wow-delay="0.3s">
+								<div class="teacherInfo">   
+								
+								<a href="<%=request.getContextPath()%>/front-end/teacher/teacherDisplayForOthers.jsp?tchrno=${courseVO.tchrno}">
+								
+								<img id='mprofile' class="teacherpic"
+									src="<%=request.getContextPath()%>/front-end/members/MprofileDisplayServlet?MEMNO=${teacherSvc.getOneTeacher(courseVO.tchrno).memno}"
+									alt="sing up image">
+								      
+								  </a>
+								  
+								  
+								  
+								     </div>
 									<a href="<%=request.getContextPath()%>/course/course.do?action=showCourseMainPage&courseno=${courseVO.courseno}" class="course">
 									<div class="icon">
+								
 										<!-- 顯鈞：替換成新版本讀圖測試2020/10/22 -->
 										<%-- <img src="<%=request.getContextPath()%>/course/coursephoto.do?action=searchPhoto&courseno=${courseVO.courseno}" style="width:200px;height:150px" class="pic"> --%>
 										<%-- <img src="<%=request.getContextPath()%>/course/CoursePictureReaderFromDB?courseno=${courseVO.courseno}" style="width: 200px; height: 150px;" class="pic"> --%>
