@@ -301,10 +301,6 @@ table.table .avatar {
 	margin-top: 10px;
 	font-size: 13px;
 }
-rounded-circle{
-/* 	border-radius:50%!important; */
-	border:3px solid black
-}
 </style>
 <script>
 	$(document).ready(function() {
