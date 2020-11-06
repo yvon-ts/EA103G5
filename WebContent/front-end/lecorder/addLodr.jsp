@@ -100,7 +100,7 @@ body{
 	<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 	<script>
 	var availableSeats = parseInt(<%=availableSeats%>);
-	console.log(typeof(availableSeats));
+	// 紀錄選中座位名稱
 	$("#submit").mousedown(function() {
 	    var arr = document.getElementsByClassName("chosen");
 	    let txt = "";
@@ -115,7 +115,6 @@ body{
 	    input.setAttribute("type", "hidden");
 	    $("#lecamt").append(input);
 	});
-	
 	</script>
 </body>
 </html>
