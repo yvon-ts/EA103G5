@@ -41,7 +41,7 @@ pageContext.setAttribute("listEmps_ByCompositeQuery", listEmps_ByCompositeQuery)
 </head>
 <body>
 	<jsp:include page="/index/front-index/header.jsp" />
-	
+	<jsp:useBean id="testTypeSvc" scope="page" class="com.test_type.model.TestTypeService" />
 	<div class="container-fluid" style="margin-top: 90px;">
 
 		<div class="row">
@@ -152,6 +152,8 @@ pageContext.setAttribute("listEmps_ByCompositeQuery", listEmps_ByCompositeQuery)
 						<c:forEach var="QuestionBankvo"
 							items="${listEmps_ByCompositeQuery}" begin="<%=pageIndex%>"
 							end="<%=pageIndex+rowsPerPage-1%>" varStatus="counter">
+							
+							<c:set var="type" value="${testTypeSvc.getOnebyNO(QuestionBankvo.typeno)}" /> 
 							<tr>
 								<td>${QuestionBankvo.qbankno }</td>
 								<td>${CourseSvc.getOneCourse(QuestionBankvo.courseno).coursename }</td>
@@ -208,7 +210,7 @@ pageContext.setAttribute("listEmps_ByCompositeQuery", listEmps_ByCompositeQuery)
 						url : "<%=request.getContextPath()%>/front-end/question/editStatus.jsp",
 						data : {
 							qbankno : $(this).val(),
-							status : $(this).prop("checked") ? 1 : 0
+							status : $(this).prop("checked") ? 0 : 1
 						},
 						success : function(data) {
 							console.log(123);
