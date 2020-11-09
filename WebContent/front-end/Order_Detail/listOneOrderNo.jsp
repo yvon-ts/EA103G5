@@ -61,19 +61,18 @@
 					</thead>
 					<tbody>
 						<%@ include file="/back-end/pool/page1.file"%>
-						<c:forEach var="orderDetailVO" items="${list}"
-							begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
+						<c:forEach var="orderDetailVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
 							<tr>
 								<td>${orderDetailVO.orderno}</td>
 								<td>${courSvc.getOneCourse(orderDetailVO.courseno).coursename}</td>
 								<td>${orderDetailVO.sellprice}</td>
 								<td>${orderDetailVO.odstatus}</td>
 								<td>
-									<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/Order_Detail/Order_Detail.do" style="margin-bottom: 0px;" id="refund-form">
+									<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/Order_Detail/Order_Detail.do" style="margin-bottom: 0px;" class="refund-form" id="${orderDetailVO.courseno}">
 										<input type="hidden" name="orderno" value="${orderDetailVO.orderno}"> 
 										<input type="hidden" name="courseno" value="${orderDetailVO.courseno}">
 										<input type="hidden" name="action" value="refund">
-										<button type="submit" class="btn btn-primary" id="${orderDetailVO.courseno}">退款</button>
+										<button type="submit" class="btn btn-primary">退款</button>
 									</FORM>
 								</td>
 							</tr>
@@ -102,7 +101,7 @@
 				    Swal.fire(
 				      '已提交申請',
 				    )
-				    $("#refund-form").submit();
+				    $(".refund-form").submit();
 				  }
 				})
 		})

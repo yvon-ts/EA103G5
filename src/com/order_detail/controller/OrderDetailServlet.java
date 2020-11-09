@@ -162,6 +162,8 @@ public class OrderDetailServlet extends HttpServlet {
 				String orderno = req.getParameter("orderno");
 				String courseno = req.getParameter("courseno");
 				
+				System.out.println(courseno);
+				
 				OrderDetailService orderDetailSvc = new OrderDetailService();
 
 				/*************************** 2.開始修改資料 *****************************************/

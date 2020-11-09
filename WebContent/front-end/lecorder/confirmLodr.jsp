@@ -147,7 +147,7 @@ html{
 	<script>
 		$("#btn").click(function(){
 			$(".num").val("1111");
-			$("#card-name").val("DAVID WU");
+			$("#card-name").val("COACH ANSI");
 			$("#exp").val("11/20");
 			$("#cvc").val("666");
 		});

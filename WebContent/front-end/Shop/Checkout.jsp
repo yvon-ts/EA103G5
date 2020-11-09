@@ -149,8 +149,8 @@ center
 
 										<div class="float-right text-right" style="margin-top: -30px">
 											<div id="totalPrice" style="font-size:22px;font-weight:900">總價：$<%=total%></div>
-											<div id="discount" style="font-size:22px;font-weight:900">折扣：-</div>
-											<div id="amount" style="font-size:22px;font-weight:900">折扣後：</div>
+											<div id="discount" style="font-size:22px;font-weight:900"></div>
+											<div id="amount" style="font-size:22px;font-weight:900"></div>
 										</div>
 										<div class="row mt-4 d-flex align-items-center">
 											<div class="col-sm-6 mb-3 mb-m-1 order-md-1 text-md-left">
