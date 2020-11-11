@@ -432,9 +432,6 @@ $("#insert").click(function(e){
 	$("#empsalary").val("40000");
 	$("#f_date1").val(today);
 	$("#empemail").val("n8742977@gmail.com");
-	$("#FUN0002").prop('checked', true);
-	$("#FUN0003").prop('checked', true);
-	$("#FUN0004").prop('checked', true);
 })
 </script>
 <script type="text/javascript">

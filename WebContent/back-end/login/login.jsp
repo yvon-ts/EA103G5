@@ -70,7 +70,7 @@
 					</span>
 
 					<span class="login100-form-title p-b-34 p-t-27">
-						管理後臺登入
+						管理後臺
 					</span>
 					<div align="center">
 					<font color="yellow"><b>${errlogin}</b></font><br>
