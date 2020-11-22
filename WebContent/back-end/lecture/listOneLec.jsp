@@ -169,7 +169,7 @@
 <%-- 			<td><%=closedate%></td> --%>
 <%-- 			<td>${lecVO.initseat}</td> --%>
 <%-- 			<td>${lecVO.currseat}</td> --%>
-			<td><span class="<%=statusCss%>"><%=status%></span></td>
+			<td><span style="white-space: nowrap" class="<%=statusCss%>"><%=status%></span></td>
 			<td>${lecVO.leclmod}</td>
 			<td>
 				<form method="post"	action="<%=request.getContextPath()%>/lecture/lecture.do">

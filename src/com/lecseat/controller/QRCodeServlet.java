@@ -25,7 +25,6 @@ public class QRCodeServlet extends HttpServlet {
 	}
 
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-		System.out.println("有進來QRcode Servlet");
 
 		req.setCharacterEncoding("UTF-8");
 		res.setContentType("text/html; charset=UTF-8");
@@ -81,10 +80,13 @@ public class QRCodeServlet extends HttpServlet {
 			LecService lecSvc = new LecService();
 			LecVO lecVO = lecSvc.getOne(lecno);
 			String oldseat = lecVO.getCurrseat();
+			String head = oldseat.substring(0, newseat.indexOf("3"));
+			String foot = oldseat.substring(newseat.indexOf("3") + 1);
+			String newLecSeat = head + "3" + foot;
 			
 			// 更新講座座位圖
 			pstmt = con.prepareStatement(UPDATE_LEC);
-			pstmt.setString(1, newseat);
+			pstmt.setString(1, newLecSeat);
 			//get lmod
 			Timestamp leclmod = new Timestamp(System.currentTimeMillis());
 			pstmt.setTimestamp(2, leclmod);
@@ -92,7 +94,7 @@ public class QRCodeServlet extends HttpServlet {
 			pstmt.executeUpdate();
 			System.out.println("更新" + lecno + "講座座位圖");
 			System.out.println("原座位圖=" + oldseat);
-			System.out.println("新座位圖=" + newseat);
+			System.out.println("新座位圖=" + newLecSeat);
 			
 			con.commit();
 			out.println(seatno + "報到成功");

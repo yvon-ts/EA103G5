@@ -67,7 +67,7 @@
 		padding: 8px 20px;
 	}
 	#statusText{
-		margin-left: 52%;
+		margin-left: 20%;
 	}
 	#status{
 		margin-top: 25px;
@@ -124,7 +124,7 @@
 						<th>主題</th>
 						<th>講師</th>
 						<th>地點</th>
-						<th>票價<i id="price" class="fa fa-sort priceAsc"></i></th>
+						<th style="white-space: nowrap">票價<i id="price" class="fa fa-sort priceAsc"></i></th>
 						<th>日期<i id="time" class="fa fa-sort timeAsc"></i></th>
 						<th>開始時間</th>
 						<th>結束時間</th>
@@ -185,7 +185,7 @@
 						<td><%=startdate%></td>
 			 			<td><%=starttime%></td>
 						<td><%=endtime%></td>
-						<td><span class="<%=statusCss%>"><%=status%></span></td>
+						<td><span style="white-space: nowrap" class="<%=statusCss%>"><%=status%></span></td>
 						<td>
 							<form method="post" action="<%=request.getContextPath()%>/lecture/lecture.do">
 								<button class="btn view" style="color: #03A9F4"><i class="material-icons">&#xE417;</i></button>
